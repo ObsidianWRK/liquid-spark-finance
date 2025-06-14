@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import GlassCard from './GlassCard';
 import { Heart, Leaf, TrendingUp, TrendingDown, DollarSign, Package } from 'lucide-react';
@@ -27,7 +26,7 @@ interface TransactionWithScoresProps {
 }
 
 const TransactionWithScores = ({ transaction, scores, currency }: TransactionWithScoresProps) => {
-  const [isHovered, setIsHovered] = useState(false);
+  const [showScores, setShowScores] = useState(false);
 
   const formatCurrency = (amount: number) => {
     const absAmount = Math.abs(amount);
@@ -132,8 +131,9 @@ const TransactionWithScores = ({ transaction, scores, currency }: TransactionWit
     <GlassCard 
       className="p-4 mb-3 glass-interactive hover:bg-white/10 transition-all duration-300"
       interactive
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
+      onClick={() => setShowScores(!showScores)}
+      onMouseEnter={() => setShowScores(true)}
+      onMouseLeave={() => setShowScores(false)}
       aria-label={`Transaction: ${transaction.merchant}, ${formatCurrency(transaction.amount)}, Financial score ${scores.financial}, Health score ${scores.health}, Eco score ${scores.eco}`}
       role="button"
     >
@@ -172,21 +172,23 @@ const TransactionWithScores = ({ transaction, scores, currency }: TransactionWit
             <p className="text-white/50 text-xs">{formatDate(transaction.date)}</p>
           </div>
           
-          {/* Score Circles */}
-          <div className="flex items-center space-x-3 pl-3 border-l border-white/10">
-            <ScoreCircle 
-              score={scores.health} 
-              label="Health"
-            />
-            <ScoreCircle 
-              score={scores.eco} 
-              label="Eco"
-            />
-            <ScoreCircle 
-              score={scores.financial} 
-              label="Financial"
-            />
-          </div>
+          {/* Score Circles - Only show when showScores is true */}
+          {showScores && (
+            <div className="flex items-center space-x-3 pl-3 border-l border-white/10 animate-fade-in">
+              <ScoreCircle 
+                score={scores.health} 
+                label="Health"
+              />
+              <ScoreCircle 
+                score={scores.eco} 
+                label="Eco"
+              />
+              <ScoreCircle 
+                score={scores.financial} 
+                label="Financial"
+              />
+            </div>
+          )}
         </div>
       </div>
       
