@@ -69,6 +69,17 @@ const Index = () => {
     },
     {
       id: 'txn_003',
+      merchant: 'UPS Store',
+      category: { name: 'Shipping', color: '#8B4513' },
+      amount: -24.99,
+      date: '2025-06-14T12:45:00Z',
+      status: 'completed' as const,
+      trackingNumber: '1Z999AA1234567890',
+      shippingProvider: 'UPS',
+      deliveryStatus: 'In Transit'
+    },
+    {
+      id: 'txn_004',
       merchant: 'Salary Deposit',
       category: { name: 'Income', color: '#34C759' },
       amount: 3250.00,
@@ -76,7 +87,18 @@ const Index = () => {
       status: 'completed' as const
     },
     {
-      id: 'txn_004',
+      id: 'txn_005',
+      merchant: 'FedEx Office',
+      category: { name: 'Shipping', color: '#4B0082' },
+      amount: -18.75,
+      date: '2025-06-13T16:20:00Z',
+      status: 'completed' as const,
+      trackingNumber: '771234567890',
+      shippingProvider: 'FedEx',
+      deliveryStatus: 'Delivered'
+    },
+    {
+      id: 'txn_006',
       merchant: 'Starbucks',
       category: { name: 'Coffee', color: '#FF9500' },
       amount: -6.85,
@@ -84,7 +106,18 @@ const Index = () => {
       status: 'completed' as const
     },
     {
-      id: 'txn_005',
+      id: 'txn_007',
+      merchant: 'USPS',
+      category: { name: 'Shipping', color: '#0066CC' },
+      amount: -12.50,
+      date: '2025-06-12T14:30:00Z',
+      status: 'completed' as const,
+      trackingNumber: '9400110200793123456789',
+      shippingProvider: 'USPS',
+      deliveryStatus: 'Out for Delivery'
+    },
+    {
+      id: 'txn_008',
       merchant: 'Gas Station',
       category: { name: 'Transportation', color: '#FF3B30' },
       amount: -45.20,

@@ -1,6 +1,7 @@
 
 import React from 'react';
 import GlassCard from './GlassCard';
+import { Package, Truck } from 'lucide-react';
 
 interface Transaction {
   id: string;
@@ -12,6 +13,9 @@ interface Transaction {
   amount: number;
   date: string;
   status: 'completed' | 'pending' | 'failed';
+  trackingNumber?: string;
+  shippingProvider?: 'UPS' | 'FedEx' | 'USPS';
+  deliveryStatus?: 'In Transit' | 'Out for Delivery' | 'Delivered';
 }
 
 interface TransactionItemProps {
@@ -54,6 +58,21 @@ const TransactionItem = ({ transaction, currency }: TransactionItemProps) => {
     }
   };
 
+  const getDeliveryStatusColor = (status?: string) => {
+    switch (status) {
+      case 'Delivered': return 'text-green-400';
+      case 'Out for Delivery': return 'text-orange-400';
+      case 'In Transit': return 'text-blue-400';
+      default: return 'text-white/70';
+    }
+  };
+
+  const getShippingIcon = (provider?: string) => {
+    return provider ? <Package className="w-4 h-4" /> : <Truck className="w-4 h-4" />;
+  };
+
+  const isShippingTransaction = transaction.category.name === 'Shipping';
+
   return (
     <GlassCard 
       className="p-4 mb-3 glass-interactive stagger-item"
@@ -65,9 +84,16 @@ const TransactionItem = ({ transaction, currency }: TransactionItemProps) => {
           <div 
             className={`w-2 h-2 rounded-full ${getStatusColor(transaction.status)}`}
           />
-          <div>
-            <p className="text-white font-medium text-sm">{transaction.merchant}</p>
-            <p className="text-white/50 text-xs">{transaction.category.name}</p>
+          <div className="flex items-center space-x-2">
+            {isShippingTransaction && (
+              <div className="text-white/70">
+                {getShippingIcon(transaction.shippingProvider)}
+              </div>
+            )}
+            <div>
+              <p className="text-white font-medium text-sm">{transaction.merchant}</p>
+              <p className="text-white/50 text-xs">{transaction.category.name}</p>
+            </div>
           </div>
         </div>
         
@@ -78,6 +104,27 @@ const TransactionItem = ({ transaction, currency }: TransactionItemProps) => {
           <p className="text-white/50 text-xs">{formatDate(transaction.date)}</p>
         </div>
       </div>
+      
+      {isShippingTransaction && transaction.trackingNumber && (
+        <div className="mt-3 pt-3 border-t border-white/10">
+          <div className="flex items-center justify-between text-xs">
+            <div>
+              <span className="text-white/50">Tracking: </span>
+              <span className="text-white/90 font-mono">{transaction.trackingNumber}</span>
+            </div>
+            <div className="flex items-center space-x-1">
+              <span className={`font-medium ${getDeliveryStatusColor(transaction.deliveryStatus)}`}>
+                {transaction.deliveryStatus}
+              </span>
+            </div>
+          </div>
+          {transaction.shippingProvider && (
+            <div className="mt-1">
+              <span className="text-white/50 text-xs">via {transaction.shippingProvider}</span>
+            </div>
+          )}
+        </div>
+      )}
     </GlassCard>
   );
 };
