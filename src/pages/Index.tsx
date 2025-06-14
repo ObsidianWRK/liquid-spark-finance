@@ -6,6 +6,9 @@ import TransactionList from '@/components/TransactionList';
 import AccountCard from '@/components/AccountCard';
 import Navigation from '@/components/Navigation';
 import InsightsPage from '@/components/insights/InsightsPage';
+import ChatDrawer from '@/components/ai/ChatDrawer';
+import BudgetReportsPage from '@/components/reports/BudgetReportsPage';
+import WrappedPage from '@/components/wrapped/WrappedPage';
 import '../styles/glass.css';
 
 const Index = () => {
@@ -169,6 +172,12 @@ const Index = () => {
           </div>
         );
       
+      case 'reports':
+        return <BudgetReportsPage />;
+      
+      case 'wrapped':
+        return <WrappedPage />;
+      
       case 'profile':
         return (
           <div className="flex items-center justify-center h-64">
@@ -209,6 +218,9 @@ const Index = () => {
       <div className="relative z-10 px-4 pt-12 pb-24 max-w-md mx-auto">
         {renderContent()}
       </div>
+
+      {/* AI Chat Drawer */}
+      <ChatDrawer userContext={{ accounts, transactions }} />
 
       {/* Navigation */}
       <Navigation activeTab={activeTab} onTabChange={setActiveTab} />
