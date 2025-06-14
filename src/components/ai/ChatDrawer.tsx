@@ -92,7 +92,7 @@ const ChatDrawer = ({ userContext }: ChatDrawerProps) => {
                       onClick={() => setInputValue(action)}
                       className="block w-full text-left p-2 text-sm text-blue-400 hover:bg-white/5 rounded-lg transition-colors"
                     >
-                      "{action}"
+                      {action}
                     </button>
                   ))}
                 </div>
