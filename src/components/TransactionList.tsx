@@ -1,6 +1,8 @@
 
 import React from 'react';
 import TransactionItem from './TransactionItem';
+import TransactionWithScores from './TransactionWithScores';
+import { calculateTransactionScores } from '@/utils/transactionScoring';
 
 interface Transaction {
   id: string;
@@ -17,9 +19,10 @@ interface Transaction {
 interface TransactionListProps {
   transactions: Transaction[];
   currency: string;
+  enhanced?: boolean;
 }
 
-const TransactionList = ({ transactions, currency }: TransactionListProps) => {
+const TransactionList = ({ transactions, currency, enhanced = false }: TransactionListProps) => {
   // Group transactions by date
   const groupedTransactions = transactions.reduce((groups, transaction) => {
     const date = new Date(transaction.date).toDateString();
@@ -57,13 +60,27 @@ const TransactionList = ({ transactions, currency }: TransactionListProps) => {
             {formatDateHeader(date)}
           </h3>
           <div className="space-y-2">
-            {dateTransactions.map((transaction) => (
-              <TransactionItem
-                key={transaction.id}
-                transaction={transaction}
-                currency={currency}
-              />
-            ))}
+            {dateTransactions.map((transaction) => {
+              if (enhanced) {
+                const scores = calculateTransactionScores(transaction);
+                return (
+                  <TransactionWithScores
+                    key={transaction.id}
+                    transaction={transaction}
+                    scores={scores}
+                    currency={currency}
+                  />
+                );
+              } else {
+                return (
+                  <TransactionItem
+                    key={transaction.id}
+                    transaction={transaction}
+                    currency={currency}
+                  />
+                );
+              }
+            })}
           </div>
         </div>
       ))}

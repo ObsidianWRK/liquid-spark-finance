@@ -47,8 +47,7 @@ const EcoScore = ({ score, metrics, monthlyImpact }: EcoScoreProps) => {
 
   return (
     <GlassCard 
-      variant="elevated" 
-      className="p-6 text-center relative overflow-hidden stagger-item"
+      className="glass-card glass-dark bg-gradient-to-br from-green-500/20 to-emerald-500/20 liquid-gradient p-6 text-center relative overflow-hidden stagger-item"
       style={{ animationDelay: '100ms' }}
     >
       {/* Background Gradient */}
@@ -66,33 +65,41 @@ const EcoScore = ({ score, metrics, monthlyImpact }: EcoScoreProps) => {
           <TrendingUp className="w-4 h-4 text-green-400 ml-2" />
         </div>
         
-        {/* Circular Progress */}
+        {/* Enhanced Circular Progress with Glass Effect */}
         <div className="relative flex justify-center items-center mb-4">
-          <svg width="120" height="120" className="transform -rotate-90">
-            <circle
-              cx="60"
-              cy="60"
-              r="40"
-              stroke="rgba(255, 255, 255, 0.1)"
-              strokeWidth="6"
-              fill="none"
-            />
-            <circle
-              cx="60"
-              cy="60"
-              r="40"
-              stroke={getScoreColor(score)}
-              strokeWidth="6"
-              fill="none"
-              strokeDasharray={strokeDasharray}
-              strokeDashoffset={strokeDashoffset}
-              strokeLinecap="round"
-              className="transition-all duration-1000 ease-out"
-              style={{
-                filter: `drop-shadow(0 0 8px ${getScoreColor(score)}40)`
-              }}
-            />
-          </svg>
+          <div className="glass-card p-2 rounded-full">
+            <svg width="120" height="120" className="transform -rotate-90">
+              <circle
+                cx="60"
+                cy="60"
+                r="40"
+                stroke="rgba(255, 255, 255, 0.1)"
+                strokeWidth="6"
+                fill="none"
+              />
+              <circle
+                cx="60"
+                cy="60"
+                r="40"
+                stroke="url(#ecoGradient)"
+                strokeWidth="6"
+                fill="none"
+                strokeDasharray={strokeDasharray}
+                strokeDashoffset={strokeDashoffset}
+                strokeLinecap="round"
+                className="transition-all duration-1000 ease-out"
+                style={{
+                  filter: `drop-shadow(0 0 8px ${getScoreColor(score)}40)`
+                }}
+              />
+              <defs>
+                <linearGradient id="ecoGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stopColor="#10b981" />
+                  <stop offset="100%" stopColor="#059669" />
+                </linearGradient>
+              </defs>
+            </svg>
+          </div>
           
           <div className="absolute inset-0 flex flex-col justify-center items-center">
             <div 
@@ -117,14 +124,14 @@ const EcoScore = ({ score, metrics, monthlyImpact }: EcoScoreProps) => {
           </p>
         </div>
         
-        {/* Eco Metrics */}
+        {/* Eco Metrics with Glass Progress Bars */}
         <div className="space-y-3 mb-4">
           <div className="flex justify-between items-center">
             <span className="text-white/80 text-sm">Carbon Footprint</span>
             <div className="flex items-center space-x-2">
-              <div className="w-16 bg-white/10 rounded-full h-2">
+              <div className="w-16 glass-progress h-2">
                 <div 
-                  className="bg-red-500 h-2 rounded-full transition-all duration-1000"
+                  className="glass-progress-fill red h-2 rounded-full transition-all duration-1000"
                   style={{ width: `${metrics.carbonFootprint}%` }}
                 />
               </div>
@@ -135,9 +142,9 @@ const EcoScore = ({ score, metrics, monthlyImpact }: EcoScoreProps) => {
           <div className="flex justify-between items-center">
             <span className="text-white/80 text-sm">Sustainable Spending</span>
             <div className="flex items-center space-x-2">
-              <div className="w-16 bg-white/10 rounded-full h-2">
+              <div className="w-16 glass-progress h-2">
                 <div 
-                  className="bg-green-500 h-2 rounded-full transition-all duration-1000"
+                  className="glass-progress-fill green h-2 rounded-full transition-all duration-1000"
                   style={{ width: `${metrics.sustainableSpending}%` }}
                 />
               </div>
@@ -148,9 +155,9 @@ const EcoScore = ({ score, metrics, monthlyImpact }: EcoScoreProps) => {
           <div className="flex justify-between items-center">
             <span className="text-white/80 text-sm">Green Transport</span>
             <div className="flex items-center space-x-2">
-              <div className="w-16 bg-white/10 rounded-full h-2">
+              <div className="w-16 glass-progress h-2">
                 <div 
-                  className="bg-blue-500 h-2 rounded-full transition-all duration-1000"
+                  className="glass-progress-fill blue h-2 rounded-full transition-all duration-1000"
                   style={{ width: `${metrics.greenTransport}%` }}
                 />
               </div>
@@ -161,7 +168,7 @@ const EcoScore = ({ score, metrics, monthlyImpact }: EcoScoreProps) => {
           <div className="flex justify-between items-center">
             <span className="text-white/80 text-sm">Renewable Energy</span>
             <div className="flex items-center space-x-2">
-              <div className="w-16 bg-white/10 rounded-full h-2">
+              <div className="w-16 glass-progress h-2">
                 <div 
                   className="bg-purple-500 h-2 rounded-full transition-all duration-1000"
                   style={{ width: `${metrics.renewableEnergy}%` }}
@@ -172,7 +179,7 @@ const EcoScore = ({ score, metrics, monthlyImpact }: EcoScoreProps) => {
           </div>
         </div>
         
-        {/* Monthly Impact */}
+        {/* Monthly Impact with Enhanced Glass Effect */}
         <GlassCard className="glass-green p-3">
           <div className="flex items-center gap-2 mb-2">
             <Recycle className="h-4 w-4 text-green-400" />

@@ -43,8 +43,7 @@ const HealthScore = ({ score, trends }: HealthScoreProps) => {
 
   return (
     <GlassCard 
-      variant="elevated" 
-      className="p-6 text-center relative overflow-hidden stagger-item"
+      className="glass-card glass-dark bg-gradient-to-br from-pink-500/20 to-red-500/20 liquid-gradient p-6 text-center relative overflow-hidden stagger-item"
       style={{ animationDelay: '0ms' }}
     >
       {/* Background Gradient */}
@@ -62,33 +61,41 @@ const HealthScore = ({ score, trends }: HealthScoreProps) => {
           <TrendingUp className="w-4 h-4 text-pink-400 ml-2" />
         </div>
         
-        {/* Circular Progress */}
+        {/* Enhanced Circular Progress with Glass Effect */}
         <div className="relative flex justify-center items-center mb-4">
-          <svg width="120" height="120" className="transform -rotate-90">
-            <circle
-              cx="60"
-              cy="60"
-              r="40"
-              stroke="rgba(255, 255, 255, 0.1)"
-              strokeWidth="6"
-              fill="none"
-            />
-            <circle
-              cx="60"
-              cy="60"
-              r="40"
-              stroke={getScoreColor(score)}
-              strokeWidth="6"
-              fill="none"
-              strokeDasharray={strokeDasharray}
-              strokeDashoffset={strokeDashoffset}
-              strokeLinecap="round"
-              className="transition-all duration-1000 ease-out"
-              style={{
-                filter: `drop-shadow(0 0 8px ${getScoreColor(score)}40)`
-              }}
-            />
-          </svg>
+          <div className="glass-card p-2 rounded-full">
+            <svg width="120" height="120" className="transform -rotate-90">
+              <circle
+                cx="60"
+                cy="60"
+                r="40"
+                stroke="rgba(255, 255, 255, 0.1)"
+                strokeWidth="6"
+                fill="none"
+              />
+              <circle
+                cx="60"
+                cy="60"
+                r="40"
+                stroke="url(#healthGradient)"
+                strokeWidth="6"
+                fill="none"
+                strokeDasharray={strokeDasharray}
+                strokeDashoffset={strokeDashoffset}
+                strokeLinecap="round"
+                className="transition-all duration-1000 ease-out"
+                style={{
+                  filter: `drop-shadow(0 0 8px ${getScoreColor(score)}40)`
+                }}
+              />
+              <defs>
+                <linearGradient id="healthGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stopColor="#f472b6" />
+                  <stop offset="100%" stopColor="#ec4899" />
+                </linearGradient>
+              </defs>
+            </svg>
+          </div>
           
           <div className="absolute inset-0 flex flex-col justify-center items-center">
             <div 
@@ -113,7 +120,7 @@ const HealthScore = ({ score, trends }: HealthScoreProps) => {
           </p>
         </div>
         
-        {/* Health Metrics */}
+        {/* Health Metrics with Glass Progress Bars */}
         <div className="space-y-3">
           <div className="flex justify-between items-center">
             <span className="text-white/80 text-sm flex items-center">
@@ -121,9 +128,9 @@ const HealthScore = ({ score, trends }: HealthScoreProps) => {
               Exercise
             </span>
             <div className="flex items-center space-x-2">
-              <div className="w-16 bg-white/10 rounded-full h-2">
+              <div className="w-16 glass-progress h-2">
                 <div 
-                  className="bg-green-500 h-2 rounded-full transition-all duration-1000"
+                  className="glass-progress-fill green h-2 rounded-full transition-all duration-1000"
                   style={{ width: `${trends.exercise}%` }}
                 />
               </div>
@@ -134,9 +141,9 @@ const HealthScore = ({ score, trends }: HealthScoreProps) => {
           <div className="flex justify-between items-center">
             <span className="text-white/80 text-sm">Nutrition</span>
             <div className="flex items-center space-x-2">
-              <div className="w-16 bg-white/10 rounded-full h-2">
+              <div className="w-16 glass-progress h-2">
                 <div 
-                  className="bg-blue-500 h-2 rounded-full transition-all duration-1000"
+                  className="glass-progress-fill blue h-2 rounded-full transition-all duration-1000"
                   style={{ width: `${trends.nutrition}%` }}
                 />
               </div>
@@ -147,7 +154,7 @@ const HealthScore = ({ score, trends }: HealthScoreProps) => {
           <div className="flex justify-between items-center">
             <span className="text-white/80 text-sm">Sleep</span>
             <div className="flex items-center space-x-2">
-              <div className="w-16 bg-white/10 rounded-full h-2">
+              <div className="w-16 glass-progress h-2">
                 <div 
                   className="bg-purple-500 h-2 rounded-full transition-all duration-1000"
                   style={{ width: `${trends.sleep}%` }}
@@ -160,7 +167,7 @@ const HealthScore = ({ score, trends }: HealthScoreProps) => {
           <div className="flex justify-between items-center">
             <span className="text-white/80 text-sm">Stress Level</span>
             <div className="flex items-center space-x-2">
-              <div className="w-16 bg-white/10 rounded-full h-2">
+              <div className="w-16 glass-progress h-2">
                 <div 
                   className="bg-orange-500 h-2 rounded-full transition-all duration-1000"
                   style={{ width: `${100 - trends.stress}%` }}
