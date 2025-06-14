@@ -145,9 +145,10 @@ const ChatDrawer = ({ userContext }: ChatDrawerProps) => {
             <div className="flex gap-2">
               <input
                 type="text"
+                aria-label="Chat message"
                 value={inputValue}
                 onChange={(e) => setInputValue(e.target.value)}
-                onKeyPress={(e) => e.key === 'Enter' && handleSendMessage()}
+                onKeyDown={(e) => e.key === 'Enter' && handleSendMessage()}
                 placeholder="Ask about your finances..."
                 className="flex-1 bg-white/5 border border-white/20 rounded-lg px-3 py-2 text-white placeholder-white/50 focus:outline-none focus:border-blue-400 focus:bg-white/10"
                 disabled={isLoading}
