@@ -35,15 +35,24 @@ const TransactionWithScores = ({ transaction, scores, currency }: TransactionWit
   const hasShippingInfo = transaction.trackingNumber && transaction.shippingProvider;
 
   return (
-    <div className="relative">
+    <div className="relative mb-3">
       <GlassCard 
-        className="p-4 mb-3 glass-interactive hover:bg-white/10 transition-all duration-300 relative"
+        className={`p-4 glass-interactive hover:bg-white/10 transition-all duration-500 ease-out relative ${
+          showScores ? 'pr-28' : 'pr-4'
+        }`}
         interactive
         onClick={() => setShowScores(!showScores)}
         onMouseEnter={() => setShowScores(true)}
         onMouseLeave={() => setShowScores(false)}
         aria-label={`Transaction: ${transaction.merchant}, ${transaction.amount < 0 ? '-' : '+'}${Math.abs(transaction.amount)}, Financial score ${scores.financial}, Health score ${scores.health}, Eco score ${scores.eco}`}
         role="button"
+        style={{
+          borderRadius: showScores ? '16px 32px 32px 16px' : '16px',
+          transform: showScores ? 'scale(1.02)' : 'scale(1)',
+          boxShadow: showScores 
+            ? '0 20px 40px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.3)' 
+            : '0 8px 32px rgba(0, 0, 0, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.2)'
+        }}
       >
         {/* Status Pill - Top Left */}
         <div className="absolute top-3 left-3 z-20">
@@ -57,7 +66,7 @@ const TransactionWithScores = ({ transaction, scores, currency }: TransactionWit
           </div>
         </div>
 
-        {/* Transaction Grid Layout - Fixed Height */}
+        {/* Transaction Grid Layout */}
         <div className="transaction-grid" style={{ minHeight: '64px', paddingTop: '20px' }}>
           <TransactionStatus status={transaction.status} />
           
@@ -81,12 +90,14 @@ const TransactionWithScores = ({ transaction, scores, currency }: TransactionWit
             />
           )}
         </div>
+
+        {/* Score Circles - Inside Card on Right */}
+        <div className={`absolute right-6 top-1/2 transform -translate-y-1/2 transition-all duration-500 ease-out ${
+          showScores ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-4 pointer-events-none'
+        }`}>
+          <ScoreCircles scores={scores} isVisible={showScores} />
+        </div>
       </GlassCard>
-      
-      {/* Score Circles - Absolutely Positioned Outside Card */}
-      <div className="absolute right-6 top-1/2 transform -translate-y-1/2 z-30 pointer-events-none">
-        <ScoreCircles scores={scores} isVisible={showScores} />
-      </div>
     </div>
   );
 };
