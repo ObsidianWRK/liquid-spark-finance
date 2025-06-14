@@ -11,6 +11,10 @@ interface GlassCardProps {
   shimmer?: boolean;
   style?: React.CSSProperties;
   onClick?: () => void;
+  onMouseEnter?: () => void;
+  onMouseLeave?: () => void;
+  'aria-label'?: string;
+  role?: string;
 }
 
 const GlassCard = ({ 
@@ -21,7 +25,11 @@ const GlassCard = ({
   interactive = false,
   shimmer = false,
   style,
-  onClick 
+  onClick,
+  onMouseEnter,
+  onMouseLeave,
+  'aria-label': ariaLabel,
+  role
 }: GlassCardProps) => {
   const baseClasses = 'glass';
   const variantClasses = {
@@ -39,15 +47,26 @@ const GlassCard = ({
     baseClasses,
     variantClasses[variant],
     shapeClasses[shape],
-    interactive && 'glass-interactive',
+    interactive && 'glass-interactive focus:outline-none focus:ring-2 focus:ring-blue-400',
     shimmer && 'glass-shimmer',
     className
   );
 
+  const Component = onClick || interactive ? 'button' : 'div';
+
   return (
-    <div className={classes} style={style} onClick={onClick}>
+    <Component 
+      className={classes} 
+      style={style} 
+      onClick={onClick}
+      onMouseEnter={onMouseEnter}
+      onMouseLeave={onMouseLeave}
+      aria-label={ariaLabel}
+      role={role}
+      type={onClick ? 'button' : undefined}
+    >
       {children}
-    </div>
+    </Component>
   );
 };
 
