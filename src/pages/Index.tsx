@@ -5,6 +5,7 @@ import QuickActions from '@/components/QuickActions';
 import TransactionList from '@/components/TransactionList';
 import AccountCard from '@/components/AccountCard';
 import Navigation from '@/components/Navigation';
+import InsightsPage from '@/components/insights/InsightsPage';
 import '../styles/glass.css';
 
 const Index = () => {
@@ -126,8 +127,9 @@ const Index = () => {
       
       case 'insights':
         return (
-          <div className="flex items-center justify-center h-64">
-            <p className="text-white/70 text-lg">Insights Coming Soon</p>
+          <div>
+            <h2 className="text-2xl font-bold text-white mb-6">Financial Insights</h2>
+            <InsightsPage transactions={transactions} accounts={accounts} />
           </div>
         );
       
