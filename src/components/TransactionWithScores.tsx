@@ -69,8 +69,10 @@ const TransactionWithScores = ({ transaction, scores, currency }: TransactionWit
         )}
       </div>
       
-      {/* Score Circles - Absolutely Positioned */}
-      <ScoreCircles scores={scores} isVisible={showScores} />
+      {/* Score Circles - Absolutely Positioned Outside Grid */}
+      <div className="absolute right-4 top-1/2 transform -translate-y-1/2 z-10">
+        <ScoreCircles scores={scores} isVisible={showScores} />
+      </div>
     </GlassCard>
   );
 };

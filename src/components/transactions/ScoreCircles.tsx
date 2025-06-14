@@ -10,7 +10,9 @@ interface ScoreCirclesProps {
 
 const ScoreCircles = ({ scores, isVisible }: ScoreCirclesProps) => {
   return (
-    <div className={`score-circles-container ${isVisible ? 'score-circles-visible' : 'score-circles-hidden'}`}>
+    <div className={`flex gap-2 transition-all duration-300 ease-out ${
+      isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-4'
+    }`}>
       <ScoreCircle 
         score={scores.health} 
         label="Health"

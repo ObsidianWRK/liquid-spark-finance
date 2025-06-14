@@ -1,3 +1,4 @@
+
 import React from 'react';
 import GlassCard from './GlassCard';
 import { Package, Truck } from 'lucide-react';
@@ -78,50 +79,48 @@ const TransactionItem = ({ transaction, currency }: TransactionItemProps) => {
       interactive
       shimmer
     >
-      <div className="flex items-center justify-between">
-        <div className="flex items-center space-x-3">
+      {/* Use the same transaction grid system */}
+      <div className="transaction-grid">
+        {/* Status */}
+        <div className="transaction-status">
           <div 
-            className={`w-2 h-2 rounded-full ${getStatusColor(transaction.status)}`}
+            className={`w-3 h-3 rounded-full ${getStatusColor(transaction.status)}`}
           />
-          <div className="flex items-center space-x-2">
-            {hasShippingInfo && (
-              <div className="text-white/70">
-                {getShippingIcon(transaction.shippingProvider)}
-              </div>
-            )}
-            <div>
-              <p className="text-white font-medium text-sm">{transaction.merchant}</p>
-              <p className="text-white/50 text-xs">{transaction.category.name}</p>
+        </div>
+        
+        {/* Main content */}
+        <div className="transaction-main">
+          {hasShippingInfo && (
+            <div className="text-white/70 flex-shrink-0">
+              {getShippingIcon(transaction.shippingProvider)}
             </div>
+          )}
+          <div className="transaction-merchant-info">
+            <p className="transaction-merchant-name">{transaction.merchant}</p>
+            <p className="transaction-category">{transaction.category.name}</p>
           </div>
         </div>
         
-        <div className="text-right">
-          <p className={`font-bold text-sm ${getAmountColor(transaction.amount)}`}>
+        {/* Amount */}
+        <div className="transaction-amount">
+          <p className={`transaction-amount-value ${getAmountColor(transaction.amount)}`}>
             {formatCurrency(transaction.amount)}
           </p>
-          <p className="text-white/50 text-xs">{formatDate(transaction.date)}</p>
+          <p className="transaction-date">{formatDate(transaction.date)}</p>
         </div>
+        
+        {/* Shipping info */}
+        {hasShippingInfo && (
+          <div className="transaction-shipping">
+            <span className="text-white/50">Tracking: </span>
+            <span className="text-white/90 font-mono">{transaction.trackingNumber}</span>
+            <span className="text-white/50"> via {transaction.shippingProvider} </span>
+            <span className={`font-medium ${getDeliveryStatusColor(transaction.deliveryStatus)}`}>
+              {transaction.deliveryStatus}
+            </span>
+          </div>
+        )}
       </div>
-      
-      {hasShippingInfo && (
-        <div className="mt-3 pt-3 border-t border-white/10">
-          <div className="flex items-center justify-between text-xs">
-            <div>
-              <span className="text-white/50">Tracking: </span>
-              <span className="text-white/90 font-mono">{transaction.trackingNumber}</span>
-            </div>
-            <div className="flex items-center space-x-1">
-              <span className={`font-medium ${getDeliveryStatusColor(transaction.deliveryStatus)}`}>
-                {transaction.deliveryStatus}
-              </span>
-            </div>
-          </div>
-          <div className="mt-1">
-            <span className="text-white/50 text-xs">via {transaction.shippingProvider}</span>
-          </div>
-        </div>
-      )}
     </GlassCard>
   );
 };
