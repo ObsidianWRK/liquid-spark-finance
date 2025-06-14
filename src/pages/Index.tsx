@@ -160,7 +160,7 @@ const Index = () => {
         return (
           <div>
             <h2 className="text-2xl font-bold text-white mb-6">Transaction History</h2>
-            <TransactionList transactions={transactions} currency="USD" />
+            <TransactionList transactions={transactions} currency="USD" enhanced={true} />
           </div>
         );
       
@@ -202,7 +202,7 @@ const Index = () => {
             
             <div className="mb-6">
               <h2 className="text-xl font-bold text-white mb-4">Recent Transactions</h2>
-              <TransactionList transactions={transactions.slice(0, 5)} currency="USD" />
+              <TransactionList transactions={transactions.slice(0, 5)} currency="USD" enhanced={true} />
             </div>
           </>
         );
