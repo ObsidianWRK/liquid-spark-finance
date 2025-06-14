@@ -28,37 +28,37 @@
 
 /* Glass Shape Variants */
 .glass-rounded {
-  border-radius: 8px;
+  border-radius: 12px;
 }
 
 .glass-card {
-  border-radius: 16px;
+  border-radius: 20px;
 }
 
 .glass-capsule {
   border-radius: 50px;
 }
 
-/* Apple Liquid Glass Effects */
+/* Apple Liquid Glass Card - Main Style */
 .glass-card {
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.06);
   backdrop-filter: blur(20px) saturate(180%);
   -webkit-backdrop-filter: blur(20px) saturate(180%);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 20px;
   box-shadow: 
-    0 8px 32px rgba(0, 0, 0, 0.1),
-    inset 0 1px 0 rgba(255, 255, 255, 0.2);
-  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    0 8px 32px rgba(0, 0, 0, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.15);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .glass-card:hover {
-  background: rgba(255, 255, 255, 0.15);
-  border-color: rgba(255, 255, 255, 0.3);
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.2);
   box-shadow: 
-    0 20px 40px rgba(0, 0, 0, 0.15),
-    inset 0 1px 0 rgba(255, 255, 255, 0.3);
-  transform: translateY(-2px);
+    0 12px 40px rgba(0, 0, 0, 0.15),
+    inset 0 1px 0 rgba(255, 255, 255, 0.25);
+  transform: translateY(-1px);
 }
 
 /* Glass Button Variant */
@@ -67,7 +67,7 @@
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   border: 1px solid rgba(255, 255, 255, 0.15);
-  border-radius: 12px;
+  border-radius: 16px;
   box-shadow: 
     0 4px 16px rgba(0, 0, 0, 0.08),
     inset 0 1px 0 rgba(255, 255, 255, 0.2);
@@ -86,20 +86,22 @@
 /* Transaction Grid System for Perfect Alignment */
 .transaction-grid {
   display: grid;
-  grid-template-columns: 16px 1fr 100px;
+  grid-template-columns: 16px 1fr 120px;
   grid-template-rows: auto auto;
-  gap: 6px 16px;
+  gap: 8px 16px;
   align-items: center;
   width: 100%;
   position: relative;
-  min-height: 48px;
+  min-height: 60px;
+  padding: 4px 0;
 }
 
 .transaction-status {
   grid-row: 1 / 2;
   grid-column: 1;
-  align-self: center;
+  align-self: start;
   justify-self: center;
+  margin-top: 4px;
 }
 
 .transaction-main {
@@ -116,17 +118,18 @@
   grid-column: 3;
   grid-row: 1;
   text-align: right;
-  min-width: 100px;
+  min-width: 120px;
   align-self: center;
 }
 
 .transaction-shipping {
   grid-column: 2 / -1;
   grid-row: 2;
-  font-size: 0.75rem;
+  font-size: 0.8rem;
   color: rgba(255, 255, 255, 0.5);
-  padding-top: 4px;
-  line-height: 1.3;
+  padding-top: 8px;
+  line-height: 1.4;
+  padding-left: 28px;
 }
 
 .transaction-merchant-info {
@@ -135,12 +138,12 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  gap: 2px;
+  gap: 4px;
 }
 
 .transaction-merchant-name {
-  font-size: 0.875rem;
-  font-weight: 600;
+  font-size: 1rem;
+  font-weight: 500;
   color: white;
   line-height: 1.2;
   margin: 0;
@@ -150,7 +153,7 @@
 }
 
 .transaction-category {
-  font-size: 0.75rem;
+  font-size: 0.85rem;
   color: rgba(255, 255, 255, 0.6);
   line-height: 1.2;
   margin: 0;
@@ -160,41 +163,39 @@
 }
 
 .transaction-amount-value {
-  font-size: 0.875rem;
-  font-weight: 700;
+  font-size: 1rem;
+  font-weight: 600;
   line-height: 1.2;
   margin: 0;
 }
 
 .transaction-date {
-  font-size: 0.75rem;
+  font-size: 0.8rem;
   color: rgba(255, 255, 255, 0.5);
   line-height: 1.2;
   margin: 0;
+  margin-top: 2px;
 }
 
-/* Enhanced Interactive States with Seamless Expansion */
+/* Enhanced Interactive States */
 .glass-interactive {
-  transition: all 0.5s var(--glass-spring);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   cursor: pointer;
   transform-origin: center;
   position: relative;
-  overflow: visible;
 }
 
 .glass-interactive:hover {
-  background: rgba(255, 255, 255, 0.15);
-  border-color: rgba(255, 255, 255, 0.3);
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.2);
   box-shadow: 
-    0 16px 56px rgba(0, 0, 0, 0.2),
-    inset 0 1px 0 0 rgba(255, 255, 255, 0.3),
-    0 0 0 1px rgba(255, 255, 255, 0.1);
+    0 12px 40px rgba(0, 0, 0, 0.15),
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.25);
 }
 
 .glass-interactive:active {
   transform: scale(0.98);
   transition-duration: 0.1s;
-  background: rgba(255, 255, 255, 0.2);
 }
 
 /* Fixed Height Transaction Cards */
@@ -202,13 +203,14 @@
   min-height: 80px;
   display: flex;
   align-items: center;
+  margin-bottom: 12px;
 }
 
 /* Stagger Animation Enhanced */
 .stagger-item {
   opacity: 0;
   transform: translateY(20px);
-  animation: stagger-in 0.6s var(--glass-spring) forwards;
+  animation: stagger-in 0.6s ease-out forwards;
 }
 
 .stagger-item:nth-child(1) { animation-delay: 0ms; }
@@ -244,7 +246,7 @@
     rgba(255, 255, 255, 0.15),
     transparent
   );
-  transition: left 0.8s var(--glass-spring);
+  transition: left 0.8s ease-out;
 }
 
 .glass-shimmer:hover::before {
@@ -253,22 +255,19 @@
 
 /* Responsive Glass Adjustments */
 @media (max-width: 768px) {
-  :root {
-    --glass-blur-light: 16px;
-    --glass-blur-medium: 20px;
-    --glass-blur-heavy: 24px;
+  .transaction-grid {
+    grid-template-columns: 12px 1fr 100px;
+    gap: 6px 12px;
   }
   
-  .transaction-grid {
-    grid-template-columns: 12px 1fr 80px;
-    gap: 6px 12px;
+  .transaction-amount {
+    min-width: 100px;
   }
 }
 
 /* Reduced Motion */
 @media (prefers-reduced-motion: reduce) {
   .glass-interactive,
-  .glass-spring,
   .stagger-item {
     transition: none;
     animation: none;

@@ -67,32 +67,15 @@ const TransactionItem = ({ transaction, currency }: TransactionItemProps) => {
     }
   };
 
-  const getShippingIcon = (provider?: string) => {
-    return provider ? <Package className="w-4 h-4" /> : <Truck className="w-4 h-4" />;
-  };
-
   const hasShippingInfo = transaction.trackingNumber && transaction.shippingProvider;
 
   return (
     <GlassCard 
-      className="transaction-card p-4 mb-3 glass-interactive stagger-item relative"
+      className="transaction-card p-5 glass-interactive stagger-item"
       interactive
-      shimmer
     >
-      {/* Status Pill - Top Left */}
-      <div className="absolute top-3 left-3 z-20">
-        <div className={`px-2 py-1 rounded-full text-xs font-medium ${
-          transaction.status === 'completed' ? 'bg-green-500/20 text-green-400' :
-          transaction.status === 'pending' ? 'bg-orange-500/20 text-orange-400' :
-          'bg-red-500/20 text-red-400'
-        }`}>
-          {transaction.status === 'completed' ? 'Completed' :
-           transaction.status === 'pending' ? 'Pending' : 'Failed'}
-        </div>
-      </div>
-
       {/* Transaction Grid Layout */}
-      <div className="transaction-grid" style={{ paddingTop: '20px' }}>
+      <div className="transaction-grid">
         {/* Status */}
         <div className="transaction-status">
           <div 
@@ -104,7 +87,7 @@ const TransactionItem = ({ transaction, currency }: TransactionItemProps) => {
         <div className="transaction-main">
           {hasShippingInfo && (
             <div className="text-white/70 flex-shrink-0">
-              {getShippingIcon(transaction.shippingProvider)}
+              <Package className="w-5 h-5" />
             </div>
           )}
           <div className="transaction-merchant-info">
@@ -125,8 +108,9 @@ const TransactionItem = ({ transaction, currency }: TransactionItemProps) => {
         {hasShippingInfo && (
           <div className="transaction-shipping">
             <span className="text-white/50">Tracking: </span>
-            <span className="text-white/90 font-mono">{transaction.trackingNumber}</span>
-            <span className="text-white/50"> via {transaction.shippingProvider} </span>
+            <span className="text-white/90 font-mono text-sm">{transaction.trackingNumber}</span>
+            <br />
+            <span className="text-white/50">via {transaction.shippingProvider} </span>
             <span className={`font-medium ${getDeliveryStatusColor(transaction.deliveryStatus)}`}>
               {transaction.deliveryStatus}
             </span>
