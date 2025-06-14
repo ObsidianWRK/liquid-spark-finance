@@ -75,12 +75,24 @@ const TransactionItem = ({ transaction, currency }: TransactionItemProps) => {
 
   return (
     <GlassCard 
-      className="p-4 mb-3 glass-interactive stagger-item"
+      className="p-4 mb-3 glass-interactive stagger-item relative"
       interactive
       shimmer
     >
-      {/* Use the same transaction grid system */}
-      <div className="transaction-grid">
+      {/* Status Pill - Top Left */}
+      <div className="absolute top-3 left-3 z-20">
+        <div className={`px-2 py-1 rounded-full text-xs font-medium ${
+          transaction.status === 'completed' ? 'bg-green-500/20 text-green-400' :
+          transaction.status === 'pending' ? 'bg-orange-500/20 text-orange-400' :
+          'bg-red-500/20 text-red-400'
+        }`}>
+          {transaction.status === 'completed' ? 'Completed' :
+           transaction.status === 'pending' ? 'Pending' : 'Failed'}
+        </div>
+      </div>
+
+      {/* Transaction Grid Layout - Fixed Height */}
+      <div className="transaction-grid" style={{ minHeight: '64px', paddingTop: '20px' }}>
         {/* Status */}
         <div className="transaction-status">
           <div 

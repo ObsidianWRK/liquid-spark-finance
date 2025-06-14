@@ -10,8 +10,8 @@ interface ScoreCirclesProps {
 
 const ScoreCircles = ({ scores, isVisible }: ScoreCirclesProps) => {
   return (
-    <div className={`flex gap-2 transition-all duration-300 ease-out ${
-      isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-4'
+    <div className={`flex gap-3 transition-all duration-500 ease-out ${
+      isVisible ? 'opacity-100 translate-x-0 scale-100' : 'opacity-0 translate-x-8 scale-75'
     }`}>
       <ScoreCircle 
         score={scores.health} 
@@ -24,14 +24,14 @@ const ScoreCircles = ({ scores, isVisible }: ScoreCirclesProps) => {
         score={scores.eco} 
         label="Eco"
         isVisible={isVisible}
-        delay={50}
+        delay={100}
         type="eco"
       />
       <ScoreCircle 
         score={scores.financial} 
         label="Financial"
         isVisible={isVisible}
-        delay={100}
+        delay={200}
         type="financial"
       />
     </div>

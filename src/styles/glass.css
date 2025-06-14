@@ -1,3 +1,4 @@
+
 /* Apple Liquid Glass Design System - Enhanced */
 
 /* CSS Custom Properties for Glass System */
@@ -25,6 +26,95 @@
     inset 0 1px 0 0 rgba(255, 255, 255, 0.2);
 }
 
+/* Transaction Grid System for Perfect Alignment */
+.transaction-grid {
+  display: grid;
+  grid-template-columns: 16px 1fr 100px;
+  grid-template-rows: auto auto;
+  gap: 6px 16px;
+  align-items: center;
+  width: 100%;
+  position: relative;
+}
+
+.transaction-status {
+  grid-row: 1 / 2;
+  grid-column: 1;
+  align-self: center;
+  justify-self: center;
+}
+
+.transaction-main {
+  grid-column: 2;
+  grid-row: 1;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+  align-self: center;
+}
+
+.transaction-amount {
+  grid-column: 3;
+  grid-row: 1;
+  text-align: right;
+  min-width: 100px;
+  align-self: center;
+}
+
+.transaction-shipping {
+  grid-column: 2 / -1;
+  grid-row: 2;
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.5);
+  padding-top: 4px;
+  line-height: 1.3;
+}
+
+.transaction-merchant-info {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 2px;
+}
+
+.transaction-merchant-name {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: white;
+  line-height: 1.2;
+  margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.transaction-category {
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.6);
+  line-height: 1.2;
+  margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.transaction-amount-value {
+  font-size: 0.875rem;
+  font-weight: 700;
+  line-height: 1.2;
+  margin: 0;
+}
+
+.transaction-date {
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.5);
+  line-height: 1.2;
+  margin: 0;
+}
+
 /* Apple Liquid Glass Effects */
 .glass-card {
   background: rgba(255, 255, 255, 0.1);
@@ -45,148 +135,6 @@
     0 20px 40px rgba(0, 0, 0, 0.15),
     inset 0 1px 0 rgba(255, 255, 255, 0.3);
   transform: translateY(-2px);
-}
-
-.glass-dark {
-  background: rgba(0, 0, 0, 0.2);
-  backdrop-filter: blur(20px) saturate(180%);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  box-shadow: 
-    0 8px 32px rgba(0, 0, 0, 0.3),
-    inset 0 1px 0 rgba(255, 255, 255, 0.1);
-}
-
-.glass-dark:hover {
-  background: rgba(0, 0, 0, 0.3);
-  border-color: rgba(255, 255, 255, 0.2);
-  box-shadow: 
-    0 20px 40px rgba(0, 0, 0, 0.4),
-    inset 0 1px 0 rgba(255, 255, 255, 0.2);
-}
-
-.liquid-gradient {
-  background: linear-gradient(
-    135deg,
-    rgba(167, 139, 250, 0.3) 0%,
-    rgba(139, 92, 246, 0.3) 25%,
-    rgba(59, 130, 246, 0.3) 50%,
-    rgba(16, 185, 129, 0.3) 75%,
-    rgba(245, 158, 11, 0.3) 100%
-  );
-  background-size: 400% 400%;
-  animation: liquidFlow 8s ease-in-out infinite;
-}
-
-@keyframes liquidFlow {
-  0%, 100% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-}
-
-.score-indicator {
-  width: 24px;
-  height: 24px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 10px;
-  font-weight: 600;
-  color: white;
-  position: relative;
-  overflow: hidden;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.score-indicator::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  border-radius: 50%;
-  padding: 1px;
-  background: linear-gradient(45deg, transparent, rgba(255,255,255,0.3), transparent);
-  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-  mask-composite: exclude;
-}
-
-.score-indicator:hover {
-  transform: scale(1.1);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-}
-
-.micro-animation {
-  animation: pulseGlow 2s ease-in-out infinite;
-}
-
-@keyframes pulseGlow {
-  0%, 100% { box-shadow: 0 0 0 rgba(59, 130, 246, 0.4); }
-  50% { box-shadow: 0 0 20px rgba(59, 130, 246, 0.6); }
-}
-
-/* Primary Glass - Account Cards, Hero Elements */
-.glass-primary {
-  background: rgba(255, 255, 255, 0.12);
-  backdrop-filter: blur(var(--glass-blur-heavy));
-  -webkit-backdrop-filter: blur(var(--glass-blur-heavy));
-  border: var(--glass-border-heavy) solid rgba(255, 255, 255, 0.25);
-  box-shadow: 
-    var(--glass-shadow-heavy),
-    inset 0 1px 0 0 rgba(255, 255, 255, 0.3),
-    0 0 0 1px rgba(255, 255, 255, 0.05);
-}
-
-/* Secondary Glass - Transaction Items, Metric Cards */
-.glass-secondary {
-  background: rgba(255, 255, 255, 0.06);
-  backdrop-filter: blur(var(--glass-blur-medium));
-  -webkit-backdrop-filter: blur(var(--glass-blur-medium));
-  border: var(--glass-border-medium) solid rgba(255, 255, 255, 0.18);
-  box-shadow: 
-    var(--glass-shadow-medium),
-    inset 0 1px 0 0 rgba(255, 255, 255, 0.15);
-}
-
-/* Tertiary Glass - Navigation, Action Buttons */
-.glass-tertiary {
-  background: rgba(255, 255, 255, 0.04);
-  backdrop-filter: blur(var(--glass-blur-light));
-  -webkit-backdrop-filter: blur(var(--glass-blur-light));
-  border: var(--glass-border-light) solid rgba(255, 255, 255, 0.12);
-  box-shadow: 
-    var(--glass-shadow-light),
-    inset 0 1px 0 0 rgba(255, 255, 255, 0.1);
-}
-
-/* Semantic Glass Tinting */
-.glass-green {
-  background: rgba(52, 199, 89, 0.08);
-  border-color: rgba(52, 199, 89, 0.25);
-  box-shadow: 
-    0 8px 32px rgba(52, 199, 89, 0.1),
-    inset 0 1px 0 0 rgba(52, 199, 89, 0.2);
-}
-
-.glass-red {
-  background: rgba(255, 59, 48, 0.08);
-  border-color: rgba(255, 59, 48, 0.25);
-  box-shadow: 
-    0 8px 32px rgba(255, 59, 48, 0.1),
-    inset 0 1px 0 0 rgba(255, 59, 48, 0.2);
-}
-
-.glass-blue {
-  background: rgba(0, 122, 255, 0.08);
-  border-color: rgba(0, 122, 255, 0.25);
-  box-shadow: 
-    0 8px 32px rgba(0, 122, 255, 0.1),
-    inset 0 1px 0 0 rgba(0, 122, 255, 0.2);
-}
-
-.glass-orange {
-  background: rgba(255, 149, 0, 0.08);
-  border-color: rgba(255, 149, 0, 0.25);
-  box-shadow: 
-    0 8px 32px rgba(255, 149, 0, 0.1),
-    inset 0 1px 0 0 rgba(255, 149, 0, 0.2);
 }
 
 /* Enhanced Interactive States */
@@ -212,90 +160,25 @@
   background: rgba(255, 255, 255, 0.2);
 }
 
-/* Glass Spring Animation */
-.glass-spring {
-  transition: all 0.35s var(--glass-spring);
+/* Stagger Animation Enhanced */
+.stagger-item {
+  opacity: 0;
+  transform: translateY(20px);
+  animation: stagger-in 0.6s var(--glass-spring) forwards;
 }
 
-/* Enhanced Shape Variants */
-.glass-capsule {
-  border-radius: 9999px;
-}
+.stagger-item:nth-child(1) { animation-delay: 0ms; }
+.stagger-item:nth-child(2) { animation-delay: 80ms; }
+.stagger-item:nth-child(3) { animation-delay: 160ms; }
+.stagger-item:nth-child(4) { animation-delay: 240ms; }
+.stagger-item:nth-child(5) { animation-delay: 320ms; }
+.stagger-item:nth-child(6) { animation-delay: 400ms; }
 
-.glass-rounded {
-  border-radius: 20px;
-}
-
-.glass-card {
-  border-radius: 16px;
-}
-
-.glass-nav {
-  border-radius: 24px 24px 0 0;
-}
-
-/* Glass Progress Elements */
-.glass-progress {
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 8px;
-  overflow: hidden;
-  position: relative;
-}
-
-.glass-progress-fill {
-  height: 100%;
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  border-radius: inherit;
-  transition: width 0.8s var(--glass-spring);
-}
-
-.glass-progress-fill.green {
-  background: linear-gradient(90deg, rgba(52, 199, 89, 0.3), rgba(52, 199, 89, 0.6));
-}
-
-.glass-progress-fill.red {
-  background: linear-gradient(90deg, rgba(255, 59, 48, 0.3), rgba(255, 59, 48, 0.6));
-}
-
-.glass-progress-fill.blue {
-  background: linear-gradient(90deg, rgba(0, 122, 255, 0.3), rgba(0, 122, 255, 0.6));
-}
-
-/* Glass Dividers */
-.glass-divider {
-  height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-  margin: 16px 0;
-}
-
-.glass-divider-vertical {
-  width: 1px;
-  background: linear-gradient(180deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-  margin: 0 16px;
-}
-
-/* Glass Status Indicators */
-.glass-status-dot {
-  position: relative;
-}
-
-.glass-status-dot::before {
-  content: '';
-  position: absolute;
-  top: -4px;
-  left: -4px;
-  right: -4px;
-  bottom: -4px;
-  background: radial-gradient(circle, currentColor 0%, transparent 70%);
-  opacity: 0.2;
-  border-radius: 50%;
-  animation: glass-pulse 2s infinite;
-}
-
-@keyframes glass-pulse {
-  0%, 100% { opacity: 0.2; transform: scale(1); }
-  50% { opacity: 0.4; transform: scale(1.1); }
+@keyframes stagger-in {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 /* Enhanced Shimmer Effect */
@@ -324,55 +207,6 @@
   left: 100%;
 }
 
-/* Floating Action Button */
-.glass-fab {
-  position: relative;
-  background: rgba(255, 255, 255, 0.15);
-  backdrop-filter: blur(var(--glass-blur-heavy));
-  -webkit-backdrop-filter: blur(var(--glass-blur-heavy));
-  border: var(--glass-border-heavy) solid rgba(255, 255, 255, 0.3);
-  box-shadow: 
-    0 16px 48px rgba(0, 0, 0, 0.2),
-    inset 0 1px 0 0 rgba(255, 255, 255, 0.4);
-  animation: glass-fab-pulse 3s infinite;
-}
-
-@keyframes glass-fab-pulse {
-  0%, 100% { box-shadow: 0 16px 48px rgba(0, 0, 0, 0.2), inset 0 1px 0 0 rgba(255, 255, 255, 0.4); }
-  50% { box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25), inset 0 1px 0 0 rgba(255, 255, 255, 0.5); }
-}
-
-/* Stagger Animation Enhanced */
-.stagger-item {
-  opacity: 0;
-  transform: translateY(20px);
-  animation: stagger-in 0.6s var(--glass-spring) forwards;
-}
-
-.stagger-item:nth-child(1) { animation-delay: 0ms; }
-.stagger-item:nth-child(2) { animation-delay: 80ms; }
-.stagger-item:nth-child(3) { animation-delay: 160ms; }
-.stagger-item:nth-child(4) { animation-delay: 240ms; }
-.stagger-item:nth-child(5) { animation-delay: 320ms; }
-.stagger-item:nth-child(6) { animation-delay: 400ms; }
-
-@keyframes stagger-in {
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-/* Balance Blur Effect Enhanced */
-.balance-blur {
-  filter: blur(12px);
-  transition: filter 0.4s var(--glass-spring);
-}
-
-.balance-reveal {
-  filter: blur(0px);
-}
-
 /* Responsive Glass Adjustments */
 @media (max-width: 768px) {
   :root {
@@ -380,14 +214,10 @@
     --glass-blur-medium: 20px;
     --glass-blur-heavy: 24px;
   }
-}
-
-/* High Contrast Mode */
-@media (prefers-contrast: high) {
-  .glass, .glass-primary, .glass-secondary, .glass-tertiary {
-    border-width: 2px;
-    border-color: rgba(255, 255, 255, 0.6);
-    background: rgba(255, 255, 255, 0.2);
+  
+  .transaction-grid {
+    grid-template-columns: 12px 1fr 80px;
+    gap: 6px 12px;
   }
 }
 
@@ -395,173 +225,8 @@
 @media (prefers-reduced-motion: reduce) {
   .glass-interactive,
   .glass-spring,
-  .stagger-item,
-  .glass-fab {
+  .stagger-item {
     transition: none;
     animation: none;
-  }
-}
-
-/* Glass Accent Borders */
-.glass-accent-green {
-  border-left: 4px solid rgba(52, 199, 89, 0.8);
-}
-
-.glass-accent-red {
-  border-left: 4px solid rgba(255, 59, 48, 0.8);
-}
-
-.glass-accent-blue {
-  border-left: 4px solid rgba(0, 122, 255, 0.8);
-}
-
-.glass-accent-orange {
-  border-left: 4px solid rgba(255, 149, 0, 0.8);
-}
-
-/* Transaction Alignment Fixes */
-.transaction-item {
-  min-height: 64px;
-  display: flex;
-  align-items: center;
-}
-
-.transaction-content {
-  min-height: 32px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.transaction-status-dot {
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-  flex-shrink: 0;
-}
-
-.transaction-text {
-  line-height: 1.2;
-}
-
-/* Transaction Grid System for Perfect Alignment */
-.transaction-grid {
-  display: grid;
-  grid-template-columns: 12px 1fr auto;
-  grid-template-rows: auto auto;
-  gap: 8px 12px;
-  align-items: center;
-  min-height: 48px;
-  width: 100%;
-}
-
-.transaction-status {
-  grid-row: 1 / -1;
-  align-self: center;
-  justify-self: center;
-}
-
-.transaction-main {
-  grid-column: 2;
-  grid-row: 1;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  min-width: 0;
-}
-
-.transaction-amount {
-  grid-column: 3;
-  grid-row: 1;
-  text-align: right;
-  min-width: 80px;
-  align-self: center;
-}
-
-.transaction-shipping {
-  grid-column: 2 / -1;
-  grid-row: 2;
-  font-size: 0.75rem;
-  color: rgba(255, 255, 255, 0.5);
-  padding-top: 4px;
-}
-
-.transaction-merchant-info {
-  flex: 1;
-  min-width: 0;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
-
-.transaction-merchant-name {
-  font-size: 0.875rem;
-  font-weight: 500;
-  color: white;
-  line-height: 1.2;
-  margin: 0;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.transaction-category {
-  font-size: 0.75rem;
-  color: rgba(255, 255, 255, 0.5);
-  line-height: 1.2;
-  margin: 0;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.transaction-amount-value {
-  font-size: 0.875rem;
-  font-weight: 700;
-  line-height: 1.2;
-  margin: 0;
-}
-
-.transaction-date {
-  font-size: 0.75rem;
-  color: rgba(255, 255, 255, 0.5);
-  line-height: 1.2;
-  margin: 0;
-}
-
-/* Score circles container */
-.score-circles-container {
-  position: absolute;
-  right: 16px;
-  top: 50%;
-  transform: translateY(-50%);
-  display: flex;
-  gap: 8px;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.score-circles-hidden {
-  opacity: 0;
-  transform: translateY(-50%) translateX(20px);
-}
-
-.score-circles-visible {
-  opacity: 1;
-  transform: translateY(-50%) translateX(0);
-}
-
-/* Fade-in animation for score circles */
-.animate-fade-in {
-  animation: fadeIn 0.3s ease-in-out;
-}
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateX(10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
   }
 }
