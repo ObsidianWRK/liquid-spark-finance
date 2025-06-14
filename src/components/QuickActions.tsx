@@ -29,8 +29,7 @@ const QuickActions = () => {
     <GlassCard 
       className="p-4 mb-6 stagger-item"
       style={{ 
-        animationDelay: '100ms',
-        borderRadius: '16px'
+        animationDelay: '100ms'
       }}
     >
       <div className="flex justify-between items-center space-x-4">
@@ -39,13 +38,7 @@ const QuickActions = () => {
           return (
             <button
               key={action.id}
-              className="glass-interactive flex-1 py-3 px-4 flex flex-col items-center space-y-2 hover:bg-white/10 rounded-xl"
-              style={{
-                background: 'rgba(255, 255, 255, 0.08)',
-                backdropFilter: 'blur(20px)',
-                border: '1px solid rgba(255, 255, 255, 0.15)',
-                borderRadius: '12px'
-              }}
+              className="glass-interactive flex-1 py-3 px-4 flex flex-col items-center space-y-2 hover:bg-white/10"
             >
               <IconComponent className={`w-6 h-6 ${action.color}`} />
               <span className="text-white text-sm font-medium">{action.label}</span>
