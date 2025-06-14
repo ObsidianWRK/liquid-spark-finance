@@ -26,6 +26,63 @@
     inset 0 1px 0 0 rgba(255, 255, 255, 0.2);
 }
 
+/* Glass Shape Variants */
+.glass-rounded {
+  border-radius: 8px;
+}
+
+.glass-card {
+  border-radius: 16px;
+}
+
+.glass-capsule {
+  border-radius: 50px;
+}
+
+/* Apple Liquid Glass Effects */
+.glass-card {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 16px;
+  box-shadow: 
+    0 8px 32px rgba(0, 0, 0, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.glass-card:hover {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: rgba(255, 255, 255, 0.3);
+  box-shadow: 
+    0 20px 40px rgba(0, 0, 0, 0.15),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  transform: translateY(-2px);
+}
+
+/* Glass Button Variant */
+.glass-button {
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 12px;
+  box-shadow: 
+    0 4px 16px rgba(0, 0, 0, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.glass-button:hover {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 255, 255, 0.25);
+  box-shadow: 
+    0 8px 24px rgba(0, 0, 0, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  transform: translateY(-1px);
+}
+
 /* Transaction Grid System for Perfect Alignment */
 .transaction-grid {
   display: grid;
@@ -35,6 +92,7 @@
   align-items: center;
   width: 100%;
   position: relative;
+  min-height: 48px;
 }
 
 .transaction-status {
@@ -115,28 +173,6 @@
   margin: 0;
 }
 
-/* Apple Liquid Glass Effects */
-.glass-card {
-  background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(20px) saturate(180%);
-  -webkit-backdrop-filter: blur(20px) saturate(180%);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: 16px;
-  box-shadow: 
-    0 8px 32px rgba(0, 0, 0, 0.1),
-    inset 0 1px 0 rgba(255, 255, 255, 0.2);
-  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.glass-card:hover {
-  background: rgba(255, 255, 255, 0.15);
-  border-color: rgba(255, 255, 255, 0.3);
-  box-shadow: 
-    0 20px 40px rgba(0, 0, 0, 0.15),
-    inset 0 1px 0 rgba(255, 255, 255, 0.3);
-  transform: translateY(-2px);
-}
-
 /* Enhanced Interactive States with Seamless Expansion */
 .glass-interactive {
   transition: all 0.5s var(--glass-spring);
@@ -159,6 +195,13 @@
   transform: scale(0.98);
   transition-duration: 0.1s;
   background: rgba(255, 255, 255, 0.2);
+}
+
+/* Fixed Height Transaction Cards */
+.transaction-card {
+  min-height: 80px;
+  display: flex;
+  align-items: center;
 }
 
 /* Stagger Animation Enhanced */

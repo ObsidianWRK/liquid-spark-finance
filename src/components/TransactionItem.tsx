@@ -75,7 +75,7 @@ const TransactionItem = ({ transaction, currency }: TransactionItemProps) => {
 
   return (
     <GlassCard 
-      className="p-4 mb-3 glass-interactive stagger-item relative"
+      className="transaction-card p-4 mb-3 glass-interactive stagger-item relative"
       interactive
       shimmer
     >
@@ -91,8 +91,8 @@ const TransactionItem = ({ transaction, currency }: TransactionItemProps) => {
         </div>
       </div>
 
-      {/* Transaction Grid Layout - Fixed Height */}
-      <div className="transaction-grid" style={{ minHeight: '64px', paddingTop: '20px' }}>
+      {/* Transaction Grid Layout */}
+      <div className="transaction-grid" style={{ paddingTop: '20px' }}>
         {/* Status */}
         <div className="transaction-status">
           <div 

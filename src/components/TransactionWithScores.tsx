@@ -37,7 +37,7 @@ const TransactionWithScores = ({ transaction, scores, currency }: TransactionWit
   return (
     <div className="relative mb-3">
       <GlassCard 
-        className={`p-4 glass-interactive hover:bg-white/10 transition-all duration-500 ease-out relative ${
+        className={`transaction-card p-4 glass-interactive hover:bg-white/10 transition-all duration-500 ease-out relative ${
           showScores ? 'pr-28' : 'pr-4'
         }`}
         interactive
@@ -67,7 +67,7 @@ const TransactionWithScores = ({ transaction, scores, currency }: TransactionWit
         </div>
 
         {/* Transaction Grid Layout */}
-        <div className="transaction-grid" style={{ minHeight: '64px', paddingTop: '20px' }}>
+        <div className="transaction-grid" style={{ paddingTop: '20px' }}>
           <TransactionStatus status={transaction.status} />
           
           <TransactionMain 

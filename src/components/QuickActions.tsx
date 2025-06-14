@@ -36,13 +36,15 @@ const QuickActions = () => {
         {actions.map((action) => {
           const IconComponent = action.icon;
           return (
-            <button
+            <GlassCard
               key={action.id}
-              className="glass-interactive flex-1 py-3 px-4 flex flex-col items-center space-y-2 hover:bg-white/10"
+              className="glass-button flex-1 py-3 px-4 flex flex-col items-center space-y-2 cursor-pointer"
+              interactive
+              shape="rounded"
             >
               <IconComponent className={`w-6 h-6 ${action.color}`} />
               <span className="text-white text-sm font-medium">{action.label}</span>
-            </button>
+            </GlassCard>
           );
         })}
       </div>
