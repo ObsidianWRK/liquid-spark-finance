@@ -1,7 +1,7 @@
 
 import React, { useState } from 'react';
 import GlassCard from './GlassCard';
-import { Heart, Leaf, TrendingUp, TrendingDown, DollarSign } from 'lucide-react';
+import { Heart, Leaf, TrendingUp, TrendingDown, DollarSign, Package } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { TransactionScores } from '@/utils/transactionScoring';
 
@@ -15,6 +15,9 @@ interface Transaction {
   amount: number;
   date: string;
   status: 'completed' | 'pending' | 'failed';
+  trackingNumber?: string;
+  shippingProvider?: 'UPS' | 'FedEx' | 'USPS';
+  deliveryStatus?: 'In Transit' | 'Out for Delivery' | 'Delivered';
 }
 
 interface TransactionWithScoresProps {
@@ -37,26 +40,12 @@ const TransactionWithScores = ({ transaction, scores, currency }: TransactionWit
     return amount < 0 ? `-${formatted}` : `+${formatted}`;
   };
 
-  const getScoreColor = (score: number) => {
-    if (score >= 80) return "from-green-400 to-green-600";
-    if (score >= 60) return "from-yellow-400 to-yellow-600"; 
-    if (score >= 40) return "from-orange-400 to-orange-600";
-    return "from-red-400 to-red-600";
-  };
-
-  const getScoreIcon = (type: 'financial' | 'health' | 'eco', score: number) => {
-    const iconClass = "w-3 h-3";
-    
-    switch (type) {
-      case 'financial':
-        return score >= 60 ? 
-          <TrendingUp className={cn(iconClass, "text-green-400")} aria-hidden="true" /> :
-          <TrendingDown className={cn(iconClass, "text-red-400")} aria-hidden="true" />;
-      case 'health':
-        return <Heart className={cn(iconClass, score >= 60 ? "text-pink-400" : "text-gray-400")} aria-hidden="true" />;
-      case 'eco':
-        return <Leaf className={cn(iconClass, score >= 60 ? "text-green-400" : "text-gray-400")} aria-hidden="true" />;
-    }
+  const formatDate = (dateString: string) => {
+    const date = new Date(dateString);
+    return date.toLocaleDateString('en-US', {
+      month: 'short',
+      day: 'numeric'
+    });
   };
 
   const getAmountColor = (amount: number) => {
@@ -74,117 +63,150 @@ const TransactionWithScores = ({ transaction, scores, currency }: TransactionWit
     }
   };
 
-  const getStatusBadge = (status: string) => {
-    const statusConfig = {
-      completed: { bg: 'bg-green-100', text: 'text-green-800', label: 'Completed' },
-      pending: { bg: 'bg-yellow-100', text: 'text-yellow-800', label: 'Pending' },
-      failed: { bg: 'bg-red-100', text: 'text-red-800', label: 'Failed' }
-    };
-    
-    const config = statusConfig[status as keyof typeof statusConfig] || statusConfig.completed;
-    
+  const getScoreColor = (score: number) => {
+    if (score >= 80) return '#34C759'; // Green
+    if (score >= 60) return '#FF9500'; // Orange
+    return '#FF3B30'; // Red
+  };
+
+  const getDeliveryStatusColor = (status?: string) => {
+    switch (status) {
+      case 'Delivered': return 'text-green-400';
+      case 'Out for Delivery': return 'text-orange-400';
+      case 'In Transit': return 'text-blue-400';
+      default: return 'text-white/70';
+    }
+  };
+
+  const ScoreCircle = ({ score, label, size = 32 }: { score: number; label: string; size?: number }) => {
+    const color = getScoreColor(score);
+    const circumference = 2 * Math.PI * 14;
+    const strokeDasharray = circumference;
+    const strokeDashoffset = circumference - (score / 100) * circumference;
+
     return (
-      <span className={`px-2 py-1 rounded-full text-xs font-medium ${config.bg} ${config.text}`}>
-        {config.label}
-      </span>
+      <div className="flex flex-col items-center space-y-1" title={`${label}: ${score}/100`}>
+        <div className="relative" style={{ width: size, height: size }}>
+          <svg width={size} height={size} className="transform -rotate-90">
+            <circle
+              cx={size / 2}
+              cy={size / 2}
+              r="14"
+              stroke="rgba(255, 255, 255, 0.1)"
+              strokeWidth="3"
+              fill="none"
+            />
+            <circle
+              cx={size / 2}
+              cy={size / 2}
+              r="14"
+              stroke={color}
+              strokeWidth="3"
+              fill="none"
+              strokeDasharray={strokeDasharray}
+              strokeDashoffset={strokeDashoffset}
+              strokeLinecap="round"
+              className="transition-all duration-700 ease-out"
+              style={{
+                filter: `drop-shadow(0 0 4px ${color}40)`
+              }}
+            />
+          </svg>
+          <div className="absolute inset-0 flex items-center justify-center">
+            <span 
+              className="text-xs font-bold"
+              style={{ color }}
+            >
+              {score}
+            </span>
+          </div>
+        </div>
+        <span className="text-xs text-white/50 font-medium">{label}</span>
+      </div>
     );
   };
 
+  const hasShippingInfo = transaction.trackingNumber && transaction.shippingProvider;
+
   return (
     <GlassCard 
-      className="glass-card glass-dark hover:scale-[1.02] transition-all duration-300 p-4 mb-3 min-h-[44px]"
+      className="p-4 mb-3 glass-interactive hover:bg-white/10 transition-all duration-300"
       interactive
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
       aria-label={`Transaction: ${transaction.merchant}, ${formatCurrency(transaction.amount)}, Financial score ${scores.financial}, Health score ${scores.health}, Eco score ${scores.eco}`}
       role="button"
     >
-      <div className="flex items-center justify-between">
-        <div className="flex items-center space-x-3">
-          {getStatusBadge(transaction.status)}
-          <div className="w-10 h-10 rounded-full bg-gradient-to-br from-blue-500/20 to-purple-500/20 flex items-center justify-center">
-            <DollarSign className="w-5 h-5 text-blue-400" aria-hidden="true" />
-          </div>
-          <div>
-            <p className="text-white font-medium text-sm">{transaction.merchant}</p>
-            <p className="text-white/50 text-xs">{transaction.category.name}</p>
+      <div className="flex items-start justify-between">
+        {/* Left Section - Status and Transaction Info */}
+        <div className="flex items-center space-x-3 flex-1 min-w-0">
+          <div 
+            className={`w-3 h-3 rounded-full flex-shrink-0 ${getStatusColor(transaction.status)}`}
+            aria-label={`Status: ${transaction.status}`}
+          />
+          
+          <div className="flex items-center space-x-2 min-w-0 flex-1">
+            {hasShippingInfo && (
+              <div className="text-white/70 flex-shrink-0">
+                <Package className="w-4 h-4" />
+              </div>
+            )}
+            <div className="min-w-0 flex-1">
+              <p className="text-white font-medium text-sm truncate">
+                {transaction.merchant}
+              </p>
+              <p className="text-white/50 text-xs truncate">
+                {transaction.category.name}
+              </p>
+            </div>
           </div>
         </div>
         
-        <div className="flex items-center gap-3">
-          <span className={`text-lg font-semibold ${getAmountColor(transaction.amount)}`}>
-            {formatCurrency(transaction.amount)}
-          </span>
+        {/* Right Section - Amount and Scores */}
+        <div className="flex items-center space-x-4 flex-shrink-0">
+          {/* Amount */}
+          <div className="text-right">
+            <p className={`font-bold text-sm ${getAmountColor(transaction.amount)}`}>
+              {formatCurrency(transaction.amount)}
+            </p>
+            <p className="text-white/50 text-xs">{formatDate(transaction.date)}</p>
+          </div>
           
-          {/* Score Indicators */}
-          <div className="flex items-center gap-1" role="group" aria-label="Transaction impact scores">
-            {/* Financial Score */}
-            <div 
-              className={cn(
-                "score-indicator bg-gradient-to-br min-w-[24px] min-h-[24px]",
-                getScoreColor(scores.financial),
-                isHovered && "micro-animation"
-              )}
-              title={`Financial Impact: ${scores.financial}/100`}
-              role="img"
-              aria-label={`Financial impact score: ${scores.financial} out of 100`}
-            >
-              {getScoreIcon('financial', scores.financial)}
-            </div>
-            
-            {/* Health Score */}
-            <div 
-              className={cn(
-                "score-indicator bg-gradient-to-br min-w-[24px] min-h-[24px]",
-                getScoreColor(scores.health),
-                isHovered && "micro-animation"
-              )}
-              style={{ animationDelay: '0.1s' }}
-              title={`Health Impact: ${scores.health}/100`}
-              role="img"
-              aria-label={`Health impact score: ${scores.health} out of 100`}
-            >
-              {getScoreIcon('health', scores.health)}
-            </div>
-            
-            {/* Eco Score */}
-            <div 
-              className={cn(
-                "score-indicator bg-gradient-to-br min-w-[24px] min-h-[24px]",
-                getScoreColor(scores.eco),
-                isHovered && "micro-animation"
-              )}
-              style={{ animationDelay: '0.2s' }}
-              title={`Eco Impact: ${scores.eco}/100`}
-              role="img"
-              aria-label={`Environmental impact score: ${scores.eco} out of 100`}
-            >
-              {getScoreIcon('eco', scores.eco)}
-            </div>
+          {/* Score Circles */}
+          <div className="flex items-center space-x-3 pl-3 border-l border-white/10">
+            <ScoreCircle 
+              score={scores.health} 
+              label="Health"
+            />
+            <ScoreCircle 
+              score={scores.eco} 
+              label="Eco"
+            />
+            <ScoreCircle 
+              score={scores.financial} 
+              label="Financial"
+            />
           </div>
         </div>
       </div>
       
-      {/* Expanded Details on Hover */}
-      <div className={cn(
-        "mt-3 overflow-hidden transition-all duration-300",
-        isHovered ? "max-h-20 opacity-100" : "max-h-0 opacity-0"
-      )}>
-        <div className="flex gap-4 text-xs">
-          <div className="flex items-center gap-1">
-            <div className={cn("w-2 h-2 rounded-full bg-gradient-to-r", getScoreColor(scores.financial))} />
-            <span className="text-gray-400">Financial: {scores.financial}</span>
-          </div>
-          <div className="flex items-center gap-1">
-            <div className={cn("w-2 h-2 rounded-full bg-gradient-to-r", getScoreColor(scores.health))} />
-            <span className="text-gray-400">Health: {scores.health}</span>
-          </div>
-          <div className="flex items-center gap-1">
-            <div className={cn("w-2 h-2 rounded-full bg-gradient-to-r", getScoreColor(scores.eco))} />
-            <span className="text-gray-400">Eco: {scores.eco}</span>
+      {/* Shipping Info */}
+      {hasShippingInfo && (
+        <div className="mt-3 pt-3 border-t border-white/10">
+          <div className="flex items-center justify-between text-xs">
+            <div className="flex items-center space-x-2">
+              <span className="text-white/50">Tracking:</span>
+              <span className="text-white/90 font-mono">{transaction.trackingNumber}</span>
+            </div>
+            <div className="flex items-center space-x-2">
+              <span className="text-white/50">via {transaction.shippingProvider}</span>
+              <span className={`font-medium ${getDeliveryStatusColor(transaction.deliveryStatus)}`}>
+                {transaction.deliveryStatus}
+              </span>
+            </div>
           </div>
         </div>
-      </div>
+      )}
     </GlassCard>
   );
 };
