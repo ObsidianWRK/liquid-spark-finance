@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import GlassCard from './GlassCard';
 import { Heart, Leaf, TrendingUp, TrendingDown, DollarSign, Package } from 'lucide-react';
@@ -137,7 +138,8 @@ const TransactionWithScores = ({ transaction, scores, currency }: TransactionWit
       aria-label={`Transaction: ${transaction.merchant}, ${formatCurrency(transaction.amount)}, Financial score ${scores.financial}, Health score ${scores.health}, Eco score ${scores.eco}`}
       role="button"
     >
-      <div className="flex items-start justify-between">
+      {/* Fixed Container with Consistent Height */}
+      <div className="min-h-[48px] flex items-center justify-between">
         {/* Left Section - Status and Transaction Info */}
         <div className="flex items-center space-x-3 flex-1 min-w-0">
           <div 
@@ -152,43 +154,45 @@ const TransactionWithScores = ({ transaction, scores, currency }: TransactionWit
               </div>
             )}
             <div className="min-w-0 flex-1">
-              <p className="text-white font-medium text-sm truncate">
+              <p className="text-white font-medium text-sm truncate leading-tight">
                 {transaction.merchant}
               </p>
-              <p className="text-white/50 text-xs truncate">
+              <p className="text-white/50 text-xs truncate leading-tight">
                 {transaction.category.name}
               </p>
             </div>
           </div>
         </div>
         
-        {/* Right Section - Amount and Scores */}
-        <div className="flex items-center space-x-4 flex-shrink-0">
-          {/* Amount */}
-          <div className="text-right">
-            <p className={`font-bold text-sm ${getAmountColor(transaction.amount)}`}>
+        {/* Right Section - Amount and Scores with Fixed Layout */}
+        <div className="flex items-center space-x-3 flex-shrink-0">
+          {/* Amount Column - Fixed Width */}
+          <div className="text-right min-w-[80px]">
+            <p className={`font-bold text-sm leading-tight ${getAmountColor(transaction.amount)}`}>
               {formatCurrency(transaction.amount)}
             </p>
-            <p className="text-white/50 text-xs">{formatDate(transaction.date)}</p>
+            <p className="text-white/50 text-xs leading-tight">{formatDate(transaction.date)}</p>
           </div>
           
-          {/* Score Circles - Only show when showScores is true */}
-          {showScores && (
-            <div className="flex items-center space-x-3 pl-3 border-l border-white/10 animate-fade-in">
-              <ScoreCircle 
-                score={scores.health} 
-                label="Health"
-              />
-              <ScoreCircle 
-                score={scores.eco} 
-                label="Eco"
-              />
-              <ScoreCircle 
-                score={scores.financial} 
-                label="Financial"
-              />
-            </div>
-          )}
+          {/* Score Circles Container - Reserved Space */}
+          <div className="w-[200px] flex justify-end">
+            {showScores && (
+              <div className="flex items-center space-x-2 pl-3 border-l border-white/10 animate-fade-in">
+                <ScoreCircle 
+                  score={scores.health} 
+                  label="Health"
+                />
+                <ScoreCircle 
+                  score={scores.eco} 
+                  label="Eco"
+                />
+                <ScoreCircle 
+                  score={scores.financial} 
+                  label="Financial"
+                />
+              </div>
+            )}
+          </div>
         </div>
       </div>
       
