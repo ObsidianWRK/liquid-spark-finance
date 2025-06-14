@@ -1,4 +1,3 @@
-
 import React from 'react';
 import GlassCard from './GlassCard';
 import { Package, Truck } from 'lucide-react';
@@ -71,7 +70,7 @@ const TransactionItem = ({ transaction, currency }: TransactionItemProps) => {
     return provider ? <Package className="w-4 h-4" /> : <Truck className="w-4 h-4" />;
   };
 
-  const isShippingTransaction = transaction.category.name === 'Shipping';
+  const hasShippingInfo = transaction.trackingNumber && transaction.shippingProvider;
 
   return (
     <GlassCard 
@@ -85,7 +84,7 @@ const TransactionItem = ({ transaction, currency }: TransactionItemProps) => {
             className={`w-2 h-2 rounded-full ${getStatusColor(transaction.status)}`}
           />
           <div className="flex items-center space-x-2">
-            {isShippingTransaction && (
+            {hasShippingInfo && (
               <div className="text-white/70">
                 {getShippingIcon(transaction.shippingProvider)}
               </div>
@@ -105,7 +104,7 @@ const TransactionItem = ({ transaction, currency }: TransactionItemProps) => {
         </div>
       </div>
       
-      {isShippingTransaction && transaction.trackingNumber && (
+      {hasShippingInfo && (
         <div className="mt-3 pt-3 border-t border-white/10">
           <div className="flex items-center justify-between text-xs">
             <div>
@@ -118,11 +117,9 @@ const TransactionItem = ({ transaction, currency }: TransactionItemProps) => {
               </span>
             </div>
           </div>
-          {transaction.shippingProvider && (
-            <div className="mt-1">
-              <span className="text-white/50 text-xs">via {transaction.shippingProvider}</span>
-            </div>
-          )}
+          <div className="mt-1">
+            <span className="text-white/50 text-xs">via {transaction.shippingProvider}</span>
+          </div>
         </div>
       )}
     </GlassCard>

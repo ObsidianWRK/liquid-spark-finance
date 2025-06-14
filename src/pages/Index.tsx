@@ -65,18 +65,21 @@ const Index = () => {
       category: { name: 'Electronics', color: '#007AFF' },
       amount: -899.00,
       date: '2025-06-14T08:15:00Z',
-      status: 'completed' as const
+      status: 'completed' as const,
+      trackingNumber: '1Z999AA1234567890',
+      shippingProvider: 'UPS' as const,
+      deliveryStatus: 'In Transit' as const
     },
     {
       id: 'txn_003',
-      merchant: 'UPS Store',
-      category: { name: 'Shipping', color: '#8B4513' },
-      amount: -24.99,
+      merchant: 'Amazon',
+      category: { name: 'Shopping', color: '#FF9500' },
+      amount: -156.78,
       date: '2025-06-14T12:45:00Z',
       status: 'completed' as const,
-      trackingNumber: '1Z999AA1234567890',
-      shippingProvider: 'UPS',
-      deliveryStatus: 'In Transit'
+      trackingNumber: '771234567890',
+      shippingProvider: 'FedEx' as const,
+      deliveryStatus: 'Delivered' as const
     },
     {
       id: 'txn_004',
@@ -88,14 +91,14 @@ const Index = () => {
     },
     {
       id: 'txn_005',
-      merchant: 'FedEx Office',
-      category: { name: 'Shipping', color: '#4B0082' },
-      amount: -18.75,
+      merchant: 'Best Buy',
+      category: { name: 'Electronics', color: '#007AFF' },
+      amount: -234.99,
       date: '2025-06-13T16:20:00Z',
       status: 'completed' as const,
-      trackingNumber: '771234567890',
-      shippingProvider: 'FedEx',
-      deliveryStatus: 'Delivered'
+      trackingNumber: '9400110200793123456789',
+      shippingProvider: 'USPS' as const,
+      deliveryStatus: 'Out for Delivery' as const
     },
     {
       id: 'txn_006',
@@ -107,14 +110,14 @@ const Index = () => {
     },
     {
       id: 'txn_007',
-      merchant: 'USPS',
-      category: { name: 'Shipping', color: '#0066CC' },
-      amount: -12.50,
+      merchant: 'Target',
+      category: { name: 'Shopping', color: '#FF3B30' },
+      amount: -89.42,
       date: '2025-06-12T14:30:00Z',
       status: 'completed' as const,
-      trackingNumber: '9400110200793123456789',
-      shippingProvider: 'USPS',
-      deliveryStatus: 'Out for Delivery'
+      trackingNumber: '1Z12345E0123456789',
+      shippingProvider: 'UPS' as const,
+      deliveryStatus: 'Delivered' as const
     },
     {
       id: 'txn_008',
