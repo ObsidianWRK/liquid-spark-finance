@@ -130,7 +130,7 @@ const TransactionWithScores = ({ transaction, scores, currency }: TransactionWit
 
   return (
     <GlassCard 
-      className="p-4 mb-3 glass-interactive hover:bg-white/10 transition-all duration-300"
+      className="p-4 mb-3 glass-interactive hover:bg-white/10 transition-all duration-300 relative"
       interactive
       onClick={() => setShowScores(!showScores)}
       onMouseEnter={() => setShowScores(true)}
@@ -138,81 +138,72 @@ const TransactionWithScores = ({ transaction, scores, currency }: TransactionWit
       aria-label={`Transaction: ${transaction.merchant}, ${formatCurrency(transaction.amount)}, Financial score ${scores.financial}, Health score ${scores.health}, Eco score ${scores.eco}`}
       role="button"
     >
-      {/* Fixed Container with Consistent Height */}
-      <div className="min-h-[48px] flex items-center justify-between">
-        {/* Left Section - Status and Transaction Info */}
-        <div className="flex items-center space-x-3 flex-1 min-w-0">
+      {/* Transaction Grid Layout */}
+      <div className="transaction-grid">
+        {/* Status Dot */}
+        <div className="transaction-status">
           <div 
-            className={`w-3 h-3 rounded-full flex-shrink-0 ${getStatusColor(transaction.status)}`}
+            className={`w-3 h-3 rounded-full ${getStatusColor(transaction.status)}`}
             aria-label={`Status: ${transaction.status}`}
           />
-          
-          <div className="flex items-center space-x-2 min-w-0 flex-1">
-            {hasShippingInfo && (
-              <div className="text-white/70 flex-shrink-0">
-                <Package className="w-4 h-4" />
-              </div>
-            )}
-            <div className="min-w-0 flex-1">
-              <p className="text-white font-medium text-sm truncate leading-tight">
-                {transaction.merchant}
-              </p>
-              <p className="text-white/50 text-xs truncate leading-tight">
-                {transaction.category.name}
-              </p>
+        </div>
+        
+        {/* Main Content */}
+        <div className="transaction-main">
+          {hasShippingInfo && (
+            <div className="text-white/70 flex-shrink-0">
+              <Package className="w-4 h-4" />
             </div>
+          )}
+          <div className="transaction-merchant-info">
+            <p className="transaction-merchant-name">
+              {transaction.merchant}
+            </p>
+            <p className="transaction-category">
+              {transaction.category.name}
+            </p>
           </div>
         </div>
         
-        {/* Right Section - Amount and Scores with Fixed Layout */}
-        <div className="flex items-center space-x-3 flex-shrink-0">
-          {/* Amount Column - Fixed Width */}
-          <div className="text-right min-w-[80px]">
-            <p className={`font-bold text-sm leading-tight ${getAmountColor(transaction.amount)}`}>
-              {formatCurrency(transaction.amount)}
-            </p>
-            <p className="text-white/50 text-xs leading-tight">{formatDate(transaction.date)}</p>
-          </div>
-          
-          {/* Score Circles Container - Reserved Space */}
-          <div className="w-[200px] flex justify-end">
-            {showScores && (
-              <div className="flex items-center space-x-2 pl-3 border-l border-white/10 animate-fade-in">
-                <ScoreCircle 
-                  score={scores.health} 
-                  label="Health"
-                />
-                <ScoreCircle 
-                  score={scores.eco} 
-                  label="Eco"
-                />
-                <ScoreCircle 
-                  score={scores.financial} 
-                  label="Financial"
-                />
-              </div>
-            )}
-          </div>
+        {/* Amount */}
+        <div className="transaction-amount">
+          <p className={`transaction-amount-value ${getAmountColor(transaction.amount)}`}>
+            {formatCurrency(transaction.amount)}
+          </p>
+          <p className="transaction-date">{formatDate(transaction.date)}</p>
         </div>
+        
+        {/* Shipping Info */}
+        {hasShippingInfo && (
+          <div className="transaction-shipping">
+            <span>Tracking: </span>
+            <span className="text-white/90 font-mono">{transaction.trackingNumber}</span>
+            <span> via {transaction.shippingProvider} </span>
+            <span className={`font-medium ${getDeliveryStatusColor(transaction.deliveryStatus)}`}>
+              {transaction.deliveryStatus}
+            </span>
+          </div>
+        )}
       </div>
       
-      {/* Shipping Info */}
-      {hasShippingInfo && (
-        <div className="mt-3 pt-3 border-t border-white/10">
-          <div className="flex items-center justify-between text-xs">
-            <div className="flex items-center space-x-2">
-              <span className="text-white/50">Tracking:</span>
-              <span className="text-white/90 font-mono">{transaction.trackingNumber}</span>
-            </div>
-            <div className="flex items-center space-x-2">
-              <span className="text-white/50">via {transaction.shippingProvider}</span>
-              <span className={`font-medium ${getDeliveryStatusColor(transaction.deliveryStatus)}`}>
-                {transaction.deliveryStatus}
-              </span>
-            </div>
-          </div>
-        </div>
-      )}
+      {/* Score Circles - Absolutely Positioned */}
+      <div className={`score-circles-container ${showScores ? 'score-circles-visible' : 'score-circles-hidden'}`}>
+        <ScoreCircle 
+          score={scores.health} 
+          label="Health"
+          size={28}
+        />
+        <ScoreCircle 
+          score={scores.eco} 
+          label="Eco"
+          size={28}
+        />
+        <ScoreCircle 
+          score={scores.financial} 
+          label="Financial"
+          size={28}
+        />
+      </div>
     </GlassCard>
   );
 };
