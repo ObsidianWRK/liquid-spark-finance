@@ -9,6 +9,7 @@ interface GlassCardProps {
   shape?: 'rounded' | 'card' | 'capsule';
   interactive?: boolean;
   shimmer?: boolean;
+  style?: React.CSSProperties;
   onClick?: () => void;
 }
 
@@ -19,6 +20,7 @@ const GlassCard = ({
   shape = 'card',
   interactive = false,
   shimmer = false,
+  style,
   onClick 
 }: GlassCardProps) => {
   const baseClasses = 'glass';
@@ -43,7 +45,7 @@ const GlassCard = ({
   );
 
   return (
-    <div className={classes} onClick={onClick}>
+    <div className={classes} style={style} onClick={onClick}>
       {children}
     </div>
   );
