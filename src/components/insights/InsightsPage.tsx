@@ -4,6 +4,7 @@ import EcoScore from './EcoScore';
 import MetricCard from './MetricCard';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { mockHealthEcoService } from '@/services/mockHealthEcoService';
+import { LineChart, Line, XAxis, YAxis, ResponsiveContainer, AreaChart, Area } from 'recharts';
 import { 
   DollarSign, 
   Shield, 
@@ -12,7 +13,8 @@ import {
   Calendar, 
   PieChart,
   Heart,
-  Leaf
+  Leaf,
+  BarChart3
 } from 'lucide-react';
 
 interface Transaction {
@@ -43,6 +45,17 @@ interface InsightsPageProps {
 
 const InsightsPage = ({ transactions, accounts }: InsightsPageProps) => {
   const [activeTab, setActiveTab] = useState('overview');
+
+  // Generate trend data for the last 6 months
+  const trendData = useMemo(() => {
+    const months = ['Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+    return months.map((month, index) => ({
+      month,
+      spending: 3200 + (Math.sin(index) * 400) + (Math.random() * 200 - 100),
+      income: 4800 + (Math.random() * 300 - 150),
+      savings: 1600 + (Math.cos(index) * 200) + (Math.random() * 150 - 75),
+    }));
+  }, []);
 
   // Calculate financial health metrics
   const metrics = useMemo(() => {
@@ -247,6 +260,124 @@ const InsightsPage = ({ transactions, accounts }: InsightsPageProps) => {
                 </div>
                 <p className="text-sm text-white/60">Score: {ecoData.score}/100</p>
                 <p className="text-xs text-white/40">CO₂ saved: 48kg this month</p>
+              </div>
+            </div>
+          </div>
+          
+          {/* Trend Snapshot */}
+          <div className="liquid-glass-card rounded-3xl p-6">
+            <h3 className="text-white text-xl font-bold mb-6 flex items-center gap-2">
+              <BarChart3 className="w-6 h-6 text-blue-400" />
+              6-Month Trend Snapshot
+            </h3>
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+              {/* Spending vs Income Trend */}
+              <div>
+                <h4 className="text-white font-medium mb-4">Spending vs Income</h4>
+                <div className="h-48">
+                  <ResponsiveContainer width="100%" height="100%">
+                    <LineChart data={trendData}>
+                      <XAxis 
+                        dataKey="month" 
+                        axisLine={false}
+                        tickLine={false}
+                        tick={{ fill: 'rgba(255,255,255,0.6)', fontSize: 12 }}
+                      />
+                      <YAxis hide />
+                      <Line 
+                        type="monotone" 
+                        dataKey="income" 
+                        stroke="#34C759" 
+                        strokeWidth={3}
+                        dot={{ fill: '#34C759', strokeWidth: 2, r: 4 }}
+                        name="Income"
+                      />
+                      <Line 
+                        type="monotone" 
+                        dataKey="spending" 
+                        stroke="#FF9500" 
+                        strokeWidth={3}
+                        dot={{ fill: '#FF9500', strokeWidth: 2, r: 4 }}
+                        name="Spending"
+                      />
+                    </LineChart>
+                  </ResponsiveContainer>
+                </div>
+                <div className="flex items-center justify-center gap-6 mt-4">
+                  <div className="flex items-center gap-2">
+                    <div className="w-3 h-3 bg-green-500 rounded-full"></div>
+                    <span className="text-white/60 text-sm">Income</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <div className="w-3 h-3 bg-orange-500 rounded-full"></div>
+                    <span className="text-white/60 text-sm">Spending</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Savings Growth */}
+              <div>
+                <h4 className="text-white font-medium mb-4">Savings Growth</h4>
+                <div className="h-48">
+                  <ResponsiveContainer width="100%" height="100%">
+                    <AreaChart data={trendData}>
+                      <XAxis 
+                        dataKey="month" 
+                        axisLine={false}
+                        tickLine={false}
+                        tick={{ fill: 'rgba(255,255,255,0.6)', fontSize: 12 }}
+                      />
+                      <YAxis hide />
+                      <defs>
+                        <linearGradient id="savingsGradient" x1="0" y1="0" x2="0" y2="1">
+                          <stop offset="5%" stopColor="#007AFF" stopOpacity={0.8}/>
+                          <stop offset="95%" stopColor="#007AFF" stopOpacity={0.1}/>
+                        </linearGradient>
+                      </defs>
+                      <Area 
+                        type="monotone" 
+                        dataKey="savings" 
+                        stroke="#007AFF" 
+                        strokeWidth={3}
+                        fill="url(#savingsGradient)"
+                      />
+                    </AreaChart>
+                  </ResponsiveContainer>
+                </div>
+                <div className="grid grid-cols-2 gap-4 mt-4">
+                  <div className="text-center">
+                    <p className="text-blue-400 text-lg font-bold">+23%</p>
+                    <p className="text-white/60 text-xs">6-month growth</p>
+                  </div>
+                  <div className="text-center">
+                    <p className="text-green-400 text-lg font-bold">$1,847</p>
+                    <p className="text-white/60 text-xs">avg monthly</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Quick Stats */}
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-6 pt-6 border-t border-white/10">
+              <div className="text-center">
+                <p className="text-white text-lg font-bold">$2,847</p>
+                <p className="text-white/60 text-sm">Best Month</p>
+                <p className="text-green-400 text-xs">Oct 2024</p>
+              </div>
+              <div className="text-center">
+                <p className="text-white text-lg font-bold">12.3%</p>
+                <p className="text-white/60 text-sm">Avg Savings Rate</p>
+                <p className="text-blue-400 text-xs">6-month avg</p>
+              </div>
+              <div className="text-center">
+                <p className="text-white text-lg font-bold">$3,421</p>
+                <p className="text-white/60 text-sm">Avg Spending</p>
+                <p className="text-orange-400 text-xs">Monthly</p>
+              </div>
+              <div className="text-center">
+                <p className="text-white text-lg font-bold">+8.2%</p>
+                <p className="text-white/60 text-sm">Income Growth</p>
+                <p className="text-green-400 text-xs">vs last quarter</p>
               </div>
             </div>
           </div>

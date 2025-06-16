@@ -28,6 +28,15 @@ export interface CategoryTrend {
   conservation: number;
 }
 
+export interface NetWorthData {
+  date: string;
+  netWorth: number;
+  assets: number;
+  liabilities: number;
+  type: 'historical' | 'projected';
+  growthRate?: number;
+}
+
 // Generate historical scores for the past 12 months
 export const generateHistoricalScores = (): HistoricalScore[] => {
   const data: HistoricalScore[] = [];
@@ -120,9 +129,97 @@ export const generateCategoryTrends = (): CategoryTrend[] => {
   return data;
 };
 
+// Generate net worth data for 3 years historical + 2 years projected
+export const generateNetWorthData = (): NetWorthData[] => {
+  const data: NetWorthData[] = [];
+  const currentDate = new Date();
+  
+  // Starting values 3 years ago
+  let baseAssets = 125000; // Starting assets
+  let baseLiabilities = 45000; // Starting liabilities
+  let monthlyNetSavings = 850; // Average monthly net worth increase
+  
+  // Historical data (3 years = 36 months)
+  for (let i = 35; i >= 0; i--) {
+    const date = new Date(currentDate);
+    date.setMonth(date.getMonth() - i);
+    
+    // Calculate growth with realistic patterns
+    const monthsFromStart = 35 - i;
+    const yearProgress = monthsFromStart / 12;
+    
+    // Compound growth with market volatility
+    const marketVolatility = Math.sin(monthsFromStart * 0.3) * 0.15; // ±15% market swings
+    const economicCycle = Math.cos(monthsFromStart * 0.1) * 0.08; // Longer economic cycles
+    
+    // Assets grow with investments and salary increases
+    const assetGrowthRate = 0.07 + marketVolatility + economicCycle; // ~7% annual average
+    const currentAssets = baseAssets * Math.pow(1 + assetGrowthRate/12, monthsFromStart) + (monthlyNetSavings * monthsFromStart);
+    
+    // Liabilities decrease over time (paying down debt)
+    const debtPaydown = 200; // Monthly debt reduction
+    const currentLiabilities = Math.max(5000, baseLiabilities - (debtPaydown * monthsFromStart));
+    
+    const netWorth = currentAssets - currentLiabilities;
+    
+    // Add some realistic variance
+    const variance = netWorth * (Math.random() - 0.5) * 0.03; // ±3% variance
+    
+    data.push({
+      date: date.toISOString().split('T')[0],
+      netWorth: Math.round(netWorth + variance),
+      assets: Math.round(currentAssets + variance * 0.8),
+      liabilities: Math.round(currentLiabilities),
+      type: 'historical',
+      growthRate: monthsFromStart > 0 ? ((netWorth / (baseAssets - baseLiabilities)) - 1) * 100 : 0
+    });
+  }
+  
+  // Calculate historical growth trend for projections
+  const historicalData = data.slice(-12); // Last 12 months
+  const avgMonthlyGrowth = historicalData.reduce((sum, point, index) => {
+    if (index === 0) return 0;
+    const prevPoint = historicalData[index - 1];
+    const monthlyGrowthRate = (point.netWorth - prevPoint.netWorth) / prevPoint.netWorth;
+    return sum + monthlyGrowthRate;
+  }, 0) / (historicalData.length - 1);
+  
+  // Projected data (2 years = 24 months)
+  const lastHistoricalPoint = data[data.length - 1];
+  for (let i = 1; i <= 24; i++) {
+    const date = new Date(currentDate);
+    date.setMonth(date.getMonth() + i);
+    
+    // Project based on historical trends with some conservative adjustment
+    const conservativeFactor = 0.8; // Be 20% more conservative in projections
+    const projectedGrowthRate = avgMonthlyGrowth * conservativeFactor;
+    
+    // Add projected market cycles and economic uncertainty
+    const futureVolatility = Math.sin(i * 0.2) * 0.1; // Reduced volatility in projections
+    const adjustedGrowthRate = projectedGrowthRate + futureVolatility;
+    
+    const prevPoint = data[data.length - 1];
+    const projectedNetWorth = prevPoint.netWorth * (1 + adjustedGrowthRate);
+    const projectedAssets = prevPoint.assets * (1 + adjustedGrowthRate * 1.1); // Assets grow slightly faster
+    const projectedLiabilities = Math.max(2000, prevPoint.liabilities * 0.995); // Continued debt reduction
+    
+    data.push({
+      date: date.toISOString().split('T')[0],
+      netWorth: Math.round(projectedNetWorth),
+      assets: Math.round(projectedAssets),
+      liabilities: Math.round(projectedLiabilities),
+      type: 'projected',
+      growthRate: ((projectedNetWorth / lastHistoricalPoint.netWorth) - 1) * 100
+    });
+  }
+  
+  return data;
+};
+
 // Service object with all historical data generators
 export const mockHistoricalService = {
   getHistoricalScores: generateHistoricalScores,
   getMonthlyFinancialData: generateMonthlyFinancialData,
-  getCategoryTrends: generateCategoryTrends
+  getCategoryTrends: generateCategoryTrends,
+  getNetWorthData: generateNetWorthData
 }; 
