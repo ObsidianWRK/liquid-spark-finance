@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { Plus, Target, TrendingUp, Award, Calendar, DollarSign, Percent, MoreHorizontal, Clock, CheckCircle2 } from 'lucide-react';
+import { Plus, Target, TrendingUp, Award, Calendar, DollarSign, Percent, MoreHorizontal, Clock, CheckCircle2, ArrowLeft } from 'lucide-react';
 import GoalCard from './GoalCard';
 import GoalCreator from './GoalCreator';
 import SavingsInsights from './SavingsInsights';
 import { savingsGoalsService } from '@/services/savingsGoalsService';
 import { SavingsGoal, SavingsInsight } from '@/types/savingsGoals';
 import { cn } from '@/lib/utils';
+import { useNavigate } from 'react-router-dom';
 
 const SavingsGoals = () => {
   const [goals, setGoals] = useState<SavingsGoal[]>([]);
@@ -13,6 +14,7 @@ const SavingsGoals = () => {
   const [loading, setLoading] = useState(true);
   const [showGoalCreator, setShowGoalCreator] = useState(false);
   const [activeTab, setActiveTab] = useState<'goals' | 'insights'>('goals');
+  const navigate = useNavigate();
 
   useEffect(() => {
     loadSavingsData();
@@ -98,6 +100,15 @@ const SavingsGoals = () => {
   return (
     <div className="min-h-screen bg-black text-white">
       <div className="max-w-7xl mx-auto px-4 py-8 sm:px-6 lg:px-8 space-y-8">
+        {/* Back */}
+        <button
+          onClick={() => navigate('/')}
+          className="liquid-glass-button flex items-center gap-2 px-3 py-2 rounded-xl text-white/80 hover:text-white transition-colors mb-4"
+        >
+          <ArrowLeft className="w-4 h-4" />
+          <span className="text-sm">Dashboard</span>
+        </button>
+
         {/* Header */}
         <div className="flex items-center justify-between">
           <div>
