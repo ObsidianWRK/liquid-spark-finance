@@ -480,7 +480,7 @@ html:not(.dark) [class*="border-white/10"] {
     /* Mobile: 1 column */
     @apply grid-cols-1;
     /* Small mobile: 2 columns */
-    @apply xs:grid-cols-2;
+    @apply sm:grid-cols-2;
     /* Tablet: 4 columns */
     @apply md:grid-cols-4;
   }
@@ -579,7 +579,7 @@ html:not(.dark) [class*="border-white/10"] {
   /* Large desktop screens */
   @media (min-width: 1536px) {
     .insights-content {
-      @apply max-w-8xl;
+      @apply max-w-7xl;
     }
     
     .main-cards-grid {
