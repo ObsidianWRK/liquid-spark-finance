@@ -1,6 +1,4 @@
-
 import React, { useState } from 'react';
-import GlassCard from './GlassCard';
 import { ChevronDown, ChevronUp } from 'lucide-react';
 
 interface Account {
@@ -34,10 +32,8 @@ const AccountCard = ({ account, recentTransactions = [] }: AccountCardProps) => 
   };
 
   return (
-    <GlassCard 
-      className="p-5 glass-interactive stagger-item"
-      interactive
-      shimmer
+    <div 
+      className="liquid-glass-button cursor-pointer stagger-item p-4"
       onClick={() => setIsExpanded(!isExpanded)}
     >
       <div className="flex justify-between items-start mb-3">
@@ -87,7 +83,7 @@ const AccountCard = ({ account, recentTransactions = [] }: AccountCardProps) => 
           </div>
         </div>
       </div>
-    </GlassCard>
+    </div>
   );
 };
 

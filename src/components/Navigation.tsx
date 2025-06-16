@@ -1,6 +1,5 @@
-
 import React, { useState } from 'react';
-import GlassCard from './GlassCard';
+import LiquidGlassSVGFilters from '@/components/ui/LiquidGlassSVGFilters';
 import { 
   Home, 
   CreditCard, 
@@ -40,98 +39,114 @@ const Navigation = ({ activeTab, onTabChange }: NavigationProps) => {
   };
 
   const getTabStyles = (isActive: boolean) => cn(
-    "flex flex-col items-center space-y-1 py-2 px-3 rounded-lg transition-all min-w-[44px] min-h-[44px] focus:outline-none focus:ring-2 focus:ring-blue-400",
+    "flex flex-col items-center justify-center space-y-1 py-3 px-4 rounded-lg transition-all duration-300 min-w-[56px] min-h-[56px] focus:outline-none focus:ring-2 focus:ring-blue-400/50 relative",
     isActive ? 
-      "bg-blue-500 text-white shadow-lg transform scale-105" : 
-      "text-white/70 hover:text-white hover:bg-white/10"
+      "liquid-glass-menu-item active text-white shadow-lg transform scale-105" : 
+      "liquid-glass-menu-item text-white/70 hover:text-white"
   );
 
   return (
     <>
+      {/* SVG Filters for Liquid Glass Effects */}
+      <LiquidGlassSVGFilters />
+
       {/* More Options Overlay */}
       {showMore && (
         <div 
-          className="fixed inset-0 z-40 bg-black/50" 
+          className="fixed inset-0 z-40 bg-black/50 backdrop-blur-sm" 
           onClick={() => setShowMore(false)}
           aria-label="Close navigation menu"
           role="button"
           tabIndex={0}
           onKeyDown={(e) => e.key === 'Escape' && setShowMore(false)}
         >
-          <GlassCard className="fixed bottom-20 left-4 right-4 p-4 max-w-md mx-auto">
-            <div className="grid grid-cols-3 gap-4">
-              {moreTabs.map((tab) => {
+          <div className="fixed bottom-20 left-4 right-4 max-w-md mx-auto">
+            <div className="liquid-glass-card p-6">
+              <div className="grid grid-cols-3 gap-4">
+                {moreTabs.map((tab) => {
+                  const IconComponent = tab.icon;
+                  const isActive = activeTab === tab.id;
+                  
+                  return (
+                    <button
+                      key={tab.id}
+                      onClick={() => {
+                        onTabChange(tab.id);
+                        setShowMore(false);
+                      }}
+                      className={cn(
+                        "flex flex-col items-center justify-center space-y-2 py-4 px-3 rounded-lg transition-all duration-300 min-w-[64px] min-h-[64px] focus:outline-none focus:ring-2 focus:ring-blue-400/50",
+                        isActive ? 
+                          "liquid-glass-menu-item active text-white shadow-lg" : 
+                          "liquid-glass-menu-item text-white/70 hover:text-white"
+                      )}
+                      aria-label={`Navigate to ${tab.label}`}
+                      aria-current={isActive ? 'page' : undefined}
+                    >
+                      <IconComponent className="w-6 h-6" aria-hidden="true" />
+                      <span className="text-xs font-medium">{tab.label}</span>
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Bottom Tab Navigation - Enhanced with Liquid Glass */}
+      <div className="fixed bottom-0 left-0 right-0 z-50">
+        <div className="liquid-glass-nav border-x-0 border-b-0 p-4">
+          <nav aria-label="Main navigation">
+            <div className="flex justify-around items-center max-w-md mx-auto">
+              {mainTabs.map((tab) => {
                 const IconComponent = tab.icon;
                 const isActive = activeTab === tab.id;
                 
                 return (
                   <button
                     key={tab.id}
-                    onClick={() => {
-                      onTabChange(tab.id);
-                      setShowMore(false);
-                    }}
+                    onClick={() => onTabChange(tab.id)}
                     className={getTabStyles(isActive)}
                     aria-label={`Navigate to ${tab.label}`}
                     aria-current={isActive ? 'page' : undefined}
                   >
-                    <IconComponent className="w-6 h-6" aria-hidden="true" />
+                    <IconComponent className="w-5 h-5" aria-hidden="true" />
                     <span className="text-xs font-medium">{tab.label}</span>
                   </button>
                 );
               })}
+              <button
+                onClick={handleMoreClick}
+                className={cn(
+                  "flex flex-col items-center justify-center space-y-1 py-3 px-4 rounded-lg transition-all duration-300 min-w-[56px] min-h-[56px] focus:outline-none focus:ring-2 focus:ring-blue-400/50",
+                  moreTabs.some(tab => tab.id === activeTab) ? 
+                    "liquid-glass-menu-item active text-white shadow-lg transform scale-105" : 
+                    "liquid-glass-menu-item text-white/70 hover:text-white"
+                )}
+                aria-label="More navigation options"
+                aria-expanded={showMore}
+                aria-haspopup="true"
+              >
+                <Settings className="w-5 h-5" aria-hidden="true" />
+                <span className="text-xs font-medium">More</span>
+              </button>
             </div>
-          </GlassCard>
+          </nav>
         </div>
-      )}
+      </div>
 
-      {/* Bottom Tab Navigation */}
-      <GlassCard className="fixed bottom-0 left-0 right-0 p-4 rounded-none border-x-0 border-b-0 z-50">
-        <nav aria-label="Main navigation">
-          <div className="flex justify-around items-center max-w-md mx-auto">
-            {mainTabs.map((tab) => {
-              const IconComponent = tab.icon;
-              const isActive = activeTab === tab.id;
-              
-              return (
-                <button
-                  key={tab.id}
-                  onClick={() => onTabChange(tab.id)}
-                  className={getTabStyles(isActive)}
-                  aria-label={`Navigate to ${tab.label}`}
-                  aria-current={isActive ? 'page' : undefined}
-                >
-                  <IconComponent className="w-5 h-5" aria-hidden="true" />
-                  <span className="text-xs font-medium">{tab.label}</span>
-                </button>
-              );
-            })}
-            <button
-              onClick={handleMoreClick}
-              className={getTabStyles(moreTabs.some(tab => tab.id === activeTab))}
-              aria-label="More navigation options"
-              aria-expanded={showMore}
-              aria-haspopup="true"
-            >
-              <Settings className="w-5 h-5" aria-hidden="true" />
-              <span className="text-xs font-medium">More</span>
-            </button>
-          </div>
-        </nav>
-      </GlassCard>
-
-      {/* Floating Action Button */}
-      <GlassCard
-        variant="elevated"
-        shape="capsule"
-        className="fixed bottom-20 right-6 p-4 glass-interactive z-40 min-w-[56px] min-h-[56px] flex items-center justify-center"
-        interactive
-        shimmer
+      {/* Floating Action Button - Enhanced with Liquid Glass */}
+      <button
+        className="liquid-glass-fab fixed bottom-20 right-6 p-4 z-40 min-w-[56px] min-h-[56px] flex items-center justify-center"
         aria-label="Add new transaction"
-        role="button"
+        onClick={() => {
+          // Handle FAB action
+          console.log('FAB clicked');
+        }}
       >
         <Plus className="w-6 h-6 text-white" aria-hidden="true" />
-      </GlassCard>
+      </button>
     </>
   );
 };

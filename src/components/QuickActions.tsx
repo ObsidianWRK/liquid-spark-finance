@@ -1,6 +1,4 @@
-
 import React from 'react';
-import GlassCard from './GlassCard';
 import { ArrowUp, ArrowDown, Plus } from 'lucide-react';
 
 const QuickActions = () => {
@@ -26,8 +24,8 @@ const QuickActions = () => {
   ];
 
   return (
-    <GlassCard 
-      className="p-4 mb-6 stagger-item"
+    <div 
+      className="stagger-item"
       style={{ 
         animationDelay: '100ms'
       }}
@@ -36,19 +34,17 @@ const QuickActions = () => {
         {actions.map((action) => {
           const IconComponent = action.icon;
           return (
-            <GlassCard
+            <button
               key={action.id}
-              className="glass-button flex-1 py-3 px-4 flex flex-col items-center space-y-2 cursor-pointer"
-              interactive
-              shape="rounded"
+              className="liquid-glass-button flex-1 py-4 px-4 flex flex-col items-center space-y-2 cursor-pointer rounded-xl"
             >
               <IconComponent className={`w-6 h-6 ${action.color}`} />
               <span className="text-white text-sm font-medium">{action.label}</span>
-            </GlassCard>
+            </button>
           );
         })}
       </div>
-    </GlassCard>
+    </div>
   );
 };
 

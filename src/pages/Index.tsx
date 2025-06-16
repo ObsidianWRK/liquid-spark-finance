@@ -9,6 +9,7 @@ import ChatDrawer from '@/components/ai/ChatDrawer';
 import BudgetReportsPage from '@/components/reports/BudgetReportsPage';
 import WrappedPage from '@/components/wrapped/WrappedPage';
 import '../styles/glass.css';
+import '../styles/liquid-glass-wwdc.css';
 
 const Index = () => {
   const [activeTab, setActiveTab] = useState('dashboard');
@@ -145,11 +146,12 @@ const Index = () => {
             <h2 className="text-2xl font-bold text-white mb-6">Your Accounts</h2>
             <div className="grid grid-cols-1 gap-4">
               {accounts.map((account) => (
-                <AccountCard 
-                  key={account.id} 
-                  account={account}
-                  recentTransactions={recentTransactions}
-                />
+                <div key={account.id} className="liquid-glass-card p-6">
+                  <AccountCard 
+                    account={account}
+                    recentTransactions={recentTransactions}
+                  />
+                </div>
               ))}
             </div>
           </div>
@@ -159,7 +161,9 @@ const Index = () => {
         return (
           <div>
             <h2 className="text-2xl font-bold text-white mb-6">Transaction History</h2>
-            <TransactionList transactions={transactions} currency="USD" enhanced={true} />
+            <div className="liquid-glass-card p-6">
+              <TransactionList transactions={transactions} currency="USD" enhanced={true} />
+            </div>
           </div>
         );
       
@@ -174,66 +178,69 @@ const Index = () => {
       
       case 'profile':
         return (
-          <div className="flex items-center justify-center h-64">
-            <p className="text-white/70 text-lg">Profile Settings</p>
+          <div className="liquid-glass-card p-8">
+            <div className="flex items-center justify-center h-64">
+              <p className="text-white/70 text-lg">Profile Settings</p>
+            </div>
           </div>
         );
       
       default:
         return (
-          <>
-            <BalanceCard
-              accountType={mainAccount.type}
-              nickname={mainAccount.nickname}
-              balance={mainAccount.balance}
-              availableBalance={mainAccount.availableBalance}
-              currency={mainAccount.currency}
-              trend={mainAccount.trend}
-              trendPercentage={mainAccount.trendPercentage}
-            />
+          <div className="space-y-6">
+            <div className="liquid-glass-card p-6">
+              <BalanceCard
+                accountType={mainAccount.type}
+                nickname={mainAccount.nickname}
+                balance={mainAccount.balance}
+                availableBalance={mainAccount.availableBalance}
+                currency={mainAccount.currency}
+                trend={mainAccount.trend}
+                trendPercentage={mainAccount.trendPercentage}
+              />
+            </div>
             
-            <QuickActions />
+            <div className="liquid-glass-card p-6">
+              <QuickActions />
+            </div>
             
-            <div className="mb-6">
+            <div className="liquid-glass-card p-6">
               <h2 className="text-xl font-bold text-white mb-4">Recent Transactions</h2>
               <TransactionList transactions={transactions.slice(0, 5)} currency="USD" enhanced={true} />
             </div>
-          </>
+          </div>
         );
     }
   };
 
-  // Use different background for insights page
-  if (activeTab === 'insights') {
-    return (
-      <>
-        {renderContent()}
-        <ChatDrawer userContext={{ accounts, transactions }} />
-        <Navigation activeTab={activeTab} onTabChange={setActiveTab} />
-      </>
-    );
-  }
-
   return (
-    <div className="liquid-glass-container liquid-bg-aurora relative overflow-hidden">
-      {/* Floating orbs for depth */}
-      <div className="liquid-orb liquid-orb-1" />
-      <div className="liquid-orb liquid-orb-2" />
-      <div className="liquid-orb liquid-orb-3" />
+    <div className="min-h-screen bg-black text-white">
+      {/* Solid Black Background */}
+      <div className="fixed inset-0 bg-black z-0" />
       
-      {/* Overlay for additional depth */}
-      <div className="absolute inset-0 liquid-overlay-glow pointer-events-none" />
-      
-      {/* Main Content */}
-      <div className="relative z-10 px-4 pt-12 pb-24 max-w-md mx-auto">
-        {renderContent()}
-      </div>
+      {/* Main Content Container */}
+      <div className="relative z-10 min-h-screen pb-24">
+        <div className="container mx-auto px-4 py-8 max-w-md">
+          {/* Header */}
+          <div className="text-center mb-8">
+            <h1 className="text-3xl font-bold bg-gradient-to-r from-white to-white/80 bg-clip-text text-transparent">
+              Liquid Spark Finance
+            </h1>
+            <p className="text-white/60 mt-2">WWDC 2025 Liquid Glass Design</p>
+          </div>
 
-      {/* AI Chat Drawer */}
-      <ChatDrawer userContext={{ accounts, transactions }} />
+          {/* Dynamic Content */}
+          <main className="space-y-6">
+            {renderContent()}
+          </main>
+        </div>
+      </div>
 
       {/* Navigation */}
       <Navigation activeTab={activeTab} onTabChange={setActiveTab} />
+
+      {/* Chat Drawer */}
+      <ChatDrawer />
     </div>
   );
 };

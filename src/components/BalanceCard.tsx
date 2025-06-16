@@ -1,6 +1,4 @@
-
 import React, { useState } from 'react';
-import GlassCard from './GlassCard';
 import { Eye, EyeOff, TrendingUp } from 'lucide-react';
 
 interface BalanceCardProps {
@@ -37,11 +35,7 @@ const BalanceCard = ({
   };
 
   return (
-    <GlassCard 
-      variant="elevated" 
-      className="p-6 mb-6 stagger-item"
-      shimmer
-    >
+    <div className="stagger-item">
       <div className="flex justify-between items-start mb-4">
         <div>
           <p className="text-white/70 text-sm font-medium">{accountType}</p>
@@ -49,7 +43,7 @@ const BalanceCard = ({
         </div>
         <button
           onClick={toggleBalanceVisibility}
-          className="glass-interactive glass-capsule p-2 hover:bg-white/10 min-w-[44px] min-h-[44px] flex items-center justify-center focus:outline-none focus:ring-2 focus:ring-blue-400"
+          className="liquid-glass-button p-2 hover:bg-white/10 min-w-[44px] min-h-[44px] flex items-center justify-center focus:outline-none focus:ring-2 focus:ring-blue-400/50"
           aria-label={isBalanceVisible ? "Hide account balance" : "Show account balance"}
           aria-pressed={isBalanceVisible}
           type="button"
@@ -85,7 +79,7 @@ const BalanceCard = ({
         </div>
         <span className="text-white/50 text-sm">vs last month</span>
       </div>
-    </GlassCard>
+    </div>
   );
 };
 

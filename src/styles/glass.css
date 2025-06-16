@@ -4,6 +4,7 @@
 @import './liquid-glass.css';
 @import './liquid-backgrounds.css';
 @import './refined-animations.css';
+@import './liquid-glass-wwdc.css';
 
 /* CSS Custom Properties for Glass System */
 :root {
