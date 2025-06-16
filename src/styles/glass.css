@@ -1,5 +1,7 @@
-
 /* Apple Liquid Glass Design System - Enhanced */
+
+/* Import Liquid Glass Enhancement Styles */
+@import './liquid-glass.css';
 
 /* CSS Custom Properties for Glass System */
 :root {
