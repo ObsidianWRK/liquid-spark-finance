@@ -157,7 +157,7 @@ const Index = () => {
               <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white tracking-wide">
                 Vueni
               </h1>
-              <p className="text-white/60 text-sm sm:text-base lg:text-lg">Modern Financial Management</p>
+                              <p className="text-white/60 text-sm sm:text-base lg:text-lg">Intelligence You Can Bank On</p>
             </div>
           )}
 
