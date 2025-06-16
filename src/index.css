@@ -342,8 +342,8 @@ html:not(.dark) [class*="border-white/10"] {
     @apply col-span-1;
     /* Tablet: full width */
     @apply md:col-span-2;
-    /* Desktop: single column if in 2-col grid */
-    @apply lg:col-span-1;
+    /* Desktop: span both columns to center content */
+    @apply lg:col-span-2;
   }
 
   /* Category grid responsiveness */

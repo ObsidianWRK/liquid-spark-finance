@@ -321,7 +321,7 @@ const EnhancedInsightsPage = ({ transactions, accounts }: InsightsPageProps) => 
         {/* Health Tab - Comprehensive Wellness */}
         {activeTab === 'health' && (
           <div className="responsive-spacing-md">
-            <div className="grid grid-cols-1 gap-4 sm:gap-6 w-full">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 w-full">
               <ComprehensiveWellnessCard data={wellnessData} />
             </div>
           </div>
@@ -330,7 +330,7 @@ const EnhancedInsightsPage = ({ transactions, accounts }: InsightsPageProps) => 
         {/* Eco Tab - Comprehensive Environmental Impact */}
         {activeTab === 'eco' && (
           <div className="responsive-spacing-md">
-            <div className="grid grid-cols-1 gap-4 sm:gap-6 w-full">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 w-full">
               <ComprehensiveEcoCard data={ecoData} />
             </div>
           </div>
