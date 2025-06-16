@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import Navigation from '@/components/Navigation';
 import AccountCard from '@/components/AccountCard';
 import BalanceCard from '@/components/BalanceCard';
-import TransactionList from '@/components/TransactionList';
+import AppleTransactionList from '@/components/transactions/AppleTransactionList';
 import LiquidGlassTopMenuBar from '@/components/LiquidGlassTopMenuBar';
 import CreditScoreCard from '@/components/credit/CreditScoreCard';
 import EnhancedInsightsPage from '@/components/insights/EnhancedInsightsPage';
@@ -79,9 +79,9 @@ const Index = () => {
               
               {/* Recent Transactions */}
               <div className="w-full">
-                <TransactionList 
-                  transactions={mockData.transactions.slice(0, 8)} 
-                  currency="USD"
+                <AppleTransactionList 
+                  transactions={mockData.transactions.slice(0, 15)}
+                  currency="USD" 
                 />
               </div>
             </div>
@@ -101,7 +101,7 @@ const Index = () => {
       case 'transactions':
         return (
           <div className="w-full">
-            <TransactionList 
+            <AppleTransactionList 
               transactions={mockData.transactions} 
               currency="USD"
             />
