@@ -54,7 +54,9 @@ const CalculatorsPage = () => {
     <>
       <BackHeader title={nameMap[id] || 'Calculator'} />
       <Suspense fallback={<div className="min-h-screen flex items-center justify-center">Loading…</div>}>
-        {Component || <div className="text-white p-4">Calculator not found.</div>}
+        <div className="liquid-glass-card rounded-2xl p-4 mx-4 sm:mx-auto max-w-3xl">
+          {Component || <div className="text-white p-4">Calculator not found.</div>}
+        </div>
       </Suspense>
     </>
   );
