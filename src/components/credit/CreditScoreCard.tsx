@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { TrendingUp, TrendingDown, AlertCircle, CheckCircle } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import AnimatedCircularProgress from '../insights/components/AnimatedCircularProgress';
 import { creditScoreService } from '@/services/creditScoreService';
 import { CreditScore } from '@/types/creditScore';
 
 const CreditScoreCard = () => {
+  const navigate = useNavigate();
   const [creditScore, setCreditScore] = useState<CreditScore | null>(null);
   const [loading, setLoading] = useState(true);
 
@@ -121,7 +123,10 @@ const CreditScoreCard = () => {
       </div>
 
       {/* Action Button */}
-      <button className="w-full bg-gradient-to-r from-indigo-500 to-purple-500 text-white py-3 rounded-lg font-medium hover:from-indigo-600 hover:to-purple-600 transition-all">
+      <button 
+        onClick={() => navigate('/credit-score')}
+        className="w-full bg-gradient-to-r from-indigo-500 to-purple-500 text-white py-3 rounded-lg font-medium hover:from-indigo-600 hover:to-purple-600 transition-all"
+      >
         View Full Credit Report
       </button>
     </div>

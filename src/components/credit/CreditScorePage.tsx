@@ -269,6 +269,47 @@ const CreditScorePage = () => {
             ))}
           </div>
         )}
+
+        {activeTab === 'history' && (
+          <div className="liquid-glass-card p-6">
+            <h3 className="text-xl font-bold text-white mb-6">Score History</h3>
+            <div className="space-y-4">
+              {creditScore.history.slice(-6).map((point, index) => (
+                <div key={index} className="flex items-center justify-between py-3 border-b border-white/10 last:border-b-0">
+                  <div className="flex items-center space-x-3">
+                    <div className="text-slate-300 font-medium">
+                      {new Date(point.date).toLocaleDateString('en-US', { 
+                        month: 'short', 
+                        year: 'numeric' 
+                      })}
+                    </div>
+                    <div className="text-white font-bold text-lg">
+                      {point.score}
+                    </div>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    {point.change !== 0 && (
+                      <>
+                        {point.change > 0 ? (
+                          <TrendingUp className="w-4 h-4 text-green-400" />
+                        ) : (
+                          <TrendingDown className="w-4 h-4 text-red-400" />
+                        )}
+                        <span 
+                          className={`text-sm font-medium ${
+                            point.change > 0 ? 'text-green-400' : 'text-red-400'
+                          }`}
+                        >
+                          {point.change > 0 ? '+' : ''}{point.change}
+                        </span>
+                      </>
+                    )}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );

@@ -9,7 +9,9 @@ import {
   Award,
   User,
   Settings,
-  Plus
+  Plus,
+  Shield,
+  Target
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
@@ -29,6 +31,8 @@ const Navigation = ({ activeTab, onTabChange }: NavigationProps) => {
   ];
 
   const moreTabs = [
+    { id: 'credit-score', label: 'Credit Score', icon: Shield },
+    { id: 'savings', label: 'Savings Goals', icon: Target },
     { id: 'reports', label: 'Reports', icon: BarChart3 },
     { id: 'wrapped', label: 'Wrapped', icon: Award },
     { id: 'profile', label: 'Profile', icon: User }
@@ -94,7 +98,13 @@ const Navigation = ({ activeTab, onTabChange }: NavigationProps) => {
                     <button
                       key={tab.id}
                       onClick={() => {
-                        onTabChange(tab.id);
+                        if (tab.id === 'credit-score') {
+                          window.location.href = '/credit-score';
+                        } else if (tab.id === 'savings') {
+                          window.location.href = '/savings';
+                        } else {
+                          onTabChange(tab.id);
+                        }
                         setShowMore(false);
                       }}
                       className={cn(

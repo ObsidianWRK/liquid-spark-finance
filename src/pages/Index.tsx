@@ -4,10 +4,11 @@ import AccountCard from '@/components/AccountCard';
 import BalanceCard from '@/components/BalanceCard';
 import TransactionList from '@/components/TransactionList';
 import LiquidGlassTopMenuBar from '@/components/LiquidGlassTopMenuBar';
+import CreditScoreCard from '@/components/credit/CreditScoreCard';
 import EnhancedInsightsPage from '@/components/insights/EnhancedInsightsPage';
 import OptimizedRefinedInsightsPage from '@/components/insights/OptimizedRefinedInsightsPage';
 import RefinedInsightsPage from '@/components/insights/RefinedInsightsPage';
-import { WrappedPage } from '@/components/wrapped/WrappedPage';
+import WrappedPage from '@/components/wrapped/WrappedPage';
 import BudgetReportsPage from '@/components/reports/BudgetReportsPage';
 import Profile from './Profile';
 import ChatDrawer from '@/components/ai/ChatDrawer';
@@ -34,6 +35,9 @@ const Index = () => {
     checkPerformance();
   }, []);
 
+  // Calculate main account data for BalanceCard
+  const mainAccount = mockData.accounts[0]; // Main checking account
+
   const renderContent = useCallback(() => {
     switch (activeTab) {
       case 'dashboard':
@@ -47,11 +51,25 @@ const Index = () => {
             {/* Balance Overview Section */}
             <div className="w-full space-y-6 pt-20">
               <div className="w-full">
-                <BalanceCard accounts={mockData.accounts} />
+                <BalanceCard 
+                  accountType={mainAccount.type}
+                  nickname={mainAccount.nickname}
+                  balance={mainAccount.balance}
+                  availableBalance={mainAccount.availableBalance}
+                  currency={mainAccount.currency}
+                  trend="up"
+                  trendPercentage={12.5}
+                />
               </div>
               
-              {/* Account Cards Grid */}
-              <div className="w-full">
+              {/* Credit Score and Account Cards Grid */}
+              <div className="w-full space-y-6">
+                {/* Credit Score Card */}
+                <div className="w-full">
+                  <CreditScoreCard />
+                </div>
+                
+                {/* Account Cards Grid */}
                 <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
                   {mockData.accounts.map((account) => (
                     <AccountCard key={account.id} account={account} />
@@ -61,7 +79,10 @@ const Index = () => {
               
               {/* Recent Transactions */}
               <div className="w-full">
-                <TransactionList transactions={mockData.transactions.slice(0, 8)} />
+                <TransactionList 
+                  transactions={mockData.transactions.slice(0, 8)} 
+                  currency="USD"
+                />
               </div>
             </div>
           </>
@@ -80,7 +101,10 @@ const Index = () => {
       case 'transactions':
         return (
           <div className="w-full">
-            <TransactionList transactions={mockData.transactions} />
+            <TransactionList 
+              transactions={mockData.transactions} 
+              currency="USD"
+            />
           </div>
         );
       case 'insights':
@@ -117,7 +141,7 @@ const Index = () => {
           </div>
         );
     }
-  }, [activeTab]);
+  }, [activeTab, mainAccount]);
 
   return (
     <div className={`min-h-screen w-full text-white smooth-scroll ${performanceMode ? 'performance-mode low-end-device' : ''}`}>

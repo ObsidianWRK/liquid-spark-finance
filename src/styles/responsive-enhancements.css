@@ -32,11 +32,71 @@
 }
 
 /* ==============================================
+   Full-Screen Layout System
+   ============================================== */
+
+/* Remove all max-width constraints for full-screen experience */
+.insights-container {
+  width: 100%;
+  margin: 0;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  
+  /* Mobile: Single column with edge-to-edge layout */
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+}
+
+/* Tablet: Two columns, full width */
+@media (min-width: 768px) {
+  .insights-container {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+}
+
+/* Desktop: Three columns, full width utilization */
+@media (min-width: 1024px) {
+  .insights-container {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+}
+
+/* Large Desktop: Four columns for ultra-wide screens */
+@media (min-width: 1440px) {
+  .insights-container {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2.5rem;
+    padding-left: 3rem;
+    padding-right: 3rem;
+  }
+}
+
+/* Ultra-wide screens: Five columns */
+@media (min-width: 1920px) {
+  .insights-container {
+    grid-template-columns: repeat(5, 1fr);
+    gap: 3rem;
+    padding-left: 4rem;
+    padding-right: 4rem;
+  }
+}
+
+/* ==============================================
    Navigation Bar Responsive Fixes
    ============================================== */
 
-/* Bottom navigation responsive sizing */
+/* Full-width navigation */
 .bottom-navigation {
+  width: 100% !important;
+  left: 0 !important;
+  right: 0 !important;
   /* Mobile: Compact size */
   height: 4rem; /* 64px */
   padding-left: 1rem;
@@ -99,38 +159,57 @@
   }
 }
 
-/* Navigation spacing adjustments */
-.bottom-navigation-spacing {
-  bottom: 7rem; /* 112px */
+/* ==============================================
+   Main Cards Grid - Full Width System
+   ============================================== */
+
+.main-cards-grid {
+  display: grid;
+  gap: 1rem;
+  width: 100%;
+  margin: 0;
+  
+  /* Mobile: Stack vertically, full width */
+  grid-template-columns: 1fr;
 }
 
+/* Small Mobile: Optimized spacing */
+@media (max-width: 480px) {
+  .main-cards-grid {
+    gap: 0.75rem;
+  }
+}
+
+/* Tablet: 2 columns, full width */
 @media (min-width: 768px) {
-  .bottom-navigation-spacing {
-    bottom: 8rem; /* 128px */
+  .main-cards-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
   }
 }
 
+/* Desktop: 3 columns with full width utilization */
 @media (min-width: 1024px) {
-  .bottom-navigation-spacing {
-    bottom: 9rem; /* 144px */
+  .main-cards-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
   }
 }
 
-/* FAB positioning */
-.bottom-fab-mobile {
-  bottom: 7rem; /* 112px */
+/* Large Desktop: 4 columns for better utilization */
+@media (min-width: 1440px) {
+  .main-cards-grid {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2.5rem;
+  }
 }
 
-.bottom-fab-tablet {
-  bottom: 8rem; /* 128px */
-}
-
-.bottom-fab-desktop {
-  bottom: 9rem; /* 144px */
-}
-
-.bottom-fab-large-desktop {
-  bottom: 10rem; /* 160px */
+/* Ultra-wide: 5 columns */
+@media (min-width: 1920px) {
+  .main-cards-grid {
+    grid-template-columns: repeat(5, 1fr);
+    gap: 3rem;
+  }
 }
 
 /* ==============================================
@@ -142,6 +221,7 @@
   backdrop-filter: blur(12px);
   background: var(--glass-bg-mobile);
   border: 1px solid var(--glass-border-mobile);
+  width: 100%;
 }
 
 /* Desktop: Enhanced effects */
@@ -162,7 +242,7 @@
   }
 }
 
-/* Navigation glass effects */
+/* Navigation glass effects - Full width */
 .liquid-glass-nav {
   backdrop-filter: blur(24px) saturate(180%);
   background: rgba(15, 23, 42, 0.85);
@@ -170,85 +250,117 @@
   box-shadow: 
     0 8px 32px rgba(0, 0, 0, 0.12),
     inset 0 1px 0 rgba(255, 255, 255, 0.15);
+  width: 100% !important;
 }
 
 /* ==============================================
-   Main Container Responsive Layout
+   Full-Screen Content Layout
    ============================================== */
 
-/* Main container responsive layout */
-.insights-container {
-  width: 100%;
-  max-width: 112rem; /* 1792px */
-  margin-left: auto;
-  margin-right: auto;
-  padding-left: 1rem;
-  padding-right: 1rem;
-  
-  /* Mobile: Single column */
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 1rem;
+/* Full-screen main container */
+.full-screen-container {
+  width: 100vw !important;
+  max-width: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
 }
 
-/* Tablet: Two columns */
+/* Content wrapper with proper spacing */
+.content-wrapper {
+  width: 100%;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
 @media (min-width: 768px) {
-  .insights-container {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 1.5rem;
+  .content-wrapper {
     padding-left: 1.5rem;
     padding-right: 1.5rem;
   }
 }
 
-/* Desktop: Three columns with proper spacing */
 @media (min-width: 1024px) {
-  .insights-container {
-    grid-template-columns: repeat(3, 1fr);
-    gap: 2rem;
+  .content-wrapper {
     padding-left: 2rem;
     padding-right: 2rem;
   }
 }
 
-/* Large Desktop: Maintain readable maximum width */
 @media (min-width: 1440px) {
-  .insights-container {
-    gap: 3rem;
+  .content-wrapper {
     padding-left: 3rem;
     padding-right: 3rem;
   }
 }
 
-/* Score cards responsive sizing */
-.main-cards-grid {
+@media (min-width: 1920px) {
+  .content-wrapper {
+    padding-left: 4rem;
+    padding-right: 4rem;
+  }
+}
+
+/* ==============================================
+   Responsive Account Cards Grid
+   ============================================== */
+
+.accounts-grid {
   display: grid;
   gap: 1rem;
+  width: 100%;
   
-  /* Mobile: Stack vertically */
+  /* Mobile: Single column */
   grid-template-columns: 1fr;
 }
 
-/* Tablet: 2 columns */
+/* Small tablet */
+@media (min-width: 640px) {
+  .accounts-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.25rem;
+  }
+}
+
+/* Large tablet */
 @media (min-width: 768px) {
-  .main-cards-grid {
+  .accounts-grid {
     grid-template-columns: repeat(2, 1fr);
     gap: 1.5rem;
   }
 }
 
-/* Desktop: 3 columns with equal height */
+/* Desktop */
 @media (min-width: 1024px) {
-  .main-cards-grid {
+  .accounts-grid {
     grid-template-columns: repeat(3, 1fr);
     gap: 2rem;
   }
 }
 
-/* Ensure equal heights for score cards */
+/* Large desktop */
+@media (min-width: 1280px) {
+  .accounts-grid {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2rem;
+  }
+}
+
+/* Ultra-wide */
+@media (min-width: 1920px) {
+  .accounts-grid {
+    grid-template-columns: repeat(6, 1fr);
+    gap: 2.5rem;
+  }
+}
+
+/* ==============================================
+   Score Cards - Equal Height System
+   ============================================== */
+
 .score-card-container {
   height: 100%;
   min-height: 0;
+  width: 100%;
 }
 
 /* Desktop: Minimum comfortable height */
@@ -258,11 +370,75 @@
   }
 }
 
-.score-card-content {
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  justify-content: space-between;
+/* ==============================================
+   Responsive Typography
+   ============================================== */
+
+/* Scale typography for full-screen experience */
+.responsive-heading {
+  font-size: 1.5rem; /* 24px */
+  line-height: 1.3;
+}
+
+@media (min-width: 768px) {
+  .responsive-heading {
+    font-size: 1.875rem; /* 30px */
+  }
+}
+
+@media (min-width: 1024px) {
+  .responsive-heading {
+    font-size: 2.25rem; /* 36px */
+  }
+}
+
+@media (min-width: 1440px) {
+  .responsive-heading {
+    font-size: 2.5rem; /* 40px */
+  }
+}
+
+/* ==============================================
+   Override Tailwind Container Classes
+   ============================================== */
+
+/* Force full-width for container classes */
+.container {
+  width: 100% !important;
+  max-width: none !important;
+}
+
+.max-w-md,
+.max-w-2xl,
+.max-w-4xl,
+.max-w-6xl,
+.max-w-7xl {
+  max-width: none !important;
+}
+
+/* Ensure body and html use full viewport */
+html, body {
+  width: 100%;
+  max-width: none;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
+
+/* ==============================================
+   Mobile Optimizations
+   ============================================== */
+
+/* Ensure mobile takes full width */
+@media (max-width: 767px) {
+  * {
+    max-width: 100vw;
+  }
+  
+  .liquid-glass-card {
+    margin-left: 0;
+    margin-right: 0;
+  }
 }
 
 /* ==============================================
