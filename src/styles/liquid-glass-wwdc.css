@@ -382,4 +382,88 @@
   .liquid-glass-nav {
     background: rgba(0, 0, 0, 0.8);
   }
+}
+
+/* Enhanced Component Animations */
+@keyframes slideInScale {
+  0% {
+    opacity: 0;
+    transform: translateY(20px) scale(0.95);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes trendPulse {
+  0%, 100% { 
+    opacity: 0.2; 
+    transform: scaleY(1);
+  }
+  50% { 
+    opacity: 0.6; 
+    transform: scaleY(1.05);
+  }
+}
+
+@keyframes metricCounter {
+  0% {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Hover Lift Effect */
+.hover-lift {
+  transition: transform 0.2s ease-out, box-shadow 0.2s ease-out;
+}
+
+.hover-lift:hover {
+  transform: translateY(-2px);
+  box-shadow: 
+    0 8px 32px rgba(0, 0, 0, 0.15),
+    0 4px 16px rgba(100, 116, 139, 0.1);
+}
+
+/* Progress Bar Animations */
+@keyframes progressFill {
+  0% {
+    width: 0%;
+  }
+  100% {
+    width: var(--progress-width);
+  }
+}
+
+@keyframes shimmerProgress {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+.animate-metricCounter {
+  animation: metricCounter 0.6s ease-out forwards;
+}
+
+/* Trend Bar Specific Animations */
+.trend-bar {
+  animation: trendBarGrow 0.8s ease-out forwards;
+}
+
+@keyframes trendBarGrow {
+  0% {
+    height: 0% !important;
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
 } 

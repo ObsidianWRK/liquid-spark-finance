@@ -60,7 +60,7 @@ const Navigation = ({ activeTab, onTabChange }: NavigationProps) => {
           tabIndex={0}
           onKeyDown={(e) => e.key === 'Escape' && setShowMore(false)}
         >
-          <div className="fixed bottom-20 left-4 right-4 max-w-md mx-auto">
+          <div className="fixed bottom-28 sm:bottom-32 left-4 right-4 max-w-md mx-auto">
             <div className="liquid-glass-card p-6">
               <div className="grid grid-cols-3 gap-4">
                 {moreTabs.map((tab) => {
@@ -96,7 +96,7 @@ const Navigation = ({ activeTab, onTabChange }: NavigationProps) => {
 
       {/* Bottom Tab Navigation - Enhanced with Glass Effects */}
       <div className="fixed bottom-0 left-0 right-0 z-50">
-        <div className="liquid-glass-nav border-x-0 border-b-0 p-3 sm:p-4">
+        <div className="liquid-glass-nav rounded-2xl border-x-0 border-b-0 p-3 sm:p-4 mx-4 mb-4">
           <nav aria-label="Main navigation">
             <div className="flex justify-around items-center max-w-md sm:max-w-2xl md:max-w-4xl lg:max-w-6xl mx-auto">
               {mainTabs.map((tab) => {
@@ -138,7 +138,7 @@ const Navigation = ({ activeTab, onTabChange }: NavigationProps) => {
 
       {/* Floating Action Button - Enhanced with Glass Effects */}
       <button
-        className="liquid-glass-fab fixed bottom-20 sm:bottom-24 right-4 sm:right-6 p-3 sm:p-4 z-40 min-w-[52px] min-h-[52px] sm:min-w-[56px] sm:min-h-[56px] flex items-center justify-center"
+        className="liquid-glass-fab fixed bottom-28 sm:bottom-32 right-4 sm:right-6 p-3 sm:p-4 z-40 min-w-[52px] min-h-[52px] sm:min-w-[56px] sm:min-h-[56px] flex items-center justify-center"
         aria-label="Add new transaction"
         onClick={() => {
           // Handle FAB action

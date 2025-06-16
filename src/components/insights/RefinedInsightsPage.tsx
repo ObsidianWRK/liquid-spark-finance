@@ -1,9 +1,10 @@
 import React, { useState, useEffect, useMemo, useCallback } from 'react';
-import { Heart, Leaf, TrendingUp, TrendingDown, DollarSign, Shield, PiggyBank, Calendar, ChevronRight, Activity, Zap, Target } from 'lucide-react';
+import { Heart, Leaf, TrendingUp, TrendingDown, DollarSign, Shield, PiggyBank, Calendar, ChevronRight, Activity, Zap, Target, BarChart3 } from 'lucide-react';
 import EnhancedGlassCard from '../ui/EnhancedGlassCard';
 import AnimatedCircularProgress from './components/AnimatedCircularProgress';
 import RefinedScoreCard from './components/RefinedScoreCard';
 import RefinedMetricCard from './components/RefinedMetricCard';
+import RefinedTrendCard from './components/RefinedTrendCard';
 import ComprehensiveWellnessCard from './components/ComprehensiveWellnessCard';
 import ComprehensiveEcoCard from './components/ComprehensiveEcoCard';
 import { mockHealthEcoService } from '@/services/mockHealthEcoService';
@@ -219,57 +220,7 @@ const RefinedInsightsPage = ({ transactions, accounts }: InsightsPageProps) => {
     return 'down';
   }, []);
 
-  const RefinedTrendCard = React.memo(({ title, subtitle, trend, delay = 0 }: {
-    title: string;
-    subtitle: string;
-    trend: string;
-    delay?: number;
-  }) => (
-    <EnhancedGlassCard 
-      className="refined-trend-card relative overflow-hidden rounded-2xl backdrop-blur-xl border border-slate-700/40 hover:border-slate-600/60 transition-all duration-300 group cursor-pointer p-4 bg-slate-900/20"
-      liquid={true}
-      liquidIntensity={0.15}
-      liquidDistortion={0.1}
-      liquidAnimated={false}
-      liquidInteractive={true}
-      style={{
-        animation: `slideInScale 0.6s ease-out ${delay}ms both`
-      }}
-    >
-      <div className="relative z-10">
-        <div className="flex items-center justify-between mb-2">
-          <div>
-            <h4 className="text-sm font-semibold text-slate-200">{title}</h4>
-            <p className="text-xs text-slate-400">{subtitle}</p>
-          </div>
-          <ChevronRight className="w-4 h-4 text-slate-500 group-hover:text-slate-300 transition-colors" />
-        </div>
-        
-        <div className="mt-4 h-16 flex items-end space-x-1">
-          {[...Array(20)].map((_, i) => (
-            <div
-              key={i}
-              className="trend-bar flex-1 rounded-sm transition-all duration-500 relative overflow-hidden"
-              style={{ 
-                height: `${Math.random() * 60 + 20}%`,
-                background: 'linear-gradient(180deg, rgba(100, 116, 139, 0.8), rgba(100, 116, 139, 0.4))',
-                animationDelay: `${i * 50}ms`
-              }}
-            >
-              <div 
-                className="absolute inset-0 bg-gradient-to-t from-transparent via-slate-400/20 to-transparent"
-                style={{ animation: `trendPulse 2s infinite ${i * 0.1}s` }}
-              />
-            </div>
-          ))}
-        </div>
-        
-        <div className="mt-3 text-center">
-          <span className="text-sm font-medium text-slate-300">{trend}</span>
-        </div>
-      </div>
-    </EnhancedGlassCard>
-  ));
+
 
   return (
     <div className="min-h-screen relative overflow-hidden" style={{ backgroundColor: '#000000' }}>
@@ -378,32 +329,32 @@ const RefinedInsightsPage = ({ transactions, accounts }: InsightsPageProps) => {
 
         {/* Professional Insights Grid - Enhanced Responsive */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
-          <div className="liquid-glass-card p-4 sm:p-6">
-            <RefinedTrendCard
-              title="Performance Trends"
-              subtitle="Monthly financial trajectory"
-              trend="Improving steadily"
-              delay={1400}
-            />
-          </div>
+          <RefinedTrendCard
+            title="Performance Trends"
+            subtitle="Monthly financial trajectory"
+            trend="Improving steadily"
+            delay={1400}
+            icon={<TrendingUp className="w-5 h-5" />}
+            onClick={() => console.log('Performance trends clicked')}
+          />
 
-          <div className="liquid-glass-card p-4 sm:p-6">
-            <RefinedTrendCard
-              title="Goal Progress"
-              subtitle="Tracking financial milestones"
-              trend="On target"
-              delay={1600}
-            />
-          </div>
+          <RefinedTrendCard
+            title="Goal Progress"
+            subtitle="Tracking financial milestones"
+            trend="On target"
+            delay={1600}
+            icon={<Target className="w-5 h-5" />}
+            onClick={() => console.log('Goal progress clicked')}
+          />
 
-          <div className="liquid-glass-card p-4 sm:p-6 md:col-span-2 lg:col-span-1">
-            <RefinedTrendCard
-              title="Risk Assessment"
-              subtitle="Financial stability outlook"
-              trend="Low risk profile"
-              delay={1800}
-            />
-          </div>
+          <RefinedTrendCard
+            title="Risk Assessment"
+            subtitle="Financial stability outlook"
+            trend="Low risk profile"
+            delay={1800}
+            icon={<BarChart3 className="w-5 h-5" />}
+            onClick={() => console.log('Risk assessment clicked')}
+          />
         </div>
 
         {/* Professional Summary Section - Enhanced Responsive */}
