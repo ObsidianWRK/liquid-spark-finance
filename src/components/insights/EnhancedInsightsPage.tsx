@@ -6,6 +6,13 @@ import EnhancedScoreCard from './components/EnhancedScoreCard';
 import EnhancedMetricCard from './components/EnhancedMetricCard';
 import { mockHealthEcoService } from '@/services/mockHealthEcoService';
 import { formatPercentage, getScoreColor } from '@/utils/formatters';
+import { 
+  usePerformanceOptimization, 
+  useResponsiveBreakpoint, 
+  useAnimationDelay,
+  useLayoutDebug,
+  usePerformanceTracking 
+} from '@/hooks/usePerformanceOptimization';
 
 // Enhanced TypeScript interfaces
 interface Transaction {
@@ -55,6 +62,15 @@ const EnhancedInsightsPage = ({ transactions, accounts }: InsightsPageProps) => 
   const [animatedScores, setAnimatedScores] = useState<ScoreData>({ financial: 0, health: 0, eco: 0 });
   const [activeTab, setActiveTab] = useState('summary');
 
+  // Performance and responsive hooks
+  const { liquidSettings } = usePerformanceOptimization();
+  const breakpoint = useResponsiveBreakpoint();
+  const { getAnimationDelay } = useAnimationDelay();
+  
+  // Debug and performance tracking (development only)
+  useLayoutDebug('EnhancedInsightsPage');
+  usePerformanceTracking('EnhancedInsightsPage');
+
   // Calculate comprehensive financial metrics (from current InsightsPage logic)
   const metrics = useMemo<FinancialMetrics>(() => {
     const monthlyIncome = transactions
@@ -93,8 +109,14 @@ const EnhancedInsightsPage = ({ transactions, accounts }: InsightsPageProps) => 
     };
   }, [transactions, accounts]);
 
-  // Calculate scores using existing logic
+  // Enhanced score calculation with validation and fallbacks
   const scores = useMemo<ScoreData>(() => {
+    // Validation function for scores
+    const validateScore = (score: number): number => {
+      if (isNaN(score) || !isFinite(score)) return 0;
+      return Math.max(0, Math.min(100, score));
+    };
+
     const weights = {
       spendingRatio: 0.25,
       emergencyFund: 0.20,
@@ -124,17 +146,19 @@ const EnhancedInsightsPage = ({ transactions, accounts }: InsightsPageProps) => 
     const ecoData = mockHealthEcoService.getEcoScore(transactions);
 
     return {
-      financial: financialScore,
-      health: healthData.score,
-      eco: ecoData.score
+      financial: validateScore(financialScore),
+      health: validateScore(healthData?.score || 75), // Fallback value
+      eco: validateScore(ecoData?.score || 68) // Fallback value
     };
   }, [metrics, transactions]);
 
-  // Animate scores on mount
+  // Enhanced animation with proper state management
   useEffect(() => {
+    // Ensure DOM is ready before animating
     const timer = setTimeout(() => {
       setAnimatedScores(scores);
-    }, 300);
+    }, 100); // Reduced delay for better UX
+    
     return () => clearTimeout(timer);
   }, [scores]);
 
@@ -153,11 +177,11 @@ const EnhancedInsightsPage = ({ transactions, accounts }: InsightsPageProps) => 
   }) => (
     <EnhancedGlassCard 
       className="enhanced-trend-card relative overflow-hidden rounded-2xl backdrop-blur-xl border border-white/20 hover:border-white/30 transition-all duration-300 group cursor-pointer p-4"
-      liquid={true}
-      liquidIntensity={0.3}
+      liquid={liquidSettings.animated}
+      liquidIntensity={liquidSettings.intensity}
       liquidDistortion={0.2}
-      liquidAnimated={false}
-      liquidInteractive={true}
+      liquidAnimated={liquidSettings.animated}
+      liquidInteractive={liquidSettings.interactive}
       style={{
         animation: `slideInScale 0.6s ease-out ${delay}ms both`
       }}
@@ -184,7 +208,7 @@ const EnhancedInsightsPage = ({ transactions, accounts }: InsightsPageProps) => 
             >
               <div 
                 className="absolute inset-0 bg-gradient-to-t from-transparent via-white/10 to-transparent"
-                style={{ animation: `trendPulse 2s infinite ${i * 0.1}s` }}
+                style={{ animation: liquidSettings.animated ? `trendPulse 2s infinite ${i * 0.1}s` : 'none' }}
               />
             </div>
           ))}
@@ -198,7 +222,7 @@ const EnhancedInsightsPage = ({ transactions, accounts }: InsightsPageProps) => 
   ));
 
   return (
-    <div className="liquid-insights-container liquid-bg-insights relative overflow-hidden">
+    <div className="insights-container liquid-insights-container liquid-bg-insights relative overflow-hidden">
       {/* Enhanced floating orbs for depth */}
       <div className="liquid-orb liquid-orb-1" />
       <div className="liquid-orb liquid-orb-2" />
@@ -209,18 +233,18 @@ const EnhancedInsightsPage = ({ transactions, accounts }: InsightsPageProps) => 
       <div className="absolute inset-0 liquid-overlay-insights pointer-events-none" />
       <div className="absolute inset-0 insights-gradient-overlay pointer-events-none" />
       
-      <div className="relative z-10 max-w-4xl mx-auto px-4 py-8">
+      <div className="relative z-10 max-w-7xl mx-auto px-4 py-8">
         {/* Header */}
         <div className="text-center mb-8">
-          <h1 className="text-4xl font-bold text-white mb-2">Financial Health</h1>
+          <h1 className="expanded-card-title font-bold text-white mb-2">Financial Health</h1>
           <p className="text-white/70 text-lg">Track your financial wellness with AI-powered insights</p>
         </div>
 
         {/* Navigation Tabs */}
         <EnhancedGlassCard 
           className="flex rounded-3xl p-1 mb-8 backdrop-blur-xl border border-white/20"
-          liquid={true}
-          liquidIntensity={0.4}
+          liquid={liquidSettings.animated}
+          liquidIntensity={liquidSettings.intensity}
           liquidDistortion={0.3}
           liquidAnimated={false}
         >
@@ -244,40 +268,49 @@ const EnhancedInsightsPage = ({ transactions, accounts }: InsightsPageProps) => 
 
         {activeTab === 'summary' && (
           <div className="space-y-8">
-            {/* Main Score Cards */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              <EnhancedScoreCard
-                title="Financial Score"
-                score={animatedScores.financial}
-                subtitle="Based on spending and savings patterns"
-                icon={<DollarSign />}
-                color={getScoreColor(scores.financial)}
-                trend={getTrend(scores.financial, { good: 60, excellent: 75 })}
-                delay={0}
-              />
-              <EnhancedScoreCard
-                title="Health Score"
-                score={animatedScores.health}
-                subtitle="Wellness spending insights"
-                icon={<Heart />}
-                color={getScoreColor(scores.health)}
-                trend="stable"
-                delay={200}
-              />
-              <EnhancedScoreCard
-                title="Eco Score"
-                score={animatedScores.eco}
-                subtitle="Environmental impact tracking"
-                icon={<Leaf />}
-                color={getScoreColor(scores.eco)}
-                trend="up"
-                delay={400}
-              />
+            {/* Main Score Cards with responsive grid */}
+            <div className="main-cards-grid">
+              <div className="score-card-container">
+                <EnhancedScoreCard
+                  title="Financial Score"
+                  score={animatedScores.financial}
+                  subtitle="Based on spending and savings patterns"
+                  icon={<DollarSign />}
+                  color={getScoreColor(scores.financial)}
+                  trend={getTrend(scores.financial, { good: 60, excellent: 75 })}
+                  delay={getAnimationDelay(0)}
+                  liquidIntensity={liquidSettings.intensity}
+                />
+              </div>
+              <div className="score-card-container">
+                <EnhancedScoreCard
+                  title="Health Score"
+                  score={animatedScores.health}
+                  subtitle="Wellness spending insights"
+                  icon={<Heart />}
+                  color={getScoreColor(scores.health)}
+                  trend="stable"
+                  delay={getAnimationDelay(1)}
+                  liquidIntensity={liquidSettings.intensity}
+                />
+              </div>
+              <div className="score-card-container">
+                <EnhancedScoreCard
+                  title="Eco Score"
+                  score={animatedScores.eco}
+                  subtitle="Environmental impact tracking"
+                  icon={<Leaf />}
+                  color={getScoreColor(scores.eco)}
+                  trend="up"
+                  delay={getAnimationDelay(2)}
+                  liquidIntensity={liquidSettings.intensity}
+                />
+              </div>
             </div>
 
             {/* Key Metrics */}
             <div>
-              <h2 className="text-2xl font-bold text-white mb-6">Key Metrics</h2>
+              <h2 className="collapsed-card-title font-bold text-white mb-6">Key Metrics</h2>
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                 <EnhancedMetricCard
                   title="Spending Ratio"
@@ -286,7 +319,8 @@ const EnhancedInsightsPage = ({ transactions, accounts }: InsightsPageProps) => 
                   progress={metrics.spendingRatio}
                   color="#F59E0B"
                   icon={<DollarSign />}
-                  delay={100}
+                  delay={getAnimationDelay(3)}
+                  liquidIntensity={liquidSettings.intensity}
                 />
                 <EnhancedMetricCard
                   title="Emergency Fund"
@@ -295,7 +329,8 @@ const EnhancedInsightsPage = ({ transactions, accounts }: InsightsPageProps) => 
                   progress={(metrics.emergencyFundMonths / 6) * 100}
                   color="#10B981"
                   icon={<Shield />}
-                  delay={200}
+                  delay={getAnimationDelay(4)}
+                  liquidIntensity={liquidSettings.intensity}
                 />
                 <EnhancedMetricCard
                   title="Savings Rate"
@@ -304,7 +339,8 @@ const EnhancedInsightsPage = ({ transactions, accounts }: InsightsPageProps) => 
                   progress={metrics.savingsRate}
                   color="#3B82F6"
                   icon={<PiggyBank />}
-                  delay={300}
+                  delay={getAnimationDelay(5)}
+                  liquidIntensity={liquidSettings.intensity}
                 />
                 <EnhancedMetricCard
                   title="Payment Score"
@@ -313,7 +349,8 @@ const EnhancedInsightsPage = ({ transactions, accounts }: InsightsPageProps) => 
                   progress={metrics.billPaymentScore}
                   color="#10B981"
                   icon={<Calendar />}
-                  delay={400}
+                  delay={getAnimationDelay(6)}
+                  liquidIntensity={liquidSettings.intensity}
                 />
               </div>
             </div>
@@ -331,9 +368,10 @@ const EnhancedInsightsPage = ({ transactions, accounts }: InsightsPageProps) => 
                 icon={<Heart />}
                 color={getScoreColor(scores.health)}
                 trend="stable"
+                liquidIntensity={liquidSettings.intensity}
               />
               <div className="space-y-4">
-                <h3 className="text-xl font-semibold text-white mb-4">Health Insights</h3>
+                <h3 className="collapsed-card-title font-semibold text-white mb-4">Health Insights</h3>
                 <EnhancedMetricCard
                   title="Exercise Spending"
                   value="$85"
@@ -341,7 +379,8 @@ const EnhancedInsightsPage = ({ transactions, accounts }: InsightsPageProps) => 
                   progress={65}
                   color="#10B981"
                   icon={<Activity />}
-                  delay={100}
+                  delay={getAnimationDelay(0)}
+                  liquidIntensity={liquidSettings.intensity}
                 />
                 <EnhancedMetricCard
                   title="Healthcare Budget"
@@ -350,7 +389,8 @@ const EnhancedInsightsPage = ({ transactions, accounts }: InsightsPageProps) => 
                   progress={80}
                   color="#3B82F6"
                   icon={<Shield />}
-                  delay={200}
+                  delay={getAnimationDelay(1)}
+                  liquidIntensity={liquidSettings.intensity}
                 />
               </div>
             </div>
@@ -365,25 +405,25 @@ const EnhancedInsightsPage = ({ transactions, accounts }: InsightsPageProps) => 
                 title="Spending Trends"
                 subtitle="Last 6 months"
                 trend="Trending lower"
-                delay={0}
+                delay={getAnimationDelay(0)}
               />
               <TrendCard
                 title="Savings Growth"
                 subtitle="Monthly progress"
                 trend="Trending higher"
-                delay={100}
+                delay={getAnimationDelay(1)}
               />
               <TrendCard
                 title="Category Analysis"
                 subtitle="Top spending areas"
                 trend="Food & Dining leads"
-                delay={200}
+                delay={getAnimationDelay(2)}
               />
               <TrendCard
                 title="Budget Performance"
                 subtitle="vs. planned spending"
                 trend="15% under budget"
-                delay={300}
+                delay={getAnimationDelay(3)}
               />
             </div>
           </div>
@@ -392,16 +432,16 @@ const EnhancedInsightsPage = ({ transactions, accounts }: InsightsPageProps) => 
         {/* Footer Summary */}
         <EnhancedGlassCard 
           className="mt-12 rounded-3xl backdrop-blur-xl border border-white/20 overflow-hidden p-6 summary-card"
-          liquid={true}
-          liquidIntensity={0.5}
+          liquid={liquidSettings.animated}
+          liquidIntensity={liquidSettings.intensity}
           liquidDistortion={0.3}
-          liquidAnimated={true}
+          liquidAnimated={liquidSettings.animated}
           style={{
-            animation: 'slideInScale 0.8s ease-out 600ms both'
+            animation: `slideInScale 0.8s ease-out ${getAnimationDelay(7)}ms both`
           }}
         >
           <div className="text-center">
-            <h3 className="text-xl font-semibold text-white mb-3">Overall Assessment</h3>
+            <h3 className="collapsed-card-title font-semibold text-white mb-3">Overall Assessment</h3>
             <p className="text-white/80 mb-6">
               Your financial health is <span className="font-bold text-blue-300">
                 {scores.financial >= 80 ? 'excellent' : scores.financial >= 60 ? 'good' : 'needs attention'}
