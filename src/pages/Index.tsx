@@ -5,9 +5,7 @@ import BalanceCard from '@/components/BalanceCard';
 import AppleTransactionList from '@/components/transactions/AppleTransactionList';
 import LiquidGlassTopMenuBar from '@/components/LiquidGlassTopMenuBar';
 import CreditScoreCard from '@/components/credit/CreditScoreCard';
-import EnhancedInsightsPage from '@/components/insights/EnhancedInsightsPage';
-import OptimizedRefinedInsightsPage from '@/components/insights/OptimizedRefinedInsightsPage';
-import RefinedInsightsPage from '@/components/insights/RefinedInsightsPage';
+import NewInsightsPage from '@/components/insights/NewInsightsPage';
 import WrappedPage from '@/components/wrapped/WrappedPage';
 import BudgetReportsPage from '@/components/reports/BudgetReportsPage';
 import Profile from './Profile';
@@ -110,7 +108,7 @@ const Index = () => {
       case 'insights':
         return (
           <div className="w-full">
-            <EnhancedInsightsPage 
+            <NewInsightsPage 
               transactions={mockData.transactions} 
               accounts={mockData.accounts} 
             />
