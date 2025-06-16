@@ -15,14 +15,41 @@ const ThemeToggle = ({ className = '' }: { className?: string }) => {
 
   const isDark = resolvedTheme === 'dark';
 
+  const handleToggle = () => {
+    setTheme(isDark ? 'light' : 'dark');
+  };
+
+  const handleKeyDown = (event: React.KeyboardEvent) => {
+    if (event.key === 'Enter' || event.key === ' ') {
+      event.preventDefault();
+      handleToggle();
+    }
+  };
+
   return (
     <button
-      aria-label="Toggle theme"
-      title="Toggle theme"
-      className={`p-2 rounded-full transition-colors duration-300 flex items-center justify-center hover:bg-white/10 ${className}`}
-      onClick={() => setTheme(isDark ? 'light' : 'dark')}
+      aria-label={`Switch to ${isDark ? 'light' : 'dark'} mode`}
+      aria-pressed={!isDark}
+      title={`Switch to ${isDark ? 'light' : 'dark'} mode`}
+      className={`p-2 rounded-full transition-all duration-300 flex items-center justify-center hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 active:scale-95 ${className}`}
+      onClick={handleToggle}
+      onKeyDown={handleKeyDown}
+      type="button"
     >
-      {isDark ? <Sun className="w-5 h-5 text-yellow-400" /> : <Moon className="w-5 h-5 text-blue-600" />}
+      {isDark ? (
+        <Sun 
+          className="w-5 h-5 text-yellow-400 transition-transform duration-300 hover:rotate-12" 
+          aria-hidden="true" 
+        />
+      ) : (
+        <Moon 
+          className="w-5 h-5 text-blue-600 transition-transform duration-300 hover:-rotate-12" 
+          aria-hidden="true" 
+        />
+      )}
+      <span className="sr-only">
+        {isDark ? 'Switch to light mode' : 'Switch to dark mode'}
+      </span>
     </button>
   );
 };
