@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { 
   File, 
   Edit, 
@@ -27,6 +27,7 @@ import {
   MenubarSeparator,
   MenubarShortcut,
 } from '@/components/ui/menubar';
+import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
 
 interface MenuBarProps {
   className?: string;
@@ -40,6 +41,7 @@ interface MenuItem {
 
 const LiquidGlassTopMenuBar = ({ className, onMenuItemClick }: MenuBarProps) => {
   const navigate = useNavigate();
+  const [isMobileToolsOpen, setIsMobileToolsOpen] = useState(false);
 
   const fileMenu = [
     { label: 'New Transaction', shortcut: '⌘N' },
@@ -183,14 +185,40 @@ const LiquidGlassTopMenuBar = ({ className, onMenuItemClick }: MenuBarProps) => 
                 </Menubar>
               </div>
 
-              {/* Mobile Tools button */}
-              <button
-                className="md:hidden liquid-glass-menu-item px-3 py-2 rounded-xl text-white/90 hover:text-white transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-blue-400/50 flex items-center"
-                onClick={() => handleItemSelect('Tools')}
-              >
-                <Settings className="w-4 h-4" />
-                <span className="ml-1 text-sm">Tools</span>
-              </button>
+              {/* Mobile Tools Sheet */}
+              <Sheet open={isMobileToolsOpen} onOpenChange={setIsMobileToolsOpen}>
+                <SheetTrigger asChild>
+                  <button
+                    className="md:hidden liquid-glass-menu-item px-3 py-2 rounded-xl text-white/90 hover:text-white transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-blue-400/50 flex items-center"
+                  >
+                    <Settings className="w-4 h-4" />
+                    <span className="ml-1 text-sm">Tools</span>
+                  </button>
+                </SheetTrigger>
+                <SheetContent side="bottom" className="liquid-glass-card border-0 rounded-t-3xl p-4 backdrop-blur-xl">
+                  <SheetHeader>
+                    <SheetTitle className="text-white">Tools</SheetTitle>
+                  </SheetHeader>
+                  <div className="grid gap-2 mt-4">
+                    {toolsMenu.map((item, idx) =>
+                      item.separator ? (
+                        <div key={idx} className="my-1 h-px bg-white/10" />
+                      ) : (
+                        <button
+                          key={idx}
+                          onClick={() => {
+                            handleItemSelect(item.label);
+                            setIsMobileToolsOpen(false);
+                          }}
+                          className="w-full text-left px-3 py-3 rounded-xl text-white/80 hover:text-white hover:bg-white/5 transition-all"
+                        >
+                          {item.label}
+                        </button>
+                      )
+                    )}
+                  </div>
+                </SheetContent>
+              </Sheet>
             </div>
 
             {/* Quick Action Items */}
