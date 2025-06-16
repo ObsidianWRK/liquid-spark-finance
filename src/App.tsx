@@ -5,7 +5,6 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { lazy, Suspense } from 'react';
 import { mockData } from '@/services/mockData';
-import { mockData } from '@/services/mockData';
 
 const queryClient = new QueryClient();
 
@@ -19,7 +18,7 @@ const BudgetPlannerPage = lazy(() => import('./components/budget/BudgetPlannerPa
 const InvestmentTrackerPage = lazy(() => import('./components/investments/InvestmentTrackerPage'));
 const CalculatorsPage = lazy(() => import('./pages/CalculatorsPage'));
 const BudgetReportsPage = lazy(() => import('./components/reports/BudgetReportsPage'));
-const NewInsightsPage = lazy(() => import('./components/insights/NewInsightsPage'));
+const InsightsPage = lazy(() => import('./pages/InsightsPage'));
 
 // Wrapper component for standalone insights page
 const StandaloneInsightsPage = () => (
@@ -48,7 +47,7 @@ const App = () => (
             <Route path="/calculators" element={<CalculatorsPage />} />
             <Route path="/calculators/:id" element={<CalculatorsPage />} />
             <Route path="/reports" element={<BudgetReportsPage />} />
-            <Route path="/insights" element={<StandaloneInsightsPage />} />
+            <Route path="/insights" element={<InsightsPage />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>

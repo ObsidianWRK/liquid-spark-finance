@@ -257,7 +257,7 @@ const InsightsPage = ({ transactions, accounts }: InsightsPageProps) => {
               <PieChart className="w-6 h-6 text-blue-400" />
               Key Financial Metrics
             </h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
               <MetricCard
                 title="Spending Ratio"
                 value={`${Math.round(metrics.spendingRatio)}%`}
@@ -325,6 +325,155 @@ const InsightsPage = ({ transactions, accounts }: InsightsPageProps) => {
                   />
                 </div>
               </MetricCard>
+            </div>
+          </div>
+
+          {/* Monthly Insights */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <div className="liquid-glass-card rounded-3xl p-6">
+              <h3 className="text-white text-xl font-bold mb-6 flex items-center gap-2">
+                <TrendingUp className="w-6 h-6 text-green-400" />
+                Monthly Insights
+              </h3>
+              <div className="space-y-4">
+                <div className="flex justify-between items-center p-4 bg-white/5 rounded-xl">
+                  <div>
+                    <p className="text-white font-medium">Total Income</p>
+                    <p className="text-white/60 text-sm">This month</p>
+                  </div>
+                  <div className="text-right">
+                    <p className="text-white text-lg font-bold">${metrics.monthlyIncome.toLocaleString()}</p>
+                    <p className="text-green-400 text-sm">+5.2%</p>
+                  </div>
+                </div>
+                <div className="flex justify-between items-center p-4 bg-white/5 rounded-xl">
+                  <div>
+                    <p className="text-white font-medium">Total Expenses</p>
+                    <p className="text-white/60 text-sm">This month</p>
+                  </div>
+                  <div className="text-right">
+                    <p className="text-white text-lg font-bold">${metrics.monthlySpending.toLocaleString()}</p>
+                    <p className="text-orange-400 text-sm">+2.1%</p>
+                  </div>
+                </div>
+                <div className="flex justify-between items-center p-4 bg-white/5 rounded-xl">
+                  <div>
+                    <p className="text-white font-medium">Net Savings</p>
+                    <p className="text-white/60 text-sm">This month</p>
+                  </div>
+                  <div className="text-right">
+                    <p className="text-white text-lg font-bold">${(metrics.monthlyIncome - metrics.monthlySpending).toLocaleString()}</p>
+                    <p className="text-blue-400 text-sm">+12.8%</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="liquid-glass-card rounded-3xl p-6">
+              <h3 className="text-white text-xl font-bold mb-6 flex items-center gap-2">
+                <PieChart className="w-6 h-6 text-purple-400" />
+                Top Spending Categories
+              </h3>
+              <div className="space-y-4">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-3">
+                    <div className="w-4 h-4 bg-blue-500 rounded-full"></div>
+                    <span className="text-white">Dining & Food</span>
+                  </div>
+                  <div className="text-right">
+                    <span className="text-white font-medium">$892</span>
+                    <div className="text-xs text-white/60">28.5%</div>
+                  </div>
+                </div>
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-3">
+                    <div className="w-4 h-4 bg-green-500 rounded-full"></div>
+                    <span className="text-white">Transportation</span>
+                  </div>
+                  <div className="text-right">
+                    <span className="text-white font-medium">$654</span>
+                    <div className="text-xs text-white/60">21.2%</div>
+                  </div>
+                </div>
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-3">
+                    <div className="w-4 h-4 bg-orange-500 rounded-full"></div>
+                    <span className="text-white">Shopping</span>
+                  </div>
+                  <div className="text-right">
+                    <span className="text-white font-medium">$523</span>
+                    <div className="text-xs text-white/60">16.8%</div>
+                  </div>
+                </div>
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-3">
+                    <div className="w-4 h-4 bg-purple-500 rounded-full"></div>
+                    <span className="text-white">Entertainment</span>
+                  </div>
+                  <div className="text-right">
+                    <span className="text-white font-medium">$387</span>
+                    <div className="text-xs text-white/60">12.4%</div>
+                  </div>
+                </div>
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-3">
+                    <div className="w-4 h-4 bg-pink-500 rounded-full"></div>
+                    <span className="text-white">Health & Fitness</span>
+                  </div>
+                  <div className="text-right">
+                    <span className="text-white font-medium">$245</span>
+                    <div className="text-xs text-white/60">7.9%</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Recommendations */}
+          <div className="liquid-glass-card rounded-3xl p-6">
+            <h3 className="text-white text-xl font-bold mb-6 flex items-center gap-2">
+              <TrendingUp className="w-6 h-6 text-yellow-400" />
+              Personalized Recommendations
+            </h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              <div className="p-4 bg-gradient-to-br from-green-500/20 to-blue-500/20 rounded-xl border border-green-400/20">
+                <div className="flex items-center gap-2 mb-3">
+                  <PiggyBank className="w-5 h-5 text-green-400" />
+                  <span className="text-white font-medium">Increase Savings</span>
+                </div>
+                <p className="text-white/70 text-sm mb-3">
+                  You're saving {Math.round(metrics.savingsRate)}% of your income. Try to reach 20% by reducing dining expenses.
+                </p>
+                <div className="flex items-center gap-2 text-green-400 text-sm">
+                  <span>Potential monthly savings: $285</span>
+                </div>
+              </div>
+
+              <div className="p-4 bg-gradient-to-br from-orange-500/20 to-red-500/20 rounded-xl border border-orange-400/20">
+                <div className="flex items-center gap-2 mb-3">
+                  <Shield className="w-5 h-5 text-orange-400" />
+                  <span className="text-white font-medium">Emergency Fund</span>
+                </div>
+                <p className="text-white/70 text-sm mb-3">
+                  Build your emergency fund to 6 months. You currently have {metrics.emergencyFundMonths.toFixed(1)} months covered.
+                </p>
+                <div className="flex items-center gap-2 text-orange-400 text-sm">
+                  <span>Target: ${(metrics.monthlySpending * 6).toLocaleString()}</span>
+                </div>
+              </div>
+
+              <div className="p-4 bg-gradient-to-br from-blue-500/20 to-purple-500/20 rounded-xl border border-blue-400/20">
+                <div className="flex items-center gap-2 mb-3">
+                  <TrendingUp className="w-5 h-5 text-blue-400" />
+                  <span className="text-white font-medium">Investment Opportunity</span>
+                </div>
+                <p className="text-white/70 text-sm mb-3">
+                  Consider investing ${Math.round((metrics.monthlyIncome - metrics.monthlySpending) * 0.7)} monthly in index funds.
+                </p>
+                <div className="flex items-center gap-2 text-blue-400 text-sm">
+                  <span>Projected 10-year growth: $45K</span>
+                </div>
+              </div>
             </div>
           </div>
         </TabsContent>
