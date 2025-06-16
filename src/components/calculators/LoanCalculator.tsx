@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { calculateLoanPayment } from '@/utils/calculators';
+import GlassSlider from '@/components/ui/GlassSlider';
 
 const LoanCalculator = () => {
   const [principal, setPrincipal] = useState(250000);
@@ -16,33 +17,24 @@ const LoanCalculator = () => {
     <div className="max-w-xl mx-auto p-4 space-y-4">
       <h1 className="text-xl font-bold text-white">Loan Calculator</h1>
       <div className="space-y-2">
-        <label className="block text-sm text-white/80">
-          Loan Amount ($)
-          <input
-            type="number"
-            value={principal}
-            onChange={(e) => setPrincipal(+e.target.value)}
-            className="w-full p-2 rounded bg-white/5 text-white border border-white/10"
-          />
-        </label>
-        <label className="block text-sm text-white/80">
-          Annual Interest Rate (%)
-          <input
-            type="number"
-            value={rate}
-            onChange={(e) => setRate(+e.target.value)}
-            className="w-full p-2 rounded bg-white/5 text-white border border-white/10"
-          />
-        </label>
-        <label className="block text-sm text-white/80">
-          Loan Term (years)
-          <input
-            type="number"
-            value={years}
-            onChange={(e) => setYears(+e.target.value)}
-            className="w-full p-2 rounded bg-white/5 text-white border border-white/10"
-          />
-        </label>
+        <div className="space-y-1">
+          <div className="flex justify-between text-xs text-white/60">
+            <span>Loan Amount (${principal.toLocaleString()})</span>
+          </div>
+          <GlassSlider value={principal} min={10000} max={1000000} step={1000} onChange={setPrincipal} />
+        </div>
+        <div className="space-y-1">
+          <div className="flex justify-between text-xs text-white/60">
+            <span>Interest Rate ({rate}%)</span>
+          </div>
+          <GlassSlider value={rate} min={0} max={15} step={0.1} onChange={setRate} />
+        </div>
+        <div className="space-y-1">
+          <div className="flex justify-between text-xs text-white/60">
+            <span>Term ({years} yrs)</span>
+          </div>
+          <GlassSlider value={years} min={1} max={40} step={1} onChange={setYears} />
+        </div>
       </div>
       <button onClick={handleCalculate} className="px-4 py-2 rounded bg-blue-600 hover:bg-blue-700 text-white">
         Calculate
