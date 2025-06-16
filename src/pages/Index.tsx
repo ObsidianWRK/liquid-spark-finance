@@ -162,14 +162,14 @@ const Index = () => {
       
       {/* Main Content Container - Full Screen Layout */}
       <div className="relative z-10 min-h-screen w-full pb-24">
-        <div className="w-full px-4 py-8 sm:px-6 lg:px-8 xl:px-12">
+        <div className="w-full px-4 pt-24 pb-8 sm:px-6 lg:px-8 xl:px-12">
           {/* Header - Only show on dashboard */}
           {activeTab === 'dashboard' && (
             <div className="text-center space-y-4 mb-8">
               <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white tracking-wide">
                 Vueni
               </h1>
-                              <p className="text-white/60 text-sm sm:text-base lg:text-lg">Intelligence You Can Bank On</p>
+              <p className="text-white/60 text-sm sm:text-base lg:text-lg">Intelligence You Can Bank On</p>
             </div>
           )}
 
