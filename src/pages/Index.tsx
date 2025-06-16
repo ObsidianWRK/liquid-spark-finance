@@ -10,6 +10,7 @@ import WrappedPage from '@/components/wrapped/WrappedPage';
 import BudgetReportsPage from '@/components/reports/BudgetReportsPage';
 import Profile from './Profile';
 import ChatDrawer from '@/components/ai/ChatDrawer';
+import NetWorthSummary from '@/components/financial/NetWorthSummary';
 import { mockData } from '@/services/mockData';
 import { usePerformanceOptimization } from '@/hooks/usePerformanceOptimization';
 
@@ -94,6 +95,9 @@ const Index = () => {
                 <AccountCard key={account.id} account={account} />
               ))}
             </div>
+            
+            {/* Net Worth Summary */}
+            <NetWorthSummary accounts={mockData.accounts} className="mt-8" />
           </div>
         );
       case 'transactions':
