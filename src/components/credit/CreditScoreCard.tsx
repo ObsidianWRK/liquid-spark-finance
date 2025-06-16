@@ -67,7 +67,7 @@ const CreditScoreCard = () => {
   }
 
   return (
-    <div className="liquid-glass-card p-6">
+    <div className="liquid-glass-card rounded-2xl p-6 shadow-lg">
       {/* Header */}
       <div className="flex items-center justify-between mb-6">
         <h3 className="text-xl font-bold text-white">Credit Score</h3>

@@ -130,7 +130,7 @@ const LiquidGlassTopMenuBar = ({ className, onMenuItemClick }: MenuBarProps) => 
                 </span>
               </div>
 
-              {/* Menu Items */}
+              {/* Menu Items (desktop) */}
               <nav className="hidden md:flex items-center space-x-1">
                 {menuItems.map((menu) => (
                   <div key={menu.label} className="relative">
@@ -150,8 +150,8 @@ const LiquidGlassTopMenuBar = ({ className, onMenuItemClick }: MenuBarProps) => 
                     
                     {/* Dropdown Menu */}
                     {activeMenu === menu.label && (
-                      <div className="absolute top-full left-0 mt-2 z-50">
-                        <div className="liquid-glass-card p-2 rounded-2xl min-w-[200px] border-0 shadow-2xl animate-in fade-in-0 zoom-in-95 duration-200">
+                      <div className={cn("z-50", "md:absolute md:top-full md:left-0 md:mt-2 fixed inset-x-4 top-20")}> 
+                        <div className="liquid-glass-card p-2 rounded-2xl min-w-[200px] md:min-w-[200px] border-0 shadow-2xl animate-in fade-in-0 zoom-in-95 duration-200">
                           {menu.items.map((item, index) => (
                             <React.Fragment key={index}>
                               {item.separator ? (
@@ -177,6 +177,15 @@ const LiquidGlassTopMenuBar = ({ className, onMenuItemClick }: MenuBarProps) => 
                   </div>
                 ))}
               </nav>
+
+              {/* Mobile Tools button */}
+              <button
+                className="md:hidden liquid-glass-menu-item px-3 py-2 rounded-xl text-white/90 hover:text-white transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-blue-400/50 flex items-center"
+                onClick={() => handleMenuClick('Tools')}
+              >
+                <Settings className="w-4 h-4" />
+                <span className="ml-1 text-sm">Tools</span>
+              </button>
             </div>
 
             {/* Quick Action Items */}
