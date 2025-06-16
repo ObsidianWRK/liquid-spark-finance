@@ -320,7 +320,7 @@ html:not(.dark) [class*="border-white/10"] {
   }
 
   .main-cards-grid {
-    @apply grid gap-4;
+    @apply grid gap-4 w-full;
     /* Mobile: 1 column */
     @apply grid-cols-1;
     /* Tablet: 2 columns */
@@ -476,7 +476,7 @@ html:not(.dark) [class*="border-white/10"] {
 
   /* Key metrics grid responsiveness */
   .metrics-grid {
-    @apply grid gap-3;
+    @apply grid gap-3 w-full;
     /* Mobile: 1 column */
     @apply grid-cols-1;
     /* Small mobile: 2 columns */
