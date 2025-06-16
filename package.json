@@ -11,6 +11,7 @@
     "lint": "eslint . --fix",
     "lint:check": "eslint .",
     "type-check": "tsc --noEmit",
+    "update:browserslist": "npx update-browserslist-db@latest || true",
     "preview": "vite preview",
     "clean": "rm -rf dist",
     "prebuild": "npm run clean && npm run lint:check && npm run type-check"
@@ -84,6 +85,7 @@
     "tailwindcss": "^3.4.11",
     "typescript": "^5.5.3",
     "typescript-eslint": "^8.0.1",
-    "vite": "^5.4.1"
+    "vite": "^5.4.1",
+    "postcss-import": "^16.1.0"
   }
 }

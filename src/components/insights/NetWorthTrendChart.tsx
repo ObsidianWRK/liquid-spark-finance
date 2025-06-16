@@ -38,7 +38,7 @@ const NetWorthTrendChart: React.FC<NetWorthTrendChartProps> = ({ data, title }) 
 
   const formatDate = (dateStr: string) => {
     const date = new Date(dateStr);
-    return date.toLocaleDateString('en-US', { month: 'short', year: 'yy' });
+    return date.toLocaleDateString('en-US', { month: 'short', year: '2-digit' });
   };
 
   const formatTooltipDate = (dateStr: string) => {

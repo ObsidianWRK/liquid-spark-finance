@@ -3,9 +3,12 @@ import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { lazy, Suspense } from 'react';
+import { lazy, Suspense, useState, useEffect } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
 import { ThemeProvider } from '@/context/ThemeContext';
+import { NotificationProvider } from '@/components/ui/NotificationSystem';
+import GlobalSearch from '@/components/search/GlobalSearch';
+import OnboardingFlow from '@/components/onboarding/OnboardingFlow';
 
 const queryClient = new QueryClient();
 
@@ -73,40 +76,100 @@ const SkipLink = () => (
   </a>
 );
 
-const App = () => (
-  <ErrorBoundary FallbackComponent={ErrorFallback} onReset={() => window.location.reload()}>
-    <ThemeProvider>
-      <QueryClientProvider client={queryClient}>
-        <TooltipProvider>
-          <SkipLink />
-          <Toaster />
-          <Sonner />
-          <BrowserRouter>
-            <Suspense fallback={<LoadingFallback />}>
-              <main id="main-content">
-                <Routes>
-                  <Route path="/" element={<Index />} />
-                  <Route path="/profile" element={<Profile />} />
-                  <Route path="/credit-score" element={<CreditScorePage />} />
-                  <Route path="/savings" element={<SavingsGoals />} />
-                  <Route path="/transactions" element={<TransactionDemo />} />
-                  <Route path="/budget-planner" element={<BudgetPlannerPage />} />
-                  <Route path="/goal-setting" element={<SavingsGoals />} />
-                  <Route path="/investment-tracker" element={<InvestmentTrackerPage />} />
-                  <Route path="/calculators" element={<CalculatorsPage />} />
-                  <Route path="/calculators/:id" element={<CalculatorsPage />} />
-                  <Route path="/reports" element={<BudgetReportsPage />} />
-                  <Route path="/insights" element={<InsightsPage />} />
-                  {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-                  <Route path="*" element={<NotFound />} />
-                </Routes>
-              </main>
-            </Suspense>
-          </BrowserRouter>
-        </TooltipProvider>
-      </QueryClientProvider>
-    </ThemeProvider>
-  </ErrorBoundary>
-);
+const App = () => {
+  const [showSearch, setShowSearch] = useState(false);
+  const [showOnboarding, setShowOnboarding] = useState<boolean>(() => {
+    return !localStorage.getItem('vueni-onboarding-complete');
+  });
+
+  // Global keyboard shortcut (Cmd+K / Ctrl+K) to open search
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
+        e.preventDefault();
+        setShowSearch(prev => !prev);
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, []);
+
+  const handleOnboardingComplete = () => {
+    localStorage.setItem('vueni-onboarding-complete', 'true');
+    setShowOnboarding(false);
+  };
+
+  const handleNavigate = (type: string, id: string) => {
+    switch (type) {
+      case 'transaction':
+        window.location.href = `/transactions?tx=${id}`;
+        break;
+      case 'account':
+        window.location.href = `/accounts?acc=${id}`;
+        break;
+      case 'calculator':
+        window.location.href = `/calculators/${id}`;
+        break;
+      case 'help':
+        window.open(`/help/${id}`, '_blank');
+        break;
+      default:
+        window.location.href = `/${type}`;
+    }
+  };
+
+  return (
+    <ErrorBoundary FallbackComponent={ErrorFallback} onReset={() => window.location.reload()}>
+      <NotificationProvider>
+        <ThemeProvider>
+          <QueryClientProvider client={queryClient}>
+            <TooltipProvider>
+              <SkipLink />
+              <Toaster />
+              <Sonner />
+              {/* Screen reader live region for toast announcements */}
+              <div id="sr-toast-live" aria-live="polite" aria-atomic="true" className="sr-only" />
+              <BrowserRouter>
+                <Suspense fallback={<LoadingFallback />}>
+                  <main id="main-content">
+                    <Routes>
+                      <Route path="/" element={<Index />} />
+                      <Route path="/profile" element={<Profile />} />
+                      <Route path="/credit-score" element={<CreditScorePage />} />
+                      <Route path="/savings" element={<SavingsGoals />} />
+                      <Route path="/transactions" element={<TransactionDemo />} />
+                      <Route path="/budget-planner" element={<BudgetPlannerPage />} />
+                      <Route path="/goal-setting" element={<SavingsGoals />} />
+                      <Route path="/investment-tracker" element={<InvestmentTrackerPage />} />
+                      <Route path="/calculators" element={<CalculatorsPage />} />
+                      <Route path="/calculators/:id" element={<CalculatorsPage />} />
+                      <Route path="/reports" element={<BudgetReportsPage />} />
+                      <Route path="/insights" element={<InsightsPage />} />
+                      {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+                      <Route path="*" element={<NotFound />} />
+                    </Routes>
+                  </main>
+                </Suspense>
+              </BrowserRouter>
+              {showSearch && (
+                <GlobalSearch
+                  isOpen={showSearch}
+                  onClose={() => setShowSearch(false)}
+                  onNavigate={handleNavigate}
+                />
+              )}
+              {showOnboarding && (
+                <OnboardingFlow
+                  onComplete={handleOnboardingComplete}
+                  onSkip={handleOnboardingComplete}
+                />
+              )}
+            </TooltipProvider>
+          </QueryClientProvider>
+        </ThemeProvider>
+      </NotificationProvider>
+    </ErrorBoundary>
+  );
+};
 
 export default App;

@@ -57,6 +57,19 @@ class NotificationService {
       } : undefined,
     };
 
+    // Screen reader live region update
+    const srRegion = document.getElementById('sr-toast-live');
+    if (srRegion) {
+      srRegion.textContent = `${options?.title || this.getDefaultTitle(type)}. ${message}`;
+
+      // Clear after it is announced
+      setTimeout(() => {
+        if (srRegion.textContent === `${options?.title || this.getDefaultTitle(type)}. ${message}`) {
+          srRegion.textContent = '';
+        }
+      }, 1000);
+    }
+
     return toast(toastConfig);
   }
 
