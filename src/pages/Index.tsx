@@ -4,7 +4,7 @@ import QuickActions from '@/components/QuickActions';
 import TransactionList from '@/components/TransactionList';
 import AccountCard from '@/components/AccountCard';
 import Navigation from '@/components/Navigation';
-import InsightsPage from '@/components/insights/InsightsPage';
+import EnhancedInsightsPage from '@/components/insights/EnhancedInsightsPage';
 import ChatDrawer from '@/components/ai/ChatDrawer';
 import BudgetReportsPage from '@/components/reports/BudgetReportsPage';
 import WrappedPage from '@/components/wrapped/WrappedPage';
@@ -164,12 +164,7 @@ const Index = () => {
         );
       
       case 'insights':
-        return (
-          <div>
-            <h2 className="text-2xl font-bold text-white mb-6">Financial Insights</h2>
-            <InsightsPage transactions={transactions} accounts={accounts} />
-          </div>
-        );
+        return <EnhancedInsightsPage transactions={transactions} accounts={accounts} />;
       
       case 'reports':
         return <BudgetReportsPage />;
@@ -208,10 +203,26 @@ const Index = () => {
     }
   };
 
+  // Use different background for insights page
+  if (activeTab === 'insights') {
+    return (
+      <>
+        {renderContent()}
+        <ChatDrawer userContext={{ accounts, transactions }} />
+        <Navigation activeTab={activeTab} onTabChange={setActiveTab} />
+      </>
+    );
+  }
+
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#0A0A0B] via-[#1C1C1E] to-[#0A0A0B] relative overflow-hidden">
-      {/* Background Gradient Overlay */}
-      <div className="absolute inset-0 bg-gradient-to-br from-blue-500/5 via-transparent to-purple-500/5 pointer-events-none" />
+    <div className="liquid-glass-container liquid-bg-aurora relative overflow-hidden">
+      {/* Floating orbs for depth */}
+      <div className="liquid-orb liquid-orb-1" />
+      <div className="liquid-orb liquid-orb-2" />
+      <div className="liquid-orb liquid-orb-3" />
+      
+      {/* Overlay for additional depth */}
+      <div className="absolute inset-0 liquid-overlay-glow pointer-events-none" />
       
       {/* Main Content */}
       <div className="relative z-10 px-4 pt-12 pb-24 max-w-md mx-auto">

@@ -198,28 +198,17 @@ const EnhancedInsightsPage = ({ transactions, accounts }: InsightsPageProps) => 
   ));
 
   return (
-    <div 
-      className="min-h-screen relative overflow-hidden enhanced-insights-page"
-      style={{
-        background: 'linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%)'
-      }}
-    >
-      {/* Animated background elements */}
-      <div className="absolute inset-0 overflow-hidden">
-        <div 
-          className="floating-orb-1 absolute -top-40 -right-40 w-80 h-80 rounded-full opacity-20"
-          style={{
-            background: 'radial-gradient(circle, rgba(255, 255, 255, 0.3) 0%, transparent 70%)'
-          }}
-        />
-        <div 
-          className="floating-orb-2 absolute -bottom-40 -left-40 w-96 h-96 rounded-full opacity-15"
-          style={{
-            background: 'radial-gradient(circle, rgba(255, 255, 255, 0.3) 0%, transparent 70%)'
-          }}
-        />
-      </div>
-
+    <div className="liquid-insights-container liquid-bg-insights relative overflow-hidden">
+      {/* Enhanced floating orbs for depth */}
+      <div className="liquid-orb liquid-orb-1" />
+      <div className="liquid-orb liquid-orb-2" />
+      <div className="liquid-orb liquid-orb-3" />
+      <div className="liquid-orb liquid-orb-4" />
+      
+      {/* Multiple overlay layers for stunning depth */}
+      <div className="absolute inset-0 liquid-overlay-insights pointer-events-none" />
+      <div className="absolute inset-0 insights-gradient-overlay pointer-events-none" />
+      
       <div className="relative z-10 max-w-4xl mx-auto px-4 py-8">
         {/* Header */}
         <div className="text-center mb-8">
@@ -448,68 +437,6 @@ const EnhancedInsightsPage = ({ transactions, accounts }: InsightsPageProps) => 
           </div>
         </EnhancedGlassCard>
       </div>
-
-      <style>
-        {`
-          .enhanced-insights-page {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
-          }
-
-          @keyframes slideInScale {
-            0% {
-              opacity: 0;
-              transform: translateY(20px) scale(0.95);
-            }
-            100% {
-              opacity: 1;
-              transform: translateY(0) scale(1);
-            }
-          }
-
-          @keyframes float {
-            0%, 100% {
-              transform: translateY(0px) rotate(0deg);
-            }
-            50% {
-              transform: translateY(-20px) rotate(5deg);
-            }
-          }
-
-          .floating-orb-1 {
-            animation: float 6s ease-in-out infinite;
-          }
-
-          .floating-orb-2 {
-            animation: float 8s ease-in-out infinite reverse;
-          }
-
-          @keyframes shimmer {
-            0% {
-              transform: translateX(-100%);
-            }
-            100% {
-              transform: translateX(100%);
-            }
-          }
-
-          @keyframes trendPulse {
-            0%, 100% {
-              opacity: 0.5;
-            }
-            50% {
-              opacity: 1;
-            }
-          }
-
-          .shimmer-effect {
-            animation: shimmer 2s infinite;
-          }
-
-          .trend-bar {
-            animation: trendPulse 2s infinite;
-          }
-        `}
-      </style>
     </div>
   );
 };
