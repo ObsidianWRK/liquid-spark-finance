@@ -38,12 +38,26 @@ const Navigation = ({ activeTab, onTabChange }: NavigationProps) => {
     setShowMore(!showMore);
   };
 
-  const getTabStyles = (isActive: boolean) => cn(
-    "flex flex-col items-center justify-center space-y-1 py-3 px-3 sm:px-4 rounded-lg transition-all duration-300 min-w-[56px] min-h-[56px] sm:min-w-[64px] sm:min-h-[64px] focus:outline-none focus:ring-2 focus:ring-blue-400/50 relative",
-    isActive ? 
-      "liquid-glass-menu-item active text-white shadow-lg transform scale-105" : 
-      "liquid-glass-menu-item text-white/70 hover:text-white"
-  );
+  const getTabStyles = (isActive: boolean, index: number, total: number) => {
+    let borderRadius = '';
+    
+    // Create seamless borders - only round outer edges
+    if (index === 0) {
+      borderRadius = 'rounded-l-3xl';
+    } else if (index === total - 1) {
+      borderRadius = 'rounded-r-3xl';
+    } else {
+      borderRadius = 'rounded-none';
+    }
+
+    return cn(
+      "flex flex-col items-center justify-center space-y-1 py-3 px-3 sm:px-4 transition-all duration-500 min-w-[56px] min-h-[56px] sm:min-w-[64px] sm:min-h-[64px] focus:outline-none focus:ring-2 focus:ring-blue-400/50 relative border-r border-white/5 last:border-r-0",
+      borderRadius,
+      isActive ? 
+        "ios26-nav-item-active text-white transform scale-105 z-10" : 
+        "ios26-nav-item text-white/70 hover:text-white hover:scale-102"
+    );
+  };
 
   return (
     <>
@@ -94,43 +108,47 @@ const Navigation = ({ activeTab, onTabChange }: NavigationProps) => {
         </div>
       )}
 
-      {/* Bottom Tab Navigation - Enhanced with Glass Effects */}
+      {/* iOS 26 Style Seamless Navigation Bar */}
       <div className="fixed bottom-0 left-0 right-0 z-50">
-        <div className="liquid-glass-nav rounded-2xl border-x-0 border-b-0 p-3 sm:p-4 mx-4 mb-4">
-          <nav aria-label="Main navigation">
-            <div className="flex justify-around items-center max-w-md sm:max-w-2xl md:max-w-4xl lg:max-w-6xl mx-auto">
-              {mainTabs.map((tab) => {
-                const IconComponent = tab.icon;
-                const isActive = activeTab === tab.id;
+        <div className="ios26-nav-container mx-4 mb-4">
+          <nav aria-label="Main navigation" className="ios26-nav-bubble">
+            <div className="flex items-center max-w-md sm:max-w-2xl md:max-w-4xl lg:max-w-6xl mx-auto">
+              {/* Main Navigation Tabs - Seamless touching bubbles */}
+              <div className="flex items-center flex-1">
+                {mainTabs.map((tab, index) => {
+                  const IconComponent = tab.icon;
+                  const isActive = activeTab === tab.id;
+                  
+                  return (
+                    <button
+                      key={tab.id}
+                      onClick={() => onTabChange(tab.id)}
+                      className={getTabStyles(isActive, index, mainTabs.length + 1)}
+                      aria-label={`Navigate to ${tab.label}`}
+                      aria-current={isActive ? 'page' : undefined}
+                    >
+                      <IconComponent className="w-5 h-5 sm:w-6 sm:h-6" aria-hidden="true" />
+                      <span className="text-xs sm:text-sm font-medium">{tab.label}</span>
+                    </button>
+                  );
+                })}
                 
-                return (
-                  <button
-                    key={tab.id}
-                    onClick={() => onTabChange(tab.id)}
-                    className={getTabStyles(isActive)}
-                    aria-label={`Navigate to ${tab.label}`}
-                    aria-current={isActive ? 'page' : undefined}
-                  >
-                    <IconComponent className="w-5 h-5 sm:w-6 sm:h-6" aria-hidden="true" />
-                    <span className="text-xs sm:text-sm font-medium">{tab.label}</span>
-                  </button>
-                );
-              })}
-              <button
-                onClick={handleMoreClick}
-                className={cn(
-                  "flex flex-col items-center justify-center space-y-1 py-3 px-4 rounded-lg transition-all duration-300 min-w-[56px] min-h-[56px] sm:min-w-[64px] sm:min-h-[64px] focus:outline-none focus:ring-2 focus:ring-blue-400/50",
-                  moreTabs.some(tab => tab.id === activeTab) ? 
-                    "liquid-glass-menu-item active text-white shadow-lg transform scale-105" : 
-                    "liquid-glass-menu-item text-white/70 hover:text-white"
-                )}
-                aria-label="More navigation options"
-                aria-expanded={showMore}
-                aria-haspopup="true"
-              >
-                <Settings className="w-5 h-5 sm:w-6 sm:h-6" aria-hidden="true" />
-                <span className="text-xs sm:text-sm font-medium">More</span>
-              </button>
+                {/* More Button - Part of seamless design */}
+                <button
+                  onClick={handleMoreClick}
+                  className={getTabStyles(
+                    moreTabs.some(tab => tab.id === activeTab),
+                    mainTabs.length,
+                    mainTabs.length + 1
+                  )}
+                  aria-label="More navigation options"
+                  aria-expanded={showMore}
+                  aria-haspopup="true"
+                >
+                  <Settings className="w-5 h-5 sm:w-6 sm:h-6" aria-hidden="true" />
+                  <span className="text-xs sm:text-sm font-medium">More</span>
+                </button>
+              </div>
             </div>
           </nav>
         </div>

@@ -177,6 +177,70 @@ const OptimizedRefinedInsightsPage = memo(({ transactions, accounts }: InsightsP
     return { intensity: 0.35, animated: !performance.prefersReducedMotion, interactive: true };
   }, [performance]);
 
+  // Comprehensive health data for wellness card
+  const comprehensiveHealthData = useMemo(() => ({
+    healthKitData: {
+      stepCount: 8542,
+      activeEnergyBurned: 387,
+      exerciseTime: 45,
+      heartRate: 72,
+      sleepAnalysis: 7.5,
+      mindfulMinutes: 15,
+      dietaryCalories: 2150,
+      dietaryWater: 64
+    },
+    spendingCategories: {
+      fitness: Math.round(transactions.filter(t => t.merchant.toLowerCase().includes('gym') || t.merchant.toLowerCase().includes('fitness')).reduce((sum, t) => sum + Math.abs(t.amount), 0) || 120),
+      nutrition: Math.round(transactions.filter(t => t.merchant.toLowerCase().includes('whole foods') || t.merchant.toLowerCase().includes('organic')).reduce((sum, t) => sum + Math.abs(t.amount), 0) || 280),
+      healthcare: 185,
+      wellness: 95,
+      supplements: 60,
+      mentalHealth: 75
+    },
+    trends: {
+      exercise: 'up' as 'up' | 'down' | 'stable',
+      nutrition: 'stable' as 'up' | 'down' | 'stable',
+      sleep: 'up' as 'up' | 'down' | 'stable',
+      stress: 'down' as 'up' | 'down' | 'stable'
+    }
+  }), [transactions]);
+
+  // Comprehensive eco data for eco card
+  const comprehensiveEcoData = useMemo(() => ({
+    ecoMetrics: {
+      totalCO2Emissions: 12.5,
+      transportationCO2: 4.2,
+      electricityUsage: 875,
+      renewableEnergyPercentage: 65,
+      recyclingRate: 72,
+      organicFoodPercentage: 42,
+      sustainableBrandsPurchases: 156,
+      ESGInvestments: 12500,
+      treesPlanted: 8,
+      wasteGenerated: 28
+    },
+    spendingCategories: {
+      sustainableFood: Math.round(transactions.filter(t => t.merchant.toLowerCase().includes('whole foods') || t.merchant.toLowerCase().includes('organic')).reduce((sum, t) => sum + Math.abs(t.amount), 0) || 180),
+      renewableEnergy: 85,
+      ecoTransport: Math.round(transactions.filter(t => t.merchant.toLowerCase().includes('tesla') || t.merchant.toLowerCase().includes('electric')).reduce((sum, t) => sum + Math.abs(t.amount), 0) || 45),
+      greenProducts: 120,
+      carbonOffset: 25,
+      conservation: 60
+    },
+    monthlyImpact: {
+      co2Saved: Math.max(0, Math.round((scores.eco - 50) * 1.5)),
+      treesEquivalent: Math.max(0, Math.round((scores.eco - 50) / 20)),
+      waterSaved: Math.max(0, Math.round((scores.eco - 50) * 12)),
+      energySaved: Math.max(0, Math.round((scores.eco - 50) * 8))
+    },
+    trends: {
+      carbonFootprint: (scores.eco > 70 ? 'down' : 'stable') as 'up' | 'down' | 'stable',
+      sustainability: 'up' as 'up' | 'down' | 'stable',
+      renewable: 'up' as 'up' | 'down' | 'stable',
+      waste: 'down' as 'up' | 'down' | 'stable'
+    }
+  }), [transactions, scores.eco]);
+
   return (
     <div className="min-h-screen relative overflow-hidden" style={{ backgroundColor: '#000000' }}>
       {/* Simplified background for performance */}
@@ -215,26 +279,19 @@ const OptimizedRefinedInsightsPage = memo(({ transactions, accounts }: InsightsP
             liquidIntensity={liquidSettings.intensity}
           />
           
-          <RefinedScoreCard
-            title="Health Score"
+          <ComprehensiveWellnessCard
             score={animatedScores.health}
-            subtitle="Wellness and lifestyle"
-            icon={<Heart />}
-            color="#22c55e"
-            trend="stable"
-            delay={200}
-            liquidIntensity={liquidSettings.intensity}
+            healthKitData={comprehensiveHealthData.healthKitData}
+            spendingCategories={comprehensiveHealthData.spendingCategories}
+            trends={comprehensiveHealthData.trends}
           />
           
-          <RefinedScoreCard
-            title="Eco Score"
+          <ComprehensiveEcoCard
             score={animatedScores.eco}
-            subtitle="Environmental impact"
-            icon={<Leaf />}
-            color="#10b981"
-            trend="up"
-            delay={400}
-            liquidIntensity={liquidSettings.intensity}
+            ecoMetrics={comprehensiveEcoData.ecoMetrics}
+            spendingCategories={comprehensiveEcoData.spendingCategories}
+            monthlyImpact={comprehensiveEcoData.monthlyImpact}
+            trends={comprehensiveEcoData.trends}
           />
         </div>
 
