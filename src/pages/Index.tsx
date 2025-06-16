@@ -222,11 +222,11 @@ const Index = () => {
       <div className="relative z-10 min-h-screen pb-24">
         <div className="container mx-auto px-4 py-8 max-w-md">
           {/* Header */}
-          <div className="text-center mb-8">
-            <h1 className="text-3xl font-bold bg-gradient-to-r from-white to-white/80 bg-clip-text text-transparent">
-              Liquid Spark Finance
+          <div className="text-center space-y-4">
+            <h1 className="text-4xl font-bold text-white tracking-wide">
+              Vueni
             </h1>
-            <p className="text-white/60 mt-2">WWDC 2025 Liquid Glass Design</p>
+            <p className="text-white/60 mt-2">Modern Financial Management</p>
           </div>
 
           {/* Dynamic Content */}

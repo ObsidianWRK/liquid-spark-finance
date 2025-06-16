@@ -47,7 +47,7 @@ const Navigation = ({ activeTab, onTabChange }: NavigationProps) => {
 
   return (
     <>
-      {/* SVG Filters for Liquid Glass Effects */}
+      {/* SVG Filters for Glass Effects */}
       <LiquidGlassSVGFilters />
 
       {/* More Options Overlay */}
@@ -94,7 +94,7 @@ const Navigation = ({ activeTab, onTabChange }: NavigationProps) => {
         </div>
       )}
 
-      {/* Bottom Tab Navigation - Enhanced with Liquid Glass */}
+              {/* Bottom Tab Navigation - Enhanced with Glass Effects */}
       <div className="fixed bottom-0 left-0 right-0 z-50">
         <div className="liquid-glass-nav border-x-0 border-b-0 p-4">
           <nav aria-label="Main navigation">
@@ -136,7 +136,7 @@ const Navigation = ({ activeTab, onTabChange }: NavigationProps) => {
         </div>
       </div>
 
-      {/* Floating Action Button - Enhanced with Liquid Glass */}
+              {/* Floating Action Button - Enhanced with Glass Effects */}
       <button
         className="liquid-glass-fab fixed bottom-20 right-6 p-4 z-40 min-w-[56px] min-h-[56px] flex items-center justify-center"
         aria-label="Add new transaction"

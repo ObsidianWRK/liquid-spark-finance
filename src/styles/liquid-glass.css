@@ -1,4 +1,6 @@
-/* Liquid Glass Enhancement Styles */
+/* Glass Enhancement Styles */
+
+/* Base variables for glass effects */
 
 /* Fallback styles for when WebGL is not supported */
 .liquid-glass-fallback {
@@ -25,7 +27,7 @@
   transform: translateY(-2px);
 }
 
-/* Enhanced glass effects for liquid glass components */
+/* Enhanced glass effects for modern glass components */
 .liquid-glass-enhanced {
   position: relative;
   overflow: hidden;

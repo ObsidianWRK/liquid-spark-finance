@@ -1,7 +1,7 @@
 import React from 'react';
 
 /**
- * SVG Filters for WWDC 2025 Liquid Glass Effects
+ * SVG Filters for Modern Glass Effects
  * Provides subtle, realistic glass effects without aggressive distortion
  */
 export const LiquidGlassSVGFilters: React.FC = () => {

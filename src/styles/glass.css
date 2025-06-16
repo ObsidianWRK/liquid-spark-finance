@@ -1,10 +1,10 @@
-/* Apple Liquid Glass Design System - Enhanced */
+/* Modern Glass Design System - Enhanced */
 
-/* Import Liquid Glass Enhancement Styles */
-@import './liquid-glass.css';
-@import './liquid-backgrounds.css';
-@import './refined-animations.css';
-@import './liquid-glass-wwdc.css';
+/* Import Glass Enhancement Styles */
+@import url('./liquid-glass.css');
+@import url('./liquid-glass-wwdc.css');
+@import url('./liquid-backgrounds.css');
+@import url('./refined-animations.css');
 
 /* CSS Custom Properties for Glass System */
 :root {
@@ -44,7 +44,7 @@
   border-radius: 50px;
 }
 
-/* Apple Liquid Glass Card - Main Style */
+/* Modern Glass Card - Main Style */
 .glass-card {
   background: rgba(255, 255, 255, 0.06);
   backdrop-filter: blur(20px) saturate(180%);
