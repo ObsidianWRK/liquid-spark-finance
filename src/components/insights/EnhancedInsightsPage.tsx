@@ -191,7 +191,7 @@ const EnhancedInsightsPage = ({ transactions, accounts }: InsightsPageProps) => 
       {/* Header */}
       <div className="flex items-center justify-between max-w-7xl mx-auto mb-6 pt-4">
         <button
-          onClick={() => navigate(-1)}
+          onClick={() => navigate('/')}
           className="flex items-center space-x-2 text-white hover:text-blue-400 transition-colors rounded-full py-2 px-3 bg-white/5 backdrop-blur-md border border-white/10"
         >
           <ArrowLeft className="w-4 h-4" />
