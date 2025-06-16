@@ -8,6 +8,7 @@ import Profile from "./pages/Profile";
 import NotFound from "./pages/NotFound";
 import CreditScorePage from "./components/credit/CreditScorePage";
 import SavingsGoals from "./components/savings/SavingsGoals";
+import TransactionDemo from "./pages/TransactionDemo";
 
 const queryClient = new QueryClient();
 
@@ -22,6 +23,7 @@ const App = () => (
           <Route path="/profile" element={<Profile />} />
           <Route path="/credit-score" element={<CreditScorePage />} />
           <Route path="/savings" element={<SavingsGoals />} />
+          <Route path="/transactions" element={<TransactionDemo />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
