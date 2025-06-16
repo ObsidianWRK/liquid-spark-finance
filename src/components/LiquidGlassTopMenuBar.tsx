@@ -265,16 +265,28 @@ const LiquidGlassTopMenuBar = ({ className, onMenuItemClick }: MenuBarProps) => 
             <div className="flex items-center space-x-2">
               {/* Quick Navigation Pills */}
               <div className="hidden lg:flex items-center space-x-1">
-                <button className="liquid-glass-menu-item p-2 rounded-xl text-white/80 hover:text-white transition-all duration-300 group">
+                <button 
+                  onClick={() => navigate('/')}
+                  className="liquid-glass-menu-item p-2 rounded-xl text-white/80 hover:text-white transition-all duration-300 group"
+                >
                   <Home className="w-4 h-4" />
                 </button>
-                <button className="liquid-glass-menu-item p-2 rounded-xl text-white/80 hover:text-white transition-all duration-300">
+                <button 
+                  onClick={() => navigate('/insights')}
+                  className="liquid-glass-menu-item p-2 rounded-xl text-white/80 hover:text-white transition-all duration-300"
+                >
                   <BarChart3 className="w-4 h-4" />
                 </button>
-                <button className="liquid-glass-menu-item p-2 rounded-xl text-white/80 hover:text-white transition-all duration-300">
+                <button 
+                  onClick={() => navigate('/transactions')}
+                  className="liquid-glass-menu-item p-2 rounded-xl text-white/80 hover:text-white transition-all duration-300"
+                >
                   <Wallet className="w-4 h-4" />
                 </button>
-                <button className="liquid-glass-menu-item p-2 rounded-xl text-white/80 hover:text-white transition-all duration-300">
+                <button 
+                  onClick={() => navigate('/reports')}
+                  className="liquid-glass-menu-item p-2 rounded-xl text-white/80 hover:text-white transition-all duration-300"
+                >
                   <TrendingUp className="w-4 h-4" />
                 </button>
               </div>
@@ -283,18 +295,27 @@ const LiquidGlassTopMenuBar = ({ className, onMenuItemClick }: MenuBarProps) => 
               <div className="hidden lg:block w-px h-6 bg-white/10" />
 
               {/* Action Buttons */}
-              <button className="liquid-glass-menu-item p-2 rounded-xl text-white/80 hover:text-white transition-all duration-300 relative">
+              <button 
+                onClick={() => alert('Search functionality coming soon!')}
+                className="liquid-glass-menu-item p-2 rounded-xl text-white/80 hover:text-white transition-all duration-300 relative"
+              >
                 <Search className="w-5 h-5" />
               </button>
               
-              <button className="liquid-glass-menu-item p-2 rounded-xl text-white/80 hover:text-white transition-all duration-300 relative">
+              <button 
+                onClick={() => alert('Notifications coming soon!')}
+                className="liquid-glass-menu-item p-2 rounded-xl text-white/80 hover:text-white transition-all duration-300 relative"
+              >
                 <Bell className="w-5 h-5" />
                 <span className="absolute -top-1 -right-1 w-3 h-3 bg-red-500 rounded-full border-2 border-black/20"></span>
               </button>
 
               <ThemeToggle />
 
-              <button className="liquid-glass-button p-2 rounded-xl text-white/90 hover:text-white transition-all duration-300">
+              <button 
+                onClick={() => navigate('/profile')}
+                className="liquid-glass-button p-2 rounded-xl text-white/90 hover:text-white transition-all duration-300"
+              >
                 <User className="w-5 h-5" />
               </button>
             </div>
