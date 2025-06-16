@@ -18,7 +18,7 @@ interface Account {
 
 export interface ScoreSummary {
   financial: number;
-  wellness: number;
+  health: number;
   eco: number;
 }
 
@@ -56,9 +56,9 @@ export const generateScoreSummary = async (
   const financial = calculateFinancialScore(transactions, accounts);
 
   const healthMetrics = await fetchHealthMetrics();
-  const wellness = calculateHealthScore(healthMetrics).totalScore;
+  const health = calculateHealthScore(healthMetrics).totalScore;
 
   const eco = calculateEcoScore(transactions).score;
 
-  return { financial, wellness, eco };
+  return { financial, health, eco };
 }; 

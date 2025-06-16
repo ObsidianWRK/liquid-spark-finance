@@ -4,7 +4,7 @@ import EnhancedGlassCard from '../ui/EnhancedGlassCard';
 import AnimatedCircularProgress from './components/AnimatedCircularProgress';
 import EnhancedScoreCard from './components/EnhancedScoreCard';
 import EnhancedMetricCard from './components/EnhancedMetricCard';
-import { mockHealthEcoService } from '@/services/mockHealthEcoService';
+import { generateScoreSummary } from '@/services/scoringModel';
 import { formatPercentage, getScoreColor } from '@/utils/formatters';
 import { 
   usePerformanceOptimization, 
@@ -61,6 +61,7 @@ interface FinancialMetrics {
 const EnhancedInsightsPage = ({ transactions, accounts }: InsightsPageProps) => {
   const [animatedScores, setAnimatedScores] = useState<ScoreData>({ financial: 0, health: 0, eco: 0 });
   const [activeTab, setActiveTab] = useState('summary');
+  const [scores, setScores] = useState<ScoreData>({ financial: 0, health: 0, eco: 0 });
 
   // Performance and responsive hooks
   const { liquidSettings } = usePerformanceOptimization();
@@ -109,48 +110,9 @@ const EnhancedInsightsPage = ({ transactions, accounts }: InsightsPageProps) => 
     };
   }, [transactions, accounts]);
 
-  // Enhanced score calculation with validation and fallbacks
-  const scores = useMemo<ScoreData>(() => {
-    // Validation function for scores
-    const validateScore = (score: number): number => {
-      if (isNaN(score) || !isFinite(score)) return 0;
-      return Math.max(0, Math.min(100, score));
-    };
-
-    const weights = {
-      spendingRatio: 0.25,
-      emergencyFund: 0.20,
-      debtRatio: 0.20,
-      savingsRate: 0.15,
-      billPayment: 0.10,
-      investments: 0.10
-    };
-
-    const spendingScore = Math.max(0, 100 - metrics.spendingRatio);
-    const emergencyScore = Math.min(100, (metrics.emergencyFundMonths / 6) * 100);
-    const debtScore = Math.max(0, 100 - metrics.debtToIncomeRatio);
-    const savingsScore = Math.min(100, metrics.savingsRate);
-    const billScore = metrics.billPaymentScore;
-    const investmentScore = 70;
-
-    const financialScore = Math.round(
-      spendingScore * weights.spendingRatio +
-      emergencyScore * weights.emergencyFund +
-      debtScore * weights.debtRatio +
-      savingsScore * weights.savingsRate +
-      billScore * weights.billPayment +
-      investmentScore * weights.investments
-    );
-
-    const healthData = mockHealthEcoService.getHealthScore(transactions);
-    const ecoData = mockHealthEcoService.getEcoScore(transactions);
-
-    return {
-      financial: validateScore(financialScore),
-      health: validateScore(healthData?.score || 75), // Fallback value
-      eco: validateScore(ecoData?.score || 68) // Fallback value
-    };
-  }, [metrics, transactions]);
+  useEffect(() => {
+    generateScoreSummary(transactions, accounts).then(setScores).catch(console.error);
+  }, [transactions, accounts]);
 
   // Enhanced animation with proper state management
   useEffect(() => {
