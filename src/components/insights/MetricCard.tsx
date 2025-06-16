@@ -10,6 +10,8 @@ interface MetricCardProps {
   color?: string;
   prefix?: string;
   suffix?: string;
+  index?: number;
+  children?: React.ReactNode;
 }
 
 const MetricCard: React.FC<MetricCardProps> = ({
@@ -20,7 +22,9 @@ const MetricCard: React.FC<MetricCardProps> = ({
   trend,
   color = '#3b82f6',
   prefix = '',
-  suffix = ''
+  suffix = '',
+  index = 0,
+  children
 }) => {
   const getTrendColor = () => {
     switch (trend) {
@@ -39,11 +43,11 @@ const MetricCard: React.FC<MetricCardProps> = ({
   };
 
   return (
-    <div className="liquid-glass-fallback rounded-2xl p-4 sm:p-6 h-full min-h-[120px] sm:min-h-[140px] md:min-h-[160px] flex flex-col justify-between group hover:scale-[1.02] transition-all duration-300">
+    <div className="liquid-glass-card rounded-2xl p-4 sm:p-6 h-full min-h-[120px] sm:min-h-[140px] md:min-h-[160px] flex flex-col justify-between group hover:scale-[1.02] transition-all duration-300">
       {/* Header */}
       <div className="flex items-start justify-between mb-3">
         <div 
-          className="p-2 sm:p-3 rounded-xl"
+          className="p-2 sm:p-3 rounded-xl backdrop-blur-sm"
           style={{ backgroundColor: `${color}20` }}
         >
           <Icon 
@@ -74,6 +78,7 @@ const MetricCard: React.FC<MetricCardProps> = ({
             {subtitle}
           </div>
         )}
+        {children}
       </div>
     </div>
   );

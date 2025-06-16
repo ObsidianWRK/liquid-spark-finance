@@ -1,4 +1,3 @@
-
 import React, { useMemo, useState } from 'react';
 import HealthScore from './HealthScore';
 import EcoScore from './EcoScore';
@@ -118,17 +117,34 @@ const InsightsPage = ({ transactions, accounts }: InsightsPageProps) => {
   const ecoData = useMemo(() => mockHealthEcoService.getEcoScore(transactions), [transactions]);
 
   return (
-    <div className="space-y-6">
+    <div className="max-w-6xl mx-auto p-6 space-y-8">
+      <h1 className="text-3xl font-bold text-white mb-8">Financial Insights</h1>
+      
       <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-        <TabsList className="grid w-full grid-cols-3 glass mb-6">
-          <TabsTrigger value="overview" className="text-white">Overview</TabsTrigger>
-          <TabsTrigger value="health" className="text-white">Health</TabsTrigger>
-          <TabsTrigger value="eco" className="text-white">Eco Impact</TabsTrigger>
+        <TabsList className="liquid-glass-card grid w-full grid-cols-3 mb-6 p-1 rounded-2xl">
+          <TabsTrigger 
+            value="overview" 
+            className="liquid-glass-menu-item text-white font-medium py-3 px-6 rounded-xl transition-all duration-200"
+          >
+            Overview
+          </TabsTrigger>
+          <TabsTrigger 
+            value="health" 
+            className="liquid-glass-menu-item text-white font-medium py-3 px-6 rounded-xl transition-all duration-200"
+          >
+            Health
+          </TabsTrigger>
+          <TabsTrigger 
+            value="eco" 
+            className="liquid-glass-menu-item text-white font-medium py-3 px-6 rounded-xl transition-all duration-200"
+          >
+            Eco Impact
+          </TabsTrigger>
         </TabsList>
 
-        <TabsContent value="overview" className="space-y-6">
+        <TabsContent value="overview" className="space-y-8">
           {/* Health and Eco Score Cards */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <HealthScore 
               score={healthData.score} 
               trends={healthData.trends} 
@@ -141,7 +157,7 @@ const InsightsPage = ({ transactions, accounts }: InsightsPageProps) => {
           </div>
 
           {/* Financial Health Score */}
-          <div className="mb-6">
+          <div className="liquid-glass-card rounded-3xl p-6">
             <HealthScore 
               score={healthScore}
               trends={{
@@ -154,19 +170,22 @@ const InsightsPage = ({ transactions, accounts }: InsightsPageProps) => {
           </div>
           
           {/* Key Metrics Grid */}
-          <div>
-            <h3 className="text-white text-lg font-bold mb-4">Key Metrics</h3>
-            <div className="grid grid-cols-2 gap-4">
+          <div className="liquid-glass-card rounded-3xl p-6">
+            <h3 className="text-white text-xl font-bold mb-6 flex items-center gap-2">
+              <PieChart className="w-6 h-6 text-blue-400" />
+              Key Financial Metrics
+            </h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <MetricCard
                 title="Spending Ratio"
                 value={`${Math.round(metrics.spendingRatio)}%`}
                 subtitle="of income spent"
                 trend={metrics.spendingRatio > 80 ? 'up' : metrics.spendingRatio < 60 ? 'down' : 'stable'}
                 color="#FF9500"
-                icon={<DollarSign className="w-4 h-4" />}
+                icon={DollarSign}
                 index={0}
               >
-                <div className="w-full bg-white/10 rounded-full h-2">
+                <div className="w-full bg-white/10 rounded-full h-2 mt-3">
                   <div 
                     className="bg-orange-500 h-2 rounded-full transition-all duration-1000"
                     style={{ width: `${Math.min(100, metrics.spendingRatio)}%` }}
@@ -180,10 +199,10 @@ const InsightsPage = ({ transactions, accounts }: InsightsPageProps) => {
                 subtitle="months covered"
                 trend={metrics.emergencyFundMonths >= 6 ? 'up' : 'down'}
                 color="#34C759"
-                icon={<Shield className="w-4 h-4" />}
+                icon={Shield}
                 index={1}
               >
-                <div className="w-full bg-white/10 rounded-full h-2">
+                <div className="w-full bg-white/10 rounded-full h-2 mt-3">
                   <div 
                     className="bg-green-500 h-2 rounded-full transition-all duration-1000"
                     style={{ width: `${Math.min(100, (metrics.emergencyFundMonths / 6) * 100)}%` }}
@@ -197,10 +216,10 @@ const InsightsPage = ({ transactions, accounts }: InsightsPageProps) => {
                 subtitle="of income saved"
                 trend={metrics.savingsRate > 10 ? 'up' : 'down'}
                 color="#007AFF"
-                icon={<PiggyBank className="w-4 h-4" />}
+                icon={PiggyBank}
                 index={2}
               >
-                <div className="w-full bg-white/10 rounded-full h-2">
+                <div className="w-full bg-white/10 rounded-full h-2 mt-3">
                   <div 
                     className="bg-blue-500 h-2 rounded-full transition-all duration-1000"
                     style={{ width: `${Math.min(100, metrics.savingsRate)}%` }}
@@ -214,10 +233,10 @@ const InsightsPage = ({ transactions, accounts }: InsightsPageProps) => {
                 subtitle="on-time payments"
                 trend={metrics.billPaymentScore > 95 ? 'up' : 'stable'}
                 color="#34C759"
-                icon={<Calendar className="w-4 h-4" />}
+                icon={Calendar}
                 index={3}
               >
-                <div className="w-full bg-white/10 rounded-full h-2">
+                <div className="w-full bg-white/10 rounded-full h-2 mt-3">
                   <div 
                     className="bg-green-500 h-2 rounded-full transition-all duration-1000"
                     style={{ width: `${metrics.billPaymentScore}%` }}
@@ -228,25 +247,27 @@ const InsightsPage = ({ transactions, accounts }: InsightsPageProps) => {
           </div>
         </TabsContent>
 
-        <TabsContent value="health" className="space-y-6">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            <HealthScore 
-              score={healthData.score} 
-              trends={healthData.trends} 
-            />
-            <div className="space-y-4">
-              <h3 className="text-white text-lg font-bold flex items-center gap-2">
-                <Heart className="w-5 h-5 text-pink-400" />
+        <TabsContent value="health" className="space-y-8">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <div className="liquid-glass-card rounded-3xl p-6">
+              <HealthScore 
+                score={healthData.score} 
+                trends={healthData.trends} 
+              />
+            </div>
+            <div className="liquid-glass-card rounded-3xl p-6">
+              <h3 className="text-white text-xl font-bold flex items-center gap-2 mb-6">
+                <Heart className="w-6 h-6 text-pink-400" />
                 Health Insights
               </h3>
-              <div className="grid grid-cols-1 gap-4">
+              <div className="grid grid-cols-1 gap-6">
                 <MetricCard
                   title="Fitness Spending"
                   value="$85"
                   subtitle="this month"
                   trend="up"
                   color="#34C759"
-                  icon={<TrendingUp className="w-4 h-4" />}
+                  icon={TrendingUp}
                   index={0}
                 />
                 <MetricCard
@@ -255,7 +276,7 @@ const InsightsPage = ({ transactions, accounts }: InsightsPageProps) => {
                   subtitle="preventive care"
                   trend="stable"
                   color="#007AFF"
-                  icon={<Shield className="w-4 h-4" />}
+                  icon={Shield}
                   index={1}
                 />
               </div>
@@ -263,26 +284,28 @@ const InsightsPage = ({ transactions, accounts }: InsightsPageProps) => {
           </div>
         </TabsContent>
 
-        <TabsContent value="eco" className="space-y-6">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            <EcoScore 
-              score={ecoData.score}
-              metrics={ecoData.metrics}
-              monthlyImpact={ecoData.monthlyImpact}
-            />
-            <div className="space-y-4">
-              <h3 className="text-white text-lg font-bold flex items-center gap-2">
-                <Leaf className="w-5 h-5 text-green-400" />
+        <TabsContent value="eco" className="space-y-8">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <div className="liquid-glass-card rounded-3xl p-6">
+              <EcoScore 
+                score={ecoData.score}
+                metrics={ecoData.metrics}
+                monthlyImpact={ecoData.monthlyImpact}
+              />
+            </div>
+            <div className="liquid-glass-card rounded-3xl p-6">
+              <h3 className="text-white text-xl font-bold flex items-center gap-2 mb-6">
+                <Leaf className="w-6 h-6 text-green-400" />
                 Eco Insights
               </h3>
-              <div className="grid grid-cols-1 gap-4">
+              <div className="grid grid-cols-1 gap-6">
                 <MetricCard
                   title="Sustainable Brands"
                   value="42%"
                   subtitle="of total spending"
                   trend="up"
                   color="#34C759"
-                  icon={<Leaf className="w-4 h-4" />}
+                  icon={Leaf}
                   index={0}
                 />
                 <MetricCard
@@ -291,7 +314,7 @@ const InsightsPage = ({ transactions, accounts }: InsightsPageProps) => {
                   subtitle="monthly investment"
                   trend="stable"
                   color="#007AFF"
-                  icon={<PieChart className="w-4 h-4" />}
+                  icon={PieChart}
                   index={1}
                 />
               </div>
