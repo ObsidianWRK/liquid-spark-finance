@@ -16,7 +16,7 @@ export interface BudgetInsight {
 
 // Enhanced AI service with health and eco advice
 export const mockAiService = {
-  sendMessage: async (message: string, context?: any): Promise<ChatMessage> => {
+  sendMessage: async (message: string, context?: Record<string, unknown>): Promise<ChatMessage> => {
     // Simulate API delay
     await new Promise(resolve => setTimeout(resolve, 1000 + Math.random() * 1000));
     

@@ -1,4 +1,13 @@
 
+interface Transaction {
+  id: string;
+  merchant?: string;
+  category?: {
+    name: string;
+  };
+  amount: number;
+}
+
 export interface HealthData {
   score: number;
   trends: {
@@ -24,7 +33,7 @@ export interface EcoData {
 }
 
 export const mockHealthEcoService = {
-  getHealthScore: (transactions: any[]): HealthData => {
+  getHealthScore: (transactions: Transaction[]): HealthData => {
     // Mock calculation based on spending patterns
     const fitnessSpending = transactions
       .filter(t => t.category?.name === 'Fitness' || t.merchant?.includes('Gym'))
@@ -54,7 +63,7 @@ export const mockHealthEcoService = {
     };
   },
 
-  getEcoScore: (transactions: any[]): EcoData => {
+  getEcoScore: (transactions: Transaction[]): EcoData => {
     const sustainableMerchants = ['Whole Foods', 'Trader Joe', 'REI', 'Patagonia'];
     const transportSpending = transactions
       .filter(t => t.category?.name === 'Transportation')

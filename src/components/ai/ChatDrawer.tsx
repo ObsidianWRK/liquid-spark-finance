@@ -7,7 +7,7 @@ import { MessageCircle, Send, Sparkles, X } from 'lucide-react';
 import { mockAiService, ChatMessage } from '@/services/mockAiService';
 
 interface ChatDrawerProps {
-  userContext?: any;
+  userContext?: Record<string, unknown>;
 }
 
 const ChatDrawer = ({ userContext }: ChatDrawerProps) => {
