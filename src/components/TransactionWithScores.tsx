@@ -71,9 +71,6 @@ const ScoreCircle = ({ score, label, isVisible, delay = 0, type }: { score: numb
           strokeDashoffset={strokeDashoffset}
           strokeLinecap="round"
           className="transition-all duration-500 ease-out"
-          style={{
-            filter: `drop-shadow(0 0 4px ${color}60)`
-          }}
         />
       </svg>
       <div className="absolute inset-0 flex items-center justify-center">
@@ -168,7 +165,7 @@ const TransactionWithScores = ({ transaction, scores, currency }: TransactionWit
         <div className="transaction-icon">
           {hasShippingInfo && (
             <div className="text-white/70">
-              {getShippingIcon(transaction.shippingProvider)}
+              <Package className="w-4 h-4" />
             </div>
           )}
         </div>

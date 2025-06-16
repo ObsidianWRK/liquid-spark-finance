@@ -118,20 +118,19 @@
 
 .transaction-amount { 
   grid-area: amount; 
+  text-align: right;
   display: flex;
   flex-direction: column;
-  align-items: flex-end;
   justify-content: center;
-  min-width: 100px;
 }
 
 .transaction-scores { 
   grid-area: scores; 
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  position: relative;
-  min-width: 72px;
+  height: 100%;
 }
 
 /* Transaction Element Styling */
