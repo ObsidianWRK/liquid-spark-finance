@@ -2,6 +2,63 @@
 
 ## 🚀 Quick Start
 
+> **NEW:** Enhanced Liquid Glass Menu Bar components now available!
+
+## 📋 Menu Bar Components
+
+### LiquidGlassTopMenuBar
+A modern top navigation bar with iOS 26-style liquid glass effects:
+
+```tsx
+import LiquidGlassTopMenuBar from '@/components/LiquidGlassTopMenuBar';
+
+<LiquidGlassTopMenuBar 
+  onMenuItemClick={(item) => console.log('Clicked:', item)}
+  className="your-custom-classes"
+/>
+```
+
+### Enhanced Radix UI Menubar
+Your existing Radix UI Menubar components now support liquid glass styling:
+
+```tsx
+import {
+  Menubar,
+  MenubarContent,
+  MenubarItem,
+  MenubarMenu,
+  MenubarTrigger,
+  MenubarShortcut,
+} from "@/components/ui/menubar";
+
+<Menubar className="bg-transparent border-0">
+  <MenubarMenu>
+    <MenubarTrigger>File</MenubarTrigger>
+    <MenubarContent>
+      <MenubarItem>New File <MenubarShortcut>⌘N</MenubarShortcut></MenubarItem>
+      <MenubarItem>Open... <MenubarShortcut>⌘O</MenubarShortcut></MenubarItem>
+    </MenubarContent>
+  </MenubarMenu>
+</Menubar>
+```
+
+### Menu Bar Demo Page
+See all menu bar effects in action:
+```tsx
+import MenuBarDemo from '@/pages/MenuBarDemo';
+```
+
+## 🎨 Menu Bar Features
+
+- **Advanced SVG Filters**: Real liquid distortion effects
+- **Backdrop Filters**: Ultra-smooth blur and saturation
+- **Interactive States**: Enhanced hover, focus, and active states
+- **Keyboard Shortcuts**: macOS-style shortcut display
+- **Responsive Design**: Mobile-optimized layouts
+- **Accessibility**: Full ARIA support and keyboard navigation
+
+## 🚀 Card Components - Quick Start
+
 ### 1. Import the CSS (Already Done)
 Your existing `src/styles/glass.css` now imports the liquid glass styles automatically.
 
