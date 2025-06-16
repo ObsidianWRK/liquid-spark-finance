@@ -149,7 +149,7 @@ const ContextualHelp: React.FC<ContextualHelpProps> = ({ page, showTour = false,
         targetElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
       }
     }
-  }, [tourActive, currentTourStep, currentTourData]);
+  }, [tourActive, currentTourStep, currentTourData, currentPageData.tour.length]);
 
   const handleNextTourStep = () => {
     if (currentTourStep < currentPageData.tour.length - 1) {

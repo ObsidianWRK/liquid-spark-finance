@@ -3,10 +3,10 @@
  * Provides encrypted localStorage with error handling and fallbacks
  */
 
-interface StorageOptions {
+interface StorageOptions<T = unknown> {
   encrypt?: boolean;
   expiry?: number; // Time in milliseconds
-  fallback?: any;
+  fallback?: T;
 }
 
 class SecureStorage {

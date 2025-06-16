@@ -23,7 +23,7 @@ import AccountCard from '@/components/AccountCard';
 import TransactionItem from '@/components/TransactionItem';
 import QuickActions from '@/components/QuickActions';
 import EmptyState from '@/components/ui/EmptyState';
-import { SkeletonCard, SkeletonTransaction } from '@/components/ui/Skeleton';
+import { SkeletonCard, SkeletonTransaction } from '@/components/ui/skeleton';
 import { useAccessibility, useSkipLinks } from '@/hooks/useAccessibility';
 import { cn } from '@/lib/utils';
 

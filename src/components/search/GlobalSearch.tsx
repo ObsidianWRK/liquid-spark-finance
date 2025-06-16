@@ -161,7 +161,7 @@ const GlobalSearch: React.FC<GlobalSearchProps> = ({ isOpen, onClose, onNavigate
 
     // Sort by relevance score
     return results.sort((a, b) => (b.relevanceScore || 0) - (a.relevanceScore || 0)).slice(0, 8);
-  }, [query, onNavigate]);
+  }, [query, onNavigate, mockTransactions, mockAccounts, mockCalculators, mockHelpContent]);
 
   // Handle search submission
   const handleSearch = (searchQuery: string = query) => {

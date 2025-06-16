@@ -4,7 +4,7 @@ import GoalCard from './GoalCard';
 import GoalCreator from './GoalCreator';
 import SavingsInsights from './SavingsInsights';
 import EmptyState from '@/components/ui/EmptyState';
-import { SkeletonCard } from '@/components/ui/Skeleton';
+import { Skeleton } from '@/components/ui/skeleton';
 import { savingsGoalsService } from '@/services/savingsGoalsService';
 import { SavingsGoal, SavingsInsight } from '@/types/savingsGoals';
 import { cn } from '@/lib/utils';
@@ -97,14 +97,14 @@ const SavingsGoals = () => {
             {/* Summary cards skeleton */}
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
               {Array.from({ length: 4 }).map((_, index) => (
-                <SkeletonCard key={index} className="h-24" />
+                <Skeleton className="h-24" />
               ))}
             </div>
             
             {/* Main content skeleton */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {Array.from({ length: 6 }).map((_, index) => (
-                <SkeletonCard key={index} className="h-48" />
+                <Skeleton className="h-48" />
               ))}
             </div>
           </div>

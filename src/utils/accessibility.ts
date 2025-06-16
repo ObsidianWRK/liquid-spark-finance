@@ -21,7 +21,7 @@ export const generateAriaProps = (props: {
   required?: boolean;
   readonly?: boolean;
 }) => {
-  const ariaProps: Record<string, any> = {};
+  const ariaProps: Record<string, string | boolean | undefined> = {};
 
   if (props.label) ariaProps['aria-label'] = props.label;
   if (props.labelledBy) ariaProps['aria-labelledby'] = props.labelledBy;
