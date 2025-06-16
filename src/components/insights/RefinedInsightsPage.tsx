@@ -198,24 +198,19 @@ const RefinedInsightsPage = ({ transactions, accounts }: InsightsPageProps) => {
   ));
 
   return (
-    <div className="liquid-insights-container min-h-screen relative overflow-hidden">
-      {/* Refined background with professional gradients */}
-      <div className="liquid-bg-insights fixed inset-0" />
+    <div className="min-h-screen relative overflow-hidden" style={{ backgroundColor: '#000000' }}>
+      {/* Subtle background effects matching the main app */}
+      <div className="fixed inset-0 bg-gradient-to-br from-slate-900/10 to-slate-800/5" />
       
-      {/* Floating orbs with professional colors */}
-      <div className="liquid-orb-1" />
-      <div className="liquid-orb-2" />
-      <div className="liquid-orb-3" />
-      <div className="liquid-orb-4" />
-      
-      {/* Refined gradient overlay */}
-      <div className="insights-gradient-overlay" />
+      {/* Minimal floating orbs for consistency */}
+      <div className="fixed top-1/4 left-1/4 w-32 h-32 bg-slate-700/5 rounded-full blur-3xl animate-pulse" />
+      <div className="fixed bottom-1/3 right-1/3 w-40 h-40 bg-indigo-900/5 rounded-full blur-3xl animate-pulse delay-1000" />
       
       {/* Content */}
       <div className="relative z-10 p-6 space-y-8">
         {/* Header */}
         <div className="text-center space-y-4 animate-slideInScale">
-          <h1 className="text-4xl font-bold text-slate-100">
+          <h1 className="text-4xl font-bold text-white">
             Financial Insights
           </h1>
           <p className="text-lg text-slate-400 max-w-2xl mx-auto">
@@ -316,49 +311,45 @@ const RefinedInsightsPage = ({ transactions, accounts }: InsightsPageProps) => {
 
         {/* Professional Insights Grid */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <RefinedTrendCard
-            title="Performance Trends"
-            subtitle="Monthly financial trajectory"
-            trend="Improving steadily"
-            delay={1400}
-          />
+          <div className="liquid-glass-card p-6">
+            <RefinedTrendCard
+              title="Performance Trends"
+              subtitle="Monthly financial trajectory"
+              trend="Improving steadily"
+              delay={1400}
+            />
+          </div>
 
-          <RefinedTrendCard
-            title="Goal Progress"
-            subtitle="Tracking financial milestones"
-            trend="On target"
-            delay={1600}
-          />
+          <div className="liquid-glass-card p-6">
+            <RefinedTrendCard
+              title="Goal Progress"
+              subtitle="Tracking financial milestones"
+              trend="On target"
+              delay={1600}
+            />
+          </div>
 
-          <RefinedTrendCard
-            title="Risk Assessment"
-            subtitle="Financial stability outlook"
-            trend="Low risk profile"
-            delay={1800}
-          />
+          <div className="liquid-glass-card p-6">
+            <RefinedTrendCard
+              title="Risk Assessment"
+              subtitle="Financial stability outlook"
+              trend="Low risk profile"
+              delay={1800}
+            />
+          </div>
         </div>
 
         {/* Professional Summary Section */}
-        <EnhancedGlassCard 
-          className="p-8 rounded-3xl backdrop-blur-xl border border-slate-700/40 bg-slate-900/20 hover:border-slate-600/60 transition-all duration-500"
-          liquid={true}
-          liquidIntensity={0.1}
-          liquidDistortion={0.05}
-          liquidAnimated={true}
-          liquidInteractive={false}
-          style={{
-            animation: `slideInScale 0.8s ease-out 2000ms both`
-          }}
-        >
+        <div className="liquid-glass-card p-8" style={{ animation: `slideInScale 0.8s ease-out 2000ms both` }}>
           <div className="text-center space-y-6">
             <div className="flex items-center justify-center space-x-3 mb-6">
               <Target className="w-8 h-8 text-indigo-400" />
-              <h2 className="text-2xl font-bold text-slate-100">Financial Overview</h2>
+              <h2 className="text-2xl font-bold text-white">Financial Overview</h2>
             </div>
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 text-left">
               <div className="space-y-4">
-                <h3 className="text-lg font-semibold text-slate-200 flex items-center space-x-2">
+                <h3 className="text-lg font-semibold text-white flex items-center space-x-2">
                   <Zap className="w-5 h-5 text-yellow-500" />
                   <span>Strengths</span>
                 </h3>
@@ -379,7 +370,7 @@ const RefinedInsightsPage = ({ transactions, accounts }: InsightsPageProps) => {
               </div>
               
               <div className="space-y-4">
-                <h3 className="text-lg font-semibold text-slate-200 flex items-center space-x-2">
+                <h3 className="text-lg font-semibold text-white flex items-center space-x-2">
                   <Target className="w-5 h-5 text-indigo-500" />
                   <span>Opportunities</span>
                 </h3>
@@ -400,7 +391,7 @@ const RefinedInsightsPage = ({ transactions, accounts }: InsightsPageProps) => {
               </div>
             </div>
           </div>
-        </EnhancedGlassCard>
+        </div>
       </div>
     </div>
   );
