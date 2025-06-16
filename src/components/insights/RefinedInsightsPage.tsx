@@ -284,10 +284,10 @@ const RefinedInsightsPage = ({ transactions, accounts }: InsightsPageProps) => {
       <div className="relative z-10 p-6 space-y-8">
         {/* Header */}
         <div className="text-center space-y-4 animate-slideInScale">
-          <h1 className="text-4xl font-bold text-white">
+          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white">
             Financial Insights
           </h1>
-          <p className="text-lg text-slate-400 max-w-2xl mx-auto">
+          <p className="text-base sm:text-lg lg:text-xl text-slate-400 max-w-2xl mx-auto">
             Professional analysis of your financial health with sophisticated visual intelligence
           </p>
         </div>
@@ -321,8 +321,8 @@ const RefinedInsightsPage = ({ transactions, accounts }: InsightsPageProps) => {
           />
         </div>
 
-        {/* Financial Metrics Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        {/* Financial Metrics Grid - Enhanced Responsive */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
           <RefinedMetricCard
             title="Monthly Spending"
             value={`$${metrics.monthlySpending.toLocaleString()}`}
@@ -376,9 +376,9 @@ const RefinedInsightsPage = ({ transactions, accounts }: InsightsPageProps) => {
           />
         </div>
 
-        {/* Professional Insights Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <div className="liquid-glass-card p-6">
+        {/* Professional Insights Grid - Enhanced Responsive */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+          <div className="liquid-glass-card p-4 sm:p-6">
             <RefinedTrendCard
               title="Performance Trends"
               subtitle="Monthly financial trajectory"
@@ -387,7 +387,7 @@ const RefinedInsightsPage = ({ transactions, accounts }: InsightsPageProps) => {
             />
           </div>
 
-          <div className="liquid-glass-card p-6">
+          <div className="liquid-glass-card p-4 sm:p-6">
             <RefinedTrendCard
               title="Goal Progress"
               subtitle="Tracking financial milestones"
@@ -396,7 +396,7 @@ const RefinedInsightsPage = ({ transactions, accounts }: InsightsPageProps) => {
             />
           </div>
 
-          <div className="liquid-glass-card p-6">
+          <div className="liquid-glass-card p-4 sm:p-6 md:col-span-2 lg:col-span-1">
             <RefinedTrendCard
               title="Risk Assessment"
               subtitle="Financial stability outlook"
@@ -406,21 +406,21 @@ const RefinedInsightsPage = ({ transactions, accounts }: InsightsPageProps) => {
           </div>
         </div>
 
-        {/* Professional Summary Section */}
-        <div className="liquid-glass-card p-8" style={{ animation: `slideInScale 0.8s ease-out 2000ms both` }}>
+        {/* Professional Summary Section - Enhanced Responsive */}
+        <div className="liquid-glass-card p-6 sm:p-8" style={{ animation: `slideInScale 0.8s ease-out 2000ms both` }}>
           <div className="text-center space-y-6">
             <div className="flex items-center justify-center space-x-3 mb-6">
-              <Target className="w-8 h-8 text-indigo-400" />
-              <h2 className="text-2xl font-bold text-white">Financial Overview</h2>
+              <Target className="w-6 h-6 sm:w-8 sm:h-8 text-indigo-400" />
+              <h2 className="text-xl sm:text-2xl font-bold text-white">Financial Overview</h2>
             </div>
             
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 text-left">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8 text-left">
               <div className="space-y-4">
-                <h3 className="text-lg font-semibold text-white flex items-center space-x-2">
-                  <Zap className="w-5 h-5 text-yellow-500" />
+                <h3 className="text-base sm:text-lg font-semibold text-white flex items-center space-x-2">
+                  <Zap className="w-4 h-4 sm:w-5 sm:h-5 text-yellow-500" />
                   <span>Strengths</span>
                 </h3>
-                <ul className="space-y-2 text-slate-400">
+                <ul className="space-y-2 text-slate-400 text-sm sm:text-base">
                   <li className="flex items-start space-x-2">
                     <span className="w-2 h-2 bg-green-500 rounded-full mt-2 flex-shrink-0"></span>
                     <span>Consistent payment history with {Math.round(metrics.billPaymentScore)}% reliability</span>
@@ -437,11 +437,11 @@ const RefinedInsightsPage = ({ transactions, accounts }: InsightsPageProps) => {
               </div>
               
               <div className="space-y-4">
-                <h3 className="text-lg font-semibold text-white flex items-center space-x-2">
-                  <Target className="w-5 h-5 text-indigo-500" />
+                <h3 className="text-base sm:text-lg font-semibold text-white flex items-center space-x-2">
+                  <Target className="w-4 h-4 sm:w-5 sm:h-5 text-indigo-500" />
                   <span>Opportunities</span>
                 </h3>
-                <ul className="space-y-2 text-slate-400">
+                <ul className="space-y-2 text-slate-400 text-sm sm:text-base">
                   <li className="flex items-start space-x-2">
                     <span className="w-2 h-2 bg-amber-500 rounded-full mt-2 flex-shrink-0"></span>
                     <span>Emergency fund covers {metrics.emergencyFundMonths.toFixed(1)} months of expenses</span>

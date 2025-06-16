@@ -144,7 +144,7 @@ const Index = () => {
         return (
           <div className="space-y-4">
             <h2 className="text-2xl font-bold text-white mb-6">Your Accounts</h2>
-            <div className="grid grid-cols-1 gap-4">
+            <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-4 lg:gap-6">
               {accounts.map((account) => (
                 <div key={account.id} className="liquid-glass-card p-6">
                   <AccountCard 
@@ -161,7 +161,7 @@ const Index = () => {
         return (
           <div>
             <h2 className="text-2xl font-bold text-white mb-6">Transaction History</h2>
-            <div className="liquid-glass-card p-6">
+            <div className="liquid-glass-card p-4 sm:p-6">
               <TransactionList transactions={transactions} currency="USD" enhanced={true} />
             </div>
           </div>
@@ -178,7 +178,7 @@ const Index = () => {
       
       case 'profile':
         return (
-          <div className="liquid-glass-card p-8">
+          <div className="liquid-glass-card p-6 sm:p-8">
             <div className="flex items-center justify-center h-64">
               <p className="text-white/70 text-lg">Profile Settings</p>
             </div>
@@ -188,23 +188,26 @@ const Index = () => {
       default:
         return (
           <div className="space-y-6">
-            <div className="liquid-glass-card p-6">
-              <BalanceCard
-                accountType={mainAccount.type}
-                nickname={mainAccount.nickname}
-                balance={mainAccount.balance}
-                availableBalance={mainAccount.availableBalance}
-                currency={mainAccount.currency}
-                trend={mainAccount.trend}
-                trendPercentage={mainAccount.trendPercentage}
-              />
+            {/* Main Cards Grid - Responsive Layout */}
+            <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
+              <div className="liquid-glass-card p-4 sm:p-6 lg:col-span-2 xl:col-span-2">
+                <BalanceCard
+                  accountType={mainAccount.type}
+                  nickname={mainAccount.nickname}
+                  balance={mainAccount.balance}
+                  availableBalance={mainAccount.availableBalance}
+                  currency={mainAccount.currency}
+                  trend={mainAccount.trend}
+                  trendPercentage={mainAccount.trendPercentage}
+                />
+              </div>
+              
+              <div className="liquid-glass-card p-4 sm:p-6">
+                <QuickActions />
+              </div>
             </div>
             
-            <div className="liquid-glass-card p-6">
-              <QuickActions />
-            </div>
-            
-            <div className="liquid-glass-card p-6">
+            <div className="liquid-glass-card p-4 sm:p-6">
               <h2 className="text-xl font-bold text-white mb-4">Recent Transactions</h2>
               <TransactionList transactions={transactions.slice(0, 5)} currency="USD" enhanced={true} />
             </div>

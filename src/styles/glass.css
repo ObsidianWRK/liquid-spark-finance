@@ -89,7 +89,7 @@
   transform: translateY(-1px);
 }
 
-/* Perfect Transaction Layout Grid */
+/* Perfect Transaction Layout Grid - Enhanced Responsive */
 .transaction-layout {
   display: grid;
   grid-template-columns: 12px 24px 1fr 100px 72px;
@@ -98,6 +98,48 @@
   align-items: center;
   min-height: 56px;
   position: relative;
+}
+
+/* Tablet optimizations */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .transaction-layout {
+    grid-template-columns: 14px 28px 1fr 120px 80px;
+    gap: 0 16px;
+    min-height: 60px;
+  }
+  
+  .transaction-merchant {
+    font-size: 15px;
+  }
+  
+  .transaction-amount-text {
+    font-size: 15px;
+  }
+}
+
+/* Desktop optimizations */
+@media (min-width: 1024px) {
+  .transaction-layout {
+    grid-template-columns: 16px 32px 1fr 140px 90px;
+    gap: 0 20px;
+    min-height: 64px;
+  }
+  
+  .transaction-merchant {
+    font-size: 16px;
+  }
+  
+  .transaction-amount-text {
+    font-size: 16px;
+  }
+  
+  .transaction-category {
+    font-size: 13px;
+  }
+  
+  .transaction-date-text {
+    font-size: 13px;
+  }
 }
 
 .transaction-status { 
