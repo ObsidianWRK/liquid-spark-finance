@@ -1,18 +1,39 @@
-import React, { useState } from 'react';
+import React, { useState, Suspense, lazy, useEffect } from 'react';
 import BalanceCard from '@/components/BalanceCard';
 import QuickActions from '@/components/QuickActions';
 import TransactionList from '@/components/TransactionList';
 import AccountCard from '@/components/AccountCard';
 import Navigation from '@/components/Navigation';
-import RefinedInsightsPage from '@/components/insights/RefinedInsightsPage';
 import ChatDrawer from '@/components/ai/ChatDrawer';
-import BudgetReportsPage from '@/components/reports/BudgetReportsPage';
-import WrappedPage from '@/components/wrapped/WrappedPage';
+import Profile from './Profile';
 import '../styles/glass.css';
 import '../styles/liquid-glass-wwdc.css';
+import '../styles/performance-optimized.css';
+
+// Lazy load heavy components for better initial load performance
+const OptimizedRefinedInsightsPage = lazy(() => import('@/components/insights/OptimizedRefinedInsightsPage'));
+const RefinedInsightsPage = lazy(() => import('@/components/insights/RefinedInsightsPage'));
+const BudgetReportsPage = lazy(() => import('@/components/reports/BudgetReportsPage'));
+const WrappedPage = lazy(() => import('@/components/wrapped/WrappedPage'));
 
 const Index = () => {
   const [activeTab, setActiveTab] = useState('dashboard');
+  const [performanceMode, setPerformanceMode] = useState(false);
+
+  // Performance detection
+  useEffect(() => {
+    const detectPerformance = () => {
+      const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+      const isLowEnd = navigator.hardwareConcurrency ? navigator.hardwareConcurrency < 4 : isMobile;
+      
+      if (isLowEnd || isMobile) {
+        setPerformanceMode(true);
+        document.body.classList.add('performance-mode', 'low-end-device');
+      }
+    };
+
+    detectPerformance();
+  }, []);
 
   // Sample banking data
   const mainAccount = {
@@ -138,15 +159,24 @@ const Index = () => {
     { id: 'txn_003', merchant: 'Salary', amount: 3250.00, date: '2025-06-13' }
   ];
 
+  // Loading component
+  const LoadingSpinner = () => (
+    <div className="min-h-screen flex items-center justify-center">
+      <div className="animate-optimized-pulse">
+        <div className="w-12 h-12 border-4 border-indigo-500 border-t-transparent rounded-full animate-spin"></div>
+      </div>
+    </div>
+  );
+
   const renderContent = () => {
     switch (activeTab) {
       case 'accounts':
         return (
-          <div className="space-y-4">
+          <div className="space-y-4 optimized-text">
             <h2 className="text-2xl font-bold text-white mb-6">Your Accounts</h2>
-            <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-4 lg:gap-6">
+            <div className="optimized-grid">
               {accounts.map((account) => (
-                <div key={account.id} className="liquid-glass-card p-6">
+                <div key={account.id} className={performanceMode ? "liquid-glass-card-optimized p-6" : "liquid-glass-card p-6"}>
                   <AccountCard 
                     account={account}
                     recentTransactions={recentTransactions}
@@ -159,38 +189,48 @@ const Index = () => {
       
       case 'transactions':
         return (
-          <div>
+          <div className="optimized-text">
             <h2 className="text-2xl font-bold text-white mb-6">Transaction History</h2>
-            <div className="liquid-glass-card p-4 sm:p-6">
-              <TransactionList transactions={transactions} currency="USD" enhanced={true} />
+            <div className={performanceMode ? "liquid-glass-card-optimized p-4 sm:p-6" : "liquid-glass-card p-4 sm:p-6"}>
+              <TransactionList transactions={transactions} currency="USD" enhanced={!performanceMode} />
             </div>
           </div>
         );
       
       case 'insights':
-        return <RefinedInsightsPage transactions={transactions} accounts={accounts} />;
+        return (
+          <Suspense fallback={<LoadingSpinner />}>
+            {performanceMode ? (
+              <OptimizedRefinedInsightsPage transactions={transactions} accounts={accounts} />
+            ) : (
+              <RefinedInsightsPage transactions={transactions} accounts={accounts} />
+            )}
+          </Suspense>
+        );
       
       case 'reports':
-        return <BudgetReportsPage />;
+        return (
+          <Suspense fallback={<LoadingSpinner />}>
+            <BudgetReportsPage />
+          </Suspense>
+        );
       
       case 'wrapped':
-        return <WrappedPage />;
+        return (
+          <Suspense fallback={<LoadingSpinner />}>
+            <WrappedPage />
+          </Suspense>
+        );
       
       case 'profile':
-        return (
-          <div className="liquid-glass-card p-6 sm:p-8">
-            <div className="flex items-center justify-center h-64">
-              <p className="text-white/70 text-lg">Profile Settings</p>
-            </div>
-          </div>
-        );
+        return <Profile />;
       
       default:
         return (
-          <div className="space-y-6">
+          <div className="space-y-6 optimized-text contain-layout">
             {/* Main Cards Grid - Responsive Layout */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
-              <div className="liquid-glass-card p-4 sm:p-6 lg:col-span-2 xl:col-span-2">
+            <div className="optimized-grid">
+              <div className={`${performanceMode ? "liquid-glass-card-optimized" : "liquid-glass-card"} p-4 sm:p-6 lg:col-span-2 xl:col-span-2 promote-layer`}>
                 <BalanceCard
                   accountType={mainAccount.type}
                   nickname={mainAccount.nickname}
@@ -202,14 +242,18 @@ const Index = () => {
                 />
               </div>
               
-              <div className="liquid-glass-card p-4 sm:p-6">
+              <div className={`${performanceMode ? "liquid-glass-card-optimized" : "liquid-glass-card"} p-4 sm:p-6 promote-layer`}>
                 <QuickActions />
               </div>
             </div>
             
-            <div className="liquid-glass-card p-4 sm:p-6">
+            <div className={`${performanceMode ? "liquid-glass-card-optimized" : "liquid-glass-card"} p-4 sm:p-6 promote-layer`}>
               <h2 className="text-xl font-bold text-white mb-4">Recent Transactions</h2>
-              <TransactionList transactions={transactions.slice(0, 5)} currency="USD" enhanced={true} />
+              <TransactionList 
+                transactions={transactions.slice(0, performanceMode ? 3 : 5)} 
+                currency="USD" 
+                enhanced={!performanceMode} 
+              />
             </div>
           </div>
         );
@@ -217,9 +261,9 @@ const Index = () => {
   };
 
   return (
-    <div className="min-h-screen bg-black text-white">
-      {/* Solid Black Background */}
-      <div className="fixed inset-0 bg-black z-0" />
+    <div className={`min-h-screen text-white smooth-scroll ${performanceMode ? 'performance-mode low-end-device' : ''}`}>
+      {/* Optimized Background */}
+      <div className={`fixed inset-0 z-0 ${performanceMode ? 'bg-black' : 'optimized-bg'}`} />
       
       {/* Main Content Container - Responsive Layout */}
       <div className="relative z-10 min-h-screen pb-24">
