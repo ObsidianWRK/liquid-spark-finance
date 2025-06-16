@@ -1,4 +1,3 @@
-
 import React from 'react';
 import TransactionItem from './TransactionItem';
 import TransactionWithScores from './TransactionWithScores';
@@ -59,27 +58,26 @@ const TransactionList = ({ transactions, currency, enhanced = false }: Transacti
           <h3 className="text-white/70 text-sm font-medium mb-3 px-4">
             {formatDateHeader(date)}
           </h3>
-          <div className="space-y-2">
-            {dateTransactions.map((transaction) => {
-              if (enhanced) {
-                const scores = calculateTransactionScores(transaction);
-                return (
-                  <TransactionWithScores
-                    key={transaction.id}
-                    transaction={transaction}
-                    scores={scores}
-                    currency={currency}
-                  />
-                );
-              } else {
-                return (
-                  <TransactionItem
-                    key={transaction.id}
-                    transaction={transaction}
-                    currency={currency}
-                  />
-                );
-              }
+          <div className="space-y-3 px-4">
+            {dateTransactions.map((transaction, index) => {
+              const TransactionComponent = enhanced ? (
+                <TransactionWithScores
+                  transaction={transaction}
+                  scores={calculateTransactionScores(transaction)}
+                  currency={currency}
+                />
+              ) : (
+                <TransactionItem
+                  transaction={transaction}
+                  currency={currency}
+                />
+              );
+
+              return (
+                <div key={transaction.id} className={index > 0 ? "mt-3" : ""}>
+                  {TransactionComponent}
+                </div>
+              );
             })}
           </div>
         </div>

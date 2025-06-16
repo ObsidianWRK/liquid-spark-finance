@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from 'react';
 import GlassCard from '../GlassCard';
 import { Leaf, TrendingUp, Recycle } from 'lucide-react';
@@ -19,6 +18,11 @@ interface EcoScoreProps {
 
 const EcoScore = ({ score, metrics, monthlyImpact }: EcoScoreProps) => {
   const [animatedScore, setAnimatedScore] = useState(0);
+
+  // Helper function to format percentages properly
+  const formatPercentage = (value: number) => {
+    return Math.round(value * 10) / 10; // Round to 1 decimal place
+  };
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -145,10 +149,10 @@ const EcoScore = ({ score, metrics, monthlyImpact }: EcoScoreProps) => {
               <div className="w-16 glass-progress h-2">
                 <div 
                   className="glass-progress-fill green h-2 rounded-full transition-all duration-1000"
-                  style={{ width: `${metrics.sustainableSpending}%` }}
+                  style={{ width: `${formatPercentage(metrics.sustainableSpending)}%` }}
                 />
               </div>
-              <span className="text-white/60 text-xs">{metrics.sustainableSpending}%</span>
+              <span className="text-white/60 text-xs">{formatPercentage(metrics.sustainableSpending)}%</span>
             </div>
           </div>
           
@@ -158,10 +162,10 @@ const EcoScore = ({ score, metrics, monthlyImpact }: EcoScoreProps) => {
               <div className="w-16 glass-progress h-2">
                 <div 
                   className="glass-progress-fill blue h-2 rounded-full transition-all duration-1000"
-                  style={{ width: `${metrics.greenTransport}%` }}
+                  style={{ width: `${formatPercentage(metrics.greenTransport)}%` }}
                 />
               </div>
-              <span className="text-white/60 text-xs">{metrics.greenTransport}%</span>
+              <span className="text-white/60 text-xs">{formatPercentage(metrics.greenTransport)}%</span>
             </div>
           </div>
           
@@ -171,10 +175,10 @@ const EcoScore = ({ score, metrics, monthlyImpact }: EcoScoreProps) => {
               <div className="w-16 glass-progress h-2">
                 <div 
                   className="bg-purple-500 h-2 rounded-full transition-all duration-1000"
-                  style={{ width: `${metrics.renewableEnergy}%` }}
+                  style={{ width: `${formatPercentage(metrics.renewableEnergy)}%` }}
                 />
               </div>
-              <span className="text-white/60 text-xs">{metrics.renewableEnergy}%</span>
+              <span className="text-white/60 text-xs">{formatPercentage(metrics.renewableEnergy)}%</span>
             </div>
           </div>
         </div>

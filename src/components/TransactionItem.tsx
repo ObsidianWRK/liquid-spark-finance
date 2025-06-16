@@ -1,4 +1,3 @@
-
 import React from 'react';
 import GlassCard from './GlassCard';
 import { Package, Truck, Plane } from 'lucide-react';
@@ -80,7 +79,7 @@ const TransactionItem = ({ transaction, currency }: TransactionItemProps) => {
 
   return (
     <GlassCard 
-      className="p-4 mb-3 glass-interactive stagger-item"
+      className="p-4 glass-interactive stagger-item"
       interactive
       shimmer
     >
