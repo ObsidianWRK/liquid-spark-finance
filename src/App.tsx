@@ -9,6 +9,8 @@ import NotFound from "./pages/NotFound";
 import CreditScorePage from "./components/credit/CreditScorePage";
 import SavingsGoals from "./components/savings/SavingsGoals";
 import TransactionDemo from "./pages/TransactionDemo";
+import BudgetPlannerPage from "./components/budget/BudgetPlannerPage";
+import InvestmentTrackerPage from "./components/investments/InvestmentTrackerPage";
 
 const queryClient = new QueryClient();
 
@@ -24,6 +26,9 @@ const App = () => (
           <Route path="/credit-score" element={<CreditScorePage />} />
           <Route path="/savings" element={<SavingsGoals />} />
           <Route path="/transactions" element={<TransactionDemo />} />
+          <Route path="/budget-planner" element={<BudgetPlannerPage />} />
+          <Route path="/goal-setting" element={<SavingsGoals />} />
+          <Route path="/investment-tracker" element={<InvestmentTrackerPage />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
