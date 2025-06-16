@@ -58,6 +58,7 @@ const LiquidGlassTopMenuBar = ({ className, onMenuItemClick }: MenuBarProps) => 
     {
       label: 'Tools',
       items: [
+        { label: 'Calculators' },
         { label: 'Budget Planner' },
         { label: 'Investment Tracker' },
         { label: 'Goal Setting' },
@@ -84,6 +85,9 @@ const LiquidGlassTopMenuBar = ({ className, onMenuItemClick }: MenuBarProps) => 
   const handleItemClick = (item: string) => {
     // Built-in navigation for tool items
     switch (item) {
+      case 'Calculators':
+        navigate('/calculators');
+        break;
       case 'Budget Planner':
         navigate('/budget-planner');
         break;
