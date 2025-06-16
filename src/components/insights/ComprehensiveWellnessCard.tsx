@@ -56,7 +56,7 @@ const ComprehensiveWellnessCard: React.FC<{ data: WellnessData }> = ({ data }) =
   ];
 
   return (
-    <EnhancedGlassCard className="comprehensive-card responsive-padding-md responsive-spacing-md">
+    <EnhancedGlassCard className="comprehensive-card responsive-padding-md responsive-spacing-md w-full">
       <div className="flex items-center justify-between">
         <div className="flex items-center space-x-2">
           <Heart className="w-4 h-4 sm:w-5 sm:h-5 text-green-400" />
