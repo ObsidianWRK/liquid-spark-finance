@@ -1,15 +1,16 @@
 import { BudgetCategory } from '@/types/budget';
+import SecureStorage from '@/utils/secureStorage';
 
 /**
  * Very light-weight client-side service for managing user budget data.
- * Data is persisted to localStorage so it survives page refreshes during demos.
+ * Data is persisted using SecureStorage which provides error handling and encryption.
  *
  * In a production scenario this class would proxy network requests to a
  * backend service (e.g. Firebase, Supabase, GraphQL, REST, etc.).
  */
 class BudgetService {
   private static instance: BudgetService;
-  private storageKey = 'vueni:budgets:v1';
+  private storageKey = 'budgets:v1';
   private categories: BudgetCategory[] = [];
 
   private constructor() {
@@ -25,30 +26,29 @@ class BudgetService {
 
   private load() {
     if (typeof window === 'undefined') return;
-    try {
-      const raw = window.localStorage.getItem(this.storageKey);
-      if (raw) {
-        this.categories = JSON.parse(raw) as BudgetCategory[];
-      } else {
-        // Seed with sample data the first time for a richer demo experience
-        this.categories = [
-          { id: '1', name: 'Groceries', budget: 600, spent: 450, color: '#4ade80', recurring: true },
-          { id: '2', name: 'Dining', budget: 300, spent: 220, color: '#38bdf8', recurring: true },
-          { id: '3', name: 'Transportation', budget: 200, spent: 145, color: '#f97316', recurring: true },
-          { id: '4', name: 'Entertainment', budget: 200, spent: 165, color: '#a855f7', recurring: true },
-          { id: '5', name: 'Savings & Investments', budget: 500, spent: 500, color: '#facc15', recurring: true }
-        ];
-        this.persist();
-      }
-    } catch (e) {
-      console.error('Failed to parse budgets from localStorage', e);
-      this.categories = [];
+    
+    const stored = SecureStorage.getItem<BudgetCategory[]>(this.storageKey, {
+      fallback: []
+    });
+
+    if (stored && stored.length > 0) {
+      this.categories = stored;
+    } else {
+      // Seed with sample data the first time for a richer demo experience
+      this.categories = [
+        { id: '1', name: 'Groceries', budget: 600, spent: 450, color: '#4ade80', recurring: true },
+        { id: '2', name: 'Dining', budget: 300, spent: 220, color: '#38bdf8', recurring: true },
+        { id: '3', name: 'Transportation', budget: 200, spent: 145, color: '#f97316', recurring: true },
+        { id: '4', name: 'Entertainment', budget: 200, spent: 165, color: '#a855f7', recurring: true },
+        { id: '5', name: 'Savings & Investments', budget: 500, spent: 500, color: '#facc15', recurring: true }
+      ];
+      this.persist();
     }
   }
 
   private persist() {
     if (typeof window === 'undefined') return;
-    window.localStorage.setItem(this.storageKey, JSON.stringify(this.categories));
+    SecureStorage.setItem(this.storageKey, this.categories);
   }
 
   /** Budget CRUD **/

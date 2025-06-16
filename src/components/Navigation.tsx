@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import LiquidGlassSVGFilters from '@/components/ui/LiquidGlassSVGFilters';
 import { 
   Home, 
@@ -22,6 +22,8 @@ interface NavigationProps {
 
 const Navigation = ({ activeTab, onTabChange }: NavigationProps) => {
   const [showMore, setShowMore] = useState(false);
+  const moreMenuRef = useRef<HTMLDivElement>(null);
+  const moreButtonRef = useRef<HTMLButtonElement>(null);
 
   const mainTabs = [
     { id: 'dashboard', label: 'Home', icon: Home },
@@ -37,6 +39,38 @@ const Navigation = ({ activeTab, onTabChange }: NavigationProps) => {
     { id: 'wrapped', label: 'Wrapped', icon: Award },
     { id: 'profile', label: 'Profile', icon: User }
   ];
+
+  // Enhanced keyboard navigation
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (showMore) {
+        if (e.key === 'Escape') {
+          setShowMore(false);
+          moreButtonRef.current?.focus();
+        }
+        if (e.key === 'Tab') {
+          const focusableElements = moreMenuRef.current?.querySelectorAll(
+            'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+          );
+          if (focusableElements && focusableElements.length > 0) {
+            const firstElement = focusableElements[0] as HTMLElement;
+            const lastElement = focusableElements[focusableElements.length - 1] as HTMLElement;
+            
+            if (e.shiftKey && document.activeElement === firstElement) {
+              e.preventDefault();
+              lastElement.focus();
+            } else if (!e.shiftKey && document.activeElement === lastElement) {
+              e.preventDefault();
+              firstElement.focus();
+            }
+          }
+        }
+      }
+    };
+
+    document.addEventListener('keydown', handleKeyDown);
+    return () => document.removeEventListener('keydown', handleKeyDown);
+  }, [showMore]);
 
   const handleMoreClick = () => {
     setShowMore(!showMore);
@@ -85,12 +119,29 @@ const Navigation = ({ activeTab, onTabChange }: NavigationProps) => {
           aria-label="Close navigation menu"
           role="button"
           tabIndex={0}
-          onKeyDown={(e) => e.key === 'Escape' && setShowMore(false)}
+          onKeyDown={(e) => {
+            if (e.key === 'Escape') {
+              setShowMore(false);
+              moreButtonRef.current?.focus();
+            }
+          }}
         >
-          <div className="fixed bottom-navigation-spacing left-4 right-4 max-w-md mx-auto">
-            <div className="liquid-glass-card p-6">
+          <div 
+            ref={moreMenuRef}
+            className="fixed bottom-navigation-spacing left-4 right-4 max-w-md mx-auto"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div 
+              className="liquid-glass-card p-6"
+              role="dialog"
+              aria-modal="true"
+              aria-label="Additional navigation options"
+            >
+              <div className="sr-only">
+                <h2>More navigation options</h2>
+              </div>
               <div className="grid grid-cols-3 gap-4">
-                {moreTabs.map((tab) => {
+                {moreTabs.map((tab, index) => {
                   const IconComponent = tab.icon;
                   const isActive = activeTab === tab.id;
                   
@@ -118,6 +169,7 @@ const Navigation = ({ activeTab, onTabChange }: NavigationProps) => {
                       )}
                       aria-label={`Navigate to ${tab.label}`}
                       aria-current={isActive ? 'page' : undefined}
+                      autoFocus={index === 0}
                     >
                       <IconComponent className="nav-icon" aria-hidden="true" />
                       <span className="nav-text font-medium">{tab.label}</span>
@@ -157,6 +209,7 @@ const Navigation = ({ activeTab, onTabChange }: NavigationProps) => {
                 
                 {/* More Button - Part of seamless design */}
                 <button
+                  ref={moreButtonRef}
                   onClick={handleMoreClick}
                   className={getTabStyles(
                     moreTabs.some(tab => tab.id === activeTab),
@@ -166,6 +219,7 @@ const Navigation = ({ activeTab, onTabChange }: NavigationProps) => {
                   aria-label="More navigation options"
                   aria-expanded={showMore}
                   aria-haspopup="true"
+                  aria-controls="more-menu"
                 >
                   <Settings className="nav-icon" aria-hidden="true" />
                   <span className="nav-text font-medium">More</span>
@@ -174,6 +228,11 @@ const Navigation = ({ activeTab, onTabChange }: NavigationProps) => {
             </div>
           </nav>
         </div>
+      </div>
+
+      {/* Live region for screen reader announcements */}
+      <div aria-live="polite" aria-atomic="true" className="sr-only">
+        {showMore ? 'More navigation options opened' : ''}
       </div>
 
       {/* Floating Action Button - Enhanced with Glass Effects */}

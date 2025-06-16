@@ -13,12 +13,12 @@ import Profile from './Profile';
 import ChatDrawer from '@/components/ai/ChatDrawer';
 import NetWorthSummary from '@/components/financial/NetWorthSummary';
 import { mockData } from '@/services/mockData';
-import { usePerformanceOptimization } from '@/hooks/usePerformanceOptimization';
+import { usePerformanceMonitor } from '@/utils/performanceOptimizer';
 
 const Index = () => {
   const [activeTab, setActiveTab] = useState('dashboard');
   const [performanceMode, setPerformanceMode] = useState(false);
-  const { liquidSettings } = usePerformanceOptimization();
+  const metrics = usePerformanceMonitor();
   const [searchParams] = useSearchParams();
 
   // Handle URL tab parameter

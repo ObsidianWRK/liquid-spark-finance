@@ -3,6 +3,8 @@ import { Plus, Target, TrendingUp, Award, Calendar, DollarSign, Percent, MoreHor
 import GoalCard from './GoalCard';
 import GoalCreator from './GoalCreator';
 import SavingsInsights from './SavingsInsights';
+import EmptyState from '@/components/ui/EmptyState';
+import { SkeletonCard } from '@/components/ui/Skeleton';
 import { savingsGoalsService } from '@/services/savingsGoalsService';
 import { SavingsGoal, SavingsInsight } from '@/types/savingsGoals';
 import { cn } from '@/lib/utils';
@@ -14,6 +16,7 @@ const SavingsGoals = () => {
   const [loading, setLoading] = useState(true);
   const [showGoalCreator, setShowGoalCreator] = useState(false);
   const [activeTab, setActiveTab] = useState<'goals' | 'insights'>('goals');
+  const [retryCount, setRetryCount] = useState(0);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -22,14 +25,17 @@ const SavingsGoals = () => {
 
   const loadSavingsData = async () => {
     try {
+      setLoading(true);
       const [goalsData, insightsData] = await Promise.all([
         savingsGoalsService.getGoals(),
         savingsGoalsService.getSavingsInsights()
       ]);
       setGoals(goalsData);
       setInsights(insightsData);
+      setRetryCount(0); // Reset retry count on success
     } catch (error) {
       console.error('Failed to load savings data:', error);
+      setRetryCount(prev => prev + 1);
     } finally {
       setLoading(false);
     }
@@ -79,17 +85,27 @@ const SavingsGoals = () => {
     return 'bg-red-500';
   };
 
+  // Loading state with skeleton
   if (loading) {
     return (
       <div className="min-h-screen bg-black text-white">
         <div className="max-w-7xl mx-auto px-4 py-8 sm:px-6 lg:px-8">
-          <div className="space-y-6 animate-pulse">
-            <div className="h-8 bg-white/[0.05] rounded w-48"></div>
-            <div className="h-32 bg-white/[0.02] rounded-xl border border-white/[0.08]"></div>
+          <div className="space-y-6">
+            {/* Header skeleton */}
+            <div className="h-8 bg-white/[0.05] rounded w-48 animate-pulse"></div>
+            
+            {/* Summary cards skeleton */}
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+              {Array.from({ length: 4 }).map((_, index) => (
+                <SkeletonCard key={index} className="h-24" />
+              ))}
+            </div>
+            
+            {/* Main content skeleton */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              <div className="h-48 bg-white/[0.02] rounded-xl border border-white/[0.08]"></div>
-              <div className="h-48 bg-white/[0.02] rounded-xl border border-white/[0.08]"></div>
-              <div className="h-48 bg-white/[0.02] rounded-xl border border-white/[0.08]"></div>
+              {Array.from({ length: 6 }).map((_, index) => (
+                <SkeletonCard key={index} className="h-48" />
+              ))}
             </div>
           </div>
         </div>
@@ -97,266 +113,194 @@ const SavingsGoals = () => {
     );
   }
 
+  // Error state with retry
+  if (retryCount > 0 && goals.length === 0) {
+    return (
+      <div className="min-h-screen bg-black text-white flex items-center justify-center">
+        <EmptyState
+          emoji="⚠️"
+          title="Unable to load savings data"
+          description="We're having trouble loading your savings goals. Please check your connection and try again."
+          action={{
+            label: `Retry${retryCount > 1 ? ` (${retryCount})` : ''}`,
+            onClick: loadSavingsData,
+            variant: 'primary'
+          }}
+          size="lg"
+        />
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-black text-white">
-      <div className="max-w-7xl mx-auto px-4 py-8 sm:px-6 lg:px-8 space-y-8">
-        {/* Back */}
-        <button
-          onClick={() => navigate('/')}
-          className="liquid-glass-button flex items-center gap-2 px-3 py-2 rounded-xl text-white/80 hover:text-white transition-colors mb-4"
-        >
-          <ArrowLeft className="w-4 h-4" />
-          <span className="text-sm">Dashboard</span>
-        </button>
-
+      <div className="max-w-7xl mx-auto px-4 py-8 sm:px-6 lg:px-8">
+        
         {/* Header */}
-        <div className="flex items-center justify-between">
-          <div>
-            <h1 className="text-3xl font-bold text-white flex items-center space-x-3">
-              <Target className="w-8 h-8 text-green-400" />
-              <span>Savings Goals</span>
-            </h1>
-            <p className="text-gray-400 mt-2">Track your progress and build wealth systematically</p>
+        <div className="flex items-center justify-between mb-8">
+          <div className="flex items-center space-x-4">
+            <button
+              onClick={() => navigate(-1)}
+              className="p-2 rounded-lg bg-white/[0.05] hover:bg-white/[0.08] transition-colors focus:outline-none focus:ring-2 focus:ring-blue-400/50"
+              aria-label="Go back"
+            >
+              <ArrowLeft className="w-5 h-5" />
+            </button>
+            <div>
+              <h1 className="text-3xl font-bold">Savings Goals</h1>
+              <p className="text-white/60 mt-1">Track your progress towards financial milestones</p>
+            </div>
           </div>
           
           <button
             onClick={() => setShowGoalCreator(true)}
-            className="bg-green-500 text-white px-6 py-3 rounded-lg font-medium hover:bg-green-600 transition-all flex items-center space-x-2 shadow-lg"
+            className="flex items-center space-x-2 bg-green-500 text-white px-6 py-3 rounded-lg font-medium hover:bg-green-600 transition-all shadow-lg focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-offset-2 focus:ring-offset-black"
           >
             <Plus className="w-5 h-5" />
             <span>New Goal</span>
           </button>
         </div>
 
-        {/* Overview Stats */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-          <div className="bg-white/[0.02] rounded-xl border border-white/[0.08] p-6">
-            <div className="flex items-center space-x-3 mb-4">
-              <div className="w-10 h-10 bg-green-500/20 rounded-lg flex items-center justify-center">
-                <DollarSign className="w-5 h-5 text-green-400" />
+        {/* Summary Cards */}
+        {goals.length > 0 && (
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+            <div className="bg-white/[0.02] rounded-xl border border-white/[0.08] p-4">
+              <div className="flex items-center space-x-3">
+                <div className="p-2 rounded-lg bg-blue-500/20">
+                  <DollarSign className="w-5 h-5 text-blue-400" />
+                </div>
+                <div>
+                  <p className="text-white/60 text-sm">Total Saved</p>
+                  <p className="text-xl font-bold text-white">{formatCurrency(totalSaved)}</p>
+                </div>
               </div>
-              <div>
-                <h3 className="font-semibold text-white">Total Saved</h3>
-                <p className="text-sm text-gray-400">Across all goals</p>
-              </div>
             </div>
-            <div className="text-2xl font-bold text-white mb-1">
-              {formatCurrency(totalSaved)}
-            </div>
-            <div className="text-sm text-green-400">
-              {formatProgress(totalSaved, totalTargets)}% of target
-            </div>
-          </div>
 
-          <div className="bg-white/[0.02] rounded-xl border border-white/[0.08] p-6">
-            <div className="flex items-center space-x-3 mb-4">
-              <div className="w-10 h-10 bg-blue-500/20 rounded-lg flex items-center justify-center">
-                <Target className="w-5 h-5 text-blue-400" />
+            <div className="bg-white/[0.02] rounded-xl border border-white/[0.08] p-4">
+              <div className="flex items-center space-x-3">
+                <div className="p-2 rounded-lg bg-purple-500/20">
+                  <Target className="w-5 h-5 text-purple-400" />
+                </div>
+                <div>
+                  <p className="text-white/60 text-sm">Total Goals</p>
+                  <p className="text-xl font-bold text-white">{formatCurrency(totalTargets)}</p>
+                </div>
               </div>
-              <div>
-                <h3 className="font-semibold text-white">Total Targets</h3>
-                <p className="text-sm text-gray-400">Goal amounts</p>
-              </div>
             </div>
-            <div className="text-2xl font-bold text-white mb-1">
-              {formatCurrency(totalTargets)}
-            </div>
-            <div className="text-sm text-blue-400">
-              {goals.length} active goals
-            </div>
-          </div>
 
-          <div className="bg-white/[0.02] rounded-xl border border-white/[0.08] p-6">
-            <div className="flex items-center space-x-3 mb-4">
-              <div className="w-10 h-10 bg-purple-500/20 rounded-lg flex items-center justify-center">
-                <Award className="w-5 h-5 text-purple-400" />
+            <div className="bg-white/[0.02] rounded-xl border border-white/[0.08] p-4">
+              <div className="flex items-center space-x-3">
+                <div className="p-2 rounded-lg bg-green-500/20">
+                  <Percent className="w-5 h-5 text-green-400" />
+                </div>
+                <div>
+                  <p className="text-white/60 text-sm">Progress</p>
+                  <p className={cn("text-xl font-bold", getProgressColor(overallProgress))}>
+                    {overallProgress.toFixed(1)}%
+                  </p>
+                </div>
               </div>
-              <div>
-                <h3 className="font-semibold text-white">Completed</h3>
-                <p className="text-sm text-gray-400">Goals achieved</p>
-              </div>
             </div>
-            <div className="text-2xl font-bold text-white mb-1">
-              {completedGoals}
-            </div>
-            <div className="text-sm text-purple-400">
-              {goals.length > 0 ? ((completedGoals / goals.length) * 100).toFixed(0) : 0}% success rate
-            </div>
-          </div>
 
-          <div className="bg-white/[0.02] rounded-xl border border-white/[0.08] p-6">
-            <div className="flex items-center space-x-3 mb-4">
-              <div className="w-10 h-10 bg-orange-500/20 rounded-lg flex items-center justify-center">
-                <Percent className="w-5 h-5 text-orange-400" />
+            <div className="bg-white/[0.02] rounded-xl border border-white/[0.08] p-4">
+              <div className="flex items-center space-x-3">
+                <div className="p-2 rounded-lg bg-yellow-500/20">
+                  <CheckCircle2 className="w-5 h-5 text-yellow-400" />
+                </div>
+                <div>
+                  <p className="text-white/60 text-sm">Completed</p>
+                  <p className="text-xl font-bold text-white">{completedGoals}</p>
+                </div>
               </div>
-              <div>
-                <h3 className="font-semibold text-white">Overall Progress</h3>
-                <p className="text-sm text-gray-400">Average completion</p>
-              </div>
-            </div>
-            <div className={cn('text-2xl font-bold mb-1', getProgressColor(overallProgress))}>
-              {overallProgress.toFixed(0)}%
-            </div>
-            <div className="w-full bg-white/[0.1] rounded-full h-2">
-              <div 
-                className={cn('h-2 rounded-full transition-all duration-500', getProgressBarColor(overallProgress))}
-                style={{ width: `${Math.min(overallProgress, 100)}%` }}
-              />
             </div>
           </div>
-        </div>
+        )}
 
         {/* Tab Navigation */}
-        <div className="flex space-x-1 bg-white/[0.05] p-1 rounded-xl">
-          {[
-            { id: 'goals', label: 'My Goals', icon: Target },
-            { id: 'insights', label: 'Insights', icon: TrendingUp }
-          ].map((tab) => {
-            const IconComponent = tab.icon;
-            return (
-              <button
-                key={tab.id}
-                onClick={() => setActiveTab(tab.id as any)}
-                className={cn(
-                  'flex-1 py-3 px-4 text-sm font-medium rounded-lg transition-all flex items-center justify-center space-x-2',
-                  activeTab === tab.id
-                    ? 'bg-green-500 text-white shadow-lg'
-                    : 'text-gray-400 hover:text-white hover:bg-white/[0.05]'
-                )}
-              >
-                <IconComponent className="w-4 h-4" />
-                <span>{tab.label}</span>
-              </button>
-            );
-          })}
+        <div className="flex space-x-1 bg-white/[0.05] p-1 rounded-xl mb-8 w-fit">
+          <button
+            onClick={() => setActiveTab('goals')}
+            className={cn(
+              "px-6 py-3 rounded-lg font-medium transition-all",
+              activeTab === 'goals'
+                ? "bg-white/[0.15] text-white shadow-lg"
+                : "text-white/70 hover:text-white hover:bg-white/[0.08]"
+            )}
+          >
+            Goals
+          </button>
+          <button
+            onClick={() => setActiveTab('insights')}
+            className={cn(
+              "px-6 py-3 rounded-lg font-medium transition-all",
+              activeTab === 'insights'
+                ? "bg-white/[0.15] text-white shadow-lg"
+                : "text-white/70 hover:text-white hover:bg-white/[0.08]"
+            )}
+          >
+            Insights
+          </button>
         </div>
 
         {/* Content */}
         {activeTab === 'goals' && (
           <div>
             {goals.length === 0 ? (
-              <div className="bg-white/[0.02] rounded-xl border border-white/[0.08] p-12 text-center">
-                <Target className="w-16 h-16 text-gray-400 mx-auto mb-4 opacity-50" />
-                <h3 className="text-xl font-bold text-white mb-2">No Savings Goals Yet</h3>
-                <p className="text-gray-400 mb-6 max-w-md mx-auto">
-                  Start your financial journey by creating your first savings goal. Whether it's an emergency fund, vacation, or major purchase, we'll help you get there.
-                </p>
+              <EmptyState
+                emoji="🎯"
+                title="Start Your Savings Journey"
+                description="Create your first savings goal to begin tracking your progress towards financial milestones. Whether it's an emergency fund, vacation, or major purchase, we'll help you get there."
+                action={{
+                  label: 'Create Your First Goal',
+                  onClick: () => setShowGoalCreator(true),
+                  variant: 'primary'
+                }}
+                size="lg"
+              />
+            ) : (
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {goals.map((goal) => (
+                  <GoalCard 
+                    key={goal.id} 
+                    goal={goal} 
+                    onUpdate={handleGoalUpdate}
+                  />
+                ))}
+                
+                {/* Add New Goal Card */}
                 <button
                   onClick={() => setShowGoalCreator(true)}
-                  className="bg-green-500 text-white px-6 py-3 rounded-lg font-medium hover:bg-green-600 transition-all flex items-center space-x-2 mx-auto shadow-lg"
+                  className="bg-white/[0.02] hover:bg-white/[0.04] border-2 border-dashed border-white/[0.15] hover:border-white/[0.25] rounded-xl p-8 transition-all focus:outline-none focus:ring-2 focus:ring-blue-400/50 group"
                 >
-                  <Plus className="w-5 h-5" />
-                  <span>Create Your First Goal</span>
-                </button>
-              </div>
-            ) : (
-              <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
-                {goals.map((goal) => {
-                  const progress = parseFloat(formatProgress(goal.currentAmount, goal.targetAmount));
-                  const daysLeft = Math.ceil((new Date(goal.targetDate).getTime() - new Date().getTime()) / (1000 * 60 * 60 * 24));
-                  
-                  return (
-                    <div key={goal.id} className="bg-white/[0.02] rounded-xl border border-white/[0.08] p-6 hover:bg-white/[0.03] transition-all">
-                      <div className="flex items-start justify-between mb-4">
-                        <div className="flex items-center space-x-3">
-                          <div className="text-2xl">{goal.icon}</div>
-                          <div>
-                            <h3 className="font-semibold text-white">{goal.name}</h3>
-                            <p className="text-sm text-gray-400">{goal.category}</p>
-                          </div>
-                        </div>
-                        {goal.isCompleted ? (
-                          <CheckCircle2 className="w-6 h-6 text-green-400" />
-                        ) : (
-                          <button className="p-2 hover:bg-white/[0.05] rounded-lg transition-colors">
-                            <MoreHorizontal className="w-4 h-4 text-gray-400" />
-                          </button>
-                        )}
-                      </div>
-
-                      <div className="space-y-4">
-                        {/* Progress */}
-                        <div>
-                          <div className="flex justify-between items-center mb-2">
-                            <span className="text-sm text-gray-400">Progress</span>
-                            <span className={cn('text-sm font-medium', getProgressColor(progress))}>
-                              {progress}%
-                            </span>
-                          </div>
-                          <div className="w-full bg-white/[0.1] rounded-full h-2">
-                            <div 
-                              className={cn('h-2 rounded-full transition-all duration-500', getProgressBarColor(progress))}
-                              style={{ width: `${Math.min(progress, 100)}%` }}
-                            />
-                          </div>
-                        </div>
-
-                        {/* Amount Details */}
-                        <div className="flex justify-between items-center">
-                          <div>
-                            <div className="text-lg font-bold text-white">
-                              {formatCurrency(goal.currentAmount)}
-                            </div>
-                            <div className="text-sm text-gray-400">
-                              of {formatCurrency(goal.targetAmount)}
-                            </div>
-                          </div>
-                          <div className="text-right">
-                            <div className="text-sm text-gray-400">
-                              {formatCurrency(goal.targetAmount - goal.currentAmount)} left
-                            </div>
-                          </div>
-                        </div>
-
-                        {/* Time Details */}
-                        <div className="flex items-center justify-between pt-3 border-t border-white/[0.05]">
-                          <div className="flex items-center space-x-2">
-                            <Calendar className="w-4 h-4 text-gray-400" />
-                            <span className="text-sm text-gray-400">
-                              {new Date(goal.targetDate).toLocaleDateString()}
-                            </span>
-                          </div>
-                          <div className="flex items-center space-x-2">
-                            <Clock className="w-4 h-4 text-gray-400" />
-                            <span className={cn(
-                              'text-sm',
-                              daysLeft < 30 ? 'text-orange-400' : daysLeft < 90 ? 'text-yellow-400' : 'text-gray-400'
-                            )}>
-                              {daysLeft > 0 ? `${daysLeft} days left` : 'Overdue'}
-                            </span>
-                          </div>
-                        </div>
-                      </div>
+                  <div className="text-center">
+                    <div className="w-12 h-12 mx-auto mb-4 rounded-full bg-white/[0.05] group-hover:bg-white/[0.08] flex items-center justify-center transition-colors">
+                      <Plus className="w-6 h-6 text-white/40 group-hover:text-white/60" />
                     </div>
-                  );
-                })}
+                    <h3 className="text-lg font-semibold text-white/70 group-hover:text-white mb-2">
+                      Add New Goal
+                    </h3>
+                    <p className="text-white/50 text-sm">
+                      Set a new savings target
+                    </p>
+                  </div>
+                </button>
               </div>
             )}
           </div>
         )}
 
         {activeTab === 'insights' && (
-          <div className="space-y-6">
-            {insights.length === 0 ? (
-              <div className="bg-white/[0.02] rounded-xl border border-white/[0.08] p-12 text-center">
-                <TrendingUp className="w-16 h-16 text-gray-400 mx-auto mb-4 opacity-50" />
-                <h3 className="text-xl font-bold text-white mb-2">No Insights Available</h3>
-                <p className="text-gray-400">Create some goals to get personalized insights and recommendations.</p>
-              </div>
-            ) : (
-              <SavingsInsights insights={insights} />
-            )}
-          </div>
+          <SavingsInsights insights={insights} />
+        )}
+
+        {/* Goal Creator Modal */}
+        {showGoalCreator && (
+          <GoalCreator
+            onGoalCreated={handleGoalCreated}
+            onClose={() => setShowGoalCreator(false)}
+          />
         )}
       </div>
-
-      {/* Goal Creator Modal */}
-      {showGoalCreator && (
-        <GoalCreator
-          onClose={() => setShowGoalCreator(false)}
-          onGoalCreated={handleGoalCreated}
-        />
-      )}
     </div>
   );
 };

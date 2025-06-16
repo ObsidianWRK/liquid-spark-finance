@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import AppShell from '@/components/layout/AppShell';
 import CleanAccountCard from '@/components/financial/CleanAccountCard';
 import CleanCreditScoreCard from '@/components/financial/CleanCreditScoreCard';
@@ -11,91 +11,121 @@ import {
   CreditCard, 
   PiggyBank,
   Eye,
-  EyeOff 
+  EyeOff,
+  Search,
+  Bell,
+  Plus,
+  ArrowUpRight,
+  ArrowDownRight,
+  RefreshCw
 } from 'lucide-react';
+import AccountCard from '@/components/AccountCard';
+import TransactionItem from '@/components/TransactionItem';
+import QuickActions from '@/components/QuickActions';
+import EmptyState from '@/components/ui/EmptyState';
+import { SkeletonCard, SkeletonTransaction } from '@/components/ui/Skeleton';
+import { useAccessibility, useSkipLinks } from '@/hooks/useAccessibility';
+import { cn } from '@/lib/utils';
 
-// Mock data that matches your existing structure
-const mockAccounts = [
+interface Transaction {
+  id: string;
+  description: string;
+  amount: number;
+  date: string;
+  type: 'income' | 'expense';
+  category: string;
+  merchant?: string;
+  icon?: string;
+}
+
+interface Account {
+  id: string;
+  name: string;
+  type: string;
+  balance: number;
+  lastUpdated: string;
+}
+
+const mockAccounts: Account[] = [
   {
     id: 'acc_001',
-    accountType: 'Checking',
-    accountName: 'Main Account',
+    name: 'Main Account',
+    type: 'Checking',
     balance: 12450.00,
-    available: 11200.00,
-    change: { amount: 1523.50, percentage: 12.5, period: 'vs last month' },
-    isActive: true
+    lastUpdated: new Date().toISOString(),
   },
   {
     id: 'acc_002',
-    accountType: 'Savings',
-    accountName: 'Emergency Fund',
+    name: 'Emergency Fund',
+    type: 'Savings',
     balance: 25780.50,
-    available: 25780.50,
-    change: { amount: 780.25, percentage: 3.1, period: 'vs last month' }
+    lastUpdated: new Date().toISOString(),
   },
   {
     id: 'acc_003',
-    accountType: 'Credit Card',
-    accountName: 'Rewards Card',
+    name: 'Rewards Card',
+    type: 'Credit Card',
     balance: -1245.30,
-    available: 8754.70,
-    change: { amount: -245.30, percentage: -2.1, period: 'vs last month' }
+    lastUpdated: new Date().toISOString(),
   },
   {
     id: 'acc_004',
-    accountType: 'Investment',
-    accountName: 'Portfolio',
+    name: 'Portfolio',
+    type: 'Investment',
     balance: 45600.25,
-    available: 45600.25,
-    change: { amount: 2340.80, percentage: 5.4, period: 'vs last month' }
+    lastUpdated: new Date().toISOString(),
   }
 ];
 
-const mockTransactions = [
+const mockTransactions: Transaction[] = [
   {
     id: 'txn_001',
-    merchant: 'Whole Foods Market',
-    category: 'Groceries',
+    description: 'Whole Foods Market',
     amount: -127.43,
-    date: '2025-06-16T10:30:00Z',
-    status: 'completed' as const,
-    scores: { health: 85, eco: 92, financial: 78 }
+    date: new Date().toISOString(),
+    type: 'expense',
+    category: 'Groceries',
+    merchant: 'Whole Foods',
+    icon: '🛒',
   },
   {
     id: 'txn_002',
-    merchant: 'Apple Store',
-    category: 'Electronics',
+    description: 'Apple Store',
     amount: -899.00,
-    date: '2025-06-16T08:15:00Z',
-    status: 'completed' as const,
-    scores: { health: 65, eco: 45, financial: 60 }
+    date: new Date().toISOString(),
+    type: 'expense',
+    category: 'Electronics',
+    merchant: 'Apple',
+    icon: '🖥️',
   },
   {
     id: 'txn_003',
-    merchant: 'Salary Deposit',
-    category: 'Income',
+    description: 'Salary Deposit',
     amount: 3250.00,
-    date: '2025-06-15T09:00:00Z',
-    status: 'completed' as const,
-    scores: { health: 100, eco: 85, financial: 95 }
+    date: new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString(),
+    type: 'income',
+    category: 'Salary',
+    icon: '💰',
   },
   {
     id: 'txn_004',
-    merchant: 'Starbucks',
-    category: 'Coffee',
+    description: 'Starbucks',
     amount: -6.85,
-    date: '2025-06-15T07:45:00Z',
-    status: 'completed' as const,
-    scores: { health: 40, eco: 60, financial: 85 }
+    date: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000).toISOString(),
+    type: 'expense',
+    category: 'Coffee',
+    merchant: 'Starbucks',
+    icon: '☕',
   },
   {
     id: 'txn_005',
-    merchant: 'Gas Station',
-    category: 'Transportation',
+    description: 'Gas Station',
     amount: -45.20,
-    date: '2025-06-14T18:30:00Z',
-    status: 'pending' as const,
-    scores: { health: 70, eco: 30, financial: 80 }
+    date: new Date().toISOString(),
+    type: 'expense',
+    category: 'Transportation',
+    merchant: 'Shell',
+    icon: '🚗',
   }
 ];
 
@@ -164,36 +194,138 @@ const OverviewCard = ({
 
 const CleanDashboard = () => {
   const [activeTab, setActiveTab] = useState('dashboard');
+  const [balanceVisible, setBalanceVisible] = useState(true);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const [accounts, setAccounts] = useState<Account[]>([]);
+  const [transactions, setTransactions] = useState<Transaction[]>([]);
+  const [retryCount, setRetryCount] = useState(0);
 
-  // Calculate totals
-  const totalBalance = mockAccounts.reduce((sum, acc) => {
-    if (acc.accountType.toLowerCase() === 'credit card') {
-      return sum; // Don't include credit card debt in total assets
+  const { containerRef, announceToScreenReader } = useAccessibility({
+    announcePageChanges: true,
+    focusOnMount: false,
+  });
+
+  useSkipLinks();
+
+  // Mock data loading with error simulation
+  useEffect(() => {
+    loadDashboardData();
+  }, []);
+
+  const loadDashboardData = async () => {
+    try {
+      setIsLoading(true);
+      setError(null);
+      
+      // Simulate API delay
+      await new Promise(resolve => setTimeout(resolve, 1500));
+      
+      // Simulate occasional network errors
+      if (Math.random() < 0.1 && retryCount < 3) {
+        throw new Error('Network error occurred');
+      }
+
+      // Mock data
+      const mockAccounts: Account[] = [
+        {
+          id: '1',
+          name: 'Chase Freedom',
+          type: 'Credit Card',
+          balance: 2543.67,
+          lastUpdated: new Date().toISOString(),
+        },
+        {
+          id: '2',
+          name: 'Wells Fargo Checking',
+          type: 'Checking',
+          balance: 8934.21,
+          lastUpdated: new Date().toISOString(),
+        },
+        {
+          id: '3',
+          name: 'Savings Account',
+          type: 'Savings',
+          balance: 15420.89,
+          lastUpdated: new Date().toISOString(),
+        },
+      ];
+
+      const mockTransactions: Transaction[] = [
+        {
+          id: '1',
+          description: 'Whole Foods Market',
+          amount: -87.43,
+          date: new Date().toISOString(),
+          type: 'expense',
+          category: 'Groceries',
+          merchant: 'Whole Foods',
+          icon: '🛒',
+        },
+        {
+          id: '2',
+          description: 'Direct Deposit',
+          amount: 3250.00,
+          date: new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString(),
+          type: 'income',
+          category: 'Salary',
+          icon: '💰',
+        },
+        {
+          id: '3',
+          description: 'Netflix Subscription',
+          amount: -15.99,
+          date: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000).toISOString(),
+          type: 'expense',
+          category: 'Entertainment',
+          merchant: 'Netflix',
+          icon: '📺',
+        },
+      ];
+
+      setAccounts(mockAccounts);
+      setTransactions(mockTransactions);
+      setRetryCount(0);
+      
+      announceToScreenReader('Dashboard data loaded successfully');
+    } catch (error) {
+      console.error('Failed to load dashboard data:', error);
+      setError(error instanceof Error ? error.message : 'Failed to load data');
+      setRetryCount(prev => prev + 1);
+      announceToScreenReader('Failed to load dashboard data');
+    } finally {
+      setIsLoading(false);
     }
-    return sum + acc.balance;
-  }, 0);
+  };
 
-  const totalDebt = mockAccounts
-    .filter(acc => acc.accountType.toLowerCase() === 'credit card')
-    .reduce((sum, acc) => sum + Math.abs(acc.balance), 0);
+  const handleRefresh = () => {
+    announceToScreenReader('Refreshing dashboard');
+    loadDashboardData();
+  };
 
-  const netWorth = totalBalance - totalDebt;
-  
-  const monthlyIncome = mockTransactions
-    .filter(t => t.amount > 0)
+  const toggleBalanceVisibility = () => {
+    setBalanceVisible(!balanceVisible);
+    announceToScreenReader(balanceVisible ? 'Balance hidden' : 'Balance visible');
+  };
+
+  const handleSearch = (query: string) => {
+    setSearchQuery(query);
+    announceToScreenReader(`Searching for: ${query}`);
+  };
+
+  const totalBalance = accounts.reduce((sum, account) => sum + account.balance, 0);
+  const monthlyIncome = transactions
+    .filter(t => t.type === 'income')
     .reduce((sum, t) => sum + t.amount, 0);
+  const monthlyExpenses = transactions
+    .filter(t => t.type === 'expense')
+    .reduce((sum, t) => sum + Math.abs(t.amount), 0);
 
-  const handleTransactionClick = (transaction: any) => {
-    console.log('Transaction clicked:', transaction);
-  };
-
-  const handleAccountClick = (account: any) => {
-    console.log('Account clicked:', account);
-  };
-
-  const handleCreditReportClick = () => {
-    console.log('View credit report clicked');
-  };
+  const filteredTransactions = transactions.filter(transaction =>
+    transaction.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    transaction.category.toLowerCase().includes(searchQuery.toLowerCase())
+  );
 
   if (activeTab !== 'dashboard') {
     return (
@@ -212,106 +344,250 @@ const CleanDashboard = () => {
     );
   }
 
-  return (
-    <AppShell activeTab={activeTab} onTabChange={setActiveTab}>
-      <div className="space-y-6">
-        {/* Welcome Header */}
-        <SimpleGlassCard className="p-6">
-          <div className="flex items-center justify-between">
-            <div>
-              <h1 className="text-2xl font-bold text-white mb-2">
-                Good morning, John 👋
-              </h1>
-              <p className="text-white/60">
-                Here's what's happening with your finances today
-              </p>
-            </div>
-            <div className="text-right">
-              <p className="text-sm text-white/60">Total Net Worth</p>
-              <p className="text-xl font-bold text-white">
-                {new Intl.NumberFormat('en-US', {
-                  style: 'currency',
-                  currency: 'USD'
-                }).format(netWorth)}
-              </p>
-            </div>
-          </div>
-        </SimpleGlassCard>
+  // Error state
+  if (error && !isLoading) {
+    return (
+      <div className="min-h-screen bg-black text-white flex items-center justify-center">
+        <EmptyState
+          emoji="⚠️"
+          title="Unable to load dashboard"
+          description={`${error}. Please check your connection and try again.`}
+          action={{
+            label: `Retry${retryCount > 1 ? ` (${retryCount})` : ''}`,
+            onClick: loadDashboardData,
+            variant: 'primary'
+          }}
+          size="lg"
+        />
+      </div>
+    );
+  }
 
-        {/* Overview Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          <OverviewCard
-            title="Total Assets"
-            value={new Intl.NumberFormat('en-US', {
-              style: 'currency',
-              currency: 'USD'
-            }).format(totalBalance)}
-            change={{ amount: 2500, percentage: 8.2 }}
-            icon={DollarSign}
-            color={colors.accent.green}
-          />
+  return (
+    <div 
+      ref={containerRef as React.RefObject<HTMLDivElement>}
+      className="min-h-screen bg-black text-white"
+    >
+      {/* Skip to content link for screen readers */}
+      <div id="main-content" className="sr-only">
+        <h1>Financial Dashboard</h1>
+      </div>
+
+      <div className="max-w-7xl mx-auto px-4 py-8 sm:px-6 lg:px-8">
+        
+        {/* Header */}
+        <div className="flex items-center justify-between mb-8">
+          <div>
+            <h1 className="text-3xl font-bold mb-2">Good morning, Alex 👋</h1>
+            <p className="text-white/60">
+              {isLoading ? 'Loading your financial overview...' : 'Here\'s your financial overview'}
+            </p>
+          </div>
           
-          <OverviewCard
-            title="Monthly Income"
-            value={new Intl.NumberFormat('en-US', {
-              style: 'currency',
-              currency: 'USD'
-            }).format(monthlyIncome)}
-            change={{ amount: 250, percentage: 4.1 }}
-            icon={TrendingUp}
-            color={colors.accent.blue}
-          />
-          
-          <OverviewCard
-            title="Total Debt"
-            value={new Intl.NumberFormat('en-US', {
-              style: 'currency',
-              currency: 'USD'
-            }).format(totalDebt)}
-            change={{ amount: -125, percentage: -2.5 }}
-            icon={CreditCard}
-            color={colors.status.error}
-          />
-          
-          <OverviewCard
-            title="Savings Rate"
-            value="23.5%"
-            change={{ amount: 1.2, percentage: 5.4 }}
-            icon={PiggyBank}
-            color={colors.accent.purple}
-          />
+          <div className="flex items-center space-x-3">
+            <button
+              onClick={handleRefresh}
+              disabled={isLoading}
+              className="p-3 rounded-xl bg-white/[0.05] hover:bg-white/[0.08] transition-colors focus:outline-none focus:ring-2 focus:ring-blue-400/50 disabled:opacity-50 disabled:cursor-not-allowed"
+              aria-label="Refresh dashboard data"
+            >
+              <RefreshCw className={cn("w-5 h-5", isLoading && "animate-spin")} />
+            </button>
+            
+            <button
+              className="p-3 rounded-xl bg-white/[0.05] hover:bg-white/[0.08] transition-colors focus:outline-none focus:ring-2 focus:ring-blue-400/50"
+              aria-label="View notifications"
+            >
+              <Bell className="w-5 h-5" />
+            </button>
+          </div>
+        </div>
+
+        {/* Quick Summary Cards */}
+        {isLoading ? (
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+            {Array.from({ length: 3 }).map((_, index) => (
+              <SkeletonCard key={index} className="h-32" />
+            ))}
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+            <SimpleGlassCard className="p-6">
+              <div className="flex items-center justify-between mb-4">
+                <h3 className="text-white/70 font-medium">Total Balance</h3>
+                <button
+                  onClick={toggleBalanceVisibility}
+                  className="p-1 rounded hover:bg-white/[0.08] transition-colors focus:outline-none focus:ring-2 focus:ring-blue-400/50"
+                  aria-label={balanceVisible ? 'Hide balance' : 'Show balance'}
+                >
+                  {balanceVisible ? (
+                    <EyeOff className="w-4 h-4 text-white/60" />
+                  ) : (
+                    <Eye className="w-4 h-4 text-white/60" />
+                  )}
+                </button>
+              </div>
+              
+              <div className="text-3xl font-bold text-white mb-2">
+                {balanceVisible ? (
+                  `$${totalBalance.toLocaleString('en-US', { minimumFractionDigits: 2 })}`
+                ) : (
+                  '••••••'
+                )}
+              </div>
+              
+              <div className="flex items-center text-green-400 text-sm">
+                <ArrowUpRight className="w-4 h-4 mr-1" />
+                +2.4% from last month
+              </div>
+            </SimpleGlassCard>
+
+            <SimpleGlassCard className="p-6">
+              <h3 className="text-white/70 font-medium mb-4">Monthly Income</h3>
+              <div className="text-3xl font-bold text-white mb-2">
+                {balanceVisible ? (
+                  `$${monthlyIncome.toLocaleString('en-US', { minimumFractionDigits: 2 })}`
+                ) : (
+                  '••••••'
+                )}
+              </div>
+              <div className="flex items-center text-green-400 text-sm">
+                <ArrowUpRight className="w-4 h-4 mr-1" />
+                +5.2% from last month
+              </div>
+            </SimpleGlassCard>
+
+            <SimpleGlassCard className="p-6">
+              <h3 className="text-white/70 font-medium mb-4">Monthly Expenses</h3>
+              <div className="text-3xl font-bold text-white mb-2">
+                {balanceVisible ? (
+                  `$${monthlyExpenses.toLocaleString('en-US', { minimumFractionDigits: 2 })}`
+                ) : (
+                  '••••••'
+                )}
+              </div>
+              <div className="flex items-center text-red-400 text-sm">
+                <ArrowDownRight className="w-4 h-4 mr-1" />
+                +1.8% from last month
+              </div>
+            </SimpleGlassCard>
+          </div>
+        )}
+
+        {/* Quick Actions */}
+        <div className="mb-8">
+          <QuickActions />
         </div>
 
         {/* Main Content Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          {/* Left Column - Accounts & Credit Score */}
-          <div className="lg:col-span-1 space-y-6">
-            {/* Credit Score */}
-            <CleanCreditScoreCard onViewReport={handleCreditReportClick} />
-            
-            {/* Account Cards */}
-            <div className="space-y-4">
-              <h3 className="text-lg font-semibold text-white px-2">Accounts</h3>
-              {mockAccounts.slice(0, 3).map((account) => (
-                <CleanAccountCard
-                  key={account.id}
-                  account={account}
-                  onClick={() => handleAccountClick(account)}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          
+          {/* Accounts */}
+          <div className="lg:col-span-1">
+            <SimpleGlassCard className="p-6">
+              <h2 className="text-xl font-semibold text-white mb-6">Accounts</h2>
+              
+              {isLoading ? (
+                <div className="space-y-4">
+                  {Array.from({ length: 3 }).map((_, index) => (
+                    <SkeletonCard key={index} className="h-16" />
+                  ))}
+                </div>
+              ) : accounts.length === 0 ? (
+                <EmptyState
+                  emoji="🏦"
+                  title="No accounts connected"
+                  description="Connect your bank accounts to see your financial overview."
+                  action={{
+                    label: 'Connect Account',
+                    onClick: () => console.log('Connect account'),
+                    variant: 'primary'
+                  }}
+                  size="sm"
                 />
-              ))}
-            </div>
+              ) : (
+                <div className="space-y-4">
+                  {accounts.map((account) => (
+                    <AccountCard 
+                      key={account.id}
+                      account={account}
+                      showBalance={balanceVisible}
+                    />
+                  ))}
+                </div>
+              )}
+            </SimpleGlassCard>
           </div>
 
-          {/* Right Column - Transactions */}
+          {/* Recent Transactions */}
           <div className="lg:col-span-2">
-            <CleanTransactionList
-              transactions={mockTransactions}
-              onTransactionClick={handleTransactionClick}
-            />
+            <SimpleGlassCard className="p-6">
+              <div className="flex items-center justify-between mb-6">
+                <h2 className="text-xl font-semibold text-white">Recent Transactions</h2>
+                <button className="text-blue-400 hover:text-blue-300 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-400/50 rounded px-2 py-1">
+                  View All
+                </button>
+              </div>
+
+              {/* Search */}
+              <div className="relative mb-6">
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-white/40" />
+                <input
+                  type="text"
+                  placeholder="Search transactions..."
+                  value={searchQuery}
+                  onChange={(e) => handleSearch(e.target.value)}
+                  className="w-full pl-10 pr-4 py-3 bg-white/[0.05] border border-white/[0.08] rounded-lg text-white placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500/50 transition-all"
+                  aria-label="Search transactions"
+                />
+              </div>
+
+              {/* Transactions List */}
+              {isLoading ? (
+                <div className="space-y-3">
+                  {Array.from({ length: 5 }).map((_, index) => (
+                    <SkeletonTransaction key={index} />
+                  ))}
+                </div>
+              ) : filteredTransactions.length === 0 ? (
+                <EmptyState
+                  icon={searchQuery ? Search : Plus}
+                  title={searchQuery ? "No transactions found" : "No recent transactions"}
+                  description={
+                    searchQuery 
+                      ? "Try adjusting your search terms to find transactions."
+                      : "Your recent transactions will appear here."
+                  }
+                  action={
+                    searchQuery 
+                      ? {
+                          label: 'Clear Search',
+                          onClick: () => handleSearch(''),
+                          variant: 'secondary'
+                        }
+                      : undefined
+                  }
+                  size="sm"
+                />
+              ) : (
+                <div className="space-y-3">
+                  {filteredTransactions.slice(0, 10).map((transaction) => (
+                    <TransactionItem 
+                      key={transaction.id}
+                      transaction={transaction}
+                      showBalance={balanceVisible}
+                    />
+                  ))}
+                </div>
+              )}
+            </SimpleGlassCard>
           </div>
         </div>
       </div>
-    </AppShell>
+
+      {/* Live region for accessibility announcements */}
+      <div aria-live="polite" aria-atomic="true" className="sr-only" />
+    </div>
   );
 };
 

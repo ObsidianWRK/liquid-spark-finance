@@ -7,8 +7,13 @@
     "dev": "vite",
     "build": "vite build",
     "build:dev": "vite build --mode development",
-    "lint": "eslint .",
-    "preview": "vite preview"
+    "build:analyze": "vite build && npx vite-bundle-analyzer dist",
+    "lint": "eslint . --fix",
+    "lint:check": "eslint .",
+    "type-check": "tsc --noEmit",
+    "preview": "vite preview",
+    "clean": "rm -rf dist",
+    "prebuild": "npm run clean && npm run lint:check && npm run type-check"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.9.0",
@@ -51,6 +56,7 @@
     "react": "^18.3.1",
     "react-day-picker": "^8.10.1",
     "react-dom": "^18.3.1",
+    "react-error-boundary": "^6.0.0",
     "react-hook-form": "^7.53.0",
     "react-resizable-panels": "^2.1.3",
     "react-router-dom": "^6.26.2",
