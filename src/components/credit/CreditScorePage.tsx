@@ -92,10 +92,10 @@ const CreditScorePage = () => {
         <div className="max-w-7xl mx-auto px-4 py-8 sm:px-6 lg:px-8">
           <div className="space-y-6 animate-pulse">
             <div className="h-8 bg-white/[0.05] rounded w-48"></div>
-            <div className="h-64 bg-white/[0.02] rounded-xl border border-white/[0.08]"></div>
+            <div className="h-64 bg-white/[0.02] rounded-3xl border border-white/[0.08]"></div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div className="h-32 bg-white/[0.02] rounded-xl border border-white/[0.08]"></div>
-              <div className="h-32 bg-white/[0.02] rounded-xl border border-white/[0.08]"></div>
+              <div className="h-32 bg-white/[0.02] rounded-3xl border border-white/[0.08]"></div>
+              <div className="h-32 bg-white/[0.02] rounded-3xl border border-white/[0.08]"></div>
             </div>
           </div>
         </div>
@@ -115,7 +115,7 @@ const CreditScorePage = () => {
             <span>Back</span>
           </button>
           
-          <div className="bg-white/[0.02] rounded-xl border border-white/[0.08] p-8 text-center">
+          <div className="bg-white/[0.02] rounded-3xl border border-white/[0.08] p-8 text-center">
             <AlertCircle className="w-16 h-16 text-orange-400 mx-auto mb-4" />
             <h2 className="text-2xl font-bold text-white mb-2">Credit Score Unavailable</h2>
             <p className="text-gray-400">We're working to get your credit score. Check back soon!</p>
@@ -149,7 +149,7 @@ const CreditScorePage = () => {
         </div>
 
         {/* Score Overview Card */}
-        <div className="bg-white/[0.02] rounded-xl border border-white/[0.08] p-8">
+        <div className="bg-white/[0.02] rounded-3xl border border-white/[0.08] p-8">
           <div className="flex flex-col lg:flex-row items-center lg:items-start gap-8">
             {/* Score Display */}
             <div className="text-center flex-shrink-0">
@@ -214,7 +214,7 @@ const CreditScorePage = () => {
         </div>
 
         {/* Tab Navigation */}
-        <div className="flex space-x-1 bg-white/[0.05] p-1 rounded-xl">
+        <div className="flex space-x-1 bg-white/[0.05] p-1 rounded-3xl">
           {[
             { id: 'overview', label: 'Overview', icon: Info },
             { id: 'factors', label: 'Credit Factors', icon: Percent },
@@ -244,7 +244,7 @@ const CreditScorePage = () => {
         <div className="space-y-6">
           {activeTab === 'overview' && (
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              <div className="bg-white/[0.02] rounded-xl border border-white/[0.08] p-6">
+              <div className="bg-white/[0.02] rounded-3xl border border-white/[0.08] p-6">
                 <div className="flex items-center space-x-3 mb-4">
                   <div className="w-10 h-10 bg-blue-500/20 rounded-lg flex items-center justify-center">
                     <CreditCard className="w-5 h-5 text-blue-400" />
@@ -258,7 +258,7 @@ const CreditScorePage = () => {
                 <div className="text-sm text-green-400">Excellent</div>
               </div>
 
-              <div className="bg-white/[0.02] rounded-xl border border-white/[0.08] p-6">
+              <div className="bg-white/[0.02] rounded-3xl border border-white/[0.08] p-6">
                 <div className="flex items-center space-x-3 mb-4">
                   <div className="w-10 h-10 bg-green-500/20 rounded-lg flex items-center justify-center">
                     <Calendar className="w-5 h-5 text-green-400" />
@@ -272,7 +272,7 @@ const CreditScorePage = () => {
                 <div className="text-sm text-green-400">Perfect record</div>
               </div>
 
-              <div className="bg-white/[0.02] rounded-xl border border-white/[0.08] p-6">
+              <div className="bg-white/[0.02] rounded-3xl border border-white/[0.08] p-6">
                 <div className="flex items-center space-x-3 mb-4">
                   <div className="w-10 h-10 bg-purple-500/20 rounded-lg flex items-center justify-center">
                     <TrendingUp className="w-5 h-5 text-purple-400" />
@@ -289,7 +289,7 @@ const CreditScorePage = () => {
           )}
 
           {activeTab === 'factors' && (
-            <div className="bg-white/[0.02] rounded-xl border border-white/[0.08] p-6">
+            <div className="bg-white/[0.02] rounded-3xl border border-white/[0.08] p-6">
               <h3 className="text-xl font-bold text-white mb-6">Factors Affecting Your Score</h3>
               <div className="space-y-4">
                 {creditScore.factors?.map((factor, index) => (
@@ -315,7 +315,7 @@ const CreditScorePage = () => {
           )}
 
           {activeTab === 'history' && (
-            <div className="bg-white/[0.02] rounded-xl border border-white/[0.08] p-6">
+            <div className="bg-white/[0.02] rounded-3xl border border-white/[0.08] p-6">
               <h3 className="text-xl font-bold text-white mb-6">Score History</h3>
               <div className="text-center py-12 text-gray-400">
                 <TrendingUp className="w-16 h-16 mx-auto mb-4 opacity-50" />
@@ -327,7 +327,7 @@ const CreditScorePage = () => {
           {activeTab === 'tips' && (
             <div className="space-y-4">
               {creditTips.map((tip, index) => (
-                <div key={index} className="bg-white/[0.02] rounded-xl border border-white/[0.08] p-6">
+                <div key={index} className="bg-white/[0.02] rounded-3xl border border-white/[0.08] p-6">
                   <div className="flex items-start space-x-4">
                     <div className={cn(
                       'w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0',
