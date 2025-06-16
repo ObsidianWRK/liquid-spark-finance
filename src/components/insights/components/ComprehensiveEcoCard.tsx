@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Leaf, Recycle, Droplet, Zap, Car, Factory, Globe, Tree, Wind, Sun, ChevronDown, ChevronUp, TrendingUp, TrendingDown, Minus } from 'lucide-react';
+import { Leaf, Recycle, Droplet, Zap, Car, Factory, Globe, Wind, ChevronDown, ChevronUp, TrendingUp, TrendingDown, Minus } from 'lucide-react';
 
 interface EcoMetrics {
   // Carbon Footprint
@@ -222,7 +222,7 @@ const ComprehensiveEcoCard: React.FC<EcoCardProps> = ({
     {
       id: 'biodiversity',
       name: 'Biodiversity',
-      icon: <Tree className="w-5 h-5" />,
+      icon: <Leaf className="w-5 h-5" />,
       color: '#22c55e',
       metrics: [
         { key: 'treesPlanted', label: 'Trees Planted', value: ecoMetrics.treesPlanted || 8, unit: 'trees/year', target: 12 },

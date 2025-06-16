@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useMemo } from 'react';
-import { Heart, Activity, Moon, Utensils, Brain, Eye, Ear, Accessibility, Users, Droplet, Wind, Calendar, ChevronDown, ChevronUp, TrendingUp, TrendingDown, Minus } from 'lucide-react';
+import { Heart, Activity, Moon, Utensils, Brain, Ear, Accessibility, Users, Droplet, Wind, ChevronDown, ChevronUp, TrendingUp, TrendingDown, Minus } from 'lucide-react';
 
 interface HealthKitMetrics {
   // Physical Activity
