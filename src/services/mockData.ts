@@ -55,6 +55,54 @@ export const mockData = {
       balance: 45600.25,
       availableBalance: 45600.25,
       currency: 'USD'
+    },
+    {
+      id: 'acc_005',
+      type: 'Checking',
+      nickname: 'Chase Banking',
+      balance: 8920.14,
+      availableBalance: 8920.14,
+      currency: 'USD'
+    },
+    {
+      id: 'acc_006',
+      type: 'Retirement',
+      nickname: '401(k)',
+      balance: 174250.67,
+      availableBalance: 174250.67,
+      currency: 'USD'
+    },
+    {
+      id: 'acc_007',
+      type: 'Retirement',
+      nickname: 'Traditional IRA',
+      balance: 62340.22,
+      availableBalance: 62340.22,
+      currency: 'USD'
+    },
+    {
+      id: 'acc_008',
+      type: 'Savings',
+      nickname: '502A Health Savings',
+      balance: 12450.11,
+      availableBalance: 12450.11,
+      currency: 'USD'
+    },
+    {
+      id: 'acc_009',
+      type: 'Education',
+      nickname: 'College Savings 529',
+      balance: 18230.89,
+      availableBalance: 18230.89,
+      currency: 'USD'
+    },
+    {
+      id: 'acc_010',
+      type: 'Savings',
+      nickname: 'Disaster Savings',
+      balance: 8500.00,
+      availableBalance: 8500.00,
+      currency: 'USD'
     }
   ] as Account[],
 
