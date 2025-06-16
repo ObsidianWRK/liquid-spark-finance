@@ -4,7 +4,7 @@ import QuickActions from '@/components/QuickActions';
 import TransactionList from '@/components/TransactionList';
 import AccountCard from '@/components/AccountCard';
 import Navigation from '@/components/Navigation';
-import EnhancedInsightsPage from '@/components/insights/EnhancedInsightsPage';
+import RefinedInsightsPage from '@/components/insights/RefinedInsightsPage';
 import ChatDrawer from '@/components/ai/ChatDrawer';
 import BudgetReportsPage from '@/components/reports/BudgetReportsPage';
 import WrappedPage from '@/components/wrapped/WrappedPage';
@@ -164,7 +164,7 @@ const Index = () => {
         );
       
       case 'insights':
-        return <EnhancedInsightsPage transactions={transactions} accounts={accounts} />;
+        return <RefinedInsightsPage transactions={transactions} accounts={accounts} />;
       
       case 'reports':
         return <BudgetReportsPage />;

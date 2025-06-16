@@ -3,6 +3,7 @@
 /* Import Liquid Glass Enhancement Styles */
 @import './liquid-glass.css';
 @import './liquid-backgrounds.css';
+@import './refined-animations.css';
 
 /* CSS Custom Properties for Glass System */
 :root {
