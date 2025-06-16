@@ -14,6 +14,7 @@ interface EnhancedScoreCardProps {
   size?: 'sm' | 'md' | 'lg';
   interactive?: boolean;
   liquidIntensity?: number;
+  onClick?: () => void;
 }
 
 const EnhancedScoreCard = memo(({
@@ -26,7 +27,8 @@ const EnhancedScoreCard = memo(({
   delay = 0,
   size = 'md',
   interactive = true,
-  liquidIntensity = 0.6
+  liquidIntensity = 0.6,
+  onClick,
 }: EnhancedScoreCardProps) => {
   const sizeConfig = {
     sm: { 
@@ -93,13 +95,14 @@ const EnhancedScoreCard = memo(({
     <EnhancedGlassCard 
       className={`
         relative overflow-hidden rounded-3xl backdrop-blur-xl border border-white/20 
-        hover:border-white/30 transition-all duration-500 group ${config.padding}
+        hover:border-white/30 transition-all duration-500 group ${config.padding} ${onClick ? 'cursor-pointer' : ''}
       `}
       liquid={true}
       liquidIntensity={liquidIntensity}
       liquidDistortion={0.4}
       liquidAnimated={true}
       liquidInteractive={interactive}
+      onClick={onClick}
       style={{
         animation: `slideInScale 0.8s ease-out ${delay}ms both`
       }}

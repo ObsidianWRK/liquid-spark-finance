@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useMemo, useCallback } from 'react';
-import { Heart, Leaf, TrendingUp, TrendingDown, DollarSign, Shield, PiggyBank, Calendar, ChevronRight, Activity } from 'lucide-react';
+import { Heart, Leaf, TrendingUp, TrendingDown, DollarSign, Shield, PiggyBank, Calendar, ChevronRight, Activity, Recycle } from 'lucide-react';
 import EnhancedGlassCard from '../ui/EnhancedGlassCard';
 import AnimatedCircularProgress from './components/AnimatedCircularProgress';
 import EnhancedScoreCard from './components/EnhancedScoreCard';
@@ -248,7 +248,7 @@ const EnhancedInsightsPage = ({ transactions, accounts }: InsightsPageProps) => 
           liquidDistortion={0.3}
           liquidAnimated={false}
         >
-          {['summary', 'health', 'trends'].map((tab) => (
+          {['summary', 'health', 'eco', 'trends'].map((tab) => (
             <button
               key={tab}
               onClick={() => setActiveTab(tab)}
@@ -280,6 +280,16 @@ const EnhancedInsightsPage = ({ transactions, accounts }: InsightsPageProps) => 
                   trend={getTrend(scores.financial, { good: 60, excellent: 75 })}
                   delay={getAnimationDelay(0)}
                   liquidIntensity={liquidSettings.intensity}
+                  onClick={() => {
+                    if (activeTab !== 'summary') {
+                      setActiveTab('summary');
+                      setTimeout(() => {
+                        document.getElementById('key-metrics')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                      }, 100);
+                    } else {
+                      document.getElementById('key-metrics')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }
+                  }}
                 />
               </div>
               <div className="score-card-container">
@@ -292,6 +302,7 @@ const EnhancedInsightsPage = ({ transactions, accounts }: InsightsPageProps) => 
                   trend="stable"
                   delay={getAnimationDelay(1)}
                   liquidIntensity={liquidSettings.intensity}
+                  onClick={() => setActiveTab('health')}
                 />
               </div>
               <div className="score-card-container">
@@ -304,12 +315,13 @@ const EnhancedInsightsPage = ({ transactions, accounts }: InsightsPageProps) => 
                   trend="up"
                   delay={getAnimationDelay(2)}
                   liquidIntensity={liquidSettings.intensity}
+                  onClick={() => setActiveTab('eco')}
                 />
               </div>
             </div>
 
             {/* Key Metrics */}
-            <div>
+            <div id="key-metrics">
               <h2 className="collapsed-card-title font-bold text-white mb-6">Key Metrics</h2>
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                 <EnhancedMetricCard
@@ -389,6 +401,46 @@ const EnhancedInsightsPage = ({ transactions, accounts }: InsightsPageProps) => 
                   progress={80}
                   color="#3B82F6"
                   icon={<Shield />}
+                  delay={getAnimationDelay(1)}
+                  liquidIntensity={liquidSettings.intensity}
+                />
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Eco Tab */}
+        {activeTab === 'eco' && (
+          <div className="space-y-6">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+              <EnhancedScoreCard
+                title="Eco Score"
+                score={animatedScores.eco}
+                subtitle="Environmental impact and sustainability"
+                icon={<Leaf />}
+                color={getScoreColor(scores.eco)}
+                trend="up"
+                liquidIntensity={liquidSettings.intensity}
+              />
+              <div className="space-y-4">
+                <h3 className="collapsed-card-title font-semibold text-white mb-4">Eco Insights</h3>
+                <EnhancedMetricCard
+                  title="CO₂ Saved"
+                  value={`${Math.max(0, Math.round((scores.eco - 50) * 1.5))} kg`}
+                  subtitle="this month"
+                  progress={Math.min(100, (scores.eco))}
+                  color="#10B981"
+                  icon={<Leaf />}
+                  delay={getAnimationDelay(0)}
+                  liquidIntensity={liquidSettings.intensity}
+                />
+                <EnhancedMetricCard
+                  title="Recycling Rate"
+                  value="72%"
+                  subtitle="household waste"
+                  progress={72}
+                  color="#3B82F6"
+                  icon={<Recycle />}
                   delay={getAnimationDelay(1)}
                   liquidIntensity={liquidSettings.intensity}
                 />
