@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useMemo, useCallback } from 'react';
-import { Heart, Leaf, TrendingUp, TrendingDown, DollarSign, Shield, PiggyBank, Calendar, ChevronRight, Activity, Recycle } from 'lucide-react';
+import { Heart, Leaf, TrendingUp, TrendingDown, DollarSign, Shield, PiggyBank, Calendar, ChevronRight, Activity, Recycle, ArrowLeft } from 'lucide-react';
 import EnhancedGlassCard from '../ui/EnhancedGlassCard';
 import AnimatedCircularProgress from './components/AnimatedCircularProgress';
 import EnhancedScoreCard from './components/EnhancedScoreCard';
@@ -13,6 +13,7 @@ import {
   useLayoutDebug,
   usePerformanceTracking 
 } from '@/hooks/usePerformanceOptimization';
+import { useNavigate } from 'react-router-dom';
 
 // Enhanced TypeScript interfaces
 interface Transaction {
@@ -183,8 +184,25 @@ const EnhancedInsightsPage = ({ transactions, accounts }: InsightsPageProps) => 
     </EnhancedGlassCard>
   ));
 
+  const navigate = useNavigate();
+
   return (
-    <div className="insights-container liquid-insights-container liquid-bg-insights relative overflow-hidden">
+    <div className="insights-container liquid-insights-container liquid-bg-insights relative overflow-hidden px-4 lg:px-0">
+      {/* Header */}
+      <div className="flex items-center justify-between max-w-7xl mx-auto mb-6 pt-4">
+        <button
+          onClick={() => navigate(-1)}
+          className="flex items-center space-x-2 text-white hover:text-blue-400 transition-colors rounded-full py-2 px-3 bg-white/5 backdrop-blur-md border border-white/10"
+        >
+          <ArrowLeft className="w-4 h-4" />
+          <span className="text-sm font-medium">Back</span>
+        </button>
+        <div className="text-center flex-1">
+          <h1 className="text-xl font-semibold text-white">Financial Health</h1>
+        </div>
+        <div className="w-16" />
+      </div>
+
       {/* Enhanced floating orbs for depth */}
       <div className="liquid-orb liquid-orb-1" />
       <div className="liquid-orb liquid-orb-2" />
