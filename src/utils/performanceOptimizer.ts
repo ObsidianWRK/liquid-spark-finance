@@ -128,7 +128,7 @@ export const usePerformanceMonitor = () => {
 // Performance-aware useEffect
 export const usePerformanceAwareEffect = (
   effect: React.EffectCallback,
-  deps?: React.DependencyList,
+  deps: React.DependencyList = [],
   highPriority: boolean = false
 ) => {
   React.useEffect(() => {
@@ -182,7 +182,7 @@ export const useOptimizedMemo = <T>(
       memoRef.current = {
         value: factory(),
         timestamp: now,
-        deps
+        deps: [...deps]
       };
     }
     
@@ -192,7 +192,7 @@ export const useOptimizedMemo = <T>(
 
 // Lazy loading utility
 export const createLazyComponent = (
-  importFn: () => Promise<{ default: React.ComponentType<any> }>
+  importFn: () => Promise<{ default: React.ComponentType<unknown> }>
 ) => {
   return React.lazy(() => {
     const metrics = PerformanceMonitor.getInstance().getMetrics();

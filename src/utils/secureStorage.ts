@@ -36,7 +36,7 @@ class SecureStorage {
   /**
    * Set item in storage with optional encryption and expiry
    */
-  static setItem<T>(key: string, value: T, options: StorageOptions = {}): boolean {
+  static setItem<T>(key: string, value: T, options: StorageOptions<T> = {}): boolean {
     try {
       const { encrypt = false, expiry } = options;
       const storageKey = this.PREFIX + key;
@@ -61,13 +61,13 @@ class SecureStorage {
   /**
    * Get item from storage with automatic expiry checking
    */
-  static getItem<T>(key: string, options: StorageOptions = {}): T | null {
+  static getItem<T>(key: string, options: StorageOptions<T> = {}): T | null {
     try {
       const { encrypt = false, fallback = null } = options;
       const storageKey = this.PREFIX + key;
       const stored = localStorage.getItem(storageKey);
       
-      if (!stored) return fallback;
+      if (!stored) return fallback as T | null;
 
       const decrypted = encrypt ? this.decrypt(stored) : stored;
       const data = JSON.parse(decrypted);
@@ -75,13 +75,13 @@ class SecureStorage {
       // Check expiry
       if (data.expiry && Date.now() > data.expiry) {
         this.removeItem(key);
-        return fallback;
+        return fallback as T | null;
       }
 
       return data.value;
     } catch (error) {
       console.warn(`Failed to retrieve from storage: ${key}`, error);
-      return options.fallback || null;
+      return (options.fallback ?? null) as T | null;
     }
   }
 
