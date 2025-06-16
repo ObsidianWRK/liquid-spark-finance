@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import GlassCard from './GlassCard';
 import { TransactionScores } from '@/utils/transactionScoring';
