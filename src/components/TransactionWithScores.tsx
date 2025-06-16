@@ -172,10 +172,10 @@ const TransactionWithScores = ({ transaction, scores, currency }: TransactionWit
         
         {/* Content */}
         <div className="transaction-content">
-          <p className="transaction-merchant truncate">
+          <p className="transaction-merchant">
             {transaction.merchant}
           </p>
-          <p className="transaction-category truncate">
+          <p className="transaction-category">
             {transaction.category.name}
           </p>
         </div>
@@ -190,10 +190,10 @@ const TransactionWithScores = ({ transaction, scores, currency }: TransactionWit
           </p>
         </div>
         
-        {/* Score Circles Area with Overlay */}
+        {/* Score Circles Area */}
         <div className="transaction-scores">
           <div 
-            className={`absolute inset-0 flex items-center justify-end gap-1 transition-all duration-300 ${
+            className={`flex items-center justify-end gap-1 transition-all duration-300 ${
               showScores ? 'opacity-100 scale-100' : 'opacity-0 scale-90'
             }`}
           >
@@ -225,23 +225,22 @@ const TransactionWithScores = ({ transaction, scores, currency }: TransactionWit
       {/* Shipping Info Row */}
       {hasShippingInfo && (
         <div className="mt-3 pt-3 border-t border-white/10">
-          <div className="transaction-layout">
-            <div className="transaction-status"></div>
-            <div className="transaction-icon"></div>
-            <div className="transaction-content">
-              <span className="text-white/50 text-xs">
-                Tracking: {transaction.trackingNumber}
-              </span>
+          <div className="flex items-center justify-between text-xs">
+            <div className="flex items-center gap-3 flex-1 min-w-0">
+              <div className="text-white/50">
+                Tracking: 
+              </div>
+              <div className="text-white/70 font-mono truncate">
+                {transaction.trackingNumber}
+              </div>
             </div>
-            <div className="transaction-amount">
-              <span className="text-white/50 text-xs">
+            <div className="flex items-center gap-3 flex-shrink-0">
+              <div className="text-white/50">
                 via {transaction.shippingProvider}
-              </span>
-            </div>
-            <div className="transaction-scores">
-              <span className={`text-xs font-medium ${getDeliveryStatusColor(transaction.deliveryStatus)}`}>
+              </div>
+              <div className={`font-medium ${getDeliveryStatusColor(transaction.deliveryStatus)}`}>
                 {transaction.deliveryStatus}
-              </span>
+              </div>
             </div>
           </div>
         </div>
