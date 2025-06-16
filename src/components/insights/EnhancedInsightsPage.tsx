@@ -1,0 +1,517 @@
+import React, { useState, useEffect, useMemo, useCallback } from 'react';
+import { Heart, Leaf, TrendingUp, TrendingDown, DollarSign, Shield, PiggyBank, Calendar, ChevronRight, Activity } from 'lucide-react';
+import EnhancedGlassCard from '../ui/EnhancedGlassCard';
+import AnimatedCircularProgress from './components/AnimatedCircularProgress';
+import EnhancedScoreCard from './components/EnhancedScoreCard';
+import EnhancedMetricCard from './components/EnhancedMetricCard';
+import { mockHealthEcoService } from '@/services/mockHealthEcoService';
+import { formatPercentage, getScoreColor } from '@/utils/formatters';
+
+// Enhanced TypeScript interfaces
+interface Transaction {
+  id: string;
+  merchant: string;
+  category: {
+    name: string;
+    color: string;
+  };
+  amount: number;
+  date: string;
+  status: 'completed' | 'pending' | 'failed';
+}
+
+interface Account {
+  id: string;
+  type: string;
+  nickname: string;
+  balance: number;
+  availableBalance: number;
+  currency: string;
+}
+
+interface InsightsPageProps {
+  transactions: Transaction[];
+  accounts: Account[];
+}
+
+interface ScoreData {
+  financial: number;
+  health: number;
+  eco: number;
+}
+
+interface FinancialMetrics {
+  spendingRatio: number;
+  emergencyFundMonths: number;
+  savingsRate: number;
+  billPaymentScore: number;
+  debtToIncomeRatio: number;
+  monthlyIncome: number;
+  monthlySpending: number;
+  totalBalance: number;
+}
+
+const EnhancedInsightsPage = ({ transactions, accounts }: InsightsPageProps) => {
+  const [animatedScores, setAnimatedScores] = useState<ScoreData>({ financial: 0, health: 0, eco: 0 });
+  const [activeTab, setActiveTab] = useState('summary');
+
+  // Calculate comprehensive financial metrics (from current InsightsPage logic)
+  const metrics = useMemo<FinancialMetrics>(() => {
+    const monthlyIncome = transactions
+      .filter(t => t.amount > 0 && new Date(t.date).getMonth() === new Date().getMonth())
+      .reduce((sum, t) => sum + t.amount, 0);
+
+    const monthlySpending = Math.abs(transactions
+      .filter(t => t.amount < 0 && new Date(t.date).getMonth() === new Date().getMonth())
+      .reduce((sum, t) => sum + t.amount, 0));
+
+    const totalBalance = accounts.reduce((sum, acc) => sum + acc.balance, 0);
+    const monthlyExpenses = monthlySpending;
+    
+    const spendingRatio = monthlyIncome > 0 ? (monthlySpending / monthlyIncome) * 100 : 0;
+    const emergencyFundMonths = monthlyExpenses > 0 ? totalBalance / monthlyExpenses : 0;
+    const savingsRate = monthlyIncome > 0 ? ((monthlyIncome - monthlySpending) / monthlyIncome) * 100 : 0;
+    
+    const creditCardDebt = Math.abs(accounts
+      .filter(acc => acc.type === 'Credit Card' && acc.balance < 0)
+      .reduce((sum, acc) => sum + acc.balance, 0));
+    const debtToIncomeRatio = monthlyIncome > 0 ? (creditCardDebt / (monthlyIncome * 12)) * 100 : 0;
+    
+    const completedTransactions = transactions.filter(t => t.status === 'completed').length;
+    const totalTransactions = transactions.length;
+    const billPaymentScore = totalTransactions > 0 ? (completedTransactions / totalTransactions) * 100 : 100;
+    
+    return {
+      spendingRatio,
+      emergencyFundMonths,
+      savingsRate,
+      debtToIncomeRatio,
+      billPaymentScore,
+      monthlyIncome,
+      monthlySpending,
+      totalBalance
+    };
+  }, [transactions, accounts]);
+
+  // Calculate scores using existing logic
+  const scores = useMemo<ScoreData>(() => {
+    const weights = {
+      spendingRatio: 0.25,
+      emergencyFund: 0.20,
+      debtRatio: 0.20,
+      savingsRate: 0.15,
+      billPayment: 0.10,
+      investments: 0.10
+    };
+
+    const spendingScore = Math.max(0, 100 - metrics.spendingRatio);
+    const emergencyScore = Math.min(100, (metrics.emergencyFundMonths / 6) * 100);
+    const debtScore = Math.max(0, 100 - metrics.debtToIncomeRatio);
+    const savingsScore = Math.min(100, metrics.savingsRate);
+    const billScore = metrics.billPaymentScore;
+    const investmentScore = 70;
+
+    const financialScore = Math.round(
+      spendingScore * weights.spendingRatio +
+      emergencyScore * weights.emergencyFund +
+      debtScore * weights.debtRatio +
+      savingsScore * weights.savingsRate +
+      billScore * weights.billPayment +
+      investmentScore * weights.investments
+    );
+
+    const healthData = mockHealthEcoService.getHealthScore(transactions);
+    const ecoData = mockHealthEcoService.getEcoScore(transactions);
+
+    return {
+      financial: financialScore,
+      health: healthData.score,
+      eco: ecoData.score
+    };
+  }, [metrics, transactions]);
+
+  // Animate scores on mount
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setAnimatedScores(scores);
+    }, 300);
+    return () => clearTimeout(timer);
+  }, [scores]);
+
+  // Trend calculation helper
+  const getTrend = useCallback((value: number, threshold: { good: number; excellent: number }) => {
+    if (value >= threshold.excellent) return 'up';
+    if (value >= threshold.good) return 'stable';
+    return 'down';
+  }, []);
+
+  const TrendCard = React.memo(({ title, subtitle, trend, delay = 0 }: {
+    title: string;
+    subtitle: string;
+    trend: string;
+    delay?: number;
+  }) => (
+    <EnhancedGlassCard 
+      className="enhanced-trend-card relative overflow-hidden rounded-2xl backdrop-blur-xl border border-white/20 hover:border-white/30 transition-all duration-300 group cursor-pointer p-4"
+      liquid={true}
+      liquidIntensity={0.3}
+      liquidDistortion={0.2}
+      liquidAnimated={false}
+      liquidInteractive={true}
+      style={{
+        animation: `slideInScale 0.6s ease-out ${delay}ms both`
+      }}
+    >
+      <div className="relative z-10">
+        <div className="flex items-center justify-between mb-2">
+          <div>
+            <h4 className="text-sm font-semibold text-white/90">{title}</h4>
+            <p className="text-xs text-white/60">{subtitle}</p>
+          </div>
+          <ChevronRight className="w-4 h-4 text-white/40 group-hover:text-white/60 transition-colors" />
+        </div>
+        
+        <div className="mt-4 h-16 flex items-end space-x-1">
+          {[...Array(20)].map((_, i) => (
+            <div
+              key={i}
+              className="trend-bar flex-1 rounded-sm transition-all duration-500 relative overflow-hidden"
+              style={{ 
+                height: `${Math.random() * 60 + 20}%`,
+                background: 'linear-gradient(180deg, rgba(59, 130, 246, 0.8), rgba(59, 130, 246, 0.4))',
+                animationDelay: `${i * 50}ms`
+              }}
+            >
+              <div 
+                className="absolute inset-0 bg-gradient-to-t from-transparent via-white/10 to-transparent"
+                style={{ animation: `trendPulse 2s infinite ${i * 0.1}s` }}
+              />
+            </div>
+          ))}
+        </div>
+        
+        <div className="mt-3 text-center">
+          <span className="text-sm font-medium text-white/90">{trend}</span>
+        </div>
+      </div>
+    </EnhancedGlassCard>
+  ));
+
+  return (
+    <div 
+      className="min-h-screen relative overflow-hidden enhanced-insights-page"
+      style={{
+        background: 'linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%)'
+      }}
+    >
+      {/* Animated background elements */}
+      <div className="absolute inset-0 overflow-hidden">
+        <div 
+          className="floating-orb-1 absolute -top-40 -right-40 w-80 h-80 rounded-full opacity-20"
+          style={{
+            background: 'radial-gradient(circle, rgba(255, 255, 255, 0.3) 0%, transparent 70%)'
+          }}
+        />
+        <div 
+          className="floating-orb-2 absolute -bottom-40 -left-40 w-96 h-96 rounded-full opacity-15"
+          style={{
+            background: 'radial-gradient(circle, rgba(255, 255, 255, 0.3) 0%, transparent 70%)'
+          }}
+        />
+      </div>
+
+      <div className="relative z-10 max-w-4xl mx-auto px-4 py-8">
+        {/* Header */}
+        <div className="text-center mb-8">
+          <h1 className="text-4xl font-bold text-white mb-2">Financial Health</h1>
+          <p className="text-white/70 text-lg">Track your financial wellness with AI-powered insights</p>
+        </div>
+
+        {/* Navigation Tabs */}
+        <EnhancedGlassCard 
+          className="flex rounded-3xl p-1 mb-8 backdrop-blur-xl border border-white/20"
+          liquid={true}
+          liquidIntensity={0.4}
+          liquidDistortion={0.3}
+          liquidAnimated={false}
+        >
+          {['summary', 'health', 'trends'].map((tab) => (
+            <button
+              key={tab}
+              onClick={() => setActiveTab(tab)}
+              className={`flex-1 py-3 px-6 rounded-2xl text-sm font-semibold transition-all duration-300 ${
+                activeTab === tab
+                  ? 'text-white shadow-lg backdrop-blur-sm border border-white/30'
+                  : 'text-white/70 hover:text-white/90'
+              }`}
+              style={activeTab === tab ? {
+                background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0.1) 100%)'
+              } : {}}
+            >
+              {tab.charAt(0).toUpperCase() + tab.slice(1)}
+            </button>
+          ))}
+        </EnhancedGlassCard>
+
+        {activeTab === 'summary' && (
+          <div className="space-y-8">
+            {/* Main Score Cards */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              <EnhancedScoreCard
+                title="Financial Score"
+                score={animatedScores.financial}
+                subtitle="Based on spending and savings patterns"
+                icon={<DollarSign />}
+                color={getScoreColor(scores.financial)}
+                trend={getTrend(scores.financial, { good: 60, excellent: 75 })}
+                delay={0}
+              />
+              <EnhancedScoreCard
+                title="Health Score"
+                score={animatedScores.health}
+                subtitle="Wellness spending insights"
+                icon={<Heart />}
+                color={getScoreColor(scores.health)}
+                trend="stable"
+                delay={200}
+              />
+              <EnhancedScoreCard
+                title="Eco Score"
+                score={animatedScores.eco}
+                subtitle="Environmental impact tracking"
+                icon={<Leaf />}
+                color={getScoreColor(scores.eco)}
+                trend="up"
+                delay={400}
+              />
+            </div>
+
+            {/* Key Metrics */}
+            <div>
+              <h2 className="text-2xl font-bold text-white mb-6">Key Metrics</h2>
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <EnhancedMetricCard
+                  title="Spending Ratio"
+                  value={`${formatPercentage(metrics.spendingRatio)}%`}
+                  subtitle="of income spent"
+                  progress={metrics.spendingRatio}
+                  color="#F59E0B"
+                  icon={<DollarSign />}
+                  delay={100}
+                />
+                <EnhancedMetricCard
+                  title="Emergency Fund"
+                  value={`${formatPercentage(metrics.emergencyFundMonths)}`}
+                  subtitle="months covered"
+                  progress={(metrics.emergencyFundMonths / 6) * 100}
+                  color="#10B981"
+                  icon={<Shield />}
+                  delay={200}
+                />
+                <EnhancedMetricCard
+                  title="Savings Rate"
+                  value={`${formatPercentage(metrics.savingsRate)}%`}
+                  subtitle="of income saved"
+                  progress={metrics.savingsRate}
+                  color="#3B82F6"
+                  icon={<PiggyBank />}
+                  delay={300}
+                />
+                <EnhancedMetricCard
+                  title="Payment Score"
+                  value={`${formatPercentage(metrics.billPaymentScore)}%`}
+                  subtitle="on-time payments"
+                  progress={metrics.billPaymentScore}
+                  color="#10B981"
+                  icon={<Calendar />}
+                  delay={400}
+                />
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Health Tab */}
+        {activeTab === 'health' && (
+          <div className="space-y-6">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+              <EnhancedScoreCard
+                title="Health Score"
+                score={animatedScores.health}
+                subtitle="Wellness spending and lifestyle"
+                icon={<Heart />}
+                color={getScoreColor(scores.health)}
+                trend="stable"
+              />
+              <div className="space-y-4">
+                <h3 className="text-xl font-semibold text-white mb-4">Health Insights</h3>
+                <EnhancedMetricCard
+                  title="Exercise Spending"
+                  value="$85"
+                  subtitle="this month"
+                  progress={65}
+                  color="#10B981"
+                  icon={<Activity />}
+                  delay={100}
+                />
+                <EnhancedMetricCard
+                  title="Healthcare Budget"
+                  value="$120"
+                  subtitle="monthly average"
+                  progress={80}
+                  color="#3B82F6"
+                  icon={<Shield />}
+                  delay={200}
+                />
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Trends Tab */}
+        {activeTab === 'trends' && (
+          <div className="space-y-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <TrendCard
+                title="Spending Trends"
+                subtitle="Last 6 months"
+                trend="Trending lower"
+                delay={0}
+              />
+              <TrendCard
+                title="Savings Growth"
+                subtitle="Monthly progress"
+                trend="Trending higher"
+                delay={100}
+              />
+              <TrendCard
+                title="Category Analysis"
+                subtitle="Top spending areas"
+                trend="Food & Dining leads"
+                delay={200}
+              />
+              <TrendCard
+                title="Budget Performance"
+                subtitle="vs. planned spending"
+                trend="15% under budget"
+                delay={300}
+              />
+            </div>
+          </div>
+        )}
+
+        {/* Footer Summary */}
+        <EnhancedGlassCard 
+          className="mt-12 rounded-3xl backdrop-blur-xl border border-white/20 overflow-hidden p-6 summary-card"
+          liquid={true}
+          liquidIntensity={0.5}
+          liquidDistortion={0.3}
+          liquidAnimated={true}
+          style={{
+            animation: 'slideInScale 0.8s ease-out 600ms both'
+          }}
+        >
+          <div className="text-center">
+            <h3 className="text-xl font-semibold text-white mb-3">Overall Assessment</h3>
+            <p className="text-white/80 mb-6">
+              Your financial health is <span className="font-bold text-blue-300">
+                {scores.financial >= 80 ? 'excellent' : scores.financial >= 60 ? 'good' : 'needs attention'}
+              </span> with 
+              room for improvement in emergency savings and sustainable spending.
+            </p>
+            <div className="flex flex-wrap justify-center gap-3 text-sm">
+              <span 
+                className="px-4 py-2 rounded-full backdrop-blur-sm border border-white/20"
+                style={{ background: 'rgba(16, 185, 129, 0.2)' }}
+              >
+                <span className="text-green-300">
+                  {metrics.savingsRate > 10 ? 'Strong savings' : 'Build savings'}
+                </span>
+              </span>
+              <span 
+                className="px-4 py-2 rounded-full backdrop-blur-sm border border-white/20"
+                style={{ background: 'rgba(245, 158, 11, 0.2)' }}
+              >
+                <span className="text-orange-300">
+                  {metrics.emergencyFundMonths < 3 ? 'Build emergency fund' : 'Good emergency fund'}
+                </span>
+              </span>
+              <span 
+                className="px-4 py-2 rounded-full backdrop-blur-sm border border-white/20"
+                style={{ background: 'rgba(59, 130, 246, 0.2)' }}
+              >
+                <span className="text-blue-300">
+                  {metrics.spendingRatio < 70 ? 'Healthy spending' : 'Watch spending'}
+                </span>
+              </span>
+            </div>
+          </div>
+        </EnhancedGlassCard>
+      </div>
+
+      <style>
+        {`
+          .enhanced-insights-page {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+          }
+
+          @keyframes slideInScale {
+            0% {
+              opacity: 0;
+              transform: translateY(20px) scale(0.95);
+            }
+            100% {
+              opacity: 1;
+              transform: translateY(0) scale(1);
+            }
+          }
+
+          @keyframes float {
+            0%, 100% {
+              transform: translateY(0px) rotate(0deg);
+            }
+            50% {
+              transform: translateY(-20px) rotate(5deg);
+            }
+          }
+
+          .floating-orb-1 {
+            animation: float 6s ease-in-out infinite;
+          }
+
+          .floating-orb-2 {
+            animation: float 8s ease-in-out infinite reverse;
+          }
+
+          @keyframes shimmer {
+            0% {
+              transform: translateX(-100%);
+            }
+            100% {
+              transform: translateX(100%);
+            }
+          }
+
+          @keyframes trendPulse {
+            0%, 100% {
+              opacity: 0.5;
+            }
+            50% {
+              opacity: 1;
+            }
+          }
+
+          .shimmer-effect {
+            animation: shimmer 2s infinite;
+          }
+
+          .trend-bar {
+            animation: trendPulse 2s infinite;
+          }
+        `}
+      </style>
+    </div>
+  );
+};
+
+export default EnhancedInsightsPage; 
