@@ -7,6 +7,7 @@ import ScoreCircle from './ScoreCircle';
 import TimeSeriesChart from './TimeSeriesChart';
 import SpendingTrendsChart from './SpendingTrendsChart';
 import CategoryTrendsChart from './CategoryTrendsChart';
+import NetWorthTrendChart from './NetWorthTrendChart';
 import { generateScoreSummary } from '@/services/scoringModel';
 import { mockHealthEcoService } from '@/services/mockHealthEcoService';
 import { mockHistoricalService } from '@/services/mockHistoricalData';
@@ -46,6 +47,7 @@ const NewInsightsPage: React.FC<NewInsightsPageProps> = ({ transactions, account
   const historicalScores = useMemo(() => mockHistoricalService.getHistoricalScores(), []);
   const monthlyFinancialData = useMemo(() => mockHistoricalService.getMonthlyFinancialData(), []);
   const categoryTrends = useMemo(() => mockHistoricalService.getCategoryTrends(), []);
+  const netWorthData = useMemo(() => mockHistoricalService.getNetWorthData(), []);
 
   // Calculate financial metrics
   const financialData = useMemo(() => {
@@ -247,6 +249,12 @@ const NewInsightsPage: React.FC<NewInsightsPageProps> = ({ transactions, account
               </div>
             </div>
 
+            {/* Net Worth Trend Chart */}
+            <NetWorthTrendChart 
+              data={netWorthData} 
+              title="Net Worth Growth & 2-Year Projection"
+            />
+
             {/* Quick Summary Cards */}
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 sm:gap-8">
               <div className="liquid-glass-fallback rounded-2xl p-6">
@@ -299,6 +307,12 @@ const NewInsightsPage: React.FC<NewInsightsPageProps> = ({ transactions, account
 
         {activeTab === 'trends' && (
           <div className="space-y-8 sm:space-y-12">
+            {/* Net Worth Trend - Featured prominently in trends */}
+            <NetWorthTrendChart 
+              data={netWorthData} 
+              title="Net Worth Growth & Future Projections (3 Years Historical + 2 Years Projected)"
+            />
+
             {/* Historical Scores Chart */}
             <TimeSeriesChart 
               data={historicalScores} 
