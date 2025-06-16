@@ -127,3 +127,17 @@
     letter-spacing: -0.01em;
   }
 }
+
+/* Light mode overrides to improve readability when `dark` class is not present */
+html:not(.dark) [class*="text-white"] {
+  color: rgb(15 23 42 / 1) !important; /* slate-900 */
+}
+html:not(.dark) [class*="text-white/60"],
+html:not(.dark) [class*="text-white/70"],
+html:not(.dark) [class*="text-white/80"],
+html:not(.dark) [class*="text-white/90"] {
+  color: rgb(30 41 59 / 0.8) !important; /* slate with opacity */
+}
+html:not(.dark) .bg-black {
+  background-color: rgb(255 255 255 / 0.8) !important;
+}
