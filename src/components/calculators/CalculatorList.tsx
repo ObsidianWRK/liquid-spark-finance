@@ -1,6 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Calculator, TrendingUp, PiggyBank, DollarSign, Infinity, Percent, BarChart2, Home, Clock, PieChart, RefreshCcw, Globe } from 'lucide-react';
+import BackHeader from '@/components/ui/BackHeader';
 
 interface CalculatorItem {
   id: string;
@@ -93,26 +94,29 @@ const calculators: CalculatorItem[] = [
 const CalculatorList = () => {
   const navigate = useNavigate();
   return (
-    <div className="max-w-3xl mx-auto p-4 space-y-4">
-      <h1 className="text-2xl font-bold mb-4 text-white">Calculators</h1>
-      {calculators.map((calc) => (
-        <div
-          key={calc.id}
-          className="liquid-glass-card rounded-2xl p-4 hover:bg-white/5 transition-colors cursor-pointer"
-          onClick={() => navigate(`/calculators/${calc.id}`)}
-        >
-          <div className="flex items-center space-x-4">
-            {calc.icon}
-            <div>
-              <h2 className="text-lg font-semibold text-white">{calc.name}</h2>
-              <p className="text-sm text-white/70">{calc.description}</p>
+    <div className="w-full">
+      <BackHeader title="Calculators" />
+      <div className="max-w-3xl mx-auto p-4 space-y-4">
+        <h1 className="text-2xl font-bold mb-4 text-white">Calculators</h1>
+        {calculators.map((calc) => (
+          <div
+            key={calc.id}
+            className="liquid-glass-card rounded-2xl p-4 hover:bg-white/5 transition-colors cursor-pointer"
+            onClick={() => navigate(`/calculators/${calc.id}`)}
+          >
+            <div className="flex items-center space-x-4">
+              {calc.icon}
+              <div>
+                <h2 className="text-lg font-semibold text-white">{calc.name}</h2>
+                <p className="text-sm text-white/70">{calc.description}</p>
+              </div>
             </div>
+            <span className="text-xs px-2 py-1 rounded-full bg-white/10 text-white/80">
+              {calc.category.toUpperCase()}
+            </span>
           </div>
-          <span className="text-xs px-2 py-1 rounded-full bg-white/10 text-white/80">
-            {calc.category.toUpperCase()}
-          </span>
-        </div>
-      ))}
+        ))}
+      </div>
     </div>
   );
 };

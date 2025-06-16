@@ -12,6 +12,7 @@ import HomeAffordabilityCalculator from '@/components/calculators/HomeAffordabil
 import MortgagePayoffCalculator from '@/components/calculators/MortgagePayoffCalculator';
 import StockBacktestCalculator from '@/components/calculators/StockBacktestCalculator';
 import ExchangeRateCalculator from '@/components/calculators/ExchangeRateCalculator';
+import BackHeader from '@/components/ui/BackHeader';
 
 const componentMap: Record<string, React.ReactNode> = {
   'financial-freedom': <FinancialFreedomCalculator />,
@@ -27,6 +28,20 @@ const componentMap: Record<string, React.ReactNode> = {
   'exchange-rate': <ExchangeRateCalculator />
 };
 
+const nameMap: Record<string, string> = {
+  'financial-freedom': 'Financial Freedom Calculator',
+  roi: 'ROI Calculator',
+  loan: 'Loan Calculator',
+  inflation: 'Inflation Calculator',
+  'compound-interest': 'Compound Interest Calculator',
+  '401k': '401k Retirement Calculator',
+  'three-fund': '3-Fund Portfolio Calculator',
+  'home-affordability': 'Home Affordability Calculator',
+  'mortgage-payoff': 'Early Mortgage Payoff Calculator',
+  backtest: 'Stock Backtest Calculator',
+  'exchange-rate': 'Exchange Rate Calculator'
+};
+
 const CalculatorsPage = () => {
   const { id } = useParams<{ id?: string }>();
 
@@ -36,9 +51,12 @@ const CalculatorsPage = () => {
 
   const Component = componentMap[id];
   return (
-    <Suspense fallback={<div className="min-h-screen flex items-center justify-center">Loading…</div>}>
-      {Component || <div className="text-white p-4">Calculator not found.</div>}
-    </Suspense>
+    <>
+      <BackHeader title={nameMap[id] || 'Calculator'} />
+      <Suspense fallback={<div className="min-h-screen flex items-center justify-center">Loading…</div>}>
+        {Component || <div className="text-white p-4">Calculator not found.</div>}
+      </Suspense>
+    </>
   );
 };
 
