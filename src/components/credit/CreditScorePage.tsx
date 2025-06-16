@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { ArrowLeft, TrendingUp, TrendingDown, Info, CheckCircle, AlertCircle } from 'lucide-react';
+import { ArrowLeft, TrendingUp, TrendingDown, Info, CheckCircle, AlertCircle, CreditCard, Calendar, Percent } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
-import AnimatedCircularProgress from '../insights/components/AnimatedCircularProgress';
 import { creditScoreService } from '@/services/creditScoreService';
 import { CreditScore, CreditTip } from '@/types/creditScore';
+import { cn } from '@/lib/utils';
 
 const CreditScorePage = () => {
   const navigate = useNavigate();
@@ -39,28 +39,63 @@ const CreditScorePage = () => {
     return '#ef4444'; // Poor
   };
 
-  const getImpactColor = (impact: string) => {
-    switch (impact) {
-      case 'High': return '#ef4444';
-      case 'Medium': return '#f97316';
-      case 'Low': return '#22c55e';
-      default: return '#64748b';
-    }
+  const getScoreColorClass = (score: number) => {
+    if (score >= 800) return 'text-green-500';
+    if (score >= 740) return 'text-lime-500';
+    if (score >= 670) return 'text-yellow-500';
+    if (score >= 580) return 'text-orange-500';
+    return 'text-red-500';
+  };
+
+  const CircularProgress = ({ value, maxValue, size = 200 }: { value: number; maxValue: number; size?: number }) => {
+    const radius = (size - 20) / 2;
+    const circumference = 2 * Math.PI * radius;
+    const progress = (value / maxValue) * circumference;
+    
+    return (
+      <div className="relative" style={{ width: size, height: size }}>
+        <svg width={size} height={size} className="transform -rotate-90">
+          <circle
+            cx={size / 2}
+            cy={size / 2}
+            r={radius}
+            stroke="rgb(30 41 59)"
+            strokeWidth="8"
+            fill="none"
+          />
+          <circle
+            cx={size / 2}
+            cy={size / 2}
+            r={radius}
+            stroke={getScoreColor(value)}
+            strokeWidth="8"
+            fill="none"
+            strokeDasharray={circumference}
+            strokeDashoffset={circumference - progress}
+            strokeLinecap="round"
+            className="transition-all duration-1000 ease-out"
+          />
+        </svg>
+        <div className="absolute inset-0 flex items-center justify-center">
+          <div className="text-center">
+            <div className="text-4xl font-bold text-white">{value}</div>
+            <div className="text-sm text-gray-400">out of {maxValue}</div>
+          </div>
+        </div>
+      </div>
+    );
   };
 
   if (loading) {
     return (
-      <div className="min-h-screen w-full text-white">
-        <div className="fixed inset-0 z-0 optimized-bg" />
-        <div className="relative z-10 min-h-screen w-full">
-          <div className="w-full px-4 py-8 sm:px-6 lg:px-8 xl:px-12">
-            <div className="w-full space-y-6 animate-pulse">
-              <div className="h-8 bg-slate-700/50 rounded w-48"></div>
-              <div className="h-64 liquid-glass-card"></div>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div className="h-32 liquid-glass-card"></div>
-                <div className="h-32 liquid-glass-card"></div>
-              </div>
+      <div className="min-h-screen bg-black text-white">
+        <div className="max-w-7xl mx-auto px-4 py-8 sm:px-6 lg:px-8">
+          <div className="space-y-6 animate-pulse">
+            <div className="h-8 bg-white/[0.05] rounded w-48"></div>
+            <div className="h-64 bg-white/[0.02] rounded-xl border border-white/[0.08]"></div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="h-32 bg-white/[0.02] rounded-xl border border-white/[0.08]"></div>
+              <div className="h-32 bg-white/[0.02] rounded-xl border border-white/[0.08]"></div>
             </div>
           </div>
         </div>
@@ -70,23 +105,20 @@ const CreditScorePage = () => {
 
   if (!creditScore) {
     return (
-      <div className="min-h-screen w-full text-white">
-        <div className="fixed inset-0 z-0 optimized-bg" />
-        <div className="relative z-10 min-h-screen w-full">
-          <div className="w-full px-4 py-8 sm:px-6 lg:px-8 xl:px-12">
-            <button
-              onClick={() => navigate(-1)}
-              className="flex items-center space-x-2 text-white mb-6 hover:text-slate-300 transition-colors"
-            >
-              <ArrowLeft className="w-5 h-5" />
-              <span>Back</span>
-            </button>
-            
-            <div className="liquid-glass-card p-8 text-center">
-              <AlertCircle className="w-16 h-16 text-orange-400 mx-auto mb-4" />
-              <h2 className="text-2xl font-bold text-white mb-2">Credit Score Unavailable</h2>
-              <p className="text-slate-400">We're working to get your credit score. Check back soon!</p>
-            </div>
+      <div className="min-h-screen bg-black text-white">
+        <div className="max-w-7xl mx-auto px-4 py-8 sm:px-6 lg:px-8">
+          <button
+            onClick={() => navigate(-1)}
+            className="flex items-center space-x-2 text-white mb-6 hover:text-blue-400 transition-colors"
+          >
+            <ArrowLeft className="w-5 h-5" />
+            <span>Back</span>
+          </button>
+          
+          <div className="bg-white/[0.02] rounded-xl border border-white/[0.08] p-8 text-center">
+            <AlertCircle className="w-16 h-16 text-orange-400 mx-auto mb-4" />
+            <h2 className="text-2xl font-bold text-white mb-2">Credit Score Unavailable</h2>
+            <p className="text-gray-400">We're working to get your credit score. Check back soon!</p>
           </div>
         </div>
       </div>
@@ -94,171 +126,187 @@ const CreditScorePage = () => {
   }
 
   return (
-    <div className="min-h-screen w-full text-white">
-      {/* Optimized Background */}
-      <div className="fixed inset-0 z-0 optimized-bg" />
-      
-      {/* Main Content Container */}
-      <div className="relative z-10 min-h-screen w-full pb-24">
-        <div className="w-full px-4 py-8 sm:px-6 lg:px-8 xl:px-12 space-y-8">
-          {/* Header */}
-          <div className="flex items-center justify-between">
-            <button
-              onClick={() => navigate(-1)}
-              className="flex items-center space-x-2 text-white hover:text-slate-300 transition-colors"
-            >
-              <ArrowLeft className="w-5 h-5" />
-              <span>Back</span>
-            </button>
-            
-            <div className="text-center">
-              <h1 className="text-3xl font-bold text-white tracking-wide">Credit Score</h1>
-              <p className="text-white/60 mt-1">
-                Updated {new Date(creditScore.lastUpdated).toLocaleDateString()}
-              </p>
-            </div>
-            
-            <div className="w-20"></div> {/* Spacer for centering */}
+    <div className="min-h-screen bg-black text-white">
+      <div className="max-w-7xl mx-auto px-4 py-8 sm:px-6 lg:px-8 space-y-8">
+        {/* Header */}
+        <div className="flex items-center justify-between">
+          <button
+            onClick={() => navigate(-1)}
+            className="flex items-center space-x-2 text-white hover:text-blue-400 transition-colors"
+          >
+            <ArrowLeft className="w-5 h-5" />
+            <span>Back</span>
+          </button>
+          
+          <div className="text-center">
+            <h1 className="text-3xl font-bold text-white">Credit Score</h1>
+            <p className="text-gray-400 mt-1">
+              Updated {new Date(creditScore.lastUpdated).toLocaleDateString()}
+            </p>
           </div>
+          
+          <div className="w-20"></div>
+        </div>
 
-          {/* Score Overview Card */}
-          <div className="liquid-glass-card p-8">
-            <div className="flex flex-col md:flex-row items-center md:items-start gap-8">
-              {/* Score Display */}
-              <div className="text-center">
-                <AnimatedCircularProgress
-                  value={creditScore.score}
-                  maxValue={850}
-                  color={getScoreColor(creditScore.score)}
-                  size={200}
-                  strokeWidth={16}
-                />
-                
-                <div className="mt-6">
-                  <div className="text-4xl font-bold text-white mb-2">
-                    {creditScore.score}
-                  </div>
-                  <div 
-                    className="text-xl font-semibold mb-3"
-                    style={{ color: getScoreColor(creditScore.score) }}
-                  >
-                    {creditScore.scoreRange} Credit
-                  </div>
-                  <div className="text-xs text-white/60 bg-white/10 px-3 py-1 rounded-full">
-                    {creditScore.provider} Score
-                  </div>
+        {/* Score Overview Card */}
+        <div className="bg-white/[0.02] rounded-xl border border-white/[0.08] p-8">
+          <div className="flex flex-col lg:flex-row items-center lg:items-start gap-8">
+            {/* Score Display */}
+            <div className="text-center flex-shrink-0">
+              <CircularProgress
+                value={creditScore.score}
+                maxValue={850}
+                size={200}
+              />
+              
+              <div className="mt-6">
+                <div className={cn('text-xl font-semibold mb-2', getScoreColorClass(creditScore.score))}>
+                  {creditScore.scoreRange} Credit
+                </div>
+                <div className="text-xs text-gray-500 bg-white/[0.05] px-3 py-1 rounded-full">
+                  {creditScore.provider} Score
                 </div>
               </div>
+            </div>
 
-              {/* Score Breakdown */}
-              <div className="flex-1 space-y-6">
-                <div>
-                  <h3 className="text-xl font-bold text-white mb-4">Score Range</h3>
-                  <div className="space-y-2">
-                    {[
-                      { range: '800-850', label: 'Excellent', color: '#22c55e' },
-                      { range: '740-799', label: 'Very Good', color: '#84cc16' },
-                      { range: '670-739', label: 'Good', color: '#eab308' },
-                      { range: '580-669', label: 'Fair', color: '#f97316' },
-                      { range: '300-579', label: 'Poor', color: '#ef4444' }
-                    ].map((item, index) => (
-                      <div key={index} className="flex items-center justify-between">
-                        <div className="flex items-center space-x-3">
-                          <div 
-                            className="w-4 h-4 rounded-full"
-                            style={{ backgroundColor: item.color }}
-                          />
-                          <span className="text-white/80">{item.label}</span>
-                        </div>
-                        <span className="text-white/60 text-sm">{item.range}</span>
+            {/* Score Details */}
+            <div className="flex-1 space-y-6">
+              <div>
+                <h3 className="text-xl font-bold text-white mb-4">Credit Score Ranges</h3>
+                <div className="space-y-3">
+                  {[
+                    { range: '800-850', label: 'Excellent', color: 'bg-green-500', current: creditScore.score >= 800 && creditScore.score <= 850 },
+                    { range: '740-799', label: 'Very Good', color: 'bg-lime-500', current: creditScore.score >= 740 && creditScore.score <= 799 },
+                    { range: '670-739', label: 'Good', color: 'bg-yellow-500', current: creditScore.score >= 670 && creditScore.score <= 739 },
+                    { range: '580-669', label: 'Fair', color: 'bg-orange-500', current: creditScore.score >= 580 && creditScore.score <= 669 },
+                    { range: '300-579', label: 'Poor', color: 'bg-red-500', current: creditScore.score >= 300 && creditScore.score <= 579 }
+                  ].map((item, index) => (
+                    <div 
+                      key={index} 
+                      className={cn(
+                        'flex items-center justify-between p-3 rounded-lg transition-all',
+                        item.current ? 'bg-white/[0.05] border border-white/[0.1]' : 'hover:bg-white/[0.02]'
+                      )}
+                    >
+                      <div className="flex items-center space-x-3">
+                        <div className={cn('w-3 h-3 rounded-full', item.color)} />
+                        <span className={cn('font-medium', item.current ? 'text-white' : 'text-gray-300')}>
+                          {item.label}
+                        </span>
+                        {item.current && (
+                          <CheckCircle className="w-4 h-4 text-blue-400" />
+                        )}
                       </div>
-                    ))}
-                  </div>
+                      <span className="text-gray-400 text-sm">{item.range}</span>
+                    </div>
+                  ))}
                 </div>
-                
-                <div>
-                  <h3 className="text-lg font-semibold text-white mb-2">What this means</h3>
-                  <p className="text-white/70 text-sm leading-relaxed">
-                    With a {creditScore.scoreRange.toLowerCase()} credit score, you may qualify for most loans and credit cards with competitive rates. Continue building your credit for even better terms.
-                  </p>
-                </div>
+              </div>
+              
+              <div className="bg-white/[0.02] rounded-lg p-4 border border-white/[0.05]">
+                <h4 className="text-lg font-semibold text-white mb-2">What this means</h4>
+                <p className="text-gray-300 text-sm leading-relaxed">
+                  With a {creditScore.scoreRange.toLowerCase()} credit score, you may qualify for most loans and credit cards with competitive rates. Continue building your credit for even better terms.
+                </p>
               </div>
             </div>
           </div>
+        </div>
 
-          {/* Tab Navigation */}
-          <div className="flex space-x-1 bg-white/10 p-1 rounded-lg">
-            {[
-              { id: 'overview', label: 'Overview' },
-              { id: 'factors', label: 'Credit Factors' },
-              { id: 'history', label: 'Score History' },
-              { id: 'tips', label: 'Improvement Tips' }
-            ].map((tab) => (
+        {/* Tab Navigation */}
+        <div className="flex space-x-1 bg-white/[0.05] p-1 rounded-xl">
+          {[
+            { id: 'overview', label: 'Overview', icon: Info },
+            { id: 'factors', label: 'Credit Factors', icon: Percent },
+            { id: 'history', label: 'Score History', icon: TrendingUp },
+            { id: 'tips', label: 'Improvement Tips', icon: CheckCircle }
+          ].map((tab) => {
+            const IconComponent = tab.icon;
+            return (
               <button
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id as any)}
-                className={`flex-1 py-3 px-4 text-sm font-medium rounded-lg transition-all ${
+                className={cn(
+                  'flex-1 py-3 px-4 text-sm font-medium rounded-lg transition-all flex items-center justify-center space-x-2',
                   activeTab === tab.id
-                    ? 'bg-indigo-500 text-white'
-                    : 'text-white/70 hover:text-white hover:bg-white/5'
-                }`}
+                    ? 'bg-blue-500 text-white shadow-lg'
+                    : 'text-gray-400 hover:text-white hover:bg-white/[0.05]'
+                )}
               >
-                {tab.label}
+                <IconComponent className="w-4 h-4" />
+                <span>{tab.label}</span>
               </button>
-            ))}
-          </div>
+            );
+          })}
+        </div>
 
-          {/* Tab Content */}
-          {activeTab === 'factors' && (
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {creditScore.factors.map((factor, index) => (
-                <div key={index} className="liquid-glass-card p-6">
-                  <div className="flex items-start justify-between mb-4">
-                    <h3 className="text-lg font-semibold text-white">{factor.factor}</h3>
-                    <span 
-                      className="text-sm font-medium px-2 py-1 rounded-full"
-                      style={{ 
-                        backgroundColor: `${getImpactColor(factor.impact)}20`,
-                        color: getImpactColor(factor.impact)
-                      }}
-                    >
-                      {factor.impact} Impact
-                    </span>
+        {/* Tab Content */}
+        <div className="space-y-6">
+          {activeTab === 'overview' && (
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              <div className="bg-white/[0.02] rounded-xl border border-white/[0.08] p-6">
+                <div className="flex items-center space-x-3 mb-4">
+                  <div className="w-10 h-10 bg-blue-500/20 rounded-lg flex items-center justify-center">
+                    <CreditCard className="w-5 h-5 text-blue-400" />
                   </div>
-                  <p className="text-white/70 text-sm mb-4">{factor.description}</p>
-                  <div className="flex items-center">
-                    {factor.status === 'Positive' ? (
-                      <TrendingUp className="w-4 h-4 text-green-400 mr-2" />
-                    ) : (
-                      <TrendingDown className="w-4 h-4 text-red-400 mr-2" />
-                    )}
-                    <span className="text-sm text-white/60">
-                      {factor.status === 'Positive' ? 'Helping your score' : 'Hurting your score'}
-                    </span>
+                  <div>
+                    <h3 className="font-semibold text-white">Credit Utilization</h3>
+                    <p className="text-sm text-gray-400">Payment history impact</p>
                   </div>
                 </div>
-              ))}
+                <div className="text-2xl font-bold text-white mb-1">23%</div>
+                <div className="text-sm text-green-400">Excellent</div>
+              </div>
+
+              <div className="bg-white/[0.02] rounded-xl border border-white/[0.08] p-6">
+                <div className="flex items-center space-x-3 mb-4">
+                  <div className="w-10 h-10 bg-green-500/20 rounded-lg flex items-center justify-center">
+                    <Calendar className="w-5 h-5 text-green-400" />
+                  </div>
+                  <div>
+                    <h3 className="font-semibold text-white">Payment History</h3>
+                    <p className="text-sm text-gray-400">On-time payments</p>
+                  </div>
+                </div>
+                <div className="text-2xl font-bold text-white mb-1">100%</div>
+                <div className="text-sm text-green-400">Perfect record</div>
+              </div>
+
+              <div className="bg-white/[0.02] rounded-xl border border-white/[0.08] p-6">
+                <div className="flex items-center space-x-3 mb-4">
+                  <div className="w-10 h-10 bg-purple-500/20 rounded-lg flex items-center justify-center">
+                    <TrendingUp className="w-5 h-5 text-purple-400" />
+                  </div>
+                  <div>
+                    <h3 className="font-semibold text-white">Credit Age</h3>
+                    <p className="text-sm text-gray-400">Average account age</p>
+                  </div>
+                </div>
+                <div className="text-2xl font-bold text-white mb-1">7.2 yrs</div>
+                <div className="text-sm text-yellow-400">Good length</div>
+              </div>
             </div>
           )}
 
-          {activeTab === 'history' && (
-            <div className="liquid-glass-card p-6">
-              <h3 className="text-xl font-bold text-white mb-6">Score History</h3>
+          {activeTab === 'factors' && (
+            <div className="bg-white/[0.02] rounded-xl border border-white/[0.08] p-6">
+              <h3 className="text-xl font-bold text-white mb-6">Factors Affecting Your Score</h3>
               <div className="space-y-4">
-                {creditScore.history.slice(-6).map((point, index) => (
-                  <div key={index} className="flex items-center justify-between py-3 border-b border-white/10 last:border-b-0">
-                    <span className="text-white/70">{new Date(point.date).toLocaleDateString()}</span>
-                    <div className="flex items-center space-x-3">
-                      <span className="text-white font-medium">{point.score}</span>
-                      {index > 0 && (
-                        <div className="flex items-center">
-                          {point.score > creditScore.history[creditScore.history.length - 7 + index]?.score ? (
-                            <TrendingUp className="w-4 h-4 text-green-400" />
-                          ) : (
-                            <TrendingDown className="w-4 h-4 text-red-400" />
-                          )}
-                        </div>
-                      )}
+                {creditScore.factors?.map((factor, index) => (
+                  <div key={index} className="flex items-center justify-between p-4 bg-white/[0.02] rounded-lg">
+                    <div className="flex-1">
+                      <div className="font-medium text-white">{factor.factor}</div>
+                      <div className="text-sm text-gray-400 mt-1">{factor.description}</div>
+                    </div>
+                    <div className="text-right">
+                      <div className={cn(
+                        'text-sm font-medium',
+                        factor.impact === 'High' && 'text-red-400',
+                        factor.impact === 'Medium' && 'text-yellow-400',
+                        factor.impact === 'Low' && 'text-green-400'
+                      )}>
+                        {factor.impact} Impact
+                      </div>
                     </div>
                   </div>
                 ))}
@@ -266,65 +314,58 @@ const CreditScorePage = () => {
             </div>
           )}
 
+          {activeTab === 'history' && (
+            <div className="bg-white/[0.02] rounded-xl border border-white/[0.08] p-6">
+              <h3 className="text-xl font-bold text-white mb-6">Score History</h3>
+              <div className="text-center py-12 text-gray-400">
+                <TrendingUp className="w-16 h-16 mx-auto mb-4 opacity-50" />
+                <p>Score history visualization coming soon</p>
+              </div>
+            </div>
+          )}
+
           {activeTab === 'tips' && (
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="space-y-4">
               {creditTips.map((tip, index) => (
-                <div key={index} className="liquid-glass-card p-6">
-                  <div className="flex items-start space-x-3 mb-4">
-                    <div className={`w-8 h-8 rounded-full flex items-center justify-center ${
-                      tip.category === 'Payment' ? 'bg-green-500/20' :
-                      tip.category === 'Utilization' ? 'bg-blue-500/20' :
-                      tip.category === 'Length' ? 'bg-purple-500/20' : 'bg-orange-500/20'
-                    }`}>
-                      <CheckCircle className={`w-4 h-4 ${
-                        tip.category === 'Payment' ? 'text-green-400' :
-                        tip.category === 'Utilization' ? 'text-blue-400' :
-                        tip.category === 'Length' ? 'text-purple-400' : 'text-orange-400'
-                      }`} />
+                <div key={index} className="bg-white/[0.02] rounded-xl border border-white/[0.08] p-6">
+                  <div className="flex items-start space-x-4">
+                    <div className={cn(
+                      'w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0',
+                      tip.impact === 'High' && 'bg-red-500/20',
+                      tip.impact === 'Medium' && 'bg-yellow-500/20',
+                      tip.impact === 'Low' && 'bg-green-500/20'
+                    )}>
+                      <CheckCircle className={cn(
+                        'w-5 h-5',
+                        tip.impact === 'High' && 'text-red-400',
+                        tip.impact === 'Medium' && 'text-yellow-400',
+                        tip.impact === 'Low' && 'text-green-400'
+                      )} />
                     </div>
                     <div className="flex-1">
-                      <h4 className="text-lg font-semibold text-white mb-2">{tip.title}</h4>
-                      <p className="text-white/70 text-sm mb-3">{tip.description}</p>
-                      <div className={`text-xs font-medium px-2 py-1 rounded-full inline-block ${
-                        tip.impact === 'High' ? 'bg-green-500/20 text-green-400' :
-                        tip.impact === 'Medium' ? 'bg-yellow-500/20 text-yellow-400' :
-                        'bg-blue-500/20 text-blue-400'
-                      }`}>
-                        {tip.impact} Impact
+                      <div className="flex items-center justify-between mb-2">
+                        <h4 className="font-semibold text-white">{tip.title}</h4>
+                        <span className={cn(
+                          'text-xs px-2 py-1 rounded-full',
+                          tip.impact === 'High' && 'bg-red-500/20 text-red-400',
+                          tip.impact === 'Medium' && 'bg-yellow-500/20 text-yellow-400',
+                          tip.impact === 'Low' && 'bg-green-500/20 text-green-400'
+                        )}>
+                          {tip.impact}
+                        </span>
+                      </div>
+                      <p className="text-gray-300 text-sm leading-relaxed">{tip.description}</p>
+                      <div className="mt-3 text-sm">
+                        <span className="text-gray-400">Category:</span>
+                        <span className="text-blue-400 ml-1">{tip.category}</span>
+                        <span className="text-gray-500 mx-2">•</span>
+                        <span className="text-gray-400">Timeframe:</span>
+                        <span className="text-blue-400 ml-1">{tip.timeframe}</span>
                       </div>
                     </div>
                   </div>
                 </div>
               ))}
-            </div>
-          )}
-
-          {activeTab === 'overview' && (
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-              {/* Credit Utilization */}
-              <div className="liquid-glass-card p-6">
-                <h3 className="text-lg font-bold text-white mb-4">Credit Utilization</h3>
-                <div className="space-y-4">
-                  <div className="flex justify-between items-center">
-                    <span className="text-white/70">Current Utilization</span>
-                    <span className="text-white font-medium">23%</span>
-                  </div>
-                  <div className="w-full bg-white/10 rounded-full h-2">
-                    <div className="bg-yellow-400 h-2 rounded-full" style={{ width: '23%' }}></div>
-                  </div>
-                  <p className="text-white/60 text-sm">Recommended to keep below 30%</p>
-                </div>
-              </div>
-
-              {/* Payment History */}
-              <div className="liquid-glass-card p-6">
-                <h3 className="text-lg font-bold text-white mb-4">Payment History</h3>
-                <div className="flex items-center space-x-3 mb-3">
-                  <CheckCircle className="w-6 h-6 text-green-400" />
-                  <span className="text-white font-medium">100% On-time Payments</span>
-                </div>
-                <p className="text-white/60 text-sm">Great job! Keep making payments on time.</p>
-              </div>
             </div>
           )}
         </div>
