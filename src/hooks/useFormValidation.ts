@@ -1,228 +1,178 @@
-import { useState, useCallback } from 'react';
+import { useState, useEffect } from 'react';
 
-export interface ValidationRule {
+// Define proper types for form validation
+interface ValidationRule<T = unknown> {
   required?: boolean;
   minLength?: number;
   maxLength?: number;
   pattern?: RegExp;
-  custom?: (value: any) => string | null;
-  email?: boolean;
-  number?: boolean;
-  min?: number;
-  max?: number;
+  custom?: (value: T) => string | null;
 }
 
-export interface FieldConfig {
-  [key: string]: ValidationRule;
+interface FormField<T = unknown> {
+  value: T;
+  error: string | null;
+  touched: boolean;
 }
 
-export interface FormErrors {
-  [key: string]: string;
+interface FormState<T extends Record<string, unknown>> {
+  [K in keyof T]: FormField<T[K]>;
 }
 
-export interface FormState<T> {
-  values: T;
-  errors: FormErrors;
-  touched: { [key: string]: boolean };
-  isValid: boolean;
-  isSubmitting: boolean;
+interface ValidationRules<T extends Record<string, unknown>> {
+  [K in keyof T]?: ValidationRule<T[K]>;
 }
 
-export const useFormValidation = <T extends Record<string, any>>(
+// Enhanced form validation hook with proper typing
+export const useFormValidation = <T extends Record<string, unknown>>(
   initialValues: T,
-  validationRules: FieldConfig
+  validationRules: ValidationRules<T> = {}
 ) => {
-  const [values, setValues] = useState<T>(initialValues);
-  const [errors, setErrors] = useState<FormErrors>({});
-  const [touched, setTouched] = useState<{ [key: string]: boolean }>({});
-  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [formState, setFormState] = useState<FormState<T>>(() => {
+    const state = {} as FormState<T>;
+    for (const key in initialValues) {
+      state[key] = {
+        value: initialValues[key],
+        error: null,
+        touched: false,
+      };
+    }
+    return state;
+  });
 
-  const validateField = useCallback((name: string, value: any): string => {
+  const [isSubmitted, setIsSubmitted] = useState(false);
+
+  // Validate a single field
+  const validateField = <K extends keyof T>(name: K, value: T[K]): string | null => {
     const rules = validationRules[name];
-    if (!rules) return '';
+    if (!rules) return null;
 
     // Required validation
-    if (rules.required && (!value || value.toString().trim() === '')) {
-      return `${name.charAt(0).toUpperCase() + name.slice(1)} is required`;
+    if (rules.required && (!value || (typeof value === 'string' && value.trim() === ''))) {
+      return `${String(name)} is required`;
     }
 
-    if (!value) return ''; // Skip other validations if empty and not required
-
-    const stringValue = value.toString();
-
-    // Email validation
-    if (rules.email) {
-      const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      if (!emailPattern.test(stringValue)) {
-        return 'Please enter a valid email address';
+    // String-specific validations
+    if (typeof value === 'string') {
+      // Min length validation
+      if (rules.minLength && value.length < rules.minLength) {
+        return `${String(name)} must be at least ${rules.minLength} characters`;
       }
-    }
 
-    // Number validation
-    if (rules.number) {
-      const numValue = Number(value);
-      if (isNaN(numValue)) {
-        return 'Please enter a valid number';
+      // Max length validation
+      if (rules.maxLength && value.length > rules.maxLength) {
+        return `${String(name)} must be no more than ${rules.maxLength} characters`;
       }
-      
-      if (rules.min !== undefined && numValue < rules.min) {
-        return `Value must be at least ${rules.min}`;
+
+      // Pattern validation
+      if (rules.pattern && !rules.pattern.test(value)) {
+        return `${String(name)} format is invalid`;
       }
-      
-      if (rules.max !== undefined && numValue > rules.max) {
-        return `Value must be no more than ${rules.max}`;
-      }
-    }
-
-    // Length validations
-    if (rules.minLength && stringValue.length < rules.minLength) {
-      return `Must be at least ${rules.minLength} characters`;
-    }
-
-    if (rules.maxLength && stringValue.length > rules.maxLength) {
-      return `Must be no more than ${rules.maxLength} characters`;
-    }
-
-    // Pattern validation
-    if (rules.pattern && !rules.pattern.test(stringValue)) {
-      return 'Please enter a valid format';
     }
 
     // Custom validation
     if (rules.custom) {
-      const customError = rules.custom(value);
-      if (customError) return customError;
+      return rules.custom(value);
     }
 
-    return '';
-  }, [validationRules]);
+    return null;
+  };
 
-  const validateForm = useCallback((): boolean => {
-    const newErrors: FormErrors = {};
+  // Update field value and validation
+  const setFieldValue = <K extends keyof T>(name: K, value: T[K]) => {
+    setFormState(prev => ({
+      ...prev,
+      [name]: {
+        ...prev[name],
+        value,
+        error: validateField(name, value),
+        touched: true,
+      },
+    }));
+  };
+
+  // Mark field as touched
+  const setFieldTouched = <K extends keyof T>(name: K) => {
+    setFormState(prev => ({
+      ...prev,
+      [name]: {
+        ...prev[name],
+        touched: true,
+      },
+    }));
+  };
+
+  // Validate all fields
+  const validateForm = (): boolean => {
     let isValid = true;
+    const newState = { ...formState };
 
-    Object.keys(validationRules).forEach(name => {
-      const error = validateField(name, values[name as keyof T]);
-      if (error) {
-        newErrors[name] = error;
-        isValid = false;
-      }
-    });
+    for (const key in formState) {
+      const error = validateField(key, formState[key].value);
+      newState[key] = {
+        ...newState[key],
+        error,
+        touched: true,
+      };
+      if (error) isValid = false;
+    }
 
-    setErrors(newErrors);
+    setFormState(newState);
     return isValid;
-  }, [values, validateField, validationRules]);
+  };
 
-  const handleChange = useCallback((name: string, value: any) => {
-    setValues(prev => ({ ...prev, [name]: value }));
-    
-    // Validate field if it has been touched
-    if (touched[name]) {
-      const error = validateField(name, value);
-      setErrors(prev => ({ ...prev, [name]: error }));
+  // Get form values
+  const getValues = (): T => {
+    const values = {} as T;
+    for (const key in formState) {
+      values[key] = formState[key].value;
     }
-  }, [touched, validateField]);
+    return values;
+  };
 
-  const handleBlur = useCallback((name: string) => {
-    setTouched(prev => ({ ...prev, [name]: true }));
-    const error = validateField(name, values[name as keyof T]);
-    setErrors(prev => ({ ...prev, [name]: error }));
-  }, [values, validateField]);
-
-  const handleSubmit = useCallback(async (onSubmit: (values: T) => Promise<void> | void) => {
-    setIsSubmitting(true);
-    
-    // Mark all fields as touched
-    const allTouched: { [key: string]: boolean } = {};
-    Object.keys(validationRules).forEach(name => {
-      allTouched[name] = true;
-    });
-    setTouched(allTouched);
-
-    try {
-      const isValid = validateForm();
-      if (isValid) {
-        await onSubmit(values);
-      }
-    } catch (error) {
-      console.error('Form submission error:', error);
-    } finally {
-      setIsSubmitting(false);
+  // Reset form
+  const resetForm = () => {
+    const state = {} as FormState<T>;
+    for (const key in initialValues) {
+      state[key] = {
+        value: initialValues[key],
+        error: null,
+        touched: false,
+      };
     }
-  }, [values, validateForm, validationRules]);
+    setFormState(state);
+    setIsSubmitted(false);
+  };
 
-  const reset = useCallback(() => {
-    setValues(initialValues);
-    setErrors({});
-    setTouched({});
-    setIsSubmitting(false);
-  }, [initialValues]);
+  // Check if form has errors
+  const hasErrors = Object.values(formState).some(field => field.error !== null);
 
-  const setFieldValue = useCallback((name: string, value: any) => {
-    setValues(prev => ({ ...prev, [name]: value }));
-  }, []);
+  // Check if form is touched
+  const isTouched = Object.values(formState).some(field => field.touched);
 
-  const setFieldError = useCallback((name: string, error: string) => {
-    setErrors(prev => ({ ...prev, [name]: error }));
-  }, []);
-
-  const getFieldProps = useCallback((name: string) => ({
-    value: values[name as keyof T] || '',
-    onChange: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-      handleChange(name, e.target.value);
-    },
-    onBlur: () => handleBlur(name),
-    error: errors[name],
-    hasError: Boolean(errors[name] && touched[name]),
-  }), [values, errors, touched, handleChange, handleBlur]);
-
-  const isValid = Object.keys(errors).every(key => !errors[key]);
+  // Common validation patterns
+  const validationPatterns = {
+    email: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+    phone: /^\+?[\d\s-()]+$/,
+    url: /^https?:\/\/.+/,
+    alphanumeric: /^[a-zA-Z0-9]+$/,
+    numeric: /^\d+$/,
+    decimal: /^\d*\.?\d+$/,
+  };
 
   return {
-    values,
-    errors,
-    touched,
-    isValid,
-    isSubmitting,
-    handleChange,
-    handleBlur,
-    handleSubmit,
-    validateForm,
-    reset,
+    formState,
     setFieldValue,
-    setFieldError,
-    getFieldProps,
+    setFieldTouched,
+    validateForm,
+    getValues,
+    resetForm,
+    hasErrors,
+    isTouched,
+    isSubmitted,
+    setIsSubmitted,
+    validationPatterns,
   };
 };
 
-// Predefined validation rules for common use cases
-export const commonValidationRules = {
-  email: {
-    required: true,
-    email: true,
-  },
-  password: {
-    required: true,
-    minLength: 8,
-    pattern: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/,
-  },
-  name: {
-    required: true,
-    minLength: 2,
-    maxLength: 50,
-    pattern: /^[a-zA-Z\s]+$/,
-  },
-  phone: {
-    pattern: /^\+?[\d\s\-\(\)]+$/,
-  },
-  amount: {
-    required: true,
-    number: true,
-    min: 0,
-  },
-  percentage: {
-    number: true,
-    min: 0,
-    max: 100,
-  },
-}; 
+export default useFormValidation; 

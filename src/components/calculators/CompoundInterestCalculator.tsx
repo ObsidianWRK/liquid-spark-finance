@@ -20,7 +20,7 @@ const CompoundInterestCalculator = () => {
 
   const generateCompoundData = (): CompoundData[] => {
     const data: CompoundData[] = [];
-    let currentPrincipal = principal;
+    const currentPrincipal = principal;
     const monthlyRate = rate / 100 / compoundFreq;
     const periodsPerYear = compoundFreq;
     

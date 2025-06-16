@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { ComposedChart, Line, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend, ReferenceLine } from 'recharts';
 import { NetWorthData } from '@/services/mockHistoricalData';
-import { TrendingUp, TrendingDown, Eye, EyeOff } from 'lucide-react';
+import { TrendingUp, TrendingDown, Eye, EyeOff, Heart } from 'lucide-react';
 
 interface NetWorthTrendChartProps {
   data: NetWorthData[];
@@ -12,6 +12,7 @@ const NetWorthTrendChart: React.FC<NetWorthTrendChartProps> = ({ data, title }) 
   const [showAssets, setShowAssets] = useState(true);
   const [showLiabilities, setShowLiabilities] = useState(true);
   const [showProjections, setShowProjections] = useState(true);
+  const [showHealthScore, setShowHealthScore] = useState(true);
 
   // Split data into historical and projected
   const historicalData = data.filter(d => d.type === 'historical');
@@ -26,6 +27,11 @@ const NetWorthTrendChart: React.FC<NetWorthTrendChartProps> = ({ data, title }) 
   const totalGrowth = ((lastPoint.netWorth - firstPoint.netWorth) / firstPoint.netWorth) * 100;
   const projectedGrowth = finalProjection ? ((finalProjection.netWorth - lastPoint.netWorth) / lastPoint.netWorth) * 100 : 0;
   const annualizedReturn = Math.pow(lastPoint.netWorth / firstPoint.netWorth, 1/3) - 1;
+  
+  // Calculate health score metrics
+  const firstHealthScore = historicalData[0]?.healthScore || 0;
+  const lastHealthScore = lastPoint?.healthScore || 0;
+  const healthScoreChange = lastHealthScore - firstHealthScore;
 
   const formatCurrency = (value: number) => {
     return new Intl.NumberFormat('en-US', {
@@ -62,7 +68,10 @@ const NetWorthTrendChart: React.FC<NetWorthTrendChartProps> = ({ data, title }) 
             <p key={index} style={{ color: entry.color }} className="text-sm font-medium">
               {entry.dataKey === 'netWorth' ? 'Net Worth' : 
                entry.dataKey === 'assets' ? 'Assets' : 
-               entry.dataKey === 'liabilities' ? 'Liabilities' : entry.dataKey}: {formatCurrency(entry.value)}
+               entry.dataKey === 'liabilities' ? 'Liabilities' :
+               entry.dataKey === 'healthScore' ? 'Health Score' : entry.dataKey}: {
+                 entry.dataKey === 'healthScore' ? `${entry.value}/100` : formatCurrency(entry.value)
+               }
             </p>
           ))}
           {payload[0]?.payload?.growthRate !== undefined && (
@@ -82,7 +91,7 @@ const NetWorthTrendChart: React.FC<NetWorthTrendChartProps> = ({ data, title }) 
         <h3 className="text-lg sm:text-xl font-bold text-white mb-4 lg:mb-0">{title}</h3>
         
         {/* Key Metrics */}
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-center lg:text-right">
+        <div className="grid grid-cols-1 sm:grid-cols-4 gap-4 text-center lg:text-right">
           <div>
             <p className="text-white/60 text-xs">3-Year Growth</p>
             <p className={`font-bold ${totalGrowth >= 0 ? 'text-green-400' : 'text-red-400'}`}>
@@ -98,6 +107,12 @@ const NetWorthTrendChart: React.FC<NetWorthTrendChartProps> = ({ data, title }) 
           <div>
             <p className="text-white/60 text-xs">Current Net Worth</p>
             <p className="font-bold text-white">{formatCurrency(lastPoint.netWorth)}</p>
+          </div>
+          <div>
+            <p className="text-white/60 text-xs">Health Score</p>
+            <p className={`font-bold ${healthScoreChange >= 0 ? 'text-green-400' : 'text-red-400'}`}>
+              {lastHealthScore}/100 {healthScoreChange >= 0 ? '+' : ''}{healthScoreChange.toFixed(0)}
+            </p>
           </div>
         </div>
       </div>
@@ -129,6 +144,19 @@ const NetWorthTrendChart: React.FC<NetWorthTrendChartProps> = ({ data, title }) 
         </button>
         
         <button
+          onClick={() => setShowHealthScore(!showHealthScore)}
+          className={`flex items-center space-x-2 px-3 py-2 rounded-lg text-xs font-medium transition-all duration-200 ${
+            showHealthScore
+              ? 'bg-pink-500/20 text-pink-300 border border-pink-500/30'
+              : 'bg-white/5 text-white/60 border border-white/10 hover:bg-white/10'
+          }`}
+        >
+          {showHealthScore ? <Eye className="w-3 h-3" /> : <EyeOff className="w-3 h-3" />}
+          <Heart className="w-3 h-3" />
+          <span>Health Score</span>
+        </button>
+        
+        <button
           onClick={() => setShowProjections(!showProjections)}
           className={`flex items-center space-x-2 px-3 py-2 rounded-lg text-xs font-medium transition-all duration-200 ${
             showProjections
@@ -148,7 +176,7 @@ const NetWorthTrendChart: React.FC<NetWorthTrendChartProps> = ({ data, title }) 
             <TrendingUp className="w-4 h-4 text-blue-400" />
             <h4 className="text-sm font-medium text-blue-300">2-Year Projection</h4>
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-sm">
             <div>
               <p className="text-white/60">Projected Net Worth:</p>
               <p className="font-bold text-white">{formatCurrency(finalProjection.netWorth)}</p>
@@ -158,6 +186,10 @@ const NetWorthTrendChart: React.FC<NetWorthTrendChartProps> = ({ data, title }) 
               <p className={`font-bold ${projectedGrowth >= 0 ? 'text-green-400' : 'text-red-400'}`}>
                 {projectedGrowth >= 0 ? '+' : ''}{formatCurrency(finalProjection.netWorth - lastPoint.netWorth)} ({projectedGrowth.toFixed(1)}%)
               </p>
+            </div>
+            <div>
+              <p className="text-white/60">Projected Health Score:</p>
+              <p className="font-bold text-pink-400">{finalProjection.healthScore}/100</p>
             </div>
           </div>
           <p className="text-white/50 text-xs mt-2">
@@ -187,10 +219,21 @@ const NetWorthTrendChart: React.FC<NetWorthTrendChartProps> = ({ data, title }) 
               fontSize={12}
               tickFormatter={formatDate}
             />
+            {/* Primary Y-axis for financial data */}
             <YAxis 
+              yAxisId="financial"
               stroke="#fff" 
               fontSize={12}
               tickFormatter={formatCurrency}
+            />
+            {/* Secondary Y-axis for health score */}
+            <YAxis 
+              yAxisId="health"
+              orientation="right"
+              stroke="#ec4899" 
+              fontSize={12}
+              domain={[0, 100]}
+              tickFormatter={(value) => `${value}`}
             />
             <Tooltip content={<CustomTooltip />} />
             <Legend 
@@ -202,6 +245,7 @@ const NetWorthTrendChart: React.FC<NetWorthTrendChartProps> = ({ data, title }) 
             
             {/* Net Worth Area */}
             <Area
+              yAxisId="financial"
               type="monotone"
               dataKey="netWorth"
               fill="url(#netWorthGradient)"
@@ -215,6 +259,7 @@ const NetWorthTrendChart: React.FC<NetWorthTrendChartProps> = ({ data, title }) 
             {/* Assets Line */}
             {showAssets && (
               <Line
+                yAxisId="financial"
                 type="monotone"
                 dataKey="assets"
                 stroke="#10b981"
@@ -229,6 +274,7 @@ const NetWorthTrendChart: React.FC<NetWorthTrendChartProps> = ({ data, title }) 
             {/* Liabilities Line */}
             {showLiabilities && (
               <Line
+                yAxisId="financial"
                 type="monotone"
                 dataKey="liabilities"
                 stroke="#ef4444"
@@ -239,12 +285,32 @@ const NetWorthTrendChart: React.FC<NetWorthTrendChartProps> = ({ data, title }) 
                 strokeDasharray={(d: any) => d?.type === 'projected' ? '5 5' : '0'}
               />
             )}
+            
+            {/* Health Score Line */}
+            {showHealthScore && (
+              <Line
+                yAxisId="health"
+                type="monotone"
+                dataKey="healthScore"
+                stroke="#ec4899"
+                strokeWidth={3}
+                name="Health Score"
+                dot={false}
+                activeDot={{ r: 4, fill: '#ec4899' }}
+                strokeDasharray={(d: any) => d?.type === 'projected' ? '3 3' : '0'}
+              />
+            )}
           </ComposedChart>
         </ResponsiveContainer>
       </div>
       
       <div className="mt-4 text-xs text-white/50 text-center">
         Historical data (3 years) | Current position | Projected trends (2 years)
+        {showHealthScore && (
+          <span className="block mt-1 text-pink-400">
+            Health Score (0-100) displayed on right axis
+          </span>
+        )}
       </div>
     </div>
   );
