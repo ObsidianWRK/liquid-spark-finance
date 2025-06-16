@@ -295,7 +295,7 @@ const ComprehensiveEcoCard: React.FC<EcoCardProps> = ({
         <div className="flex items-center justify-between mb-6">
           <div className="flex items-center space-x-3">
             <Leaf className="w-6 h-6 text-green-400" />
-            <h3 className="text-xl font-bold text-white">Eco Impact</h3>
+            <h3 className="text-lg font-bold text-white">Eco Impact</h3>
           </div>
           <ChevronDown className="w-5 h-5 text-slate-400" />
         </div>
@@ -360,7 +360,7 @@ const ComprehensiveEcoCard: React.FC<EcoCardProps> = ({
       </div>
 
       {/* Category Navigation */}
-      <div className="grid grid-cols-3 md:grid-cols-6 gap-2 mb-6">
+      <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-3 mb-6">
         <button
           onClick={() => setActiveCategory('overview')}
           className={`p-3 rounded-lg text-xs font-medium transition-all ${
@@ -375,7 +375,7 @@ const ComprehensiveEcoCard: React.FC<EcoCardProps> = ({
           <button
             key={category.id}
             onClick={() => setActiveCategory(category.id)}
-            className={`p-2 rounded-lg text-xs font-medium transition-all flex flex-col items-center space-y-1 ${
+            className={`p-3 rounded-lg text-xs font-medium transition-all flex flex-col items-center space-y-2 min-h-[80px] ${
               activeCategory === category.id
                 ? 'bg-green-500/20 text-green-300 border border-green-500/30'
                 : 'bg-slate-800/30 text-slate-400 hover:bg-slate-700/30'
@@ -386,8 +386,12 @@ const ComprehensiveEcoCard: React.FC<EcoCardProps> = ({
               color: activeCategory === category.id ? category.color : undefined
             }}
           >
-            {category.icon}
-            <span className="hidden md:block text-center leading-tight">{category.name}</span>
+            <div className="flex-shrink-0">
+              {category.icon}
+            </div>
+            <span className="text-center leading-tight text-[10px] sm:text-xs break-words max-w-full">
+              {category.name}
+            </span>
           </button>
         ))}
       </div>
