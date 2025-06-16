@@ -17,6 +17,7 @@
   --spacing-lg: 1.5rem; /* 24px */
   --spacing-xl: 2rem; /* 32px */
   --spacing-2xl: 3rem; /* 48px */
+  --bottom-nav-height: 4rem; /* Mobile default */
 }
 
 /* Desktop spacing multipliers */
@@ -28,6 +29,7 @@
     --spacing-lg: 2rem; /* 32px */
     --spacing-xl: 3rem; /* 48px */
     --spacing-2xl: 4rem; /* 64px */
+    --bottom-nav-height: 6rem; /* Desktop */
   }
 }
 
@@ -581,5 +583,66 @@ html, body {
     backdrop-filter: none !important;
     box-shadow: none !important;
     transform: none !important;
+  }
+}
+
+/* ==============================================
+   iOS 26 Navigation Bubble Styles
+   ============================================== */
+.ios26-nav-bubble {
+  display: flex;
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(24px) saturate(180%);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 9999px; /* Fully rounded */
+  overflow: hidden;
+}
+
+/* Individual nav item base style */
+.ios26-nav-item {
+  position: relative;
+  transition: background 0.25s ease, transform 0.25s ease;
+}
+
+/* Active state */
+.ios26-nav-item-active {
+  background: rgba(99, 102, 241, 0.15);
+}
+
+/* Hover / focus states */
+.ios26-nav-item:hover,
+.ios26-nav-item:focus-visible {
+  background: rgba(255, 255, 255, 0.05);
+  transform: translateY(-2px);
+}
+
+/* ==============================================
+   Utility Classes that depend on Bottom Navigation Height
+   ============================================== */
+.bottom-navigation-spacing {
+  bottom: calc(var(--bottom-nav-height) + 1rem); /* offset overlay above nav */
+}
+
+/* Floating Action Button offsets */
+.bottom-fab-mobile {
+  bottom: calc(var(--bottom-nav-height) + 0.5rem);
+}
+
+@media (min-width: 768px) {
+  .bottom-fab-tablet {
+    bottom: calc(var(--bottom-nav-height) + 0.75rem);
+  }
+}
+
+@media (min-width: 1024px) {
+  .bottom-fab-desktop {
+    bottom: calc(var(--bottom-nav-height) + 1rem);
+  }
+}
+
+@media (min-width: 1440px) {
+  .bottom-fab-large-desktop {
+    bottom: calc(var(--bottom-nav-height) + 1.25rem);
   }
 } 
