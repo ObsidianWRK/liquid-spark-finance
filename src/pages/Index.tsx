@@ -218,15 +218,15 @@ const Index = () => {
       {/* Solid Black Background */}
       <div className="fixed inset-0 bg-black z-0" />
       
-      {/* Main Content Container */}
+      {/* Main Content Container - Responsive Layout */}
       <div className="relative z-10 min-h-screen pb-24">
-        <div className="container mx-auto px-4 py-8 max-w-md">
+        <div className="container mx-auto px-4 py-8 max-w-md sm:max-w-2xl md:max-w-4xl lg:max-w-6xl xl:max-w-7xl">
           {/* Header */}
-          <div className="text-center space-y-4">
-            <h1 className="text-4xl font-bold text-white tracking-wide">
+          <div className="text-center space-y-4 mb-8">
+            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white tracking-wide">
               Vueni
             </h1>
-            <p className="text-white/60 mt-2">Modern Financial Management</p>
+            <p className="text-white/60 text-sm sm:text-base lg:text-lg">Modern Financial Management</p>
           </div>
 
           {/* Dynamic Content */}
