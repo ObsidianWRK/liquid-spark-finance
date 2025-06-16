@@ -4,6 +4,8 @@ import EnhancedGlassCard from '../ui/EnhancedGlassCard';
 import AnimatedCircularProgress from './components/AnimatedCircularProgress';
 import RefinedScoreCard from './components/RefinedScoreCard';
 import RefinedMetricCard from './components/RefinedMetricCard';
+import ComprehensiveWellnessCard from './components/ComprehensiveWellnessCard';
+import ComprehensiveEcoCard from './components/ComprehensiveEcoCard';
 import { mockHealthEcoService } from '@/services/mockHealthEcoService';
 import { formatPercentage, getScoreColor } from '@/utils/formatters';
 
@@ -130,6 +132,78 @@ const RefinedInsightsPage = ({ transactions, accounts }: InsightsPageProps) => {
     };
   }, [metrics, transactions]);
 
+  // Generate comprehensive health and eco data
+  const comprehensiveHealthData = useMemo(() => ({
+    healthKitData: {
+      stepCount: 8542,
+      activeEnergyBurned: 387,
+      exerciseTime: 45,
+      distanceWalkingRunning: 6.2,
+      flightsClimbed: 12,
+      heartRate: 72,
+      bloodPressureSystolic: 120,
+      bloodPressureDiastolic: 80,
+      bodyMass: 165,
+      height: 70,
+      bmi: 23.6,
+      dietaryCalories: 2150,
+      dietaryProtein: 85,
+      dietaryWater: 2.1,
+      sleepAnalysis: 7.5,
+      mindfulMinutes: 15,
+      stressLevel: 3
+    },
+    spendingCategories: {
+      fitness: Math.round(transactions.filter(t => t.merchant.toLowerCase().includes('gym') || t.merchant.toLowerCase().includes('fitness')).reduce((sum, t) => sum + Math.abs(t.amount), 0) || 85),
+      nutrition: Math.round(transactions.filter(t => t.category?.name === 'Groceries').reduce((sum, t) => sum + Math.abs(t.amount), 0) * 0.3 || 120),
+      healthcare: Math.round(transactions.filter(t => t.merchant.toLowerCase().includes('health') || t.merchant.toLowerCase().includes('medical')).reduce((sum, t) => sum + Math.abs(t.amount), 0) || 340),
+      wellness: Math.round(transactions.filter(t => t.merchant.toLowerCase().includes('spa') || t.merchant.toLowerCase().includes('massage')).reduce((sum, t) => sum + Math.abs(t.amount), 0) || 75),
+      supplements: 45,
+      mentalHealth: 120
+    },
+    trends: {
+      exercise: (metrics.savingsRate > 15 ? 'up' : 'stable') as 'up' | 'down' | 'stable',
+      nutrition: 'up' as 'up' | 'down' | 'stable',
+      sleep: 'stable' as 'up' | 'down' | 'stable',
+      stress: (metrics.debtToIncomeRatio < 20 ? 'down' : 'stable') as 'up' | 'down' | 'stable'
+    }
+  }), [transactions, metrics]);
+
+  const comprehensiveEcoData = useMemo(() => ({
+    ecoMetrics: {
+      totalCO2Emissions: 12.5,
+      transportationCO2: 4.2,
+      electricityUsage: 875,
+      renewableEnergyPercentage: 65,
+      recyclingRate: 72,
+      organicFoodPercentage: 42,
+      sustainableBrandsPurchases: 156,
+      ESGInvestments: 12500,
+      treesPlanted: 8,
+      wasteGenerated: 28
+    },
+    spendingCategories: {
+      sustainableFood: Math.round(transactions.filter(t => t.merchant.toLowerCase().includes('whole foods') || t.merchant.toLowerCase().includes('organic')).reduce((sum, t) => sum + Math.abs(t.amount), 0) || 180),
+      renewableEnergy: 85,
+      ecoTransport: Math.round(transactions.filter(t => t.merchant.toLowerCase().includes('tesla') || t.merchant.toLowerCase().includes('electric')).reduce((sum, t) => sum + Math.abs(t.amount), 0) || 45),
+      greenProducts: 120,
+      carbonOffset: 25,
+      conservation: 60
+    },
+    monthlyImpact: {
+      co2Saved: Math.max(0, Math.round((scores.eco - 50) * 1.5)),
+      treesEquivalent: Math.max(0, Math.round((scores.eco - 50) / 20)),
+      waterSaved: Math.max(0, Math.round((scores.eco - 50) * 12)),
+      energySaved: Math.max(0, Math.round((scores.eco - 50) * 8))
+    },
+    trends: {
+      carbonFootprint: (scores.eco > 70 ? 'down' : 'stable') as 'up' | 'down' | 'stable',
+      sustainability: 'up' as 'up' | 'down' | 'stable',
+      renewable: 'up' as 'up' | 'down' | 'stable',
+      waste: 'down' as 'up' | 'down' | 'stable'
+    }
+  }), [transactions, scores.eco]);
+
   // Animate scores on mount
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -231,26 +305,19 @@ const RefinedInsightsPage = ({ transactions, accounts }: InsightsPageProps) => {
             liquidIntensity={0.2}
           />
           
-          <RefinedScoreCard
-            title="Wellness Score"
+          <ComprehensiveWellnessCard
             score={animatedScores.health}
-            subtitle="Health-conscious spending habits"
-            icon={<Heart />}
-            color="#22c55e" // Green-500
-            trend={getTrend(animatedScores.health, { good: 65, excellent: 85 })}
-            delay={200}
-            liquidIntensity={0.2}
+            healthKitData={comprehensiveHealthData.healthKitData}
+            spendingCategories={comprehensiveHealthData.spendingCategories}
+            trends={comprehensiveHealthData.trends}
           />
           
-          <RefinedScoreCard
-            title="Eco Impact"
+          <ComprehensiveEcoCard
             score={animatedScores.eco}
-            subtitle="Environmental responsibility"
-            icon={<Leaf />}
-            color="#10b981" // Emerald-500
-            trend={getTrend(animatedScores.eco, { good: 70, excellent: 90 })}
-            delay={400}
-            liquidIntensity={0.2}
+            ecoMetrics={comprehensiveEcoData.ecoMetrics}
+            spendingCategories={comprehensiveEcoData.spendingCategories}
+            monthlyImpact={comprehensiveEcoData.monthlyImpact}
+            trends={comprehensiveEcoData.trends}
           />
         </div>
 
