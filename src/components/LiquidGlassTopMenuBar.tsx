@@ -16,7 +16,6 @@ import {
 } from 'lucide-react';
 import LiquidGlassSVGFilters from '@/components/ui/LiquidGlassSVGFilters';
 import { cn } from '@/lib/utils';
-import { useNavigate } from 'react-router-dom';
 
 interface MenuBarProps {
   className?: string;
@@ -30,7 +29,6 @@ interface MenuItem {
 
 const LiquidGlassTopMenuBar = ({ className, onMenuItemClick }: MenuBarProps) => {
   const [activeMenu, setActiveMenu] = useState<string | null>(null);
-  const navigate = useNavigate();
 
   const menuItems: MenuItem[] = [
     {
@@ -81,20 +79,7 @@ const LiquidGlassTopMenuBar = ({ className, onMenuItemClick }: MenuBarProps) => 
   };
 
   const handleItemClick = (item: string) => {
-    // Built-in navigation for tool items
-    switch (item) {
-      case 'Budget Planner':
-        navigate('/budget-planner');
-        break;
-      case 'Goal Setting':
-        navigate('/goal-setting');
-        break;
-      case 'Investment Tracker':
-        navigate('/investment-tracker');
-        break;
-      default:
-        onMenuItemClick?.(item);
-    }
+    onMenuItemClick?.(item);
     setActiveMenu(null);
   };
 
