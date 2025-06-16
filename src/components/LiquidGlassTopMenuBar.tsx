@@ -15,6 +15,7 @@ import {
   TrendingUp
 } from 'lucide-react';
 import LiquidGlassSVGFilters from '@/components/ui/LiquidGlassSVGFilters';
+import ThemeToggle from './ThemeToggle';
 import { cn } from '@/lib/utils';
 import { useNavigate } from 'react-router-dom';
 
@@ -218,7 +219,9 @@ const LiquidGlassTopMenuBar = ({ className, onMenuItemClick }: MenuBarProps) => 
                 <Bell className="w-5 h-5" />
                 <span className="absolute -top-1 -right-1 w-3 h-3 bg-red-500 rounded-full border-2 border-black/20"></span>
               </button>
-              
+
+              <ThemeToggle />
+
               <button className="liquid-glass-button p-2 rounded-xl text-white/90 hover:text-white transition-all duration-300">
                 <User className="w-5 h-5" />
               </button>
