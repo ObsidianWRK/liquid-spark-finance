@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import BalanceCard from '@/components/BalanceCard';
 import QuickActions from '@/components/QuickActions';
