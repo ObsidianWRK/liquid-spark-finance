@@ -181,7 +181,7 @@ const CompoundInterestCalculator = () => {
             
             <button
               onClick={handleCalculate}
-              className="w-full py-3 px-6 rounded-xl bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white font-semibold transition-all duration-200 transform hover:scale-105"
+              className="w-full py-3 px-6 rounded-xl bg-white/10 hover:bg-white/20 border border-white/20 hover:border-white/30 text-white font-semibold transition-all duration-200"
             >
               Calculate Growth
             </button>
@@ -193,7 +193,7 @@ const CompoundInterestCalculator = () => {
           <div className="bg-white/5 backdrop-blur-xl rounded-3xl p-6 border border-white/10">
             <h2 className="text-xl font-semibold text-white mb-6">Results</h2>
             <div className="space-y-4">
-              <div className="text-center p-6 bg-gradient-to-r from-green-500/20 to-blue-500/20 rounded-2xl border border-green-400/20">
+              <div className="text-center p-6 bg-white/5 rounded-2xl border border-white/20">
                 <div className="text-3xl font-bold text-white mb-2">{formatCurrency(futureValue)}</div>
                 <div className="text-white/80">Future Value</div>
               </div>

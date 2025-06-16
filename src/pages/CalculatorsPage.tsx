@@ -46,19 +46,34 @@ const CalculatorsPage = () => {
   const { id } = useParams<{ id?: string }>();
 
   if (!id) {
-    return <CalculatorList />;
+    return (
+      <div className="w-full text-white">
+        <CalculatorList />
+      </div>
+    );
   }
 
   const Component = componentMap[id];
   return (
-    <>
+    <div className="w-full text-white">
       <BackHeader title={nameMap[id] || 'Calculator'} />
-      <Suspense fallback={<div className="min-h-screen flex items-center justify-center">Loading…</div>}>
-        <div className="liquid-glass-card rounded-2xl p-4 mx-4 sm:mx-auto max-w-3xl">
-          {Component || <div className="text-white p-4">Calculator not found.</div>}
+      <Suspense fallback={
+        <div className="w-full text-white flex items-center justify-center py-20">
+          <div className="liquid-glass-fallback rounded-2xl p-8">
+            <div className="flex items-center space-x-4">
+              <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-white"></div>
+              <span className="text-white text-lg">Loading calculator...</span>
+            </div>
+          </div>
+        </div>
+      }>
+        <div className="w-full px-4 py-6 max-w-6xl mx-auto">
+          <div className="liquid-glass-fallback rounded-2xl p-6">
+            {Component || <div className="text-white p-4 text-center">Calculator not found.</div>}
+          </div>
         </div>
       </Suspense>
-    </>
+    </div>
   );
 };
 

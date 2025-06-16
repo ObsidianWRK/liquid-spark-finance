@@ -4,6 +4,8 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { lazy, Suspense } from 'react';
+import { mockData } from '@/services/mockData';
+import { mockData } from '@/services/mockData';
 
 const queryClient = new QueryClient();
 
@@ -16,6 +18,16 @@ const TransactionDemo = lazy(() => import('./pages/TransactionDemo'));
 const BudgetPlannerPage = lazy(() => import('./components/budget/BudgetPlannerPage'));
 const InvestmentTrackerPage = lazy(() => import('./components/investments/InvestmentTrackerPage'));
 const CalculatorsPage = lazy(() => import('./pages/CalculatorsPage'));
+const BudgetReportsPage = lazy(() => import('./components/reports/BudgetReportsPage'));
+const NewInsightsPage = lazy(() => import('./components/insights/NewInsightsPage'));
+
+// Wrapper component for standalone insights page
+const StandaloneInsightsPage = () => (
+  <NewInsightsPage 
+    transactions={mockData.transactions} 
+    accounts={mockData.accounts} 
+  />
+);
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
@@ -35,6 +47,8 @@ const App = () => (
             <Route path="/investment-tracker" element={<InvestmentTrackerPage />} />
             <Route path="/calculators" element={<CalculatorsPage />} />
             <Route path="/calculators/:id" element={<CalculatorsPage />} />
+            <Route path="/reports" element={<BudgetReportsPage />} />
+            <Route path="/insights" element={<StandaloneInsightsPage />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>

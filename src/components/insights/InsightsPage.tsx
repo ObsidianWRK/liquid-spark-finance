@@ -143,30 +143,112 @@ const InsightsPage = ({ transactions, accounts }: InsightsPageProps) => {
         </TabsList>
 
         <TabsContent value="overview" className="space-y-8">
-          {/* Health and Eco Score Cards */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <HealthScore 
-              score={healthData.score} 
-              trends={healthData.trends} 
-            />
-            <EcoScore 
-              score={ecoData.score}
-              metrics={ecoData.metrics}
-              monthlyImpact={ecoData.monthlyImpact}
-            />
-          </div>
-
-          {/* Financial Health Score */}
+          {/* Overall Scores Section */}
           <div className="liquid-glass-card rounded-3xl p-6">
-            <HealthScore 
-              score={healthScore}
-              trends={{
-                exercise: Math.round(metrics.savingsRate),
-                nutrition: Math.round(100 - metrics.spendingRatio),
-                sleep: Math.round(metrics.billPaymentScore),
-                stress: Math.round(100 - metrics.debtToIncomeRatio)
-              }}
-            />
+            <h2 className="text-white text-2xl font-bold mb-6 text-center">Your Overall Scores</h2>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              <div className="text-center">
+                <div className="relative inline-flex items-center justify-center w-24 h-24 mb-4">
+                  <svg className="w-24 h-24 transform -rotate-90">
+                    <circle
+                      cx="48"
+                      cy="48"
+                      r="40"
+                      stroke="rgba(59, 130, 246, 0.2)"
+                      strokeWidth="6"
+                      fill="none"
+                    />
+                    <circle
+                      cx="48"
+                      cy="48"
+                      r="40"
+                      stroke="#3B82F6"
+                      strokeWidth="6"
+                      fill="none"
+                      strokeDasharray={`${(healthScore / 100) * 251.2} 251.2`}
+                      strokeLinecap="round"
+                    />
+                  </svg>
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <span className="text-2xl font-bold text-white">{healthScore}</span>
+                  </div>
+                </div>
+                <div className="flex items-center justify-center gap-2 mb-2">
+                  <Shield className="w-5 h-5 text-blue-400" />
+                  <h3 className="text-lg font-semibold text-white">Financial Health</h3>
+                </div>
+                <p className="text-sm text-white/60">Score: {healthScore}/100</p>
+                <p className="text-xs text-white/40">Monthly spending: ${metrics.monthlySpending.toLocaleString()}</p>
+              </div>
+
+              <div className="text-center">
+                <div className="relative inline-flex items-center justify-center w-24 h-24 mb-4">
+                  <svg className="w-24 h-24 transform -rotate-90">
+                    <circle
+                      cx="48"
+                      cy="48"
+                      r="40"
+                      stroke="rgba(239, 68, 68, 0.2)"
+                      strokeWidth="6"
+                      fill="none"
+                    />
+                    <circle
+                      cx="48"
+                      cy="48"
+                      r="40"
+                      stroke="#EF4444"
+                      strokeWidth="6"
+                      fill="none"
+                      strokeDasharray={`${(healthData.score / 100) * 251.2} 251.2`}
+                      strokeLinecap="round"
+                    />
+                  </svg>
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <span className="text-2xl font-bold text-white">{healthData.score}</span>
+                  </div>
+                </div>
+                <div className="flex items-center justify-center gap-2 mb-2">
+                  <Heart className="w-5 h-5 text-red-400" />
+                  <h3 className="text-lg font-semibold text-white">Wellness Score</h3>
+                </div>
+                <p className="text-sm text-white/60">Score: {healthData.score}/100</p>
+                <p className="text-xs text-white/40">Monthly wellness: $703</p>
+              </div>
+
+              <div className="text-center">
+                <div className="relative inline-flex items-center justify-center w-24 h-24 mb-4">
+                  <svg className="w-24 h-24 transform -rotate-90">
+                    <circle
+                      cx="48"
+                      cy="48"
+                      r="40"
+                      stroke="rgba(34, 197, 94, 0.2)"
+                      strokeWidth="6"
+                      fill="none"
+                    />
+                    <circle
+                      cx="48"
+                      cy="48"
+                      r="40"
+                      stroke="#22C55E"
+                      strokeWidth="6"
+                      fill="none"
+                      strokeDasharray={`${(ecoData.score / 100) * 251.2} 251.2`}
+                      strokeLinecap="round"
+                    />
+                  </svg>
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <span className="text-2xl font-bold text-white">{ecoData.score}</span>
+                  </div>
+                </div>
+                <div className="flex items-center justify-center gap-2 mb-2">
+                  <Leaf className="w-5 h-5 text-green-400" />
+                  <h3 className="text-lg font-semibold text-white">Eco Impact</h3>
+                </div>
+                <p className="text-sm text-white/60">Score: {ecoData.score}/100</p>
+                <p className="text-xs text-white/40">CO₂ saved: 48kg this month</p>
+              </div>
+            </div>
           </div>
           
           {/* Key Metrics Grid */}

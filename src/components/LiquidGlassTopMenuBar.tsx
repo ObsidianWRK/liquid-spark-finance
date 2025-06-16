@@ -79,6 +79,7 @@ const LiquidGlassTopMenuBar = ({ className, onMenuItemClick }: MenuBarProps) => 
 
   const handleItemSelect = (item: string) => {
     switch (item) {
+      // Tools Menu Navigation
       case 'Calculators':
         navigate('/calculators');
         break;
@@ -91,7 +92,46 @@ const LiquidGlassTopMenuBar = ({ className, onMenuItemClick }: MenuBarProps) => 
       case 'Investment Tracker':
         navigate('/investment-tracker');
         break;
+      case 'Data Analysis':
+        navigate('/insights');
+        break;
+      
+      // View Menu Navigation
+      case 'Dashboard':
+        navigate('/');
+        break;
+      case 'Transactions':
+        navigate('/transactions');
+        break;
+      case 'Reports':
+        navigate('/reports');
+        break;
+      case 'Insights':
+        navigate('/insights');
+        break;
+      
+      // File Menu Actions
+      case 'New Transaction':
+        navigate('/transactions?new=true');
+        break;
+      case 'Settings':
+        navigate('/profile');
+        break;
+      
+      // Help Menu Actions
+      case 'Documentation':
+        window.open('https://github.com/your-org/vueni-finance/wiki', '_blank');
+        break;
+      case 'Support Center':
+        window.open('https://support.vueni.com', '_blank');
+        break;
+      case 'About Vueni':
+        navigate('/profile');
+        break;
+      
+      // Default fallback
       default:
+        console.log('Menu item not handled:', item);
         onMenuItemClick?.(item);
     }
   };
