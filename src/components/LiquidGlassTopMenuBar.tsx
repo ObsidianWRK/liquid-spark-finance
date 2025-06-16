@@ -93,7 +93,7 @@ const LiquidGlassTopMenuBar = ({ className, onMenuItemClick }: MenuBarProps) => 
         navigate('/investment-tracker');
         break;
       case 'Data Analysis':
-        navigate('/insights');
+        navigate('/?tab=insights');
         break;
       
       // View Menu Navigation
@@ -107,7 +107,14 @@ const LiquidGlassTopMenuBar = ({ className, onMenuItemClick }: MenuBarProps) => 
         navigate('/reports');
         break;
       case 'Insights':
-        navigate('/insights');
+        navigate('/?tab=insights');
+        break;
+      case 'Full Screen':
+        if (document.fullscreenElement) {
+          document.exitFullscreen();
+        } else {
+          document.documentElement.requestFullscreen();
+        }
         break;
       
       // File Menu Actions
@@ -272,7 +279,7 @@ const LiquidGlassTopMenuBar = ({ className, onMenuItemClick }: MenuBarProps) => 
                   <Home className="w-4 h-4" />
                 </button>
                 <button 
-                  onClick={() => navigate('/insights')}
+                  onClick={() => navigate('/?tab=insights')}
                   className="liquid-glass-menu-item p-2 rounded-xl text-white/80 hover:text-white transition-all duration-300"
                 >
                   <BarChart3 className="w-4 h-4" />

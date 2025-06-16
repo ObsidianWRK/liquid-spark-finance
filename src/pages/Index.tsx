@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
+import { useLocation, useSearchParams } from 'react-router-dom';
 import Navigation from '@/components/Navigation';
 import AccountCard from '@/components/AccountCard';
 import BalanceCard from '@/components/BalanceCard';
@@ -18,6 +19,15 @@ const Index = () => {
   const [activeTab, setActiveTab] = useState('dashboard');
   const [performanceMode, setPerformanceMode] = useState(false);
   const { liquidSettings } = usePerformanceOptimization();
+  const [searchParams] = useSearchParams();
+
+  // Handle URL tab parameter
+  useEffect(() => {
+    const tabFromUrl = searchParams.get('tab');
+    if (tabFromUrl && ['dashboard', 'accounts', 'transactions', 'insights', 'reports', 'wrapped', 'profile'].includes(tabFromUrl)) {
+      setActiveTab(tabFromUrl);
+    }
+  }, [searchParams]);
 
   // Performance detection
   useEffect(() => {

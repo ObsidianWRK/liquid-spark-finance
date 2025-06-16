@@ -1,11 +1,15 @@
 import React, { useState, useEffect, useMemo } from 'react';
-import { Heart, Leaf, DollarSign, TrendingUp } from 'lucide-react';
+import { Heart, Leaf, DollarSign, TrendingUp, Calendar, BarChart3 } from 'lucide-react';
 import FinancialCard from './FinancialCard';
 import WellnessCard from './WellnessCard';
 import EcoCard from './EcoCard';
 import ScoreCircle from './ScoreCircle';
+import TimeSeriesChart from './TimeSeriesChart';
+import SpendingTrendsChart from './SpendingTrendsChart';
+import CategoryTrendsChart from './CategoryTrendsChart';
 import { generateScoreSummary } from '@/services/scoringModel';
 import { mockHealthEcoService } from '@/services/mockHealthEcoService';
+import { mockHistoricalService } from '@/services/mockHistoricalData';
 
 interface Transaction {
   id: string;
@@ -37,6 +41,11 @@ const NewInsightsPage: React.FC<NewInsightsPageProps> = ({ transactions, account
   const [activeTab, setActiveTab] = useState('overview');
   const [scores, setScores] = useState({ financial: 0, health: 0, eco: 0 });
   const [isLoading, setIsLoading] = useState(true);
+
+  // Generate historical data
+  const historicalScores = useMemo(() => mockHistoricalService.getHistoricalScores(), []);
+  const monthlyFinancialData = useMemo(() => mockHistoricalService.getMonthlyFinancialData(), []);
+  const categoryTrends = useMemo(() => mockHistoricalService.getCategoryTrends(), []);
 
   // Calculate financial metrics
   const financialData = useMemo(() => {
@@ -147,6 +156,7 @@ const NewInsightsPage: React.FC<NewInsightsPageProps> = ({ transactions, account
 
   const tabs = [
     { id: 'overview', label: 'Overview', icon: TrendingUp },
+    { id: 'trends', label: 'Trends', icon: BarChart3 },
     { id: 'financial', label: 'Financial', icon: DollarSign },
     { id: 'health', label: 'Health', icon: Heart },
     { id: 'eco', label: 'Eco', icon: Leaf },
@@ -283,6 +293,36 @@ const NewInsightsPage: React.FC<NewInsightsPageProps> = ({ transactions, account
                   CO₂ saved: {ecoData.monthlyImpact.co2Saved}kg this month
                 </p>
               </div>
+            </div>
+          </div>
+        )}
+
+        {activeTab === 'trends' && (
+          <div className="space-y-8 sm:space-y-12">
+            {/* Historical Scores Chart */}
+            <TimeSeriesChart 
+              data={historicalScores} 
+              title="Score Progress Over Time (Past 12 Months)"
+            />
+
+            {/* Financial Trends */}
+            <SpendingTrendsChart 
+              data={monthlyFinancialData} 
+              title="Monthly Financial Overview"
+            />
+
+            {/* Category Trends */}
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+              <CategoryTrendsChart 
+                data={categoryTrends} 
+                type="health"
+                title="Health & Wellness Spending Trends"
+              />
+              <CategoryTrendsChart 
+                data={categoryTrends} 
+                type="eco"
+                title="Eco & Sustainability Spending Trends"
+              />
             </div>
           </div>
         )}

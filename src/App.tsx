@@ -4,7 +4,6 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { lazy, Suspense } from 'react';
-import { mockData } from '@/services/mockData';
 
 const queryClient = new QueryClient();
 
@@ -18,15 +17,9 @@ const BudgetPlannerPage = lazy(() => import('./components/budget/BudgetPlannerPa
 const InvestmentTrackerPage = lazy(() => import('./components/investments/InvestmentTrackerPage'));
 const CalculatorsPage = lazy(() => import('./pages/CalculatorsPage'));
 const BudgetReportsPage = lazy(() => import('./components/reports/BudgetReportsPage'));
-const InsightsPage = lazy(() => import('./pages/InsightsPage'));
 
-// Wrapper component for standalone insights page
-const StandaloneInsightsPage = () => (
-  <NewInsightsPage 
-    transactions={mockData.transactions} 
-    accounts={mockData.accounts} 
-  />
-);
+// Import insights page
+const InsightsPage = lazy(() => import('./pages/InsightsPage'));
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
