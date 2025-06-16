@@ -1,0 +1,204 @@
+/* Card Alignment and Text Layout Fixes */
+
+/* Fix text wrapping and spacing for card titles */
+.liquid-glass-card h3,
+.liquid-glass-card h2,
+.liquid-glass-card .card-title {
+  word-break: break-word;
+  overflow-wrap: break-word;
+  hyphens: auto;
+  line-height: 1.3;
+  max-width: 100%;
+}
+
+/* Category navigation button improvements */
+.category-nav-button {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+  padding: 0.75rem !important;
+  min-height: 80px !important;
+  word-break: break-word !important;
+  overflow-wrap: break-word !important;
+  text-align: center !important;
+  gap: 0.5rem !important;
+}
+
+.category-nav-button .icon-wrapper {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.category-nav-button .text-wrapper {
+  text-align: center;
+  line-height: 1.2;
+  font-size: 0.75rem;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+/* Grid layout improvements for main cards */
+.main-cards-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+  align-items: start;
+}
+
+@media (min-width: 1024px) {
+  .main-cards-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+  }
+}
+
+/* Category grid responsive improvements */
+.category-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.75rem;
+}
+
+@media (min-width: 768px) {
+  .category-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .category-grid {
+    grid-template-columns: repeat(6, 1fr);
+  }
+}
+
+/* Responsive typography */
+@media (max-width: 640px) {
+  .liquid-glass-card h3 {
+    font-size: 1rem !important;
+    line-height: 1.25 !important;
+  }
+  
+  .category-nav-button .text-wrapper {
+    font-size: 0.625rem !important;
+    line-height: 1.1 !important;
+  }
+}
+
+@media (min-width: 641px) and (max-width: 1024px) {
+  .liquid-glass-card h3 {
+    font-size: 1.125rem !important;
+    line-height: 1.3 !important;
+  }
+}
+
+@media (min-width: 1025px) {
+  .liquid-glass-card h3 {
+    font-size: 1.25rem !important;
+    line-height: 1.4 !important;
+  }
+}
+
+/* Ensure consistent card heights in grid */
+.equal-height-cards {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.equal-height-cards .liquid-glass-card {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Text overflow prevention */
+.prevent-overflow {
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.prevent-overflow-multiline {
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+/* Icon and text alignment fixes */
+.icon-text-row {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: nowrap;
+}
+
+.icon-text-row .icon {
+  flex-shrink: 0;
+}
+
+.icon-text-row .text {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Category button specific fixes */
+.category-button-grid button {
+  min-height: 80px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+  padding: 0.75rem !important;
+  gap: 0.5rem !important;
+  text-align: center !important;
+  word-break: break-word !important;
+}
+
+/* Score card alignment */
+.score-card-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 400px;
+}
+
+.score-card-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+/* Collapsed card title fixes */
+.collapsed-card-title {
+  font-size: 1.125rem !important;
+  line-height: 1.3 !important;
+  font-weight: 700 !important;
+  max-width: 100% !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  white-space: nowrap !important;
+}
+
+/* Expanded card title fixes */
+.expanded-card-title {
+  font-size: 1.25rem !important;
+  line-height: 1.4 !important;
+  font-weight: 700 !important;
+  max-width: 100% !important;
+  word-break: break-word !important;
+  overflow-wrap: break-word !important;
+} 

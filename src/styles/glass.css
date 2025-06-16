@@ -5,6 +5,7 @@
 @import url('./liquid-glass-wwdc.css');
 @import url('./liquid-backgrounds.css');
 @import url('./refined-animations.css');
+@import url('./card-alignment.css');
 
 /* CSS Custom Properties for Glass System */
 :root {

@@ -293,38 +293,32 @@ const RefinedInsightsPage = ({ transactions, accounts }: InsightsPageProps) => {
         </div>
 
         {/* Main Score Cards */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
-          <div className="flex">
-            <RefinedScoreCard
-              title="Financial Health"
-              score={animatedScores.financial}
-              subtitle="Overall financial wellness score"
-              icon={<DollarSign />}
-              color="#6366f1" // Indigo-500
-              trend={getTrend(animatedScores.financial, { good: 60, excellent: 80 })}
-              delay={0}
-              liquidIntensity={0.2}
-            />
-          </div>
+        <div className="main-cards-grid">
+          <RefinedScoreCard
+            title="Financial Health"
+            score={animatedScores.financial}
+            subtitle="Overall financial wellness score"
+            icon={<DollarSign />}
+            color="#6366f1" // Indigo-500
+            trend={getTrend(animatedScores.financial, { good: 60, excellent: 80 })}
+            delay={0}
+            liquidIntensity={0.2}
+          />
           
-          <div className="flex">
-            <ComprehensiveWellnessCard
-              score={animatedScores.health}
-              healthKitData={comprehensiveHealthData.healthKitData}
-              spendingCategories={comprehensiveHealthData.spendingCategories}
-              trends={comprehensiveHealthData.trends}
-            />
-          </div>
+          <ComprehensiveWellnessCard
+            score={animatedScores.health}
+            healthKitData={comprehensiveHealthData.healthKitData}
+            spendingCategories={comprehensiveHealthData.spendingCategories}
+            trends={comprehensiveHealthData.trends}
+          />
           
-          <div className="flex">
-            <ComprehensiveEcoCard
-              score={animatedScores.eco}
-              ecoMetrics={comprehensiveEcoData.ecoMetrics}
-              spendingCategories={comprehensiveEcoData.spendingCategories}
-              monthlyImpact={comprehensiveEcoData.monthlyImpact}
-              trends={comprehensiveEcoData.trends}
-            />
-          </div>
+          <ComprehensiveEcoCard
+            score={animatedScores.eco}
+            ecoMetrics={comprehensiveEcoData.ecoMetrics}
+            spendingCategories={comprehensiveEcoData.spendingCategories}
+            monthlyImpact={comprehensiveEcoData.monthlyImpact}
+            trends={comprehensiveEcoData.trends}
+          />
         </div>
 
         {/* Financial Metrics Grid */}

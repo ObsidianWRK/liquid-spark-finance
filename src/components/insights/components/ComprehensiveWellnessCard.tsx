@@ -292,55 +292,59 @@ const ComprehensiveWellnessCard: React.FC<WellnessCardProps> = ({
   if (!isExpanded) {
     return (
       <div 
-        className="liquid-glass-card p-6 cursor-pointer transition-all duration-300 hover:scale-105"
+        className="liquid-glass-card p-6 cursor-pointer transition-all duration-300 hover:scale-105 score-card-container"
         onClick={() => setIsExpanded(true)}
       >
-        <div className="flex items-center justify-between mb-6">
-          <div className="flex items-center space-x-3">
-            <Heart className="w-6 h-6 text-green-400" />
-            <h3 className="text-lg font-bold text-white">Wellness Score</h3>
-          </div>
-          <ChevronDown className="w-5 h-5 text-slate-400" />
-        </div>
-
-        <div className="text-center">
-          <div className="relative inline-block mb-4">
-            <svg width="100" height="100" className="transform -rotate-90">
-              <circle
-                cx="50"
-                cy="50"
-                r="40"
-                stroke="rgba(255, 255, 255, 0.1)"
-                strokeWidth="6"
-                fill="none"
-              />
-              <circle
-                cx="50"
-                cy="50"
-                r="40"
-                stroke={getScoreColor(score)}
-                strokeWidth="6"
-                fill="none"
-                strokeDasharray={strokeDasharray}
-                strokeDashoffset={strokeDashoffset}
-                strokeLinecap="round"
-                className="transition-all duration-1000 ease-out"
-              />
-            </svg>
-            <div className="absolute inset-0 flex items-center justify-center">
-              <span className="text-2xl font-bold text-white">{Math.round(animatedScore)}</span>
+        <div className="score-card-content">
+          <div className="flex items-center justify-between mb-6">
+            <div className="icon-text-row">
+              <div className="icon">
+                <Heart className="w-6 h-6 text-green-400" />
+              </div>
+              <h3 className="text collapsed-card-title text-white">Wellness Score</h3>
             </div>
+            <ChevronDown className="w-5 h-5 text-slate-400" />
           </div>
 
-          <div className="text-lg font-semibold text-white mb-2">
-            {getScoreLabel(score)}
-          </div>
-          <p className="text-slate-400 text-sm mb-4">
-            Health-conscious spending habits
-          </p>
+          <div className="text-center">
+            <div className="relative inline-block mb-4">
+              <svg width="100" height="100" className="transform -rotate-90">
+                <circle
+                  cx="50"
+                  cy="50"
+                  r="40"
+                  stroke="rgba(255, 255, 255, 0.1)"
+                  strokeWidth="6"
+                  fill="none"
+                />
+                <circle
+                  cx="50"
+                  cy="50"
+                  r="40"
+                  stroke={getScoreColor(score)}
+                  strokeWidth="6"
+                  fill="none"
+                  strokeDasharray={strokeDasharray}
+                  strokeDashoffset={strokeDashoffset}
+                  strokeLinecap="round"
+                  className="transition-all duration-1000 ease-out"
+                />
+              </svg>
+              <div className="absolute inset-0 flex items-center justify-center">
+                <span className="text-2xl font-bold text-white">{Math.round(animatedScore)}</span>
+              </div>
+            </div>
 
-          <div className="text-xs text-slate-500">
-            Click to view detailed health metrics
+            <div className="text-lg font-semibold text-white mb-2">
+              {getScoreLabel(score)}
+            </div>
+            <p className="text-slate-400 text-sm mb-4">
+              Health-conscious spending habits
+            </p>
+
+            <div className="text-xs text-slate-500">
+              Click to view detailed health metrics
+            </div>
           </div>
         </div>
       </div>
@@ -348,11 +352,13 @@ const ComprehensiveWellnessCard: React.FC<WellnessCardProps> = ({
   }
 
   return (
-    <div className="liquid-glass-card p-6">
+    <div className="liquid-glass-card p-6 equal-height-cards">
       <div className="flex items-center justify-between mb-6">
-        <div className="flex items-center space-x-3">
-          <Heart className="w-6 h-6 text-green-400" />
-          <h3 className="text-xl font-bold text-white">Comprehensive Wellness</h3>
+        <div className="icon-text-row">
+          <div className="icon">
+            <Heart className="w-6 h-6 text-green-400" />
+          </div>
+          <h3 className="text expanded-card-title text-white">Comprehensive Wellness</h3>
         </div>
         <button
           onClick={() => setIsExpanded(false)}
@@ -363,22 +369,24 @@ const ComprehensiveWellnessCard: React.FC<WellnessCardProps> = ({
       </div>
 
       {/* Category Navigation */}
-      <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-3 mb-6">
+      <div className="category-grid category-button-grid mb-6">
         <button
           onClick={() => setActiveCategory('overview')}
-          className={`p-3 rounded-lg text-xs font-medium transition-all ${
+          className={`category-nav-button p-3 rounded-lg text-xs font-medium transition-all ${
             activeCategory === 'overview'
               ? 'bg-indigo-500/20 text-indigo-300 border border-indigo-500/30'
               : 'bg-slate-800/30 text-slate-400 hover:bg-slate-700/30'
           }`}
         >
-          Overview
+          <div className="icon-wrapper">
+            Overview
+          </div>
         </button>
         {healthCategories.map((category) => (
           <button
             key={category.id}
             onClick={() => setActiveCategory(category.id)}
-            className={`p-3 rounded-lg text-xs font-medium transition-all flex flex-col items-center space-y-2 min-h-[80px] ${
+            className={`category-nav-button p-3 rounded-lg text-xs font-medium transition-all ${
               activeCategory === category.id
                 ? 'bg-indigo-500/20 text-indigo-300 border border-indigo-500/30'
                 : 'bg-slate-800/30 text-slate-400 hover:bg-slate-700/30'
@@ -389,12 +397,12 @@ const ComprehensiveWellnessCard: React.FC<WellnessCardProps> = ({
               color: activeCategory === category.id ? category.color : undefined
             }}
           >
-            <div className="flex-shrink-0">
+            <div className="icon-wrapper">
               {category.icon}
             </div>
-            <span className="text-center leading-tight text-[10px] sm:text-xs break-words max-w-full">
+            <div className="text-wrapper">
               {category.name}
-            </span>
+            </div>
           </button>
         ))}
       </div>
