@@ -15,6 +15,7 @@ const SavingsGoals = lazy(() => import('./components/savings/SavingsGoals'));
 const TransactionDemo = lazy(() => import('./pages/TransactionDemo'));
 const BudgetPlannerPage = lazy(() => import('./components/budget/BudgetPlannerPage'));
 const InvestmentTrackerPage = lazy(() => import('./components/investments/InvestmentTrackerPage'));
+const CalculatorsPage = lazy(() => import('./pages/CalculatorsPage'));
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
@@ -32,6 +33,8 @@ const App = () => (
             <Route path="/budget-planner" element={<BudgetPlannerPage />} />
             <Route path="/goal-setting" element={<SavingsGoals />} />
             <Route path="/investment-tracker" element={<InvestmentTrackerPage />} />
+            <Route path="/calculators" element={<CalculatorsPage />} />
+            <Route path="/calculators/:id" element={<CalculatorsPage />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
