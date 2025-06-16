@@ -1,5 +1,5 @@
-/* Import responsive enhancements */
-@import './styles/responsive-enhancements.css';
+@import './styles/responsive-enhancements.css'; /* responsive enhancements */
+@import './styles/performance-optimized.css';
 
 @tailwind base;
 @tailwind components;
