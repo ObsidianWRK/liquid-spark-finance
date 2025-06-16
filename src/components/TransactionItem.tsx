@@ -79,7 +79,11 @@ const TransactionItem = ({ transaction, currency }: TransactionItemProps) => {
   const hasShippingInfo = transaction.trackingNumber && transaction.shippingProvider;
 
   return (
-    <GlassCard className="transaction-card p-4 mb-3 glass-interactive stagger-item">
+    <GlassCard 
+      className="p-4 mb-3 glass-interactive stagger-item"
+      interactive
+      shimmer
+    >
       <div className="transaction-layout">
         {/* Status Dot */}
         <div className="transaction-status">
@@ -97,10 +101,10 @@ const TransactionItem = ({ transaction, currency }: TransactionItemProps) => {
         
         {/* Content */}
         <div className="transaction-content">
-          <p className="transaction-merchant">
+          <p className="transaction-merchant truncate">
             {transaction.merchant}
           </p>
-          <p className="transaction-category">
+          <p className="transaction-category truncate">
             {transaction.category.name}
           </p>
         </div>

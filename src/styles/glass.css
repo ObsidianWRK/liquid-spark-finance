@@ -83,12 +83,11 @@
   transform: translateY(-1px);
 }
 
-/* Perfect Transaction Layout System */
+/* Perfect Transaction Layout Grid */
 .transaction-layout {
   display: grid;
   grid-template-columns: 12px 24px 1fr 100px 72px;
-  grid-template-areas: 
-    "status icon content amount scores";
+  grid-template-areas: "status icon content amount scores";
   gap: 0 12px;
   align-items: center;
   min-height: 56px;
@@ -96,21 +95,21 @@
 }
 
 .transaction-status { 
-  grid-area: status;
+  grid-area: status; 
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
 .transaction-icon { 
-  grid-area: icon;
+  grid-area: icon; 
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
 .transaction-content { 
-  grid-area: content;
+  grid-area: content; 
   min-width: 0;
   display: flex;
   flex-direction: column;
@@ -118,7 +117,7 @@
 }
 
 .transaction-amount { 
-  grid-area: amount;
+  grid-area: amount; 
   display: flex;
   flex-direction: column;
   align-items: flex-end;
@@ -127,7 +126,7 @@
 }
 
 .transaction-scores { 
-  grid-area: scores;
+  grid-area: scores; 
   display: flex;
   align-items: center;
   justify-content: flex-end;
