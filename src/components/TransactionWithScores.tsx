@@ -2,10 +2,7 @@
 import React, { useState } from 'react';
 import GlassCard from './GlassCard';
 import { TransactionScores } from '@/utils/transactionScoring';
-import TransactionStatus from './transactions/TransactionStatus';
-import TransactionMain from './transactions/TransactionMain';
-import TransactionAmount from './transactions/TransactionAmount';
-import ShippingInfo from './transactions/ShippingInfo';
+import { Package, Truck, Plane } from 'lucide-react';
 import ScoreCircles from './transactions/ScoreCircles';
 
 interface Transaction {
@@ -32,58 +29,140 @@ interface TransactionWithScoresProps {
 const TransactionWithScores = ({ transaction, scores, currency }: TransactionWithScoresProps) => {
   const [showScores, setShowScores] = useState(false);
 
+  const formatCurrency = (amount: number) => {
+    const absAmount = Math.abs(amount);
+    const formatted = new Intl.NumberFormat('en-US', {
+      style: 'currency',
+      currency: currency,
+      minimumFractionDigits: 2
+    }).format(absAmount);
+    
+    return amount < 0 ? `-${formatted}` : `+${formatted}`;
+  };
+
+  const formatDate = (dateString: string) => {
+    const date = new Date(dateString);
+    return date.toLocaleDateString('en-US', {
+      month: 'short',
+      day: 'numeric'
+    });
+  };
+
+  const getAmountColor = (amount: number) => {
+    if (amount > 0) return 'text-green-400';
+    if (amount < 0) return 'text-white';
+    return 'text-white/70';
+  };
+
+  const getStatusColor = (status: string) => {
+    switch (status) {
+      case 'completed': return 'bg-green-400';
+      case 'pending': return 'bg-orange-400';
+      case 'failed': return 'bg-red-400';
+      default: return 'bg-white/50';
+    }
+  };
+
+  const getDeliveryStatusColor = (status?: string) => {
+    switch (status) {
+      case 'Delivered': return 'text-green-400';
+      case 'Out for Delivery': return 'text-orange-400';
+      case 'In Transit': return 'text-blue-400';
+      default: return 'text-white/70';
+    }
+  };
+
+  const getShippingIcon = (provider?: string) => {
+    switch (provider) {
+      case 'UPS': return <Truck className="w-4 h-4" />;
+      case 'FedEx': return <Plane className="w-4 h-4" />;
+      case 'USPS': return <Package className="w-4 h-4" />;
+      default: return <Package className="w-4 h-4" />;
+    }
+  };
+
   const hasShippingInfo = transaction.trackingNumber && transaction.shippingProvider;
 
   return (
-    <div className="relative mb-3">
-      <GlassCard 
-        className={`transaction-card p-5 glass-interactive transition-all duration-300 ease-out relative ${
-          showScores ? 'pr-32' : 'pr-5'
-        }`}
-        interactive
-        onClick={() => setShowScores(!showScores)}
-        onMouseEnter={() => setShowScores(true)}
-        onMouseLeave={() => setShowScores(false)}
-        aria-label={`Transaction: ${transaction.merchant}, ${transaction.amount < 0 ? '-' : '+'}${Math.abs(transaction.amount)}, Financial score ${scores.financial}, Health score ${scores.health}, Eco score ${scores.eco}`}
-        role="button"
-        style={{
-          borderRadius: showScores ? '20px 32px 32px 20px' : '20px',
-          transform: showScores ? 'scale(1.01)' : 'scale(1)',
-        }}
-      >
-        {/* Transaction Grid Layout */}
-        <div className="transaction-grid">
-          <TransactionStatus status={transaction.status} />
-          
-          <TransactionMain 
-            merchant={transaction.merchant}
-            category={transaction.category}
-            hasShippingInfo={!!hasShippingInfo}
-          />
-          
-          <TransactionAmount 
-            amount={transaction.amount}
-            date={transaction.date}
-            currency={currency}
-          />
-          
+    <GlassCard 
+      className="transaction-card p-4 mb-3 glass-interactive hover:bg-white/10 cursor-pointer"
+      onMouseEnter={() => setShowScores(true)}
+      onMouseLeave={() => setShowScores(false)}
+      onClick={() => setShowScores(!showScores)}
+      aria-label={`Transaction: ${transaction.merchant}, ${formatCurrency(transaction.amount)}, Financial score ${scores.financial}, Health score ${scores.health}, Eco score ${scores.eco}`}
+    >
+      <div className="transaction-layout">
+        {/* Status Dot */}
+        <div className="transaction-status">
+          <div className={`transaction-status-dot ${getStatusColor(transaction.status)}`} />
+        </div>
+        
+        {/* Shipping Icon */}
+        <div className="transaction-icon">
           {hasShippingInfo && (
-            <ShippingInfo 
-              trackingNumber={transaction.trackingNumber!}
-              shippingProvider={transaction.shippingProvider!}
-              deliveryStatus={transaction.deliveryStatus}
-            />
+            <div className="text-white/70">
+              {getShippingIcon(transaction.shippingProvider)}
+            </div>
           )}
         </div>
-
-        {/* Score Circles - Inside Card on Right */}
-        <div className={`absolute right-6 top-1/2 transform -translate-y-1/2 transition-all duration-300 ease-out ${
-          showScores ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-4 pointer-events-none'
-        }`}>
-          <ScoreCircles scores={scores} isVisible={showScores} />
+        
+        {/* Content */}
+        <div className="transaction-content">
+          <p className="transaction-merchant">
+            {transaction.merchant}
+          </p>
+          <p className="transaction-category">
+            {transaction.category.name}
+          </p>
         </div>
-      </GlassCard>
-    </div>
+        
+        {/* Amount */}
+        <div className="transaction-amount">
+          <p className={`transaction-amount-text ${getAmountColor(transaction.amount)}`}>
+            {formatCurrency(transaction.amount)}
+          </p>
+          <p className="transaction-date-text">
+            {formatDate(transaction.date)}
+          </p>
+        </div>
+        
+        {/* Scores Area with Overlay */}
+        <div className="transaction-scores">
+          <div 
+            className={`absolute inset-0 flex items-center justify-end gap-1 transition-all duration-300 ${
+              showScores ? 'opacity-100 scale-100' : 'opacity-0 scale-90'
+            }`}
+          >
+            <ScoreCircles scores={scores} isVisible={showScores} />
+          </div>
+        </div>
+      </div>
+      
+      {/* Shipping Info Row */}
+      {hasShippingInfo && (
+        <div className="mt-3 pt-3 border-t border-white/10">
+          <div className="transaction-layout">
+            <div className="transaction-status"></div>
+            <div className="transaction-icon"></div>
+            <div className="transaction-content">
+              <span className="text-white/50 text-xs">
+                Tracking: {transaction.trackingNumber}
+              </span>
+            </div>
+            <div className="transaction-amount">
+              <span className="text-white/50 text-xs">
+                via {transaction.shippingProvider}
+              </span>
+            </div>
+            <div className="transaction-scores">
+              <span className={`text-xs font-medium ${getDeliveryStatusColor(transaction.deliveryStatus)}`}>
+                {transaction.deliveryStatus}
+              </span>
+            </div>
+          </div>
+        </div>
+      )}
+    </GlassCard>
   );
 };
 

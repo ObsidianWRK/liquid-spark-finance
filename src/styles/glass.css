@@ -83,98 +83,101 @@
   transform: translateY(-1px);
 }
 
-/* Transaction Grid System for Perfect Alignment */
-.transaction-grid {
+/* Perfect Transaction Layout System */
+.transaction-layout {
   display: grid;
-  grid-template-columns: 16px 1fr 120px;
-  grid-template-rows: auto auto;
-  gap: 8px 16px;
+  grid-template-columns: 12px 24px 1fr 100px 72px;
+  grid-template-areas: 
+    "status icon content amount scores";
+  gap: 0 12px;
   align-items: center;
-  width: 100%;
+  min-height: 56px;
   position: relative;
-  min-height: 60px;
-  padding: 4px 0;
 }
 
-.transaction-status {
-  grid-row: 1 / 2;
-  grid-column: 1;
-  align-self: start;
-  justify-self: center;
-  margin-top: 4px;
-}
-
-.transaction-main {
-  grid-column: 2;
-  grid-row: 1;
+.transaction-status { 
+  grid-area: status;
   display: flex;
   align-items: center;
-  gap: 12px;
-  min-width: 0;
-  align-self: center;
+  justify-content: center;
 }
 
-.transaction-amount {
-  grid-column: 3;
-  grid-row: 1;
-  text-align: right;
-  min-width: 120px;
-  align-self: center;
+.transaction-icon { 
+  grid-area: icon;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.transaction-shipping {
-  grid-column: 2 / -1;
-  grid-row: 2;
-  font-size: 0.8rem;
-  color: rgba(255, 255, 255, 0.5);
-  padding-top: 8px;
-  line-height: 1.4;
-  padding-left: 28px;
-}
-
-.transaction-merchant-info {
-  flex: 1;
+.transaction-content { 
+  grid-area: content;
   min-width: 0;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  gap: 4px;
 }
 
-.transaction-merchant-name {
-  font-size: 1rem;
+.transaction-amount { 
+  grid-area: amount;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: center;
+  min-width: 100px;
+}
+
+.transaction-scores { 
+  grid-area: scores;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  position: relative;
+  min-width: 72px;
+}
+
+/* Transaction Element Styling */
+.transaction-status-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.transaction-merchant {
+  font-size: 14px;
   font-weight: 500;
-  color: white;
   line-height: 1.2;
-  margin: 0;
+  margin: 0 0 2px 0;
+  color: white;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
 .transaction-category {
-  font-size: 0.85rem;
-  color: rgba(255, 255, 255, 0.6);
+  font-size: 12px;
   line-height: 1.2;
   margin: 0;
+  color: rgba(255, 255, 255, 0.7);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
-.transaction-amount-value {
-  font-size: 1rem;
+.transaction-amount-text {
+  font-size: 14px;
   font-weight: 600;
   line-height: 1.2;
-  margin: 0;
+  text-align: right;
+  margin: 0 0 2px 0;
 }
 
-.transaction-date {
-  font-size: 0.8rem;
-  color: rgba(255, 255, 255, 0.5);
+.transaction-date-text {
+  font-size: 12px;
   line-height: 1.2;
+  text-align: right;
   margin: 0;
-  margin-top: 2px;
+  color: rgba(255, 255, 255, 0.7);
 }
 
 /* Enhanced Interactive States */
@@ -202,7 +205,7 @@
 .transaction-card {
   min-height: 80px;
   display: flex;
-  align-items: center;
+  flex-direction: column;
   margin-bottom: 12px;
 }
 
@@ -255,13 +258,17 @@
 
 /* Responsive Glass Adjustments */
 @media (max-width: 768px) {
-  .transaction-grid {
-    grid-template-columns: 12px 1fr 100px;
-    gap: 6px 12px;
+  .transaction-layout {
+    grid-template-columns: 10px 20px 1fr 90px 60px;
+    gap: 0 10px;
   }
   
   .transaction-amount {
-    min-width: 100px;
+    min-width: 90px;
+  }
+  
+  .transaction-scores {
+    min-width: 60px;
   }
 }
 

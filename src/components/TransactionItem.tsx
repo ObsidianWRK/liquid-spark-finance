@@ -1,7 +1,7 @@
 
 import React from 'react';
 import GlassCard from './GlassCard';
-import { Package, Truck } from 'lucide-react';
+import { Package, Truck, Plane } from 'lucide-react';
 
 interface Transaction {
   id: string;
@@ -67,56 +67,82 @@ const TransactionItem = ({ transaction, currency }: TransactionItemProps) => {
     }
   };
 
+  const getShippingIcon = (provider?: string) => {
+    switch (provider) {
+      case 'UPS': return <Truck className="w-4 h-4" />;
+      case 'FedEx': return <Plane className="w-4 h-4" />;
+      case 'USPS': return <Package className="w-4 h-4" />;
+      default: return <Package className="w-4 h-4" />;
+    }
+  };
+
   const hasShippingInfo = transaction.trackingNumber && transaction.shippingProvider;
 
   return (
-    <GlassCard 
-      className="transaction-card p-5 glass-interactive stagger-item"
-      interactive
-    >
-      {/* Transaction Grid Layout */}
-      <div className="transaction-grid">
-        {/* Status */}
+    <GlassCard className="transaction-card p-4 mb-3 glass-interactive stagger-item">
+      <div className="transaction-layout">
+        {/* Status Dot */}
         <div className="transaction-status">
-          <div 
-            className={`w-3 h-3 rounded-full ${getStatusColor(transaction.status)}`}
-          />
+          <div className={`transaction-status-dot ${getStatusColor(transaction.status)}`} />
         </div>
         
-        {/* Main content */}
-        <div className="transaction-main">
+        {/* Shipping Icon */}
+        <div className="transaction-icon">
           {hasShippingInfo && (
-            <div className="text-white/70 flex-shrink-0">
-              <Package className="w-5 h-5" />
+            <div className="text-white/70">
+              {getShippingIcon(transaction.shippingProvider)}
             </div>
           )}
-          <div className="transaction-merchant-info">
-            <p className="transaction-merchant-name">{transaction.merchant}</p>
-            <p className="transaction-category">{transaction.category.name}</p>
-          </div>
+        </div>
+        
+        {/* Content */}
+        <div className="transaction-content">
+          <p className="transaction-merchant">
+            {transaction.merchant}
+          </p>
+          <p className="transaction-category">
+            {transaction.category.name}
+          </p>
         </div>
         
         {/* Amount */}
         <div className="transaction-amount">
-          <p className={`transaction-amount-value ${getAmountColor(transaction.amount)}`}>
+          <p className={`transaction-amount-text ${getAmountColor(transaction.amount)}`}>
             {formatCurrency(transaction.amount)}
           </p>
-          <p className="transaction-date">{formatDate(transaction.date)}</p>
+          <p className="transaction-date-text">
+            {formatDate(transaction.date)}
+          </p>
         </div>
         
-        {/* Shipping info */}
-        {hasShippingInfo && (
-          <div className="transaction-shipping">
-            <span className="text-white/50">Tracking: </span>
-            <span className="text-white/90 font-mono text-sm">{transaction.trackingNumber}</span>
-            <br />
-            <span className="text-white/50">via {transaction.shippingProvider} </span>
-            <span className={`font-medium ${getDeliveryStatusColor(transaction.deliveryStatus)}`}>
-              {transaction.deliveryStatus}
-            </span>
-          </div>
-        )}
+        {/* Empty Scores Area */}
+        <div className="transaction-scores"></div>
       </div>
+      
+      {/* Shipping Info Row */}
+      {hasShippingInfo && (
+        <div className="mt-3 pt-3 border-t border-white/10">
+          <div className="transaction-layout">
+            <div className="transaction-status"></div>
+            <div className="transaction-icon"></div>
+            <div className="transaction-content">
+              <span className="text-white/50 text-xs">
+                Tracking: {transaction.trackingNumber}
+              </span>
+            </div>
+            <div className="transaction-amount">
+              <span className="text-white/50 text-xs">
+                via {transaction.shippingProvider}
+              </span>
+            </div>
+            <div className="transaction-scores">
+              <span className={`text-xs font-medium ${getDeliveryStatusColor(transaction.deliveryStatus)}`}>
+                {transaction.deliveryStatus}
+              </span>
+            </div>
+          </div>
+        </div>
+      )}
     </GlassCard>
   );
 };
