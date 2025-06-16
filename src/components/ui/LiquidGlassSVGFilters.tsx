@@ -2,7 +2,7 @@ import React from 'react';
 
 /**
  * SVG Filters for WWDC 2025 Liquid Glass Effects
- * Provides realistic distortion, lighting, and refraction effects
+ * Provides subtle, realistic glass effects without aggressive distortion
  */
 export const LiquidGlassSVGFilters: React.FC = () => {
   return (
@@ -12,7 +12,7 @@ export const LiquidGlassSVGFilters: React.FC = () => {
       aria-hidden="true"
     >
       <defs>
-        {/* Primary Glass Distortion Filter */}
+        {/* Primary Glass Effect - Subtle lighting only */}
         <filter
           id="glass-distortion-primary"
           x="0%"
@@ -21,48 +21,29 @@ export const LiquidGlassSVGFilters: React.FC = () => {
           height="100%"
           filterUnits="objectBoundingBox"
         >
-          <feTurbulence
-            type="fractalNoise"
-            baseFrequency="0.01 0.01"
-            numOctaves="2"
-            seed="5"
-            result="turbulence"
-          />
-          <feComponentTransfer in="turbulence" result="mapped">
-            <feFuncR type="gamma" amplitude="1" exponent="8" offset="0.5" />
-            <feFuncG type="gamma" amplitude="0" exponent="1" offset="0" />
-            <feFuncB type="gamma" amplitude="0" exponent="1" offset="0.5" />
-          </feComponentTransfer>
-          <feGaussianBlur in="turbulence" stdDeviation="2" result="softMap" />
+          <feGaussianBlur in="SourceGraphic" stdDeviation="0.5" result="blur" />
           <feSpecularLighting
-            in="softMap"
-            surfaceScale="3"
-            specularConstant="0.8"
-            specularExponent="80"
-            lightingColor="rgba(255,255,255,0.8)"
+            in="blur"
+            surfaceScale="1"
+            specularConstant="0.3"
+            specularExponent="20"
+            lightingColor="rgba(255,255,255,0.1)"
             result="specLight"
           >
-            <fePointLight x="-150" y="-150" z="250" />
+            <fePointLight x="-50" y="-50" z="100" />
           </feSpecularLighting>
           <feComposite
-            in="specLight"
+            in="SourceGraphic"
+            in2="specLight"
             operator="arithmetic"
             k1="0"
             k2="1"
-            k3="1"
+            k3="0.2"
             k4="0"
-            result="litImage"
-          />
-          <feDisplacementMap
-            in="SourceGraphic"
-            in2="softMap"
-            scale="120"
-            xChannelSelector="R"
-            yChannelSelector="G"
           />
         </filter>
 
-        {/* Hover State Glass Distortion */}
+        {/* Hover State - Slightly enhanced lighting */}
         <filter
           id="glass-distortion-hover"
           x="0%"
@@ -71,48 +52,29 @@ export const LiquidGlassSVGFilters: React.FC = () => {
           height="100%"
           filterUnits="objectBoundingBox"
         >
-          <feTurbulence
-            type="fractalNoise"
-            baseFrequency="0.015 0.015"
-            numOctaves="2"
-            seed="7"
-            result="turbulence"
-          />
-          <feComponentTransfer in="turbulence" result="mapped">
-            <feFuncR type="gamma" amplitude="1.2" exponent="6" offset="0.4" />
-            <feFuncG type="gamma" amplitude="0" exponent="1" offset="0" />
-            <feFuncB type="gamma" amplitude="0" exponent="1" offset="0.6" />
-          </feComponentTransfer>
-          <feGaussianBlur in="turbulence" stdDeviation="1.5" result="softMap" />
+          <feGaussianBlur in="SourceGraphic" stdDeviation="0.3" result="blur" />
           <feSpecularLighting
-            in="softMap"
-            surfaceScale="4"
-            specularConstant="1.2"
-            specularExponent="100"
-            lightingColor="rgba(255,255,255,0.9)"
+            in="blur"
+            surfaceScale="1.2"
+            specularConstant="0.4"
+            specularExponent="25"
+            lightingColor="rgba(255,255,255,0.15)"
             result="specLight"
           >
-            <fePointLight x="-120" y="-120" z="280" />
+            <fePointLight x="-40" y="-40" z="120" />
           </feSpecularLighting>
           <feComposite
-            in="specLight"
+            in="SourceGraphic"
+            in2="specLight"
             operator="arithmetic"
             k1="0"
             k2="1"
-            k3="1"
+            k3="0.3"
             k4="0"
-            result="litImage"
-          />
-          <feDisplacementMap
-            in="SourceGraphic"
-            in2="softMap"
-            scale="150"
-            xChannelSelector="R"
-            yChannelSelector="G"
           />
         </filter>
 
-        {/* Navigation Glass Distortion */}
+        {/* Navigation - Minimal effect */}
         <filter
           id="glass-distortion-nav"
           x="0%"
@@ -121,48 +83,28 @@ export const LiquidGlassSVGFilters: React.FC = () => {
           height="100%"
           filterUnits="objectBoundingBox"
         >
-          <feTurbulence
-            type="fractalNoise"
-            baseFrequency="0.008 0.008"
-            numOctaves="1"
-            seed="3"
-            result="turbulence"
-          />
-          <feComponentTransfer in="turbulence" result="mapped">
-            <feFuncR type="gamma" amplitude="0.8" exponent="12" offset="0.6" />
-            <feFuncG type="gamma" amplitude="0" exponent="1" offset="0" />
-            <feFuncB type="gamma" amplitude="0" exponent="1" offset="0.4" />
-          </feComponentTransfer>
-          <feGaussianBlur in="turbulence" stdDeviation="3" result="softMap" />
           <feSpecularLighting
-            in="softMap"
-            surfaceScale="2"
-            specularConstant="0.6"
-            specularExponent="60"
-            lightingColor="rgba(255,255,255,0.6)"
+            in="SourceGraphic"
+            surfaceScale="0.5"
+            specularConstant="0.2"
+            specularExponent="15"
+            lightingColor="rgba(255,255,255,0.08)"
             result="specLight"
           >
-            <fePointLight x="-200" y="-200" z="200" />
+            <fePointLight x="-100" y="-100" z="80" />
           </feSpecularLighting>
           <feComposite
-            in="specLight"
+            in="SourceGraphic"
+            in2="specLight"
             operator="arithmetic"
             k1="0"
             k2="1"
-            k3="1"
+            k3="0.15"
             k4="0"
-            result="litImage"
-          />
-          <feDisplacementMap
-            in="SourceGraphic"
-            in2="softMap"
-            scale="80"
-            xChannelSelector="R"
-            yChannelSelector="G"
           />
         </filter>
 
-        {/* Navigation Hover Glass Distortion */}
+        {/* Navigation Hover */}
         <filter
           id="glass-distortion-nav-hover"
           x="0%"
@@ -171,48 +113,28 @@ export const LiquidGlassSVGFilters: React.FC = () => {
           height="100%"
           filterUnits="objectBoundingBox"
         >
-          <feTurbulence
-            type="fractalNoise"
-            baseFrequency="0.012 0.012"
-            numOctaves="1"
-            seed="4"
-            result="turbulence"
-          />
-          <feComponentTransfer in="turbulence" result="mapped">
-            <feFuncR type="gamma" amplitude="1" exponent="10" offset="0.5" />
-            <feFuncG type="gamma" amplitude="0" exponent="1" offset="0" />
-            <feFuncB type="gamma" amplitude="0" exponent="1" offset="0.5" />
-          </feComponentTransfer>
-          <feGaussianBlur in="turbulence" stdDeviation="2.5" result="softMap" />
           <feSpecularLighting
-            in="softMap"
-            surfaceScale="2.5"
-            specularConstant="0.8"
-            specularExponent="70"
-            lightingColor="rgba(255,255,255,0.7)"
+            in="SourceGraphic"
+            surfaceScale="0.8"
+            specularConstant="0.3"
+            specularExponent="20"
+            lightingColor="rgba(255,255,255,0.12)"
             result="specLight"
           >
-            <fePointLight x="-180" y="-180" z="220" />
+            <fePointLight x="-80" y="-80" z="100" />
           </feSpecularLighting>
           <feComposite
-            in="specLight"
+            in="SourceGraphic"
+            in2="specLight"
             operator="arithmetic"
             k1="0"
             k2="1"
-            k3="1"
+            k3="0.2"
             k4="0"
-            result="litImage"
-          />
-          <feDisplacementMap
-            in="SourceGraphic"
-            in2="softMap"
-            scale="100"
-            xChannelSelector="R"
-            yChannelSelector="G"
           />
         </filter>
 
-        {/* Button Glass Distortion */}
+        {/* Button - Clean glass effect */}
         <filter
           id="glass-distortion-button"
           x="0%"
@@ -221,48 +143,28 @@ export const LiquidGlassSVGFilters: React.FC = () => {
           height="100%"
           filterUnits="objectBoundingBox"
         >
-          <feTurbulence
-            type="fractalNoise"
-            baseFrequency="0.012 0.012"
-            numOctaves="1"
-            seed="8"
-            result="turbulence"
-          />
-          <feComponentTransfer in="turbulence" result="mapped">
-            <feFuncR type="gamma" amplitude="0.9" exponent="9" offset="0.55" />
-            <feFuncG type="gamma" amplitude="0" exponent="1" offset="0" />
-            <feFuncB type="gamma" amplitude="0" exponent="1" offset="0.45" />
-          </feComponentTransfer>
-          <feGaussianBlur in="turbulence" stdDeviation="2" result="softMap" />
           <feSpecularLighting
-            in="softMap"
-            surfaceScale="2.5"
-            specularConstant="0.7"
-            specularExponent="90"
-            lightingColor="rgba(255,255,255,0.8)"
+            in="SourceGraphic"
+            surfaceScale="0.8"
+            specularConstant="0.25"
+            specularExponent="18"
+            lightingColor="rgba(255,255,255,0.1)"
             result="specLight"
           >
-            <fePointLight x="-160" y="-160" z="240" />
+            <fePointLight x="-60" y="-60" z="90" />
           </feSpecularLighting>
           <feComposite
-            in="specLight"
+            in="SourceGraphic"
+            in2="specLight"
             operator="arithmetic"
             k1="0"
             k2="1"
-            k3="1"
+            k3="0.18"
             k4="0"
-            result="litImage"
-          />
-          <feDisplacementMap
-            in="SourceGraphic"
-            in2="softMap"
-            scale="90"
-            xChannelSelector="R"
-            yChannelSelector="G"
           />
         </filter>
 
-        {/* Button Hover Glass Distortion */}
+        {/* Button Hover */}
         <filter
           id="glass-distortion-button-hover"
           x="0%"
@@ -271,48 +173,28 @@ export const LiquidGlassSVGFilters: React.FC = () => {
           height="100%"
           filterUnits="objectBoundingBox"
         >
-          <feTurbulence
-            type="fractalNoise"
-            baseFrequency="0.016 0.016"
-            numOctaves="1"
-            seed="9"
-            result="turbulence"
-          />
-          <feComponentTransfer in="turbulence" result="mapped">
-            <feFuncR type="gamma" amplitude="1.1" exponent="7" offset="0.45" />
-            <feFuncG type="gamma" amplitude="0" exponent="1" offset="0" />
-            <feFuncB type="gamma" amplitude="0" exponent="1" offset="0.55" />
-          </feComponentTransfer>
-          <feGaussianBlur in="turbulence" stdDeviation="1.5" result="softMap" />
           <feSpecularLighting
-            in="softMap"
-            surfaceScale="3"
-            specularConstant="1"
-            specularExponent="110"
-            lightingColor="rgba(255,255,255,0.9)"
+            in="SourceGraphic"
+            surfaceScale="1"
+            specularConstant="0.35"
+            specularExponent="22"
+            lightingColor="rgba(255,255,255,0.15)"
             result="specLight"
           >
-            <fePointLight x="-140" y="-140" z="260" />
+            <fePointLight x="-50" y="-50" z="110" />
           </feSpecularLighting>
           <feComposite
-            in="specLight"
+            in="SourceGraphic"
+            in2="specLight"
             operator="arithmetic"
             k1="0"
             k2="1"
-            k3="1"
+            k3="0.25"
             k4="0"
-            result="litImage"
-          />
-          <feDisplacementMap
-            in="SourceGraphic"
-            in2="softMap"
-            scale="120"
-            xChannelSelector="R"
-            yChannelSelector="G"
           />
         </filter>
 
-        {/* Card Glass Distortion */}
+        {/* Card - Subtle glass effect */}
         <filter
           id="glass-distortion-card"
           x="0%"
@@ -321,48 +203,28 @@ export const LiquidGlassSVGFilters: React.FC = () => {
           height="100%"
           filterUnits="objectBoundingBox"
         >
-          <feTurbulence
-            type="fractalNoise"
-            baseFrequency="0.009 0.009"
-            numOctaves="2"
-            seed="6"
-            result="turbulence"
-          />
-          <feComponentTransfer in="turbulence" result="mapped">
-            <feFuncR type="gamma" amplitude="0.8" exponent="10" offset="0.6" />
-            <feFuncG type="gamma" amplitude="0" exponent="1" offset="0" />
-            <feFuncB type="gamma" amplitude="0" exponent="1" offset="0.4" />
-          </feComponentTransfer>
-          <feGaussianBlur in="turbulence" stdDeviation="2.5" result="softMap" />
           <feSpecularLighting
-            in="softMap"
-            surfaceScale="2"
-            specularConstant="0.6"
-            specularExponent="70"
-            lightingColor="rgba(255,255,255,0.7)"
+            in="SourceGraphic"
+            surfaceScale="0.6"
+            specularConstant="0.2"
+            specularExponent="16"
+            lightingColor="rgba(255,255,255,0.08)"
             result="specLight"
           >
-            <fePointLight x="-180" y="-180" z="220" />
+            <fePointLight x="-70" y="-70" z="85" />
           </feSpecularLighting>
           <feComposite
-            in="specLight"
+            in="SourceGraphic"
+            in2="specLight"
             operator="arithmetic"
             k1="0"
             k2="1"
-            k3="1"
+            k3="0.12"
             k4="0"
-            result="litImage"
-          />
-          <feDisplacementMap
-            in="SourceGraphic"
-            in2="softMap"
-            scale="100"
-            xChannelSelector="R"
-            yChannelSelector="G"
           />
         </filter>
 
-        {/* Card Hover Glass Distortion */}
+        {/* Card Hover */}
         <filter
           id="glass-distortion-card-hover"
           x="0%"
@@ -371,48 +233,28 @@ export const LiquidGlassSVGFilters: React.FC = () => {
           height="100%"
           filterUnits="objectBoundingBox"
         >
-          <feTurbulence
-            type="fractalNoise"
-            baseFrequency="0.013 0.013"
-            numOctaves="2"
-            seed="11"
-            result="turbulence"
-          />
-          <feComponentTransfer in="turbulence" result="mapped">
-            <feFuncR type="gamma" amplitude="1" exponent="8" offset="0.5" />
-            <feFuncG type="gamma" amplitude="0" exponent="1" offset="0" />
-            <feFuncB type="gamma" amplitude="0" exponent="1" offset="0.5" />
-          </feComponentTransfer>
-          <feGaussianBlur in="turbulence" stdDeviation="2" result="softMap" />
           <feSpecularLighting
-            in="softMap"
-            surfaceScale="3"
-            specularConstant="0.9"
-            specularExponent="90"
-            lightingColor="rgba(255,255,255,0.8)"
+            in="SourceGraphic"
+            surfaceScale="0.9"
+            specularConstant="0.3"
+            specularExponent="20"
+            lightingColor="rgba(255,255,255,0.12)"
             result="specLight"
           >
-            <fePointLight x="-160" y="-160" z="240" />
+            <fePointLight x="-60" y="-60" z="100" />
           </feSpecularLighting>
           <feComposite
-            in="specLight"
+            in="SourceGraphic"
+            in2="specLight"
             operator="arithmetic"
             k1="0"
             k2="1"
-            k3="1"
+            k3="0.18"
             k4="0"
-            result="litImage"
-          />
-          <feDisplacementMap
-            in="SourceGraphic"
-            in2="softMap"
-            scale="130"
-            xChannelSelector="R"
-            yChannelSelector="G"
           />
         </filter>
 
-        {/* Menu Item Glass Distortion */}
+        {/* Menu Item - Very subtle */}
         <filter
           id="glass-distortion-menu"
           x="0%"
@@ -421,48 +263,28 @@ export const LiquidGlassSVGFilters: React.FC = () => {
           height="100%"
           filterUnits="objectBoundingBox"
         >
-          <feTurbulence
-            type="fractalNoise"
-            baseFrequency="0.014 0.014"
-            numOctaves="1"
-            seed="12"
-            result="turbulence"
-          />
-          <feComponentTransfer in="turbulence" result="mapped">
-            <feFuncR type="gamma" amplitude="0.7" exponent="11" offset="0.65" />
-            <feFuncG type="gamma" amplitude="0" exponent="1" offset="0" />
-            <feFuncB type="gamma" amplitude="0" exponent="1" offset="0.35" />
-          </feComponentTransfer>
-          <feGaussianBlur in="turbulence" stdDeviation="1.8" result="softMap" />
           <feSpecularLighting
-            in="softMap"
-            surfaceScale="1.5"
-            specularConstant="0.5"
-            specularExponent="50"
-            lightingColor="rgba(255,255,255,0.6)"
+            in="SourceGraphic"
+            surfaceScale="0.4"
+            specularConstant="0.15"
+            specularExponent="12"
+            lightingColor="rgba(255,255,255,0.06)"
             result="specLight"
           >
-            <fePointLight x="-200" y="-200" z="180" />
+            <fePointLight x="-80" y="-80" z="70" />
           </feSpecularLighting>
           <feComposite
-            in="specLight"
+            in="SourceGraphic"
+            in2="specLight"
             operator="arithmetic"
             k1="0"
             k2="1"
-            k3="1"
+            k3="0.1"
             k4="0"
-            result="litImage"
-          />
-          <feDisplacementMap
-            in="SourceGraphic"
-            in2="softMap"
-            scale="60"
-            xChannelSelector="R"
-            yChannelSelector="G"
           />
         </filter>
 
-        {/* Menu Item Hover Glass Distortion */}
+        {/* Menu Item Hover */}
         <filter
           id="glass-distortion-menu-hover"
           x="0%"
@@ -471,48 +293,28 @@ export const LiquidGlassSVGFilters: React.FC = () => {
           height="100%"
           filterUnits="objectBoundingBox"
         >
-          <feTurbulence
-            type="fractalNoise"
-            baseFrequency="0.016 0.016"
-            numOctaves="1"
-            seed="13"
-            result="turbulence"
-          />
-          <feComponentTransfer in="turbulence" result="mapped">
-            <feFuncR type="gamma" amplitude="0.9" exponent="9" offset="0.55" />
-            <feFuncG type="gamma" amplitude="0" exponent="1" offset="0" />
-            <feFuncB type="gamma" amplitude="0" exponent="1" offset="0.45" />
-          </feComponentTransfer>
-          <feGaussianBlur in="turbulence" stdDeviation="1.5" result="softMap" />
           <feSpecularLighting
-            in="softMap"
-            surfaceScale="2"
-            specularConstant="0.7"
-            specularExponent="70"
-            lightingColor="rgba(255,255,255,0.7)"
+            in="SourceGraphic"
+            surfaceScale="0.6"
+            specularConstant="0.2"
+            specularExponent="15"
+            lightingColor="rgba(255,255,255,0.08)"
             result="specLight"
           >
-            <fePointLight x="-180" y="-180" z="200" />
+            <fePointLight x="-70" y="-70" z="80" />
           </feSpecularLighting>
           <feComposite
-            in="specLight"
+            in="SourceGraphic"
+            in2="specLight"
             operator="arithmetic"
             k1="0"
             k2="1"
-            k3="1"
+            k3="0.12"
             k4="0"
-            result="litImage"
-          />
-          <feDisplacementMap
-            in="SourceGraphic"
-            in2="softMap"
-            scale="80"
-            xChannelSelector="R"
-            yChannelSelector="G"
           />
         </filter>
 
-        {/* Menu Item Active Glass Distortion */}
+        {/* Menu Item Active */}
         <filter
           id="glass-distortion-menu-active"
           x="0%"
@@ -521,48 +323,28 @@ export const LiquidGlassSVGFilters: React.FC = () => {
           height="100%"
           filterUnits="objectBoundingBox"
         >
-          <feTurbulence
-            type="fractalNoise"
-            baseFrequency="0.018 0.018"
-            numOctaves="1"
-            seed="14"
-            result="turbulence"
-          />
-          <feComponentTransfer in="turbulence" result="mapped">
-            <feFuncR type="gamma" amplitude="1" exponent="8" offset="0.5" />
-            <feFuncG type="gamma" amplitude="0" exponent="1" offset="0" />
-            <feFuncB type="gamma" amplitude="0" exponent="1" offset="0.5" />
-          </feComponentTransfer>
-          <feGaussianBlur in="turbulence" stdDeviation="1.2" result="softMap" />
           <feSpecularLighting
-            in="softMap"
-            surfaceScale="2.5"
-            specularConstant="0.9"
-            specularExponent="90"
-            lightingColor="rgba(99,102,241,0.8)"
+            in="SourceGraphic"
+            surfaceScale="0.8"
+            specularConstant="0.25"
+            specularExponent="18"
+            lightingColor="rgba(99,102,241,0.1)"
             result="specLight"
           >
-            <fePointLight x="-160" y="-160" z="220" />
+            <fePointLight x="-60" y="-60" z="90" />
           </feSpecularLighting>
           <feComposite
-            in="specLight"
+            in="SourceGraphic"
+            in2="specLight"
             operator="arithmetic"
             k1="0"
             k2="1"
-            k3="1"
+            k3="0.15"
             k4="0"
-            result="litImage"
-          />
-          <feDisplacementMap
-            in="SourceGraphic"
-            in2="softMap"
-            scale="90"
-            xChannelSelector="R"
-            yChannelSelector="G"
           />
         </filter>
 
-        {/* FAB Glass Distortion */}
+        {/* FAB - Enhanced but clean */}
         <filter
           id="glass-distortion-fab"
           x="0%"
@@ -571,48 +353,28 @@ export const LiquidGlassSVGFilters: React.FC = () => {
           height="100%"
           filterUnits="objectBoundingBox"
         >
-          <feTurbulence
-            type="fractalNoise"
-            baseFrequency="0.015 0.015"
-            numOctaves="1"
-            seed="15"
-            result="turbulence"
-          />
-          <feComponentTransfer in="turbulence" result="mapped">
-            <feFuncR type="gamma" amplitude="1" exponent="8" offset="0.5" />
-            <feFuncG type="gamma" amplitude="0" exponent="1" offset="0" />
-            <feFuncB type="gamma" amplitude="0" exponent="1" offset="0.5" />
-          </feComponentTransfer>
-          <feGaussianBlur in="turbulence" stdDeviation="1.5" result="softMap" />
           <feSpecularLighting
-            in="softMap"
-            surfaceScale="3"
-            specularConstant="1"
-            specularExponent="100"
-            lightingColor="rgba(99,102,241,0.9)"
+            in="SourceGraphic"
+            surfaceScale="1"
+            specularConstant="0.3"
+            specularExponent="20"
+            lightingColor="rgba(99,102,241,0.12)"
             result="specLight"
           >
-            <fePointLight x="-140" y="-140" z="250" />
+            <fePointLight x="-50" y="-50" z="100" />
           </feSpecularLighting>
           <feComposite
-            in="specLight"
+            in="SourceGraphic"
+            in2="specLight"
             operator="arithmetic"
             k1="0"
             k2="1"
-            k3="1"
+            k3="0.2"
             k4="0"
-            result="litImage"
-          />
-          <feDisplacementMap
-            in="SourceGraphic"
-            in2="softMap"
-            scale="110"
-            xChannelSelector="R"
-            yChannelSelector="G"
           />
         </filter>
 
-        {/* FAB Hover Glass Distortion */}
+        {/* FAB Hover */}
         <filter
           id="glass-distortion-fab-hover"
           x="0%"
@@ -621,48 +383,28 @@ export const LiquidGlassSVGFilters: React.FC = () => {
           height="100%"
           filterUnits="objectBoundingBox"
         >
-          <feTurbulence
-            type="fractalNoise"
-            baseFrequency="0.018 0.018"
-            numOctaves="1"
-            seed="16"
-            result="turbulence"
-          />
-          <feComponentTransfer in="turbulence" result="mapped">
-            <feFuncR type="gamma" amplitude="1.2" exponent="6" offset="0.4" />
-            <feFuncG type="gamma" amplitude="0" exponent="1" offset="0" />
-            <feFuncB type="gamma" amplitude="0" exponent="1" offset="0.6" />
-          </feComponentTransfer>
-          <feGaussianBlur in="turbulence" stdDeviation="1.2" result="softMap" />
           <feSpecularLighting
-            in="softMap"
-            surfaceScale="4"
-            specularConstant="1.3"
-            specularExponent="120"
-            lightingColor="rgba(99,102,241,1)"
+            in="SourceGraphic"
+            surfaceScale="1.2"
+            specularConstant="0.4"
+            specularExponent="25"
+            lightingColor="rgba(99,102,241,0.15)"
             result="specLight"
           >
-            <fePointLight x="-120" y="-120" z="280" />
+            <fePointLight x="-40" y="-40" z="120" />
           </feSpecularLighting>
           <feComposite
-            in="specLight"
+            in="SourceGraphic"
+            in2="specLight"
             operator="arithmetic"
             k1="0"
             k2="1"
-            k3="1"
+            k3="0.25"
             k4="0"
-            result="litImage"
-          />
-          <feDisplacementMap
-            in="SourceGraphic"
-            in2="softMap"
-            scale="140"
-            xChannelSelector="R"
-            yChannelSelector="G"
           />
         </filter>
 
-        {/* Animated Flow Filters for Liquid Animation */}
+        {/* Animated Flow Filters - Very subtle movement */}
         <filter
           id="glass-distortion-flow-1"
           x="0%"
@@ -671,20 +413,24 @@ export const LiquidGlassSVGFilters: React.FC = () => {
           height="100%"
           filterUnits="objectBoundingBox"
         >
-          <feTurbulence
-            type="fractalNoise"
-            baseFrequency="0.011 0.008"
-            numOctaves="2"
-            seed="17"
-            result="turbulence"
-          />
-          <feGaussianBlur in="turbulence" stdDeviation="2.2" result="softMap" />
-          <feDisplacementMap
+          <feSpecularLighting
             in="SourceGraphic"
-            in2="softMap"
-            scale="95"
-            xChannelSelector="R"
-            yChannelSelector="G"
+            surfaceScale="0.8"
+            specularConstant="0.25"
+            specularExponent="18"
+            lightingColor="rgba(255,255,255,0.08)"
+            result="specLight"
+          >
+            <fePointLight x="-55" y="-45" z="95" />
+          </feSpecularLighting>
+          <feComposite
+            in="SourceGraphic"
+            in2="specLight"
+            operator="arithmetic"
+            k1="0"
+            k2="1"
+            k3="0.15"
+            k4="0"
           />
         </filter>
 
@@ -696,20 +442,24 @@ export const LiquidGlassSVGFilters: React.FC = () => {
           height="100%"
           filterUnits="objectBoundingBox"
         >
-          <feTurbulence
-            type="fractalNoise"
-            baseFrequency="0.013 0.009"
-            numOctaves="2"
-            seed="18"
-            result="turbulence"
-          />
-          <feGaussianBlur in="turbulence" stdDeviation="1.8" result="softMap" />
-          <feDisplacementMap
+          <feSpecularLighting
             in="SourceGraphic"
-            in2="softMap"
-            scale="110"
-            xChannelSelector="R"
-            yChannelSelector="G"
+            surfaceScale="0.9"
+            specularConstant="0.3"
+            specularExponent="20"
+            lightingColor="rgba(255,255,255,0.1)"
+            result="specLight"
+          >
+            <fePointLight x="-45" y="-55" z="105" />
+          </feSpecularLighting>
+          <feComposite
+            in="SourceGraphic"
+            in2="specLight"
+            operator="arithmetic"
+            k1="0"
+            k2="1"
+            k3="0.18"
+            k4="0"
           />
         </filter>
 
@@ -721,20 +471,24 @@ export const LiquidGlassSVGFilters: React.FC = () => {
           height="100%"
           filterUnits="objectBoundingBox"
         >
-          <feTurbulence
-            type="fractalNoise"
-            baseFrequency="0.009 0.012"
-            numOctaves="2"
-            seed="19"
-            result="turbulence"
-          />
-          <feGaussianBlur in="turbulence" stdDeviation="2.5" result="softMap" />
-          <feDisplacementMap
+          <feSpecularLighting
             in="SourceGraphic"
-            in2="softMap"
-            scale="85"
-            xChannelSelector="R"
-            yChannelSelector="G"
+            surfaceScale="0.7"
+            specularConstant="0.2"
+            specularExponent="16"
+            lightingColor="rgba(255,255,255,0.06)"
+            result="specLight"
+          >
+            <fePointLight x="-65" y="-35" z="85" />
+          </feSpecularLighting>
+          <feComposite
+            in="SourceGraphic"
+            in2="specLight"
+            operator="arithmetic"
+            k1="0"
+            k2="1"
+            k3="0.12"
+            k4="0"
           />
         </filter>
       </defs>
