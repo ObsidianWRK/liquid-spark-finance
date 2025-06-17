@@ -711,7 +711,7 @@ export const ensureCompliance = (userData: any): boolean => {
 
 ## Conclusion
 
-The Liquid Spark Finance application contains several critical security vulnerabilities that require immediate attention. The most severe issues involve unencrypted data storage and XSS vulnerabilities, which could lead to complete data compromise.
+The Vueni application contains several critical security vulnerabilities that require immediate attention. The most severe issues involve unencrypted data storage and XSS vulnerabilities, which could lead to complete data compromise.
 
 By implementing the remediation strategies outlined in this document, the application can achieve a robust security posture suitable for handling sensitive financial data. The phased approach ensures that critical issues are addressed first while building a comprehensive security framework for long-term protection.
 
