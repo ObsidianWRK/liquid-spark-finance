@@ -2,11 +2,6 @@ import type { Config } from "tailwindcss";
 
 export default {
 	darkMode: ["class"],
-	safelist: [
-		'data-[state=open]',
-		'data-[state=closed]',
-		'data-[state=active]'
-	],
 	content: [
 		"./pages/**/*.{ts,tsx}",
 		"./components/**/*.{ts,tsx}",

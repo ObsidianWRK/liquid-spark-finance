@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Card } from '@/components/ui';
+import SimpleGlassCard from '@/components/ui/SimpleGlassCard';
 import { colors } from '@/theme/colors';
 import { 
   CreditCard, 
@@ -69,7 +69,7 @@ const CleanCreditScoreCard = ({
   const strokeDashoffset = circumference - (scorePercentage / 100) * circumference;
 
   return (
-    <Card className={`p-6 ${className || ''}`}>
+    <SimpleGlassCard className={`p-6 ${className || ''}`}>
       {/* Header */}
       <div className="flex items-center justify-between mb-6">
         <div className="flex items-center gap-3">
@@ -203,7 +203,7 @@ const CleanCreditScoreCard = ({
           Next review: {new Date(creditData.nextReviewDate).toLocaleDateString()}
         </p>
       </div>
-    </Card>
+    </SimpleGlassCard>
   );
 };
 

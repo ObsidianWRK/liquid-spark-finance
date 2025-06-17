@@ -1,9 +1,9 @@
+@import './styles/responsive-enhancements.css'; /* responsive enhancements */
+@import './styles/performance-optimized.css';
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-/* Import the magical liquid glass navigation styles */
-@import './styles/liquid-glass-navigation.css';
 
 /* Definition of the design system. All colors, gradients, fonts, etc should be defined here. */
 
@@ -590,31 +590,4 @@ html:not(.dark) [class*="border-white/10"] {
       @apply h-[320px];
     }
   }
-}
-
-/* Theme color variables */
-:root {
-  --color-bg: #000000;
-  --color-surface: rgba(255,255,255,0.04);
-  --color-primary: #3b82f6; /* blue-500 */
-  --color-primary-foreground: #ffffff;
-}
-
-html.light {
-  --color-bg: #fafafa;
-  --color-surface: rgba(0,0,0,0.04);
-  --color-primary: #2563eb; /* blue-600 */
-  --color-primary-foreground: #ffffff;
-}
-
-/* Utility classes using variables */
-.bg-surface {
-  background-color: var(--color-surface);
-}
-.text-primary {
-  color: var(--color-primary);
-}
-.bg-primary {
-  background-color: var(--color-primary);
-  color: var(--color-primary-foreground);
 }

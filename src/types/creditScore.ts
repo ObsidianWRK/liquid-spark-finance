@@ -1,4 +1,11 @@
-export * from '../features/credit/types';
+export interface CreditScore {
+  score: number;
+  scoreRange: 'Poor' | 'Fair' | 'Good' | 'Very Good' | 'Excellent';
+  lastUpdated: string;
+  provider: 'FICO' | 'VantageScore';
+  factors: CreditFactor[];
+  history: ScoreHistoryPoint[];
+}
 
 export interface CreditFactor {
   factor: string;

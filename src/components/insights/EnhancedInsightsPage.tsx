@@ -8,7 +8,13 @@ import ComprehensiveWellnessCard from './ComprehensiveWellnessCard';
 import ComprehensiveEcoCard from './ComprehensiveEcoCard';
 import { generateScoreSummary } from '@/services/scoringModel';
 import { formatPercentage, getScoreColor } from '@/utils/formatters';
-import { usePerformanceMonitor } from '@/utils/performanceOptimizer';
+import { 
+  usePerformanceOptimization, 
+  useResponsiveBreakpoint, 
+  useAnimationDelay,
+  useLayoutDebug,
+  usePerformanceTracking 
+} from '@/hooks/usePerformanceOptimization';
 
 // Enhanced TypeScript interfaces
 interface Transaction {
@@ -60,14 +66,13 @@ const EnhancedInsightsPage = ({ transactions, accounts }: InsightsPageProps) => 
   const [scores, setScores] = useState<ScoreData>({ financial: 0, health: 0, eco: 0 });
 
   // Performance and responsive hooks
-  const performanceMetrics = usePerformanceMonitor();
+  const { liquidSettings } = usePerformanceOptimization();
+  const breakpoint = useResponsiveBreakpoint();
+  const { getAnimationDelay } = useAnimationDelay();
   
-  // Create liquidSettings based on performance metrics
-  const liquidSettings = useMemo(() => ({
-    intensity: performanceMetrics.isLowEndDevice ? 0.15 : performanceMetrics.isMobile ? 0.25 : 0.35,
-    animated: !performanceMetrics.prefersReducedMotion && !performanceMetrics.isLowEndDevice,
-    interactive: !performanceMetrics.isLowEndDevice
-  }), [performanceMetrics]);
+  // Debug and performance tracking (development only)
+  useLayoutDebug('EnhancedInsightsPage');
+  usePerformanceTracking('EnhancedInsightsPage');
 
   // Sample wellness data based on screenshot
   const wellnessData = useMemo(() => ({

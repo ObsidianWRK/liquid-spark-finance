@@ -1,0 +1,298 @@
+/* Performance-Optimized CSS for Vueni */
+
+/* CSS Hardware Acceleration */
+.hw-accelerated {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  perspective: 1000px;
+  will-change: transform;
+}
+
+/* Optimized Glass Effects - Reduced Blur for Performance */
+.liquid-glass-card-optimized {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  box-shadow: 
+    0 4px 20px rgba(0, 0, 0, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  transition: transform 0.2s ease-out, box-shadow 0.2s ease-out;
+  will-change: transform;
+}
+
+.liquid-glass-card-optimized:hover {
+  transform: translateY(-1px);
+  box-shadow: 
+    0 6px 24px rgba(0, 0, 0, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.15);
+}
+
+/* Performance Mode - Minimal Effects */
+.performance-mode .liquid-glass-card,
+.performance-mode .liquid-glass-card-optimized {
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  transition: background-color 0.2s ease;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+}
+
+.performance-mode .liquid-glass-card:hover,
+.performance-mode .liquid-glass-card-optimized:hover {
+  transform: none;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+/* Simplified Animations */
+@keyframes optimizedSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes optimizedFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes optimizedPulse {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 0.7; }
+}
+
+/* Performance-First Animation Classes */
+.animate-optimized-slide {
+  animation: optimizedSlideIn 0.4s ease-out both;
+}
+
+.animate-optimized-fade {
+  animation: optimizedFadeIn 0.3s ease-out both;
+}
+
+.animate-optimized-pulse {
+  animation: optimizedPulse 2s ease-in-out infinite;
+}
+
+/* Reduced Motion Support */
+@media (prefers-reduced-motion: reduce) {
+  .animate-optimized-slide,
+  .animate-optimized-fade,
+  .animate-optimized-pulse,
+  .hw-accelerated {
+    animation: none;
+    transition: none;
+    transform: none;
+  }
+  
+  .liquid-glass-card-optimized:hover {
+    transform: none;
+  }
+}
+
+/* Mobile Optimizations */
+@media (max-width: 768px) {
+  .liquid-glass-card-optimized {
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border-radius: 12px;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+  }
+  
+  .liquid-glass-card-optimized:hover {
+    transform: none;
+  }
+  
+  /* Disable complex animations on mobile */
+  .animate-optimized-pulse {
+    animation: none;
+  }
+}
+
+/* Low-End Device Optimizations */
+.low-end-device .liquid-glass-card,
+.low-end-device .liquid-glass-card-optimized {
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  box-shadow: 0 1px 8px rgba(0, 0, 0, 0.04);
+  transition: background-color 0.2s ease;
+}
+
+.low-end-device .liquid-glass-card:hover,
+.low-end-device .liquid-glass-card-optimized:hover {
+  background: rgba(255, 255, 255, 0.06);
+  transform: none;
+}
+
+/* Optimized Grid Layouts */
+.optimized-grid {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: 640px) {
+  .optimized-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .optimized-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+  }
+}
+
+/* Efficient Scrolling */
+.smooth-scroll {
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Memory-Efficient Backgrounds */
+.optimized-bg {
+  background: linear-gradient(135deg, 
+    rgba(0, 0, 0, 0.95) 0%, 
+    rgba(15, 23, 42, 0.95) 50%, 
+    rgba(0, 0, 0, 0.95) 100%);
+  background-attachment: fixed;
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+}
+
+/* Optimized Floating Elements */
+.floating-orb-optimized {
+  position: fixed;
+  border-radius: 50%;
+  filter: blur(20px);
+  opacity: 0.3;
+  pointer-events: none;
+  animation: optimizedPulse 4s ease-in-out infinite;
+}
+
+/* Text Rendering Optimizations */
+.optimized-text {
+  text-rendering: optimizeSpeed;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Layout Optimizations */
+.contain-layout {
+  contain: layout style paint;
+}
+
+.contain-strict {
+  contain: strict;
+}
+
+/* Performance Monitoring Classes */
+.performance-indicator {
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
+  background: rgba(0, 0, 0, 0.8);
+  color: white;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  font-size: 0.75rem;
+  z-index: 9999;
+  font-family: monospace;
+}
+
+/* Optimized Transitions */
+.fast-transition {
+  transition: all 0.15s ease-out;
+}
+
+.medium-transition {
+  transition: all 0.25s ease-out;
+}
+
+.slow-transition {
+  transition: all 0.4s ease-out;
+}
+
+/* GPU Layer Promotion for Smooth Animations */
+.promote-layer {
+  transform: translateZ(0);
+  will-change: transform, opacity;
+}
+
+/* Efficient Button Styles */
+.optimized-button {
+  background: rgba(99, 102, 241, 0.1);
+  border: 1px solid rgba(99, 102, 241, 0.3);
+  border-radius: 8px;
+  padding: 0.5rem 1rem;
+  color: white;
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+  cursor: pointer;
+}
+
+.optimized-button:hover {
+  background: rgba(99, 102, 241, 0.2);
+  border-color: rgba(99, 102, 241, 0.5);
+}
+
+.optimized-button:active {
+  background: rgba(99, 102, 241, 0.3);
+  transform: scale(0.98);
+}
+
+/* Accessibility Improvements */
+.focus-optimized:focus {
+  outline: 2px solid rgba(99, 102, 241, 0.8);
+  outline-offset: 2px;
+}
+
+/* Print Optimizations */
+@media print {
+  .liquid-glass-card,
+  .liquid-glass-card-optimized,
+  .floating-orb-optimized {
+    background: white;
+    color: black;
+    box-shadow: none;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    filter: none;
+  }
+}
+
+/* Dark Mode Optimizations */
+@media (prefers-color-scheme: dark) {
+  .optimized-bg {
+    background: linear-gradient(135deg, 
+      rgba(0, 0, 0, 0.98) 0%, 
+      rgba(15, 23, 42, 0.98) 50%, 
+      rgba(0, 0, 0, 0.98) 100%);
+  }
+}
+
+/* Container Queries for Enhanced Responsiveness */
+@container (min-width: 320px) {
+  .responsive-card {
+    padding: 1rem;
+  }
+}
+
+@container (min-width: 640px) {
+  .responsive-card {
+    padding: 1.5rem;
+  }
+}
+
+@container (min-width: 1024px) {
+  .responsive-card {
+    padding: 2rem;
+  }
+} 

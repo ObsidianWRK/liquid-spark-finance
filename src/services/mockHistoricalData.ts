@@ -33,7 +33,6 @@ export interface NetWorthData {
   netWorth: number;
   assets: number;
   liabilities: number;
-  healthScore: number;
   type: 'historical' | 'projected';
   growthRate?: number;
 }
@@ -163,18 +162,6 @@ export const generateNetWorthData = (): NetWorthData[] => {
     
     const netWorth = currentAssets - currentLiabilities;
     
-    // Generate realistic health score that correlates somewhat with financial wellness
-    // but has its own patterns (seasonal variation, lifestyle changes, etc.)
-    const baseHealthScore = 65; // Starting baseline
-    const financialStressImpact = Math.min(10, Math.max(-10, (netWorth - 80000) / 10000)); // Financial stress/relief affects health
-    const seasonalHealthFactor = Math.sin((monthsFromStart + 2) * Math.PI / 6) * 8; // Seasonal patterns (winter blues, summer activity)
-    const improvementTrend = (monthsFromStart / 36) * 12; // Gradual health improvement over time
-    const randomVariance = (Math.random() - 0.5) * 12; // Random monthly variation
-    
-    const healthScore = Math.round(Math.max(40, Math.min(95, 
-      baseHealthScore + financialStressImpact + seasonalHealthFactor + improvementTrend + randomVariance
-    )));
-    
     // Add some realistic variance
     const variance = netWorth * (Math.random() - 0.5) * 0.03; // ±3% variance
     
@@ -183,7 +170,6 @@ export const generateNetWorthData = (): NetWorthData[] => {
       netWorth: Math.round(netWorth + variance),
       assets: Math.round(currentAssets + variance * 0.8),
       liabilities: Math.round(currentLiabilities),
-      healthScore: healthScore,
       type: 'historical',
       growthRate: monthsFromStart > 0 ? ((netWorth / (baseAssets - baseLiabilities)) - 1) * 100 : 0
     });
@@ -197,9 +183,6 @@ export const generateNetWorthData = (): NetWorthData[] => {
     const monthlyGrowthRate = (point.netWorth - prevPoint.netWorth) / prevPoint.netWorth;
     return sum + monthlyGrowthRate;
   }, 0) / (historicalData.length - 1);
-  
-  // Calculate average health score trend
-  const avgHealthScore = historicalData.reduce((sum, point) => sum + point.healthScore, 0) / historicalData.length;
   
   // Projected data (2 years = 24 months)
   const lastHistoricalPoint = data[data.length - 1];
@@ -220,21 +203,11 @@ export const generateNetWorthData = (): NetWorthData[] => {
     const projectedAssets = prevPoint.assets * (1 + adjustedGrowthRate * 1.1); // Assets grow slightly faster
     const projectedLiabilities = Math.max(2000, prevPoint.liabilities * 0.995); // Continued debt reduction
     
-    // Project health score with continued improvement trend but some uncertainty
-    const healthTrendFactor = 0.3; // Gradual health improvement
-    const seasonalHealthProjection = Math.sin((36 + i + 2) * Math.PI / 6) * 6; // Continued seasonal patterns
-    const uncertaintyFactor = (Math.random() - 0.5) * 8; // Future uncertainty
-    
-    const projectedHealthScore = Math.round(Math.max(45, Math.min(90, 
-      avgHealthScore + (i * healthTrendFactor) + seasonalHealthProjection + uncertaintyFactor
-    )));
-    
     data.push({
       date: date.toISOString().split('T')[0],
       netWorth: Math.round(projectedNetWorth),
       assets: Math.round(projectedAssets),
       liabilities: Math.round(projectedLiabilities),
-      healthScore: projectedHealthScore,
       type: 'projected',
       growthRate: ((projectedNetWorth / lastHistoricalPoint.netWorth) - 1) * 100
     });

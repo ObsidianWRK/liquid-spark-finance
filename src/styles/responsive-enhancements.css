@@ -1,0 +1,804 @@
+/* Vueni Financial App - Responsive UX Enhancements */
+
+/* ==============================================
+   CSS Custom Properties - Responsive Spacing
+   ============================================== */
+:root {
+  /* Enhanced contrast for larger screens */
+  --glass-bg-mobile: rgba(15, 23, 42, 0.8);
+  --glass-bg-desktop: rgba(15, 23, 42, 0.6);
+  --glass-border-mobile: rgba(255, 255, 255, 0.1);
+  --glass-border-desktop: rgba(255, 255, 255, 0.15);
+  
+  /* Responsive spacing scale */
+  --spacing-xs: 0.5rem; /* 8px */
+  --spacing-sm: 0.75rem; /* 12px */
+  --spacing-md: 1rem; /* 16px */
+  --spacing-lg: 1.5rem; /* 24px */
+  --spacing-xl: 2rem; /* 32px */
+  --spacing-2xl: 3rem; /* 48px */
+  --bottom-nav-height: 4rem; /* Mobile default */
+  
+  /* WCAG Accessibility Colors for Light Mode */
+  --light-text-primary: rgb(15, 23, 42); /* slate-900 - 15.84:1 ratio */
+  --light-text-secondary: rgb(51, 65, 85); /* slate-700 - 9.32:1 ratio */
+  --light-bg-glass: rgba(248, 250, 252, 0.95); /* slate-50 */
+  --light-border: rgba(148, 163, 184, 0.4); /* slate-400 */
+  --focus-ring: rgb(59, 130, 246); /* blue-500 */
+}
+
+/* Desktop spacing multipliers */
+@media (min-width: 1024px) {
+  :root {
+    --spacing-xs: 0.75rem; /* 12px */
+    --spacing-sm: 1rem; /* 16px */
+    --spacing-md: 1.5rem; /* 24px */
+    --spacing-lg: 2rem; /* 32px */
+    --spacing-xl: 3rem; /* 48px */
+    --spacing-2xl: 4rem; /* 64px */
+    --bottom-nav-height: 6rem; /* Desktop */
+  }
+}
+
+/* ==============================================
+   WCAG AA Accessibility Enhancements
+   ============================================== */
+
+/* Improved Focus States for All Interactive Elements */
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+[role="button"]:focus-visible,
+[role="tab"]:focus-visible,
+[role="menuitem"]:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+  transition: outline 0.2s ease-in-out;
+}
+
+/* Enhanced focus for navigation elements */
+.ios26-nav-item:focus-visible {
+  outline: 3px solid var(--focus-ring);
+  outline-offset: 4px;
+  border-radius: 8px;
+}
+
+/* Keyboard Navigation Support */
+.liquid-glass-menu-item:focus-visible {
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.3);
+  outline: none;
+}
+
+/* Skip Link for Screen Reader Users */
+.skip-link {
+  position: absolute;
+  top: -40px;
+  left: 6px;
+  background: var(--focus-ring);
+  color: white;
+  padding: 8px;
+  text-decoration: none;
+  border-radius: 4px;
+  z-index: 9999;
+  font-weight: 600;
+}
+
+.skip-link:focus {
+  top: 6px;
+}
+
+/* Screen Reader Only Text */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* High Contrast Mode Support */
+@media (prefers-contrast: high) {
+  :root {
+    --glass-bg-mobile: rgba(0, 0, 0, 0.95);
+    --glass-bg-desktop: rgba(0, 0, 0, 0.9);
+    --glass-border-mobile: rgba(255, 255, 255, 0.3);
+    --glass-border-desktop: rgba(255, 255, 255, 0.4);
+  }
+  
+  .liquid-glass-card {
+    border-width: 2px;
+  }
+  
+  button, .liquid-glass-menu-item {
+    border-width: 2px;
+  }
+}
+
+/* Light Mode High Contrast */
+@media (prefers-contrast: high) {
+  html:not(.dark) {
+    --light-text-primary: rgb(0, 0, 0);
+    --light-text-secondary: rgb(17, 24, 39);
+    --light-bg-glass: rgba(255, 255, 255, 1);
+    --light-border: rgba(0, 0, 0, 0.6);
+  }
+}
+
+/* Reduced Motion Support */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  
+  .liquid-glass-card:hover {
+    transform: none !important;
+  }
+  
+  .ios26-nav-item:hover {
+    transform: none !important;
+  }
+}
+
+/* Touch Target Sizing - WCAG 2.5.5 */
+@media (pointer: coarse) {
+  button,
+  a,
+  input,
+  select,
+  textarea,
+  [role="button"],
+  [role="tab"],
+  [role="menuitem"] {
+    min-height: 44px;
+    min-width: 44px;
+  }
+  
+  .ios26-nav-item {
+    min-height: 56px;
+    min-width: 56px;
+  }
+}
+
+/* Color Contrast Improvements for Light Mode */
+html:not(.dark) {
+  /* Ensure all text meets WCAG AA standards */
+  color: var(--light-text-primary);
+}
+
+html:not(.dark) .text-muted,
+html:not(.dark) [class*="text-muted"] {
+  color: var(--light-text-secondary) !important;
+}
+
+/* ==============================================
+   Full-Screen Layout System
+   ============================================== */
+
+/* Remove all max-width constraints for full-screen experience */
+.insights-container {
+  width: 100%;
+  margin: 0;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  
+  /* Mobile: Single column with edge-to-edge layout */
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+}
+
+/* Tablet: Two columns, full width */
+@media (min-width: 768px) {
+  .insights-container {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+}
+
+/* Desktop: Three columns, full width utilization */
+@media (min-width: 1024px) {
+  .insights-container {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+}
+
+/* Large Desktop: Four columns for ultra-wide screens */
+@media (min-width: 1440px) {
+  .insights-container {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2.5rem;
+    padding-left: 3rem;
+    padding-right: 3rem;
+  }
+}
+
+/* Ultra-wide screens: Five columns */
+@media (min-width: 1920px) {
+  .insights-container {
+    grid-template-columns: repeat(5, 1fr);
+    gap: 3rem;
+    padding-left: 4rem;
+    padding-right: 4rem;
+  }
+}
+
+/* ==============================================
+   Navigation Bar Responsive Fixes
+   ============================================== */
+
+/* Full-width navigation */
+.bottom-navigation {
+  width: 100% !important;
+  left: 0 !important;
+  right: 0 !important;
+  /* Mobile: Compact size */
+  height: 4rem; /* 64px */
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+/* Tablet: Medium size */
+@media (min-width: 768px) {
+  .bottom-navigation {
+    height: 5rem; /* 80px */
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+}
+
+/* Desktop: Larger, more accessible size */
+@media (min-width: 1024px) {
+  .bottom-navigation {
+    height: 6rem; /* 96px */
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+}
+
+/* Large Desktop: Maximum comfortable size */
+@media (min-width: 1440px) {
+  .bottom-navigation {
+    height: 7rem; /* 112px */
+    padding-left: 3rem;
+    padding-right: 3rem;
+  }
+}
+
+/* Navigation icon responsive sizing */
+.nav-icon {
+  /* Mobile: Small icons */
+  width: 1.25rem; /* 20px */
+  height: 1.25rem; /* 20px */
+}
+
+/* Desktop: Larger, more accessible icons */
+@media (min-width: 1024px) {
+  .nav-icon {
+    width: 1.75rem; /* 28px */
+    height: 1.75rem; /* 28px */
+  }
+}
+
+/* Navigation text responsive sizing */
+.nav-text {
+  /* Mobile: Small text */
+  font-size: 0.75rem; /* 12px */
+}
+
+/* Desktop: Larger, more readable text */
+@media (min-width: 1024px) {
+  .nav-text {
+    font-size: 0.875rem; /* 14px */
+    font-weight: 500;
+  }
+}
+
+/* ==============================================
+   Main Cards Grid - Full Width System
+   ============================================== */
+
+.main-cards-grid {
+  display: grid;
+  gap: 1rem;
+  width: 100%;
+  margin: 0;
+  
+  /* Mobile: Stack vertically, full width */
+  grid-template-columns: 1fr;
+}
+
+/* Small Mobile: Optimized spacing */
+@media (max-width: 480px) {
+  .main-cards-grid {
+    gap: 0.75rem;
+  }
+}
+
+/* Tablet: 2 columns, full width */
+@media (min-width: 768px) {
+  .main-cards-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+  }
+}
+
+/* Desktop: 3 columns with full width utilization */
+@media (min-width: 1024px) {
+  .main-cards-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+  }
+}
+
+/* Large Desktop: 4 columns for better utilization */
+@media (min-width: 1440px) {
+  .main-cards-grid {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2.5rem;
+  }
+}
+
+/* Ultra-wide: 5 columns */
+@media (min-width: 1920px) {
+  .main-cards-grid {
+    grid-template-columns: repeat(5, 1fr);
+    gap: 3rem;
+  }
+}
+
+/* ==============================================
+   Enhanced Glass Morphism Effects
+   ============================================== */
+
+/* Responsive glass morphism that scales properly */
+.liquid-glass-card {
+  backdrop-filter: blur(12px);
+  background: var(--glass-bg-mobile);
+  border: 1px solid var(--glass-border-mobile);
+  width: 100%;
+}
+
+/* Desktop: Enhanced effects */
+@media (min-width: 1024px) {
+  .liquid-glass-card {
+    backdrop-filter: blur(20px) saturate(180%);
+    background: var(--glass-bg-desktop);
+    border: 1px solid var(--glass-border-desktop);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  
+  /* Add subtle hover effects for desktop */
+  .liquid-glass-card:hover {
+    background: rgba(15, 23, 42, 0.7);
+    border-color: rgba(255, 255, 255, 0.2);
+    transform: translateY(-2px);
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3);
+  }
+}
+
+/* Navigation glass effects - Full width */
+.liquid-glass-nav {
+  display: flex;
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(24px) saturate(180%);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 9999px; /* Fully rounded */
+  overflow: hidden;
+}
+
+/* ==============================================
+   Accessibility & Performance Features
+   ============================================== */
+
+/* Add focus indicators for card navigation */
+.liquid-glass-card[role="button"]:focus-visible,
+.liquid-glass-card[tabindex]:focus-visible {
+  outline: 3px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+/* Ensure proper semantic structure */
+.main-content {
+  min-height: 100vh;
+  padding-bottom: calc(var(--bottom-nav-height) + 2rem);
+}
+
+/* Live region for dynamic content announcements */
+.live-region {
+  position: absolute;
+  left: -10000px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+/* Form accessibility improvements */
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+.form-label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+  color: var(--light-text-primary);
+}
+
+html:not(.dark) .form-label {
+  color: var(--light-text-primary);
+}
+
+.form-input:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+  border-color: var(--focus-ring);
+}
+
+/* Error states with proper contrast */
+.form-error {
+  color: rgb(185, 28, 28); /* red-700 */
+  font-size: 0.875rem;
+  margin-top: 0.25rem;
+}
+
+html:not(.dark) .form-error {
+  color: rgb(153, 27, 27); /* red-800 for better contrast */
+}
+
+/* Full-screen glass container */
+.full-screen-container {
+  min-height: 100vh;
+  width: 100%;
+  overflow-x: hidden;
+}
+
+.content-wrapper {
+  max-width: none;
+  width: 100%;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+@media (min-width: 768px) {
+  .content-wrapper {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .content-wrapper {
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+}
+
+@media (min-width: 1440px) {
+  .content-wrapper {
+    padding-left: 3rem;
+    padding-right: 3rem;
+  }
+}
+
+@media (min-width: 1920px) {
+  .content-wrapper {
+    padding-left: 4rem;
+    padding-right: 4rem;
+  }
+}
+
+/* ==============================================
+   Account Cards Grid System
+   ============================================== */
+
+.accounts-grid {
+  display: grid;
+  gap: 1rem;
+  width: 100%;
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: 640px) {
+  .accounts-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .accounts-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .accounts-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+  }
+}
+
+@media (min-width: 1280px) {
+  .accounts-grid {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2rem;
+  }
+}
+
+@media (min-width: 1920px) {
+  .accounts-grid {
+    grid-template-columns: repeat(5, 1fr);
+    gap: 2.5rem;
+  }
+}
+
+/* ==============================================
+   Credit Score Card Container
+   ============================================== */
+.score-card-container {
+  width: 100%;
+  max-width: none;
+  margin: 0 auto;
+  padding: 0;
+}
+
+@media (min-width: 1024px) {
+  .score-card-container {
+    padding: 0;
+  }
+}
+
+/* ==============================================
+   Typography System
+   ============================================== */
+.responsive-heading {
+  font-size: 1.5rem;
+  line-height: 1.4;
+}
+
+@media (min-width: 768px) {
+  .responsive-heading {
+    font-size: 1.75rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .responsive-heading {
+    font-size: 2rem;
+  }
+}
+
+@media (min-width: 1440px) {
+  .responsive-heading {
+    font-size: 2.25rem;
+  }
+}
+
+/* ==============================================
+   Remove Container Constraints
+   ============================================== */
+
+.container {
+  max-width: none !important;
+  width: 100% !important;
+}
+
+.max-w-md,
+.max-w-lg,
+.max-w-xl,
+.max-w-2xl,
+.max-w-3xl,
+.max-w-4xl,
+.max-w-5xl,
+.max-w-6xl,
+.max-w-7xl {
+  max-width: none !important;
+}
+
+/* Global overrides for full-screen */
+html, body {
+  width: 100%;
+  overflow-x: hidden;
+  margin: 0;
+  padding: 0;
+}
+
+/* ==============================================
+   Mobile Optimizations  
+   ============================================== */
+@media (max-width: 767px) {
+  * {
+    scroll-behavior: smooth;
+  }
+  
+  .liquid-glass-card {
+    border-radius: 16px;
+    padding: 1rem;
+    margin-bottom: 1rem;
+  }
+}
+
+/* ==============================================
+   Transaction List Enhancements
+   ============================================== */
+
+.transaction-list {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+@media (min-width: 1024px) {
+  .transaction-list {
+    gap: 1rem;
+  }
+}
+
+.transaction-item {
+  transition: all 0.2s ease;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.05);
+  padding: 1rem;
+  cursor: pointer;
+}
+
+.transaction-item:hover {
+  background: rgba(255, 255, 255, 0.08);
+  transform: translateY(-1px);
+}
+
+@media (min-width: 1024px) {
+  .transaction-item {
+    padding: 1.5rem;
+    border-radius: 16px;
+  }
+}
+
+/* ==============================================
+   Card Title Enhancements
+   ============================================== */
+
+.collapsed-card-title {
+  font-size: 1rem !important;
+  line-height: 1.3 !important;
+}
+
+@media (min-width: 1024px) {
+  .collapsed-card-title {
+    font-size: 1.125rem !important;
+  }
+}
+
+.expanded-card-title {
+  font-size: 1.25rem !important;
+  line-height: 1.4 !important;
+  margin-bottom: 1rem !important;
+  word-break: break-word;
+  overflow-wrap: break-word;
+}
+
+@media (min-width: 1024px) {
+  .expanded-card-title {
+    font-size: 1.5rem !important;
+  }
+}
+
+/* ==============================================
+   Animation System
+   ============================================== */
+
+.hardware-accelerated {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  will-change: transform;
+}
+
+@keyframes slideInScale {
+  0% {
+    opacity: 0;
+    transform: translateY(20px) scale(0.95);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes shimmer {
+  0%, 100% { transform: translateX(-100%); }
+  50% { transform: translateX(100%); }
+}
+
+@keyframes trendPulse {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 0.8; }
+}
+
+.animate-slideInScale {
+  animation: slideInScale 0.6s ease-out both;
+}
+
+@media (min-width: 1024px) {
+  .animate-slideInScale {
+    animation-duration: 0.8s;
+  }
+}
+
+/* ==============================================
+   iOS 26 Navigation Bubble Styles
+   ============================================== */
+.ios26-nav-bubble {
+  display: flex;
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(24px) saturate(180%);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 9999px; /* Fully rounded */
+  overflow: hidden;
+}
+
+/* Individual nav item base style */
+.ios26-nav-item {
+  position: relative;
+  transition: background 0.25s ease, transform 0.25s ease;
+}
+
+/* Active state */
+.ios26-nav-item-active {
+  background: rgba(99, 102, 241, 0.15);
+}
+
+/* Hover / focus states */
+.ios26-nav-item:hover,
+.ios26-nav-item:focus-visible {
+  background: rgba(255, 255, 255, 0.05);
+  transform: translateY(-2px);
+}
+
+/* ==============================================
+   Utility Classes that depend on Bottom Navigation Height
+   ============================================== */
+.bottom-navigation-spacing {
+  bottom: calc(var(--bottom-nav-height) + 1rem); /* offset overlay above nav */
+}
+
+.bottom-fab-mobile {
+  bottom: calc(var(--bottom-nav-height) + 1rem);
+}
+
+@media (min-width: 768px) {
+  .bottom-fab-tablet {
+    bottom: calc(var(--bottom-nav-height) + 1.5rem);
+  }
+}
+
+@media (min-width: 1024px) {
+  .bottom-fab-desktop {
+    bottom: calc(var(--bottom-nav-height) + 2rem);
+  }
+}
+
+@media (min-width: 1440px) {
+  .bottom-fab-large-desktop {
+    bottom: calc(var(--bottom-nav-height) + 3rem);
+  }
+} 

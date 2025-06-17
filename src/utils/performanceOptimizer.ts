@@ -1,4 +1,4 @@
-// Performance Optimization Utilities for Vueni - Consolidated Version
+// Performance Optimization Utilities for Vueni
 import React from 'react';
 
 interface PerformanceMetrics {
@@ -10,10 +10,6 @@ interface PerformanceMetrics {
   prefersReducedMotion: boolean;
 }
 
-/**
- * Singleton Performance Monitor
- * Provides centralized performance tracking and optimization
- */
 class PerformanceMonitor {
   private static instance: PerformanceMonitor;
   private metrics: PerformanceMetrics;
@@ -65,24 +61,28 @@ class PerformanceMonitor {
   }
 
   private startMonitoring() {
-    const updateMetrics = () => {
+    const monitor = () => {
       this.frameCount++;
       const currentTime = performance.now();
       
       if (currentTime - this.lastTime >= 1000) {
-        const fps = Math.round((this.frameCount * 1000) / (currentTime - this.lastTime));
-        this.metrics.fps = fps;
+        this.metrics.fps = Math.round((this.frameCount * 1000) / (currentTime - this.lastTime));
         this.frameCount = 0;
         this.lastTime = currentTime;
 
-        // Notify subscribers
+        // Update memory usage if available
+        if ('memory' in performance) {
+          this.metrics.memoryUsage = (performance as any).memory.usedJSHeapSize / 1048576; // MB
+        }
+
+        // Notify callbacks
         this.callbacks.forEach(callback => callback(this.metrics));
       }
 
-      this.animationId = requestAnimationFrame(updateMetrics);
+      this.animationId = requestAnimationFrame(monitor);
     };
 
-    this.animationId = requestAnimationFrame(updateMetrics);
+    this.animationId = requestAnimationFrame(monitor);
   }
 
   getMetrics(): PerformanceMetrics {
@@ -105,43 +105,78 @@ class PerformanceMonitor {
   }
 }
 
-/**
- * React Hooks for Performance Optimization
- */
+// Performance-aware settings
+export const getOptimizedSettings = (metrics: PerformanceMetrics) => {
+  const settings = {
+    liquidGlass: {
+      enabled: true,
+      intensity: 0.6,
+      distortion: 0.4,
+      animated: true,
+      interactive: true
+    },
+    animations: {
+      enabled: true,
+      duration: 300,
+      stagger: 100
+    },
+    rendering: {
+      lazyLoad: false,
+      virtualization: false,
+      batchUpdates: false
+    }
+  };
 
-// Hook for performance monitoring
-export const usePerformanceMonitor = () => {
-  const [metrics, setMetrics] = React.useState<PerformanceMetrics>(
-    PerformanceMonitor.getInstance().getMetrics()
-  );
-  
-  React.useEffect(() => {
-    const monitor = PerformanceMonitor.getInstance();
-    const unsubscribe = monitor.subscribe(setMetrics);
-    
-    return unsubscribe;
-  }, []);
-  
-  return metrics;
+  // Performance-based optimizations
+  if (metrics.fps < 30) {
+    settings.liquidGlass.animated = false;
+    settings.liquidGlass.intensity *= 0.5;
+    settings.animations.duration *= 0.5;
+    settings.rendering.batchUpdates = true;
+  }
+
+  if (metrics.isLowEndDevice) {
+    settings.liquidGlass.intensity *= 0.6;
+    settings.liquidGlass.distortion *= 0.6;
+    settings.liquidGlass.interactive = false;
+    settings.rendering.lazyLoad = true;
+  }
+
+  if (metrics.isMobile) {
+    settings.liquidGlass.intensity *= 0.7;
+    settings.liquidGlass.animated = false;
+    settings.animations.duration *= 0.7;
+    settings.rendering.lazyLoad = true;
+  }
+
+  if (!metrics.supportsWebGL) {
+    settings.liquidGlass.enabled = false;
+  }
+
+  if (metrics.prefersReducedMotion) {
+    settings.liquidGlass.animated = false;
+    settings.animations.enabled = false;
+  }
+
+  return settings;
 };
 
-// Performance-aware useEffect
-export const usePerformanceAwareEffect = (
-  effect: React.EffectCallback,
-  deps: React.DependencyList = [],
-  highPriority: boolean = false
+// Lazy loading utility
+export const createLazyComponent = (
+  importFn: () => Promise<{ default: React.ComponentType<any> }>
 ) => {
-  React.useEffect(() => {
+  return React.lazy(() => {
     const metrics = PerformanceMonitor.getInstance().getMetrics();
     
-    if (!highPriority && metrics.fps < 30) {
-      // Defer non-critical effects when performance is poor
-      const timer = setTimeout(effect, 100);
-      return () => clearTimeout(timer);
+    if (metrics.isLowEndDevice) {
+      // Delay loading on low-end devices
+      return new Promise(resolve => {
+        setTimeout(() => resolve(importFn()), 100);
+      });
     } else {
-      return effect();
+      return importFn();
     }
-  }, deps);
+  });
 };
 
 // Debounced state updates for performance
@@ -163,11 +198,70 @@ export const useDebouncedState = <T>(
   return [debouncedState, setState];
 };
 
-// Memory-efficient memoization with expiry
+// Performance-aware useEffect
+export const usePerformanceAwareEffect = (
+  effect: React.EffectCallback,
+  deps?: React.DependencyList,
+  highPriority: boolean = false
+) => {
+  React.useEffect(() => {
+    const metrics = PerformanceMonitor.getInstance().getMetrics();
+    
+    if (!highPriority && metrics.fps < 30) {
+      // Defer non-critical effects when performance is poor
+      const timer = setTimeout(effect, 100);
+      return () => clearTimeout(timer);
+    } else {
+      return effect();
+    }
+  }, deps);
+};
+
+// Batch state updates for better performance
+export const useBatchedUpdates = () => {
+  const [updates, setUpdates] = React.useState<Array<() => void>>([]);
+  
+  const batchUpdate = React.useCallback((updateFn: () => void) => {
+    setUpdates(prev => [...prev, updateFn]);
+  }, []);
+  
+  React.useEffect(() => {
+    if (updates.length > 0) {
+      const timer = setTimeout(() => {
+        React.startTransition(() => {
+          updates.forEach(update => update());
+          setUpdates([]);
+        });
+      }, 16); // Next frame
+      
+      return () => clearTimeout(timer);
+    }
+  }, [updates]);
+  
+  return batchUpdate;
+};
+
+// Hook for performance monitoring
+export const usePerformanceMonitor = () => {
+  const [metrics, setMetrics] = React.useState<PerformanceMetrics>(
+    PerformanceMonitor.getInstance().getMetrics()
+  );
+  
+  React.useEffect(() => {
+    const monitor = PerformanceMonitor.getInstance();
+    const unsubscribe = monitor.subscribe(setMetrics);
+    
+    return unsubscribe;
+  }, []);
+  
+  return metrics;
+};
+
+// Memory-efficient memoization
 export const useOptimizedMemo = <T>(
   factory: () => T,
   deps: React.DependencyList,
-  expiry: number = 5000
+  expiry: number = 5000 // 5 seconds
 ) => {
   const memoRef = React.useRef<{ value: T; timestamp: number; deps: React.DependencyList } | null>(null);
   
@@ -182,48 +276,12 @@ export const useOptimizedMemo = <T>(
       memoRef.current = {
         value: factory(),
         timestamp: now,
-        deps: [...deps]
+        deps
       };
     }
     
     return memoRef.current.value;
   }, deps);
-};
-
-// Lazy loading utility
-export const createLazyComponent = (
-  importFn: () => Promise<{ default: React.ComponentType<unknown> }>
-) => {
-  return React.lazy(() => {
-    const metrics = PerformanceMonitor.getInstance().getMetrics();
-    
-    if (metrics.isLowEndDevice) {
-      // Delay loading on low-end devices
-      return new Promise(resolve => {
-        setTimeout(() => resolve(importFn()), 100);
-      });
-    } else {
-      return importFn();
-    }
-  });
-};
-
-/**
- * Layout debugging hook for development
- */
-export const useLayoutDebug = (componentName: string) => {
-  React.useEffect(() => {
-    if (process.env.NODE_ENV === 'development') {
-      const startTime = performance.now();
-      
-      return () => {
-        const renderTime = performance.now() - startTime;
-        if (renderTime > 16.67) { // Longer than 1 frame at 60fps
-          console.warn(`${componentName} render took ${renderTime.toFixed(2)}ms`);
-        }
-      };
-    }
-  }, [componentName]);
 };
 
 export default PerformanceMonitor; 

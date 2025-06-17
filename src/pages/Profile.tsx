@@ -32,6 +32,7 @@ import {
   Database,
   Globe
 } from 'lucide-react';
+import LiquidGlassSVGFilters from '@/components/ui/LiquidGlassSVGFilters';
 
 const Profile = () => {
   const [activeSection, setActiveSection] = useState('edit-profile');
@@ -679,82 +680,85 @@ const Profile = () => {
   };
 
   return (
-    <div className="min-h-screen bg-black text-white">
-      <div className="max-w-6xl mx-auto p-4">
-        {/* Desktop Layout */}
-        <div className="hidden md:flex space-x-6">
-          {/* Sidebar */}
-          <div className="w-80 liquid-glass-card p-6">
-            <h2 className="text-xl font-bold text-white mb-6">Settings</h2>
-            <nav className="space-y-2">
-              {menuItems.map((item) => {
-                const IconComponent = item.icon;
-                return (
-                  <button
-                    key={item.id}
-                    onClick={() => setActiveSection(item.id)}
-                    className={`w-full flex items-center space-x-3 p-3 rounded-lg transition-all ${
-                      activeSection === item.id
-                        ? 'liquid-glass-menu-item active text-white'
-                        : 'text-white/70 hover:text-white hover:bg-white/10'
-                    }`}
-                  >
-                    <IconComponent className="w-5 h-5" />
-                    <span>{item.label}</span>
-                  </button>
-                );
-              })}
-            </nav>
-            
-            {/* Sign Out Button */}
-            <div className="mt-8 pt-4 border-t border-white/20">
-              <button className="w-full flex items-center space-x-3 p-3 rounded-lg text-red-400 hover:bg-red-500/20 transition-all">
-                <LogOut className="w-5 h-5" />
-                <span>Sign Out</span>
-              </button>
+    <>
+      <LiquidGlassSVGFilters />
+      <div className="min-h-screen bg-black text-white">
+        <div className="max-w-6xl mx-auto p-4">
+          {/* Desktop Layout */}
+          <div className="hidden md:flex space-x-6">
+            {/* Sidebar */}
+            <div className="w-80 liquid-glass-card p-6">
+              <h2 className="text-xl font-bold text-white mb-6">Settings</h2>
+              <nav className="space-y-2">
+                {menuItems.map((item) => {
+                  const IconComponent = item.icon;
+                  return (
+                    <button
+                      key={item.id}
+                      onClick={() => setActiveSection(item.id)}
+                      className={`w-full flex items-center space-x-3 p-3 rounded-lg transition-all ${
+                        activeSection === item.id
+                          ? 'liquid-glass-menu-item active text-white'
+                          : 'text-white/70 hover:text-white hover:bg-white/10'
+                      }`}
+                    >
+                      <IconComponent className="w-5 h-5" />
+                      <span>{item.label}</span>
+                    </button>
+                  );
+                })}
+              </nav>
+              
+              {/* Sign Out Button */}
+              <div className="mt-8 pt-4 border-t border-white/20">
+                <button className="w-full flex items-center space-x-3 p-3 rounded-lg text-red-400 hover:bg-red-500/20 transition-all">
+                  <LogOut className="w-5 h-5" />
+                  <span>Sign Out</span>
+                </button>
+              </div>
+            </div>
+
+            {/* Main Content */}
+            <div className="flex-1 liquid-glass-card p-8">
+              <h1 className="text-2xl font-bold text-white mb-6">
+                {menuItems.find(item => item.id === activeSection)?.label}
+              </h1>
+              {renderContent()}
             </div>
           </div>
 
-          {/* Main Content */}
-          <div className="flex-1 liquid-glass-card p-8">
-            <h1 className="text-2xl font-bold text-white mb-6">
-              {menuItems.find(item => item.id === activeSection)?.label}
-            </h1>
-            {renderContent()}
-          </div>
-        </div>
+          {/* Mobile Layout */}
+          <div className="md:hidden space-y-4">
+            <div className="liquid-glass-card p-6">
+              <h1 className="text-2xl font-bold text-white mb-6">Settings</h1>
+              
+              {/* Mobile Menu Grid */}
+              <div className="grid grid-cols-2 gap-3 mb-6">
+                {menuItems.slice(0, 4).map((item) => {
+                  const IconComponent = item.icon;
+                  return (
+                    <button
+                      key={item.id}
+                      onClick={() => setActiveSection(item.id)}
+                      className={`flex flex-col items-center space-y-2 p-4 rounded-lg transition-all ${
+                        activeSection === item.id
+                          ? 'liquid-glass-menu-item active text-white'
+                          : 'text-white/70 hover:text-white hover:bg-white/10'
+                      }`}
+                    >
+                      <IconComponent className="w-6 h-6" />
+                      <span className="text-xs text-center">{item.label.split(' ')[0]}</span>
+                    </button>
+                  );
+                })}
+              </div>
 
-        {/* Mobile Layout */}
-        <div className="md:hidden space-y-4">
-          <div className="liquid-glass-card p-6">
-            <h1 className="text-2xl font-bold text-white mb-6">Settings</h1>
-            
-            {/* Mobile Menu Grid */}
-            <div className="grid grid-cols-2 gap-3 mb-6">
-              {menuItems.slice(0, 4).map((item) => {
-                const IconComponent = item.icon;
-                return (
-                  <button
-                    key={item.id}
-                    onClick={() => setActiveSection(item.id)}
-                    className={`flex flex-col items-center space-y-2 p-4 rounded-lg transition-all ${
-                      activeSection === item.id
-                        ? 'liquid-glass-menu-item active text-white'
-                        : 'text-white/70 hover:text-white hover:bg-white/10'
-                    }`}
-                  >
-                    <IconComponent className="w-6 h-6" />
-                    <span className="text-xs text-center">{item.label.split(' ')[0]}</span>
-                  </button>
-                );
-              })}
+              {renderContent()}
             </div>
-
-            {renderContent()}
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 

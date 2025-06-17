@@ -1,6 +1,7 @@
 import * as React from "react"
 import * as MenubarPrimitive from "@radix-ui/react-menubar"
 import { Check, ChevronRight, Circle } from "lucide-react"
+import LiquidGlassSVGFilters from '@/components/ui/LiquidGlassSVGFilters'
 
 import { cn } from "@/lib/utils"
 
@@ -19,6 +20,7 @@ const Menubar = React.forwardRef<
   React.ComponentPropsWithoutRef<typeof MenubarPrimitive.Root>
 >(({ className, ...props }, ref) => (
   <>
+    <LiquidGlassSVGFilters />
     <MenubarPrimitive.Root
       ref={ref}
       className={cn(

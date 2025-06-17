@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Card } from '@/components/ui';
+import SimpleGlassCard from '@/components/ui/SimpleGlassCard';
 import { colors } from '@/theme/colors';
 import { 
   TrendingUp, 
@@ -127,7 +127,7 @@ const NetWorthSummary = ({ accounts, className }: NetWorthSummaryProps) => {
   return (
     <div className={`space-y-6 ${className || ''}`}>
       {/* Main Net Worth Card */}
-      <Card className="p-4 sm:p-6">
+      <SimpleGlassCard className="p-4 sm:p-6">
         <div className="flex items-start justify-between mb-4 sm:mb-6">
           <div>
             <h2 className="text-lg sm:text-xl font-bold text-white mb-1 sm:mb-2">Net Worth</h2>
@@ -193,12 +193,12 @@ const NetWorthSummary = ({ accounts, className }: NetWorthSummaryProps) => {
             </div>
           </div>
         </div>
-      </Card>
+      </SimpleGlassCard>
 
       {/* Charts Row */}
       <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
         {/* Net Worth Trend */}
-        <Card className="p-4 sm:p-6">
+        <SimpleGlassCard className="p-4 sm:p-6">
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-4 sm:mb-6 gap-3 sm:gap-0">
             <h3 className="text-base sm:text-lg font-semibold text-white">Net Worth Trend</h3>
             <div className="flex gap-1 flex-wrap">
@@ -255,10 +255,10 @@ const NetWorthSummary = ({ accounts, className }: NetWorthSummaryProps) => {
               </AreaChart>
             </ResponsiveContainer>
           </div>
-        </Card>
+        </SimpleGlassCard>
 
         {/* Asset Allocation */}
-        <Card className="p-4 sm:p-6">
+        <SimpleGlassCard className="p-4 sm:p-6">
           <h3 className="text-base sm:text-lg font-semibold text-white mb-4 sm:mb-6">Asset Allocation</h3>
           
           <div className="h-40 sm:h-48 mb-4 sm:mb-6">
@@ -312,12 +312,12 @@ const NetWorthSummary = ({ accounts, className }: NetWorthSummaryProps) => {
               </div>
             ))}
           </div>
-        </Card>
+        </SimpleGlassCard>
       </div>
 
       {/* Quick Stats */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
-        <Card className="p-3 sm:p-4">
+        <SimpleGlassCard className="p-3 sm:p-4">
           <div className="flex items-center gap-2 sm:gap-3 mb-2 sm:mb-3">
             <div className="p-1.5 sm:p-2 rounded-lg bg-blue-500/10 flex-shrink-0">
               <Calendar className="w-3 h-3 sm:w-4 sm:h-4 text-blue-400" />
@@ -328,9 +328,9 @@ const NetWorthSummary = ({ accounts, className }: NetWorthSummaryProps) => {
             +{formatCurrency(calculations.monthlyChange)}
           </div>
           <div className="text-green-400 text-xs">+3.2% increase</div>
-        </Card>
+        </SimpleGlassCard>
 
-        <Card className="p-3 sm:p-4">
+        <SimpleGlassCard className="p-3 sm:p-4">
           <div className="flex items-center gap-2 sm:gap-3 mb-2 sm:mb-3">
             <div className="p-1.5 sm:p-2 rounded-lg bg-purple-500/10 flex-shrink-0">
               <Target className="w-3 h-3 sm:w-4 sm:h-4 text-purple-400" />
@@ -339,9 +339,9 @@ const NetWorthSummary = ({ accounts, className }: NetWorthSummaryProps) => {
           </div>
           <div className="text-lg sm:text-xl font-bold text-white">73%</div>
           <div className="text-purple-400 text-xs">On track</div>
-        </Card>
+        </SimpleGlassCard>
 
-        <Card className="p-3 sm:p-4">
+        <SimpleGlassCard className="p-3 sm:p-4">
           <div className="flex items-center gap-2 sm:gap-3 mb-2 sm:mb-3">
             <div className="p-1.5 sm:p-2 rounded-lg bg-green-500/10 flex-shrink-0">
               <PiggyBank className="w-3 h-3 sm:w-4 sm:h-4 text-green-400" />
@@ -350,9 +350,9 @@ const NetWorthSummary = ({ accounts, className }: NetWorthSummaryProps) => {
           </div>
           <div className="text-lg sm:text-xl font-bold text-white">23.5%</div>
           <div className="text-green-400 text-xs">Above average</div>
-        </Card>
+        </SimpleGlassCard>
 
-        <Card className="p-3 sm:p-4">
+        <SimpleGlassCard className="p-3 sm:p-4">
           <div className="flex items-center gap-2 sm:gap-3 mb-2 sm:mb-3">
             <div className="p-1.5 sm:p-2 rounded-lg bg-orange-500/10 flex-shrink-0">
               <Building className="w-3 h-3 sm:w-4 sm:h-4 text-orange-400" />
@@ -361,7 +361,7 @@ const NetWorthSummary = ({ accounts, className }: NetWorthSummaryProps) => {
           </div>
           <div className="text-lg sm:text-xl font-bold text-white">785</div>
           <div className="text-green-400 text-xs">Excellent</div>
-        </Card>
+        </SimpleGlassCard>
       </div>
     </div>
   );

@@ -1,5 +1,5 @@
 import React, { useState, useMemo } from 'react';
-import { Card } from '@/components/ui';
+import SimpleGlassCard from '@/components/ui/SimpleGlassCard';
 import { colors } from '@/theme/colors';
 import { 
   Calendar, 
@@ -10,8 +10,6 @@ import {
   TrendingDown,
   Minus
 } from 'lucide-react';
-import EmptyState from '@/components/ui/EmptyState';
-import { cn } from '@/lib/utils';
 
 export interface CleanTransaction {
   id: string;
@@ -212,7 +210,7 @@ const CleanTransactionList = ({
   };
 
   return (
-    <Card className={`p-6 ${className || ''}`}>
+    <SimpleGlassCard className={`p-6 ${className || ''}`}>
       {/* Header */}
       <div className="flex items-center justify-between mb-6">
         <h2 className="text-xl font-semibold text-white">Transactions</h2>
@@ -260,27 +258,20 @@ const CleanTransactionList = ({
 
       {/* Empty State */}
       {Object.keys(groupedTransactions).length === 0 && (
-        <EmptyState
-          icon={searchQuery ? Search : Calendar}
-          title="No transactions found"
-          description={
-            searchQuery 
-              ? 'Try adjusting your search terms or clear filters to see more results.'
-              : 'Your transactions will appear here as you make purchases and payments.'
-          }
-          action={
-            searchQuery 
-              ? {
-                  label: 'Clear Search',
-                  onClick: () => setSearchQuery(''),
-                  variant: 'secondary'
-                }
-              : undefined
-          }
-          size="md"
-        />
+        <div className="text-center py-12">
+          <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-white/[0.06] flex items-center justify-center">
+            <Calendar className="w-8 h-8 text-white/40" />
+          </div>
+          <p className="text-white/60 mb-2">No transactions found</p>
+          <p className="text-white/40 text-sm">
+            {searchQuery 
+              ? 'Try adjusting your search'
+              : 'Your transactions will appear here'
+            }
+          </p>
+        </div>
       )}
-    </Card>
+    </SimpleGlassCard>
   );
 };
 

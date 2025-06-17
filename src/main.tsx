@@ -1,8 +1,10 @@
 import { createRoot } from 'react-dom/client'
 import App from './App.tsx'
 import './index.css'
-import './sentry';
+import { ThemeProvider } from "next-themes";
 
 createRoot(document.getElementById("root")!).render(
-  <App />
+  <ThemeProvider attribute="class" defaultTheme="dark" enableSystem={true}>
+    <App />
+  </ThemeProvider>
 );
