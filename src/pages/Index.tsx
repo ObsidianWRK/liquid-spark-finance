@@ -16,42 +16,115 @@ import { mockData } from '@/services/mockData';
 // Lazy load WrappedPage for better performance
 const WrappedPage = lazy(() => import('@/components/wrapped/WrappedPage'));
 
+// Error Boundary Component
+class ErrorBoundary extends React.Component<
+  { children: React.ReactNode },
+  { hasError: boolean; error?: Error }
+> {
+  constructor(props: { children: React.ReactNode }) {
+    super(props);
+    this.state = { hasError: false };
+  }
+
+  static getDerivedStateFromError(error: Error) {
+    console.error('ErrorBoundary caught error:', error);
+    return { hasError: true, error };
+  }
+
+  componentDidCatch(error: Error, errorInfo: React.ErrorInfo) {
+    console.error('Error details:', { error, errorInfo });
+  }
+
+  render() {
+    if (this.state.hasError) {
+      return (
+        <div className="min-h-screen bg-black text-white flex items-center justify-center">
+          <div className="text-center space-y-4 p-8">
+            <h1 className="text-2xl font-bold text-red-400">Something went wrong</h1>
+            <p className="text-white/60">Error: {this.state.error?.message}</p>
+            <button 
+              onClick={() => this.setState({ hasError: false })}
+              className="bg-blue-500 hover:bg-blue-600 px-4 py-2 rounded-lg"
+            >
+              Try Again
+            </button>
+          </div>
+        </div>
+      );
+    }
+
+    return this.props.children;
+  }
+}
+
 // Transform mockData transactions to match OptimizedTransactionList format
 const transformTransactions = (transactions: typeof mockData.transactions) => {
-  if (!transactions || transactions.length === 0) return [];
-  
-  return transactions.map(t => ({
-    id: t.id,
-    date: t.date,
-    description: t.merchant,
-    amount: Math.abs(t.amount),
-    category: {
-      name: t.category?.name?.toLowerCase() || 'other',
-      color: t.category?.color || '#6366f1'
-    },
-    type: t.amount < 0 ? 'expense' : 'income' as const,
-    merchant: t.merchant,
-    status: 'completed' as const,
-    scores: {
-      health: Math.floor(Math.random() * 100),
-      eco: Math.floor(Math.random() * 100),
-      financial: Math.floor(Math.random() * 100),
+  try {
+    if (!transactions || transactions.length === 0) {
+      console.warn('No transactions available');
+      return [];
     }
-  }));
+    
+    return transactions.map(t => ({
+      id: t.id,
+      date: t.date,
+      description: t.merchant,
+      amount: Math.abs(t.amount),
+      category: {
+        name: t.category?.name?.toLowerCase() || 'other',
+        color: t.category?.color || '#6366f1'
+      },
+      type: (t.amount < 0 ? 'expense' : 'income') as 'expense' | 'income',
+      merchant: t.merchant,
+      status: 'completed' as const,
+      scores: {
+        health: Math.floor(Math.random() * 100),
+        eco: Math.floor(Math.random() * 100),
+        financial: Math.floor(Math.random() * 100),
+      }
+    }));
+  } catch (error) {
+    console.error('Error transforming transactions:', error);
+    return [];
+  }
 };
 
 const Index = () => {
   const [activeTab, setActiveTab] = useState('dashboard');
   const [performanceMode, setPerformanceMode] = useState(false);
   const [searchParams] = useSearchParams();
+  const [debugInfo, setDebugInfo] = useState<string>('');
 
-  // Safety check for mock data
-  if (!mockData || !mockData.accounts || mockData.accounts.length === 0) {
+  // Debug logging
+  useEffect(() => {
+    console.log('Index component mounted');
+    console.log('mockData:', { 
+      accountsCount: mockData?.accounts?.length, 
+      transactionsCount: mockData?.transactions?.length 
+    });
+    setDebugInfo(`Loaded: ${mockData?.accounts?.length || 0} accounts, ${mockData?.transactions?.length || 0} transactions`);
+  }, []);
+
+  // Safety check for mock data with better error handling
+  if (!mockData) {
+    console.error('mockData is undefined');
     return (
       <div className="min-h-screen bg-black text-white flex items-center justify-center">
         <div className="text-center">
-          <h1 className="text-2xl font-bold mb-4">Loading Vueni...</h1>
-          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-white mx-auto"></div>
+          <h1 className="text-2xl font-bold mb-4 text-red-400">Data Loading Error</h1>
+          <p className="text-white/60">mockData is not available</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (!mockData.accounts || mockData.accounts.length === 0) {
+    console.error('No accounts in mockData');
+    return (
+      <div className="min-h-screen bg-black text-white flex items-center justify-center">
+        <div className="text-center">
+          <h1 className="text-2xl font-bold mb-4 text-yellow-400">No Accounts Found</h1>
+          <p className="text-white/60">No account data available</p>
         </div>
       </div>
     );
@@ -61,17 +134,28 @@ const Index = () => {
 
   // Handle URL tab parameter
   useEffect(() => {
-    const tabFromUrl = searchParams.get('tab');
-    if (tabFromUrl && ['dashboard', 'accounts', 'transactions', 'insights', 'reports', 'wrapped', 'profile'].includes(tabFromUrl)) {
-      setActiveTab(tabFromUrl);
+    try {
+      const tabFromUrl = searchParams.get('tab');
+      if (tabFromUrl && ['dashboard', 'accounts', 'transactions', 'insights', 'reports', 'wrapped', 'profile'].includes(tabFromUrl)) {
+        setActiveTab(tabFromUrl);
+        console.log('Tab changed to:', tabFromUrl);
+      }
+    } catch (error) {
+      console.error('Error handling URL tab parameter:', error);
     }
   }, [searchParams]);
 
   // Simple performance detection
   useEffect(() => {
-    const isSlowDevice = navigator.hardwareConcurrency < 4 || 
-                        /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-    setPerformanceMode(isSlowDevice);
+    try {
+      const isSlowDevice = navigator.hardwareConcurrency < 4 || 
+                          /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+      setPerformanceMode(isSlowDevice);
+      console.log('Performance mode:', isSlowDevice);
+    } catch (error) {
+      console.error('Error in performance detection:', error);
+      setPerformanceMode(false);
+    }
   }, []);
 
   const renderContent = useCallback(() => {
@@ -120,7 +204,6 @@ const Index = () => {
                   groupByDate: true,
                   sortable: false
                 }}
-                title="Recent Transactions"
                 className="w-full"
               />
             </div>
@@ -233,34 +316,41 @@ const Index = () => {
   }, [activeTab, mainAccount]);
 
   return (
-    <div className={`min-h-screen w-full text-white smooth-scroll bg-black ${performanceMode ? 'performance-mode low-end-device' : ''}`}>
-      {/* Top Menu Bar */}
-      <LiquidGlassTopMenuBar 
-        title="Vueni" 
-        subtitle="Financial Intelligence Platform"
-        className="fixed top-0 left-0 right-0 z-40"
-      />
+    <ErrorBoundary>
+      <div className={`min-h-screen w-full text-white smooth-scroll bg-black ${performanceMode ? 'performance-mode low-end-device' : ''}`}>
+        {/* Debug info in development */}
+        {process.env.NODE_ENV === 'development' && (
+          <div className="fixed top-0 right-0 z-50 bg-black/80 text-xs text-white p-2 rounded-bl-lg">
+            {debugInfo}
+          </div>
+        )}
 
-      {/* Main Content Area */}
-      <main 
-        className="flex-1 overflow-hidden pb-24"
-        role="main"
-        aria-label="Main content"
-      >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          {renderContent()}
-        </div>
-      </main>
+        {/* Top Menu Bar */}
+        <LiquidGlassTopMenuBar 
+          className="fixed top-0 left-0 right-0 z-40"
+        />
 
-      {/* Bottom Navigation */}
-      <Navigation 
-        activeTab={activeTab} 
-        onTabChange={setActiveTab}
-      />
+        {/* Main Content Area */}
+        <main 
+          className="flex-1 overflow-hidden pb-24"
+          role="main"
+          aria-label="Main content"
+        >
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            {renderContent()}
+          </div>
+        </main>
 
-      {/* Chat Drawer */}
-      <ChatDrawer />
-    </div>
+        {/* Bottom Navigation */}
+        <Navigation 
+          activeTab={activeTab} 
+          onTabChange={setActiveTab}
+        />
+
+        {/* Chat Drawer */}
+        <ChatDrawer />
+      </div>
+    </ErrorBoundary>
   );
 };
 
