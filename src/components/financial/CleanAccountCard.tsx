@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import SimpleGlassCard from '@/components/ui/SimpleGlassCard';
+import { Card } from '@/components/ui';
 import { colors } from '@/theme/colors';
 import { 
   Eye, 
@@ -70,9 +70,8 @@ const CleanAccountCard = ({ account, onClick, className }: CleanAccountCardProps
   };
 
   return (
-    <SimpleGlassCard 
+    <Card 
       className={`p-6 ${className || ''}`}
-      interactive={!!onClick}
       onClick={onClick}
     >
       {/* Header */}
@@ -157,7 +156,7 @@ const CleanAccountCard = ({ account, onClick, className }: CleanAccountCardProps
           </div>
         </div>
       )}
-    </SimpleGlassCard>
+    </Card>
   );
 };
 

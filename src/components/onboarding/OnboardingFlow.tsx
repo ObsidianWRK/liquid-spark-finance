@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { ChevronRight, ChevronLeft, Check, Shield, Sparkles, CreditCard, TrendingUp, Calculator, Lightbulb } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import SimpleGlassCard from '@/components/ui/SimpleGlassCard';
+import { Card } from '@/components/ui';
 import { cn } from '@/lib/utils';
 
 interface OnboardingStep {
@@ -129,7 +129,7 @@ const OnboardingFlow: React.FC<OnboardingFlowProps> = ({ onComplete, onSkip }) =
 
   return (
     <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
-      <SimpleGlassCard className={cn(
+      <Card className={cn(
         "w-full max-w-2xl max-h-[90vh] overflow-hidden transition-all duration-500",
         isVisible ? "opacity-100 scale-100" : "opacity-0 scale-95"
       )}>
@@ -254,7 +254,7 @@ const OnboardingFlow: React.FC<OnboardingFlowProps> = ({ onComplete, onSkip }) =
             <ChevronRight className="w-4 h-4 ml-2" />
           </Button>
         </div>
-      </SimpleGlassCard>
+      </Card>
     </div>
   );
 };

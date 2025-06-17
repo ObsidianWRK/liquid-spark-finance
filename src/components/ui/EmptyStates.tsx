@@ -14,7 +14,7 @@ import {
   Zap
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import SimpleGlassCard from './SimpleGlassCard';
+import { Card } from '@/components/ui';
 import { cn } from '@/lib/utils';
 
 interface EmptyStateProps {
@@ -189,7 +189,7 @@ const EmptyState: React.FC<EmptyStateProps> = ({
   const config = getEmptyStateConfig();
 
   return (
-    <SimpleGlassCard className={cn("p-12 text-center max-w-md mx-auto", className)}>
+    <Card className={cn("p-12 text-center max-w-md mx-auto", className)}>
       <div className="space-y-6">
         {/* Illustration or Icon */}
         <div className="flex justify-center">
@@ -236,7 +236,7 @@ const EmptyState: React.FC<EmptyStateProps> = ({
           )}
         </div>
       </div>
-    </SimpleGlassCard>
+    </Card>
   );
 };
 
@@ -298,7 +298,7 @@ export const SearchEmptyState: React.FC<{ onClearSearch: () => void; searchTerm?
 export const LoadingEmptyState: React.FC<{ message?: string }> = ({ 
   message = "Loading your data..." 
 }) => (
-  <SimpleGlassCard className="p-12 text-center max-w-md mx-auto">
+  <Card className="p-12 text-center max-w-md mx-auto">
     <div className="space-y-6">
       <div className="flex justify-center">
         <div className="w-16 h-16 rounded-full border-4 border-blue-500/30 border-t-blue-500 animate-spin" />
@@ -308,7 +308,7 @@ export const LoadingEmptyState: React.FC<{ message?: string }> = ({
         <p className="text-white/70">{message}</p>
       </div>
     </div>
-  </SimpleGlassCard>
+  </Card>
 );
 
 export default EmptyState; 

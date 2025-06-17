@@ -1,6 +1,4 @@
-import React, { useEffect, useState } from 'react';
-import { budgetService } from '@/services/budgetService';
-import { BudgetCategory } from '@/types/budget';
+import React, { useState } from 'react';
 import {
   Plus,
   Trash2,
@@ -13,37 +11,34 @@ import {
   PieChart, Pie, Cell, Tooltip as ReTooltip, Legend,
   ResponsiveContainer
 } from 'recharts';
+import {
+  useBudgetCategories,
+  useAddBudgetCategory,
+  useDeleteBudgetCategory,
+} from './hooks';
 
 const BudgetPlannerPage = () => {
-  const [categories, setCategories] = useState<BudgetCategory[]>([]);
+  const { data: categories = [] } = useBudgetCategories();
+  const addCategory = useAddBudgetCategory();
+  const deleteCategory = useDeleteBudgetCategory();
+
   const [showAddForm, setShowAddForm] = useState(false);
   const [newCatName, setNewCatName] = useState('');
   const [newCatBudget, setNewCatBudget] = useState('');
   const [expandedCatIds, setExpandedCatIds] = useState<string[]>([]);
 
-  useEffect(() => {
-    fetch();
-  }, []);
-
-  const fetch = async () => {
-    const cats = await budgetService.listCategories();
-    setCategories(cats);
-  };
-
   const handleAddCategory = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!newCatName.trim() || Number(newCatBudget) <= 0) return;
-    await budgetService.addCategory({ name: newCatName.trim(), budget: Number(newCatBudget), color: randomColor(), recurring: true });
+    await addCategory.mutateAsync({ name: newCatName.trim(), budget: Number(newCatBudget), color: randomColor() as string, recurring: true });
     setNewCatName('');
     setNewCatBudget('');
     setShowAddForm(false);
-    fetch();
   };
 
   const handleDelete = async (id: string) => {
     if (confirm('Delete this budget category?')) {
-      await budgetService.deleteCategory(id);
-      fetch();
+      await deleteCategory.mutateAsync(id);
     }
   };
 

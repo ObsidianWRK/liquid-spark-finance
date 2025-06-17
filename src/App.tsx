@@ -3,6 +3,7 @@ import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { routes } from '@/routes';
 import { lazy, Suspense, useState, useEffect } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
 import { ThemeProvider } from '@/context/ThemeContext';
@@ -12,19 +13,19 @@ import OnboardingFlow from '@/components/onboarding/OnboardingFlow';
 
 const queryClient = new QueryClient();
 
-const Index = lazy(() => import('./pages/Index'));
+const Dashboard = lazy(() => import('./pages/Dashboard'));
 const Profile = lazy(() => import('./pages/Profile'));
 const NotFound = lazy(() => import('./pages/NotFound'));
-const CreditScorePage = lazy(() => import('./components/credit/CreditScorePage'));
-const SavingsGoals = lazy(() => import('./components/savings/SavingsGoals'));
-const TransactionDemo = lazy(() => import('./pages/TransactionDemo'));
-const BudgetPlannerPage = lazy(() => import('./components/budget/BudgetPlannerPage'));
+const CreditScorePage = lazy(() => import('./features/credit/CreditScorePage'));
+const SavingsGoals = lazy(() => import('./features/savings/SavingsGoals'));
+const TransactionDemo = lazy(() => import('./features/transactions/TransactionDemo'));
+const BudgetPlannerPage = lazy(() => import('./features/budget/BudgetPlannerPage'));
 const InvestmentTrackerPage = lazy(() => import('./components/investments/InvestmentTrackerPage'));
 const CalculatorsPage = lazy(() => import('./pages/CalculatorsPage'));
 const BudgetReportsPage = lazy(() => import('./components/reports/BudgetReportsPage'));
 
 // Import insights page
-const InsightsPage = lazy(() => import('./pages/InsightsPage'));
+const InsightsPage = lazy(() => import('./features/insights/InsightsPage'));
 
 // Enhanced Loading Component
 const LoadingFallback = () => (
@@ -133,18 +134,18 @@ const App = () => {
                 <Suspense fallback={<LoadingFallback />}>
                   <main id="main-content">
                     <Routes>
-                      <Route path="/" element={<Index />} />
-                      <Route path="/profile" element={<Profile />} />
-                      <Route path="/credit-score" element={<CreditScorePage />} />
-                      <Route path="/savings" element={<SavingsGoals />} />
-                      <Route path="/transactions" element={<TransactionDemo />} />
-                      <Route path="/budget-planner" element={<BudgetPlannerPage />} />
-                      <Route path="/goal-setting" element={<SavingsGoals />} />
-                      <Route path="/investment-tracker" element={<InvestmentTrackerPage />} />
-                      <Route path="/calculators" element={<CalculatorsPage />} />
-                      <Route path="/calculators/:id" element={<CalculatorsPage />} />
-                      <Route path="/reports" element={<BudgetReportsPage />} />
-                      <Route path="/insights" element={<InsightsPage />} />
+                      <Route path={routes.home} element={<Dashboard />} />
+                      <Route path={routes.profile} element={<Profile />} />
+                      <Route path={routes.creditScore} element={<CreditScorePage />} />
+                      <Route path={routes.savings} element={<SavingsGoals />} />
+                      <Route path={routes.transactions} element={<TransactionDemo />} />
+                      <Route path={routes.budgetPlanner} element={<BudgetPlannerPage />} />
+                      <Route path={routes.goalSetting} element={<SavingsGoals />} />
+                      <Route path={routes.investmentTracker} element={<InvestmentTrackerPage />} />
+                      <Route path={routes.calculators} element={<CalculatorsPage />} />
+                      <Route path={`${routes.calculators}/:id`} element={<CalculatorsPage />} />
+                      <Route path={routes.reports} element={<BudgetReportsPage />} />
+                      <Route path={routes.insights} element={<InsightsPage />} />
                       {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
                       <Route path="*" element={<NotFound />} />
                     </Routes>

@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef, useMemo } from 'react';
 import { Search, X, Clock, TrendingUp, CreditCard, Receipt, Calculator, BookOpen, ChevronRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import SimpleGlassCard from '@/components/ui/SimpleGlassCard';
+import { Card } from '@/components/ui';
 import { cn } from '@/lib/utils';
 
 interface SearchResult {
@@ -215,7 +215,7 @@ const GlobalSearch: React.FC<GlobalSearchProps> = ({ isOpen, onClose, onNavigate
 
   return (
     <div className="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm flex items-start justify-center pt-20 p-4">
-      <SimpleGlassCard className="w-full max-w-2xl">
+      <Card className="w-full max-w-2xl">
         {/* Search input */}
         <div className="p-4 border-b border-white/10">
           <div className="relative">
@@ -359,7 +359,7 @@ const GlobalSearch: React.FC<GlobalSearchProps> = ({ isOpen, onClose, onNavigate
             </div>
           )}
         </div>
-      </SimpleGlassCard>
+      </Card>
     </div>
   );
 };

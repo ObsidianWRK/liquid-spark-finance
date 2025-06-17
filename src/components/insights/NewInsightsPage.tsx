@@ -8,9 +8,13 @@ import TimeSeriesChart from './TimeSeriesChart';
 import SpendingTrendsChart from './SpendingTrendsChart';
 import CategoryTrendsChart from './CategoryTrendsChart';
 import NetWorthTrendChart from './NetWorthTrendChart';
-import { generateScoreSummary } from '@/services/scoringModel';
-import { mockHealthEcoService } from '@/services/mockHealthEcoService';
-import { mockHistoricalService } from '@/services/mockHistoricalData';
+import {
+  useInsightsScores,
+  useHistoricalScores,
+  useMonthlyFinancialData,
+  useCategoryTrends,
+  useNetWorthData,
+} from '@/features/insights/hooks';
 
 interface Transaction {
   id: string;
@@ -40,14 +44,11 @@ interface NewInsightsPageProps {
 
 const NewInsightsPage: React.FC<NewInsightsPageProps> = ({ transactions, accounts }) => {
   const [activeTab, setActiveTab] = useState('overview');
-  const [scores, setScores] = useState({ financial: 0, health: 0, eco: 0 });
-  const [isLoading, setIsLoading] = useState(true);
-
-  // Generate historical data
-  const historicalScores = useMemo(() => mockHistoricalService.getHistoricalScores(), []);
-  const monthlyFinancialData = useMemo(() => mockHistoricalService.getMonthlyFinancialData(), []);
-  const categoryTrends = useMemo(() => mockHistoricalService.getCategoryTrends(), []);
-  const netWorthData = useMemo(() => mockHistoricalService.getNetWorthData(), []);
+  const { data: scores = { financial: 0, health: 0, eco: 0 }, isLoading } = useInsightsScores(transactions, accounts);
+  const { data: historicalScores = [] } = useHistoricalScores();
+  const { data: monthlyFinancialData = [] } = useMonthlyFinancialData();
+  const { data: categoryTrends = [] } = useCategoryTrends();
+  const { data: netWorthData = [] } = useNetWorthData();
 
   // Calculate financial metrics
   const financialData = useMemo(() => {
@@ -130,31 +131,6 @@ const NewInsightsPage: React.FC<NewInsightsPageProps> = ({ transactions, account
       waste: 'stable' as const
     }
   }), []);
-
-  // Load scores
-  useEffect(() => {
-    const loadScores = async () => {
-      setIsLoading(true);
-      try {
-        const financialScores = await generateScoreSummary(transactions, accounts);
-        const healthData = mockHealthEcoService.getHealthScore(transactions);
-        const ecoScore = mockHealthEcoService.getEcoScore(transactions);
-        
-        setScores({
-          financial: financialScores.financial,
-          health: healthData.score,
-          eco: ecoScore.score
-        });
-      } catch (error) {
-        console.error('Error loading scores:', error);
-        setScores({ financial: 72, health: 75, eco: 82 });
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    loadScores();
-  }, [transactions, accounts]);
 
   const tabs = [
     { id: 'overview', label: 'Overview', icon: TrendingUp },

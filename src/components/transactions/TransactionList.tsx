@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import SimpleGlassCard from '@/components/ui/SimpleGlassCard';
+import { Card } from '@/components/ui';
 import { colors } from '@/theme/colors';
 import { 
   Calendar, 
@@ -235,7 +235,7 @@ const TransactionList = ({
   }, [transactions]);
 
   return (
-    <SimpleGlassCard className={`p-6 ${className}`}>
+    <Card className={`p-6 ${className}`}>
       {/* Header */}
       <div className="flex items-center justify-between mb-6">
         <h2 className="text-xl font-semibold text-white">Transactions</h2>
@@ -317,7 +317,7 @@ const TransactionList = ({
           </p>
         </div>
       )}
-    </SimpleGlassCard>
+    </Card>
   );
 };
 

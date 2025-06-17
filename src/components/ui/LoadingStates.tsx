@@ -1,6 +1,6 @@
 import React from 'react';
 import { Loader2, TrendingUp, CreditCard, BarChart3, Calculator } from 'lucide-react';
-import SimpleGlassCard from './SimpleGlassCard';
+import { Card } from '@/components/ui';
 import { cn } from '@/lib/utils';
 
 interface LoadingSpinnerProps {
@@ -104,7 +104,7 @@ export const ProgressBar: React.FC<ProgressBarProps> = ({
 
 // Account card skeleton
 export const AccountCardSkeleton: React.FC = () => (
-  <SimpleGlassCard className="p-6">
+  <Card className="p-6">
     <div className="space-y-4">
       <div className="flex items-center justify-between">
         <Skeleton className="h-5 w-24" />
@@ -116,12 +116,12 @@ export const AccountCardSkeleton: React.FC = () => (
         <Skeleton className="h-4 w-16" />
       </div>
     </div>
-  </SimpleGlassCard>
+  </Card>
 );
 
 // Transaction list skeleton
 export const TransactionListSkeleton: React.FC = () => (
-  <SimpleGlassCard className="p-6">
+  <Card className="p-6">
     <div className="space-y-4">
       <div className="flex justify-between items-center">
         <Skeleton className="h-6 w-32" />
@@ -138,12 +138,12 @@ export const TransactionListSkeleton: React.FC = () => (
         </div>
       ))}
     </div>
-  </SimpleGlassCard>
+  </Card>
 );
 
 // Chart skeleton
 export const ChartSkeleton: React.FC = () => (
-  <SimpleGlassCard className="p-6">
+  <Card className="p-6">
     <div className="space-y-4">
       <Skeleton className="h-6 w-40" />
       <div className="h-64 flex items-end justify-between gap-2">
@@ -160,7 +160,7 @@ export const ChartSkeleton: React.FC = () => (
         <Skeleton className="h-3 w-16" />
       </div>
     </div>
-  </SimpleGlassCard>
+  </Card>
 );
 
 // Page-specific loading states
@@ -196,7 +196,7 @@ export const PageLoading: React.FC<PageLoadingProps> = ({ page, message }) => {
 
   return (
     <div className="min-h-screen bg-black flex items-center justify-center p-4">
-      <SimpleGlassCard className="max-w-md w-full p-8 text-center">
+      <Card className="max-w-md w-full p-8 text-center">
         <div className="space-y-6">
           <div className="flex justify-center">
             <div className="p-4 rounded-2xl bg-gradient-to-br from-white/10 to-white/5 border border-white/10">
@@ -217,7 +217,7 @@ export const PageLoading: React.FC<PageLoadingProps> = ({ page, message }) => {
             <LoadingSpinner size="md" />
           </div>
         </div>
-      </SimpleGlassCard>
+      </Card>
     </div>
   );
 };

@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { HelpCircle, X, ChevronRight, ChevronLeft, Target, Lightbulb, BookOpen } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import SimpleGlassCard from '@/components/ui/SimpleGlassCard';
+import { Card } from '@/components/ui';
 import { cn } from '@/lib/utils';
 
 interface HelpTooltip {
@@ -209,7 +209,7 @@ const ContextualHelp: React.FC<ContextualHelpProps> = ({ page, showTour = false,
       {tourActive && currentTourData && (
         <div className="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm">
           <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-            <SimpleGlassCard className="max-w-md p-6">
+            <Card className="max-w-md p-6">
               <div className="space-y-4">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
@@ -267,7 +267,7 @@ const ContextualHelp: React.FC<ContextualHelpProps> = ({ page, showTour = false,
                   </Button>
                 </div>
               </div>
-            </SimpleGlassCard>
+            </Card>
           </div>
         </div>
       )}
@@ -275,7 +275,7 @@ const ContextualHelp: React.FC<ContextualHelpProps> = ({ page, showTour = false,
       {/* Help Center Modal */}
       {showHelpCenter && (
         <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
-          <SimpleGlassCard className="w-full max-w-4xl max-h-[90vh] overflow-hidden">
+          <Card className="w-full max-w-4xl max-h-[90vh] overflow-hidden">
             <div className="p-6 border-b border-white/10">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3">
@@ -335,7 +335,7 @@ const ContextualHelp: React.FC<ContextualHelpProps> = ({ page, showTour = false,
                 </div>
               </div>
             </div>
-          </SimpleGlassCard>
+          </Card>
         </div>
       )}
     </>

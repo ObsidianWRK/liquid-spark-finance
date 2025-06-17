@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback, createContext, useContext } from 'react';
 import { X, CheckCircle, AlertCircle, Info, AlertTriangle, Bell, BellRing } from 'lucide-react';
-import SimpleGlassCard from './SimpleGlassCard';
+import { Card } from '@/components/ui';
 import { cn } from '@/lib/utils';
 
 interface Notification {
@@ -148,7 +148,7 @@ const ToastNotification: React.FC<ToastNotificationProps> = ({ notification, onR
         ? "translate-x-0 opacity-100 scale-100" 
         : "translate-x-full opacity-0 scale-95"
     )}>
-      <SimpleGlassCard className={cn("p-4 max-w-sm w-full", getStyles())}>
+      <Card className={cn("p-4 max-w-sm w-full", getStyles())}>
         <div className="flex items-start gap-3">
           <div className="flex-shrink-0 mt-0.5">
             {getIcon()}
@@ -180,7 +180,7 @@ const ToastNotification: React.FC<ToastNotificationProps> = ({ notification, onR
             <X className="w-4 h-4" />
           </button>
         </div>
-      </SimpleGlassCard>
+      </Card>
     </div>
   );
 };
@@ -242,7 +242,7 @@ export const NotificationBell: React.FC<NotificationBellProps> = ({ className })
 
       {showPanel && (
         <div className="absolute top-full right-0 mt-2 w-80 max-h-96 overflow-y-auto">
-          <SimpleGlassCard className="p-4">
+          <Card className="p-4">
             <div className="flex items-center justify-between mb-4">
               <h3 className="text-white font-semibold">Notifications</h3>
               <button
@@ -283,7 +283,7 @@ export const NotificationBell: React.FC<NotificationBellProps> = ({ className })
                 <p className="text-white/60 text-sm">No notifications</p>
               </div>
             )}
-          </SimpleGlassCard>
+          </Card>
         </div>
       )}
     </div>
