@@ -1,4 +1,6 @@
 {
+  "name": "vueni-financial-platform",
+  "version": 2,
   "headers": [
     {
       "source": "/(.*)",
@@ -97,7 +99,14 @@
   },
   "build": {
     "env": {
-      "VITE_ENCRYPTION_KEY": "@vueni-encryption-key"
+      "VITE_VUENI_ENCRYPTION_KEY": "@vueni-encryption-key",
+      "VITE_VUENI_API_URL": "@vueni-api-url",
+      "VITE_VUENI_ANALYTICS_ID": "@vueni-analytics-id"
     }
+  },
+  "env": {
+    "VITE_VUENI_ENCRYPTION_KEY": "@vueni-encryption-key",
+    "VITE_VUENI_API_URL": "@vueni-api-url",
+    "VITE_VUENI_ANALYTICS_ID": "@vueni-analytics-id"
   }
 }

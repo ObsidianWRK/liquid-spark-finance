@@ -1,0 +1,52 @@
+# Vueni Vercel Deployment Ignore File
+
+# Development files
+.env.local
+.env.development
+.env.test
+*.log
+.DS_Store
+
+# Test files and coverage
+coverage/
+.nyc_output/
+test-results/
+playwright-report/
+e2e/test-results/
+
+# Development dependencies
+node_modules/.cache/
+.cache/
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Temporary files
+tmp/
+temp/
+.tmp/
+
+# Source maps (if not needed in production)
+*.map
+
+# Documentation
+docs/
+*.md
+!README.md
+
+# Build artifacts not needed for deployment
+src/test/
+scripts/
+.github/
+
+# Package manager files
+yarn.lock
+package-lock.json
+pnpm-lock.yaml
+
+# Vercel specific
+.vercel/

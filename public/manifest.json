@@ -1,0 +1,76 @@
+{
+  "name": "Vueni Financial Platform",
+  "short_name": "Vueni",
+  "description": "Advanced financial management platform with unified transaction insights",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0f172a",
+  "theme_color": "#3b82f6",
+  "orientation": "portrait-primary",
+  "categories": ["finance", "productivity", "business"],
+  "lang": "en-US",
+  "dir": "ltr",
+  "icons": [
+    {
+      "src": "/favicon.ico",
+      "sizes": "64x64 32x32 24x24 16x16",
+      "type": "image/x-icon"
+    },
+    {
+      "src": "/icon-192.png",
+      "type": "image/png",
+      "sizes": "192x192",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icon-512.png",
+      "type": "image/png",
+      "sizes": "512x512",
+      "purpose": "any maskable"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "/screenshot-desktop.png",
+      "type": "image/png",
+      "sizes": "1280x720",
+      "form_factor": "wide",
+      "label": "Vueni Dashboard - Desktop"
+    },
+    {
+      "src": "/screenshot-mobile.png",
+      "type": "image/png",
+      "sizes": "375x667",
+      "form_factor": "narrow",
+      "label": "Vueni Dashboard - Mobile"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Dashboard",
+      "short_name": "Dashboard",
+      "description": "View your financial dashboard",
+      "url": "/dashboard",
+      "icons": [
+        {
+          "src": "/dashboard-icon.png",
+          "sizes": "96x96"
+        }
+      ]
+    },
+    {
+      "name": "Transactions",
+      "short_name": "Transactions",
+      "description": "View transaction history",
+      "url": "/transactions",
+      "icons": [
+        {
+          "src": "/transactions-icon.png",
+          "sizes": "96x96"
+        }
+      ]
+    }
+  ],
+  "related_applications": [],
+  "prefer_related_applications": false
+}

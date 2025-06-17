@@ -3,7 +3,7 @@ import { useLocation, useSearchParams } from 'react-router-dom';
 import Navigation from '@/components/Navigation';
 import AccountCard from '@/components/AccountCard';
 import BalanceCard from '@/components/BalanceCard';
-import { UnifiedTransactionList } from '@/components/shared';
+import { VueniUnifiedTransactionList } from '@/components/shared';
 import LiquidGlassTopMenuBar from '@/components/LiquidGlassTopMenuBar';
 import CreditScoreCard from '@/components/credit/CreditScoreCard';
 import NewInsightsPage from '@/components/insights/NewInsightsPage';
@@ -106,7 +106,7 @@ const Index = () => {
               
               {/* Recent Transactions */}
               <div className="w-full">
-                <UnifiedTransactionList 
+                <VueniUnifiedTransactionList 
                   transactions={transformTransactions(mockData.transactions.slice(0, 15))}
                   variant="apple"
                   currency="USD"
@@ -138,7 +138,7 @@ const Index = () => {
       case 'transactions':
         return (
           <div className="w-full">
-            <UnifiedTransactionList 
+            <VueniUnifiedTransactionList 
               transactions={transformTransactions(mockData.transactions)} 
               variant="apple"
               currency="USD"
