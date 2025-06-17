@@ -1,4 +1,5 @@
 import { Holding, PortfolioSummary } from '@/types/investments';
+import { secureStorage } from '@/utils/crypto';
 
 class InvestmentService {
   private static instance: InvestmentService;
@@ -19,9 +20,9 @@ class InvestmentService {
   private load() {
     if (typeof window === 'undefined') return;
     try {
-      const raw = window.localStorage.getItem(this.storageKey);
-      if (raw) {
-        this.summary = JSON.parse(raw) as PortfolioSummary;
+      const data = secureStorage.getItem(this.storageKey);
+      if (data) {
+        this.summary = data as PortfolioSummary;
       } else {
         // Seed demo data
         this.summary = {
@@ -47,7 +48,7 @@ class InvestmentService {
 
   private persist() {
     if (typeof window === 'undefined') return;
-    window.localStorage.setItem(this.storageKey, JSON.stringify(this.summary));
+    secureStorage.setItem(this.storageKey, this.summary);
   }
 
   async getPortfolio(): Promise<PortfolioSummary> {

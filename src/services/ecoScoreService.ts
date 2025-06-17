@@ -44,6 +44,26 @@ const SUSTAINABLE_MERCHANTS = [
   'REI'
 ];
 
+/**
+ * Calculates environmental impact score based on transaction data.
+ * 
+ * Analyzes spending patterns to estimate carbon footprint using emission factors
+ * per dollar spent in different categories. Considers sustainable merchant preferences
+ * to provide a comprehensive eco-score from 0-100 (higher is better).
+ * 
+ * @param transactions - Array of financial transactions to analyze
+ * @returns EcoBreakdown object with CO2 emissions, sustainable spending ratio, and overall score
+ * 
+ * @example
+ * ```typescript
+ * const transactions = [
+ *   { id: '1', merchant: 'Gas Station', category: { name: 'Transportation' }, amount: -50 },
+ *   { id: '2', merchant: 'Whole Foods', category: { name: 'Food' }, amount: -120 }
+ * ];
+ * const ecoData = calculateEcoScore(transactions);
+ * console.log(ecoData.score); // Environmental score 0-100
+ * ```
+ */
 export const calculateEcoScore = (transactions: Transaction[]): EcoBreakdown => {
   let transportKg = 0;
   let foodKg = 0;

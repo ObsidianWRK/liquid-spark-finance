@@ -1,4 +1,5 @@
 import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
+import { secureStorage } from '@/utils/crypto';
 
 interface LiquidGlassSettings {
   enabled: boolean;
@@ -114,10 +115,10 @@ const getOptimizedSettings = (
 
 export const LiquidGlassProvider = ({ children }: { children: ReactNode }) => {
   const [settings, setSettings] = useState<LiquidGlassSettings>(() => {
-    // Load settings from localStorage if available
+    // Load settings from secure storage if available
     try {
-      const saved = localStorage.getItem('liquidGlassSettings');
-      return saved ? { ...defaultSettings, ...JSON.parse(saved) } : defaultSettings;
+      const saved = secureStorage.getItem('liquidGlassSettings');
+      return saved ? { ...defaultSettings, ...saved } : defaultSettings;
     } catch {
       return defaultSettings;
     }
@@ -132,20 +133,20 @@ export const LiquidGlassProvider = ({ children }: { children: ReactNode }) => {
     const newSettings = { ...settings, ...updates };
     setSettings(newSettings);
     
-    // Save to localStorage
+    // Save to secure storage
     try {
-      localStorage.setItem('liquidGlassSettings', JSON.stringify(newSettings));
+      secureStorage.setItem('liquidGlassSettings', newSettings);
     } catch {
-      // Ignore localStorage errors
+      // Ignore storage errors
     }
   };
 
   const resetSettings = () => {
     setSettings(defaultSettings);
     try {
-      localStorage.removeItem('liquidGlassSettings');
+      secureStorage.removeItem('liquidGlassSettings');
     } catch {
-      // Ignore localStorage errors
+      // Ignore storage errors
     }
   };
 

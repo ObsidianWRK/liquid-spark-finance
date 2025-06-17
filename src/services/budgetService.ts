@@ -1,8 +1,9 @@
 import { BudgetCategory } from '@/types/budget';
+import { secureStorage } from '@/utils/crypto';
 
 /**
  * Very light-weight client-side service for managing user budget data.
- * Data is persisted to localStorage so it survives page refreshes during demos.
+ * Data is encrypted and persisted to localStorage so it survives page refreshes during demos.
  *
  * In a production scenario this class would proxy network requests to a
  * backend service (e.g. Firebase, Supabase, GraphQL, REST, etc.).
@@ -26,9 +27,9 @@ class BudgetService {
   private load() {
     if (typeof window === 'undefined') return;
     try {
-      const raw = window.localStorage.getItem(this.storageKey);
-      if (raw) {
-        this.categories = JSON.parse(raw) as BudgetCategory[];
+      const data = secureStorage.getItem(this.storageKey);
+      if (data) {
+        this.categories = data as BudgetCategory[];
       } else {
         // Seed with sample data the first time for a richer demo experience
         this.categories = [
@@ -48,7 +49,7 @@ class BudgetService {
 
   private persist() {
     if (typeof window === 'undefined') return;
-    window.localStorage.setItem(this.storageKey, JSON.stringify(this.categories));
+    secureStorage.setItem(this.storageKey, this.categories);
   }
 
   /** Budget CRUD **/
