@@ -220,6 +220,8 @@ const NetWorthTrendChart: React.FC<NetWorthTrendChartProps> = ({ data, title }) 
               tickFormatter={formatDate}
             />
             {/* Primary Y-axis for financial data */}
+            {/* Hidden default Y-axis to satisfy components that default to id '0' */}
+            <YAxis yAxisId={0} hide />
             <YAxis 
               yAxisId="financial"
               stroke="#fff" 
@@ -241,7 +243,7 @@ const NetWorthTrendChart: React.FC<NetWorthTrendChartProps> = ({ data, title }) 
             />
             
             {/* Reference line for current date */}
-            <ReferenceLine x={currentDate} stroke="rgba(255,255,255,0.5)" strokeDasharray="2 2" />
+            <ReferenceLine x={currentDate as unknown as number | string} stroke="rgba(255,255,255,0.5)" strokeDasharray="2 2" />
             
             {/* Net Worth Area */}
             <Area
