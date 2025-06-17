@@ -1,22 +1,31 @@
 import React, { useEffect, useState } from 'react';
-import { useTheme } from 'next-themes';
 import { Sun, Moon } from 'lucide-react';
 
 const ThemeToggle = ({ className = '' }: { className?: string }) => {
-  const { theme, setTheme, resolvedTheme } = useTheme();
+  const [isDark, setIsDark] = useState(true);
   const [mounted, setMounted] = useState(false);
 
-  // Ensure component is mounted before accessing resolved theme to avoid hydration mismatch
+  // Ensure component is mounted before accessing DOM
   useEffect(() => {
     setMounted(true);
+    // Check current theme from document
+    setIsDark(document.documentElement.classList.contains('dark'));
   }, []);
 
   if (!mounted) return null;
 
-  const isDark = resolvedTheme === 'dark';
-
   const handleToggle = () => {
-    setTheme(isDark ? 'light' : 'dark');
+    const newTheme = !isDark;
+    setIsDark(newTheme);
+    
+    // Update document class
+    if (newTheme) {
+      document.documentElement.classList.add('dark');
+      document.documentElement.classList.remove('light');
+    } else {
+      document.documentElement.classList.add('light');
+      document.documentElement.classList.remove('dark');
+    }
   };
 
   const handleKeyDown = (event: React.KeyboardEvent) => {
@@ -54,4 +63,4 @@ const ThemeToggle = ({ className = '' }: { className?: string }) => {
   );
 };
 
-export default ThemeToggle; 
+export default ThemeToggle;

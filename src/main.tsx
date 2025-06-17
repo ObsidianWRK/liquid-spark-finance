@@ -1,10 +1,10 @@
 import { createRoot } from 'react-dom/client'
 import App from './App.tsx'
 import './index.css'
-import { ThemeProvider } from "next-themes";
+
+// Add dark mode class to document by default
+document.documentElement.classList.add('dark');
 
 createRoot(document.getElementById("root")!).render(
-  <ThemeProvider attribute="class" defaultTheme="dark" enableSystem={true}>
-    <App />
-  </ThemeProvider>
+  <App />
 );
