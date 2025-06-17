@@ -267,7 +267,6 @@ const NetWorthTrendChart: React.FC<NetWorthTrendChartProps> = ({ data, title }) 
                 name="Assets"
                 dot={false}
                 activeDot={{ r: 4, fill: '#10b981' }}
-                strokeDasharray={(d: any) => d?.type === 'projected' ? '5 5' : '0'}
               />
             )}
             
@@ -282,7 +281,6 @@ const NetWorthTrendChart: React.FC<NetWorthTrendChartProps> = ({ data, title }) 
                 name="Liabilities"
                 dot={false}
                 activeDot={{ r: 4, fill: '#ef4444' }}
-                strokeDasharray={(d: any) => d?.type === 'projected' ? '5 5' : '0'}
               />
             )}
             
@@ -297,7 +295,6 @@ const NetWorthTrendChart: React.FC<NetWorthTrendChartProps> = ({ data, title }) 
                 name="Health Score"
                 dot={false}
                 activeDot={{ r: 4, fill: '#ec4899' }}
-                strokeDasharray={(d: any) => d?.type === 'projected' ? '3 3' : '0'}
               />
             )}
           </ComposedChart>
