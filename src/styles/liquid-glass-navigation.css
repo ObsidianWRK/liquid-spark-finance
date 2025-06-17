@@ -1,0 +1,210 @@
+
+/* 🌟 Magical Liquid Glass Navigation Styles ✨ */
+
+/* Import SF Pro Display font for that Apple-like smoothness */
+@import url('https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@300;400;500;600;700&display=swap');
+
+.font-display {
+  font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+/* The magical glass container */
+.liquid-glass-nav-container {
+  /* Perfect pill shape */
+  width: 450px;
+  height: 84px;
+  border-radius: 42px;
+  
+  /* The secret glass sauce */
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  
+  /* Floating cloud shadows */
+  box-shadow: 
+    0 8px 32px rgba(0, 0, 0, 0.1),
+    0 16px 64px rgba(0, 0, 0, 0.05),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.1);
+  
+  /* Subtle border for extra definition */
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  
+  /* Smooth transitions for all interactions */
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  
+  /* Gentle hover lift */
+  will-change: transform;
+}
+
+/* Breathing effect on hover */
+.liquid-glass-nav-container:hover {
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 
+    0 12px 40px rgba(0, 0, 0, 0.15),
+    0 20px 80px rgba(0, 0, 0, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.25);
+}
+
+/* Individual navigation item glass effect */
+.nav-item-glass {
+  position: relative;
+  overflow: hidden;
+}
+
+/* Starlight hover glow */
+.nav-item-glass::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.3) 0%, transparent 70%);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  transition: all 0.6s ease-out;
+  opacity: 0;
+  z-index: 0;
+}
+
+.nav-item-glass:hover::before {
+  width: 80px;
+  height: 80px;
+  opacity: 1;
+}
+
+/* Gentle pulse animation for active items */
+@keyframes gentle-pulse {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.1);
+  }
+}
+
+.nav-item-glass.active {
+  animation: gentle-pulse 2s infinite;
+}
+
+/* Slide-up entrance animation */
+@keyframes slide-up-magical {
+  0% {
+    transform: translateY(100px) scale(0.8);
+    opacity: 0;
+    filter: blur(10px);
+  }
+  50% {
+    transform: translateY(-5px) scale(1.05);
+    opacity: 0.8;
+    filter: blur(2px);
+  }
+  100% {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+    filter: blur(0px);
+  }
+}
+
+/* Apply entrance animation to container */
+.liquid-glass-nav-container {
+  animation: slide-up-magical 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+/* Responsive breakpoints with love */
+@media (max-width: 768px) {
+  .liquid-glass-nav-container {
+    width: 380px;
+    height: 76px;
+    border-radius: 38px;
+  }
+  
+  .nav-item-glass {
+    width: 56px;
+    height: 56px;
+  }
+}
+
+@media (max-width: 480px) {
+  .liquid-glass-nav-container {
+    width: 320px;
+    height: 68px;
+    border-radius: 34px;
+  }
+  
+  .nav-item-glass {
+    width: 48px;
+    height: 48px;
+  }
+  
+  .nav-item-glass .w-6 {
+    width: 20px;
+    height: 20px;
+  }
+  
+  .nav-item-glass span {
+    font-size: 8px;
+  }
+}
+
+/* Focus styles for keyboard warriors */
+.nav-item-glass:focus {
+  outline: none;
+  box-shadow: 
+    0 0 0 2px rgba(255, 255, 255, 0.3),
+    0 0 0 4px rgba(59, 130, 246, 0.4);
+}
+
+/* Accessibility: Respect reduced motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  .liquid-glass-nav-container {
+    animation: none;
+    transition: none;
+  }
+  
+  .nav-item-glass {
+    transition: none;
+  }
+  
+  .nav-item-glass::before {
+    transition: none;
+  }
+  
+  .nav-item-glass:hover {
+    transform: none;
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .liquid-glass-nav-container {
+    background: rgba(255, 255, 255, 0.15);
+    border: 2px solid rgba(255, 255, 255, 0.3);
+  }
+  
+  .nav-item-glass {
+    border: 1px solid rgba(255, 255, 255, 0.2);
+  }
+}
+
+/* Dark mode enhancements */
+@media (prefers-color-scheme: light) {
+  .liquid-glass-nav-container {
+    background: rgba(0, 0, 0, 0.05);
+    backdrop-filter: blur(20px) saturate(180%) brightness(1.2);
+    border-color: rgba(0, 0, 0, 0.1);
+    box-shadow: 
+      0 8px 32px rgba(0, 0, 0, 0.08),
+      0 16px 64px rgba(0, 0, 0, 0.03),
+      inset 0 1px 0 rgba(255, 255, 255, 0.6);
+  }
+  
+  .nav-item-glass {
+    color: rgba(0, 0, 0, 0.8);
+  }
+  
+  .nav-item-glass:hover {
+    background: rgba(0, 0, 0, 0.05);
+  }
+}
