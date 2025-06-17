@@ -1,33 +1,33 @@
 import React, { useState, useEffect, useCallback, lazy, Suspense } from 'react';
-import { useLocation, useSearchParams } from 'react-router-dom';
+import { useSearchParams } from 'react-router-dom';
 import Navigation from '@/components/Navigation';
 import AccountCard from '@/components/AccountCard';
 import BalanceCard from '@/components/BalanceCard';
-import { VueniUnifiedTransactionList } from '@/components/shared';
 import { OptimizedTransactionList } from '@/components/transactions/OptimizedTransactionList';
 import LiquidGlassTopMenuBar from '@/components/LiquidGlassTopMenuBar';
 import CreditScoreCard from '@/components/credit/CreditScoreCard';
-import NewInsightsPage from '@/components/insights/NewInsightsPage';
 import { UnifiedInsightsPage } from '@/components/insights/UnifiedInsightsPage';
-// Lazy load WrappedPage for better performance
-const WrappedPage = lazy(() => import('@/components/wrapped/WrappedPage'));
 import BudgetReportsPage from '@/components/reports/BudgetReportsPage';
 import Profile from './Profile';
 import ChatDrawer from '@/components/ai/ChatDrawer';
 import NetWorthSummary from '@/components/financial/NetWorthSummary';
 import { mockData } from '@/services/mockData';
-import { usePerformanceOptimization } from '@/hooks/usePerformanceOptimization';
 
-// Transform mockData transactions to match UnifiedTransactionList format
+// Lazy load WrappedPage for better performance
+const WrappedPage = lazy(() => import('@/components/wrapped/WrappedPage'));
+
+// Transform mockData transactions to match OptimizedTransactionList format
 const transformTransactions = (transactions: typeof mockData.transactions) => {
+  if (!transactions || transactions.length === 0) return [];
+  
   return transactions.map(t => ({
     id: t.id,
     date: t.date,
     description: t.merchant,
     amount: Math.abs(t.amount),
     category: {
-      name: t.category.name.toLowerCase(),
-      color: t.category.color || '#6366f1'
+      name: t.category?.name?.toLowerCase() || 'other',
+      color: t.category?.color || '#6366f1'
     },
     type: t.amount < 0 ? 'expense' : 'income' as const,
     merchant: t.merchant,
@@ -43,8 +43,21 @@ const transformTransactions = (transactions: typeof mockData.transactions) => {
 const Index = () => {
   const [activeTab, setActiveTab] = useState('dashboard');
   const [performanceMode, setPerformanceMode] = useState(false);
-  const { liquidSettings } = usePerformanceOptimization();
   const [searchParams] = useSearchParams();
+
+  // Safety check for mock data
+  if (!mockData || !mockData.accounts || mockData.accounts.length === 0) {
+    return (
+      <div className="min-h-screen bg-black text-white flex items-center justify-center">
+        <div className="text-center">
+          <h1 className="text-2xl font-bold mb-4">Loading Vueni...</h1>
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-white mx-auto"></div>
+        </div>
+      </div>
+    );
+  }
+
+  const mainAccount = mockData.accounts[0];
 
   // Handle URL tab parameter
   useEffect(() => {
@@ -54,80 +67,64 @@ const Index = () => {
     }
   }, [searchParams]);
 
-  // Performance detection
+  // Simple performance detection
   useEffect(() => {
-    const checkPerformance = () => {
-      const start = performance.now();
-      requestAnimationFrame(() => {
-        const duration = performance.now() - start;
-        if (duration > 16.67) { // More than one frame at 60fps
-          setPerformanceMode(true);
-        }
-      });
-    };
-
-    checkPerformance();
+    const isSlowDevice = navigator.hardwareConcurrency < 4 || 
+                        /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+    setPerformanceMode(isSlowDevice);
   }, []);
-
-  // Calculate main account data for BalanceCard
-  const mainAccount = mockData.accounts[0]; // Main checking account
 
   const renderContent = useCallback(() => {
     switch (activeTab) {
       case 'dashboard':
         return (
-          <>
-            {/* Enhanced Navigation Menu Bar */}
+          <div className="w-full space-y-6 pt-20">
             <div className="w-full">
-              <LiquidGlassTopMenuBar />
+              <BalanceCard 
+                accountType={mainAccount.type}
+                nickname={mainAccount.nickname}
+                balance={mainAccount.balance}
+                availableBalance={mainAccount.availableBalance}
+                currency={mainAccount.currency}
+                trend="up"
+                trendPercentage={12.5}
+              />
             </div>
             
-            {/* Balance Overview Section */}
-            <div className="w-full space-y-6 pt-20">
+            {/* Credit Score and Account Cards Grid */}
+            <div className="w-full space-y-6">
+              {/* Credit Score Card */}
               <div className="w-full">
-                <BalanceCard 
-                  accountType={mainAccount.type}
-                  nickname={mainAccount.nickname}
-                  balance={mainAccount.balance}
-                  availableBalance={mainAccount.availableBalance}
-                  currency={mainAccount.currency}
-                  trend="up"
-                  trendPercentage={12.5}
-                />
+                <CreditScoreCard />
               </div>
               
-              {/* Credit Score and Account Cards Grid */}
-              <div className="w-full space-y-6">
-                {/* Credit Score Card */}
-                <div className="w-full">
-                  <CreditScoreCard />
-                </div>
-                
-                {/* Account Cards Grid */}
-                <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-                  {mockData.accounts.map((account) => (
-                    <AccountCard key={account.id} account={account} />
-                  ))}
-                </div>
-              </div>
-              
-              {/* Recent Transactions */}
-              <div className="w-full">
-                <OptimizedTransactionList 
-                  transactions={transformTransactions(mockData.transactions.slice(0, 15))}
-                  variant="apple"
-                  currency="USD"
-                  features={{
-                    showScores: true,
-                    showCategories: true,
-                    searchable: false,
-                    groupByDate: true,
-                    sortable: true
-                  }}
-                />
+              {/* Account Cards Grid */}
+              <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+                {mockData.accounts.map((account) => (
+                  <AccountCard key={account.id} account={account} />
+                ))}
               </div>
             </div>
-          </>
+            
+            {/* Recent Transactions */}
+            <div className="w-full">
+              <OptimizedTransactionList 
+                transactions={transformTransactions(mockData.transactions.slice(0, 10))} 
+                variant="apple"
+                currency="USD"
+                features={{
+                  showScores: true,
+                  showCategories: true,
+                  searchable: false,
+                  filterable: false,
+                  groupByDate: true,
+                  sortable: false
+                }}
+                title="Recent Transactions"
+                className="w-full"
+              />
+            </div>
+          </div>
         );
       case 'accounts':
         return (
@@ -158,6 +155,10 @@ const Index = () => {
                 groupByDate: true,
                 sortable: true
               }}
+              onTransactionClick={(transaction) => {
+                console.log('Transaction clicked:', transaction);
+              }}
+              className="w-full"
             />
           </div>
         );
@@ -214,8 +215,18 @@ const Index = () => {
         );
       default:
         return (
-          <div className="w-full">
-            <h1 className="text-2xl font-bold text-white">Welcome to Vueni</h1>
+          <div className="w-full space-y-6 pt-20">
+            <div className="w-full">
+              <BalanceCard 
+                accountType={mainAccount.type}
+                nickname={mainAccount.nickname}
+                balance={mainAccount.balance}
+                availableBalance={mainAccount.availableBalance}
+                currency={mainAccount.currency}
+                trend="up"
+                trendPercentage={12.5}
+              />
+            </div>
           </div>
         );
     }
@@ -223,31 +234,29 @@ const Index = () => {
 
   return (
     <div className={`min-h-screen w-full text-white smooth-scroll bg-black ${performanceMode ? 'performance-mode low-end-device' : ''}`}>
-      {/* Optimized Background */}
-      <div className={`fixed inset-0 z-0 ${performanceMode ? 'bg-black' : 'optimized-bg'}`} />
-      
-      {/* Main Content Container - Full Screen Layout */}
-      <div className="relative z-10 min-h-screen w-full pb-24">
-        <div className="w-full px-4 pt-24 pb-8 sm:px-6 lg:px-8 xl:px-12">
-          {/* Header - Only show on dashboard */}
-          {activeTab === 'dashboard' && (
-            <div className="text-center space-y-4 mb-8">
-              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black text-white tracking-wider drop-shadow-lg">
-                **VUENI**
-              </h1>
-              <p className="text-white/70 text-base sm:text-lg lg:text-xl font-semibold italic tracking-wide">***Intelligence You Can Bank On***</p>
-            </div>
-          )}
+      {/* Top Menu Bar */}
+      <LiquidGlassTopMenuBar 
+        title="Vueni" 
+        subtitle="Financial Intelligence Platform"
+        className="fixed top-0 left-0 right-0 z-40"
+      />
 
-          {/* Dynamic Content */}
-          <main className="w-full space-y-6">
-            {renderContent()}
-          </main>
+      {/* Main Content Area */}
+      <main 
+        className="flex-1 overflow-hidden pb-24"
+        role="main"
+        aria-label="Main content"
+      >
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          {renderContent()}
         </div>
-      </div>
+      </main>
 
-      {/* Navigation */}
-      <Navigation activeTab={activeTab} onTabChange={setActiveTab} />
+      {/* Bottom Navigation */}
+      <Navigation 
+        activeTab={activeTab} 
+        onTabChange={setActiveTab}
+      />
 
       {/* Chat Drawer */}
       <ChatDrawer />
