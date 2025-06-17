@@ -70,8 +70,8 @@ const CreditScoreCard = () => {
     <div className="liquid-glass-card rounded-2xl p-6 shadow-lg">
       {/* Header */}
       <div className="flex items-center justify-between mb-6">
-        <h3 className="text-xl font-bold text-white">Credit Score</h3>
-        <div className="text-xs text-slate-400">
+        <h3 className="text-2xl font-black text-white tracking-wide">***Credit Score***</h3>
+        <div className="text-xs text-slate-400 font-medium italic">
           Updated {new Date(creditScore.lastUpdated).toLocaleDateString()}
         </div>
       </div>
@@ -87,16 +87,16 @@ const CreditScoreCard = () => {
         />
         
         <div className="mt-4">
-          <div className="text-3xl font-bold text-white mb-1">
-            {creditScore.score}
+          <div className="text-4xl font-black text-white mb-1 tracking-wider">
+            ***{creditScore.score}***
           </div>
           <div 
-            className="text-lg font-semibold mb-2"
+            className="text-xl font-black mb-2 tracking-wide"
             style={{ color: getScoreColor(creditScore.score) }}
           >
-            {creditScore.scoreRange} Credit
+            ***{creditScore.scoreRange} Credit***
           </div>
-          <p className="text-slate-400 text-sm max-w-xs mx-auto">
+          <p className="text-slate-400 text-sm max-w-xs mx-auto font-medium italic">
             {getScoreDescription(creditScore.scoreRange)}
           </p>
         </div>
@@ -104,7 +104,7 @@ const CreditScoreCard = () => {
 
       {/* Quick Factors */}
       <div className="space-y-3 mb-6">
-        <h4 className="text-white font-semibold text-sm">Key Factors</h4>
+        <h4 className="text-white font-black text-sm tracking-wide">***Key Factors***</h4>
         {creditScore.factors.slice(0, 3).map((factor, index) => (
           <div key={index} className="flex items-center justify-between">
             <div className="flex items-center space-x-2">
@@ -125,9 +125,9 @@ const CreditScoreCard = () => {
       {/* Action Button */}
       <button 
         onClick={() => navigate('/credit-score')}
-        className="w-full bg-gradient-to-r from-indigo-500 to-purple-500 text-white py-3 rounded-lg font-medium hover:from-indigo-600 hover:to-purple-600 transition-all"
+        className="w-full liquid-glass-card bg-gradient-to-r from-blue-500/20 to-cyan-500/20 backdrop-blur-md text-white py-3 rounded-xl font-bold text-lg tracking-wide hover:from-blue-500/30 hover:to-cyan-500/30 hover:scale-[1.02] transition-all duration-300 border border-white/10 hover:border-white/20 shadow-lg hover:shadow-blue-500/20"
       >
-        View Full Credit Report
+        ***View Full Credit Report***
       </button>
     </div>
   );

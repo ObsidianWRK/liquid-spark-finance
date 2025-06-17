@@ -122,7 +122,7 @@ const OverviewCard = ({
             <Icon className="w-5 h-5" style={{ color }} />
           </div>
           <div>
-            <h3 className="font-medium text-white text-sm">{title}</h3>
+            <h3 className="font-bold text-white text-sm tracking-wide">***{title}***</h3>
           </div>
         </div>
         
@@ -139,7 +139,7 @@ const OverviewCard = ({
       </div>
 
       <div className={`mb-3 transition-all duration-300 ${isVisible ? '' : 'blur-sm'}`}>
-        <div className="text-2xl font-bold text-white mb-1">
+        <div className="text-3xl font-black text-white mb-1 tracking-wide">
           {isVisible ? value : '••••••'}
         </div>
       </div>
@@ -219,16 +219,16 @@ const CleanDashboard = () => {
         <SimpleGlassCard className="p-6">
           <div className="flex items-center justify-between">
             <div>
-              <h1 className="text-2xl font-bold text-white mb-2">
-                Good morning, John 👋
+              <h1 className="text-3xl font-black text-white mb-2 tracking-wide">
+                ***Good morning, John*** 👋
               </h1>
-              <p className="text-white/60">
+              <p className="text-white/70 font-medium italic">
                 Here's what's happening with your finances today
               </p>
             </div>
             <div className="text-right">
-              <p className="text-sm text-white/60">Total Net Worth</p>
-              <p className="text-xl font-bold text-white">
+              <p className="text-sm text-white/60 font-semibold">***Total Net Worth***</p>
+              <p className="text-2xl font-black text-white tracking-wide">
                 {new Intl.NumberFormat('en-US', {
                   style: 'currency',
                   currency: 'USD'
@@ -291,7 +291,7 @@ const CleanDashboard = () => {
             
             {/* Account Cards */}
             <div className="space-y-4">
-              <h3 className="text-lg font-semibold text-white px-2">Accounts</h3>
+              <h3 className="text-xl font-black text-white px-2 tracking-wide italic">***Accounts***</h3>
               {mockAccounts.slice(0, 3).map((account) => (
                 <CleanAccountCard
                   key={account.id}

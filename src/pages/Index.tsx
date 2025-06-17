@@ -199,10 +199,10 @@ const Index = () => {
           {/* Header - Only show on dashboard */}
           {activeTab === 'dashboard' && (
             <div className="text-center space-y-4 mb-8">
-              <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white tracking-wide">
-                Vueni
+              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black text-white tracking-wider drop-shadow-lg">
+                **VUENI**
               </h1>
-              <p className="text-white/60 text-sm sm:text-base lg:text-lg">Intelligence You Can Bank On</p>
+              <p className="text-white/70 text-base sm:text-lg lg:text-xl font-semibold italic tracking-wide">***Intelligence You Can Bank On***</p>
             </div>
           )}
 
