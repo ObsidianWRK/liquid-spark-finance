@@ -160,9 +160,9 @@
 /* Memory-Efficient Backgrounds */
 .optimized-bg {
   background: linear-gradient(135deg, 
-    rgba(0, 0, 0, 0.95) 0%, 
-    rgba(15, 23, 42, 0.95) 50%, 
-    rgba(0, 0, 0, 0.95) 100%);
+    rgba(0, 0, 0, 0.98) 0%, 
+    rgba(0, 0, 0, 0.95) 50%, 
+    rgba(0, 0, 0, 0.98) 100%);
   background-attachment: fixed;
   background-size: 100% 100%;
   background-repeat: no-repeat;
@@ -273,7 +273,7 @@
   .optimized-bg {
     background: linear-gradient(135deg, 
       rgba(0, 0, 0, 0.98) 0%, 
-      rgba(15, 23, 42, 0.98) 50%, 
+      rgba(0, 0, 0, 0.95) 50%, 
       rgba(0, 0, 0, 0.98) 100%);
   }
 }

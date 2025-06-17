@@ -22,9 +22,13 @@ const transformTransactions = (transactions: typeof mockData.transactions) => {
     date: t.date,
     description: t.merchant,
     amount: Math.abs(t.amount),
-    category: t.category.name.toLowerCase(),
+    category: {
+      name: t.category.name.toLowerCase(),
+      color: t.category.color || '#6366f1'
+    },
     type: t.amount < 0 ? 'expense' : 'income' as const,
     merchant: t.merchant,
+    status: 'completed' as const,
     scores: {
       health: Math.floor(Math.random() * 100),
       eco: Math.floor(Math.random() * 100),
@@ -189,7 +193,7 @@ const Index = () => {
   }, [activeTab, mainAccount]);
 
   return (
-    <div className={`min-h-screen w-full text-white smooth-scroll ${performanceMode ? 'performance-mode low-end-device' : ''}`}>
+    <div className={`min-h-screen w-full text-white smooth-scroll bg-black ${performanceMode ? 'performance-mode low-end-device' : ''}`}>
       {/* Optimized Background */}
       <div className={`fixed inset-0 z-0 ${performanceMode ? 'bg-black' : 'optimized-bg'}`} />
       
