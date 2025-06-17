@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { UnifiedTransactionList } from '@/components/shared';
+import { VueniUnifiedTransactionList } from '@/components/shared';
 import MobileTransactionScreen from '@/screens/MobileTransactionScreen';
 import EnterpriseTransactionView from '@/components/transactions/EnterpriseTransactionView';
 import { Smartphone, Tablet, Monitor } from 'lucide-react';
@@ -191,7 +191,7 @@ const TransactionDemo: React.FC = () => {
           {view === 'tablet' && (
             <div className="bg-gray-900 rounded-2xl p-8 shadow-2xl">
               <div className="bg-black rounded-xl overflow-hidden">
-                <UnifiedTransactionList
+                <VueniUnifiedTransactionList
                   transactions={transactions.map(t => ({
                     id: t.id,
                     date: t.date,

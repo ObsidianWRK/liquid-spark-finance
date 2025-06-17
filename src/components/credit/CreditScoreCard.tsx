@@ -4,6 +4,8 @@ import { useNavigate } from 'react-router-dom';
 import AnimatedCircularProgress from '../insights/components/AnimatedCircularProgress';
 import { creditScoreService } from '@/services/creditScoreService';
 import { CreditScore } from '@/types/creditScore';
+import { UniversalCard } from '@/components/ui/UniversalCard';
+import { OptimizedScoreCard } from '@/components/insights/components/OptimizedScoreCard';
 
 const CreditScoreCard = () => {
   const navigate = useNavigate();
@@ -67,7 +69,7 @@ const CreditScoreCard = () => {
   }
 
   return (
-    <div className="liquid-glass-card rounded-2xl p-6 shadow-lg">
+    <UniversalCard variant="glass" className="p-6" interactive>
       {/* Header */}
       <div className="flex items-center justify-between mb-6">
         <h3 className="text-2xl font-black text-white tracking-wide">***Credit Score***</h3>
@@ -76,30 +78,23 @@ const CreditScoreCard = () => {
         </div>
       </div>
 
-      {/* Score Display */}
-      <div className="text-center mb-6">
-        <AnimatedCircularProgress
-          value={creditScore.score}
-          maxValue={850}
-          color={getScoreColor(creditScore.score)}
-          size={140}
-          strokeWidth={12}
+      {/* Optimized Score Display */}
+      <div className="mb-6">
+        <OptimizedScoreCard
+          data={{
+            score: creditScore.score,
+            maxScore: 850,
+            label: creditScore.scoreRange,
+            description: getScoreDescription(creditScore.scoreRange),
+            color: getScoreColor(creditScore.score),
+            trend: {
+              direction: 'up',
+              percentage: 5
+            }
+          }}
+          variant="enhanced"
+          size="lg"
         />
-        
-        <div className="mt-4">
-          <div className="text-4xl font-black text-white mb-1 tracking-wider">
-            ***{creditScore.score}***
-          </div>
-          <div 
-            className="text-xl font-black mb-2 tracking-wide"
-            style={{ color: getScoreColor(creditScore.score) }}
-          >
-            ***{creditScore.scoreRange} Credit***
-          </div>
-          <p className="text-slate-400 text-sm max-w-xs mx-auto font-medium italic">
-            {getScoreDescription(creditScore.scoreRange)}
-          </p>
-        </div>
       </div>
 
       {/* Quick Factors */}
@@ -122,14 +117,27 @@ const CreditScoreCard = () => {
         ))}
       </div>
 
-      {/* Action Button */}
-      <button 
+      {/* Optimized Action Button */}
+      <UniversalCard
+        variant="glass"
+        className="cursor-pointer"
+        interactive
+        hover={{ scale: true, glow: true }}
         onClick={() => navigate('/credit-score')}
-        className="w-full liquid-glass-card bg-gradient-to-r from-blue-500/20 to-cyan-500/20 backdrop-blur-md text-white py-3 rounded-xl font-bold text-lg tracking-wide hover:from-blue-500/30 hover:to-cyan-500/30 hover:scale-[1.02] transition-all duration-300 border border-white/10 hover:border-white/20 shadow-lg hover:shadow-blue-500/20"
+        gradient={{
+          from: 'blue-500/20',
+          to: 'cyan-500/20',
+          direction: 'to-r'
+        }}
+        border={{ style: 'glow', color: 'border-blue-500/30' }}
       >
-        ***View Full Credit Report***
-      </button>
-    </div>
+        <div className="py-3 text-center">
+          <span className="text-white font-bold text-lg tracking-wide">
+            ***View Full Credit Report***
+          </span>
+        </div>
+      </UniversalCard>
+    </UniversalCard>
   );
 };
 

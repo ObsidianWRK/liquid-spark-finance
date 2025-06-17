@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Eye, EyeOff, TrendingUp } from 'lucide-react';
+import { UniversalCard } from '@/components/ui/UniversalCard';
 
 interface BalanceCardProps {
   accountType: string;
@@ -11,7 +12,7 @@ interface BalanceCardProps {
   trendPercentage: number;
 }
 
-const BalanceCard = ({
+const BalanceCard = React.memo<BalanceCardProps>(({
   accountType,
   nickname,
   balance,
@@ -19,7 +20,7 @@ const BalanceCard = ({
   currency,
   trend,
   trendPercentage
-}: BalanceCardProps) => {
+}) => {
   const [isBalanceVisible, setIsBalanceVisible] = useState(true);
 
   const formatCurrency = (amount: number) => {
@@ -35,7 +36,7 @@ const BalanceCard = ({
   };
 
   return (
-    <div className="stagger-item">
+    <UniversalCard variant="glass" className="stagger-item p-6" interactive>
       <div className="flex justify-between items-start mb-4">
         <div>
           <p className="text-white/70 text-sm font-medium">{accountType}</p>
@@ -43,7 +44,7 @@ const BalanceCard = ({
         </div>
         <button
           onClick={toggleBalanceVisibility}
-          className="liquid-glass-button p-2 hover:bg-white/10 min-w-[44px] min-h-[44px] flex items-center justify-center focus:outline-none focus:ring-2 focus:ring-blue-400/50"
+          className="p-2 rounded-lg bg-white/5 hover:bg-white/10 min-w-[44px] min-h-[44px] flex items-center justify-center focus:outline-none focus:ring-2 focus:ring-blue-400/50 transition-colors"
           aria-label={isBalanceVisible ? "Hide account balance" : "Show account balance"}
           aria-pressed={isBalanceVisible}
           type="button"
@@ -79,8 +80,10 @@ const BalanceCard = ({
         </div>
         <span className="text-white/50 text-sm">vs last month</span>
       </div>
-    </div>
+    </UniversalCard>
   );
-};
+});
+
+BalanceCard.displayName = 'BalanceCard';
 
 export default BalanceCard;

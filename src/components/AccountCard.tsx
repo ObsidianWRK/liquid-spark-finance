@@ -1,14 +1,7 @@
 import React, { useState } from 'react';
 import { ChevronDown, ChevronUp } from 'lucide-react';
-
-interface Account {
-  id: string;
-  type: string;
-  nickname: string;
-  balance: number;
-  availableBalance: number;
-  currency: string;
-}
+import { Account } from '@/types/shared';
+import { UniversalCard } from '@/components/ui/UniversalCard';
 
 interface AccountCardProps {
   account: Account;
@@ -20,7 +13,7 @@ interface AccountCardProps {
   }>;
 }
 
-const AccountCard = ({ account, recentTransactions = [] }: AccountCardProps) => {
+const AccountCard = React.memo<AccountCardProps>(({ account, recentTransactions = [] }) => {
   const [isExpanded, setIsExpanded] = useState(false);
 
   const formatCurrency = (amount: number) => {
@@ -32,8 +25,11 @@ const AccountCard = ({ account, recentTransactions = [] }: AccountCardProps) => 
   };
 
   return (
-    <div 
-      className="liquid-glass-button cursor-pointer stagger-item p-4"
+    <UniversalCard
+      variant="glass"
+      className="stagger-item cursor-pointer"
+      interactive
+      hover={{ scale: true, glow: true }}
       onClick={() => setIsExpanded(!isExpanded)}
     >
       <div className="flex justify-between items-start mb-3">
@@ -83,8 +79,10 @@ const AccountCard = ({ account, recentTransactions = [] }: AccountCardProps) => 
           </div>
         </div>
       </div>
-    </div>
+    </UniversalCard>
   );
-};
+});
+
+AccountCard.displayName = 'AccountCard';
 
 export default AccountCard;

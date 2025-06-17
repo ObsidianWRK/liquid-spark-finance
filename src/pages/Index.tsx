@@ -4,9 +4,11 @@ import Navigation from '@/components/Navigation';
 import AccountCard from '@/components/AccountCard';
 import BalanceCard from '@/components/BalanceCard';
 import { VueniUnifiedTransactionList } from '@/components/shared';
+import { OptimizedTransactionList } from '@/components/transactions/OptimizedTransactionList';
 import LiquidGlassTopMenuBar from '@/components/LiquidGlassTopMenuBar';
 import CreditScoreCard from '@/components/credit/CreditScoreCard';
 import NewInsightsPage from '@/components/insights/NewInsightsPage';
+import { UnifiedInsightsPage } from '@/components/insights/UnifiedInsightsPage';
 import WrappedPage from '@/components/wrapped/WrappedPage';
 import BudgetReportsPage from '@/components/reports/BudgetReportsPage';
 import Profile from './Profile';
@@ -110,7 +112,7 @@ const Index = () => {
               
               {/* Recent Transactions */}
               <div className="w-full">
-                <VueniUnifiedTransactionList 
+                <OptimizedTransactionList 
                   transactions={transformTransactions(mockData.transactions.slice(0, 15))}
                   variant="apple"
                   currency="USD"
@@ -119,6 +121,7 @@ const Index = () => {
                     showCategories: true,
                     searchable: false,
                     groupByDate: true,
+                    sortable: true
                   }}
                 />
               </div>
@@ -142,7 +145,7 @@ const Index = () => {
       case 'transactions':
         return (
           <div className="w-full">
-            <VueniUnifiedTransactionList 
+            <OptimizedTransactionList 
               transactions={transformTransactions(mockData.transactions)} 
               variant="apple"
               currency="USD"
@@ -152,6 +155,7 @@ const Index = () => {
                 searchable: true,
                 filterable: true,
                 groupByDate: true,
+                sortable: true
               }}
             />
           </div>
@@ -159,9 +163,27 @@ const Index = () => {
       case 'insights':
         return (
           <div className="w-full">
-            <NewInsightsPage 
-              transactions={mockData.transactions} 
-              accounts={mockData.accounts} 
+            <UnifiedInsightsPage 
+              config={{
+                variant: 'comprehensive',
+                features: {
+                  showScores: true,
+                  showTrends: true,
+                  showCategories: true,
+                  enableInteractions: true,
+                  showComparisons: true
+                },
+                layout: {
+                  columns: 3,
+                  spacing: 'normal',
+                  responsive: true
+                },
+                dataSource: {
+                  transactions: transformTransactions(mockData.transactions),
+                  accounts: mockData.accounts,
+                  timeframe: '30d'
+                }
+              }}
             />
           </div>
         );

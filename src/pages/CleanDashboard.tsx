@@ -3,6 +3,7 @@ import AppShell from '@/components/layout/AppShell';
 import CleanAccountCard from '@/components/financial/CleanAccountCard';
 import CleanCreditScoreCard from '@/components/financial/CleanCreditScoreCard';
 import { UnifiedTransactionList } from '@/components/shared';
+import { OptimizedTransactionList } from '@/components/transactions/OptimizedTransactionList';
 import SimpleGlassCard from '@/components/ui/SimpleGlassCard';
 import { colors } from '@/theme/colors';
 import { 
@@ -304,16 +305,20 @@ const CleanDashboard = () => {
 
           {/* Right Column - Transactions */}
           <div className="lg:col-span-2">
-            <UnifiedTransactionList
+            <OptimizedTransactionList
               transactions={mockTransactions.map(t => ({
                 id: t.id,
                 date: t.date,
                 description: t.merchant,
-                amount: Math.abs(t.amount),
-                category: t.category.toLowerCase(),
+                amount: t.amount,
+                category: {
+                  name: t.category,
+                  color: '#6366f1'
+                },
                 type: t.amount < 0 ? 'expense' : 'income' as const,
                 merchant: t.merchant,
-                scores: t.scores
+                scores: t.scores,
+                status: 'completed' as const
               }))}
               variant="clean"
               currency="USD"
@@ -322,6 +327,7 @@ const CleanDashboard = () => {
                 showCategories: true,
                 searchable: true,
                 filterable: true,
+                sortable: true
               }}
               onTransactionClick={handleTransactionClick}
             />
