@@ -1,3 +1,4 @@
+
 import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import { secureStorage } from '@/utils/crypto';
 
@@ -225,4 +226,4 @@ export const useLiquidGlassSettings = (
     interactive: componentSettings?.interactive ?? settings.interactive,
     performanceMode: settings.performanceMode,
   };
-}; 
+};
