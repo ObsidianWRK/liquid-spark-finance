@@ -3,7 +3,7 @@
     "business_requirements": {
       "initiative_name": "Vueni Refactor Initiative",
       "business_justification": {
-        "problem_statement": "The Liquid Spark Finance application suffers from 23% code duplication (2,266 lines), 8 critical security vulnerabilities, 0% test coverage, and performance bottlenecks affecting user trust and scalability.",
+        "problem_statement": "The Vueni application suffers from 23% code duplication (2,266 lines), 8 critical security vulnerabilities, 0% test coverage, and performance bottlenecks affecting user trust and scalability.",
         "business_impact": {
           "current_state": {
             "user_trust_risk": "High - Financial data stored unencrypted in localStorage",
