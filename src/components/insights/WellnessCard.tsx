@@ -1,6 +1,6 @@
 import React from 'react';
 import { Heart, Activity, Brain, Apple, Bed, Shield } from 'lucide-react';
-import ScoreCircle from './ScoreCircle';
+import ScoreCircle from '../transactions/ScoreCircle';
 import MetricCard from './MetricCard';
 
 interface WellnessData {

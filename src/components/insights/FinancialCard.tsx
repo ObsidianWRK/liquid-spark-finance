@@ -1,6 +1,6 @@
 import React from 'react';
 import { DollarSign, PiggyBank, CreditCard, TrendingUp, Shield, Calendar } from 'lucide-react';
-import ScoreCircle from './ScoreCircle';
+import { SharedScoreCircle } from '@/components/shared';
 import MetricCard from './MetricCard';
 
 interface FinancialData {
@@ -133,11 +133,12 @@ const FinancialCard: React.FC<FinancialCardProps> = ({ data }) => {
             </p>
           </div>
           <div className="flex flex-col items-center">
-            <ScoreCircle 
+            <SharedScoreCircle 
               score={data.overallScore} 
-              size="large"
+              type="financial"
+              size="lg"
               label={getScoreRating(data.overallScore)}
-              color="#3b82f6"
+              showLabel={true}
             />
           </div>
         </div>

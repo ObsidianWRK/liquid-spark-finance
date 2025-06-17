@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import PolishedTransactionList from '@/components/transactions/PolishedTransactionList';
+import { UnifiedTransactionList } from '@/components/shared';
 import MobileTransactionScreen from '@/screens/MobileTransactionScreen';
 import EnterpriseTransactionView from '@/components/transactions/EnterpriseTransactionView';
 import { Smartphone, Tablet, Monitor } from 'lucide-react';
@@ -191,8 +191,29 @@ const TransactionDemo: React.FC = () => {
           {view === 'tablet' && (
             <div className="bg-gray-900 rounded-2xl p-8 shadow-2xl">
               <div className="bg-black rounded-xl overflow-hidden">
-                <PolishedTransactionList
-                  transactions={transactions}
+                <UnifiedTransactionList
+                  transactions={transactions.map(t => ({
+                    id: t.id,
+                    date: t.date,
+                    description: t.merchant,
+                    amount: Math.abs(t.amount),
+                    category: t.category.toLowerCase(),
+                    type: t.amount < 0 ? 'expense' : 'income' as const,
+                    merchant: t.merchant,
+                    scores: {
+                      health: Math.floor(Math.random() * 100),
+                      eco: Math.floor(Math.random() * 100),
+                      financial: Math.floor(Math.random() * 100),
+                    }
+                  }))}
+                  variant="polished"
+                  currency="USD"
+                  features={{
+                    showScores: true,
+                    showCategories: true,
+                    searchable: true,
+                    filterable: true,
+                  }}
                   onTransactionClick={(t) => console.log('Selected:', t)}
                 />
               </div>

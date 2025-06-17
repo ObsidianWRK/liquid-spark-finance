@@ -1,4 +1,4 @@
-# 💰 Liquid Spark Finance
+# 💰 Vueni
 
 [![React](https://img.shields.io/badge/React-18.3.1-blue.svg)](https://reactjs.org/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.5.3-blue.svg)](https://www.typescriptlang.org/)
@@ -30,8 +30,8 @@ A comprehensive personal finance management application built with React, TypeSc
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/yourusername/liquid-spark-finance.git
-   cd liquid-spark-finance
+   git clone https://github.com/yourusername/vueni.git
+   cd vueni
    ```
 
 2. **Install dependencies**
@@ -195,7 +195,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 🔗 Links
 
-- **Live Demo**: [https://liquid-spark-finance.vercel.app](https://liquid-spark-finance.vercel.app)
+- **Live Demo**: [https://vueni.vercel.app](https://vueni.vercel.app)
 - **Documentation**: [docs/README.md](docs/README.md)
 - **API Reference**: [docs/API.md](docs/API.md)
 - **Component Library**: [docs/COMPONENTS.md](docs/COMPONENTS.md)

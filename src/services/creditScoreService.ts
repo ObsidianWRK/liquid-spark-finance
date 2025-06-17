@@ -1,7 +1,13 @@
 import { CreditScore, CreditTip, ScoreHistoryPoint } from '@/types/creditScore';
+import { VueniSecureStorage } from '@/utils/crypto';
 
 export class CreditScoreService {
   private static instance: CreditScoreService;
+  private storageKey = 'vueni:credit:score:v1';
+  
+  private constructor() {
+    // Initialize any persistent data loading if needed
+  }
   
   static getInstance(): CreditScoreService {
     if (!CreditScoreService.instance) {
@@ -10,9 +16,38 @@ export class CreditScoreService {
     return CreditScoreService.instance;
   }
 
+  /**
+   * Caches credit score data securely for demo purposes
+   */
+  private cacheCreditData(data: CreditScore): void {
+    try {
+      VueniSecureStorage.setItem(this.storageKey, data, { sensitive: true, sessionOnly: true });
+    } catch (error) {
+      console.error('Failed to cache credit score data:', error);
+    }
+  }
+
+  /**
+   * Retrieves cached credit score data
+   */
+  private getCachedCreditData(): CreditScore | null {
+    try {
+      return VueniSecureStorage.getItem(this.storageKey);
+    } catch (error) {
+      console.error('Failed to retrieve cached credit data:', error);
+      return null;
+    }
+  }
+
   async getCurrentScore(): Promise<CreditScore> {
+    // Check for cached data first (for demo purposes)
+    const cachedData = this.getCachedCreditData();
+    if (cachedData) {
+      return cachedData;
+    }
+
     // Mock data for now - replace with actual API call
-    return {
+    const scoreData: CreditScore = {
       score: 680,
       scoreRange: 'Good',
       lastUpdated: new Date().toISOString(),
@@ -56,6 +91,10 @@ export class CreditScoreService {
       ],
       history: this.generateMockHistory()
     };
+
+    // Cache the sensitive credit score data in session storage
+    this.cacheCreditData(scoreData);
+    return scoreData;
   }
 
   async getCreditTips(): Promise<CreditTip[]> {

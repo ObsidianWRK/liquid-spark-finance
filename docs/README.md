@@ -1,6 +1,6 @@
-# Liquid Spark Finance Documentation
+# Vueni Documentation
 
-Welcome to the comprehensive documentation for the Liquid Spark Finance application. This documentation provides everything you need to understand, develop, test, and deploy the application.
+Welcome to the comprehensive documentation for the Vueni application. This documentation provides everything you need to understand, develop, test, and deploy the application.
 
 ## 📋 Table of Contents
 
@@ -101,7 +101,7 @@ Welcome to the comprehensive documentation for the Liquid Spark Finance applicat
 ```bash
 # Setup
 git clone <repository>
-cd liquid-spark-finance
+cd vueni
 npm install
 cp .env.example .env.local
 

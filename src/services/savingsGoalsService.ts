@@ -1,14 +1,42 @@
 import { SavingsGoal, Contribution, SavingsInsight } from '@/types/savingsGoals';
+import { VueniSecureStorage } from '@/utils/crypto';
 
 export class SavingsGoalsService {
   private static instance: SavingsGoalsService;
+  private storageKey = 'vueni:savings:goals:v1';
   private goals: SavingsGoal[] = [];
+
+  private constructor() {
+    this.load();
+  }
 
   static getInstance(): SavingsGoalsService {
     if (!SavingsGoalsService.instance) {
       SavingsGoalsService.instance = new SavingsGoalsService();
     }
     return SavingsGoalsService.instance;
+  }
+
+  private load(): void {
+    if (typeof window === 'undefined') return;
+    try {
+      const data = VueniSecureStorage.getItem(this.storageKey);
+      if (data) {
+        this.goals = data as SavingsGoal[];
+      }
+    } catch (error) {
+      console.error('Failed to load savings goals from secure storage:', error);
+      this.goals = [];
+    }
+  }
+
+  private persist(): void {
+    if (typeof window === 'undefined') return;
+    try {
+      VueniSecureStorage.setItem(this.storageKey, this.goals, { sensitive: true });
+    } catch (error) {
+      console.error('Failed to persist savings goals to secure storage:', error);
+    }
   }
 
   async getGoals(): Promise<SavingsGoal[]> {
@@ -95,6 +123,7 @@ export class SavingsGoalsService {
     };
     
     this.goals.push(newGoal);
+    this.persist();
     return newGoal;
   }
 
@@ -112,6 +141,8 @@ export class SavingsGoalsService {
       if (goal.currentAmount >= goal.targetAmount) {
         goal.isCompleted = true;
       }
+      
+      this.persist();
     }
   }
 
@@ -119,11 +150,13 @@ export class SavingsGoalsService {
     const goalIndex = this.goals.findIndex(g => g.id === goalId);
     if (goalIndex !== -1) {
       this.goals[goalIndex] = { ...this.goals[goalIndex], ...updates };
+      this.persist();
     }
   }
 
   async deleteGoal(goalId: string): Promise<void> {
     this.goals = this.goals.filter(g => g.id !== goalId);
+    this.persist();
   }
 
   async getSavingsInsights(): Promise<SavingsInsight[]> {

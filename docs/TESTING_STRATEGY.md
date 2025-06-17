@@ -2,7 +2,7 @@
 
 ## Overview
 
-This document outlines a comprehensive testing strategy for the Liquid Spark Finance application, addressing the current 0% test coverage and establishing a robust testing framework to achieve 80% coverage target.
+This document outlines a comprehensive testing strategy for the Vueni application, addressing the current 0% test coverage and establishing a robust testing framework to achieve 80% coverage target.
 
 ## Current State Analysis
 
@@ -1100,4 +1100,4 @@ coverage: {
 - **Maintainable test suite** with clear patterns
 - **Security assurance** through automated testing
 
-This comprehensive testing strategy will transform the Liquid Spark Finance application from an untested codebase to a robust, reliable financial platform with confidence in all critical functionality.
+This comprehensive testing strategy will transform the Vueni application from an untested codebase to a robust, reliable financial platform with confidence in all critical functionality.

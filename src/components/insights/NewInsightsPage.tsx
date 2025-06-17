@@ -3,7 +3,7 @@ import { Heart, Leaf, DollarSign, TrendingUp, Calendar, BarChart3 } from 'lucide
 import FinancialCard from './FinancialCard';
 import WellnessCard from './WellnessCard';
 import EcoCard from './EcoCard';
-import ScoreCircle from './ScoreCircle';
+import { SharedScoreCircle } from '@/components/shared';
 import TimeSeriesChart from './TimeSeriesChart';
 import SpendingTrendsChart from './SpendingTrendsChart';
 import CategoryTrendsChart from './CategoryTrendsChart';
@@ -221,27 +221,30 @@ const NewInsightsPage: React.FC<NewInsightsPageProps> = ({ transactions, account
               </h3>
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 sm:gap-12">
                 <div className="text-center">
-                  <ScoreCircle 
+                  <SharedScoreCircle 
                     score={scores.financial} 
-                    size="large"
+                    type="financial"
+                    size="lg"
                     label="Financial Health"
-                    color="#3b82f6"
+                    showLabel={true}
                   />
                 </div>
                 <div className="text-center">
-                  <ScoreCircle 
+                  <SharedScoreCircle 
                     score={scores.health} 
-                    size="large"
+                    type="health"
+                    size="lg"
                     label="Wellness Score"
-                    color="#ef4444"
+                    showLabel={true}
                   />
                 </div>
                 <div className="text-center">
-                  <ScoreCircle 
+                  <SharedScoreCircle 
                     score={scores.eco} 
-                    size="large"
+                    type="eco"
+                    size="lg"
                     label="Eco Impact"
-                    color="#10b981"
+                    showLabel={true}
                   />
                 </div>
               </div>

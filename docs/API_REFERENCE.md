@@ -2,7 +2,7 @@
 
 ## Overview
 
-This document provides comprehensive API documentation for the Liquid Spark Finance application, covering all financial calculation functions, service methods, and utility functions.
+This document provides comprehensive API documentation for the Vueni application, covering all financial calculation functions, service methods, and utility functions.
 
 ## Financial Calculators API
 
@@ -741,4 +741,4 @@ const monitoredCalculateCompoundInterest = performanceWrapper(
 );
 ```
 
-This API reference provides comprehensive documentation for all financial calculation functions and services in the Liquid Spark Finance application. Each function includes detailed parameter descriptions, return types, usage examples, and error handling information to support development and integration efforts.
+This API reference provides comprehensive documentation for all financial calculation functions and services in the Vueni application. Each function includes detailed parameter descriptions, return types, usage examples, and error handling information to support development and integration efforts.

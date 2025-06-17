@@ -1,6 +1,6 @@
 import React from 'react';
 import { Leaf, Droplets, Zap, TreePine, Car, Recycle, ShoppingBag, DollarSign } from 'lucide-react';
-import ScoreCircle from './ScoreCircle';
+import ScoreCircle from '../transactions/ScoreCircle';
 import MetricCard from './MetricCard';
 
 interface EcoData {

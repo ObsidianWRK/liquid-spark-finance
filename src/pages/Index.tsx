@@ -3,7 +3,7 @@ import { useLocation, useSearchParams } from 'react-router-dom';
 import Navigation from '@/components/Navigation';
 import AccountCard from '@/components/AccountCard';
 import BalanceCard from '@/components/BalanceCard';
-import AppleTransactionList from '@/components/transactions/AppleTransactionList';
+import { UnifiedTransactionList } from '@/components/shared';
 import LiquidGlassTopMenuBar from '@/components/LiquidGlassTopMenuBar';
 import CreditScoreCard from '@/components/credit/CreditScoreCard';
 import NewInsightsPage from '@/components/insights/NewInsightsPage';
@@ -14,6 +14,24 @@ import ChatDrawer from '@/components/ai/ChatDrawer';
 import NetWorthSummary from '@/components/financial/NetWorthSummary';
 import { mockData } from '@/services/mockData';
 import { usePerformanceOptimization } from '@/hooks/usePerformanceOptimization';
+
+// Transform mockData transactions to match UnifiedTransactionList format
+const transformTransactions = (transactions: typeof mockData.transactions) => {
+  return transactions.map(t => ({
+    id: t.id,
+    date: t.date,
+    description: t.merchant,
+    amount: Math.abs(t.amount),
+    category: t.category.name.toLowerCase(),
+    type: t.amount < 0 ? 'expense' : 'income' as const,
+    merchant: t.merchant,
+    scores: {
+      health: Math.floor(Math.random() * 100),
+      eco: Math.floor(Math.random() * 100),
+      financial: Math.floor(Math.random() * 100),
+    }
+  }));
+};
 
 const Index = () => {
   const [activeTab, setActiveTab] = useState('dashboard');
@@ -88,9 +106,16 @@ const Index = () => {
               
               {/* Recent Transactions */}
               <div className="w-full">
-                <AppleTransactionList 
-                  transactions={mockData.transactions.slice(0, 15)}
-                  currency="USD" 
+                <UnifiedTransactionList 
+                  transactions={transformTransactions(mockData.transactions.slice(0, 15))}
+                  variant="apple"
+                  currency="USD"
+                  features={{
+                    showScores: true,
+                    showCategories: true,
+                    searchable: false,
+                    groupByDate: true,
+                  }}
                 />
               </div>
             </div>
@@ -113,9 +138,17 @@ const Index = () => {
       case 'transactions':
         return (
           <div className="w-full">
-            <AppleTransactionList 
-              transactions={mockData.transactions} 
+            <UnifiedTransactionList 
+              transactions={transformTransactions(mockData.transactions)} 
+              variant="apple"
               currency="USD"
+              features={{
+                showScores: true,
+                showCategories: true,
+                searchable: true,
+                filterable: true,
+                groupByDate: true,
+              }}
             />
           </div>
         );

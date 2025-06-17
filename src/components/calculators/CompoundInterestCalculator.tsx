@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import { calculateCompoundInterest } from '@/utils/calculators';
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, BarChart, Bar } from 'recharts';
+import { SecureCalculatorWrapper, useSecureCalculator } from './SecureCalculatorWrapper';
+import { Alert, AlertDescription } from '@/components/ui/alert';
+import { AlertTriangle } from 'lucide-react';
 
 interface CompoundData {
   year: number;
@@ -9,7 +12,17 @@ interface CompoundData {
   total: number;
 }
 
-const CompoundInterestCalculator = () => {
+interface SecureCalculatorProps {
+  securityContext?: {
+    validateInput: (type: string, value: any) => any;
+    onCalculationSuccess: () => void;
+    onCalculationError: (error: Error) => void;
+    securityLevel: string;
+  };
+  onSecurityEvent?: (violationType: string, details: any) => void;
+}
+
+const CompoundInterestCalculator = ({ securityContext, onSecurityEvent }: SecureCalculatorProps) => {
   const [principal, setPrincipal] = useState(10000);
   const [rate, setRate] = useState(7);
   const [years, setYears] = useState(10);
@@ -17,6 +30,9 @@ const CompoundInterestCalculator = () => {
   const [monthlyContribution, setMonthlyContribution] = useState(200);
   const [futureValue, setFutureValue] = useState<number | null>(null);
   const [chartData, setChartData] = useState<CompoundData[]>([]);
+  const [inputErrors, setInputErrors] = useState<Record<string, string>>({});
+
+  const { validateAndSanitizeInput, performSecureCalculation } = useSecureCalculator('compound-interest');
 
   const generateCompoundData = (): CompoundData[] => {
     const data: CompoundData[] = [];
@@ -62,11 +78,59 @@ const CompoundInterestCalculator = () => {
     return data;
   };
 
-  const handleCalculate = () => {
-    const result = calculateCompoundInterest(principal, rate, years, compoundFreq);
-    const chartData = generateCompoundData();
-    setFutureValue(result);
-    setChartData(chartData);
+  const handleSecureInput = (field: string, value: string, type: string) => {
+    setInputErrors(prev => ({ ...prev, [field]: '' }));
+    
+    try {
+      let sanitizedValue;
+      if (securityContext) {
+        sanitizedValue = securityContext.validateInput(type, value);
+      } else {
+        sanitizedValue = validateAndSanitizeInput(type, value);
+      }
+
+      switch (field) {
+        case 'principal':
+          setPrincipal(sanitizedValue);
+          break;
+        case 'monthlyContribution':
+          setMonthlyContribution(sanitizedValue);
+          break;
+        case 'rate':
+          setRate(sanitizedValue);
+          break;
+        case 'years':
+          setYears(sanitizedValue);
+          break;
+      }
+    } catch (error) {
+      setInputErrors(prev => ({ ...prev, [field]: error.message }));
+      onSecurityEvent?.('invalid_input', { field, value, error: error.message });
+    }
+  };
+
+  const handleCalculate = async () => {
+    try {
+      const calculationFunction = () => {
+        const result = calculateCompoundInterest(principal, rate, years, compoundFreq);
+        const chartData = generateCompoundData();
+        setFutureValue(result);
+        setChartData(chartData);
+        return result;
+      };
+
+      if (securityContext) {
+        await calculationFunction();
+        securityContext.onCalculationSuccess();
+      } else {
+        await performSecureCalculation(calculationFunction);
+      }
+    } catch (error) {
+      if (securityContext) {
+        securityContext.onCalculationError(error);
+      }
+      setInputErrors(prev => ({ ...prev, calculation: error.message }));
+    }
   };
 
   const formatCurrency = (value: number) => {
@@ -106,10 +170,18 @@ const CompoundInterestCalculator = () => {
                 <input
                   type="number"
                   value={principal}
-                  onChange={(e) => setPrincipal(+e.target.value)}
-                  className="w-full pl-8 pr-4 py-3 rounded-xl bg-white/5 text-white border border-white/10 focus:border-blue-400 focus:outline-none transition-colors"
+                  onChange={(e) => handleSecureInput('principal', e.target.value, 'amount')}
+                  className={`w-full pl-8 pr-4 py-3 rounded-xl bg-white/5 text-white border transition-colors focus:outline-none ${
+                    inputErrors.principal ? 'border-red-400 focus:border-red-400' : 'border-white/10 focus:border-blue-400'
+                  }`}
                   placeholder="10,000"
                 />
+                {inputErrors.principal && (
+                  <Alert className="mt-2 border-red-200 bg-red-50">
+                    <AlertTriangle className="h-4 w-4 text-red-600" />
+                    <AlertDescription className="text-red-700">{inputErrors.principal}</AlertDescription>
+                  </Alert>
+                )}
               </div>
             </div>
             
@@ -122,10 +194,18 @@ const CompoundInterestCalculator = () => {
                 <input
                   type="number"
                   value={monthlyContribution}
-                  onChange={(e) => setMonthlyContribution(+e.target.value)}
-                  className="w-full pl-8 pr-4 py-3 rounded-xl bg-white/5 text-white border border-white/10 focus:border-blue-400 focus:outline-none transition-colors"
+                  onChange={(e) => handleSecureInput('monthlyContribution', e.target.value, 'amount')}
+                  className={`w-full pl-8 pr-4 py-3 rounded-xl bg-white/5 text-white border transition-colors focus:outline-none ${
+                    inputErrors.monthlyContribution ? 'border-red-400 focus:border-red-400' : 'border-white/10 focus:border-blue-400'
+                  }`}
                   placeholder="200"
                 />
+                {inputErrors.monthlyContribution && (
+                  <Alert className="mt-2 border-red-200 bg-red-50">
+                    <AlertTriangle className="h-4 w-4 text-red-600" />
+                    <AlertDescription className="text-red-700">{inputErrors.monthlyContribution}</AlertDescription>
+                  </Alert>
+                )}
               </div>
             </div>
             
@@ -137,11 +217,19 @@ const CompoundInterestCalculator = () => {
                 <input
                   type="number"
                   value={rate}
-                  onChange={(e) => setRate(+e.target.value)}
-                  className="w-full pr-8 pl-4 py-3 rounded-xl bg-white/5 text-white border border-white/10 focus:border-blue-400 focus:outline-none transition-colors"
+                  onChange={(e) => handleSecureInput('rate', e.target.value, 'interestRate')}
+                  className={`w-full pr-8 pl-4 py-3 rounded-xl bg-white/5 text-white border transition-colors focus:outline-none ${
+                    inputErrors.rate ? 'border-red-400 focus:border-red-400' : 'border-white/10 focus:border-blue-400'
+                  }`}
                   placeholder="7"
                   step="0.1"
                 />
+                {inputErrors.rate && (
+                  <Alert className="mt-2 border-red-200 bg-red-50">
+                    <AlertTriangle className="h-4 w-4 text-red-600" />
+                    <AlertDescription className="text-red-700">{inputErrors.rate}</AlertDescription>
+                  </Alert>
+                )}
                 <span className="absolute right-3 top-1/2 transform -translate-y-1/2 text-white/60">%</span>
               </div>
             </div>
@@ -154,10 +242,18 @@ const CompoundInterestCalculator = () => {
                 <input
                   type="number"
                   value={years}
-                  onChange={(e) => setYears(+e.target.value)}
-                  className="w-full pr-16 pl-4 py-3 rounded-xl bg-white/5 text-white border border-white/10 focus:border-blue-400 focus:outline-none transition-colors"
+                  onChange={(e) => handleSecureInput('years', e.target.value, 'timePeriod')}
+                  className={`w-full pr-16 pl-4 py-3 rounded-xl bg-white/5 text-white border transition-colors focus:outline-none ${
+                    inputErrors.years ? 'border-red-400 focus:border-red-400' : 'border-white/10 focus:border-blue-400'
+                  }`}
                   placeholder="10"
                 />
+                {inputErrors.years && (
+                  <Alert className="mt-2 border-red-200 bg-red-50">
+                    <AlertTriangle className="h-4 w-4 text-red-600" />
+                    <AlertDescription className="text-red-700">{inputErrors.years}</AlertDescription>
+                  </Alert>
+                )}
                 <span className="absolute right-3 top-1/2 transform -translate-y-1/2 text-white/60">years</span>
               </div>
             </div>
@@ -185,6 +281,15 @@ const CompoundInterestCalculator = () => {
             >
               Calculate Growth
             </button>
+
+            {inputErrors.calculation && (
+              <Alert className="mt-4 border-red-200 bg-red-50">
+                <AlertTriangle className="h-4 w-4 text-red-600" />
+                <AlertDescription className="text-red-700">
+                  Calculation Error: {inputErrors.calculation}
+                </AlertDescription>
+              </Alert>
+            )}
           </div>
         </div>
 
@@ -298,4 +403,14 @@ const CompoundInterestCalculator = () => {
   );
 };
 
-export default CompoundInterestCalculator; 
+// Wrapped component with security features
+const SecureCompoundInterestCalculator = () => {
+  return (
+    <SecureCalculatorWrapper calculatorName="compound-interest">
+      <CompoundInterestCalculator />
+    </SecureCalculatorWrapper>
+  );
+};
+
+export default SecureCompoundInterestCalculator;
+export { CompoundInterestCalculator }; 

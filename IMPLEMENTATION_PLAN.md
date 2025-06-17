@@ -1,4 +1,4 @@
-# 🚀 Liquid Spark Finance - Implementation Plan
+# 🚀 Vueni - Implementation Plan
 
 ## Week 1-2: Foundation Setup
 

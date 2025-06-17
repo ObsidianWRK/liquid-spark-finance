@@ -2,7 +2,7 @@
 
 ## Overview
 
-This comprehensive guide covers development environment setup, build processes, deployment strategies, and production configuration for the Liquid Spark Finance application.
+This comprehensive guide covers development environment setup, build processes, deployment strategies, and production configuration for the Vueni application.
 
 ## Development Environment Setup
 
@@ -34,8 +34,8 @@ This comprehensive guide covers development environment setup, build processes, 
 #### 1. Clone and Setup Repository
 ```bash
 # Clone the repository
-git clone https://github.com/yourusername/liquid-spark-finance.git
-cd liquid-spark-finance
+git clone https://github.com/yourusername/vueni.git
+cd vueni
 
 # Install dependencies
 npm install
@@ -52,7 +52,7 @@ npm run dev
 Create `.env.local` file:
 ```bash
 # Development Configuration
-VITE_APP_NAME="Liquid Spark Finance"
+VITE_APP_NAME="Vueni"
 VITE_APP_VERSION="1.0.0"
 VITE_APP_ENV="development"
 
@@ -111,7 +111,7 @@ brew install postgresql@14
 brew services start postgresql@14
 
 # Create database
-createdb liquid_spark_finance_dev
+createdb vueni_dev
 
 # Run migrations (when implemented)
 npm run db:migrate
@@ -121,7 +121,7 @@ npm run db:seed
 #### Environment Variables for Database
 ```bash
 # Add to .env.local when database is implemented
-DATABASE_URL="postgresql://user:password@localhost:5432/liquid_spark_finance_dev"
+DATABASE_URL="postgresql://user:password@localhost:5432/vueni_dev"
 REDIS_URL="redis://localhost:6379"
 ```
 
@@ -506,7 +506,7 @@ services:
   postgres:
     image: postgres:14-alpine
     environment:
-      POSTGRES_DB: liquid_spark_finance
+      POSTGRES_DB: vueni
       POSTGRES_USER: app_user
       POSTGRES_PASSWORD: ${DB_PASSWORD}
     volumes:
@@ -611,7 +611,7 @@ export const config = {
 ```typescript
 // src/config/staging.ts
 export const config = {
-  API_BASE_URL: 'https://staging-api.liquidsparkfinance.com',
+          API_BASE_URL: 'https://staging-api.vueni.com',
   ENABLE_MOCK_DATA: false,
   LOG_LEVEL: 'info',
   ENABLE_DEV_TOOLS: false,
@@ -631,7 +631,7 @@ export const config = {
 ```typescript
 // src/config/production.ts
 export const config = {
-  API_BASE_URL: 'https://api.liquidsparkfinance.com',
+          API_BASE_URL: 'https://api.vueni.com',
   ENABLE_MOCK_DATA: false,
   LOG_LEVEL: 'error',
   ENABLE_DEV_TOOLS: false,
@@ -696,7 +696,7 @@ const sendToAnalytics = (metric: any) => {
 
 ```typescript
 // public/sw.js
-const CACHE_NAME = 'liquid-spark-finance-v1';
+const CACHE_NAME = 'vueni-v1';
 const urlsToCache = [
   '/',
   '/static/js/bundle.js',
@@ -1005,4 +1005,4 @@ npm run build
 }
 ```
 
-This comprehensive deployment guide provides everything needed to set up, build, deploy, and maintain the Liquid Spark Finance application across different environments and platforms.
+This comprehensive deployment guide provides everything needed to set up, build, deploy, and maintain the Vueni application across different environments and platforms.

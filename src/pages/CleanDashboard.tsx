@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import AppShell from '@/components/layout/AppShell';
 import CleanAccountCard from '@/components/financial/CleanAccountCard';
 import CleanCreditScoreCard from '@/components/financial/CleanCreditScoreCard';
-import CleanTransactionList from '@/components/transactions/CleanTransactionList';
+import { UnifiedTransactionList } from '@/components/shared';
 import SimpleGlassCard from '@/components/ui/SimpleGlassCard';
 import { colors } from '@/theme/colors';
 import { 
@@ -304,8 +304,25 @@ const CleanDashboard = () => {
 
           {/* Right Column - Transactions */}
           <div className="lg:col-span-2">
-            <CleanTransactionList
-              transactions={mockTransactions}
+            <UnifiedTransactionList
+              transactions={mockTransactions.map(t => ({
+                id: t.id,
+                date: t.date,
+                description: t.merchant,
+                amount: Math.abs(t.amount),
+                category: t.category.toLowerCase(),
+                type: t.amount < 0 ? 'expense' : 'income' as const,
+                merchant: t.merchant,
+                scores: t.scores
+              }))}
+              variant="clean"
+              currency="USD"
+              features={{
+                showScores: true,
+                showCategories: true,
+                searchable: true,
+                filterable: true,
+              }}
               onTransactionClick={handleTransactionClick}
             />
           </div>

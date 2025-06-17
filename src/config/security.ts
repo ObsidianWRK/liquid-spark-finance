@@ -1,4 +1,4 @@
-// Security configuration for Liquid Spark Finance
+// Security configuration for Vueni
 
 export const securityConfig = {
   // Content Security Policy

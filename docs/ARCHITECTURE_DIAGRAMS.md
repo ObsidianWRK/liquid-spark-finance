@@ -1,6 +1,6 @@
 # Architecture Diagrams
 
-This document contains system architecture diagrams for the Liquid Spark Finance application.
+This document contains system architecture diagrams for the Vueni application.
 
 ## Component Hierarchy Diagram
 
