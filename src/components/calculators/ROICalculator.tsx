@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo, useCallback } from 'react';
 import { calculateROI } from '@/utils/calculators';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell } from 'recharts';
+import { UniversalCard } from '@/components/ui/UniversalCard';
 
 interface ROIData {
   investment: string;
@@ -8,21 +9,25 @@ interface ROIData {
   percentage: number;
 }
 
-const ROICalculator = () => {
+const ROICalculator = React.memo(() => {
   const [initial, setInitial] = useState(1000);
   const [current, setCurrent] = useState(1200);
   const [timeHeld, setTimeHeld] = useState(12); // months
-  const [roi, setRoi] = useState<number | null>(null);
-  const [chartData, setChartData] = useState<ROIData[]>([]);
 
-  const generateChartData = (initialInvestment: number, currentValue: number): ROIData[] => {
-    const gain = currentValue - initialInvestment;
-    const gainPercentage = ((gain / initialInvestment) * 100);
+  // Memoized expensive calculations - only recalculate when inputs change
+  const calculatedROI = useMemo(() => {
+    if (initial <= 0) return null;
+    return calculateROI(initial, current, timeHeld);
+  }, [initial, current, timeHeld]);
+
+  const chartData = useMemo((): ROIData[] => {
+    const gain = current - initial;
+    const gainPercentage = initial > 0 ? ((gain / initial) * 100) : 0;
     
     return [
       {
         investment: 'Initial Investment',
-        amount: initialInvestment,
+        amount: initial,
         percentage: 100
       },
       {
@@ -32,23 +37,30 @@ const ROICalculator = () => {
       },
       {
         investment: 'Current Value',
-        amount: currentValue,
+        amount: current,
         percentage: 100 + gainPercentage
       }
     ];
-  };
+  }, [initial, current]);
 
-  const pieData = [
+  // Memoized pie chart data
+  const pieData = useMemo(() => [
     { name: 'Initial Investment', value: initial, color: '#3B82F6' },
     { name: 'Gain/Loss', value: Math.max(0, current - initial), color: '#10B981' }
-  ];
+  ], [initial, current]);
 
-  const handleCalculate = () => {
-    const result = calculateROI(initial, current);
-    const chartData = generateChartData(initial, current);
-    setRoi(result);
-    setChartData(chartData);
-  };
+  // Optimized event handlers with useCallback
+  const handleInitialChange = useCallback((value: string) => {
+    setInitial(parseFloat(value) || 0);
+  }, []);
+
+  const handleCurrentChange = useCallback((value: string) => {
+    setCurrent(parseFloat(value) || 0);
+  }, []);
+
+  const handleTimeChange = useCallback((value: string) => {
+    setTimeHeld(parseInt(value) || 0);
+  }, []);
 
   const formatCurrency = (value: number) => {
     return new Intl.NumberFormat('en-US', {
@@ -59,7 +71,7 @@ const ROICalculator = () => {
     }).format(value);
   };
 
-  const annualizedReturn = timeHeld > 0 ? (roi || 0) * (12 / timeHeld) : 0;
+  const annualizedReturn = timeHeld > 0 ? (calculatedROI || 0) * (12 / timeHeld) : 0;
 
   return (
     <div className="max-w-6xl mx-auto p-6 space-y-8">
@@ -79,7 +91,7 @@ const ROICalculator = () => {
                 <input
                   type="number"
                   value={initial}
-                  onChange={(e) => setInitial(+e.target.value)}
+                  onChange={(e) => handleInitialChange(e.target.value)}
                   className="w-full pl-8 pr-4 py-3 rounded-xl bg-white/5 text-white border border-white/10 focus:border-blue-400 focus:outline-none transition-colors"
                   placeholder="1,000"
                 />
@@ -95,7 +107,7 @@ const ROICalculator = () => {
                 <input
                   type="number"
                   value={current}
-                  onChange={(e) => setCurrent(+e.target.value)}
+                  onChange={(e) => handleCurrentChange(e.target.value)}
                   className="w-full pl-8 pr-4 py-3 rounded-xl bg-white/5 text-white border border-white/10 focus:border-blue-400 focus:outline-none transition-colors"
                   placeholder="1,200"
                 />
@@ -109,28 +121,22 @@ const ROICalculator = () => {
               <input
                 type="number"
                 value={timeHeld}
-                onChange={(e) => setTimeHeld(+e.target.value)}
+                onChange={(e) => handleTimeChange(e.target.value)}
                 className="w-full px-4 py-3 rounded-xl bg-white/5 text-white border border-white/10 focus:border-blue-400 focus:outline-none transition-colors"
                 placeholder="12"
               />
             </div>
             
-            <button
-              onClick={handleCalculate}
-              className="w-full py-3 px-6 rounded-xl bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white font-semibold transition-all duration-200 transform hover:scale-105"
-            >
-              Calculate ROI
-            </button>
           </div>
         </div>
 
         {/* Results Section */}
-        {roi !== null && (
+        {calculatedROI !== null && (
           <div className="bg-white/5 backdrop-blur-xl rounded-3xl p-6 border border-white/10">
             <h2 className="text-xl font-semibold text-white mb-6">Results</h2>
             <div className="space-y-4">
-              <div className={`text-center p-6 rounded-2xl border ${roi >= 0 ? 'bg-gradient-to-r from-green-500/20 to-blue-500/20 border-green-400/20' : 'bg-gradient-to-r from-red-500/20 to-orange-500/20 border-red-400/20'}`}>
-                <div className="text-3xl font-bold text-white mb-2">{roi?.toFixed(2)}%</div>
+              <div className={`text-center p-6 rounded-2xl border ${calculatedROI >= 0 ? 'bg-gradient-to-r from-green-500/20 to-blue-500/20 border-green-400/20' : 'bg-gradient-to-r from-red-500/20 to-orange-500/20 border-red-400/20'}`}>
+                <div className="text-3xl font-bold text-white mb-2">{calculatedROI?.toFixed(2)}%</div>
                 <div className="text-white/80">Total Return</div>
               </div>
               
@@ -231,6 +237,8 @@ const ROICalculator = () => {
       )}
     </div>
   );
-};
+});
+
+ROICalculator.displayName = 'ROICalculator';
 
 export default ROICalculator; 

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo, useCallback } from 'react';
 import { ChevronDown, ChevronUp } from 'lucide-react';
 import { Account } from '@/types/shared';
 import { UniversalCard } from '@/components/ui/UniversalCard';
@@ -16,13 +16,15 @@ interface AccountCardProps {
 const AccountCard = React.memo<AccountCardProps>(({ account, recentTransactions = [] }) => {
   const [isExpanded, setIsExpanded] = useState(false);
 
-  const formatCurrency = (amount: number) => {
-    return new Intl.NumberFormat('en-US', {
+  // Memoized currency formatter to prevent recreation
+  const formatCurrency = useMemo(() => {
+    const formatter = new Intl.NumberFormat('en-US', {
       style: 'currency',
       currency: account.currency,
       minimumFractionDigits: 2
-    }).format(amount);
-  };
+    });
+    return (amount: number) => formatter.format(amount);
+  }, [account.currency]);
 
   return (
     <UniversalCard
@@ -30,7 +32,7 @@ const AccountCard = React.memo<AccountCardProps>(({ account, recentTransactions 
       className="stagger-item cursor-pointer"
       interactive
       hover={{ scale: true, glow: true }}
-      onClick={() => setIsExpanded(!isExpanded)}
+      onClick={useCallback(() => setIsExpanded(prev => !prev), [])}
     >
       <div className="flex justify-between items-start mb-3">
         <div>

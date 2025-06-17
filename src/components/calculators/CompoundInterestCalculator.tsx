@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo, useCallback } from 'react';
 import { calculateCompoundInterest } from '@/utils/calculators';
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, BarChart, Bar } from 'recharts';
 import { SecureCalculatorWrapper, useSecureCalculator } from './SecureCalculatorWrapper';
@@ -22,7 +22,7 @@ interface SecureCalculatorProps {
   onSecurityEvent?: (violationType: string, details: any) => void;
 }
 
-const CompoundInterestCalculator = ({ securityContext, onSecurityEvent }: SecureCalculatorProps) => {
+const CompoundInterestCalculator = React.memo<SecureCalculatorProps>(({ securityContext, onSecurityEvent }) => {
   const [principal, setPrincipal] = useState(10000);
   const [rate, setRate] = useState(7);
   const [years, setYears] = useState(10);
@@ -34,7 +34,8 @@ const CompoundInterestCalculator = ({ securityContext, onSecurityEvent }: Secure
 
   const { validateAndSanitizeInput, performSecureCalculation } = useSecureCalculator('compound-interest');
 
-  const generateCompoundData = (): CompoundData[] => {
+  // Memoized expensive calculation to prevent unnecessary recalculations
+  const compoundData = useMemo((): CompoundData[] => {
     const data: CompoundData[] = [];
     let currentPrincipal = principal;
     const monthlyRate = rate / 100 / compoundFreq;
@@ -76,9 +77,9 @@ const CompoundInterestCalculator = ({ securityContext, onSecurityEvent }: Secure
     }
     
     return data;
-  };
+  }, [principal, rate, years, compoundFreq, monthlyContribution]);
 
-  const handleSecureInput = (field: string, value: string, type: string) => {
+  const handleSecureInput = useCallback((field: string, value: string, type: string) => {
     setInputErrors(prev => ({ ...prev, [field]: '' }));
     
     try {
@@ -107,13 +108,13 @@ const CompoundInterestCalculator = ({ securityContext, onSecurityEvent }: Secure
       setInputErrors(prev => ({ ...prev, [field]: error.message }));
       onSecurityEvent?.('invalid_input', { field, value, error: error.message });
     }
-  };
+  }, [securityContext, validateAndSanitizeInput, onSecurityEvent]);
 
-  const handleCalculate = async () => {
+  const handleCalculate = useCallback(async () => {
     try {
       const calculationFunction = () => {
         const result = calculateCompoundInterest(principal, rate, years, compoundFreq);
-        const chartData = generateCompoundData();
+        const chartData = compoundData;
         setFutureValue(result);
         setChartData(chartData);
         return result;
@@ -131,16 +132,18 @@ const CompoundInterestCalculator = ({ securityContext, onSecurityEvent }: Secure
       }
       setInputErrors(prev => ({ ...prev, calculation: error.message }));
     }
-  };
+  }, [principal, rate, years, compoundFreq, monthlyContribution, securityContext, performSecureCalculation, compoundData]);
 
-  const formatCurrency = (value: number) => {
-    return new Intl.NumberFormat('en-US', {
+  // Memoized currency formatter
+  const formatCurrency = useMemo(() => {
+    const formatter = new Intl.NumberFormat('en-US', {
       style: 'currency',
       currency: 'USD',
       minimumFractionDigits: 0,
       maximumFractionDigits: 0,
-    }).format(value);
-  };
+    });
+    return (value: number) => formatter.format(value);
+  }, []);
 
   const totalContributions = principal + (monthlyContribution * 12 * years);
   const totalInterest = futureValue ? futureValue - totalContributions : 0;
@@ -401,7 +404,9 @@ const CompoundInterestCalculator = ({ securityContext, onSecurityEvent }: Secure
       )}
     </div>
   );
-};
+});
+
+CompoundInterestCalculator.displayName = 'CompoundInterestCalculator';
 
 // Wrapped component with security features
 const SecureCompoundInterestCalculator = () => {

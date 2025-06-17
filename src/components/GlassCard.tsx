@@ -1,72 +1,39 @@
+// Legacy GlassCard - Redirected to UniversalCard for optimization
+// This maintains backward compatibility while using the optimized system
 
-import React from 'react';
-import { cn } from '@/lib/utils';
+import { UniversalCard } from '@/components/ui/UniversalCard';
+import type { BaseCardProps } from '@/types/shared';
 
-interface GlassCardProps {
-  children: React.ReactNode;
-  className?: string;
+interface GlassCardProps extends Omit<BaseCardProps, 'variant'> {
   variant?: 'default' | 'elevated' | 'subtle';
   shape?: 'rounded' | 'card' | 'capsule';
   interactive?: boolean;
-  shimmer?: boolean;
-  style?: React.CSSProperties;
-  onClick?: () => void;
-  onMouseEnter?: () => void;
-  onMouseLeave?: () => void;
-  'aria-label'?: string;
-  role?: string;
 }
 
-const GlassCard = ({ 
+// Optimized wrapper component - consolidates legacy GlassCard functionality
+export const GlassCard: React.FC<GlassCardProps> = ({ 
   children, 
-  className, 
+  className = '', 
   variant = 'default',
   shape = 'card',
   interactive = false,
-  shimmer = false,
-  style,
-  onClick,
-  onMouseEnter,
-  onMouseLeave,
-  'aria-label': ariaLabel,
-  role
-}: GlassCardProps) => {
-  const baseClasses = 'glass';
-  const variantClasses = {
-    default: '',
-    elevated: 'glass-elevated',
-    subtle: 'glass-subtle'
-  };
-  const shapeClasses = {
-    rounded: 'glass-rounded',
-    card: 'glass-card',
-    capsule: 'glass-capsule'
-  };
-
-  const classes = cn(
-    baseClasses,
-    variantClasses[variant],
-    shapeClasses[shape],
-    interactive && 'glass-interactive focus:outline-none focus:ring-2 focus:ring-blue-400',
-    shimmer && 'glass-shimmer',
-    className
-  );
-
-  const Component = onClick || interactive ? 'button' : 'div';
-
+  ...props 
+}) => {
+  // Map legacy variants to UniversalCard system
+  const universalVariant = 'glass';
+  const universalSize = variant === 'elevated' ? 'lg' : variant === 'subtle' ? 'sm' : 'md';
+  
   return (
-    <Component 
-      className={classes} 
-      style={style} 
-      onClick={onClick}
-      onMouseEnter={onMouseEnter}
-      onMouseLeave={onMouseLeave}
-      aria-label={ariaLabel}
-      role={role}
-      type={onClick ? 'button' : undefined}
+    <UniversalCard
+      variant={universalVariant}
+      size={universalSize}
+      interactive={interactive}
+      className={className}
+      hover={interactive ? { scale: true, glow: true } : undefined}
+      {...props}
     >
       {children}
-    </Component>
+    </UniversalCard>
   );
 };
 

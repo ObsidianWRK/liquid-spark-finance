@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import { TrendingUp, TrendingDown, AlertCircle, CheckCircle } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import AnimatedCircularProgress from '../insights/components/AnimatedCircularProgress';
@@ -7,7 +7,7 @@ import { CreditScore } from '@/types/creditScore';
 import { UniversalCard } from '@/components/ui/UniversalCard';
 import { OptimizedScoreCard } from '@/components/insights/components/OptimizedScoreCard';
 
-const CreditScoreCard = () => {
+const CreditScoreCard = React.memo(() => {
   const navigate = useNavigate();
   const [creditScore, setCreditScore] = useState<CreditScore | null>(null);
   const [loading, setLoading] = useState(true);
@@ -27,15 +27,15 @@ const CreditScoreCard = () => {
     loadCreditScore();
   }, []);
 
-  const getScoreColor = (score: number) => {
+  const getScoreColor = useMemo(() => (score: number) => {
     if (score >= 800) return '#22c55e'; // Excellent
     if (score >= 740) return '#84cc16'; // Very Good  
     if (score >= 670) return '#eab308'; // Good
     if (score >= 580) return '#f97316'; // Fair
     return '#ef4444'; // Poor
-  };
+  }, []);
 
-  const getScoreDescription = (range: string) => {
+  const getScoreDescription = useMemo(() => {
     const descriptions = {
       'Excellent': 'You have excellent credit! Keep up the great work.',
       'Very Good': 'Your credit is in great shape with room for small improvements.',
@@ -43,8 +43,8 @@ const CreditScoreCard = () => {
       'Fair': 'Your credit is fair. Focus on improvement strategies.',
       'Poor': 'Work on building your credit with consistent payments.'
     };
-    return descriptions[range as keyof typeof descriptions] || '';
-  };
+    return (range: string) => descriptions[range as keyof typeof descriptions] || '';
+  }, []);
 
   if (loading) {
     return (
@@ -123,7 +123,7 @@ const CreditScoreCard = () => {
         className="cursor-pointer"
         interactive
         hover={{ scale: true, glow: true }}
-        onClick={() => navigate('/credit-score')}
+        onClick={useCallback(() => navigate('/credit-score'), [navigate])}
         gradient={{
           from: 'blue-500/20',
           to: 'cyan-500/20',
@@ -139,6 +139,8 @@ const CreditScoreCard = () => {
       </UniversalCard>
     </UniversalCard>
   );
-};
+});
+
+CreditScoreCard.displayName = 'CreditScoreCard';
 
 export default CreditScoreCard; 

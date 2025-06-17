@@ -2,13 +2,14 @@ import React, { useState } from 'react';
 import { Calendar, TrendingUp, Plus, Target, Clock } from 'lucide-react';
 import { SavingsGoal } from '@/types/savingsGoals';
 import { savingsGoalsService } from '@/services/savingsGoalsService';
+import { UniversalCard } from '@/components/ui/UniversalCard';
 
 interface GoalCardProps {
   goal: SavingsGoal;
   onGoalUpdate?: () => void;
 }
 
-const GoalCard = ({ goal, onGoalUpdate }: GoalCardProps) => {
+const GoalCard = React.memo<GoalCardProps>(({ goal, onGoalUpdate }) => {
   const [showContribution, setShowContribution] = useState(false);
   const [contributionAmount, setContributionAmount] = useState('');
   const [isAddingContribution, setIsAddingContribution] = useState(false);
@@ -61,10 +62,15 @@ const GoalCard = ({ goal, onGoalUpdate }: GoalCardProps) => {
   };
 
   return (
-    <div 
-      className="liquid-glass-card p-6 relative overflow-hidden"
-      style={{ 
-        background: `linear-gradient(135deg, ${goal.color}15 0%, transparent 50%)` 
+    <UniversalCard
+      variant="glass"
+      className="relative overflow-hidden"
+      interactive
+      hover={{ scale: true, glow: true }}
+      gradient={{
+        from: goal.color + '15',
+        to: 'transparent',
+        direction: 'to-br'
       }}
     >
       {/* Goal Header */}
@@ -222,8 +228,10 @@ const GoalCard = ({ goal, onGoalUpdate }: GoalCardProps) => {
           <span>Overdue</span>
         </div>
       )}
-    </div>
+    </UniversalCard>
   );
-};
+});
+
+GoalCard.displayName = 'GoalCard';
 
 export default GoalCard; 

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, lazy, Suspense } from 'react';
 import { useLocation, useSearchParams } from 'react-router-dom';
 import Navigation from '@/components/Navigation';
 import AccountCard from '@/components/AccountCard';
@@ -9,7 +9,8 @@ import LiquidGlassTopMenuBar from '@/components/LiquidGlassTopMenuBar';
 import CreditScoreCard from '@/components/credit/CreditScoreCard';
 import NewInsightsPage from '@/components/insights/NewInsightsPage';
 import { UnifiedInsightsPage } from '@/components/insights/UnifiedInsightsPage';
-import WrappedPage from '@/components/wrapped/WrappedPage';
+// Lazy load WrappedPage for better performance
+const WrappedPage = lazy(() => import('@/components/wrapped/WrappedPage'));
 import BudgetReportsPage from '@/components/reports/BudgetReportsPage';
 import Profile from './Profile';
 import ChatDrawer from '@/components/ai/ChatDrawer';
@@ -196,7 +197,13 @@ const Index = () => {
       case 'wrapped':
         return (
           <div className="w-full">
-            <WrappedPage />
+            <Suspense fallback={
+              <div className="flex items-center justify-center p-8">
+                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-white"></div>
+              </div>
+            }>
+              <WrappedPage />
+            </Suspense>
           </div>
         );
       case 'profile':

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo, useCallback } from 'react';
 import { Eye, EyeOff, TrendingUp } from 'lucide-react';
 import { UniversalCard } from '@/components/ui/UniversalCard';
 
@@ -23,17 +23,19 @@ const BalanceCard = React.memo<BalanceCardProps>(({
 }) => {
   const [isBalanceVisible, setIsBalanceVisible] = useState(true);
 
-  const formatCurrency = (amount: number) => {
-    return new Intl.NumberFormat('en-US', {
+  // Memoized currency formatter to prevent recreation
+  const formatCurrency = useMemo(() => {
+    const formatter = new Intl.NumberFormat('en-US', {
       style: 'currency',
       currency: currency,
       minimumFractionDigits: 2
-    }).format(amount);
-  };
+    });
+    return (amount: number) => formatter.format(amount);
+  }, [currency]);
 
-  const toggleBalanceVisibility = () => {
-    setIsBalanceVisible(!isBalanceVisible);
-  };
+  const toggleBalanceVisibility = useCallback(() => {
+    setIsBalanceVisible(prev => !prev);
+  }, []);
 
   return (
     <UniversalCard variant="glass" className="stagger-item p-6" interactive>

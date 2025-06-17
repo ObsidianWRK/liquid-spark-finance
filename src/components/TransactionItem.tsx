@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo, useCallback } from 'react';
 import GlassCard from './GlassCard';
 import { Package, Truck, Plane } from 'lucide-react';
 
@@ -22,60 +22,72 @@ interface TransactionItemProps {
   currency: string;
 }
 
-const TransactionItem = ({ transaction, currency }: TransactionItemProps) => {
-  const formatCurrency = (amount: number) => {
-    const absAmount = Math.abs(amount);
-    const formatted = new Intl.NumberFormat('en-US', {
+const TransactionItem = React.memo<TransactionItemProps>(({ transaction, currency }) => {
+  // Memoized formatters to prevent recreation on every render
+  const formatCurrency = useMemo(() => {
+    const formatter = new Intl.NumberFormat('en-US', {
       style: 'currency',
       currency: currency,
       minimumFractionDigits: 2
-    }).format(absAmount);
+    });
     
-    return amount < 0 ? `-${formatted}` : `+${formatted}`;
-  };
+    return (amount: number) => {
+      const absAmount = Math.abs(amount);
+      const formatted = formatter.format(absAmount);
+      return amount < 0 ? `-${formatted}` : `+${formatted}`;
+    };
+  }, [currency]);
 
-  const formatDate = (dateString: string) => {
-    const date = new Date(dateString);
-    return date.toLocaleDateString('en-US', {
+  const formatDate = useMemo(() => {
+    const formatter = new Intl.DateTimeFormat('en-US', {
       month: 'short',
       day: 'numeric'
     });
-  };
+    
+    return (dateString: string) => {
+      const date = new Date(dateString);
+      return formatter.format(date);
+    };
+  }, []);
 
-  const getAmountColor = (amount: number) => {
-    if (amount > 0) return 'text-green-400';
-    if (amount < 0) return 'text-white';
+  // Memoized color calculations
+  const amountColor = useMemo(() => {
+    if (transaction.amount > 0) return 'text-green-400';
+    if (transaction.amount < 0) return 'text-white';
     return 'text-white/70';
-  };
+  }, [transaction.amount]);
 
-  const getStatusColor = (status: string) => {
-    switch (status) {
+  const statusColor = useMemo(() => {
+    switch (transaction.status) {
       case 'completed': return 'bg-green-400';
       case 'pending': return 'bg-orange-400';
       case 'failed': return 'bg-red-400';
       default: return 'bg-white/50';
     }
-  };
+  }, [transaction.status]);
 
-  const getDeliveryStatusColor = (status?: string) => {
-    switch (status) {
+  const deliveryStatusColor = useMemo(() => {
+    switch (transaction.deliveryStatus) {
       case 'Delivered': return 'text-green-400';
       case 'Out for Delivery': return 'text-orange-400';
       case 'In Transit': return 'text-blue-400';
       default: return 'text-white/70';
     }
-  };
+  }, [transaction.deliveryStatus]);
 
-  const getShippingIcon = (provider?: string) => {
-    switch (provider) {
+  const shippingIcon = useMemo(() => {
+    switch (transaction.shippingProvider) {
       case 'UPS': return <Truck className="w-4 h-4" />;
       case 'FedEx': return <Plane className="w-4 h-4" />;
       case 'USPS': return <Package className="w-4 h-4" />;
       default: return <Package className="w-4 h-4" />;
     }
-  };
+  }, [transaction.shippingProvider]);
 
-  const hasShippingInfo = transaction.trackingNumber && transaction.shippingProvider;
+  const hasShippingInfo = useMemo(() => 
+    transaction.trackingNumber && transaction.shippingProvider, 
+    [transaction.trackingNumber, transaction.shippingProvider]
+  );
 
   return (
     <GlassCard 
@@ -86,14 +98,14 @@ const TransactionItem = ({ transaction, currency }: TransactionItemProps) => {
       <div className="transaction-layout">
         {/* Status Dot */}
         <div className="transaction-status">
-          <div className={`transaction-status-dot ${getStatusColor(transaction.status)}`} />
+          <div className={`transaction-status-dot ${statusColor}`} />
         </div>
         
         {/* Shipping Icon */}
         <div className="transaction-icon">
           {hasShippingInfo && (
             <div className="text-white/70">
-              {getShippingIcon(transaction.shippingProvider)}
+              {shippingIcon}
             </div>
           )}
         </div>
@@ -110,7 +122,7 @@ const TransactionItem = ({ transaction, currency }: TransactionItemProps) => {
         
         {/* Amount */}
         <div className="transaction-amount">
-          <p className={`transaction-amount-text ${getAmountColor(transaction.amount)}`}>
+          <p className={`transaction-amount-text ${amountColor}`}>
             {formatCurrency(transaction.amount)}
           </p>
           <p className="transaction-date-text">
@@ -139,7 +151,7 @@ const TransactionItem = ({ transaction, currency }: TransactionItemProps) => {
               </span>
             </div>
             <div className="transaction-scores">
-              <span className={`text-xs font-medium ${getDeliveryStatusColor(transaction.deliveryStatus)}`}>
+              <span className={`text-xs font-medium ${deliveryStatusColor}`}>
                 {transaction.deliveryStatus}
               </span>
             </div>
@@ -148,6 +160,8 @@ const TransactionItem = ({ transaction, currency }: TransactionItemProps) => {
       )}
     </GlassCard>
   );
-};
+});
+
+TransactionItem.displayName = 'TransactionItem';
 
 export default TransactionItem;

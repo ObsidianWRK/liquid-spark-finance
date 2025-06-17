@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend } from 'recharts';
 import { MonthlySpending } from '@/services/mockHistoricalData';
 
@@ -7,25 +7,33 @@ interface SpendingTrendsChartProps {
   title: string;
 }
 
-const SpendingTrendsChart: React.FC<SpendingTrendsChartProps> = ({ data, title }) => {
-  const formatCurrency = (value: number) => {
-    return new Intl.NumberFormat('en-US', {
+const SpendingTrendsChart = React.memo<SpendingTrendsChartProps>(({ data, title }) => {
+  // Memoized formatters to prevent recreation on every render
+  const formatCurrency = useMemo(() => {
+    const formatter = new Intl.NumberFormat('en-US', {
       style: 'currency',
       currency: 'USD',
       minimumFractionDigits: 0,
       maximumFractionDigits: 0,
-    }).format(value);
-  };
+    });
+    return (value: number) => formatter.format(value);
+  }, []);
 
-  const formatDate = (dateStr: string) => {
-    const date = new Date(dateStr);
-    return date.toLocaleDateString('en-US', { month: 'short', year: '2-digit' });
-  };
+  const formatDate = useMemo(() => {
+    const formatter = new Intl.DateTimeFormat('en-US', { month: 'short', year: '2-digit' });
+    return (dateStr: string) => {
+      const date = new Date(dateStr);
+      return formatter.format(date);
+    };
+  }, []);
 
-  const formatTooltipDate = (dateStr: string) => {
-    const date = new Date(dateStr);
-    return date.toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
-  };
+  const formatTooltipDate = useMemo(() => {
+    const formatter = new Intl.DateTimeFormat('en-US', { month: 'long', year: 'numeric' });
+    return (dateStr: string) => {
+      const date = new Date(dateStr);
+      return formatter.format(date);
+    };
+  }, []);
 
   return (
     <div className="liquid-glass-fallback rounded-2xl p-6">
@@ -111,6 +119,8 @@ const SpendingTrendsChart: React.FC<SpendingTrendsChartProps> = ({ data, title }
       </div>
     </div>
   );
-};
+});
+
+SpendingTrendsChart.displayName = 'SpendingTrendsChart';
 
 export default SpendingTrendsChart; 

@@ -17,12 +17,23 @@ export default defineConfig({
     sourcemap: false,
     rollupOptions: {
       output: {
-        manualChunks: {
-          vendor: ['react', 'react-dom'],
-          ui: ['@radix-ui/react-accordion', '@radix-ui/react-dialog', '@radix-ui/react-dropdown-menu'],
-          charts: ['recharts'],
-          crypto: ['crypto-js'],
-          routing: ['react-router-dom']
+        manualChunks: (id) => {
+          // Phase 3: Advanced chunk optimization
+          if (id.includes('node_modules')) {
+            if (id.includes('react') || id.includes('react-dom')) return 'vendor';
+            if (id.includes('@radix-ui')) return 'ui';
+            if (id.includes('recharts')) return 'charts';
+            if (id.includes('crypto-js')) return 'crypto';
+            if (id.includes('react-router')) return 'routing';
+            return 'vendor';
+          }
+          
+          // Application chunks
+          if (id.includes('/insights/')) return 'insights';
+          if (id.includes('/calculators/')) return 'calculators';
+          if (id.includes('/components/ui/UniversalCard')) return 'universal-card';
+          if (id.includes('/performance/')) return 'performance';
+          if (id.includes('/transactions/Optimized')) return 'optimized-transactions';
         },
         chunkFileNames: 'assets/[name]-[hash].js',
         entryFileNames: 'assets/[name]-[hash].js',

@@ -20,27 +20,34 @@ interface NavigationProps {
   onTabChange: (tab: string) => void;
 }
 
-const Navigation = ({ activeTab, onTabChange }: NavigationProps) => {
+const Navigation = React.memo<NavigationProps>(({ activeTab, onTabChange }) => {
   const [showMore, setShowMore] = useState(false);
 
-  const mainTabs = [
+  // Memoized tab configurations to prevent recreation on every render
+  const mainTabs = React.useMemo(() => [
     { id: 'dashboard', label: 'Home', icon: Home },
     { id: 'accounts', label: 'Accounts', icon: CreditCard },
     { id: 'transactions', label: 'Transactions', icon: Receipt },
     { id: 'insights', label: 'Insights', icon: TrendingUp }
-  ];
+  ], []);
 
-  const moreTabs = [
+  const moreTabs = React.useMemo(() => [
     { id: 'credit-score', label: 'Credit Score', icon: Shield },
     { id: 'savings', label: 'Savings Goals', icon: Target },
     { id: 'reports', label: 'Reports', icon: BarChart3 },
     { id: 'wrapped', label: 'Wrapped', icon: Award },
     { id: 'profile', label: 'Profile', icon: User }
-  ];
+  ], []);
 
-  const handleMoreClick = () => {
+  // Optimized event handlers with useCallback
+  const handleMoreClick = React.useCallback(() => {
     setShowMore(!showMore);
-  };
+  }, [showMore]);
+
+  const handleTabClick = React.useCallback((tabId: string) => {
+    onTabChange(tabId);
+    setShowMore(false); // Close more menu when tab is selected
+  }, [onTabChange]);
 
   const getTabStyles = (isActive: boolean, index: number, total: number) => {
     let borderRadius = '';
@@ -144,7 +151,7 @@ const Navigation = ({ activeTab, onTabChange }: NavigationProps) => {
                   return (
                     <button
                       key={tab.id}
-                      onClick={() => onTabChange(tab.id)}
+                      onClick={() => handleTabClick(tab.id)}
                       className={getTabStyles(isActive, index, mainTabs.length + 1)}
                       aria-label={`Navigate to ${tab.label}`}
                       aria-current={isActive ? 'page' : undefined}
@@ -201,6 +208,8 @@ const Navigation = ({ activeTab, onTabChange }: NavigationProps) => {
       </button>
     </>
   );
-};
+});
+
+Navigation.displayName = 'Navigation';
 
 export default Navigation;
