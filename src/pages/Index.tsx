@@ -90,22 +90,7 @@ const transformTransactions = (transactions: typeof mockData.transactions) => {
 };
 
 const Index = () => {
-  const [activeTab, setActiveTab] = useState('dashboard');
-  const [performanceMode, setPerformanceMode] = useState(false);
-  const [searchParams] = useSearchParams();
-  const [debugInfo, setDebugInfo] = useState<string>('');
-
-  // Debug logging
-  useEffect(() => {
-    console.log('Index component mounted');
-    console.log('mockData:', { 
-      accountsCount: mockData?.accounts?.length, 
-      transactionsCount: mockData?.transactions?.length 
-    });
-    setDebugInfo(`Loaded: ${mockData?.accounts?.length || 0} accounts, ${mockData?.transactions?.length || 0} transactions`);
-  }, []);
-
-  // Safety check for mock data with better error handling
+  // Check data availability first to avoid hook violations
   if (!mockData) {
     console.error('mockData is undefined');
     return (
@@ -130,7 +115,21 @@ const Index = () => {
     );
   }
 
-  const mainAccount = mockData.accounts[0];
+  // ALL HOOKS DECLARED AFTER EARLY RETURNS TO ENSURE CONSISTENT HOOK ORDER
+  const [activeTab, setActiveTab] = useState('dashboard');
+  const [performanceMode, setPerformanceMode] = useState(false);
+  const [searchParams] = useSearchParams();
+  const [debugInfo, setDebugInfo] = useState<string>('');
+
+  // Debug logging
+  useEffect(() => {
+    console.log('Index component mounted');
+    console.log('mockData:', { 
+      accountsCount: mockData?.accounts?.length, 
+      transactionsCount: mockData?.transactions?.length 
+    });
+    setDebugInfo(`Loaded: ${mockData?.accounts?.length || 0} accounts, ${mockData?.transactions?.length || 0} transactions`);
+  }, []);
 
   // Handle URL tab parameter
   useEffect(() => {
@@ -157,6 +156,8 @@ const Index = () => {
       setPerformanceMode(false);
     }
   }, []);
+
+  const mainAccount = mockData.accounts[0];
 
   const renderContent = useCallback(() => {
     switch (activeTab) {
