@@ -291,18 +291,20 @@ export default function Index() {
 
   return (
     <ErrorBoundary>
-      <div className="min-h-screen">
+      <div className="min-h-screen flex flex-col">
         <PerformanceMonitor />
         <LiquidGlassTopMenuBar />
         
-        <div className="flex">
+        <div className="flex flex-1 overflow-hidden">
           <Navigation 
             activeTab={currentView}
             onTabChange={handleViewChange}
           />
           
-          <main className="flex-1 overflow-auto pt-24">
-            {renderCurrentView()}
+          <main className="flex-1 overflow-y-auto pt-24 pb-32">
+            <div className="min-h-full">
+              {renderCurrentView()}
+            </div>
           </main>
           </div>
       </div>

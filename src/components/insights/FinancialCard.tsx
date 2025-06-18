@@ -40,6 +40,10 @@ const FinancialCard: React.FC<FinancialCardProps> = ({ data }) => {
     return `${Math.round(value)}%`;
   };
 
+  const formatEmergencyFund = (months: number) => {
+    return `${Math.round(months * 10) / 10} months`;
+  };
+
   const keyMetrics = [
     { 
       icon: DollarSign, 
@@ -65,7 +69,7 @@ const FinancialCard: React.FC<FinancialCardProps> = ({ data }) => {
     { 
       icon: Shield, 
       label: 'Emergency Fund', 
-      value: `${data.emergencyFundMonths.toFixed(1)} months`, 
+      value: formatEmergencyFund(data.emergencyFundMonths), 
       color: '#8b5cf6',
       trend: data.emergencyFundMonths >= 6 ? 'up' as const : data.emergencyFundMonths >= 3 ? 'stable' as const : 'down' as const
     },
@@ -100,7 +104,7 @@ const FinancialCard: React.FC<FinancialCardProps> = ({ data }) => {
     },
     {
       title: 'Emergency Fund',
-      value: `${data.emergencyFundMonths.toFixed(1)} months`,
+      value: formatEmergencyFund(data.emergencyFundMonths),
       description: 'Monthly expenses covered',
       status: data.emergencyFundMonths >= 6 ? 'good' : data.emergencyFundMonths >= 3 ? 'warning' : 'danger'
     },
@@ -124,7 +128,7 @@ const FinancialCard: React.FC<FinancialCardProps> = ({ data }) => {
   return (
     <div className="w-full">
       {/* Header */}
-      <div className="liquid-glass-fallback rounded-2xl p-4 sm:p-6 mb-4 sm:mb-6">
+      <div className="bg-white/[0.02] rounded-2xl border border-white/[0.08] p-4 sm:p-6 mb-4 sm:mb-6 backdrop-blur-md shadow-md">
         <div className="flex flex-col sm:flex-row items-center justify-between space-y-4 sm:space-y-0">
           <div className="text-center sm:text-left">
             <h3 className="text-xl sm:text-2xl font-bold text-white mb-2">Financial Health</h3>
@@ -161,7 +165,7 @@ const FinancialCard: React.FC<FinancialCardProps> = ({ data }) => {
       </div>
 
       {/* Financial Insights */}
-      <div className="liquid-glass-fallback rounded-2xl p-4 sm:p-6">
+      <div className="bg-white/[0.02] rounded-2xl border border-white/[0.08] p-4 sm:p-6 backdrop-blur-md shadow-md">
         <h4 className="text-lg sm:text-xl font-bold text-white mb-4">Financial Insights</h4>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
           {insights.map((insight, index) => (

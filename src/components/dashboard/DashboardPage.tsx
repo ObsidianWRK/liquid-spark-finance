@@ -121,7 +121,7 @@ const DashboardPage = () => {
             Export
           </button>
 
-          <button className="bg-white/[0.05] hover:bg-white/[0.08] text-white/80 hover:text-white p-2 rounded-xl transition-colors border border-white/[0.08]">
+          <button className="bg-white/[0.05] hover:bg-white/[0.08] text-white/80 hover:text-white p-2 rounded-xl transition-colors border border-white/[0.08] flex items-center justify-center">
             <Settings className="w-4 h-4" />
           </button>
         </div>
