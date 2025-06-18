@@ -1,0 +1,667 @@
+{
+  "config": {
+    "configFile": "/Users/damon/liquid-spark-finance/liquid-spark-finance/playwright.config.ts",
+    "rootDir": "/Users/damon/liquid-spark-finance/liquid-spark-finance/e2e",
+    "forbidOnly": false,
+    "fullyParallel": true,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 600000,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {},
+    "preserveOutput": "always",
+    "reporter": [
+      [
+        "html",
+        {
+          "open": "on-failure",
+          "outputFolder": "playwright-report"
+        }
+      ],
+      [
+        "json",
+        {
+          "outputFile": "test-results/test-results.json"
+        }
+      ],
+      [
+        "junit",
+        {
+          "outputFile": "test-results/junit.xml"
+        }
+      ],
+      [
+        "line",
+        null
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "quiet": false,
+    "projects": [
+      {
+        "outputDir": "/Users/damon/liquid-spark-finance/liquid-spark-finance/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {},
+        "id": "hook-validation-chrome",
+        "name": "hook-validation-chrome",
+        "testDir": "/Users/damon/liquid-spark-finance/liquid-spark-finance/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "**/hook-*.spec.ts",
+          "**/comprehensive-hook-validation.spec.ts"
+        ],
+        "timeout": 30000
+      },
+      {
+        "outputDir": "/Users/damon/liquid-spark-finance/liquid-spark-finance/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {},
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "/Users/damon/liquid-spark-finance/liquid-spark-finance/e2e",
+        "testIgnore": [
+          "**/hook-*.spec.ts",
+          "**/comprehensive-hook-validation.spec.ts"
+        ],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 30000
+      },
+      {
+        "outputDir": "/Users/damon/liquid-spark-finance/liquid-spark-finance/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {},
+        "id": "firefox",
+        "name": "firefox",
+        "testDir": "/Users/damon/liquid-spark-finance/liquid-spark-finance/e2e",
+        "testIgnore": [
+          "**/hook-*.spec.ts",
+          "**/comprehensive-hook-validation.spec.ts"
+        ],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 30000
+      },
+      {
+        "outputDir": "/Users/damon/liquid-spark-finance/liquid-spark-finance/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {},
+        "id": "webkit",
+        "name": "webkit",
+        "testDir": "/Users/damon/liquid-spark-finance/liquid-spark-finance/e2e",
+        "testIgnore": [
+          "**/hook-*.spec.ts",
+          "**/comprehensive-hook-validation.spec.ts"
+        ],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 30000
+      },
+      {
+        "outputDir": "/Users/damon/liquid-spark-finance/liquid-spark-finance/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {},
+        "id": "hook-validation-mobile",
+        "name": "hook-validation-mobile",
+        "testDir": "/Users/damon/liquid-spark-finance/liquid-spark-finance/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "**/navigation-hook-validation.spec.ts",
+          "**/performance-hook-validation.spec.ts"
+        ],
+        "timeout": 30000
+      },
+      {
+        "outputDir": "/Users/damon/liquid-spark-finance/liquid-spark-finance/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {},
+        "id": "Mobile Chrome",
+        "name": "Mobile Chrome",
+        "testDir": "/Users/damon/liquid-spark-finance/liquid-spark-finance/e2e",
+        "testIgnore": [
+          "**/hook-*.spec.ts",
+          "**/comprehensive-hook-validation.spec.ts"
+        ],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 30000
+      },
+      {
+        "outputDir": "/Users/damon/liquid-spark-finance/liquid-spark-finance/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {},
+        "id": "Mobile Safari",
+        "name": "Mobile Safari",
+        "testDir": "/Users/damon/liquid-spark-finance/liquid-spark-finance/e2e",
+        "testIgnore": [
+          "**/hook-*.spec.ts",
+          "**/comprehensive-hook-validation.spec.ts"
+        ],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 30000
+      }
+    ],
+    "shard": null,
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.53.0",
+    "workers": 4,
+    "webServer": {
+      "command": "npm run dev",
+      "port": 5173,
+      "reuseExistingServer": true,
+      "timeout": 120000
+    }
+  },
+  "suites": [
+    {
+      "title": "comprehensive-hook-validation.spec.ts",
+      "file": "comprehensive-hook-validation.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Comprehensive Hook Validation Suite",
+          "file": "comprehensive-hook-validation.spec.ts",
+          "line": 4,
+          "column": 6,
+          "specs": [
+            {
+              "title": "should complete full navigation cycle without hook violations",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "hook-validation-chrome",
+                  "projectName": "hook-validation-chrome",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "f88a649ab005f20b256b-7a97df76ac0606857ce7",
+              "file": "comprehensive-hook-validation.spec.ts",
+              "line": 33,
+              "column": 3
+            },
+            {
+              "title": "should handle rapid navigation stress test without hook violations",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "hook-validation-chrome",
+                  "projectName": "hook-validation-chrome",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "f88a649ab005f20b256b-76562f6d290eb206942f",
+              "file": "comprehensive-hook-validation.spec.ts",
+              "line": 46,
+              "column": 3
+            },
+            {
+              "title": "should handle mobile navigation without hook violations",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "hook-validation-chrome",
+                  "projectName": "hook-validation-chrome",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "f88a649ab005f20b256b-6a04563794b75ffc08ee",
+              "file": "comprehensive-hook-validation.spec.ts",
+              "line": 60,
+              "column": 3
+            },
+            {
+              "title": "should handle complex navigation patterns without hook violations",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "hook-validation-chrome",
+                  "projectName": "hook-validation-chrome",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "f88a649ab005f20b256b-5295a0b5498bf40a11d3",
+              "file": "comprehensive-hook-validation.spec.ts",
+              "line": 73,
+              "column": 3
+            },
+            {
+              "title": "should handle viewport changes during navigation without hook violations",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "hook-validation-chrome",
+                  "projectName": "hook-validation-chrome",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "f88a649ab005f20b256b-15ad304d9c08d975b986",
+              "file": "comprehensive-hook-validation.spec.ts",
+              "line": 120,
+              "column": 3
+            },
+            {
+              "title": "should handle lazy loading scenarios without hook violations",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "hook-validation-chrome",
+                  "projectName": "hook-validation-chrome",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "f88a649ab005f20b256b-821774a85f98b4582658",
+              "file": "comprehensive-hook-validation.spec.ts",
+              "line": 155,
+              "column": 3
+            },
+            {
+              "title": "should handle performance stress scenarios without hook violations",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "hook-validation-chrome",
+                  "projectName": "hook-validation-chrome",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "f88a649ab005f20b256b-41e4e99ade69e613961a",
+              "file": "comprehensive-hook-validation.spec.ts",
+              "line": 185,
+              "column": 3
+            },
+            {
+              "title": "should handle error recovery scenarios without hook violations",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "hook-validation-chrome",
+                  "projectName": "hook-validation-chrome",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "f88a649ab005f20b256b-00c687ac39bf2db800ff",
+              "file": "comprehensive-hook-validation.spec.ts",
+              "line": 238,
+              "column": 3
+            },
+            {
+              "title": "should validate performance metrics are within acceptable ranges",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "hook-validation-chrome",
+                  "projectName": "hook-validation-chrome",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "f88a649ab005f20b256b-1098ed13df9614ed6b18",
+              "file": "comprehensive-hook-validation.spec.ts",
+              "line": 275,
+              "column": 3
+            },
+            {
+              "title": "should generate comprehensive test report",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "hook-validation-chrome",
+                  "projectName": "hook-validation-chrome",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "f88a649ab005f20b256b-5c6110e272c9865b9076",
+              "file": "comprehensive-hook-validation.spec.ts",
+              "line": 309,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "hook-violations.spec.ts",
+      "file": "hook-violations.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "React Hook Violations and Error Detection",
+          "file": "hook-violations.spec.ts",
+          "line": 3,
+          "column": 6,
+          "specs": [
+            {
+              "title": "should load initial page without hook violations",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "hook-validation-chrome",
+                  "projectName": "hook-validation-chrome",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "e7f8535335926c0d1795-477ff5d851d4bb071858",
+              "file": "hook-violations.spec.ts",
+              "line": 55,
+              "column": 3
+            },
+            {
+              "title": "should navigate between all tabs without hook violations",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "hook-validation-chrome",
+                  "projectName": "hook-validation-chrome",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "e7f8535335926c0d1795-0c5bafeca12bce6555c3",
+              "file": "hook-violations.spec.ts",
+              "line": 73,
+              "column": 3
+            },
+            {
+              "title": "should handle rapid tab navigation without hook violations",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "hook-validation-chrome",
+                  "projectName": "hook-validation-chrome",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "e7f8535335926c0d1795-398559d74b09f10464de",
+              "file": "hook-violations.spec.ts",
+              "line": 100,
+              "column": 3
+            },
+            {
+              "title": "should handle URL parameter changes without hook violations",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "hook-validation-chrome",
+                  "projectName": "hook-validation-chrome",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "e7f8535335926c0d1795-385b611deac3a3a09831",
+              "file": "hook-violations.spec.ts",
+              "line": 128,
+              "column": 3
+            },
+            {
+              "title": "should handle page refresh on each tab without hook violations",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "hook-validation-chrome",
+                  "projectName": "hook-validation-chrome",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "e7f8535335926c0d1795-454078e3cac805239e49",
+              "file": "hook-violations.spec.ts",
+              "line": 160,
+              "column": 3
+            },
+            {
+              "title": "should handle mobile viewport changes without hook violations",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "hook-validation-chrome",
+                  "projectName": "hook-validation-chrome",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "e7f8535335926c0d1795-e2495f7069832ab92a2a",
+              "file": "hook-violations.spec.ts",
+              "line": 190,
+              "column": 3
+            },
+            {
+              "title": "should handle component mount/unmount cycles without hook violations",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "hook-validation-chrome",
+                  "projectName": "hook-validation-chrome",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "e7f8535335926c0d1795-9187a9c04c71a9c6601e",
+              "file": "hook-violations.spec.ts",
+              "line": 221,
+              "column": 3
+            },
+            {
+              "title": "should handle wrapped tab lazy loading without hook violations",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "hook-validation-chrome",
+                  "projectName": "hook-validation-chrome",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "e7f8535335926c0d1795-0268eb4670b34d2c5e32",
+              "file": "hook-violations.spec.ts",
+              "line": 253,
+              "column": 3
+            },
+            {
+              "title": "should handle error boundary scenarios without hook violations",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "hook-validation-chrome",
+                  "projectName": "hook-validation-chrome",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "e7f8535335926c0d1795-8e30f2c8d84dcc4897ed",
+              "file": "hook-violations.spec.ts",
+              "line": 282,
+              "column": 3
+            },
+            {
+              "title": "should handle performance mode toggle without hook violations",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "hook-validation-chrome",
+                  "projectName": "hook-validation-chrome",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "e7f8535335926c0d1795-067e812815988dedd497",
+              "file": "hook-violations.spec.ts",
+              "line": 318,
+              "column": 3
+            },
+            {
+              "title": "should validate React DevTools compatibility",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "hook-validation-chrome",
+                  "projectName": "hook-validation-chrome",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "e7f8535335926c0d1795-5aa69188070bb220a7e9",
+              "file": "hook-violations.spec.ts",
+              "line": 350,
+              "column": 3
+            }
+          ]
+        },
+        {
+          "title": "Specific Hook Violation Reproduction",
+          "file": "hook-violations.spec.ts",
+          "line": 389,
+          "column": 6,
+          "specs": [
+            {
+              "title": "should reproduce reported hook violation scenario",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "hook-validation-chrome",
+                  "projectName": "hook-validation-chrome",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "e7f8535335926c0d1795-853f40d9ce7841197e83",
+              "file": "hook-violations.spec.ts",
+              "line": 390,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2025-06-18T01:01:53.572Z",
+    "duration": 49.037000000000035,
+    "expected": 0,
+    "skipped": 22,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}
