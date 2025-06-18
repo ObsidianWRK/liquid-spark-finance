@@ -165,6 +165,29 @@ export default function Index() {
 
   const renderCurrentView = () => {
     switch (currentView) {
+      case 'accounts':
+        return (
+          <div className="p-6 space-y-6">
+            <div className="flex items-center justify-between">
+              <div>
+                <h1 className="text-2xl font-bold text-white">Accounts</h1>
+                <p className="text-white/60 mt-1">
+                  Manage all your financial accounts in one place
+                </p>
+              </div>
+            </div>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {mockData.accounts?.map(account => (
+                <AccountCard key={account.id} account={account} />
+              )) || (
+                <div className="col-span-full text-center py-12">
+                  <p className="text-white/60">No accounts connected yet</p>
+                </div>
+              )}
+            </div>
+          </div>
+        );
       case 'insights':
         return <ConsolidatedInsightsPage />;
       case 'transactions':
