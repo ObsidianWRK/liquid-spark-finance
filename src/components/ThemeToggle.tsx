@@ -12,7 +12,14 @@ const ThemeToggle = ({ className = '' }: { className?: string }) => {
     setIsDark(document.documentElement.classList.contains('dark'));
   }, []);
 
-  if (!mounted) return null;
+  // Render loading state instead of early return to maintain hook consistency
+  if (!mounted) {
+    return (
+      <div className={`p-2 rounded-full flex items-center justify-center ${className}`}>
+        <div className="w-5 h-5 opacity-0" />
+      </div>
+    );
+  }
 
   const handleToggle = () => {
     const newTheme = !isDark;

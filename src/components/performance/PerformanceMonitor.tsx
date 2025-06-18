@@ -21,6 +21,11 @@ export const PerformanceMonitor = React.memo<PerformanceMonitorProps>(({
   enabled = process.env.NODE_ENV === 'development',
   position = 'top-right' 
 }) => {
+  // Early return check before any hooks to maintain hook consistency
+  if (!enabled) {
+    return null;
+  }
+
   const [metrics, setMetrics] = useState<PerformanceMetrics>({
     renderTime: 0,
     bundleSize: 0,
@@ -45,8 +50,6 @@ export const PerformanceMonitor = React.memo<PerformanceMonitorProps>(({
 
   // Performance monitoring logic
   useEffect(() => {
-    if (!enabled) return;
-
     const observer = new PerformanceObserver((list) => {
       const entries = list.getEntries();
       setPerformanceEntries(prev => [...prev, ...entries].slice(-50)); // Keep last 50 entries
@@ -81,7 +84,7 @@ export const PerformanceMonitor = React.memo<PerformanceMonitorProps>(({
       clearInterval(memoryTimer);
       clearInterval(componentTimer);
     };
-  }, [enabled]);
+  }, []);
 
   // Calculate performance scores
   const performanceScore = useMemo(() => {
@@ -99,8 +102,6 @@ export const PerformanceMonitor = React.memo<PerformanceMonitorProps>(({
     if (score >= 50) return '#f97316'; // orange
     return '#ef4444'; // red
   };
-
-  if (!enabled) return null;
 
   return (
     <div className={`fixed ${positionStyles} z-50 transition-all duration-300`}>

@@ -5,6 +5,8 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { lazy, Suspense } from 'react';
 import { UniversalCard } from '@/components/ui/UniversalCard';
+import { LiquidGlassProvider } from '@/hooks/useLiquidGlass';
+import { FeatureFlagProvider } from '@/components/shared/VueniFeatureFlags';
 
 const queryClient = new QueryClient();
 
@@ -44,30 +46,34 @@ const OptimizedLoadingFallback = () => (
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
-    <TooltipProvider>
-      <Toaster />
-      <Sonner />
-      <BrowserRouter>
-        <Suspense fallback={<OptimizedLoadingFallback />}>
-          <Routes>
-            <Route path="/" element={<Index />} />
-            <Route path="/profile" element={<Profile />} />
-            <Route path="/credit-score" element={<CreditScorePage />} />
-            <Route path="/savings" element={<SavingsGoals />} />
-            <Route path="/transactions" element={<TransactionDemo />} />
-            <Route path="/budget-planner" element={<BudgetPlannerPage />} />
-            <Route path="/goal-setting" element={<SavingsGoals />} />
-            <Route path="/investment-tracker" element={<InvestmentTrackerPage />} />
-            <Route path="/calculators" element={<CalculatorsPage />} />
-            <Route path="/calculators/:id" element={<CalculatorsPage />} />
-            <Route path="/reports" element={<BudgetReportsPage />} />
-            <Route path="/insights" element={<InsightsPage />} />
-            {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-        </Suspense>
-      </BrowserRouter>
-    </TooltipProvider>
+    <FeatureFlagProvider preset="production">
+      <LiquidGlassProvider>
+        <TooltipProvider>
+          <Toaster />
+          <Sonner />
+          <BrowserRouter>
+            <Suspense fallback={<OptimizedLoadingFallback />}>
+              <Routes>
+                <Route path="/" element={<Index />} />
+                <Route path="/profile" element={<Profile />} />
+                <Route path="/credit-score" element={<CreditScorePage />} />
+                <Route path="/savings" element={<SavingsGoals />} />
+                <Route path="/transactions" element={<TransactionDemo />} />
+                <Route path="/budget-planner" element={<BudgetPlannerPage />} />
+                <Route path="/goal-setting" element={<SavingsGoals />} />
+                <Route path="/investment-tracker" element={<InvestmentTrackerPage />} />
+                <Route path="/calculators" element={<CalculatorsPage />} />
+                <Route path="/calculators/:id" element={<CalculatorsPage />} />
+                <Route path="/reports" element={<BudgetReportsPage />} />
+                <Route path="/insights" element={<InsightsPage />} />
+                {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+                <Route path="*" element={<NotFound />} />
+              </Routes>
+            </Suspense>
+          </BrowserRouter>
+        </TooltipProvider>
+      </LiquidGlassProvider>
+    </FeatureFlagProvider>
   </QueryClientProvider>
 );
 
