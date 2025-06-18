@@ -2,6 +2,7 @@ import React, { useState, useEffect, useMemo, Suspense, lazy } from 'react';
 import { Heart, Leaf, DollarSign, TrendingUp, Calendar, BarChart3 } from 'lucide-react';
 import { SharedScoreCircle } from '@/components/shared';
 import { Transaction, Account } from '@/types/shared';
+import { formatScore, formatPercentage } from '@/utils/formatters';
 
 // Lazy load heavy components for performance
 const FinancialCard = lazy(() => import('./FinancialCard'));
@@ -127,9 +128,9 @@ const NewInsightsPage: React.FC<NewInsightsPageProps> = ({ transactions, account
         const ecoScore = mockHealthEcoService.getEcoScore(transactions);
         
         setScores({
-          financial: financialScores.financial,
-          health: healthData.score,
-          eco: ecoScore.score
+          financial: Math.round(financialScores.financial),
+          health: Math.round(healthData.score),
+          eco: Math.round(ecoScore.score)
         });
       } catch (error) {
         console.error('Error loading scores:', error);
@@ -247,7 +248,7 @@ const NewInsightsPage: React.FC<NewInsightsPageProps> = ({ transactions, account
                   </div>
                   <div>
                     <h4 className="text-lg font-bold text-white">Financial Health</h4>
-                    <p className="text-white/70 text-sm">Score: {scores.financial}/100</p>
+                    <p className="text-white/70 text-sm">Score: {Math.round(scores.financial)}/100</p>
                   </div>
                 </div>
                 <p className="text-white/60 text-sm">
@@ -262,7 +263,7 @@ const NewInsightsPage: React.FC<NewInsightsPageProps> = ({ transactions, account
                   </div>
                   <div>
                     <h4 className="text-lg font-bold text-white">Wellness</h4>
-                    <p className="text-white/70 text-sm">Score: {scores.health}/100</p>
+                    <p className="text-white/70 text-sm">Score: {Math.round(scores.health)}/100</p>
                   </div>
                 </div>
                 <p className="text-white/60 text-sm">

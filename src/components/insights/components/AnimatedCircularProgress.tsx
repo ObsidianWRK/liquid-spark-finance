@@ -1,4 +1,5 @@
 import React, { memo, useEffect, useState, useMemo, useRef } from 'react';
+import { formatScore } from '@/utils/formatters';
 
 interface AnimatedCircularProgressProps {
   value: number;
@@ -124,7 +125,7 @@ const AnimatedCircularProgress = memo(({
             transitionDelay: `${delay}ms`
           }}
         >
-          {Math.round(animatedValue)}
+          {formatScore(animatedValue).replace('.', '.')}
         </span>
         {showLabel && (
           <span 

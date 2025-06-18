@@ -8,7 +8,7 @@ import RefinedTrendCard from './components/RefinedTrendCard';
 import ComprehensiveWellnessCard from './components/ComprehensiveWellnessCard';
 import ComprehensiveEcoCard from './components/ComprehensiveEcoCard';
 import { mockHealthEcoService } from '@/services/mockHealthEcoService';
-import { formatPercentage, getScoreColor } from '@/utils/formatters';
+import { formatPercentage, formatScore, getScoreColor } from '@/utils/formatters';
 
 // Enhanced TypeScript interfaces
 interface Transaction {
@@ -127,9 +127,9 @@ const RefinedInsightsPage = ({ transactions, accounts }: InsightsPageProps) => {
     const ecoData = mockHealthEcoService.getEcoScore(transactions);
 
     return {
-      financial: financialScore,
-      health: healthData.score,
-      eco: ecoData.score
+      financial: Math.round(financialScore),
+      health: Math.round(healthData.score),
+      eco: Math.round(ecoData.score)
     };
   }, [metrics, transactions]);
 
@@ -247,7 +247,7 @@ const RefinedInsightsPage = ({ transactions, accounts }: InsightsPageProps) => {
         <div className="main-cards-grid">
           <RefinedScoreCard
             title="Financial Health"
-            score={animatedScores.financial}
+            score={Math.round(animatedScores.financial)}
             subtitle="Overall financial wellness score"
             icon={<DollarSign />}
             color="#6366f1" // Indigo-500
@@ -374,7 +374,7 @@ const RefinedInsightsPage = ({ transactions, accounts }: InsightsPageProps) => {
                 <ul className="space-y-2 text-slate-400 text-sm sm:text-base">
                   <li className="flex items-start space-x-2">
                     <span className="w-2 h-2 bg-green-500 rounded-full mt-2 flex-shrink-0"></span>
-                    <span>Consistent payment history with {Math.round(metrics.billPaymentScore)}% reliability</span>
+                    <span>Consistent payment history with {formatScore(metrics.billPaymentScore)}% reliability</span>
                   </li>
                   <li className="flex items-start space-x-2">
                     <span className="w-2 h-2 bg-blue-500 rounded-full mt-2 flex-shrink-0"></span>
