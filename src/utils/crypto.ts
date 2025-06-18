@@ -7,13 +7,29 @@ const SECRET_KEY = SecurityEnvValidator.getValidatedEncryptionKey('VITE_VUENI_EN
 // Session timeout for sensitive data (30 minutes)
 const SESSION_TIMEOUT = 30 * 60 * 1000;
 
+interface AuditLogEntry {
+  action: string;
+  key: string;
+  timestamp: string;
+  userAgent?: string;
+  [key: string]: unknown;
+}
+
+interface SecurityEvent {
+  event: string;
+  key: string;
+  details?: string;
+  timestamp: string;
+  severity: 'low' | 'medium' | 'high' | 'critical';
+}
+
 /**
  * VueniSecureStorage - Production-grade encrypted storage for financial data
  * Implements PCI-DSS considerations and financial compliance standards
  */
 export class VueniSecureStorage {
   private static sessionData = new Map<string, { data: unknown; timestamp: number; encrypted: boolean }>();
-  private static auditLog: Array<{ action: string; key: string; timestamp: string; userAgent?: string }> = [];
+  private static auditLog: AuditLogEntry[] = [];
 
   /**
    * Encrypts data with AES-256 and adds integrity check

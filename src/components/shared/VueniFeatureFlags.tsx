@@ -351,6 +351,14 @@ export const checkFeatureFlag = (flags: FeatureFlags, feature: keyof FeatureFlag
 // Export types for external use
 export type { FeatureFlags, FeatureFlagContextType };
 
-export const createFeatureFlag = (name: string, defaultValue: boolean, description?: string): FeatureFlag => ({
-  validateFeatures: (features: Record<string, boolean>) => ValidationResult;
-});
+// Additional utility types
+export interface FeatureFlag {
+  name: string;
+  defaultValue: boolean;
+  description?: string;
+}
+
+export interface ValidationResult {
+  isValid: boolean;
+  errors?: string[];
+}
