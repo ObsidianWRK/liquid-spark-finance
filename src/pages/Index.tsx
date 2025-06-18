@@ -264,7 +264,7 @@ export default function Index() {
             onTabChange={handleViewChange}
           />
           
-          <main className="flex-1 overflow-auto">
+          <main className="flex-1 overflow-auto pt-24">
             {renderCurrentView()}
           </main>
           </div>

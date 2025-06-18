@@ -148,8 +148,8 @@ const LiquidGlassTopMenuBar = ({ className, onMenuItemClick }: MenuBarProps) => 
       <LiquidGlassSVGFilters />
       
       {/* Top Menu Bar with Liquid Glass Effect */}
-      <div className={cn("fixed top-0 left-0 right-0 z-50 p-4", className)}>
-        <div className="liquid-glass-nav rounded-2xl p-3 border-x-0 border-t-0 border-b border-white/10">
+      <div className={cn("fixed top-0 left-0 right-0 z-50 p-4 pt-safe", className)}>
+        <div className="liquid-glass-nav rounded-2xl p-3 border-x-0 border-t-0 border-b border-white/10 backdrop-blur-xl">
           <div className="flex items-center justify-between max-w-7xl mx-auto">
             
             {/* Logo/Brand */}

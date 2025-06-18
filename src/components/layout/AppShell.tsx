@@ -46,7 +46,7 @@ const AppShell = ({ children, activeTab = 'dashboard', onTabChange }: AppShellPr
     <div className="min-h-screen bg-gray-950">
       {/* Top Header */}
       <header className="fixed top-0 left-0 right-0 z-50">
-        <SimpleGlassCard className="m-4 p-4 rounded-xl">
+        <SimpleGlassCard className="m-4 p-4 rounded-xl backdrop-blur-xl">
           <div className="flex items-center justify-between">
             {/* Left side */}
             <div className="flex items-center gap-4">
@@ -184,7 +184,7 @@ const AppShell = ({ children, activeTab = 'dashboard', onTabChange }: AppShellPr
 
       {/* Main Content */}
       <main className={`
-        pt-24 pb-6 px-4 transition-all duration-300
+        pt-32 pb-6 px-4 transition-all duration-300
         lg:ml-64 lg:pl-4
       `}>
         <div className="max-w-none">

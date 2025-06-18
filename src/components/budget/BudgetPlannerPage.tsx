@@ -6,8 +6,10 @@ import {
   Trash2,
   TrendingUp,
   ChevronDown,
-  ChevronUp
+  ChevronUp,
+  ArrowLeft
 } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import { cn } from '@/lib/utils';
 import {
   PieChart, Pie, Cell, Tooltip as ReTooltip, Legend,
@@ -15,6 +17,7 @@ import {
 } from 'recharts';
 
 const BudgetPlannerPage = () => {
+  const navigate = useNavigate();
   const [categories, setCategories] = useState<BudgetCategory[]>([]);
   const [showAddForm, setShowAddForm] = useState(false);
   const [newCatName, setNewCatName] = useState('');
@@ -73,6 +76,15 @@ const BudgetPlannerPage = () => {
   return (
     <div className="min-h-screen bg-black text-white">
       <div className="max-w-7xl mx-auto px-4 py-8 sm:px-6 lg:px-8 space-y-10">
+        {/* Back Button */}
+        <button
+          onClick={() => navigate('/')}
+          className="liquid-glass-button flex items-center gap-2 px-3 py-2 rounded-xl text-white/80 hover:text-white transition-colors mb-4"
+        >
+          <ArrowLeft className="w-4 h-4" />
+          <span className="text-sm">Dashboard</span>
+        </button>
+
         <header className="flex items-center justify-between">
           <div>
             <h1 className="text-3xl font-bold flex items-center space-x-3">

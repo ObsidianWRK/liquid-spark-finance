@@ -121,7 +121,7 @@ const SavingsGoals = () => {
           
           <button
             onClick={() => setShowGoalCreator(true)}
-            className="bg-green-500 text-white px-6 py-3 rounded-lg font-medium hover:bg-green-600 transition-all flex items-center space-x-2 shadow-lg"
+            className="liquid-glass-button px-6 py-3 rounded-xl font-medium hover:bg-white/[0.08] transition-all flex items-center space-x-2 text-white border border-white/[0.12] backdrop-blur-md"
           >
             <Plus className="w-5 h-5" />
             <span>New Goal</span>
@@ -220,7 +220,7 @@ const SavingsGoals = () => {
                 className={cn(
                   'flex-1 py-3 px-4 text-sm font-medium rounded-lg transition-all flex items-center justify-center space-x-2',
                   activeTab === tab.id
-                    ? 'bg-green-500 text-white shadow-lg'
+                    ? 'bg-blue-500 text-white shadow-lg border border-blue-400/30'
                     : 'text-gray-400 hover:text-white hover:bg-white/[0.05]'
                 )}
               >
@@ -243,7 +243,7 @@ const SavingsGoals = () => {
                 </p>
                 <button
                   onClick={() => setShowGoalCreator(true)}
-                  className="bg-green-500 text-white px-6 py-3 rounded-lg font-medium hover:bg-green-600 transition-all flex items-center space-x-2 mx-auto shadow-lg"
+                  className="liquid-glass-button px-6 py-3 rounded-xl font-medium hover:bg-white/[0.08] transition-all flex items-center space-x-2 mx-auto text-white border border-white/[0.12] backdrop-blur-md"
                 >
                   <Plus className="w-5 h-5" />
                   <span>Create Your First Goal</span>

@@ -80,75 +80,73 @@ const TransactionItem = React.memo<TransactionItemProps>(({ transaction, currenc
   );
 
   return (
-    <GlassCard 
-      className="p-4 glass-interactive stagger-item"
-      interactive
-      shimmer
-    >
-      <div className="transaction-layout">
-        {/* Status Dot */}
-        <div className="transaction-status">
-          <div className={`transaction-status-dot ${statusColor}`} />
+    <div className="bg-white/[0.02] rounded-2xl border border-white/[0.08] p-4 hover:bg-white/[0.03] transition-all duration-300 backdrop-blur-md">
+      <div className="flex items-center gap-4">
+        {/* Status Indicator */}
+        <div className="flex-shrink-0">
+          <div className={`w-3 h-3 rounded-full ${statusColor.replace('bg-', 'bg-')}`} />
         </div>
         
-        {/* Shipping Icon */}
-        <div className="transaction-icon">
-          {hasShippingInfo && (
-            <div className="text-white/70">
-              {shippingIcon}
-            </div>
-          )}
+        {/* Merchant Icon/Avatar */}
+        <div className="flex-shrink-0">
+          <div className="w-12 h-12 rounded-2xl bg-white/[0.06] flex items-center justify-center">
+            {hasShippingInfo ? (
+              <div className="text-white/70">
+                {shippingIcon}
+              </div>
+            ) : (
+              <div className="w-8 h-8 rounded-xl bg-blue-500/20 flex items-center justify-center">
+                <span className="text-blue-400 text-sm font-bold">
+                  {transaction.merchant.charAt(0).toUpperCase()}
+                </span>
+              </div>
+            )}
+          </div>
         </div>
         
         {/* Content */}
-        <div className="transaction-content">
-          <p className="transaction-merchant truncate">
+        <div className="flex-1 min-w-0">
+          <p className="font-semibold text-white truncate text-sm">
             {transaction.merchant}
           </p>
-          <p className="transaction-category truncate">
-            {transaction.category.name}
+          <p className="text-white/60 text-xs mt-1 truncate">
+            {transaction.category.name} • {formatDate(transaction.date)}
           </p>
         </div>
         
         {/* Amount */}
-        <div className="transaction-amount">
-          <p className={`transaction-amount-text ${amountColor}`}>
+        <div className="flex-shrink-0 text-right">
+          <p className={`font-bold text-sm ${amountColor}`}>
             {formatCurrency(transaction.amount)}
           </p>
-          <p className="transaction-date-text">
-            {formatDate(transaction.date)}
-          </p>
+          <div className="flex items-center justify-end mt-1">
+            <div className={`w-2 h-2 rounded-full ${statusColor} mr-2`} />
+            <span className="text-white/50 text-xs capitalize">
+              {transaction.status}
+            </span>
+          </div>
         </div>
-        
-        {/* Empty Scores Area */}
-        <div className="transaction-scores"></div>
       </div>
       
       {/* Shipping Info Row */}
       {hasShippingInfo && (
-        <div className="mt-3 pt-3 border-t border-white/10">
-          <div className="transaction-layout">
-            <div className="transaction-status"></div>
-            <div className="transaction-icon"></div>
-            <div className="transaction-content">
-              <span className="text-white/50 text-xs">
-                Tracking: {transaction.trackingNumber}
-              </span>
-            </div>
-            <div className="transaction-amount">
-              <span className="text-white/50 text-xs">
+        <div className="mt-3 pt-3 border-t border-white/[0.05]">
+          <div className="flex items-center justify-between text-xs">
+            <span className="text-white/50">
+              Tracking: {transaction.trackingNumber}
+            </span>
+            <div className="flex items-center gap-2">
+              <span className="text-white/50">
                 via {transaction.shippingProvider}
               </span>
-            </div>
-            <div className="transaction-scores">
-              <span className={`text-xs font-medium ${deliveryStatusColor}`}>
+              <span className={`font-medium ${deliveryStatusColor}`}>
                 {transaction.deliveryStatus}
               </span>
             </div>
           </div>
         </div>
       )}
-    </GlassCard>
+    </div>
   );
 });
 

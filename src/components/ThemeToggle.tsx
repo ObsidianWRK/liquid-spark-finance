@@ -1,5 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Sun, Moon } from 'lucide-react';
+import { Switch } from '@/components/ui/switch';
+import { cn } from '@/lib/utils';
 
 const ThemeToggle = ({ className = '' }: { className?: string }) => {
   const [isDark, setIsDark] = useState(true);
@@ -15,18 +17,17 @@ const ThemeToggle = ({ className = '' }: { className?: string }) => {
   // Render loading state instead of early return to maintain hook consistency
   if (!mounted) {
     return (
-      <div className={`p-2 rounded-full flex items-center justify-center ${className}`}>
-        <div className="w-5 h-5 opacity-0" />
+      <div className={cn("flex items-center justify-center", className)}>
+        <div className="w-11 h-6 opacity-0" />
       </div>
     );
   }
 
-  const handleToggle = () => {
-    const newTheme = !isDark;
-    setIsDark(newTheme);
+  const handleToggle = (checked: boolean) => {
+    setIsDark(checked);
     
     // Update document class
-    if (newTheme) {
+    if (checked) {
       document.documentElement.classList.add('dark');
       document.documentElement.classList.remove('light');
     } else {
@@ -35,38 +36,37 @@ const ThemeToggle = ({ className = '' }: { className?: string }) => {
     }
   };
 
-  const handleKeyDown = (event: React.KeyboardEvent) => {
-    if (event.key === 'Enter' || event.key === ' ') {
-      event.preventDefault();
-      handleToggle();
-    }
-  };
-
   return (
-    <button
-      aria-label={`Switch to ${isDark ? 'light' : 'dark'} mode`}
-      aria-pressed={!isDark}
-      title={`Switch to ${isDark ? 'light' : 'dark'} mode`}
-      className={`p-2 rounded-full transition-all duration-300 flex items-center justify-center hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 active:scale-95 ${className}`}
-      onClick={handleToggle}
-      onKeyDown={handleKeyDown}
-      type="button"
-    >
-      {isDark ? (
-        <Sun 
-          className="w-5 h-5 text-yellow-400 transition-transform duration-300 hover:rotate-12" 
-          aria-hidden="true" 
-        />
-      ) : (
+    <div className={cn("flex items-center gap-3", className)}>
+      <div className="flex items-center gap-2">
         <Moon 
-          className="w-5 h-5 text-blue-600 transition-transform duration-300 hover:-rotate-12" 
+          className={cn(
+            "w-4 h-4 transition-colors duration-300",
+            !isDark ? "text-blue-400" : "text-white/40"
+          )}
           aria-hidden="true" 
         />
-      )}
+        
+        <Switch
+          checked={isDark}
+          onCheckedChange={handleToggle}
+          aria-label={`Switch to ${isDark ? 'light' : 'dark'} mode`}
+          className="data-[state=checked]:bg-blue-500 data-[state=unchecked]:bg-white/20"
+        />
+        
+        <Sun 
+          className={cn(
+            "w-4 h-4 transition-colors duration-300",
+            isDark ? "text-yellow-400" : "text-white/40"
+          )}
+          aria-hidden="true" 
+        />
+      </div>
+      
       <span className="sr-only">
         {isDark ? 'Switch to light mode' : 'Switch to dark mode'}
       </span>
-    </button>
+    </div>
   );
 };
 
