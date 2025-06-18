@@ -276,12 +276,12 @@ export const useOptimizedMemo = <T>(
       memoRef.current = {
         value: factory(),
         timestamp: now,
-        deps
+        deps: [...deps] // Create a copy to avoid mutations
       };
     }
     
     return memoRef.current.value;
-  }, deps);
+  }, [factory, expiry, ...deps]); // Add all missing dependencies
 };
 
 export default PerformanceMonitor; 

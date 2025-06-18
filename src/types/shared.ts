@@ -172,8 +172,8 @@ export type CategoryFilterHandler = (category: string) => void;
 export type SortChangeHandler = (field: string, direction: 'asc' | 'desc') => void;
 
 // Performance Optimization Types
-export interface MemoizedComponentProps {
-  shouldUpdate?: (prevProps: any, nextProps: any) => boolean;
+export interface MemoizedComponentProps<T = Record<string, unknown>> {
+  shouldUpdate?: (prevProps: T, nextProps: T) => boolean;
 }
 
 export interface OptimizedListProps<T> {
