@@ -3,32 +3,53 @@
  */
 
 /**
+ * Format score with exactly 1 decimal place
+ * @param value - The score value to format
+ * @returns Formatted score string (e.g., "85.7", "92.0")
+ */
+export const formatScore = (value: number): string => {
+  // Ensure exactly 1 decimal place
+  return value.toFixed(1);
+};
+
+/**
  * Format percentage with consistent decimal places
  * @param value - The percentage value to format
  * @param decimals - Number of decimal places (default: 1)
- * @returns Formatted percentage string
+ * @returns Formatted percentage string with % sign
  */
 export const formatPercentage = (value: number, decimals: number = 1): string => {
-  return (Math.round(value * Math.pow(10, decimals)) / Math.pow(10, decimals)).toFixed(decimals);
+  return `${value.toFixed(decimals)}%`;
 };
 
 /**
  * Format currency with proper locale and currency symbol
  * @param value - The currency value to format
- * @param currency - Currency code (default: 'USD')
- * @param locale - Locale for formatting (default: 'en-US')
+ * @param options - Formatting options
  * @returns Formatted currency string
  */
 export const formatCurrency = (
   value: number, 
-  currency: string = 'USD', 
-  locale: string = 'en-US'
+  options?: { 
+    decimals?: number; 
+    currency?: string;
+    locale?: string;
+  }
 ): string => {
+  const { 
+    decimals, 
+    currency = 'USD', 
+    locale = 'en-US' 
+  } = options || {};
+  
+  // Determine decimal places
+  const shouldShowDecimals = decimals !== undefined ? decimals > 0 : value % 1 !== 0;
+  
   return new Intl.NumberFormat(locale, {
     style: 'currency',
     currency: currency,
-    minimumFractionDigits: value >= 1000 ? 0 : 2,
-    maximumFractionDigits: value >= 1000 ? 0 : 2,
+    minimumFractionDigits: shouldShowDecimals ? (decimals ?? 2) : 0,
+    maximumFractionDigits: shouldShowDecimals ? (decimals ?? 2) : 0,
   }).format(value);
 };
 
@@ -40,15 +61,33 @@ export const formatCurrency = (
  */
 export const formatLargeNumber = (value: number, decimals: number = 1): string => {
   if (value >= 1e9) {
-    return `${formatPercentage(value / 1e9, decimals)}B`;
+    return `${(value / 1e9).toFixed(decimals)}B`;
   }
   if (value >= 1e6) {
-    return `${formatPercentage(value / 1e6, decimals)}M`;
+    return `${(value / 1e6).toFixed(decimals)}M`;
   }
   if (value >= 1e3) {
-    return `${formatPercentage(value / 1e3, decimals)}K`;
+    return `${(value / 1e3).toFixed(decimals)}K`;
   }
   return value.toString();
+};
+
+/**
+ * Format compact number for display (e.g., 1.2K, 3.4M)
+ * @param value - The number to format
+ * @returns Compact formatted string
+ */
+export const formatCompactNumber = (value: number): string => {
+  if (value >= 1e9) {
+    return `${(value / 1e9).toFixed(1)}B`;
+  }
+  if (value >= 1e6) {
+    return `${(value / 1e6).toFixed(1)}M`;
+  }
+  if (value >= 1e3) {
+    return `${(value / 1e3).toFixed(1)}K`;
+  }
+  return value.toFixed(0);
 };
 
 /**
@@ -58,7 +97,7 @@ export const formatLargeNumber = (value: number, decimals: number = 1): string =
  * @returns Formatted number string
  */
 export const formatDecimal = (value: number, decimals: number = 1): string => {
-  return (Math.round(value * Math.pow(10, decimals)) / Math.pow(10, decimals)).toFixed(decimals);
+  return value.toFixed(decimals);
 };
 
 /**

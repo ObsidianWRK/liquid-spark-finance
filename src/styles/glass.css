@@ -326,3 +326,24 @@
     animation: none;
   }
 }
+
+/* CardShell Gradient Overlays */
+.gradient-green {
+  background: radial-gradient(circle at top right, rgba(34, 197, 94, 0.1), transparent);
+}
+
+.gradient-yellow {
+  background: radial-gradient(circle at top right, rgba(250, 204, 21, 0.1), transparent);
+}
+
+.gradient-blue {
+  background: radial-gradient(circle at top right, rgba(59, 130, 246, 0.1), transparent);
+}
+
+.gradient-red {
+  background: radial-gradient(circle at top right, rgba(239, 68, 68, 0.1), transparent);
+}
+
+.gradient-purple {
+  background: radial-gradient(circle at top right, rgba(139, 92, 246, 0.1), transparent);
+}

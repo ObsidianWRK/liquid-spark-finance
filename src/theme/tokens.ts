@@ -11,6 +11,16 @@ export const themeTokens = {
     '3xl': '4rem',    // 64px
   },
   
+  // Border radius tokens
+  radius: {
+    sm: '0.25rem',    // 4px
+    md: '0.5rem',     // 8px
+    lg: '0.75rem',    // 12px - standard card radius
+    xl: '1rem',       // 16px
+    '2xl': '1.5rem',  // 24px
+    full: '9999px',   // Pill shape
+  },
+  
   // Navigation specific tokens
   navigation: {
     height: {
@@ -51,6 +61,20 @@ export const themeTokens = {
         border: 'rgba(255, 255, 255, 0.04)',
         borderHover: 'rgba(255, 255, 255, 0.08)',
       }
+    },
+    // Card accent colors
+    accents: {
+      green: '#22c55e',
+      yellow: '#facc15',
+      blue: '#3b82f6',
+      red: '#ef4444',
+      purple: '#8b5cf6',
+    },
+    // Card-specific colors
+    card: {
+      bg: 'rgba(39, 39, 42, 0.4)', // zinc-800/40
+      border: 'rgba(63, 63, 70, 0.6)', // zinc-700/60
+      shadow: 'rgba(255, 255, 255, 0.05)',
     }
   },
   

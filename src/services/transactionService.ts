@@ -6,7 +6,8 @@ import {
   TransactionAnalytics,
   CategorySpending,
   SpendingInsight,
-  TransactionImport
+  TransactionImport,
+  FieldMapping
 } from '@/types/transactions';
 
 /**
@@ -346,8 +347,7 @@ export class TransactionService {
   async importTransactions(
     familyId: string,
     file: File,
-    mapping: Record<string, string>
-    mapping: any
+    mapping: FieldMapping
   ): Promise<TransactionImport> {
     const importRecord: TransactionImport = {
       id: this.generateImportId(),

@@ -1,0 +1,1941 @@
+<testsuites id="" name="" tests="85" failures="46" skipped="0" errors="0" time="227.63100899999998">
+<testsuite name="ui-refactor-validation.spec.ts" timestamp="2025-06-18T15:27:35.704Z" hostname="chromium" tests="17" failures="11" skipped="0" time="91.08" errors="0">
+<testcase name="UI Refactor Validation › Financial Health Score Formatting › should display Financial Health score with exactly 1 decimal place" classname="ui-refactor-validation.spec.ts" time="7.36">
+<failure message="ui-refactor-validation.spec.ts:10:5 should display Financial Health score with exactly 1 decimal place" type="FAILURE">
+<![CDATA[  [chromium] › ui-refactor-validation.spec.ts:10:5 › UI Refactor Validation › Financial Health Score Formatting › should display Financial Health score with exactly 1 decimal place 
+
+    Error: expect(received).toMatch(expected)
+
+    Expected pattern: /^\d{1,3}\.\d%$/
+    Received string:  "$12,450.00"
+
+      17 |       
+      18 |       // Verify score has correct format (XX.X%)
+    > 19 |       expect(scoreText).toMatch(/^\d{1,3}\.\d%$/);
+         |                         ^
+      20 |       
+      21 |       // Verify no excessive decimals
+      22 |       expect(scoreText).not.toMatch(/\.\d{2,}%/);
+        at /Users/damon/liquid-spark-finance/liquid-spark-finance/e2e/ui-refactor-validation.spec.ts:19:25
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/ui-refactor-validation-UI--dc14c-ith-exactly-1-decimal-place-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results/ui-refactor-validation-UI--dc14c-ith-exactly-1-decimal-place-chromium/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../test-results/ui-refactor-validation-UI--dc14c-ith-exactly-1-decimal-place-chromium/error-context.md
+]]>
+</failure>
+<system-out>
+<![CDATA[
+[[ATTACHMENT|ui-refactor-validation-UI--dc14c-ith-exactly-1-decimal-place-chromium/test-failed-1.png]]
+
+[[ATTACHMENT|ui-refactor-validation-UI--dc14c-ith-exactly-1-decimal-place-chromium/video.webm]]
+
+[[ATTACHMENT|ui-refactor-validation-UI--dc14c-ith-exactly-1-decimal-place-chromium/error-context.md]]
+]]>
+</system-out>
+</testcase>
+<testcase name="UI Refactor Validation › Financial Health Score Formatting › should format all percentage values correctly" classname="ui-refactor-validation.spec.ts" time="7.256">
+</testcase>
+<testcase name="UI Refactor Validation › Total Wealth Calculation › should display accurate Total Wealth on Insights page" classname="ui-refactor-validation.spec.ts" time="7.368">
+<failure message="ui-refactor-validation.spec.ts:38:5 should display accurate Total Wealth on Insights page" type="FAILURE">
+<![CDATA[  [chromium] › ui-refactor-validation.spec.ts:38:5 › UI Refactor Validation › Total Wealth Calculation › should display accurate Total Wealth on Insights page 
+
+    Error: page.click: Error: strict mode violation: locator('text=Insights') resolved to 2 elements:
+        1) <span data-lov-name="span" data-component-line="160" data-component-name="span" class="nav-text font-medium" data-component-file="Navigation.tsx" data-lov-id="src/components/Navigation.tsx:160:22" data-component-path="src/components/Navigation.tsx" data-component-content="%7B%22className%22%3A%22nav-text%20font-medium%22%7D">Insights</span> aka getByRole('button', { name: 'Navigate to Insights' })
+        2) <span data-lov-name="span" data-component-line="229" data-component-name="span" data-component-content="%7B%7D" data-component-file="SavingsGoals.tsx" data-lov-id="src/components/savings/SavingsGoals.tsx:229:16" data-component-path="src/components/savings/SavingsGoals.tsx">Insights</span> aka getByRole('main').getByRole('button', { name: 'Insights' })
+
+    Call log:
+      - waiting for locator('text=Insights')
+
+
+      38 |     test('should display accurate Total Wealth on Insights page', async ({ page }) => {
+      39 |       // Navigate to Insights page
+    > 40 |       await page.click('text=Insights');
+         |                  ^
+      41 |       await page.waitForLoadState('networkidle');
+      42 |       
+      43 |       // Check Total Wealth display
+        at /Users/damon/liquid-spark-finance/liquid-spark-finance/e2e/ui-refactor-validation.spec.ts:40:18
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/ui-refactor-validation-UI--bf3e9-tal-Wealth-on-Insights-page-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results/ui-refactor-validation-UI--bf3e9-tal-Wealth-on-Insights-page-chromium/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../test-results/ui-refactor-validation-UI--bf3e9-tal-Wealth-on-Insights-page-chromium/error-context.md
+]]>
+</failure>
+<system-out>
+<![CDATA[
+[[ATTACHMENT|ui-refactor-validation-UI--bf3e9-tal-Wealth-on-Insights-page-chromium/test-failed-1.png]]
+
+[[ATTACHMENT|ui-refactor-validation-UI--bf3e9-tal-Wealth-on-Insights-page-chromium/video.webm]]
+
+[[ATTACHMENT|ui-refactor-validation-UI--bf3e9-tal-Wealth-on-Insights-page-chromium/error-context.md]]
+]]>
+</system-out>
+</testcase>
+<testcase name="UI Refactor Validation › Total Wealth Calculation › should calculate Total Wealth from all account types" classname="ui-refactor-validation.spec.ts" time="8.166">
+<failure message="ui-refactor-validation.spec.ts:56:5 should calculate Total Wealth from all account types" type="FAILURE">
+<![CDATA[  [chromium] › ui-refactor-validation.spec.ts:56:5 › UI Refactor Validation › Total Wealth Calculation › should calculate Total Wealth from all account types 
+
+    Error: page.click: Error: strict mode violation: locator('text=Insights') resolved to 2 elements:
+        1) <span data-lov-name="span" data-component-line="160" data-component-name="span" class="nav-text font-medium" data-component-file="Navigation.tsx" data-lov-id="src/components/Navigation.tsx:160:22" data-component-path="src/components/Navigation.tsx" data-component-content="%7B%22className%22%3A%22nav-text%20font-medium%22%7D">Insights</span> aka getByRole('button', { name: 'Navigate to Insights' })
+        2) <span data-lov-name="span" data-component-line="229" data-component-name="span" data-component-content="%7B%7D" data-component-file="SavingsGoals.tsx" data-lov-id="src/components/savings/SavingsGoals.tsx:229:16" data-component-path="src/components/savings/SavingsGoals.tsx">Insights</span> aka getByRole('main').getByRole('button', { name: 'Insights' })
+
+    Call log:
+      - waiting for locator('text=Insights')
+
+
+      74 |       
+      75 |       // Navigate to Insights and verify total
+    > 76 |       await page.click('text=Insights');
+         |                  ^
+      77 |       await page.waitForLoadState('networkidle');
+      78 |       
+      79 |       const displayedTotal = await page.locator('text=/Total Wealth.*\\$[\\d,]+/').first().textContent();
+        at /Users/damon/liquid-spark-finance/liquid-spark-finance/e2e/ui-refactor-validation.spec.ts:76:18
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/ui-refactor-validation-UI--6a73d-alth-from-all-account-types-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results/ui-refactor-validation-UI--6a73d-alth-from-all-account-types-chromium/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../test-results/ui-refactor-validation-UI--6a73d-alth-from-all-account-types-chromium/error-context.md
+]]>
+</failure>
+<system-out>
+<![CDATA[
+[[ATTACHMENT|ui-refactor-validation-UI--6a73d-alth-from-all-account-types-chromium/test-failed-1.png]]
+
+[[ATTACHMENT|ui-refactor-validation-UI--6a73d-alth-from-all-account-types-chromium/video.webm]]
+
+[[ATTACHMENT|ui-refactor-validation-UI--6a73d-alth-from-all-account-types-chromium/error-context.md]]
+]]>
+</system-out>
+</testcase>
+<testcase name="UI Refactor Validation › Transaction List Styling › should display transactions with proper CardShell styling" classname="ui-refactor-validation.spec.ts" time="2.159">
+<failure message="ui-refactor-validation.spec.ts:88:5 should display transactions with proper CardShell styling" type="FAILURE">
+<![CDATA[  [chromium] › ui-refactor-validation.spec.ts:88:5 › UI Refactor Validation › Transaction List Styling › should display transactions with proper CardShell styling 
+
+    Error: page.click: Error: strict mode violation: locator('text=Transactions') resolved to 2 elements:
+        1) <span data-lov-name="span" data-component-line="160" data-component-name="span" class="nav-text font-medium" data-component-file="Navigation.tsx" data-lov-id="src/components/Navigation.tsx:160:22" data-component-path="src/components/Navigation.tsx" data-component-content="%7B%22className%22%3A%22nav-text%20font-medium%22%7D">Transactions</span> aka getByRole('button', { name: 'Navigate to Transactions' })
+        2) <h3 data-lov-name="h3" data-component-name="h3" data-component-line="166" class="text-lg font-semibold text-white" data-component-file="OptimizedTransactionList.tsx" data-lov-id="src/components/transactions/OptimizedTransactionList.tsx:166:10" data-component-path="src/components/transactions/OptimizedTransactionList.tsx" data-component-content="%7B%22text%22%3A%22Recent%20Transactions%22%2C%22className%22%3A%22text-lg%20font-semibold%20text-white%22%7D">Recent Transactions</h3> aka getByRole('heading', { name: 'Recent Transactions' })
+
+    Call log:
+      - waiting for locator('text=Transactions')
+
+
+      88 |     test('should display transactions with proper CardShell styling', async ({ page }) => {
+      89 |       // Navigate to transactions view
+    > 90 |       await page.click('text=Transactions');
+         |                  ^
+      91 |       await page.waitForLoadState('networkidle');
+      92 |       
+      93 |       // Check transaction list container
+        at /Users/damon/liquid-spark-finance/liquid-spark-finance/e2e/ui-refactor-validation.spec.ts:90:18
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/ui-refactor-validation-UI--10bb3-th-proper-CardShell-styling-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results/ui-refactor-validation-UI--10bb3-th-proper-CardShell-styling-chromium/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../test-results/ui-refactor-validation-UI--10bb3-th-proper-CardShell-styling-chromium/error-context.md
+]]>
+</failure>
+<system-out>
+<![CDATA[
+[[ATTACHMENT|ui-refactor-validation-UI--10bb3-th-proper-CardShell-styling-chromium/test-failed-1.png]]
+
+[[ATTACHMENT|ui-refactor-validation-UI--10bb3-th-proper-CardShell-styling-chromium/video.webm]]
+
+[[ATTACHMENT|ui-refactor-validation-UI--10bb3-th-proper-CardShell-styling-chromium/error-context.md]]
+]]>
+</system-out>
+</testcase>
+<testcase name="UI Refactor Validation › Transaction List Styling › should maintain rounded corners with scroll" classname="ui-refactor-validation.spec.ts" time="3.655">
+<failure message="ui-refactor-validation.spec.ts:112:5 should maintain rounded corners with scroll" type="FAILURE">
+<![CDATA[  [chromium] › ui-refactor-validation.spec.ts:112:5 › UI Refactor Validation › Transaction List Styling › should maintain rounded corners with scroll 
+
+    Error: page.click: Error: strict mode violation: locator('text=Transactions') resolved to 2 elements:
+        1) <span data-lov-name="span" data-component-line="160" data-component-name="span" class="nav-text font-medium" data-component-file="Navigation.tsx" data-lov-id="src/components/Navigation.tsx:160:22" data-component-path="src/components/Navigation.tsx" data-component-content="%7B%22className%22%3A%22nav-text%20font-medium%22%7D">Transactions</span> aka getByRole('button', { name: 'Navigate to Transactions' })
+        2) <h3 data-lov-name="h3" data-component-name="h3" data-component-line="166" class="text-lg font-semibold text-white" data-component-file="OptimizedTransactionList.tsx" data-lov-id="src/components/transactions/OptimizedTransactionList.tsx:166:10" data-component-path="src/components/transactions/OptimizedTransactionList.tsx" data-component-content="%7B%22text%22%3A%22Recent%20Transactions%22%2C%22className%22%3A%22text-lg%20font-semibold%20text-white%22%7D">Recent Transactions</h3> aka getByRole('heading', { name: 'Recent Transactions' })
+
+    Call log:
+      - waiting for locator('text=Transactions')
+
+
+      111 |
+      112 |     test('should maintain rounded corners with scroll', async ({ page }) => {
+    > 113 |       await page.click('text=Transactions');
+          |                  ^
+      114 |       await page.waitForLoadState('networkidle');
+      115 |       
+      116 |       // Check for mask-image CSS property
+        at /Users/damon/liquid-spark-finance/liquid-spark-finance/e2e/ui-refactor-validation.spec.ts:113:18
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/ui-refactor-validation-UI--4256e-rounded-corners-with-scroll-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results/ui-refactor-validation-UI--4256e-rounded-corners-with-scroll-chromium/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../test-results/ui-refactor-validation-UI--4256e-rounded-corners-with-scroll-chromium/error-context.md
+]]>
+</failure>
+<system-out>
+<![CDATA[
+[[ATTACHMENT|ui-refactor-validation-UI--4256e-rounded-corners-with-scroll-chromium/test-failed-1.png]]
+
+[[ATTACHMENT|ui-refactor-validation-UI--4256e-rounded-corners-with-scroll-chromium/video.webm]]
+
+[[ATTACHMENT|ui-refactor-validation-UI--4256e-rounded-corners-with-scroll-chromium/error-context.md]]
+]]>
+</system-out>
+</testcase>
+<testcase name="UI Refactor Validation › Card Design Consistency › should apply consistent glass morphism to all cards" classname="ui-refactor-validation.spec.ts" time="3.661">
+<failure message="ui-refactor-validation.spec.ts:126:5 should apply consistent glass morphism to all cards" type="FAILURE">
+<![CDATA[  [chromium] › ui-refactor-validation.spec.ts:126:5 › UI Refactor Validation › Card Design Consistency › should apply consistent glass morphism to all cards 
+
+    Error: expect(received).toMatch(expected)
+
+    Expected pattern: /border/
+    Received string:  "relative rounded-xl bg-zinc-800/40 backdrop-blur ring-1 ring-zinc-700/60 shadow-[inset_0_0_0_1px_rgba(255,255,255,.05)] overflow-hidden p-0"
+
+      143 |           
+      144 |           // Should have proper border
+    > 145 |           expect(classes).toMatch(/border/);
+          |                           ^
+      146 |           
+      147 |           // Should have rounded corners
+      148 |           expect(classes).toMatch(/rounded/);
+        at /Users/damon/liquid-spark-finance/liquid-spark-finance/e2e/ui-refactor-validation.spec.ts:145:27
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/ui-refactor-validation-UI--343f0-glass-morphism-to-all-cards-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results/ui-refactor-validation-UI--343f0-glass-morphism-to-all-cards-chromium/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../test-results/ui-refactor-validation-UI--343f0-glass-morphism-to-all-cards-chromium/error-context.md
+]]>
+</failure>
+<system-out>
+<![CDATA[
+[[ATTACHMENT|ui-refactor-validation-UI--343f0-glass-morphism-to-all-cards-chromium/test-failed-1.png]]
+
+[[ATTACHMENT|ui-refactor-validation-UI--343f0-glass-morphism-to-all-cards-chromium/video.webm]]
+
+[[ATTACHMENT|ui-refactor-validation-UI--343f0-glass-morphism-to-all-cards-chromium/error-context.md]]
+]]>
+</system-out>
+</testcase>
+<testcase name="UI Refactor Validation › Card Design Consistency › should have proper hover states on interactive cards" classname="ui-refactor-validation.spec.ts" time="3.34">
+<failure message="ui-refactor-validation.spec.ts:156:5 should have proper hover states on interactive cards" type="FAILURE">
+<![CDATA[  [chromium] › ui-refactor-validation.spec.ts:156:5 › UI Refactor Validation › Card Design Consistency › should have proper hover states on interactive cards 
+
+    Error: expect(received).not.toEqual(expected) // deep equality
+
+    Expected: not {"boxShadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0.05) 0px 2px 4px 0px inset", "transform": "none"}
+
+
+      179 |       
+      180 |       // Verify hover effect is applied
+    > 181 |       expect(hoverStyles).not.toEqual(initialStyles);
+          |                               ^
+      182 |     });
+      183 |   });
+      184 |
+        at /Users/damon/liquid-spark-finance/liquid-spark-finance/e2e/ui-refactor-validation.spec.ts:181:31
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/ui-refactor-validation-UI--2c116-states-on-interactive-cards-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results/ui-refactor-validation-UI--2c116-states-on-interactive-cards-chromium/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../test-results/ui-refactor-validation-UI--2c116-states-on-interactive-cards-chromium/error-context.md
+]]>
+</failure>
+<system-out>
+<![CDATA[
+[[ATTACHMENT|ui-refactor-validation-UI--2c116-states-on-interactive-cards-chromium/test-failed-1.png]]
+
+[[ATTACHMENT|ui-refactor-validation-UI--2c116-states-on-interactive-cards-chromium/video.webm]]
+
+[[ATTACHMENT|ui-refactor-validation-UI--2c116-states-on-interactive-cards-chromium/error-context.md]]
+]]>
+</system-out>
+</testcase>
+<testcase name="UI Refactor Validation › Savings Goals Progress Bars › should display gradient progress bars" classname="ui-refactor-validation.spec.ts" time="3.142">
+</testcase>
+<testcase name="UI Refactor Validation › Savings Goals Progress Bars › should show dynamic gradient based on progress" classname="ui-refactor-validation.spec.ts" time="13.89">
+<failure message="ui-refactor-validation.spec.ts:207:5 should show dynamic gradient based on progress" type="FAILURE">
+<![CDATA[  [chromium] › ui-refactor-validation.spec.ts:207:5 › UI Refactor Validation › Savings Goals Progress Bars › should show dynamic gradient based on progress 
+
+    TimeoutError: locator.getAttribute: Timeout 10000ms exceeded.
+    Call log:
+      - waiting for locator('[data-testid="goal-card"], .border.border-white\\/10').first().locator('.h-2.bg-gradient-to-r').first()
+
+
+      214 |       for (const card of goalCards) {
+      215 |         const progressBar = await card.locator('.h-2.bg-gradient-to-r').first();
+    > 216 |         const classes = await progressBar.getAttribute('class');
+          |                                           ^
+      217 |         
+      218 |         // Check for progress-based gradient colors
+      219 |         expect(classes).toMatch(/from-(red|orange|yellow|lime|green)/);
+        at /Users/damon/liquid-spark-finance/liquid-spark-finance/e2e/ui-refactor-validation.spec.ts:216:43
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/ui-refactor-validation-UI--5011f--gradient-based-on-progress-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results/ui-refactor-validation-UI--5011f--gradient-based-on-progress-chromium/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../test-results/ui-refactor-validation-UI--5011f--gradient-based-on-progress-chromium/error-context.md
+]]>
+</failure>
+<system-out>
+<![CDATA[
+[[ATTACHMENT|ui-refactor-validation-UI--5011f--gradient-based-on-progress-chromium/test-failed-1.png]]
+
+[[ATTACHMENT|ui-refactor-validation-UI--5011f--gradient-based-on-progress-chromium/video.webm]]
+
+[[ATTACHMENT|ui-refactor-validation-UI--5011f--gradient-based-on-progress-chromium/error-context.md]]
+]]>
+</system-out>
+</testcase>
+<testcase name="UI Refactor Validation › Savings Goals Progress Bars › should display &quot;Overdue&quot; badge for overdue goals" classname="ui-refactor-validation.spec.ts" time="4.747">
+</testcase>
+<testcase name="UI Refactor Validation › Accessibility Audit › should have proper ARIA labels and roles" classname="ui-refactor-validation.spec.ts" time="4.333">
+</testcase>
+<testcase name="UI Refactor Validation › Accessibility Audit › should have sufficient color contrast" classname="ui-refactor-validation.spec.ts" time="1.699">
+</testcase>
+<testcase name="UI Refactor Validation › Accessibility Audit › should be keyboard navigable" classname="ui-refactor-validation.spec.ts" time="3.253">
+<failure message="ui-refactor-validation.spec.ts:281:5 should be keyboard navigable" type="FAILURE">
+<![CDATA[  [chromium] › ui-refactor-validation.spec.ts:281:5 › UI Refactor Validation › Accessibility Audit › should be keyboard navigable 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      294 |         
+      295 |         // Focused element should be visible
+    > 296 |         expect(focusedElement.visible).toBe(true);
+          |                                        ^
+      297 |       }
+      298 |     });
+      299 |
+        at /Users/damon/liquid-spark-finance/liquid-spark-finance/e2e/ui-refactor-validation.spec.ts:296:40
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/ui-refactor-validation-UI--6c795-hould-be-keyboard-navigable-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results/ui-refactor-validation-UI--6c795-hould-be-keyboard-navigable-chromium/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../test-results/ui-refactor-validation-UI--6c795-hould-be-keyboard-navigable-chromium/error-context.md
+]]>
+</failure>
+<system-out>
+<![CDATA[
+[[ATTACHMENT|ui-refactor-validation-UI--6c795-hould-be-keyboard-navigable-chromium/test-failed-1.png]]
+
+[[ATTACHMENT|ui-refactor-validation-UI--6c795-hould-be-keyboard-navigable-chromium/video.webm]]
+
+[[ATTACHMENT|ui-refactor-validation-UI--6c795-hould-be-keyboard-navigable-chromium/error-context.md]]
+]]>
+</system-out>
+</testcase>
+<testcase name="UI Refactor Validation › Accessibility Audit › should have proper heading hierarchy" classname="ui-refactor-validation.spec.ts" time="2.681">
+<failure message="ui-refactor-validation.spec.ts:300:5 should have proper heading hierarchy" type="FAILURE">
+<![CDATA[  [chromium] › ui-refactor-validation.spec.ts:300:5 › UI Refactor Validation › Accessibility Audit › should have proper heading hierarchy 
+
+    Error: expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 1
+    Received:    2
+
+      308 |         // Heading levels should not skip (e.g., h1 -> h3)
+      309 |         if (lastLevel > 0) {
+    > 310 |           expect(level - lastLevel).toBeLessThanOrEqual(1);
+          |                                     ^
+      311 |         }
+      312 |         lastLevel = level;
+      313 |       }
+        at /Users/damon/liquid-spark-finance/liquid-spark-finance/e2e/ui-refactor-validation.spec.ts:310:37
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/ui-refactor-validation-UI--d48b3-ve-proper-heading-hierarchy-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results/ui-refactor-validation-UI--d48b3-ve-proper-heading-hierarchy-chromium/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../test-results/ui-refactor-validation-UI--d48b3-ve-proper-heading-hierarchy-chromium/error-context.md
+]]>
+</failure>
+<system-out>
+<![CDATA[
+[[ATTACHMENT|ui-refactor-validation-UI--d48b3-ve-proper-heading-hierarchy-chromium/test-failed-1.png]]
+
+[[ATTACHMENT|ui-refactor-validation-UI--d48b3-ve-proper-heading-hierarchy-chromium/video.webm]]
+
+[[ATTACHMENT|ui-refactor-validation-UI--d48b3-ve-proper-heading-hierarchy-chromium/error-context.md]]
+]]>
+</system-out>
+</testcase>
+<testcase name="UI Refactor Validation › Component Integration › should use centralized data selectors" classname="ui-refactor-validation.spec.ts" time="11.962">
+<failure message="ui-refactor-validation.spec.ts:318:5 should use centralized data selectors" type="FAILURE">
+<![CDATA[  [chromium] › ui-refactor-validation.spec.ts:318:5 › UI Refactor Validation › Component Integration › should use centralized data selectors 
+
+    TimeoutError: locator.textContent: Timeout 10000ms exceeded.
+    Call log:
+      - waiting for locator('text=/Total Wealth.*\\$[\\d,]+/').first()
+
+
+      318 |     test('should use centralized data selectors', async ({ page }) => {
+      319 |       // Check that financial metrics are consistent across pages
+    > 320 |       const dashboard = await page.locator('text=/Total Wealth.*\\$[\\d,]+/').first().textContent();
+          |                                                                                       ^
+      321 |       
+      322 |       await page.click('text=Insights');
+      323 |       await page.waitForLoadState('networkidle');
+        at /Users/damon/liquid-spark-finance/liquid-spark-finance/e2e/ui-refactor-validation.spec.ts:320:87
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/ui-refactor-validation-UI--b6352--centralized-data-selectors-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results/ui-refactor-validation-UI--b6352--centralized-data-selectors-chromium/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../test-results/ui-refactor-validation-UI--b6352--centralized-data-selectors-chromium/error-context.md
+]]>
+</failure>
+<system-out>
+<![CDATA[
+[[ATTACHMENT|ui-refactor-validation-UI--b6352--centralized-data-selectors-chromium/test-failed-1.png]]
+
+[[ATTACHMENT|ui-refactor-validation-UI--b6352--centralized-data-selectors-chromium/video.webm]]
+
+[[ATTACHMENT|ui-refactor-validation-UI--b6352--centralized-data-selectors-chromium/error-context.md]]
+]]>
+</system-out>
+</testcase>
+<testcase name="UI Refactor Validation › Component Integration › should apply consistent number formatting" classname="ui-refactor-validation.spec.ts" time="2.408">
+</testcase>
+</testsuite>
+<testsuite name="ui-refactor-validation.spec.ts" timestamp="2025-06-18T15:27:35.704Z" hostname="firefox" tests="17" failures="10" skipped="0" time="134.726" errors="0">
+<testcase name="UI Refactor Validation › Financial Health Score Formatting › should display Financial Health score with exactly 1 decimal place" classname="ui-refactor-validation.spec.ts" time="8.222">
+<failure message="ui-refactor-validation.spec.ts:10:5 should display Financial Health score with exactly 1 decimal place" type="FAILURE">
+<![CDATA[  [firefox] › ui-refactor-validation.spec.ts:10:5 › UI Refactor Validation › Financial Health Score Formatting › should display Financial Health score with exactly 1 decimal place 
+
+    Error: expect(received).toMatch(expected)
+
+    Expected pattern: /^\d{1,3}\.\d%$/
+    Received string:  "$12,450.00"
+
+      17 |       
+      18 |       // Verify score has correct format (XX.X%)
+    > 19 |       expect(scoreText).toMatch(/^\d{1,3}\.\d%$/);
+         |                         ^
+      20 |       
+      21 |       // Verify no excessive decimals
+      22 |       expect(scoreText).not.toMatch(/\.\d{2,}%/);
+        at /Users/damon/liquid-spark-finance/liquid-spark-finance/e2e/ui-refactor-validation.spec.ts:19:25
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/ui-refactor-validation-UI--dc14c-ith-exactly-1-decimal-place-firefox/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results/ui-refactor-validation-UI--dc14c-ith-exactly-1-decimal-place-firefox/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../test-results/ui-refactor-validation-UI--dc14c-ith-exactly-1-decimal-place-firefox/error-context.md
+]]>
+</failure>
+<system-out>
+<![CDATA[
+[[ATTACHMENT|ui-refactor-validation-UI--dc14c-ith-exactly-1-decimal-place-firefox/test-failed-1.png]]
+
+[[ATTACHMENT|ui-refactor-validation-UI--dc14c-ith-exactly-1-decimal-place-firefox/video.webm]]
+
+[[ATTACHMENT|ui-refactor-validation-UI--dc14c-ith-exactly-1-decimal-place-firefox/error-context.md]]
+]]>
+</system-out>
+</testcase>
+<testcase name="UI Refactor Validation › Financial Health Score Formatting › should format all percentage values correctly" classname="ui-refactor-validation.spec.ts" time="7.835">
+</testcase>
+<testcase name="UI Refactor Validation › Total Wealth Calculation › should display accurate Total Wealth on Insights page" classname="ui-refactor-validation.spec.ts" time="8.036">
+<failure message="ui-refactor-validation.spec.ts:38:5 should display accurate Total Wealth on Insights page" type="FAILURE">
+<![CDATA[  [firefox] › ui-refactor-validation.spec.ts:38:5 › UI Refactor Validation › Total Wealth Calculation › should display accurate Total Wealth on Insights page 
+
+    Error: page.click: Error: strict mode violation: locator('text=Insights') resolved to 2 elements:
+        1) <span data-lov-name="span" data-component-line="160" data-component-name="span" class="nav-text font-medium" data-component-file="Navigation.tsx" data-lov-id="src/components/Navigation.tsx:160:22" data-component-path="src/components/Navigation.tsx" data-component-content="%7B%22className%22%3A%22nav-text%20font-medium%22%7D">Insights</span> aka getByRole('button', { name: 'Navigate to Insights' })
+        2) <span data-lov-name="span" data-component-line="229" data-component-name="span" data-component-content="%7B%7D" data-component-file="SavingsGoals.tsx" data-lov-id="src/components/savings/SavingsGoals.tsx:229:16" data-component-path="src/components/savings/SavingsGoals.tsx">Insights</span> aka getByRole('main').getByRole('button', { name: 'Insights' })
+
+    Call log:
+      - waiting for locator('text=Insights')
+
+
+      38 |     test('should display accurate Total Wealth on Insights page', async ({ page }) => {
+      39 |       // Navigate to Insights page
+    > 40 |       await page.click('text=Insights');
+         |                  ^
+      41 |       await page.waitForLoadState('networkidle');
+      42 |       
+      43 |       // Check Total Wealth display
+        at /Users/damon/liquid-spark-finance/liquid-spark-finance/e2e/ui-refactor-validation.spec.ts:40:18
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/ui-refactor-validation-UI--bf3e9-tal-Wealth-on-Insights-page-firefox/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results/ui-refactor-validation-UI--bf3e9-tal-Wealth-on-Insights-page-firefox/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../test-results/ui-refactor-validation-UI--bf3e9-tal-Wealth-on-Insights-page-firefox/error-context.md
+]]>
+</failure>
+<system-out>
+<![CDATA[
+[[ATTACHMENT|ui-refactor-validation-UI--bf3e9-tal-Wealth-on-Insights-page-firefox/test-failed-1.png]]
+
+[[ATTACHMENT|ui-refactor-validation-UI--bf3e9-tal-Wealth-on-Insights-page-firefox/video.webm]]
+
+[[ATTACHMENT|ui-refactor-validation-UI--bf3e9-tal-Wealth-on-Insights-page-firefox/error-context.md]]
+]]>
+</system-out>
+</testcase>
+<testcase name="UI Refactor Validation › Total Wealth Calculation › should calculate Total Wealth from all account types" classname="ui-refactor-validation.spec.ts" time="7.779">
+<failure message="ui-refactor-validation.spec.ts:56:5 should calculate Total Wealth from all account types" type="FAILURE">
+<![CDATA[  [firefox] › ui-refactor-validation.spec.ts:56:5 › UI Refactor Validation › Total Wealth Calculation › should calculate Total Wealth from all account types 
+
+    Error: page.click: Error: strict mode violation: locator('text=Insights') resolved to 2 elements:
+        1) <span data-lov-name="span" data-component-line="160" data-component-name="span" class="nav-text font-medium" data-component-file="Navigation.tsx" data-lov-id="src/components/Navigation.tsx:160:22" data-component-path="src/components/Navigation.tsx" data-component-content="%7B%22className%22%3A%22nav-text%20font-medium%22%7D">Insights</span> aka getByRole('button', { name: 'Navigate to Insights' })
+        2) <span data-lov-name="span" data-component-line="229" data-component-name="span" data-component-content="%7B%7D" data-component-file="SavingsGoals.tsx" data-lov-id="src/components/savings/SavingsGoals.tsx:229:16" data-component-path="src/components/savings/SavingsGoals.tsx">Insights</span> aka getByRole('main').getByRole('button', { name: 'Insights' })
+
+    Call log:
+      - waiting for locator('text=Insights')
+
+
+      74 |       
+      75 |       // Navigate to Insights and verify total
+    > 76 |       await page.click('text=Insights');
+         |                  ^
+      77 |       await page.waitForLoadState('networkidle');
+      78 |       
+      79 |       const displayedTotal = await page.locator('text=/Total Wealth.*\\$[\\d,]+/').first().textContent();
+        at /Users/damon/liquid-spark-finance/liquid-spark-finance/e2e/ui-refactor-validation.spec.ts:76:18
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/ui-refactor-validation-UI--6a73d-alth-from-all-account-types-firefox/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results/ui-refactor-validation-UI--6a73d-alth-from-all-account-types-firefox/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../test-results/ui-refactor-validation-UI--6a73d-alth-from-all-account-types-firefox/error-context.md
+]]>
+</failure>
+<system-out>
+<![CDATA[
+[[ATTACHMENT|ui-refactor-validation-UI--6a73d-alth-from-all-account-types-firefox/test-failed-1.png]]
+
+[[ATTACHMENT|ui-refactor-validation-UI--6a73d-alth-from-all-account-types-firefox/video.webm]]
+
+[[ATTACHMENT|ui-refactor-validation-UI--6a73d-alth-from-all-account-types-firefox/error-context.md]]
+]]>
+</system-out>
+</testcase>
+<testcase name="UI Refactor Validation › Transaction List Styling › should display transactions with proper CardShell styling" classname="ui-refactor-validation.spec.ts" time="4.276">
+<failure message="ui-refactor-validation.spec.ts:88:5 should display transactions with proper CardShell styling" type="FAILURE">
+<![CDATA[  [firefox] › ui-refactor-validation.spec.ts:88:5 › UI Refactor Validation › Transaction List Styling › should display transactions with proper CardShell styling 
+
+    Error: page.click: Error: strict mode violation: locator('text=Transactions') resolved to 2 elements:
+        1) <span data-lov-name="span" data-component-line="160" data-component-name="span" class="nav-text font-medium" data-component-file="Navigation.tsx" data-lov-id="src/components/Navigation.tsx:160:22" data-component-path="src/components/Navigation.tsx" data-component-content="%7B%22className%22%3A%22nav-text%20font-medium%22%7D">Transactions</span> aka getByRole('button', { name: 'Navigate to Transactions' })
+        2) <h3 data-lov-name="h3" data-component-name="h3" data-component-line="166" class="text-lg font-semibold text-white" data-component-file="OptimizedTransactionList.tsx" data-lov-id="src/components/transactions/OptimizedTransactionList.tsx:166:10" data-component-path="src/components/transactions/OptimizedTransactionList.tsx" data-component-content="%7B%22text%22%3A%22Recent%20Transactions%22%2C%22className%22%3A%22text-lg%20font-semibold%20text-white%22%7D">Recent Transactions</h3> aka getByRole('heading', { name: 'Recent Transactions' })
+
+    Call log:
+      - waiting for locator('text=Transactions')
+
+
+      88 |     test('should display transactions with proper CardShell styling', async ({ page }) => {
+      89 |       // Navigate to transactions view
+    > 90 |       await page.click('text=Transactions');
+         |                  ^
+      91 |       await page.waitForLoadState('networkidle');
+      92 |       
+      93 |       // Check transaction list container
+        at /Users/damon/liquid-spark-finance/liquid-spark-finance/e2e/ui-refactor-validation.spec.ts:90:18
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/ui-refactor-validation-UI--10bb3-th-proper-CardShell-styling-firefox/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results/ui-refactor-validation-UI--10bb3-th-proper-CardShell-styling-firefox/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../test-results/ui-refactor-validation-UI--10bb3-th-proper-CardShell-styling-firefox/error-context.md
+]]>
+</failure>
+<system-out>
+<![CDATA[
+[[ATTACHMENT|ui-refactor-validation-UI--10bb3-th-proper-CardShell-styling-firefox/test-failed-1.png]]
+
+[[ATTACHMENT|ui-refactor-validation-UI--10bb3-th-proper-CardShell-styling-firefox/video.webm]]
+
+[[ATTACHMENT|ui-refactor-validation-UI--10bb3-th-proper-CardShell-styling-firefox/error-context.md]]
+]]>
+</system-out>
+</testcase>
+<testcase name="UI Refactor Validation › Transaction List Styling › should maintain rounded corners with scroll" classname="ui-refactor-validation.spec.ts" time="6.408">
+<failure message="ui-refactor-validation.spec.ts:112:5 should maintain rounded corners with scroll" type="FAILURE">
+<![CDATA[  [firefox] › ui-refactor-validation.spec.ts:112:5 › UI Refactor Validation › Transaction List Styling › should maintain rounded corners with scroll 
+
+    Error: page.click: Error: strict mode violation: locator('text=Transactions') resolved to 2 elements:
+        1) <span data-lov-name="span" data-component-line="160" data-component-name="span" class="nav-text font-medium" data-component-file="Navigation.tsx" data-lov-id="src/components/Navigation.tsx:160:22" data-component-path="src/components/Navigation.tsx" data-component-content="%7B%22className%22%3A%22nav-text%20font-medium%22%7D">Transactions</span> aka getByRole('button', { name: 'Navigate to Transactions' })
+        2) <h3 data-lov-name="h3" data-component-name="h3" data-component-line="166" class="text-lg font-semibold text-white" data-component-file="OptimizedTransactionList.tsx" data-lov-id="src/components/transactions/OptimizedTransactionList.tsx:166:10" data-component-path="src/components/transactions/OptimizedTransactionList.tsx" data-component-content="%7B%22text%22%3A%22Recent%20Transactions%22%2C%22className%22%3A%22text-lg%20font-semibold%20text-white%22%7D">Recent Transactions</h3> aka getByRole('heading', { name: 'Recent Transactions' })
+
+    Call log:
+      - waiting for locator('text=Transactions')
+
+
+      111 |
+      112 |     test('should maintain rounded corners with scroll', async ({ page }) => {
+    > 113 |       await page.click('text=Transactions');
+          |                  ^
+      114 |       await page.waitForLoadState('networkidle');
+      115 |       
+      116 |       // Check for mask-image CSS property
+        at /Users/damon/liquid-spark-finance/liquid-spark-finance/e2e/ui-refactor-validation.spec.ts:113:18
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/ui-refactor-validation-UI--4256e-rounded-corners-with-scroll-firefox/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results/ui-refactor-validation-UI--4256e-rounded-corners-with-scroll-firefox/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../test-results/ui-refactor-validation-UI--4256e-rounded-corners-with-scroll-firefox/error-context.md
+]]>
+</failure>
+<system-out>
+<![CDATA[
+[[ATTACHMENT|ui-refactor-validation-UI--4256e-rounded-corners-with-scroll-firefox/test-failed-1.png]]
+
+[[ATTACHMENT|ui-refactor-validation-UI--4256e-rounded-corners-with-scroll-firefox/video.webm]]
+
+[[ATTACHMENT|ui-refactor-validation-UI--4256e-rounded-corners-with-scroll-firefox/error-context.md]]
+]]>
+</system-out>
+</testcase>
+<testcase name="UI Refactor Validation › Card Design Consistency › should apply consistent glass morphism to all cards" classname="ui-refactor-validation.spec.ts" time="6.505">
+<failure message="ui-refactor-validation.spec.ts:126:5 should apply consistent glass morphism to all cards" type="FAILURE">
+<![CDATA[  [firefox] › ui-refactor-validation.spec.ts:126:5 › UI Refactor Validation › Card Design Consistency › should apply consistent glass morphism to all cards 
+
+    Error: expect(received).toMatch(expected)
+
+    Expected pattern: /border/
+    Received string:  "relative rounded-xl bg-zinc-800/40 backdrop-blur ring-1 ring-zinc-700/60 shadow-[inset_0_0_0_1px_rgba(255,255,255,.05)] overflow-hidden p-0"
+
+      143 |           
+      144 |           // Should have proper border
+    > 145 |           expect(classes).toMatch(/border/);
+          |                           ^
+      146 |           
+      147 |           // Should have rounded corners
+      148 |           expect(classes).toMatch(/rounded/);
+        at /Users/damon/liquid-spark-finance/liquid-spark-finance/e2e/ui-refactor-validation.spec.ts:145:27
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/ui-refactor-validation-UI--343f0-glass-morphism-to-all-cards-firefox/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results/ui-refactor-validation-UI--343f0-glass-morphism-to-all-cards-firefox/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../test-results/ui-refactor-validation-UI--343f0-glass-morphism-to-all-cards-firefox/error-context.md
+]]>
+</failure>
+<system-out>
+<![CDATA[
+[[ATTACHMENT|ui-refactor-validation-UI--343f0-glass-morphism-to-all-cards-firefox/test-failed-1.png]]
+
+[[ATTACHMENT|ui-refactor-validation-UI--343f0-glass-morphism-to-all-cards-firefox/video.webm]]
+
+[[ATTACHMENT|ui-refactor-validation-UI--343f0-glass-morphism-to-all-cards-firefox/error-context.md]]
+]]>
+</system-out>
+</testcase>
+<testcase name="UI Refactor Validation › Card Design Consistency › should have proper hover states on interactive cards" classname="ui-refactor-validation.spec.ts" time="7.412">
+<failure message="ui-refactor-validation.spec.ts:156:5 should have proper hover states on interactive cards" type="FAILURE">
+<![CDATA[  [firefox] › ui-refactor-validation.spec.ts:156:5 › UI Refactor Validation › Card Design Consistency › should have proper hover states on interactive cards 
+
+    Error: expect(received).not.toEqual(expected) // deep equality
+
+    Expected: not {"boxShadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0.05) 0px 2px 4px 0px inset", "transform": "none"}
+
+
+      179 |       
+      180 |       // Verify hover effect is applied
+    > 181 |       expect(hoverStyles).not.toEqual(initialStyles);
+          |                               ^
+      182 |     });
+      183 |   });
+      184 |
+        at /Users/damon/liquid-spark-finance/liquid-spark-finance/e2e/ui-refactor-validation.spec.ts:181:31
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/ui-refactor-validation-UI--2c116-states-on-interactive-cards-firefox/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results/ui-refactor-validation-UI--2c116-states-on-interactive-cards-firefox/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../test-results/ui-refactor-validation-UI--2c116-states-on-interactive-cards-firefox/error-context.md
+]]>
+</failure>
+<system-out>
+<![CDATA[
+[[ATTACHMENT|ui-refactor-validation-UI--2c116-states-on-interactive-cards-firefox/test-failed-1.png]]
+
+[[ATTACHMENT|ui-refactor-validation-UI--2c116-states-on-interactive-cards-firefox/video.webm]]
+
+[[ATTACHMENT|ui-refactor-validation-UI--2c116-states-on-interactive-cards-firefox/error-context.md]]
+]]>
+</system-out>
+</testcase>
+<testcase name="UI Refactor Validation › Savings Goals Progress Bars › should display gradient progress bars" classname="ui-refactor-validation.spec.ts" time="6.025">
+</testcase>
+<testcase name="UI Refactor Validation › Savings Goals Progress Bars › should show dynamic gradient based on progress" classname="ui-refactor-validation.spec.ts" time="17.759">
+<failure message="ui-refactor-validation.spec.ts:207:5 should show dynamic gradient based on progress" type="FAILURE">
+<![CDATA[  [firefox] › ui-refactor-validation.spec.ts:207:5 › UI Refactor Validation › Savings Goals Progress Bars › should show dynamic gradient based on progress 
+
+    TimeoutError: locator.getAttribute: Timeout 10000ms exceeded.
+    Call log:
+      - waiting for locator('[data-testid="goal-card"], .border.border-white\\/10').first().locator('.h-2.bg-gradient-to-r').first()
+
+
+      214 |       for (const card of goalCards) {
+      215 |         const progressBar = await card.locator('.h-2.bg-gradient-to-r').first();
+    > 216 |         const classes = await progressBar.getAttribute('class');
+          |                                           ^
+      217 |         
+      218 |         // Check for progress-based gradient colors
+      219 |         expect(classes).toMatch(/from-(red|orange|yellow|lime|green)/);
+        at /Users/damon/liquid-spark-finance/liquid-spark-finance/e2e/ui-refactor-validation.spec.ts:216:43
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/ui-refactor-validation-UI--5011f--gradient-based-on-progress-firefox/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results/ui-refactor-validation-UI--5011f--gradient-based-on-progress-firefox/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../test-results/ui-refactor-validation-UI--5011f--gradient-based-on-progress-firefox/error-context.md
+]]>
+</failure>
+<system-out>
+<![CDATA[
+[[ATTACHMENT|ui-refactor-validation-UI--5011f--gradient-based-on-progress-firefox/test-failed-1.png]]
+
+[[ATTACHMENT|ui-refactor-validation-UI--5011f--gradient-based-on-progress-firefox/video.webm]]
+
+[[ATTACHMENT|ui-refactor-validation-UI--5011f--gradient-based-on-progress-firefox/error-context.md]]
+]]>
+</system-out>
+</testcase>
+<testcase name="UI Refactor Validation › Savings Goals Progress Bars › should display &quot;Overdue&quot; badge for overdue goals" classname="ui-refactor-validation.spec.ts" time="8.725">
+</testcase>
+<testcase name="UI Refactor Validation › Accessibility Audit › should have proper ARIA labels and roles" classname="ui-refactor-validation.spec.ts" time="8.668">
+</testcase>
+<testcase name="UI Refactor Validation › Accessibility Audit › should have sufficient color contrast" classname="ui-refactor-validation.spec.ts" time="5.847">
+</testcase>
+<testcase name="UI Refactor Validation › Accessibility Audit › should be keyboard navigable" classname="ui-refactor-validation.spec.ts" time="3.233">
+</testcase>
+<testcase name="UI Refactor Validation › Accessibility Audit › should have proper heading hierarchy" classname="ui-refactor-validation.spec.ts" time="6.066">
+<failure message="ui-refactor-validation.spec.ts:300:5 should have proper heading hierarchy" type="FAILURE">
+<![CDATA[  [firefox] › ui-refactor-validation.spec.ts:300:5 › UI Refactor Validation › Accessibility Audit › should have proper heading hierarchy 
+
+    Error: expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 1
+    Received:    2
+
+      308 |         // Heading levels should not skip (e.g., h1 -> h3)
+      309 |         if (lastLevel > 0) {
+    > 310 |           expect(level - lastLevel).toBeLessThanOrEqual(1);
+          |                                     ^
+      311 |         }
+      312 |         lastLevel = level;
+      313 |       }
+        at /Users/damon/liquid-spark-finance/liquid-spark-finance/e2e/ui-refactor-validation.spec.ts:310:37
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/ui-refactor-validation-UI--d48b3-ve-proper-heading-hierarchy-firefox/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results/ui-refactor-validation-UI--d48b3-ve-proper-heading-hierarchy-firefox/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../test-results/ui-refactor-validation-UI--d48b3-ve-proper-heading-hierarchy-firefox/error-context.md
+]]>
+</failure>
+<system-out>
+<![CDATA[
+[[ATTACHMENT|ui-refactor-validation-UI--d48b3-ve-proper-heading-hierarchy-firefox/test-failed-1.png]]
+
+[[ATTACHMENT|ui-refactor-validation-UI--d48b3-ve-proper-heading-hierarchy-firefox/video.webm]]
+
+[[ATTACHMENT|ui-refactor-validation-UI--d48b3-ve-proper-heading-hierarchy-firefox/error-context.md]]
+]]>
+</system-out>
+</testcase>
+<testcase name="UI Refactor Validation › Component Integration › should use centralized data selectors" classname="ui-refactor-validation.spec.ts" time="17.305">
+<failure message="ui-refactor-validation.spec.ts:318:5 should use centralized data selectors" type="FAILURE">
+<![CDATA[  [firefox] › ui-refactor-validation.spec.ts:318:5 › UI Refactor Validation › Component Integration › should use centralized data selectors 
+
+    TimeoutError: locator.textContent: Timeout 10000ms exceeded.
+    Call log:
+      - waiting for locator('text=/Total Wealth.*\\$[\\d,]+/').first()
+
+
+      318 |     test('should use centralized data selectors', async ({ page }) => {
+      319 |       // Check that financial metrics are consistent across pages
+    > 320 |       const dashboard = await page.locator('text=/Total Wealth.*\\$[\\d,]+/').first().textContent();
+          |                                                                                       ^
+      321 |       
+      322 |       await page.click('text=Insights');
+      323 |       await page.waitForLoadState('networkidle');
+        at /Users/damon/liquid-spark-finance/liquid-spark-finance/e2e/ui-refactor-validation.spec.ts:320:87
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/ui-refactor-validation-UI--b6352--centralized-data-selectors-firefox/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results/ui-refactor-validation-UI--b6352--centralized-data-selectors-firefox/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../test-results/ui-refactor-validation-UI--b6352--centralized-data-selectors-firefox/error-context.md
+]]>
+</failure>
+<system-out>
+<![CDATA[
+[[ATTACHMENT|ui-refactor-validation-UI--b6352--centralized-data-selectors-firefox/test-failed-1.png]]
+
+[[ATTACHMENT|ui-refactor-validation-UI--b6352--centralized-data-selectors-firefox/video.webm]]
+
+[[ATTACHMENT|ui-refactor-validation-UI--b6352--centralized-data-selectors-firefox/error-context.md]]
+]]>
+</system-out>
+</testcase>
+<testcase name="UI Refactor Validation › Component Integration › should apply consistent number formatting" classname="ui-refactor-validation.spec.ts" time="4.625">
+</testcase>
+</testsuite>
+<testsuite name="ui-refactor-validation.spec.ts" timestamp="2025-06-18T15:27:35.704Z" hostname="webkit" tests="17" failures="8" skipped="0" time="240.001" errors="0">
+<testcase name="UI Refactor Validation › Financial Health Score Formatting › should display Financial Health score with exactly 1 decimal place" classname="ui-refactor-validation.spec.ts" time="21.029">
+<failure message="ui-refactor-validation.spec.ts:10:5 should display Financial Health score with exactly 1 decimal place" type="FAILURE">
+<![CDATA[  [webkit] › ui-refactor-validation.spec.ts:10:5 › UI Refactor Validation › Financial Health Score Formatting › should display Financial Health score with exactly 1 decimal place 
+
+    Error: expect(received).toMatch(expected)
+
+    Expected pattern: /^\d{1,3}\.\d%$/
+    Received string:  "$12,450.00"
+
+      17 |       
+      18 |       // Verify score has correct format (XX.X%)
+    > 19 |       expect(scoreText).toMatch(/^\d{1,3}\.\d%$/);
+         |                         ^
+      20 |       
+      21 |       // Verify no excessive decimals
+      22 |       expect(scoreText).not.toMatch(/\.\d{2,}%/);
+        at /Users/damon/liquid-spark-finance/liquid-spark-finance/e2e/ui-refactor-validation.spec.ts:19:25
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/ui-refactor-validation-UI--dc14c-ith-exactly-1-decimal-place-webkit/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results/ui-refactor-validation-UI--dc14c-ith-exactly-1-decimal-place-webkit/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../test-results/ui-refactor-validation-UI--dc14c-ith-exactly-1-decimal-place-webkit/error-context.md
+]]>
+</failure>
+<system-out>
+<![CDATA[
+[[ATTACHMENT|ui-refactor-validation-UI--dc14c-ith-exactly-1-decimal-place-webkit/test-failed-1.png]]
+
+[[ATTACHMENT|ui-refactor-validation-UI--dc14c-ith-exactly-1-decimal-place-webkit/video.webm]]
+
+[[ATTACHMENT|ui-refactor-validation-UI--dc14c-ith-exactly-1-decimal-place-webkit/error-context.md]]
+]]>
+</system-out>
+</testcase>
+<testcase name="UI Refactor Validation › Financial Health Score Formatting › should format all percentage values correctly" classname="ui-refactor-validation.spec.ts" time="20.915">
+</testcase>
+<testcase name="UI Refactor Validation › Total Wealth Calculation › should display accurate Total Wealth on Insights page" classname="ui-refactor-validation.spec.ts" time="19.879">
+<failure message="ui-refactor-validation.spec.ts:38:5 should display accurate Total Wealth on Insights page" type="FAILURE">
+<![CDATA[  [webkit] › ui-refactor-validation.spec.ts:38:5 › UI Refactor Validation › Total Wealth Calculation › should display accurate Total Wealth on Insights page 
+
+    Error: page.click: Error: strict mode violation: locator('text=Insights') resolved to 2 elements:
+        1) <span data-lov-name="span" data-component-line="160" data-component-name="span" class="nav-text font-medium" data-component-file="Navigation.tsx" data-lov-id="src/components/Navigation.tsx:160:22" data-component-path="src/components/Navigation.tsx" data-component-content="%7B%22className%22%3A%22nav-text%20font-medium%22%7D">Insights</span> aka getByRole('button', { name: 'Navigate to Insights' })
+        2) <span data-lov-name="span" data-component-line="229" data-component-name="span" data-component-content="%7B%7D" data-component-file="SavingsGoals.tsx" data-lov-id="src/components/savings/SavingsGoals.tsx:229:16" data-component-path="src/components/savings/SavingsGoals.tsx">Insights</span> aka getByRole('main').getByRole('button', { name: 'Insights' })
+
+    Call log:
+      - waiting for locator('text=Insights')
+
+
+      38 |     test('should display accurate Total Wealth on Insights page', async ({ page }) => {
+      39 |       // Navigate to Insights page
+    > 40 |       await page.click('text=Insights');
+         |                  ^
+      41 |       await page.waitForLoadState('networkidle');
+      42 |       
+      43 |       // Check Total Wealth display
+        at /Users/damon/liquid-spark-finance/liquid-spark-finance/e2e/ui-refactor-validation.spec.ts:40:18
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/ui-refactor-validation-UI--bf3e9-tal-Wealth-on-Insights-page-webkit/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results/ui-refactor-validation-UI--bf3e9-tal-Wealth-on-Insights-page-webkit/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../test-results/ui-refactor-validation-UI--bf3e9-tal-Wealth-on-Insights-page-webkit/error-context.md
+]]>
+</failure>
+<system-out>
+<![CDATA[
+[[ATTACHMENT|ui-refactor-validation-UI--bf3e9-tal-Wealth-on-Insights-page-webkit/test-failed-1.png]]
+
+[[ATTACHMENT|ui-refactor-validation-UI--bf3e9-tal-Wealth-on-Insights-page-webkit/video.webm]]
+
+[[ATTACHMENT|ui-refactor-validation-UI--bf3e9-tal-Wealth-on-Insights-page-webkit/error-context.md]]
+]]>
+</system-out>
+</testcase>
+<testcase name="UI Refactor Validation › Total Wealth Calculation › should calculate Total Wealth from all account types" classname="ui-refactor-validation.spec.ts" time="10.336">
+<failure message="ui-refactor-validation.spec.ts:56:5 should calculate Total Wealth from all account types" type="FAILURE">
+<![CDATA[  [webkit] › ui-refactor-validation.spec.ts:56:5 › UI Refactor Validation › Total Wealth Calculation › should calculate Total Wealth from all account types 
+
+    Error: page.click: Error: strict mode violation: locator('text=Insights') resolved to 2 elements:
+        1) <span data-lov-name="span" data-component-line="160" data-component-name="span" class="nav-text font-medium" data-component-file="Navigation.tsx" data-lov-id="src/components/Navigation.tsx:160:22" data-component-path="src/components/Navigation.tsx" data-component-content="%7B%22className%22%3A%22nav-text%20font-medium%22%7D">Insights</span> aka getByRole('button', { name: 'Navigate to Insights' })
+        2) <span data-lov-name="span" data-component-line="229" data-component-name="span" data-component-content="%7B%7D" data-component-file="SavingsGoals.tsx" data-lov-id="src/components/savings/SavingsGoals.tsx:229:16" data-component-path="src/components/savings/SavingsGoals.tsx">Insights</span> aka getByRole('main').getByRole('button', { name: 'Insights' })
+
+    Call log:
+      - waiting for locator('text=Insights')
+
+
+      74 |       
+      75 |       // Navigate to Insights and verify total
+    > 76 |       await page.click('text=Insights');
+         |                  ^
+      77 |       await page.waitForLoadState('networkidle');
+      78 |       
+      79 |       const displayedTotal = await page.locator('text=/Total Wealth.*\\$[\\d,]+/').first().textContent();
+        at /Users/damon/liquid-spark-finance/liquid-spark-finance/e2e/ui-refactor-validation.spec.ts:76:18
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/ui-refactor-validation-UI--6a73d-alth-from-all-account-types-webkit/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results/ui-refactor-validation-UI--6a73d-alth-from-all-account-types-webkit/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../test-results/ui-refactor-validation-UI--6a73d-alth-from-all-account-types-webkit/error-context.md
+]]>
+</failure>
+<system-out>
+<![CDATA[
+[[ATTACHMENT|ui-refactor-validation-UI--6a73d-alth-from-all-account-types-webkit/test-failed-1.png]]
+
+[[ATTACHMENT|ui-refactor-validation-UI--6a73d-alth-from-all-account-types-webkit/video.webm]]
+
+[[ATTACHMENT|ui-refactor-validation-UI--6a73d-alth-from-all-account-types-webkit/error-context.md]]
+]]>
+</system-out>
+</testcase>
+<testcase name="UI Refactor Validation › Transaction List Styling › should display transactions with proper CardShell styling" classname="ui-refactor-validation.spec.ts" time="12.763">
+<failure message="ui-refactor-validation.spec.ts:88:5 should display transactions with proper CardShell styling" type="FAILURE">
+<![CDATA[  [webkit] › ui-refactor-validation.spec.ts:88:5 › UI Refactor Validation › Transaction List Styling › should display transactions with proper CardShell styling 
+
+    Error: page.click: Error: strict mode violation: locator('text=Transactions') resolved to 2 elements:
+        1) <span data-lov-name="span" data-component-line="160" data-component-name="span" class="nav-text font-medium" data-component-file="Navigation.tsx" data-lov-id="src/components/Navigation.tsx:160:22" data-component-path="src/components/Navigation.tsx" data-component-content="%7B%22className%22%3A%22nav-text%20font-medium%22%7D">Transactions</span> aka getByRole('button', { name: 'Navigate to Transactions' })
+        2) <h3 data-lov-name="h3" data-component-name="h3" data-component-line="166" class="text-lg font-semibold text-white" data-component-file="OptimizedTransactionList.tsx" data-lov-id="src/components/transactions/OptimizedTransactionList.tsx:166:10" data-component-path="src/components/transactions/OptimizedTransactionList.tsx" data-component-content="%7B%22text%22%3A%22Recent%20Transactions%22%2C%22className%22%3A%22text-lg%20font-semibold%20text-white%22%7D">Recent Transactions</h3> aka getByRole('heading', { name: 'Recent Transactions' })
+
+    Call log:
+      - waiting for locator('text=Transactions')
+
+
+      88 |     test('should display transactions with proper CardShell styling', async ({ page }) => {
+      89 |       // Navigate to transactions view
+    > 90 |       await page.click('text=Transactions');
+         |                  ^
+      91 |       await page.waitForLoadState('networkidle');
+      92 |       
+      93 |       // Check transaction list container
+        at /Users/damon/liquid-spark-finance/liquid-spark-finance/e2e/ui-refactor-validation.spec.ts:90:18
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/ui-refactor-validation-UI--10bb3-th-proper-CardShell-styling-webkit/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results/ui-refactor-validation-UI--10bb3-th-proper-CardShell-styling-webkit/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../test-results/ui-refactor-validation-UI--10bb3-th-proper-CardShell-styling-webkit/error-context.md
+]]>
+</failure>
+<system-out>
+<![CDATA[
+[[ATTACHMENT|ui-refactor-validation-UI--10bb3-th-proper-CardShell-styling-webkit/test-failed-1.png]]
+
+[[ATTACHMENT|ui-refactor-validation-UI--10bb3-th-proper-CardShell-styling-webkit/video.webm]]
+
+[[ATTACHMENT|ui-refactor-validation-UI--10bb3-th-proper-CardShell-styling-webkit/error-context.md]]
+]]>
+</system-out>
+</testcase>
+<testcase name="UI Refactor Validation › Transaction List Styling › should maintain rounded corners with scroll" classname="ui-refactor-validation.spec.ts" time="12.886">
+<failure message="ui-refactor-validation.spec.ts:112:5 should maintain rounded corners with scroll" type="FAILURE">
+<![CDATA[  [webkit] › ui-refactor-validation.spec.ts:112:5 › UI Refactor Validation › Transaction List Styling › should maintain rounded corners with scroll 
+
+    Error: page.click: Error: strict mode violation: locator('text=Transactions') resolved to 2 elements:
+        1) <span data-lov-name="span" data-component-line="160" data-component-name="span" class="nav-text font-medium" data-component-file="Navigation.tsx" data-lov-id="src/components/Navigation.tsx:160:22" data-component-path="src/components/Navigation.tsx" data-component-content="%7B%22className%22%3A%22nav-text%20font-medium%22%7D">Transactions</span> aka getByRole('button', { name: 'Navigate to Transactions' })
+        2) <h3 data-lov-name="h3" data-component-name="h3" data-component-line="166" class="text-lg font-semibold text-white" data-component-file="OptimizedTransactionList.tsx" data-lov-id="src/components/transactions/OptimizedTransactionList.tsx:166:10" data-component-path="src/components/transactions/OptimizedTransactionList.tsx" data-component-content="%7B%22text%22%3A%22Recent%20Transactions%22%2C%22className%22%3A%22text-lg%20font-semibold%20text-white%22%7D">Recent Transactions</h3> aka getByRole('heading', { name: 'Recent Transactions' })
+
+    Call log:
+      - waiting for locator('text=Transactions')
+
+
+      111 |
+      112 |     test('should maintain rounded corners with scroll', async ({ page }) => {
+    > 113 |       await page.click('text=Transactions');
+          |                  ^
+      114 |       await page.waitForLoadState('networkidle');
+      115 |       
+      116 |       // Check for mask-image CSS property
+        at /Users/damon/liquid-spark-finance/liquid-spark-finance/e2e/ui-refactor-validation.spec.ts:113:18
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/ui-refactor-validation-UI--4256e-rounded-corners-with-scroll-webkit/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results/ui-refactor-validation-UI--4256e-rounded-corners-with-scroll-webkit/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../test-results/ui-refactor-validation-UI--4256e-rounded-corners-with-scroll-webkit/error-context.md
+]]>
+</failure>
+<system-out>
+<![CDATA[
+[[ATTACHMENT|ui-refactor-validation-UI--4256e-rounded-corners-with-scroll-webkit/test-failed-1.png]]
+
+[[ATTACHMENT|ui-refactor-validation-UI--4256e-rounded-corners-with-scroll-webkit/video.webm]]
+
+[[ATTACHMENT|ui-refactor-validation-UI--4256e-rounded-corners-with-scroll-webkit/error-context.md]]
+]]>
+</system-out>
+</testcase>
+<testcase name="UI Refactor Validation › Card Design Consistency › should apply consistent glass morphism to all cards" classname="ui-refactor-validation.spec.ts" time="8.277">
+</testcase>
+<testcase name="UI Refactor Validation › Card Design Consistency › should have proper hover states on interactive cards" classname="ui-refactor-validation.spec.ts" time="10.637">
+</testcase>
+<testcase name="UI Refactor Validation › Savings Goals Progress Bars › should display gradient progress bars" classname="ui-refactor-validation.spec.ts" time="18.644">
+</testcase>
+<testcase name="UI Refactor Validation › Savings Goals Progress Bars › should show dynamic gradient based on progress" classname="ui-refactor-validation.spec.ts" time="30.063">
+<failure message="ui-refactor-validation.spec.ts:207:5 should show dynamic gradient based on progress" type="FAILURE">
+<![CDATA[  [webkit] › ui-refactor-validation.spec.ts:207:5 › UI Refactor Validation › Savings Goals Progress Bars › should show dynamic gradient based on progress 
+
+    TimeoutError: locator.getAttribute: Timeout 10000ms exceeded.
+    Call log:
+      - waiting for locator('[data-testid="goal-card"], .border.border-white\\/10').first().locator('.h-2.bg-gradient-to-r').first()
+
+
+      214 |       for (const card of goalCards) {
+      215 |         const progressBar = await card.locator('.h-2.bg-gradient-to-r').first();
+    > 216 |         const classes = await progressBar.getAttribute('class');
+          |                                           ^
+      217 |         
+      218 |         // Check for progress-based gradient colors
+      219 |         expect(classes).toMatch(/from-(red|orange|yellow|lime|green)/);
+        at /Users/damon/liquid-spark-finance/liquid-spark-finance/e2e/ui-refactor-validation.spec.ts:216:43
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/ui-refactor-validation-UI--5011f--gradient-based-on-progress-webkit/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results/ui-refactor-validation-UI--5011f--gradient-based-on-progress-webkit/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../test-results/ui-refactor-validation-UI--5011f--gradient-based-on-progress-webkit/error-context.md
+]]>
+</failure>
+<system-out>
+<![CDATA[
+[[ATTACHMENT|ui-refactor-validation-UI--5011f--gradient-based-on-progress-webkit/test-failed-1.png]]
+
+[[ATTACHMENT|ui-refactor-validation-UI--5011f--gradient-based-on-progress-webkit/video.webm]]
+
+[[ATTACHMENT|ui-refactor-validation-UI--5011f--gradient-based-on-progress-webkit/error-context.md]]
+]]>
+</system-out>
+</testcase>
+<testcase name="UI Refactor Validation › Savings Goals Progress Bars › should display &quot;Overdue&quot; badge for overdue goals" classname="ui-refactor-validation.spec.ts" time="16.439">
+</testcase>
+<testcase name="UI Refactor Validation › Accessibility Audit › should have proper ARIA labels and roles" classname="ui-refactor-validation.spec.ts" time="11.63">
+</testcase>
+<testcase name="UI Refactor Validation › Accessibility Audit › should have sufficient color contrast" classname="ui-refactor-validation.spec.ts" time="9.013">
+</testcase>
+<testcase name="UI Refactor Validation › Accessibility Audit › should be keyboard navigable" classname="ui-refactor-validation.spec.ts" time="6.304">
+<failure message="ui-refactor-validation.spec.ts:281:5 should be keyboard navigable" type="FAILURE">
+<![CDATA[  [webkit] › ui-refactor-validation.spec.ts:281:5 › UI Refactor Validation › Accessibility Audit › should be keyboard navigable 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      294 |         
+      295 |         // Focused element should be visible
+    > 296 |         expect(focusedElement.visible).toBe(true);
+          |                                        ^
+      297 |       }
+      298 |     });
+      299 |
+        at /Users/damon/liquid-spark-finance/liquid-spark-finance/e2e/ui-refactor-validation.spec.ts:296:40
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/ui-refactor-validation-UI--6c795-hould-be-keyboard-navigable-webkit/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results/ui-refactor-validation-UI--6c795-hould-be-keyboard-navigable-webkit/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../test-results/ui-refactor-validation-UI--6c795-hould-be-keyboard-navigable-webkit/error-context.md
+]]>
+</failure>
+<system-out>
+<![CDATA[
+[[ATTACHMENT|ui-refactor-validation-UI--6c795-hould-be-keyboard-navigable-webkit/test-failed-1.png]]
+
+[[ATTACHMENT|ui-refactor-validation-UI--6c795-hould-be-keyboard-navigable-webkit/video.webm]]
+
+[[ATTACHMENT|ui-refactor-validation-UI--6c795-hould-be-keyboard-navigable-webkit/error-context.md]]
+]]>
+</system-out>
+</testcase>
+<testcase name="UI Refactor Validation › Accessibility Audit › should have proper heading hierarchy" classname="ui-refactor-validation.spec.ts" time="5.105">
+</testcase>
+<testcase name="UI Refactor Validation › Component Integration › should use centralized data selectors" classname="ui-refactor-validation.spec.ts" time="23.418">
+<failure message="ui-refactor-validation.spec.ts:318:5 should use centralized data selectors" type="FAILURE">
+<![CDATA[  [webkit] › ui-refactor-validation.spec.ts:318:5 › UI Refactor Validation › Component Integration › should use centralized data selectors 
+
+    TimeoutError: locator.textContent: Timeout 10000ms exceeded.
+    Call log:
+      - waiting for locator('text=/Total Wealth.*\\$[\\d,]+/').first()
+
+
+      318 |     test('should use centralized data selectors', async ({ page }) => {
+      319 |       // Check that financial metrics are consistent across pages
+    > 320 |       const dashboard = await page.locator('text=/Total Wealth.*\\$[\\d,]+/').first().textContent();
+          |                                                                                       ^
+      321 |       
+      322 |       await page.click('text=Insights');
+      323 |       await page.waitForLoadState('networkidle');
+        at /Users/damon/liquid-spark-finance/liquid-spark-finance/e2e/ui-refactor-validation.spec.ts:320:87
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/ui-refactor-validation-UI--b6352--centralized-data-selectors-webkit/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results/ui-refactor-validation-UI--b6352--centralized-data-selectors-webkit/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../test-results/ui-refactor-validation-UI--b6352--centralized-data-selectors-webkit/error-context.md
+]]>
+</failure>
+<system-out>
+<![CDATA[
+[[ATTACHMENT|ui-refactor-validation-UI--b6352--centralized-data-selectors-webkit/test-failed-1.png]]
+
+[[ATTACHMENT|ui-refactor-validation-UI--b6352--centralized-data-selectors-webkit/video.webm]]
+
+[[ATTACHMENT|ui-refactor-validation-UI--b6352--centralized-data-selectors-webkit/error-context.md]]
+]]>
+</system-out>
+</testcase>
+<testcase name="UI Refactor Validation › Component Integration › should apply consistent number formatting" classname="ui-refactor-validation.spec.ts" time="2.663">
+</testcase>
+</testsuite>
+<testsuite name="ui-refactor-validation.spec.ts" timestamp="2025-06-18T15:27:35.704Z" hostname="Mobile Chrome" tests="17" failures="10" skipped="0" time="91.788" errors="0">
+<testcase name="UI Refactor Validation › Financial Health Score Formatting › should display Financial Health score with exactly 1 decimal place" classname="ui-refactor-validation.spec.ts" time="7.277">
+<failure message="ui-refactor-validation.spec.ts:10:5 should display Financial Health score with exactly 1 decimal place" type="FAILURE">
+<![CDATA[  [Mobile Chrome] › ui-refactor-validation.spec.ts:10:5 › UI Refactor Validation › Financial Health Score Formatting › should display Financial Health score with exactly 1 decimal place 
+
+    Error: expect(received).toMatch(expected)
+
+    Expected pattern: /^\d{1,3}\.\d%$/
+    Received string:  "$12,450.00"
+
+      17 |       
+      18 |       // Verify score has correct format (XX.X%)
+    > 19 |       expect(scoreText).toMatch(/^\d{1,3}\.\d%$/);
+         |                         ^
+      20 |       
+      21 |       // Verify no excessive decimals
+      22 |       expect(scoreText).not.toMatch(/\.\d{2,}%/);
+        at /Users/damon/liquid-spark-finance/liquid-spark-finance/e2e/ui-refactor-validation.spec.ts:19:25
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/ui-refactor-validation-UI--dc14c-ith-exactly-1-decimal-place-Mobile-Chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results/ui-refactor-validation-UI--dc14c-ith-exactly-1-decimal-place-Mobile-Chrome/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../test-results/ui-refactor-validation-UI--dc14c-ith-exactly-1-decimal-place-Mobile-Chrome/error-context.md
+]]>
+</failure>
+<system-out>
+<![CDATA[
+[[ATTACHMENT|ui-refactor-validation-UI--dc14c-ith-exactly-1-decimal-place-Mobile-Chrome/test-failed-1.png]]
+
+[[ATTACHMENT|ui-refactor-validation-UI--dc14c-ith-exactly-1-decimal-place-Mobile-Chrome/video.webm]]
+
+[[ATTACHMENT|ui-refactor-validation-UI--dc14c-ith-exactly-1-decimal-place-Mobile-Chrome/error-context.md]]
+]]>
+</system-out>
+</testcase>
+<testcase name="UI Refactor Validation › Financial Health Score Formatting › should format all percentage values correctly" classname="ui-refactor-validation.spec.ts" time="5.516">
+</testcase>
+<testcase name="UI Refactor Validation › Total Wealth Calculation › should display accurate Total Wealth on Insights page" classname="ui-refactor-validation.spec.ts" time="6.161">
+<failure message="ui-refactor-validation.spec.ts:38:5 should display accurate Total Wealth on Insights page" type="FAILURE">
+<![CDATA[  [Mobile Chrome] › ui-refactor-validation.spec.ts:38:5 › UI Refactor Validation › Total Wealth Calculation › should display accurate Total Wealth on Insights page 
+
+    Error: page.click: Error: strict mode violation: locator('text=Insights') resolved to 2 elements:
+        1) <span data-lov-name="span" data-component-line="160" data-component-name="span" class="nav-text font-medium" data-component-file="Navigation.tsx" data-lov-id="src/components/Navigation.tsx:160:22" data-component-path="src/components/Navigation.tsx" data-component-content="%7B%22className%22%3A%22nav-text%20font-medium%22%7D">Insights</span> aka getByRole('button', { name: 'Navigate to Insights' })
+        2) <span data-lov-name="span" data-component-line="229" data-component-name="span" data-component-content="%7B%7D" data-component-file="SavingsGoals.tsx" data-lov-id="src/components/savings/SavingsGoals.tsx:229:16" data-component-path="src/components/savings/SavingsGoals.tsx">Insights</span> aka getByRole('button', { name: 'Insights', exact: true })
+
+    Call log:
+      - waiting for locator('text=Insights')
+
+
+      38 |     test('should display accurate Total Wealth on Insights page', async ({ page }) => {
+      39 |       // Navigate to Insights page
+    > 40 |       await page.click('text=Insights');
+         |                  ^
+      41 |       await page.waitForLoadState('networkidle');
+      42 |       
+      43 |       // Check Total Wealth display
+        at /Users/damon/liquid-spark-finance/liquid-spark-finance/e2e/ui-refactor-validation.spec.ts:40:18
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/ui-refactor-validation-UI--bf3e9-tal-Wealth-on-Insights-page-Mobile-Chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results/ui-refactor-validation-UI--bf3e9-tal-Wealth-on-Insights-page-Mobile-Chrome/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../test-results/ui-refactor-validation-UI--bf3e9-tal-Wealth-on-Insights-page-Mobile-Chrome/error-context.md
+]]>
+</failure>
+<system-out>
+<![CDATA[
+[[ATTACHMENT|ui-refactor-validation-UI--bf3e9-tal-Wealth-on-Insights-page-Mobile-Chrome/test-failed-1.png]]
+
+[[ATTACHMENT|ui-refactor-validation-UI--bf3e9-tal-Wealth-on-Insights-page-Mobile-Chrome/video.webm]]
+
+[[ATTACHMENT|ui-refactor-validation-UI--bf3e9-tal-Wealth-on-Insights-page-Mobile-Chrome/error-context.md]]
+]]>
+</system-out>
+</testcase>
+<testcase name="UI Refactor Validation › Total Wealth Calculation › should calculate Total Wealth from all account types" classname="ui-refactor-validation.spec.ts" time="4.57">
+<failure message="ui-refactor-validation.spec.ts:56:5 should calculate Total Wealth from all account types" type="FAILURE">
+<![CDATA[  [Mobile Chrome] › ui-refactor-validation.spec.ts:56:5 › UI Refactor Validation › Total Wealth Calculation › should calculate Total Wealth from all account types 
+
+    Error: page.click: Error: strict mode violation: locator('text=Insights') resolved to 2 elements:
+        1) <span data-lov-name="span" data-component-line="160" data-component-name="span" class="nav-text font-medium" data-component-file="Navigation.tsx" data-lov-id="src/components/Navigation.tsx:160:22" data-component-path="src/components/Navigation.tsx" data-component-content="%7B%22className%22%3A%22nav-text%20font-medium%22%7D">Insights</span> aka getByRole('button', { name: 'Navigate to Insights' })
+        2) <span data-lov-name="span" data-component-line="229" data-component-name="span" data-component-content="%7B%7D" data-component-file="SavingsGoals.tsx" data-lov-id="src/components/savings/SavingsGoals.tsx:229:16" data-component-path="src/components/savings/SavingsGoals.tsx">Insights</span> aka getByRole('button', { name: 'Insights', exact: true })
+
+    Call log:
+      - waiting for locator('text=Insights')
+
+
+      74 |       
+      75 |       // Navigate to Insights and verify total
+    > 76 |       await page.click('text=Insights');
+         |                  ^
+      77 |       await page.waitForLoadState('networkidle');
+      78 |       
+      79 |       const displayedTotal = await page.locator('text=/Total Wealth.*\\$[\\d,]+/').first().textContent();
+        at /Users/damon/liquid-spark-finance/liquid-spark-finance/e2e/ui-refactor-validation.spec.ts:76:18
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/ui-refactor-validation-UI--6a73d-alth-from-all-account-types-Mobile-Chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results/ui-refactor-validation-UI--6a73d-alth-from-all-account-types-Mobile-Chrome/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../test-results/ui-refactor-validation-UI--6a73d-alth-from-all-account-types-Mobile-Chrome/error-context.md
+]]>
+</failure>
+<system-out>
+<![CDATA[
+[[ATTACHMENT|ui-refactor-validation-UI--6a73d-alth-from-all-account-types-Mobile-Chrome/test-failed-1.png]]
+
+[[ATTACHMENT|ui-refactor-validation-UI--6a73d-alth-from-all-account-types-Mobile-Chrome/video.webm]]
+
+[[ATTACHMENT|ui-refactor-validation-UI--6a73d-alth-from-all-account-types-Mobile-Chrome/error-context.md]]
+]]>
+</system-out>
+</testcase>
+<testcase name="UI Refactor Validation › Transaction List Styling › should display transactions with proper CardShell styling" classname="ui-refactor-validation.spec.ts" time="4.972">
+<failure message="ui-refactor-validation.spec.ts:88:5 should display transactions with proper CardShell styling" type="FAILURE">
+<![CDATA[  [Mobile Chrome] › ui-refactor-validation.spec.ts:88:5 › UI Refactor Validation › Transaction List Styling › should display transactions with proper CardShell styling 
+
+    Error: page.click: Error: strict mode violation: locator('text=Transactions') resolved to 2 elements:
+        1) <span data-lov-name="span" data-component-line="160" data-component-name="span" class="nav-text font-medium" data-component-file="Navigation.tsx" data-lov-id="src/components/Navigation.tsx:160:22" data-component-path="src/components/Navigation.tsx" data-component-content="%7B%22className%22%3A%22nav-text%20font-medium%22%7D">Transactions</span> aka getByRole('button', { name: 'Navigate to Transactions' })
+        2) <h3 data-lov-name="h3" data-component-name="h3" data-component-line="166" class="text-lg font-semibold text-white" data-component-file="OptimizedTransactionList.tsx" data-lov-id="src/components/transactions/OptimizedTransactionList.tsx:166:10" data-component-path="src/components/transactions/OptimizedTransactionList.tsx" data-component-content="%7B%22text%22%3A%22Recent%20Transactions%22%2C%22className%22%3A%22text-lg%20font-semibold%20text-white%22%7D">Recent Transactions</h3> aka getByRole('heading', { name: 'Recent Transactions' })
+
+    Call log:
+      - waiting for locator('text=Transactions')
+
+
+      88 |     test('should display transactions with proper CardShell styling', async ({ page }) => {
+      89 |       // Navigate to transactions view
+    > 90 |       await page.click('text=Transactions');
+         |                  ^
+      91 |       await page.waitForLoadState('networkidle');
+      92 |       
+      93 |       // Check transaction list container
+        at /Users/damon/liquid-spark-finance/liquid-spark-finance/e2e/ui-refactor-validation.spec.ts:90:18
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/ui-refactor-validation-UI--10bb3-th-proper-CardShell-styling-Mobile-Chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results/ui-refactor-validation-UI--10bb3-th-proper-CardShell-styling-Mobile-Chrome/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../test-results/ui-refactor-validation-UI--10bb3-th-proper-CardShell-styling-Mobile-Chrome/error-context.md
+]]>
+</failure>
+<system-out>
+<![CDATA[
+[[ATTACHMENT|ui-refactor-validation-UI--10bb3-th-proper-CardShell-styling-Mobile-Chrome/test-failed-1.png]]
+
+[[ATTACHMENT|ui-refactor-validation-UI--10bb3-th-proper-CardShell-styling-Mobile-Chrome/video.webm]]
+
+[[ATTACHMENT|ui-refactor-validation-UI--10bb3-th-proper-CardShell-styling-Mobile-Chrome/error-context.md]]
+]]>
+</system-out>
+</testcase>
+<testcase name="UI Refactor Validation › Transaction List Styling › should maintain rounded corners with scroll" classname="ui-refactor-validation.spec.ts" time="3.886">
+<failure message="ui-refactor-validation.spec.ts:112:5 should maintain rounded corners with scroll" type="FAILURE">
+<![CDATA[  [Mobile Chrome] › ui-refactor-validation.spec.ts:112:5 › UI Refactor Validation › Transaction List Styling › should maintain rounded corners with scroll 
+
+    Error: page.click: Error: strict mode violation: locator('text=Transactions') resolved to 2 elements:
+        1) <span data-lov-name="span" data-component-line="160" data-component-name="span" class="nav-text font-medium" data-component-file="Navigation.tsx" data-lov-id="src/components/Navigation.tsx:160:22" data-component-path="src/components/Navigation.tsx" data-component-content="%7B%22className%22%3A%22nav-text%20font-medium%22%7D">Transactions</span> aka getByRole('button', { name: 'Navigate to Transactions' })
+        2) <h3 data-lov-name="h3" data-component-name="h3" data-component-line="166" class="text-lg font-semibold text-white" data-component-file="OptimizedTransactionList.tsx" data-lov-id="src/components/transactions/OptimizedTransactionList.tsx:166:10" data-component-path="src/components/transactions/OptimizedTransactionList.tsx" data-component-content="%7B%22text%22%3A%22Recent%20Transactions%22%2C%22className%22%3A%22text-lg%20font-semibold%20text-white%22%7D">Recent Transactions</h3> aka getByRole('heading', { name: 'Recent Transactions' })
+
+    Call log:
+      - waiting for locator('text=Transactions')
+
+
+      111 |
+      112 |     test('should maintain rounded corners with scroll', async ({ page }) => {
+    > 113 |       await page.click('text=Transactions');
+          |                  ^
+      114 |       await page.waitForLoadState('networkidle');
+      115 |       
+      116 |       // Check for mask-image CSS property
+        at /Users/damon/liquid-spark-finance/liquid-spark-finance/e2e/ui-refactor-validation.spec.ts:113:18
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/ui-refactor-validation-UI--4256e-rounded-corners-with-scroll-Mobile-Chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results/ui-refactor-validation-UI--4256e-rounded-corners-with-scroll-Mobile-Chrome/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../test-results/ui-refactor-validation-UI--4256e-rounded-corners-with-scroll-Mobile-Chrome/error-context.md
+]]>
+</failure>
+<system-out>
+<![CDATA[
+[[ATTACHMENT|ui-refactor-validation-UI--4256e-rounded-corners-with-scroll-Mobile-Chrome/test-failed-1.png]]
+
+[[ATTACHMENT|ui-refactor-validation-UI--4256e-rounded-corners-with-scroll-Mobile-Chrome/video.webm]]
+
+[[ATTACHMENT|ui-refactor-validation-UI--4256e-rounded-corners-with-scroll-Mobile-Chrome/error-context.md]]
+]]>
+</system-out>
+</testcase>
+<testcase name="UI Refactor Validation › Card Design Consistency › should apply consistent glass morphism to all cards" classname="ui-refactor-validation.spec.ts" time="3.525">
+<failure message="ui-refactor-validation.spec.ts:126:5 should apply consistent glass morphism to all cards" type="FAILURE">
+<![CDATA[  [Mobile Chrome] › ui-refactor-validation.spec.ts:126:5 › UI Refactor Validation › Card Design Consistency › should apply consistent glass morphism to all cards 
+
+    Error: expect(received).toMatch(expected)
+
+    Expected pattern: /border/
+    Received string:  "relative rounded-xl bg-zinc-800/40 backdrop-blur ring-1 ring-zinc-700/60 shadow-[inset_0_0_0_1px_rgba(255,255,255,.05)] overflow-hidden p-0"
+
+      143 |           
+      144 |           // Should have proper border
+    > 145 |           expect(classes).toMatch(/border/);
+          |                           ^
+      146 |           
+      147 |           // Should have rounded corners
+      148 |           expect(classes).toMatch(/rounded/);
+        at /Users/damon/liquid-spark-finance/liquid-spark-finance/e2e/ui-refactor-validation.spec.ts:145:27
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/ui-refactor-validation-UI--343f0-glass-morphism-to-all-cards-Mobile-Chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results/ui-refactor-validation-UI--343f0-glass-morphism-to-all-cards-Mobile-Chrome/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../test-results/ui-refactor-validation-UI--343f0-glass-morphism-to-all-cards-Mobile-Chrome/error-context.md
+]]>
+</failure>
+<system-out>
+<![CDATA[
+[[ATTACHMENT|ui-refactor-validation-UI--343f0-glass-morphism-to-all-cards-Mobile-Chrome/test-failed-1.png]]
+
+[[ATTACHMENT|ui-refactor-validation-UI--343f0-glass-morphism-to-all-cards-Mobile-Chrome/video.webm]]
+
+[[ATTACHMENT|ui-refactor-validation-UI--343f0-glass-morphism-to-all-cards-Mobile-Chrome/error-context.md]]
+]]>
+</system-out>
+</testcase>
+<testcase name="UI Refactor Validation › Card Design Consistency › should have proper hover states on interactive cards" classname="ui-refactor-validation.spec.ts" time="4.713">
+<failure message="ui-refactor-validation.spec.ts:156:5 should have proper hover states on interactive cards" type="FAILURE">
+<![CDATA[  [Mobile Chrome] › ui-refactor-validation.spec.ts:156:5 › UI Refactor Validation › Card Design Consistency › should have proper hover states on interactive cards 
+
+    Error: expect(received).not.toEqual(expected) // deep equality
+
+    Expected: not {"boxShadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0.05) 0px 2px 4px 0px inset", "transform": "none"}
+
+
+      179 |       
+      180 |       // Verify hover effect is applied
+    > 181 |       expect(hoverStyles).not.toEqual(initialStyles);
+          |                               ^
+      182 |     });
+      183 |   });
+      184 |
+        at /Users/damon/liquid-spark-finance/liquid-spark-finance/e2e/ui-refactor-validation.spec.ts:181:31
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/ui-refactor-validation-UI--2c116-states-on-interactive-cards-Mobile-Chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results/ui-refactor-validation-UI--2c116-states-on-interactive-cards-Mobile-Chrome/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../test-results/ui-refactor-validation-UI--2c116-states-on-interactive-cards-Mobile-Chrome/error-context.md
+]]>
+</failure>
+<system-out>
+<![CDATA[
+[[ATTACHMENT|ui-refactor-validation-UI--2c116-states-on-interactive-cards-Mobile-Chrome/test-failed-1.png]]
+
+[[ATTACHMENT|ui-refactor-validation-UI--2c116-states-on-interactive-cards-Mobile-Chrome/video.webm]]
+
+[[ATTACHMENT|ui-refactor-validation-UI--2c116-states-on-interactive-cards-Mobile-Chrome/error-context.md]]
+]]>
+</system-out>
+</testcase>
+<testcase name="UI Refactor Validation › Savings Goals Progress Bars › should display gradient progress bars" classname="ui-refactor-validation.spec.ts" time="4.75">
+</testcase>
+<testcase name="UI Refactor Validation › Savings Goals Progress Bars › should show dynamic gradient based on progress" classname="ui-refactor-validation.spec.ts" time="13.625">
+<failure message="ui-refactor-validation.spec.ts:207:5 should show dynamic gradient based on progress" type="FAILURE">
+<![CDATA[  [Mobile Chrome] › ui-refactor-validation.spec.ts:207:5 › UI Refactor Validation › Savings Goals Progress Bars › should show dynamic gradient based on progress 
+
+    TimeoutError: locator.getAttribute: Timeout 10000ms exceeded.
+    Call log:
+      - waiting for locator('[data-testid="goal-card"], .border.border-white\\/10').first().locator('.h-2.bg-gradient-to-r').first()
+
+
+      214 |       for (const card of goalCards) {
+      215 |         const progressBar = await card.locator('.h-2.bg-gradient-to-r').first();
+    > 216 |         const classes = await progressBar.getAttribute('class');
+          |                                           ^
+      217 |         
+      218 |         // Check for progress-based gradient colors
+      219 |         expect(classes).toMatch(/from-(red|orange|yellow|lime|green)/);
+        at /Users/damon/liquid-spark-finance/liquid-spark-finance/e2e/ui-refactor-validation.spec.ts:216:43
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/ui-refactor-validation-UI--5011f--gradient-based-on-progress-Mobile-Chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results/ui-refactor-validation-UI--5011f--gradient-based-on-progress-Mobile-Chrome/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../test-results/ui-refactor-validation-UI--5011f--gradient-based-on-progress-Mobile-Chrome/error-context.md
+]]>
+</failure>
+<system-out>
+<![CDATA[
+[[ATTACHMENT|ui-refactor-validation-UI--5011f--gradient-based-on-progress-Mobile-Chrome/test-failed-1.png]]
+
+[[ATTACHMENT|ui-refactor-validation-UI--5011f--gradient-based-on-progress-Mobile-Chrome/video.webm]]
+
+[[ATTACHMENT|ui-refactor-validation-UI--5011f--gradient-based-on-progress-Mobile-Chrome/error-context.md]]
+]]>
+</system-out>
+</testcase>
+<testcase name="UI Refactor Validation › Savings Goals Progress Bars › should display &quot;Overdue&quot; badge for overdue goals" classname="ui-refactor-validation.spec.ts" time="4.559">
+</testcase>
+<testcase name="UI Refactor Validation › Accessibility Audit › should have proper ARIA labels and roles" classname="ui-refactor-validation.spec.ts" time="4.48">
+</testcase>
+<testcase name="UI Refactor Validation › Accessibility Audit › should have sufficient color contrast" classname="ui-refactor-validation.spec.ts" time="3.16">
+</testcase>
+<testcase name="UI Refactor Validation › Accessibility Audit › should be keyboard navigable" classname="ui-refactor-validation.spec.ts" time="3.515">
+<failure message="ui-refactor-validation.spec.ts:281:5 should be keyboard navigable" type="FAILURE">
+<![CDATA[  [Mobile Chrome] › ui-refactor-validation.spec.ts:281:5 › UI Refactor Validation › Accessibility Audit › should be keyboard navigable 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      294 |         
+      295 |         // Focused element should be visible
+    > 296 |         expect(focusedElement.visible).toBe(true);
+          |                                        ^
+      297 |       }
+      298 |     });
+      299 |
+        at /Users/damon/liquid-spark-finance/liquid-spark-finance/e2e/ui-refactor-validation.spec.ts:296:40
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/ui-refactor-validation-UI--6c795-hould-be-keyboard-navigable-Mobile-Chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results/ui-refactor-validation-UI--6c795-hould-be-keyboard-navigable-Mobile-Chrome/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../test-results/ui-refactor-validation-UI--6c795-hould-be-keyboard-navigable-Mobile-Chrome/error-context.md
+]]>
+</failure>
+<system-out>
+<![CDATA[
+[[ATTACHMENT|ui-refactor-validation-UI--6c795-hould-be-keyboard-navigable-Mobile-Chrome/test-failed-1.png]]
+
+[[ATTACHMENT|ui-refactor-validation-UI--6c795-hould-be-keyboard-navigable-Mobile-Chrome/video.webm]]
+
+[[ATTACHMENT|ui-refactor-validation-UI--6c795-hould-be-keyboard-navigable-Mobile-Chrome/error-context.md]]
+]]>
+</system-out>
+</testcase>
+<testcase name="UI Refactor Validation › Accessibility Audit › should have proper heading hierarchy" classname="ui-refactor-validation.spec.ts" time="1.79">
+</testcase>
+<testcase name="UI Refactor Validation › Component Integration › should use centralized data selectors" classname="ui-refactor-validation.spec.ts" time="12.586">
+<failure message="ui-refactor-validation.spec.ts:318:5 should use centralized data selectors" type="FAILURE">
+<![CDATA[  [Mobile Chrome] › ui-refactor-validation.spec.ts:318:5 › UI Refactor Validation › Component Integration › should use centralized data selectors 
+
+    TimeoutError: locator.textContent: Timeout 10000ms exceeded.
+    Call log:
+      - waiting for locator('text=/Total Wealth.*\\$[\\d,]+/').first()
+
+
+      318 |     test('should use centralized data selectors', async ({ page }) => {
+      319 |       // Check that financial metrics are consistent across pages
+    > 320 |       const dashboard = await page.locator('text=/Total Wealth.*\\$[\\d,]+/').first().textContent();
+          |                                                                                       ^
+      321 |       
+      322 |       await page.click('text=Insights');
+      323 |       await page.waitForLoadState('networkidle');
+        at /Users/damon/liquid-spark-finance/liquid-spark-finance/e2e/ui-refactor-validation.spec.ts:320:87
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/ui-refactor-validation-UI--b6352--centralized-data-selectors-Mobile-Chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results/ui-refactor-validation-UI--b6352--centralized-data-selectors-Mobile-Chrome/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../test-results/ui-refactor-validation-UI--b6352--centralized-data-selectors-Mobile-Chrome/error-context.md
+]]>
+</failure>
+<system-out>
+<![CDATA[
+[[ATTACHMENT|ui-refactor-validation-UI--b6352--centralized-data-selectors-Mobile-Chrome/test-failed-1.png]]
+
+[[ATTACHMENT|ui-refactor-validation-UI--b6352--centralized-data-selectors-Mobile-Chrome/video.webm]]
+
+[[ATTACHMENT|ui-refactor-validation-UI--b6352--centralized-data-selectors-Mobile-Chrome/error-context.md]]
+]]>
+</system-out>
+</testcase>
+<testcase name="UI Refactor Validation › Component Integration › should apply consistent number formatting" classname="ui-refactor-validation.spec.ts" time="2.703">
+</testcase>
+</testsuite>
+<testsuite name="ui-refactor-validation.spec.ts" timestamp="2025-06-18T15:27:35.704Z" hostname="Mobile Safari" tests="17" failures="7" skipped="0" time="102.431" errors="0">
+<testcase name="UI Refactor Validation › Financial Health Score Formatting › should display Financial Health score with exactly 1 decimal place" classname="ui-refactor-validation.spec.ts" time="4.556">
+<failure message="ui-refactor-validation.spec.ts:10:5 should display Financial Health score with exactly 1 decimal place" type="FAILURE">
+<![CDATA[  [Mobile Safari] › ui-refactor-validation.spec.ts:10:5 › UI Refactor Validation › Financial Health Score Formatting › should display Financial Health score with exactly 1 decimal place 
+
+    Error: expect(received).toMatch(expected)
+
+    Expected pattern: /^\d{1,3}\.\d%$/
+    Received string:  "$12,450.00"
+
+      17 |       
+      18 |       // Verify score has correct format (XX.X%)
+    > 19 |       expect(scoreText).toMatch(/^\d{1,3}\.\d%$/);
+         |                         ^
+      20 |       
+      21 |       // Verify no excessive decimals
+      22 |       expect(scoreText).not.toMatch(/\.\d{2,}%/);
+        at /Users/damon/liquid-spark-finance/liquid-spark-finance/e2e/ui-refactor-validation.spec.ts:19:25
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/ui-refactor-validation-UI--dc14c-ith-exactly-1-decimal-place-Mobile-Safari/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results/ui-refactor-validation-UI--dc14c-ith-exactly-1-decimal-place-Mobile-Safari/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../test-results/ui-refactor-validation-UI--dc14c-ith-exactly-1-decimal-place-Mobile-Safari/error-context.md
+]]>
+</failure>
+<system-out>
+<![CDATA[
+[[ATTACHMENT|ui-refactor-validation-UI--dc14c-ith-exactly-1-decimal-place-Mobile-Safari/test-failed-1.png]]
+
+[[ATTACHMENT|ui-refactor-validation-UI--dc14c-ith-exactly-1-decimal-place-Mobile-Safari/video.webm]]
+
+[[ATTACHMENT|ui-refactor-validation-UI--dc14c-ith-exactly-1-decimal-place-Mobile-Safari/error-context.md]]
+]]>
+</system-out>
+</testcase>
+<testcase name="UI Refactor Validation › Financial Health Score Formatting › should format all percentage values correctly" classname="ui-refactor-validation.spec.ts" time="3.494">
+</testcase>
+<testcase name="UI Refactor Validation › Total Wealth Calculation › should display accurate Total Wealth on Insights page" classname="ui-refactor-validation.spec.ts" time="6.217">
+</testcase>
+<testcase name="UI Refactor Validation › Total Wealth Calculation › should calculate Total Wealth from all account types" classname="ui-refactor-validation.spec.ts" time="8.176">
+<failure message="ui-refactor-validation.spec.ts:56:5 should calculate Total Wealth from all account types" type="FAILURE">
+<![CDATA[  [Mobile Safari] › ui-refactor-validation.spec.ts:56:5 › UI Refactor Validation › Total Wealth Calculation › should calculate Total Wealth from all account types 
+
+    Error: page.click: Error: strict mode violation: locator('text=Insights') resolved to 2 elements:
+        1) <span data-lov-name="span" data-component-line="160" data-component-name="span" class="nav-text font-medium" data-component-file="Navigation.tsx" data-lov-id="src/components/Navigation.tsx:160:22" data-component-path="src/components/Navigation.tsx" data-component-content="%7B%22className%22%3A%22nav-text%20font-medium%22%7D">Insights</span> aka getByRole('button', { name: 'Navigate to Insights' })
+        2) <span data-lov-name="span" data-component-line="229" data-component-name="span" data-component-content="%7B%7D" data-component-file="SavingsGoals.tsx" data-lov-id="src/components/savings/SavingsGoals.tsx:229:16" data-component-path="src/components/savings/SavingsGoals.tsx">Insights</span> aka getByRole('button', { name: 'Insights', exact: true })
+
+    Call log:
+      - waiting for locator('text=Insights')
+
+
+      74 |       
+      75 |       // Navigate to Insights and verify total
+    > 76 |       await page.click('text=Insights');
+         |                  ^
+      77 |       await page.waitForLoadState('networkidle');
+      78 |       
+      79 |       const displayedTotal = await page.locator('text=/Total Wealth.*\\$[\\d,]+/').first().textContent();
+        at /Users/damon/liquid-spark-finance/liquid-spark-finance/e2e/ui-refactor-validation.spec.ts:76:18
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/ui-refactor-validation-UI--6a73d-alth-from-all-account-types-Mobile-Safari/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results/ui-refactor-validation-UI--6a73d-alth-from-all-account-types-Mobile-Safari/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../test-results/ui-refactor-validation-UI--6a73d-alth-from-all-account-types-Mobile-Safari/error-context.md
+]]>
+</failure>
+<system-out>
+<![CDATA[
+[[ATTACHMENT|ui-refactor-validation-UI--6a73d-alth-from-all-account-types-Mobile-Safari/test-failed-1.png]]
+
+[[ATTACHMENT|ui-refactor-validation-UI--6a73d-alth-from-all-account-types-Mobile-Safari/video.webm]]
+
+[[ATTACHMENT|ui-refactor-validation-UI--6a73d-alth-from-all-account-types-Mobile-Safari/error-context.md]]
+]]>
+</system-out>
+</testcase>
+<testcase name="UI Refactor Validation › Transaction List Styling › should display transactions with proper CardShell styling" classname="ui-refactor-validation.spec.ts" time="4.929">
+<failure message="ui-refactor-validation.spec.ts:88:5 should display transactions with proper CardShell styling" type="FAILURE">
+<![CDATA[  [Mobile Safari] › ui-refactor-validation.spec.ts:88:5 › UI Refactor Validation › Transaction List Styling › should display transactions with proper CardShell styling 
+
+    Error: page.click: Error: strict mode violation: locator('text=Transactions') resolved to 2 elements:
+        1) <span data-lov-name="span" data-component-line="160" data-component-name="span" class="nav-text font-medium" data-component-file="Navigation.tsx" data-lov-id="src/components/Navigation.tsx:160:22" data-component-path="src/components/Navigation.tsx" data-component-content="%7B%22className%22%3A%22nav-text%20font-medium%22%7D">Transactions</span> aka getByRole('button', { name: 'Navigate to Transactions' })
+        2) <h3 data-lov-name="h3" data-component-name="h3" data-component-line="166" class="text-lg font-semibold text-white" data-component-file="OptimizedTransactionList.tsx" data-lov-id="src/components/transactions/OptimizedTransactionList.tsx:166:10" data-component-path="src/components/transactions/OptimizedTransactionList.tsx" data-component-content="%7B%22text%22%3A%22Recent%20Transactions%22%2C%22className%22%3A%22text-lg%20font-semibold%20text-white%22%7D">Recent Transactions</h3> aka getByRole('heading', { name: 'Recent Transactions' })
+
+    Call log:
+      - waiting for locator('text=Transactions')
+
+
+      88 |     test('should display transactions with proper CardShell styling', async ({ page }) => {
+      89 |       // Navigate to transactions view
+    > 90 |       await page.click('text=Transactions');
+         |                  ^
+      91 |       await page.waitForLoadState('networkidle');
+      92 |       
+      93 |       // Check transaction list container
+        at /Users/damon/liquid-spark-finance/liquid-spark-finance/e2e/ui-refactor-validation.spec.ts:90:18
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/ui-refactor-validation-UI--10bb3-th-proper-CardShell-styling-Mobile-Safari/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results/ui-refactor-validation-UI--10bb3-th-proper-CardShell-styling-Mobile-Safari/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../test-results/ui-refactor-validation-UI--10bb3-th-proper-CardShell-styling-Mobile-Safari/error-context.md
+]]>
+</failure>
+<system-out>
+<![CDATA[
+[[ATTACHMENT|ui-refactor-validation-UI--10bb3-th-proper-CardShell-styling-Mobile-Safari/test-failed-1.png]]
+
+[[ATTACHMENT|ui-refactor-validation-UI--10bb3-th-proper-CardShell-styling-Mobile-Safari/video.webm]]
+
+[[ATTACHMENT|ui-refactor-validation-UI--10bb3-th-proper-CardShell-styling-Mobile-Safari/error-context.md]]
+]]>
+</system-out>
+</testcase>
+<testcase name="UI Refactor Validation › Transaction List Styling › should maintain rounded corners with scroll" classname="ui-refactor-validation.spec.ts" time="5.467">
+<failure message="ui-refactor-validation.spec.ts:112:5 should maintain rounded corners with scroll" type="FAILURE">
+<![CDATA[  [Mobile Safari] › ui-refactor-validation.spec.ts:112:5 › UI Refactor Validation › Transaction List Styling › should maintain rounded corners with scroll 
+
+    Error: page.click: Error: strict mode violation: locator('text=Transactions') resolved to 2 elements:
+        1) <span data-lov-name="span" data-component-line="160" data-component-name="span" class="nav-text font-medium" data-component-file="Navigation.tsx" data-lov-id="src/components/Navigation.tsx:160:22" data-component-path="src/components/Navigation.tsx" data-component-content="%7B%22className%22%3A%22nav-text%20font-medium%22%7D">Transactions</span> aka getByRole('button', { name: 'Navigate to Transactions' })
+        2) <h3 data-lov-name="h3" data-component-name="h3" data-component-line="166" class="text-lg font-semibold text-white" data-component-file="OptimizedTransactionList.tsx" data-lov-id="src/components/transactions/OptimizedTransactionList.tsx:166:10" data-component-path="src/components/transactions/OptimizedTransactionList.tsx" data-component-content="%7B%22text%22%3A%22Recent%20Transactions%22%2C%22className%22%3A%22text-lg%20font-semibold%20text-white%22%7D">Recent Transactions</h3> aka getByRole('heading', { name: 'Recent Transactions' })
+
+    Call log:
+      - waiting for locator('text=Transactions')
+
+
+      111 |
+      112 |     test('should maintain rounded corners with scroll', async ({ page }) => {
+    > 113 |       await page.click('text=Transactions');
+          |                  ^
+      114 |       await page.waitForLoadState('networkidle');
+      115 |       
+      116 |       // Check for mask-image CSS property
+        at /Users/damon/liquid-spark-finance/liquid-spark-finance/e2e/ui-refactor-validation.spec.ts:113:18
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/ui-refactor-validation-UI--4256e-rounded-corners-with-scroll-Mobile-Safari/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results/ui-refactor-validation-UI--4256e-rounded-corners-with-scroll-Mobile-Safari/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../test-results/ui-refactor-validation-UI--4256e-rounded-corners-with-scroll-Mobile-Safari/error-context.md
+]]>
+</failure>
+<system-out>
+<![CDATA[
+[[ATTACHMENT|ui-refactor-validation-UI--4256e-rounded-corners-with-scroll-Mobile-Safari/test-failed-1.png]]
+
+[[ATTACHMENT|ui-refactor-validation-UI--4256e-rounded-corners-with-scroll-Mobile-Safari/video.webm]]
+
+[[ATTACHMENT|ui-refactor-validation-UI--4256e-rounded-corners-with-scroll-Mobile-Safari/error-context.md]]
+]]>
+</system-out>
+</testcase>
+<testcase name="UI Refactor Validation › Card Design Consistency › should apply consistent glass morphism to all cards" classname="ui-refactor-validation.spec.ts" time="4.197">
+</testcase>
+<testcase name="UI Refactor Validation › Card Design Consistency › should have proper hover states on interactive cards" classname="ui-refactor-validation.spec.ts" time="10.536">
+</testcase>
+<testcase name="UI Refactor Validation › Savings Goals Progress Bars › should display gradient progress bars" classname="ui-refactor-validation.spec.ts" time="6.331">
+</testcase>
+<testcase name="UI Refactor Validation › Savings Goals Progress Bars › should show dynamic gradient based on progress" classname="ui-refactor-validation.spec.ts" time="15.53">
+<failure message="ui-refactor-validation.spec.ts:207:5 should show dynamic gradient based on progress" type="FAILURE">
+<![CDATA[  [Mobile Safari] › ui-refactor-validation.spec.ts:207:5 › UI Refactor Validation › Savings Goals Progress Bars › should show dynamic gradient based on progress 
+
+    TimeoutError: locator.getAttribute: Timeout 10000ms exceeded.
+    Call log:
+      - waiting for locator('[data-testid="goal-card"], .border.border-white\\/10').first().locator('.h-2.bg-gradient-to-r').first()
+
+
+      214 |       for (const card of goalCards) {
+      215 |         const progressBar = await card.locator('.h-2.bg-gradient-to-r').first();
+    > 216 |         const classes = await progressBar.getAttribute('class');
+          |                                           ^
+      217 |         
+      218 |         // Check for progress-based gradient colors
+      219 |         expect(classes).toMatch(/from-(red|orange|yellow|lime|green)/);
+        at /Users/damon/liquid-spark-finance/liquid-spark-finance/e2e/ui-refactor-validation.spec.ts:216:43
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/ui-refactor-validation-UI--5011f--gradient-based-on-progress-Mobile-Safari/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results/ui-refactor-validation-UI--5011f--gradient-based-on-progress-Mobile-Safari/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../test-results/ui-refactor-validation-UI--5011f--gradient-based-on-progress-Mobile-Safari/error-context.md
+]]>
+</failure>
+<system-out>
+<![CDATA[
+[[ATTACHMENT|ui-refactor-validation-UI--5011f--gradient-based-on-progress-Mobile-Safari/test-failed-1.png]]
+
+[[ATTACHMENT|ui-refactor-validation-UI--5011f--gradient-based-on-progress-Mobile-Safari/video.webm]]
+
+[[ATTACHMENT|ui-refactor-validation-UI--5011f--gradient-based-on-progress-Mobile-Safari/error-context.md]]
+]]>
+</system-out>
+</testcase>
+<testcase name="UI Refactor Validation › Savings Goals Progress Bars › should display &quot;Overdue&quot; badge for overdue goals" classname="ui-refactor-validation.spec.ts" time="4.323">
+</testcase>
+<testcase name="UI Refactor Validation › Accessibility Audit › should have proper ARIA labels and roles" classname="ui-refactor-validation.spec.ts" time="5.052">
+</testcase>
+<testcase name="UI Refactor Validation › Accessibility Audit › should have sufficient color contrast" classname="ui-refactor-validation.spec.ts" time="2.679">
+</testcase>
+<testcase name="UI Refactor Validation › Accessibility Audit › should be keyboard navigable" classname="ui-refactor-validation.spec.ts" time="2.998">
+<failure message="ui-refactor-validation.spec.ts:281:5 should be keyboard navigable" type="FAILURE">
+<![CDATA[  [Mobile Safari] › ui-refactor-validation.spec.ts:281:5 › UI Refactor Validation › Accessibility Audit › should be keyboard navigable 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      294 |         
+      295 |         // Focused element should be visible
+    > 296 |         expect(focusedElement.visible).toBe(true);
+          |                                        ^
+      297 |       }
+      298 |     });
+      299 |
+        at /Users/damon/liquid-spark-finance/liquid-spark-finance/e2e/ui-refactor-validation.spec.ts:296:40
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/ui-refactor-validation-UI--6c795-hould-be-keyboard-navigable-Mobile-Safari/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results/ui-refactor-validation-UI--6c795-hould-be-keyboard-navigable-Mobile-Safari/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../test-results/ui-refactor-validation-UI--6c795-hould-be-keyboard-navigable-Mobile-Safari/error-context.md
+]]>
+</failure>
+<system-out>
+<![CDATA[
+[[ATTACHMENT|ui-refactor-validation-UI--6c795-hould-be-keyboard-navigable-Mobile-Safari/test-failed-1.png]]
+
+[[ATTACHMENT|ui-refactor-validation-UI--6c795-hould-be-keyboard-navigable-Mobile-Safari/video.webm]]
+
+[[ATTACHMENT|ui-refactor-validation-UI--6c795-hould-be-keyboard-navigable-Mobile-Safari/error-context.md]]
+]]>
+</system-out>
+</testcase>
+<testcase name="UI Refactor Validation › Accessibility Audit › should have proper heading hierarchy" classname="ui-refactor-validation.spec.ts" time="2.271">
+</testcase>
+<testcase name="UI Refactor Validation › Component Integration › should use centralized data selectors" classname="ui-refactor-validation.spec.ts" time="12.26">
+<failure message="ui-refactor-validation.spec.ts:318:5 should use centralized data selectors" type="FAILURE">
+<![CDATA[  [Mobile Safari] › ui-refactor-validation.spec.ts:318:5 › UI Refactor Validation › Component Integration › should use centralized data selectors 
+
+    TimeoutError: locator.textContent: Timeout 10000ms exceeded.
+    Call log:
+      - waiting for locator('text=/Total Wealth.*\\$[\\d,]+/').first()
+
+
+      318 |     test('should use centralized data selectors', async ({ page }) => {
+      319 |       // Check that financial metrics are consistent across pages
+    > 320 |       const dashboard = await page.locator('text=/Total Wealth.*\\$[\\d,]+/').first().textContent();
+          |                                                                                       ^
+      321 |       
+      322 |       await page.click('text=Insights');
+      323 |       await page.waitForLoadState('networkidle');
+        at /Users/damon/liquid-spark-finance/liquid-spark-finance/e2e/ui-refactor-validation.spec.ts:320:87
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/ui-refactor-validation-UI--b6352--centralized-data-selectors-Mobile-Safari/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results/ui-refactor-validation-UI--b6352--centralized-data-selectors-Mobile-Safari/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../test-results/ui-refactor-validation-UI--b6352--centralized-data-selectors-Mobile-Safari/error-context.md
+]]>
+</failure>
+<system-out>
+<![CDATA[
+[[ATTACHMENT|ui-refactor-validation-UI--b6352--centralized-data-selectors-Mobile-Safari/test-failed-1.png]]
+
+[[ATTACHMENT|ui-refactor-validation-UI--b6352--centralized-data-selectors-Mobile-Safari/video.webm]]
+
+[[ATTACHMENT|ui-refactor-validation-UI--b6352--centralized-data-selectors-Mobile-Safari/error-context.md]]
+]]>
+</system-out>
+</testcase>
+<testcase name="UI Refactor Validation › Component Integration › should apply consistent number formatting" classname="ui-refactor-validation.spec.ts" time="3.415">
+</testcase>
+</testsuite>
+</testsuites>

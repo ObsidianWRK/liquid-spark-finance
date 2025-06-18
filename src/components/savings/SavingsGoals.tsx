@@ -7,6 +7,7 @@ import { savingsGoalsService } from '@/services/savingsGoalsService';
 import { SavingsGoal, SavingsInsight } from '@/types/savingsGoals';
 import { cn } from '@/lib/utils';
 import { useNavigate } from 'react-router-dom';
+import { CardShell } from '@/components/ui/CardShell';
 
 const SavingsGoals = () => {
   const [goals, setGoals] = useState<SavingsGoal[]>([]);
@@ -71,12 +72,12 @@ const SavingsGoals = () => {
     return 'text-red-400';
   };
 
-  const getProgressBarColor = (percentage: number) => {
-    if (percentage >= 100) return 'bg-green-500';
-    if (percentage >= 75) return 'bg-lime-500';
-    if (percentage >= 50) return 'bg-yellow-500';
-    if (percentage >= 25) return 'bg-orange-500';
-    return 'bg-red-500';
+  const getProgressBarGradient = (percentage: number) => {
+    if (percentage >= 100) return 'bg-gradient-to-r from-lime-500 to-green-500';
+    if (percentage >= 75) return 'bg-gradient-to-r from-yellow-500 to-lime-500';
+    if (percentage >= 50) return 'bg-gradient-to-r from-orange-500 to-yellow-500';
+    if (percentage >= 25) return 'bg-gradient-to-r from-red-500 to-orange-500';
+    return 'bg-gradient-to-r from-red-600 to-red-500';
   };
 
   if (loading) {
@@ -197,9 +198,9 @@ const SavingsGoals = () => {
             <div className={cn('text-2xl font-bold mb-1', getProgressColor(overallProgress))}>
               {overallProgress.toFixed(0)}%
             </div>
-            <div className="w-full bg-white/[0.1] rounded-full h-2">
+            <div className="w-full bg-white/[0.1] rounded-full h-2 overflow-hidden">
               <div 
-                className={cn('h-2 rounded-full transition-all duration-500', getProgressBarColor(overallProgress))}
+                className={cn('h-2 transition-all duration-500', getProgressBarGradient(overallProgress))}
                 style={{ width: `${Math.min(overallProgress, 100)}%` }}
               />
             </div>
@@ -216,12 +217,12 @@ const SavingsGoals = () => {
             return (
               <button
                 key={tab.id}
-                onClick={(e: React.MouseEvent) => e.stopPropagation()}
+                onClick={() => setActiveTab(tab.id as 'goals' | 'insights')}
                 className={cn(
                   'flex-1 py-3 px-4 text-sm font-medium rounded-lg transition-all flex items-center justify-center space-x-2',
                   activeTab === tab.id
-                    ? 'bg-blue-500 text-white shadow-lg border border-blue-400/30'
-                    : 'text-gray-400 hover:text-white hover:bg-white/[0.05]'
+                    ? 'bg-gradient-to-r from-blue-500 to-blue-600 text-white shadow-lg shadow-blue-500/25'
+                    : 'text-white/60 hover:text-white hover:bg-white/10'
                 )}
               >
                 <IconComponent className="w-4 h-4" />
@@ -283,9 +284,9 @@ const SavingsGoals = () => {
                               {progress}%
                             </span>
                           </div>
-                          <div className="w-full bg-white/[0.1] rounded-full h-2">
+                          <div className="w-full bg-white/[0.1] rounded-full h-2 overflow-hidden">
                             <div 
-                              className={cn('h-2 rounded-full transition-all duration-500', getProgressBarColor(progress))}
+                              className={cn('h-2 transition-all duration-500', getProgressBarGradient(progress))}
                               style={{ width: `${Math.min(progress, 100)}%` }}
                             />
                           </div>
@@ -318,12 +319,18 @@ const SavingsGoals = () => {
                           </div>
                           <div className="flex items-center space-x-2">
                             <Clock className="w-4 h-4 text-gray-400" />
-                            <span className={cn(
-                              'text-sm',
-                              daysLeft < 30 ? 'text-orange-400' : daysLeft < 90 ? 'text-yellow-400' : 'text-gray-400'
-                            )}>
-                              {daysLeft > 0 ? `${daysLeft} days left` : 'Overdue'}
-                            </span>
+                            {daysLeft <= 0 ? (
+                              <span className="text-xs px-2 py-1 rounded-full bg-red-500/20 text-red-400 border border-red-500/30 animate-pulse">
+                                Overdue
+                              </span>
+                            ) : (
+                              <span className={cn(
+                                'text-sm',
+                                daysLeft < 30 ? 'text-orange-400' : daysLeft < 90 ? 'text-yellow-400' : 'text-gray-400'
+                              )}>
+                                {daysLeft} days left
+                              </span>
+                            )}
                           </div>
                         </div>
                       </div>

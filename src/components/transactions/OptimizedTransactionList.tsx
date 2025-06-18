@@ -5,7 +5,7 @@ import {
   TransactionClickHandler,
   CategoryFilterHandler 
 } from '@/types/shared';
-import { UniversalCard } from '@/components/ui/UniversalCard';
+import { CardShell } from '@/components/ui/CardShell';
 import { Search, Filter, ChevronDown, TrendingUp, TrendingDown } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
@@ -122,32 +122,32 @@ export const OptimizedTransactionList = React.memo<TransactionListProps>(({
     switch (variant) {
       case 'clean':
         return {
-          container: 'bg-transparent',
+          container: '',
           item: 'hover:bg-white/5 border-b border-white/5',
           spacing: 'py-3 px-4'
         };
       case 'enterprise':
         return {
-          container: 'bg-slate-900 border border-slate-700',
-          item: 'hover:bg-slate-800 border-b border-slate-700',
+          container: '',
+          item: 'hover:bg-white/5 border-b border-white/10',
           spacing: 'py-4 px-6'
         };
       case 'apple':
         return {
-          container: 'bg-white/5 backdrop-blur-md',
-          item: 'hover:bg-white/8 border-b border-white/10 last:border-b-0',
+          container: '',
+          item: 'hover:bg-white/5 border-b border-white/10 last:border-b-0',
           spacing: 'py-4 px-5'
         };
       case 'modern':
         return {
-          container: 'bg-gradient-to-b from-white/10 to-white/5',
-          item: 'hover:bg-white/10 border-b border-white/10 last:border-b-0',
+          container: '',
+          item: 'hover:bg-white/5 border-b border-white/10 last:border-b-0',
           spacing: 'py-4 px-5'
         };
       default:
         return {
-          container: 'bg-white/5',
-          item: 'hover:bg-white/8 border-b border-white/10 last:border-b-0',
+          container: '',
+          item: 'hover:bg-white/5 border-b border-white/10 last:border-b-0',
           spacing: 'py-3 px-4'
         };
     }
@@ -156,9 +156,9 @@ export const OptimizedTransactionList = React.memo<TransactionListProps>(({
   const variantStyles = getVariantStyles();
 
   return (
-    <UniversalCard 
-      variant="glass" 
-      className={cn('overflow-hidden', className)}
+    <CardShell 
+      accent="blue" 
+      className={cn('overflow-hidden p-0', className)}
     >
       {/* Header with Search and Filters */}
       <div className="p-4 border-b border-white/10">
@@ -234,12 +234,22 @@ export const OptimizedTransactionList = React.memo<TransactionListProps>(({
       </div>
 
       {/* Transaction List */}
-      <div className={cn('max-h-96 overflow-y-auto', variantStyles.container)}>
+      <div 
+        className={cn(
+          'max-h-96 overflow-y-auto transaction-scroll-container', 
+          variantStyles.container
+        )}
+        style={{
+          maskImage: 'radial-gradient(white, white)',
+          WebkitMaskImage: 'radial-gradient(white, white)',
+          borderRadius: 'inherit'
+        }}
+      >
         {Object.entries(groupedTransactions).map(([date, groupTransactions]) => (
           <div key={date}>
             {/* Date Header (if grouping enabled) */}
             {features.groupByDate && (
-              <div className="sticky top-0 bg-white/5 backdrop-blur-md px-4 py-2 border-b border-white/10">
+              <div className="sticky top-0 bg-zinc-800/60 backdrop-blur-md px-4 py-2 border-b border-white/10 z-10">
                 <div className="text-sm font-medium text-white/80">
                   {date === new Date().toDateString() ? 'Today' : 
                    date === new Date(Date.now() - 86400000).toDateString() ? 'Yesterday' :
@@ -272,7 +282,7 @@ export const OptimizedTransactionList = React.memo<TransactionListProps>(({
           </div>
         )}
       </div>
-    </UniversalCard>
+    </CardShell>
   );
 });
 
@@ -283,7 +293,11 @@ const TransactionItem = React.memo<{
   transaction: Transaction;
   currency: string;
   features: TransactionListProps['features'];
-  styles: ReturnType<typeof getVariantStyles>;
+  styles: {
+    container: string;
+    item: string;
+    spacing: string;
+  };
   onClick: () => void;
 }>(({ transaction, currency, features, styles, onClick }) => {
   const formatAmount = (amount: number) => {

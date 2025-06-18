@@ -336,7 +336,8 @@ class InvestmentService {
     }
 
     let stocks = 0, bonds = 0, crypto = 0, other = 0;
-    let cash = 0, commodities = 0, reitsPercentage = 0;
+    const cash = 0, commodities = 0;
+    let reitsPercentage = 0;
     const sectors: Record<string, number> = {};
 
     for (const holding of holdings) {
