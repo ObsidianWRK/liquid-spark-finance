@@ -21,11 +21,7 @@ export const PerformanceMonitor = React.memo<PerformanceMonitorProps>(({
   enabled = import.meta.env.DEV,
   position = 'top-right' 
 }) => {
-  // Early return check before any hooks to maintain hook consistency
-  if (!enabled) {
-    return null;
-  }
-
+  // ALL HOOKS MUST BE AT THE TOP - No conditional hooks allowed
   const [metrics, setMetrics] = useState<PerformanceMetrics>({
     renderTime: 0,
     bundleSize: 0,
@@ -50,6 +46,8 @@ export const PerformanceMonitor = React.memo<PerformanceMonitorProps>(({
 
   // Performance monitoring logic
   useEffect(() => {
+    if (!enabled) return; // Early return AFTER hooks
+
     const observer = new PerformanceObserver((list) => {
       const entries = list.getEntries();
       setPerformanceEntries(prev => [...prev, ...entries].slice(-50)); // Keep last 50 entries
@@ -60,11 +58,13 @@ export const PerformanceMonitor = React.memo<PerformanceMonitorProps>(({
     // Memory monitoring
     const memoryTimer = setInterval(() => {
       if ('memory' in performance) {
-        const memory = (performance as any).memory;
-        setMetrics(prev => ({
-          ...prev,
-          memoryUsage: Math.round(memory.usedJSHeapSize / 1024 / 1024) // MB
-        }));
+        const memory = (performance as unknown as { memory?: { usedJSHeapSize: number } }).memory;
+        if (memory) {
+          setMetrics(prev => ({
+            ...prev,
+            memoryUsage: Math.round(memory.usedJSHeapSize / 1024 / 1024) // MB
+          }));
+        }
       }
     }, 1000);
 
@@ -84,16 +84,23 @@ export const PerformanceMonitor = React.memo<PerformanceMonitorProps>(({
       clearInterval(memoryTimer);
       clearInterval(componentTimer);
     };
-  }, []);
+  }, [enabled]);
 
   // Calculate performance scores
   const performanceScore = useMemo(() => {
+    if (!enabled) return 0;
+    
     const renderScore = metrics.renderTime < 16 ? 100 : Math.max(0, 100 - (metrics.renderTime - 16) * 2);
     const memoryScore = metrics.memoryUsage < 50 ? 100 : Math.max(0, 100 - (metrics.memoryUsage - 50));
     const cacheScore = metrics.cacheHitRate;
     
     return Math.round((renderScore + memoryScore + cacheScore) / 3);
-  }, [metrics]);
+  }, [metrics, enabled]);
+
+  // Early return check AFTER all hooks
+  if (!enabled) {
+    return null;
+  }
 
   // Get performance color
   const getPerformanceColor = (score: number) => {

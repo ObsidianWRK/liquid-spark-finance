@@ -1,4 +1,6 @@
-export interface VueniCacheItem<T = any> {
+import type { Transaction } from '@/types/shared';
+
+export interface VueniCacheItem<T = unknown> {
   data: T;
   timestamp: number;
   expiresAt: number;
@@ -14,6 +16,11 @@ export interface VueniCacheConfig {
   maxItems: number; // Maximum number of items
   enableCompression: boolean;
   enableMetrics: boolean;
+  defaultTTL: number;
+  cleanupInterval: number;
+  compressionThreshold: number;
+  enablePersistence: boolean;
+  persistenceKey: string;
 }
 
 export class VueniCacheManager {
@@ -34,11 +41,16 @@ export class VueniCacheManager {
       maxItems: 1000,
       enableCompression: true,
       enableMetrics: true,
+      defaultTTL: 30 * 60 * 1000, // 30 minutes default
+      cleanupInterval: 5 * 60 * 1000, // 5 minutes
+      compressionThreshold: 1024,
+      enablePersistence: true,
+      persistenceKey: 'vueni_cache',
       ...config
     };
 
     // Cleanup expired items periodically
-    setInterval(() => this.cleanup(), 5 * 60 * 1000); // Every 5 minutes
+    setInterval(() => this.cleanup(), this.config.cleanupInterval);
   }
 
   set<T>(key: string, data: T, ttl?: number): void {
@@ -50,7 +62,7 @@ export class VueniCacheManager {
     
     // Compress data if enabled and beneficial
     let processedData = data;
-    if (this.config.enableCompression && dataSize > 1024) { // Compress if > 1KB
+    if (this.config.enableCompression && dataSize > this.config.compressionThreshold) { // Compress if > 1KB
       processedData = this.compress(data);
       const compressedSize = this.estimateSize(processedData);
       this.metrics.compressionSavings += dataSize - compressedSize;
@@ -128,7 +140,7 @@ export class VueniCacheManager {
   }
 
   // Cache financial transactions with optimized strategy
-  cacheTransactions(transactions: any[], userId: string): void {
+  cacheTransactions(transactions: Transaction[], userId: string): void {
     const key = `vueni_transactions_${userId}`;
     
     // Optimize transaction data for caching
@@ -145,29 +157,29 @@ export class VueniCacheManager {
     this.set(key, optimizedTransactions, 10 * 60 * 1000); // 10 minutes for transactions
   }
 
-  getCachedTransactions(userId: string): any[] | null {
+  getCachedTransactions(userId: string): Transaction[] | null {
     const key = `vueni_transactions_${userId}`;
     return this.get(key);
   }
 
   // Cache insights with longer TTL
-  cacheInsights(insights: any, userId: string): void {
+  cacheInsights<T = Record<string, unknown>>(insights: T, userId: string): void {
     const key = `vueni_insights_${userId}`;
     this.set(key, insights, 60 * 60 * 1000); // 1 hour for insights
   }
 
-  getCachedInsights(userId: string): any | null {
+  getCachedInsights<T = Record<string, unknown>>(userId: string): T | null {
     const key = `vueni_insights_${userId}`;
     return this.get(key);
   }
 
   // Cache component state
-  cacheComponentState(componentName: string, state: any): void {
+  cacheComponentState<T = Record<string, unknown>>(componentName: string, state: T): void {
     const key = `vueni_component_${componentName}`;
     this.set(key, state, 5 * 60 * 1000); // 5 minutes for component state
   }
 
-  getCachedComponentState(componentName: string): any | null {
+  getCachedComponentState<T = Record<string, unknown>>(componentName: string): T | null {
     const key = `vueni_component_${componentName}`;
     return this.get(key);
   }

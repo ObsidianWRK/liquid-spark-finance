@@ -124,13 +124,13 @@ export default function Index() {
 
   // View management in useEffect
   useEffect(() => {
-    const view = searchParams.get('view') || 'dashboard';
-    setCurrentView(view);
+    const tab = searchParams.get('tab') || searchParams.get('view') || 'dashboard';
+    setCurrentView(tab);
   }, [searchParams]);
 
   const handleViewChange = useCallback((view: string) => {
     setCurrentView(view);
-    setSearchParams({ view });
+    setSearchParams({ tab: view });
   }, [setSearchParams]);
 
   // Error display after hooks

@@ -15,7 +15,7 @@ export class InputSanitizer {
    * Escape HTML entities to prevent XSS
    */
   static escapeHtml(input: string): string {
-    return String(input).replace(/[&<>"'\/]/g, (match) => 
+    return String(input).replace(/[&<>"'/]/g, (match) => 
       this.htmlEntities[match] || match
     );
   }

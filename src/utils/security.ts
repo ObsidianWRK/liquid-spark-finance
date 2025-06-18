@@ -27,7 +27,7 @@ export class VueniInputSanitizer {
       throw new Error('Input must be a string');
     }
 
-    return input.replace(/[&<>"'`=\/]/g, (match) => HTML_ENTITIES[match] || match);
+    return input.replace(/[&<>"'`='/]/g, (match) => HTML_ENTITIES[match] || match);
   }
 
   /**
