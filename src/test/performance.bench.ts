@@ -9,7 +9,7 @@ import { LiquidGlassTopMenuBar } from '../components/LiquidGlassTopMenuBar';
 import { TransactionWithScores } from '../components/TransactionWithScores';
 
 // Import liquid glass hooks
-import { useLiquidGlass } from '../hooks/useLiquidGlass';
+import { useLiquidGlass } from '../hooks/useLiquidGlass.tsx';
 import { usePerformanceOptimization } from '../hooks/usePerformanceOptimization';
 
 // Import utilities for performance testing

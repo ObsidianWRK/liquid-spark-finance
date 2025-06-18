@@ -5,7 +5,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { lazy, Suspense } from 'react';
 import { UniversalCard } from '@/components/ui/UniversalCard';
-import { LiquidGlassProvider } from '@/hooks/useLiquidGlass';
+import { LiquidGlassProvider } from '@/hooks/useLiquidGlass.tsx';
 import { FeatureFlagProvider } from '@/components/shared/VueniFeatureFlags';
 
 const queryClient = new QueryClient();
