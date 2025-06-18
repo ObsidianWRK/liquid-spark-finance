@@ -1,23 +1,15 @@
-import React, { useState, useEffect, useMemo, Suspense, lazy } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { Heart, Leaf, DollarSign, TrendingUp, Calendar, BarChart3 } from 'lucide-react';
+import FinancialCard from './FinancialCard';
+import WellnessCard from './WellnessCard';
+import EcoCard from './EcoCard';
 import { SharedScoreCircle } from '@/components/shared';
-
-// Lazy load heavy components for performance
-const FinancialCard = lazy(() => import('./FinancialCard'));
-const WellnessCard = lazy(() => import('./WellnessCard'));
-const EcoCard = lazy(() => import('./EcoCard'));
-const TimeSeriesChart = lazy(() => import('./TimeSeriesChart'));
-const SpendingTrendsChart = lazy(() => import('./SpendingTrendsChart'));
-const CategoryTrendsChart = lazy(() => import('./CategoryTrendsChart'));
+import TimeSeriesChart from './TimeSeriesChart';
+import SpendingTrendsChart from './SpendingTrendsChart';
+import CategoryTrendsChart from './CategoryTrendsChart';
 import { generateScoreSummary } from '@/services/scoringModel';
 import { mockHealthEcoService } from '@/services/mockHealthEcoService';
 import { mockHistoricalService } from '@/services/mockHistoricalData';
-
-const LoadingSpinner = () => (
-  <div className="flex items-center justify-center py-12">
-    <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-white/50"></div>
-  </div>
-);
 
 interface Transaction {
   id: string;
@@ -310,51 +302,37 @@ const NewInsightsPage: React.FC<NewInsightsPageProps> = ({ transactions, account
 
         {activeTab === 'trends' && (
           <div className="space-y-8 sm:space-y-12">
-            <Suspense fallback={<LoadingSpinner />}>
-              {/* Historical Scores Chart */}
-              <TimeSeriesChart 
-                data={historicalScores} 
-                title="Score Progress Over Time (Past 12 Months)"
-              />
+            {/* Historical Scores Chart */}
+            <TimeSeriesChart 
+              data={historicalScores} 
+              title="Score Progress Over Time (Past 12 Months)"
+            />
 
-              {/* Financial Trends */}
-              <SpendingTrendsChart 
-                data={monthlyFinancialData} 
-                title="Monthly Financial Overview"
-              />
+            {/* Financial Trends */}
+            <SpendingTrendsChart 
+              data={monthlyFinancialData} 
+              title="Monthly Financial Overview"
+            />
 
-              {/* Category Trends */}
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                <CategoryTrendsChart 
-                  data={categoryTrends} 
-                  type="health"
-                  title="Health & Wellness Spending Trends"
-                />
-                <CategoryTrendsChart 
-                  data={categoryTrends} 
-                  type="eco"
-                  title="Eco & Sustainability Spending Trends"
-                />
-              </div>
-            </Suspense>
+            {/* Category Trends */}
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+              <CategoryTrendsChart 
+                data={categoryTrends} 
+                type="health"
+                title="Health & Wellness Spending Trends"
+              />
+              <CategoryTrendsChart 
+                data={categoryTrends} 
+                type="eco"
+                title="Eco & Sustainability Spending Trends"
+              />
+            </div>
           </div>
         )}
 
-        {activeTab === 'financial' && (
-          <Suspense fallback={<LoadingSpinner />}>
-            <FinancialCard data={financialData} />
-          </Suspense>
-        )}
-        {activeTab === 'health' && (
-          <Suspense fallback={<LoadingSpinner />}>
-            <WellnessCard data={wellnessData} />
-          </Suspense>
-        )}
-        {activeTab === 'eco' && (
-          <Suspense fallback={<LoadingSpinner />}>
-            <EcoCard data={ecoData} />
-          </Suspense>
-        )}
+        {activeTab === 'financial' && <FinancialCard data={financialData} />}
+        {activeTab === 'health' && <WellnessCard data={wellnessData} />}
+        {activeTab === 'eco' && <EcoCard data={ecoData} />}
       </div>
     </div>
   );

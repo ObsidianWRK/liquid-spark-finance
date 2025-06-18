@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useMemo, Suspense, lazy, useCallback } from 'react';
-import { Heart, Leaf, DollarSign, TrendingUp, TrendingDown, Calendar, BarChart3, Settings, Filter, Eye, EyeOff, Download, Zap, Target, Activity, Shield, PiggyBank, ChevronRight } from 'lucide-react';
+import { Heart, Leaf, DollarSign, TrendingUp, Calendar, BarChart3, Settings, Filter, Eye, EyeOff, Download, Zap, Target, Activity, Shield, PiggyBank, ChevronRight } from 'lucide-react';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';

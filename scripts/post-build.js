@@ -1,9 +1,9 @@
 #!/usr/bin/env node
 
 // Vueni Post-Build Script for Vercel Optimization
-const fs = require('fs');
-const path = require('path');
-const { execSync } = require('child_process');
+import fs from 'fs';
+import path from 'path';
+import { execSync } from 'child_process';
 
 console.log('🚀 Running Vueni post-build optimizations...');
 

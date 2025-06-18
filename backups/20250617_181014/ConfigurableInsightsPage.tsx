@@ -1,14 +1,13 @@
-import React, { useState, useEffect, useMemo, Suspense, lazy, useCallback } from 'react';
-import { Heart, Leaf, DollarSign, TrendingUp, TrendingDown, Calendar, BarChart3, Settings, Filter, Eye, EyeOff, Download, Zap, Target, Activity, Shield, PiggyBank, ChevronRight } from 'lucide-react';
+import React, { useState, useEffect, useMemo, Suspense, lazy } from 'react';
+import { Heart, Leaf, DollarSign, TrendingUp, Calendar, BarChart3, Settings, Filter, Eye, EyeOff, Download } from 'lucide-react';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Switch } from '@/components/ui/switch';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { cn } from '@/lib/utils';
 import { SharedScoreCircle, ScoreGroup } from './SharedScoreCircle';
-import { formatPercentage, getScoreColor } from '@/utils/formatters';
+import { InputSanitizer } from '@/utils/sanitize';
 
 // Lazy load heavy components for performance
 const TimeSeriesChart = lazy(() => import('@/components/insights/TimeSeriesChart'));
@@ -17,8 +16,6 @@ const CategoryTrendsChart = lazy(() => import('@/components/insights/CategoryTre
 const FinancialCard = lazy(() => import('@/components/insights/FinancialCard'));
 const WellnessCard = lazy(() => import('@/components/insights/WellnessCard'));
 const EcoCard = lazy(() => import('@/components/insights/EcoCard'));
-const AnimatedCircularProgress = lazy(() => import('@/components/insights/components/AnimatedCircularProgress'));
-const EnhancedMetricCard = lazy(() => import('@/components/insights/components/EnhancedMetricCard'));
 
 export interface Transaction {
   id: string;
@@ -41,8 +38,8 @@ export interface Account {
   currency: string;
 }
 
-export type InsightsVariant = 'standard' | 'refined' | 'enhanced' | 'optimized' | 'comprehensive' | 'mobile' | 'dashboard';
-export type ViewMode = 'overview' | 'trends' | 'financial' | 'health' | 'eco' | 'detailed';
+type LayoutVariant = 'standard' | 'refined' | 'enhanced' | 'optimized' | 'comprehensive';
+type ViewMode = 'overview' | 'trends' | 'financial' | 'health' | 'eco';
 
 interface LayoutConfig {
   showHeader: boolean;
@@ -50,31 +47,21 @@ interface LayoutConfig {
   showScoreCards: boolean;
   showCharts: boolean;
   showDetailedCards: boolean;
-  showMetrics: boolean;
   compactMode: boolean;
   animationsEnabled: boolean;
   autoRefresh: boolean;
-  refreshInterval: number;
-  showSettings: boolean;
-  enableExport: boolean;
-  enableFilters: boolean;
 }
 
-const variantLayouts: Record<InsightsVariant, LayoutConfig> = {
+const defaultLayouts: Record<LayoutVariant, LayoutConfig> = {
   standard: {
     showHeader: true,
     showTabs: true,
     showScoreCards: true,
     showCharts: true,
     showDetailedCards: true,
-    showMetrics: true,
     compactMode: false,
     animationsEnabled: true,
     autoRefresh: false,
-    refreshInterval: 30000,
-    showSettings: false,
-    enableExport: false,
-    enableFilters: false,
   },
   refined: {
     showHeader: true,
@@ -82,14 +69,9 @@ const variantLayouts: Record<InsightsVariant, LayoutConfig> = {
     showScoreCards: true,
     showCharts: true,
     showDetailedCards: true,
-    showMetrics: true,
     compactMode: true,
     animationsEnabled: true,
     autoRefresh: false,
-    refreshInterval: 30000,
-    showSettings: true,
-    enableExport: true,
-    enableFilters: true,
   },
   enhanced: {
     showHeader: true,
@@ -97,14 +79,9 @@ const variantLayouts: Record<InsightsVariant, LayoutConfig> = {
     showScoreCards: true,
     showCharts: true,
     showDetailedCards: true,
-    showMetrics: true,
     compactMode: false,
     animationsEnabled: true,
     autoRefresh: true,
-    refreshInterval: 30000,
-    showSettings: true,
-    enableExport: true,
-    enableFilters: true,
   },
   optimized: {
     showHeader: false,
@@ -112,14 +89,9 @@ const variantLayouts: Record<InsightsVariant, LayoutConfig> = {
     showScoreCards: true,
     showCharts: false,
     showDetailedCards: false,
-    showMetrics: true,
     compactMode: true,
     animationsEnabled: false,
     autoRefresh: false,
-    refreshInterval: 60000,
-    showSettings: false,
-    enableExport: false,
-    enableFilters: false,
   },
   comprehensive: {
     showHeader: true,
@@ -127,56 +99,20 @@ const variantLayouts: Record<InsightsVariant, LayoutConfig> = {
     showScoreCards: true,
     showCharts: true,
     showDetailedCards: true,
-    showMetrics: true,
     compactMode: false,
     animationsEnabled: true,
     autoRefresh: true,
-    refreshInterval: 15000,
-    showSettings: true,
-    enableExport: true,
-    enableFilters: true,
-  },
-  mobile: {
-    showHeader: false,
-    showTabs: true,
-    showScoreCards: true,
-    showCharts: false,
-    showDetailedCards: true,
-    showMetrics: false,
-    compactMode: true,
-    animationsEnabled: true,
-    autoRefresh: false,
-    refreshInterval: 60000,
-    showSettings: false,
-    enableExport: false,
-    enableFilters: false,
-  },
-  dashboard: {
-    showHeader: true,
-    showTabs: false,
-    showScoreCards: true,
-    showCharts: true,
-    showDetailedCards: false,
-    showMetrics: true,
-    compactMode: false,
-    animationsEnabled: true,
-    autoRefresh: true,
-    refreshInterval: 10000,
-    showSettings: false,
-    enableExport: true,
-    enableFilters: false,
   },
 };
 
-export interface VueniUnifiedInsightsPageProps {
+export interface ConfigurableInsightsPageProps {
   transactions: Transaction[];
   accounts: Account[];
-  variant?: InsightsVariant;
+  variant?: LayoutVariant;
   customLayout?: Partial<LayoutConfig>;
   className?: string;
+  showSettings?: boolean;
   onExportData?: () => void;
-  defaultTab?: ViewMode;
-  enableFeatureFlags?: boolean;
 }
 
 const LoadingSpinner = () => (
@@ -185,132 +121,18 @@ const LoadingSpinner = () => (
   </div>
 );
 
-// Enhanced Score Card Component
-const EnhancedScoreDisplay = ({ scores, layout, animationsEnabled }: any) => {
-  if (layout.compactMode) {
-    return (
-      <div className="flex justify-center gap-6">
-        <ScoreGroup 
-          scores={scores}
-          size="md"
-          showLabels={true}
-          animated={animationsEnabled}
-        />
-      </div>
-    );
-  }
-
-  return (
-    <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
-      {Object.entries(scores).map(([type, score]) => (
-        <div key={type} className="text-center">
-          <SharedScoreCircle 
-            score={score as number}
-            type={type as any}
-            size="lg"
-            label={type === 'health' ? 'Wellness Score' : type === 'eco' ? 'Eco Impact' : 'Financial Health'}
-            showLabel={true}
-            animated={animationsEnabled}
-          />
-        </div>
-      ))}
-    </div>
-  );
-};
-
-// Quick Metrics Component
-const QuickMetrics = ({ financialData, wellnessData, ecoData, layout }: any) => {
-  const metrics = [
-    {
-      icon: DollarSign,
-      label: 'Monthly Spending',
-      value: `$${financialData.monthlySpending.toLocaleString()}`,
-      change: financialData.spendingRatio,
-      color: 'blue',
-    },
-    {
-      icon: Heart,
-      label: 'Wellness Investment',
-      value: `$${Object.values(wellnessData.monthlySpending).reduce((sum: number, amount: number) => sum + amount, 0).toLocaleString()}`,
-      change: 12,
-      color: 'red',
-    },
-    {
-      icon: Leaf,
-      label: 'CO₂ Saved',
-      value: `${ecoData.monthlyImpact.co2Saved}kg`,
-      change: 8,
-      color: 'green',
-    },
-    {
-      icon: PiggyBank,
-      label: 'Savings Rate',
-      value: `${financialData.savingsRate.toFixed(1)}%`,
-      change: financialData.savingsRate > 20 ? 5 : -3,
-      color: 'purple',
-    },
-  ];
-
-  if (layout.compactMode) {
-    return (
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
-        {metrics.map((metric, index) => (
-          <Card key={index} className="bg-black/20 backdrop-blur-sm border-white/10 p-3">
-            <div className="flex items-center gap-2">
-              <metric.icon className="h-4 w-4 text-white/70" />
-              <span className="text-xs text-white/60">{metric.label}</span>
-            </div>
-            <div className="mt-1">
-              <span className="text-white font-semibold text-sm">{metric.value}</span>
-            </div>
-          </Card>
-        ))}
-      </div>
-    );
-  }
-
-  return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-      {metrics.map((metric, index) => (
-        <Card key={index} className="bg-black/20 backdrop-blur-sm border-white/10 p-4">
-          <div className="flex items-center space-x-3 mb-3">
-            <div className={`p-2 rounded-lg bg-${metric.color}-500/20`}>
-              <metric.icon className={`w-5 h-5 text-${metric.color}-400`} />
-            </div>
-            <div>
-              <h4 className="font-bold text-white text-sm">{metric.label}</h4>
-              <p className="text-white/70 text-xs">This month</p>
-            </div>
-          </div>
-          <div className="flex items-center justify-between">
-            <span className="text-white font-bold text-lg">{metric.value}</span>
-            <div className={cn(
-              "flex items-center text-xs",
-              metric.change > 0 ? "text-green-400" : "text-red-400"
-            )}>
-              {metric.change > 0 ? <TrendingUp className="w-3 h-3 mr-1" /> : <TrendingDown className="w-3 h-3 mr-1" />}
-              {Math.abs(metric.change)}%
-            </div>
-          </div>
-        </Card>
-      ))}
-    </div>
-  );
-};
-
-export const VueniUnifiedInsightsPage = React.memo<VueniUnifiedInsightsPageProps>(({
+export const ConfigurableInsightsPage = React.memo<ConfigurableInsightsPageProps>(({
   transactions,
   accounts,
   variant = 'standard',
   customLayout,
   className,
+  showSettings = false,
   onExportData,
-  defaultTab = 'overview',
-  enableFeatureFlags = false,
 }) => {
-  const [activeTab, setActiveTab] = useState<ViewMode>(defaultTab);
+  const [activeTab, setActiveTab] = useState<ViewMode>('overview');
   const [layout, setLayout] = useState<LayoutConfig>(() => ({
-    ...variantLayouts[variant],
+    ...defaultLayouts[variant],
     ...customLayout,
   }));
   const [scores, setScores] = useState({ financial: 0, health: 0, eco: 0 });
@@ -430,10 +252,10 @@ export const VueniUnifiedInsightsPage = React.memo<VueniUnifiedInsightsPageProps
         health: Math.max(0, Math.min(100, prev.health + (Math.random() - 0.5) * 4)),
         eco: Math.max(0, Math.min(100, prev.eco + (Math.random() - 0.5) * 4)),
       }));
-    }, layout.refreshInterval);
+    }, 30000);
 
     return () => clearInterval(interval);
-  }, [layout.autoRefresh, layout.refreshInterval]);
+  }, [layout.autoRefresh]);
 
   const tabs = [
     { id: 'overview' as ViewMode, label: 'Overview', icon: TrendingUp },
@@ -441,12 +263,11 @@ export const VueniUnifiedInsightsPage = React.memo<VueniUnifiedInsightsPageProps
     { id: 'financial' as ViewMode, label: 'Financial', icon: DollarSign },
     { id: 'health' as ViewMode, label: 'Health', icon: Heart },
     { id: 'eco' as ViewMode, label: 'Eco', icon: Leaf },
-    { id: 'detailed' as ViewMode, label: 'Detailed', icon: Activity },
   ];
 
-  const handleLayoutChange = useCallback((key: keyof LayoutConfig, value: boolean | number) => {
+  const handleLayoutChange = (key: keyof LayoutConfig, value: boolean) => {
     setLayout(prev => ({ ...prev, [key]: value }));
-  }, []);
+  };
 
   if (isLoading) {
     return (
@@ -462,7 +283,7 @@ export const VueniUnifiedInsightsPage = React.memo<VueniUnifiedInsightsPageProps
   }
 
   return (
-    <div className={cn('w-full text-white space-y-6', className)} data-testid="vueni-unified-insights">
+    <div className={cn('w-full text-white space-y-6', className)} data-testid="configurable-insights">
       {/* Header */}
       {layout.showHeader && (
         <Card className="bg-black/20 backdrop-blur-sm border-white/10 p-6">
@@ -470,16 +291,12 @@ export const VueniUnifiedInsightsPage = React.memo<VueniUnifiedInsightsPageProps
             <div>
               <h1 className={cn(
                 'font-bold text-white mb-2',
-                layout.compactMode ? 'text-xl' : 'text-3xl lg:text-4xl'
+                layout.compactMode ? 'text-2xl' : 'text-3xl lg:text-4xl'
               )}>
                 Financial Insights
               </h1>
               <p className="text-white/70 text-sm lg:text-base">
-                {variant === 'comprehensive' ? 'Complete analysis of your financial ecosystem' :
-                 variant === 'enhanced' ? 'Advanced insights with real-time monitoring' :
-                 variant === 'refined' ? 'Streamlined view of your financial health' :
-                 variant === 'mobile' ? 'Your finances at a glance' :
-                 'Comprehensive analysis of your financial health, wellness spending, and environmental impact'}
+                Comprehensive analysis of your financial health, wellness spending, and environmental impact
               </p>
             </div>
             
@@ -493,7 +310,7 @@ export const VueniUnifiedInsightsPage = React.memo<VueniUnifiedInsightsPageProps
                 {isVisible ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
               </Button>
               
-              {layout.enableExport && onExportData && (
+              {onExportData && (
                 <Button
                   variant="ghost"
                   size="icon"
@@ -504,7 +321,7 @@ export const VueniUnifiedInsightsPage = React.memo<VueniUnifiedInsightsPageProps
                 </Button>
               )}
               
-              {layout.showSettings && enableFeatureFlags && (
+              {showSettings && (
                 <Button
                   variant="ghost"
                   size="icon"
@@ -520,7 +337,7 @@ export const VueniUnifiedInsightsPage = React.memo<VueniUnifiedInsightsPageProps
       )}
 
       {/* Layout Settings */}
-      {showLayoutSettings && enableFeatureFlags && (
+      {showLayoutSettings && (
         <Card className="bg-black/20 backdrop-blur-sm border-white/10 p-4">
           <h3 className="text-lg font-semibold text-white mb-4">Layout Settings</h3>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
@@ -569,13 +386,12 @@ export const VueniUnifiedInsightsPage = React.memo<VueniUnifiedInsightsPageProps
                   variant={activeTab === tab.id ? "default" : "ghost"}
                   className={cn(
                     'flex items-center space-x-2 transition-all duration-300',
-                    layout.compactMode ? 'px-3 py-2 text-xs' : 'px-4 py-2 text-sm',
                     activeTab === tab.id
                       ? 'bg-white/20 text-white border-white/30'
                       : 'text-white/70 hover:text-white/90 hover:bg-white/10'
                   )}
                 >
-                  <Icon className={cn("w-4 h-4", layout.compactMode && "w-3 h-3")} />
+                  <Icon className="w-4 h-4" />
                   <span>{tab.label}</span>
                 </Button>
               );
@@ -591,29 +407,97 @@ export const VueniUnifiedInsightsPage = React.memo<VueniUnifiedInsightsPageProps
             {/* Score Overview */}
             {layout.showScoreCards && (
               <Card className="bg-black/20 backdrop-blur-sm border-white/10 p-6">
-                <h3 className={cn(
-                  "font-bold text-white mb-6 text-center",
-                  layout.compactMode ? "text-lg" : "text-xl"
-                )}>
+                <h3 className="text-xl font-bold text-white mb-6 text-center">
                   Your Overall Scores
                 </h3>
-                <EnhancedScoreDisplay 
-                  scores={scores} 
-                  layout={layout}
-                  animationsEnabled={layout.animationsEnabled}
-                />
+                <div className={cn(
+                  'grid gap-8',
+                  layout.compactMode ? 'grid-cols-3' : 'grid-cols-1 sm:grid-cols-3'
+                )}>
+                  <div className="text-center">
+                    <SharedScoreCircle 
+                      score={scores.financial} 
+                      type="financial"
+                      size={layout.compactMode ? "md" : "lg"}
+                      label="Financial Health"
+                      showLabel={true}
+                      animated={layout.animationsEnabled}
+                    />
+                  </div>
+                  <div className="text-center">
+                    <SharedScoreCircle 
+                      score={scores.health} 
+                      type="health"
+                      size={layout.compactMode ? "md" : "lg"}
+                      label="Wellness Score"
+                      showLabel={true}
+                      animated={layout.animationsEnabled}
+                    />
+                  </div>
+                  <div className="text-center">
+                    <SharedScoreCircle 
+                      score={scores.eco} 
+                      type="eco"
+                      size={layout.compactMode ? "md" : "lg"}
+                      label="Eco Impact"
+                      showLabel={true}
+                      animated={layout.animationsEnabled}
+                    />
+                  </div>
+                </div>
               </Card>
             )}
 
-            {/* Quick Metrics */}
-            {layout.showMetrics && (
-              <QuickMetrics 
-                financialData={financialData}
-                wellnessData={wellnessData}
-                ecoData={ecoData}
-                layout={layout}
-              />
-            )}
+            {/* Quick Summary Cards */}
+            <div className={cn(
+              'grid gap-6',
+              layout.compactMode ? 'grid-cols-3' : 'grid-cols-1 lg:grid-cols-3'
+            )}>
+              <Card className="bg-black/20 backdrop-blur-sm border-white/10 p-4">
+                <div className="flex items-center space-x-3 mb-3">
+                  <div className="p-2 rounded-lg bg-blue-500/20">
+                    <DollarSign className="w-5 h-5 text-blue-400" />
+                  </div>
+                  <div>
+                    <h4 className="font-bold text-white">Financial Health</h4>
+                    <p className="text-white/70 text-sm">Score: {scores.financial}/100</p>
+                  </div>
+                </div>
+                <p className="text-white/60 text-sm">
+                  Monthly spending: ${financialData.monthlySpending.toLocaleString()}
+                </p>
+              </Card>
+
+              <Card className="bg-black/20 backdrop-blur-sm border-white/10 p-4">
+                <div className="flex items-center space-x-3 mb-3">
+                  <div className="p-2 rounded-lg bg-red-500/20">
+                    <Heart className="w-5 h-5 text-red-400" />
+                  </div>
+                  <div>
+                    <h4 className="font-bold text-white">Wellness</h4>
+                    <p className="text-white/70 text-sm">Score: {scores.health}/100</p>
+                  </div>
+                </div>
+                <p className="text-white/60 text-sm">
+                  Monthly wellness: ${Object.values(wellnessData.monthlySpending).reduce((sum, amount) => sum + amount, 0).toLocaleString()}
+                </p>
+              </Card>
+
+              <Card className="bg-black/20 backdrop-blur-sm border-white/10 p-4">
+                <div className="flex items-center space-x-3 mb-3">
+                  <div className="p-2 rounded-lg bg-green-500/20">
+                    <Leaf className="w-5 h-5 text-green-400" />
+                  </div>
+                  <div>
+                    <h4 className="font-bold text-white">Eco Impact</h4>
+                    <p className="text-white/70 text-sm">Score: {scores.eco}/100</p>
+                  </div>
+                </div>
+                <p className="text-white/60 text-sm">
+                  CO₂ saved: {ecoData.monthlyImpact.co2Saved}kg this month
+                </p>
+              </Card>
+            </div>
           </div>
         )}
 
@@ -661,43 +545,9 @@ export const VueniUnifiedInsightsPage = React.memo<VueniUnifiedInsightsPageProps
             <EcoCard data={ecoData} />
           </Suspense>
         )}
-
-        {activeTab === 'detailed' && (
-          <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
-            <Suspense fallback={<LoadingSpinner />}>
-              <FinancialCard data={financialData} />
-              <WellnessCard data={wellnessData} />
-              <EcoCard data={ecoData} />
-            </Suspense>
-          </div>
-        )}
       </div>
     </div>
   );
 });
 
-VueniUnifiedInsightsPage.displayName = 'VueniUnifiedInsightsPage';
-
-// Export preset configurations
-export const insightsPresets = {
-  dashboard: {
-    variant: 'dashboard' as InsightsVariant,
-    defaultTab: 'overview' as ViewMode,
-  },
-  mobile: {
-    variant: 'mobile' as InsightsVariant, 
-    defaultTab: 'overview' as ViewMode,
-  },
-  detailed: {
-    variant: 'comprehensive' as InsightsVariant,
-    defaultTab: 'detailed' as ViewMode,
-  },
-  minimal: {
-    variant: 'optimized' as InsightsVariant,
-    defaultTab: 'overview' as ViewMode,
-  },
-  analytics: {
-    variant: 'enhanced' as InsightsVariant,
-    defaultTab: 'trends' as ViewMode,
-  },
-} as const;
+ConfigurableInsightsPage.displayName = 'ConfigurableInsightsPage'; 
