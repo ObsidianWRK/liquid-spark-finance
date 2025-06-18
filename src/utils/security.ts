@@ -342,7 +342,7 @@ export class VueniSecurityMonitor {
   /**
    * Logs a security event
    */
-  static logEvent(type: string, description: string, metadata?: any): void {
+  static logEvent(type: string, description: string, metadata?: Record<string, unknown>): void {
     const event = {
       type,
       description,
@@ -386,7 +386,13 @@ export class VueniSecurityMonitor {
   /**
    * Sends security events to monitoring service (production)
    */
-  private static sendToMonitoringService(event: any): void {
+  private static sendToMonitoringService(event: {
+    type: string;
+    description: string;
+    timestamp: string;
+    userAgent?: string;
+    [key: string]: unknown;
+  }): void {
     // Placeholder for production monitoring integration
     // This would send to services like DataDog, Sentry, etc.
   }

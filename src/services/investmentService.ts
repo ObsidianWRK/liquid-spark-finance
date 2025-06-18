@@ -70,9 +70,9 @@ class InvestmentService {
       const data = secureStorage.getItem(this.storageKey);
       if (data) {
         // Load existing data
-        const portfolioData = data as any;
+        const portfolioData = data as { holdings?: unknown[] };
         if (portfolioData.holdings) {
-          portfolioData.holdings.forEach((holding: any) => {
+          portfolioData.holdings.forEach((holding: unknown) => {
             this.holdings.set(holding.id, holding);
           });
         }
@@ -328,7 +328,8 @@ class InvestmentService {
       };
     }
 
-    let stocks = 0, bonds = 0, cash = 0, reits = 0, commodities = 0, crypto = 0, other = 0;
+    let stocks = 0, bonds = 0, crypto = 0, other = 0;
+    const cash = 0, commodities = 0, reits = 0;
     const sectors: Record<string, number> = {};
 
     for (const holding of holdings) {
@@ -439,7 +440,14 @@ class InvestmentService {
     potentialBenefit: string;
   }>> {
     const portfolio = await this.getFamilyPortfolio(familyId);
-    const recommendations: Array<any> = [];
+    const recommendations: Array<{
+      type: 'rebalance' | 'diversify' | 'tax_optimize' | 'reduce_risk';
+      title: string;
+      description: string;
+      actionItems: string[];
+      priority: 'high' | 'medium' | 'low';
+      potentialBenefit: string;
+    }> = [];
 
     // Check for rebalancing needs
     if (portfolio.allocation.stocks > 80) {

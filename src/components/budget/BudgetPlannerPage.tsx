@@ -1,36 +1,47 @@
 import React, { useEffect, useState } from 'react';
 import { budgetService } from '@/services/budgetService';
-import { BudgetCategory } from '@/types/budget';
+import { Budget, SavingsGoal } from '@/types/budgets';
+import BudgetTracker from './BudgetTracker';
 import {
   Plus,
   Trash2,
   TrendingUp,
-  ChevronDown,
-  ChevronUp,
-  ArrowLeft
+  Target,
+  BarChart3,
+  ArrowLeft,
+  Settings,
+  AlertCircle
 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { cn } from '@/lib/utils';
-import {
-  PieChart, Pie, Cell, Tooltip as ReTooltip, Legend,
-  ResponsiveContainer
-} from 'recharts';
 
 const BudgetPlannerPage = () => {
   const navigate = useNavigate();
-  const [categories, setCategories] = useState<BudgetCategory[]>([]);
-  const [showAddForm, setShowAddForm] = useState(false);
-  const [newCatName, setNewCatName] = useState('');
-  const [newCatBudget, setNewCatBudget] = useState('');
-  const [expandedCatIds, setExpandedCatIds] = useState<string[]>([]);
+  const [budget, setBudget] = useState<Budget | null>(null);
+  const [goals, setGoals] = useState<SavingsGoal[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [activeTab, setActiveTab] = useState<'budget' | 'goals' | 'analytics'>('budget');
 
   useEffect(() => {
-    fetch();
+    loadData();
   }, []);
 
-  const fetch = async () => {
-    const cats = await budgetService.listCategories();
-    setCategories(cats);
+  const loadData = async () => {
+    try {
+      setLoading(true);
+      const familyId = 'demo_family';
+      const [activeBudget, familyGoals] = await Promise.all([
+        budgetService.getActiveBudget(familyId),
+        budgetService.getFamilySavingsGoals(familyId)
+      ]);
+      
+      setBudget(activeBudget);
+      setGoals(familyGoals);
+    } catch (error) {
+      console.error('Failed to load budget data:', error);
+    } finally {
+      setLoading(false);
+    }
   };
 
   const handleAddCategory = async (e: React.FormEvent) => {
