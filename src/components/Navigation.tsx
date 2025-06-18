@@ -28,15 +28,15 @@ const Navigation = React.memo<NavigationProps>(({ activeTab, onTabChange }) => {
     { id: 'dashboard', label: 'Home', icon: Home },
     { id: 'accounts', label: 'Accounts', icon: CreditCard },
     { id: 'transactions', label: 'Transactions', icon: Receipt },
-    { id: 'insights', label: 'Insights', icon: TrendingUp }
+    { id: 'analytics', label: 'Analytics', icon: BarChart3 }
   ], []);
 
   const moreTabs = React.useMemo(() => [
-    { id: 'credit-score', label: 'Credit Score', icon: Shield },
-    { id: 'savings', label: 'Savings Goals', icon: Target },
-    { id: 'reports', label: 'Reports', icon: BarChart3 },
-    { id: 'wrapped', label: 'Wrapped', icon: Award },
-    { id: 'profile', label: 'Profile', icon: User }
+    { id: 'insights', label: 'Insights', icon: TrendingUp },
+    { id: 'investments', label: 'Investments', icon: Award },
+    { id: 'budget', label: 'Budget', icon: Target },
+    { id: 'planning', label: 'Planning', icon: Target },
+    { id: 'reports', label: 'Reports', icon: BarChart3 }
   ], []);
 
   // Optimized event handlers with useCallback
@@ -105,13 +105,7 @@ const Navigation = React.memo<NavigationProps>(({ activeTab, onTabChange }) => {
                     <button
                       key={tab.id}
                       onClick={() => {
-                        if (tab.id === 'credit-score') {
-                          window.location.href = '/credit-score';
-                        } else if (tab.id === 'savings') {
-                          window.location.href = '/savings';
-                        } else {
-                          onTabChange(tab.id);
-                        }
+                        onTabChange(tab.id);
                         setShowMore(false);
                       }}
                       className={cn(

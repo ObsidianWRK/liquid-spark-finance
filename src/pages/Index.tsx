@@ -17,6 +17,8 @@ import { mockData } from '@/services/mockData';
 // Lazy load components properly without webpack comments
 const InvestmentTrackerPage = lazy(() => import('@/components/investments/InvestmentTrackerPage'));
 const BudgetPlannerPage = lazy(() => import('@/components/budget/BudgetPlannerPage'));
+const DashboardPage = lazy(() => import('@/components/dashboard/DashboardPage'));
+const FinancialPlanningPage = lazy(() => import('@/components/planning/FinancialPlanningPage'));
 
 // Error Boundary Component
 class ErrorBoundary extends React.Component<
@@ -222,6 +224,18 @@ export default function Index() {
         return (
           <Suspense fallback={<div className="p-6 text-white">Loading budget planner...</div>}>
             <BudgetPlannerPage />
+          </Suspense>
+        );
+      case 'analytics':
+        return (
+          <Suspense fallback={<div className="p-6 text-white">Loading analytics dashboard...</div>}>
+            <DashboardPage />
+          </Suspense>
+        );
+      case 'planning':
+        return (
+          <Suspense fallback={<div className="p-6 text-white">Loading financial planning...</div>}>
+            <FinancialPlanningPage familyId="demo_family" />
           </Suspense>
         );
       default:
