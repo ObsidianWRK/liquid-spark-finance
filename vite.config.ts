@@ -51,6 +51,13 @@ export default defineConfig(({ mode }) => ({
   // Vercel handles hosting automatically
   define: {
     'process.env.NODE_ENV': JSON.stringify(mode === 'production' ? 'production' : 'development'),
+    // Fix crypto-js browser compatibility - process polyfills
+    'process.env': JSON.stringify({}),
+    'process.browser': true,
+    'process.version': JSON.stringify(''),
+    'process.platform': JSON.stringify('browser'),
+    'process.nextTick': JSON.stringify('setTimeout'),
+    'global': 'globalThis',
     // Security flags for production
     '__VUENI_SECURITY_ENABLED__': mode === 'production',
     '__VUENI_DEBUG_ENABLED__': mode === 'development'

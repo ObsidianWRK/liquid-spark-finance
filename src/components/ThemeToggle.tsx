@@ -18,7 +18,7 @@ const ThemeToggle = ({ className = '' }: { className?: string }) => {
   if (!mounted) {
     return (
       <div className={cn("flex items-center justify-center", className)}>
-        <div className="w-11 h-6 opacity-0" />
+        <div className="w-12 h-7 opacity-0" />
       </div>
     );
   }
@@ -37,11 +37,11 @@ const ThemeToggle = ({ className = '' }: { className?: string }) => {
   };
 
   return (
-    <div className={cn("flex items-center gap-3", className)}>
-      <div className="flex items-center gap-2">
+    <div className={cn("flex items-center gap-2 sm:gap-3", className)}>
+      <div className="flex items-center gap-1.5 sm:gap-2">
         <Moon 
           className={cn(
-            "w-4 h-4 transition-colors duration-300",
+            "w-3 h-3 sm:w-4 sm:h-4 transition-colors duration-300",
             !isDark ? "text-blue-400" : "text-white/40"
           )}
           aria-hidden="true" 
@@ -51,12 +51,20 @@ const ThemeToggle = ({ className = '' }: { className?: string }) => {
           checked={isDark}
           onCheckedChange={handleToggle}
           aria-label={`Switch to ${isDark ? 'light' : 'dark'} mode`}
-          className="data-[state=checked]:bg-blue-500 data-[state=unchecked]:bg-white/20"
+          className={cn(
+            // Enhanced iOS26 styling with proper background colors
+            "data-[state=checked]:bg-blue-600 data-[state=unchecked]:bg-gray-600/60",
+            "dark:data-[state=checked]:bg-blue-500 dark:data-[state=unchecked]:bg-gray-500/40",
+            // Additional shadow and border for definition
+            "shadow-inner border border-white/10",
+            // Smooth transitions
+            "transition-all duration-300 ease-out"
+          )}
         />
         
         <Sun 
           className={cn(
-            "w-4 h-4 transition-colors duration-300",
+            "w-3 h-3 sm:w-4 sm:h-4 transition-colors duration-300",
             isDark ? "text-yellow-400" : "text-white/40"
           )}
           aria-hidden="true" 

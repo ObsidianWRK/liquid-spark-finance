@@ -12,7 +12,8 @@ import {
   Home,
   BarChart3,
   Wallet,
-  TrendingUp
+  TrendingUp,
+  Menu
 } from 'lucide-react';
 import LiquidGlassSVGFilters from '@/components/ui/LiquidGlassSVGFilters';
 import ThemeToggle from './ThemeToggle';
@@ -42,6 +43,7 @@ interface MenuItem {
 const LiquidGlassTopMenuBar = ({ className, onMenuItemClick }: MenuBarProps) => {
   const navigate = useNavigate();
   const [isMobileToolsOpen, setIsMobileToolsOpen] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const fileMenu = [
     { label: 'New Transaction', shortcut: '⌘N' },
@@ -141,6 +143,8 @@ const LiquidGlassTopMenuBar = ({ className, onMenuItemClick }: MenuBarProps) => 
         console.log('Menu item not handled:', item);
         onMenuItemClick?.(item);
     }
+    // Close mobile menu after selection
+    setIsMobileMenuOpen(false);
   };
 
   return (
@@ -148,20 +152,20 @@ const LiquidGlassTopMenuBar = ({ className, onMenuItemClick }: MenuBarProps) => 
       <LiquidGlassSVGFilters />
       
       {/* Top Menu Bar with Liquid Glass Effect */}
-      <div className={cn("fixed top-0 left-0 right-0 z-50 p-4 pt-safe", className)}>
-        <div className="liquid-glass-nav rounded-2xl p-3 border-x-0 border-t-0 border-b border-white/10 backdrop-blur-xl">
+      <div className={cn("fixed top-0 left-0 right-0 z-50 p-2 sm:p-4 pt-safe", className)}>
+        <div className="liquid-glass-nav rounded-2xl p-2 sm:p-3 border-x-0 border-t-0 border-b border-white/10 backdrop-blur-xl">
           <div className="flex items-center justify-between max-w-7xl mx-auto">
             
             {/* Logo/Brand */}
-            <div className="flex items-center space-x-6">
-              <div className="liquid-glass-button p-3 rounded-xl">
-                <span className="text-white font-bold text-xl bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
+            <div className="flex items-center space-x-2 sm:space-x-6 flex-shrink-0">
+              <div className="liquid-glass-button p-2 sm:p-3 rounded-xl">
+                <span className="text-white font-bold text-lg sm:text-xl bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
                   Vueni
                 </span>
               </div>
 
-              {/* Menu Items using Radix Menubar (desktop) */}
-              <div className="hidden md:block">
+              {/* Desktop Menu Items using Radix Menubar */}
+              <div className="hidden lg:block">
                 <Menubar>
                   {/* File */}
                   <MenubarMenu>
@@ -232,89 +236,140 @@ const LiquidGlassTopMenuBar = ({ className, onMenuItemClick }: MenuBarProps) => 
                 </Menubar>
               </div>
 
-              {/* Mobile Tools Sheet */}
-              <Sheet open={isMobileToolsOpen} onOpenChange={setIsMobileToolsOpen}>
+              {/* Mobile Menu Button - Tablet and smaller */}
+              <Sheet open={isMobileMenuOpen} onOpenChange={setIsMobileMenuOpen}>
                 <SheetTrigger asChild>
                   <button
-                    className="md:hidden liquid-glass-menu-item px-3 py-2 rounded-xl text-white/90 hover:text-white transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-blue-400/50 flex items-center"
+                    className="lg:hidden liquid-glass-menu-item p-2 rounded-xl text-white/90 hover:text-white transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-blue-400/50 flex items-center"
+                    aria-label="Open menu"
                   >
-                    <Settings className="w-4 h-4" />
-                    <span className="ml-1 text-sm">Tools</span>
+                    <Menu className="w-4 h-4" />
                   </button>
                 </SheetTrigger>
-                <SheetContent side="bottom" className="liquid-glass-card border-0 rounded-t-3xl p-4 backdrop-blur-xl">
-                  <SheetHeader>
-                    <SheetTitle className="text-white">Tools</SheetTitle>
+                <SheetContent side="left" className="liquid-glass-card border-0 backdrop-blur-xl w-80 sm:w-96">
+                  <SheetHeader className="mb-6">
+                    <SheetTitle className="text-white text-left">Menu</SheetTitle>
                   </SheetHeader>
-                  <div className="grid gap-2 mt-4">
-                    {toolsMenu.map((item, idx) =>
-                      item.separator ? (
-                        <div key={idx} className="my-1 h-px bg-white/10" />
-                      ) : (
-                        <button
-                          key={idx}
-                          onClick={() => {
-                            handleItemSelect(item.label);
-                            setIsMobileToolsOpen(false);
-                          }}
-                          className="w-full text-left px-3 py-3 rounded-xl text-white/80 hover:text-white hover:bg-white/5 transition-all"
-                        >
-                          {item.label}
-                        </button>
-                      )
-                    )}
+                  <div className="space-y-6">
+                    {/* File Menu */}
+                    <div>
+                      <h3 className="text-white/80 font-medium mb-3">File</h3>
+                      <div className="space-y-1">
+                        {fileMenu.map((item, idx) =>
+                          item.separator ? (
+                            <div key={idx} className="my-3 h-px bg-white/10" />
+                          ) : (
+                            <button
+                              key={idx}
+                              onClick={() => handleItemSelect(item.label)}
+                              className="w-full text-left px-3 py-2 rounded-lg text-white/70 hover:text-white hover:bg-white/5 transition-all flex items-center justify-between"
+                            >
+                              <span>{item.label}</span>
+                              {item.shortcut && <span className="text-xs text-white/40">{item.shortcut}</span>}
+                            </button>
+                          )
+                        )}
+                      </div>
+                    </div>
+
+                    {/* View Menu */}
+                    <div>
+                      <h3 className="text-white/80 font-medium mb-3">View</h3>
+                      <div className="space-y-1">
+                        {viewMenu.map((item, idx) =>
+                          item.separator ? (
+                            <div key={idx} className="my-3 h-px bg-white/10" />
+                          ) : (
+                            <button
+                              key={idx}
+                              onClick={() => handleItemSelect(item.label)}
+                              className="w-full text-left px-3 py-2 rounded-lg text-white/70 hover:text-white hover:bg-white/5 transition-all flex items-center justify-between"
+                            >
+                              <span>{item.label}</span>
+                              {item.shortcut && <span className="text-xs text-white/40">{item.shortcut}</span>}
+                            </button>
+                          )
+                        )}
+                      </div>
+                    </div>
+
+                    {/* Tools Menu */}
+                    <div>
+                      <h3 className="text-white/80 font-medium mb-3">Tools</h3>
+                      <div className="space-y-1">
+                        {toolsMenu.map((item, idx) =>
+                          item.separator ? (
+                            <div key={idx} className="my-3 h-px bg-white/10" />
+                          ) : (
+                            <button
+                              key={idx}
+                              onClick={() => handleItemSelect(item.label)}
+                              className="w-full text-left px-3 py-2 rounded-lg text-white/70 hover:text-white hover:bg-white/5 transition-all"
+                            >
+                              {item.label}
+                            </button>
+                          )
+                        )}
+                      </div>
+                    </div>
                   </div>
                 </SheetContent>
               </Sheet>
             </div>
 
-            {/* Quick Action Items */}
-            <div className="flex items-center space-x-2">
-              {/* Quick Navigation Pills */}
-              <div className="hidden lg:flex items-center space-x-1">
+            {/* Right Side Actions - Responsive */}
+            <div className="flex items-center space-x-1 sm:space-x-2 flex-shrink-0">
+              {/* Quick Navigation Pills - Large screens only */}
+              <div className="hidden xl:flex items-center space-x-1">
                 <button 
                   onClick={() => navigate('/')}
                   className="liquid-glass-menu-item p-2 rounded-xl text-white/80 hover:text-white transition-all duration-300 group"
+                  aria-label="Dashboard"
                 >
                   <Home className="w-4 h-4" />
                 </button>
                 <button 
                   onClick={() => navigate('/?tab=insights')}
                   className="liquid-glass-menu-item p-2 rounded-xl text-white/80 hover:text-white transition-all duration-300"
+                  aria-label="Insights"
                 >
                   <BarChart3 className="w-4 h-4" />
                 </button>
                 <button 
                   onClick={() => navigate('/transactions')}
                   className="liquid-glass-menu-item p-2 rounded-xl text-white/80 hover:text-white transition-all duration-300"
+                  aria-label="Transactions"
                 >
                   <Wallet className="w-4 h-4" />
                 </button>
                 <button 
                   onClick={() => navigate('/reports')}
                   className="liquid-glass-menu-item p-2 rounded-xl text-white/80 hover:text-white transition-all duration-300"
+                  aria-label="Reports"
                 >
                   <TrendingUp className="w-4 h-4" />
                 </button>
               </div>
 
-              {/* Divider */}
-              <div className="hidden lg:block w-px h-6 bg-white/10" />
+              {/* Divider - Large screens only */}
+              <div className="hidden xl:block w-px h-6 bg-white/10" />
 
-              {/* Action Buttons */}
+              {/* Essential Action Buttons - Always visible */}
               <button 
                 onClick={() => alert('Search functionality coming soon!')}
-                className="liquid-glass-menu-item p-2 rounded-xl text-white/80 hover:text-white transition-all duration-300 relative"
+                className="hidden sm:flex liquid-glass-menu-item p-2 rounded-xl text-white/80 hover:text-white transition-all duration-300 relative"
+                aria-label="Search"
               >
-                <Search className="w-5 h-5" />
+                <Search className="w-4 h-4 sm:w-5 sm:h-5" />
               </button>
               
               <button 
                 onClick={() => alert('Notifications coming soon!')}
                 className="liquid-glass-menu-item p-2 rounded-xl text-white/80 hover:text-white transition-all duration-300 relative"
+                aria-label="Notifications"
               >
-                <Bell className="w-5 h-5" />
-                <span className="absolute -top-1 -right-1 w-3 h-3 bg-red-500 rounded-full border-2 border-black/20"></span>
+                <Bell className="w-4 h-4 sm:w-5 sm:h-5" />
+                <span className="absolute -top-1 -right-1 w-2 h-2 sm:w-3 sm:h-3 bg-red-500 rounded-full border border-black/20"></span>
               </button>
 
               <ThemeToggle />
@@ -322,8 +377,9 @@ const LiquidGlassTopMenuBar = ({ className, onMenuItemClick }: MenuBarProps) => 
               <button 
                 onClick={() => navigate('/profile')}
                 className="liquid-glass-button p-2 rounded-xl text-white/90 hover:text-white transition-all duration-300"
+                aria-label="Profile"
               >
-                <User className="w-5 h-5" />
+                <User className="w-4 h-4 sm:w-5 sm:h-5" />
               </button>
             </div>
           </div>

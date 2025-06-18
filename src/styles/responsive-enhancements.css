@@ -345,7 +345,7 @@ html:not(.dark) [class*="text-muted"] {
   }
 }
 
-/* Large Desktop: 4 columns for better utilization */
+/* Large Desktop: Optimize for ultra-wide screens */
 @media (min-width: 1440px) {
   .main-cards-grid {
     grid-template-columns: repeat(4, 1fr);
@@ -353,7 +353,7 @@ html:not(.dark) [class*="text-muted"] {
   }
 }
 
-/* Ultra-wide: 5 columns */
+/* Ultra-wide: Maximum cards per row */
 @media (min-width: 1920px) {
   .main-cards-grid {
     grid-template-columns: repeat(5, 1fr);
@@ -361,38 +361,146 @@ html:not(.dark) [class*="text-muted"] {
   }
 }
 
-/* ==============================================
-   Enhanced Glass Morphism Effects
-   ============================================== */
-
-/* Responsive glass morphism that scales properly */
-.liquid-glass-card {
-  backdrop-filter: blur(12px);
-  background: var(--glass-bg-mobile);
-  border: 1px solid var(--glass-border-mobile);
-  width: 100%;
+/* Insights Page Specific Layout */
+.insights-page-grid {
+  padding: 1rem;
+  gap: 1rem;
 }
 
-/* Desktop: Enhanced effects */
+/* Tablet insights layout */
+@media (min-width: 768px) {
+  .insights-page-grid {
+    padding: 1.5rem;
+    gap: 1.5rem;
+  }
+}
+
+/* Desktop insights layout */
 @media (min-width: 1024px) {
-  .liquid-glass-card {
-    backdrop-filter: blur(20px) saturate(180%);
-    background: var(--glass-bg-desktop);
-    border: 1px solid var(--glass-border-desktop);
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  }
-  
-  /* Add subtle hover effects for desktop */
-  .liquid-glass-card:hover {
-    background: rgba(15, 23, 42, 0.7);
-    border-color: rgba(255, 255, 255, 0.2);
-    transform: translateY(-2px);
-    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3);
+  .insights-page-grid {
+    padding: 2rem;
+    gap: 2rem;
   }
 }
 
-/* Navigation glass effects - Full width */
-.liquid-glass-nav {
+/* Large desktop insights layout */
+@media (min-width: 1440px) {
+  .insights-page-grid {
+    padding: 3rem;
+    gap: 2.5rem;
+  }
+}
+
+/* Ultra-wide insights layout */
+@media (min-width: 1920px) {
+  .insights-page-grid {
+    padding: 4rem;
+    gap: 3rem;
+  }
+}
+
+/* Transaction View Responsive */
+.transaction-view-responsive {
+  /* Mobile: Stack transaction items */
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+@media (min-width: 768px) {
+  .transaction-view-responsive {
+    /* Tablet: Show transaction grid */
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .transaction-view-responsive {
+    /* Desktop: Full transaction table */
+    display: block;
+  }
+}
+
+/* Enhanced Animation System for iOS26 */
+@keyframes slideInScale {
+  0% {
+    opacity: 0;
+    transform: translateY(20px) scale(0.95);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes slideInLeft {
+  0% {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideInRight {
+  0% {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.animate-slideInScale {
+  animation: slideInScale 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.animate-slideInLeft {
+  animation: slideInLeft 0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.animate-slideInRight {
+  animation: slideInRight 0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+/* Staggered animations for grid items */
+.animate-delay-100 {
+  animation-delay: 0.1s;
+}
+
+.animate-delay-200 {
+  animation-delay: 0.2s;
+}
+
+.animate-delay-300 {
+  animation-delay: 0.3s;
+}
+
+.animate-delay-400 {
+  animation-delay: 0.4s;
+}
+
+.animate-delay-500 {
+  animation-delay: 0.5s;
+}
+
+/* Enhanced hover effects for desktop */
+@media (min-width: 1024px) {
+  .animate-slideInScale {
+    animation-duration: 0.8s;
+  }
+}
+
+/* ==============================================
+   iOS 26 Navigation Bubble Styles
+   ============================================== */
+.ios26-nav-bubble {
   display: flex;
   background: rgba(255, 255, 255, 0.03);
   backdrop-filter: blur(24px) saturate(180%);
@@ -402,104 +510,214 @@ html:not(.dark) [class*="text-muted"] {
   overflow: hidden;
 }
 
+/* Individual nav item base style */
+.ios26-nav-item {
+  position: relative;
+  transition: background 0.25s ease, transform 0.25s ease;
+}
+
+/* Active state */
+.ios26-nav-item-active {
+  background: rgba(99, 102, 241, 0.15);
+}
+
+/* Hover / focus states */
+.ios26-nav-item:hover,
+.ios26-nav-item:focus-visible {
+  background: rgba(255, 255, 255, 0.05);
+  transform: translateY(-2px);
+}
+
 /* ==============================================
-   Accessibility & Performance Features
+   Utility Classes that depend on Bottom Navigation Height
    ============================================== */
-
-/* Add focus indicators for card navigation */
-.liquid-glass-card[role="button"]:focus-visible,
-.liquid-glass-card[tabindex]:focus-visible {
-  outline: 3px solid var(--focus-ring);
-  outline-offset: 2px;
+.bottom-navigation-spacing {
+  bottom: calc(var(--bottom-nav-height) + 1rem); /* offset overlay above nav */
 }
 
-/* Ensure proper semantic structure */
-.main-content {
-  min-height: 100vh;
-  padding-bottom: calc(var(--bottom-nav-height) + 2rem);
-}
-
-/* Live region for dynamic content announcements */
-.live-region {
-  position: absolute;
-  left: -10000px;
-  width: 1px;
-  height: 1px;
-  overflow: hidden;
-}
-
-/* Form accessibility improvements */
-.form-group {
-  margin-bottom: 1.5rem;
-}
-
-.form-label {
-  display: block;
-  margin-bottom: 0.5rem;
-  font-weight: 600;
-  color: var(--light-text-primary);
-}
-
-html:not(.dark) .form-label {
-  color: var(--light-text-primary);
-}
-
-.form-input:focus-visible {
-  outline: 2px solid var(--focus-ring);
-  outline-offset: 2px;
-  border-color: var(--focus-ring);
-}
-
-/* Error states with proper contrast */
-.form-error {
-  color: rgb(185, 28, 28); /* red-700 */
-  font-size: 0.875rem;
-  margin-top: 0.25rem;
-}
-
-html:not(.dark) .form-error {
-  color: rgb(153, 27, 27); /* red-800 for better contrast */
-}
-
-/* Full-screen glass container */
-.full-screen-container {
-  min-height: 100vh;
-  width: 100%;
-  overflow-x: hidden;
-}
-
-.content-wrapper {
-  max-width: none;
-  width: 100%;
-  padding-left: 1rem;
-  padding-right: 1rem;
+.bottom-fab-mobile {
+  bottom: calc(var(--bottom-nav-height) + 1rem);
 }
 
 @media (min-width: 768px) {
-  .content-wrapper {
-    padding-left: 1.5rem;
-    padding-right: 1.5rem;
+  .bottom-fab-tablet {
+    bottom: calc(var(--bottom-nav-height) + 1.5rem);
   }
 }
 
 @media (min-width: 1024px) {
-  .content-wrapper {
-    padding-left: 2rem;
-    padding-right: 2rem;
+  .bottom-fab-desktop {
+    bottom: calc(var(--bottom-nav-height) + 2rem);
   }
 }
 
 @media (min-width: 1440px) {
-  .content-wrapper {
-    padding-left: 3rem;
-    padding-right: 3rem;
+  .bottom-fab-large-desktop {
+    bottom: calc(var(--bottom-nav-height) + 3rem);
   }
 }
 
-@media (min-width: 1920px) {
-  .content-wrapper {
-    padding-left: 4rem;
-    padding-right: 4rem;
+/* ==============================================
+   iOS 26 Toggle Enhancements
+   ============================================== */
+
+/* Enhanced iOS26 toggle styling */
+.ios26-toggle {
+  position: relative;
+  display: inline-flex;
+  height: 28px;
+  width: 48px;
+  border-radius: 9999px;
+  background-color: rgba(156, 163, 175, 0.6); /* gray-400/60 */
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+  border: 2px solid transparent;
+  overflow: hidden;
+}
+
+.ios26-toggle:focus-visible {
+  outline: 2px solid #3b82f6;
+  outline-offset: 2px;
+}
+
+/* Dark mode toggle background */
+.dark .ios26-toggle {
+  background-color: rgba(107, 114, 128, 0.4); /* gray-500/40 */
+}
+
+/* Active state */
+.ios26-toggle[data-state="checked"] {
+  background-color: #2563eb; /* blue-600 */
+}
+
+.dark .ios26-toggle[data-state="checked"] {
+  background-color: #3b82f6; /* blue-500 */
+}
+
+/* Toggle thumb */
+.ios26-toggle-thumb {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  height: 20px;
+  width: 20px;
+  border-radius: 50%;
+  background-color: white;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transform: translateX(0);
+}
+
+/* Dark mode thumb shadow */
+.dark .ios26-toggle-thumb {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+}
+
+/* Active thumb position */
+.ios26-toggle[data-state="checked"] .ios26-toggle-thumb {
+  transform: translateX(20px);
+}
+
+/* ==============================================
+   Mobile Navigation Enhancements
+   ============================================== */
+
+/* Enhanced mobile navigation spacing */
+.mobile-nav-enhanced {
+  padding: 0.5rem;
+  gap: 0.25rem;
+}
+
+@media (min-width: 640px) {
+  .mobile-nav-enhanced {
+    padding: 1rem;
+    gap: 0.5rem;
+  }
+}
+
+/* Improved touch targets for mobile */
+@media (max-width: 640px) {
+  .nav-button-mobile {
+    min-height: 44px;
+    min-width: 44px;
+    padding: 0.75rem;
+  }
+  
+  .nav-icon-mobile {
+    width: 20px;
+    height: 20px;
+  }
+  
+  /* Reduce spacing for compact mobile layout */
+  .nav-container-mobile {
+    gap: 0.25rem;
+  }
+}
+
+/* Medium screens - tablets */
+@media (min-width: 641px) and (max-width: 1024px) {
+  .nav-button-tablet {
+    min-height: 48px;
+    min-width: 48px;
+    padding: 0.875rem;
+  }
+  
+  .nav-icon-tablet {
+    width: 22px;
+    height: 22px;
+  }
+}
+
+/* Large screens - desktops */
+@media (min-width: 1025px) {
+  .nav-button-desktop {
+    min-height: 44px;
+    min-width: 44px;
+    padding: 0.75rem;
+  }
+  
+  .nav-icon-desktop {
+    width: 20px;
+    height: 20px;
+  }
+}
+
+/* Top navigation bar responsive improvements */
+.top-nav-responsive {
+  /* Mobile: Compact padding */
+  padding: 0.5rem;
+}
+
+@media (min-width: 640px) {
+  .top-nav-responsive {
+    /* Tablet: Medium padding */
+    padding: 1rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .top-nav-responsive {
+    /* Desktop: Standard padding */
+    padding: 1rem 1.5rem;
+  }
+}
+
+/* Prevent overflow on small screens */
+.nav-overflow-hidden {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+/* Mobile menu improvements */
+.mobile-menu-container {
+  width: 100%;
+  max-width: 320px;
+}
+
+@media (min-width: 640px) {
+  .mobile-menu-container {
+    max-width: 384px;
   }
 }
 
@@ -710,17 +928,6 @@ html, body {
   transform: translateZ(0);
   backface-visibility: hidden;
   will-change: transform;
-}
-
-@keyframes slideInScale {
-  0% {
-    opacity: 0;
-    transform: translateY(20px) scale(0.95);
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-  }
 }
 
 @keyframes shimmer {
