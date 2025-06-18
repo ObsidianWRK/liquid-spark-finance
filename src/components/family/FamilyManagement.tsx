@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { 
   Users, 
   Settings, 
@@ -28,26 +28,26 @@ const FamilyManagement = ({ familyId, currentUserId }: FamilyManagementProps) =>
   const [showInviteModal, setShowInviteModal] = useState(false);
   const [showSettingsModal, setShowSettingsModal] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [newMemberEmail, setNewMemberEmail] = useState('');
+  const [newMemberRole, setNewMemberRole] = useState<'member' | 'admin'>('member');
 
-  useEffect(() => {
-    loadFamilyData();
-  }, [familyId]);
-
-  const loadFamilyData = async () => {
+  const loadFamilyData = useCallback(async () => {
     try {
-      const [familyData, membersData] = await Promise.all([
-        familyService.getFamilyById(familyId),
-        familyService.getFamilyMembers(familyId)
-      ]);
-
-      setFamily(familyData);
-      setMembers(membersData);
+      setLoading(true);
+      const data = await familyService.getFamilyData(familyId);
+      setFamily(data.family);
+      setMembers(data.members);
+      setInvitations(data.invitations);
     } catch (error) {
       console.error('Failed to load family data:', error);
     } finally {
       setLoading(false);
     }
-  };
+  }, [familyId]);
+
+  useEffect(() => {
+    loadFamilyData();
+  }, [loadFamilyData]);
 
   const getRoleIcon = (role: FamilyMember['role']) => {
     switch (role) {

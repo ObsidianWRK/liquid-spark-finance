@@ -346,6 +346,7 @@ export class TransactionService {
   async importTransactions(
     familyId: string,
     file: File,
+    mapping: Record<string, string>
     mapping: any
   ): Promise<TransactionImport> {
     const importRecord: TransactionImport = {

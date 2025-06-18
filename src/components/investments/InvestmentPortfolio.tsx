@@ -29,7 +29,7 @@ const InvestmentPortfolio = ({ familyId, className }: InvestmentPortfolioProps) 
 
   useEffect(() => {
     loadPortfolio();
-  }, [familyId]);
+  }, [loadPortfolio]);
 
   const loadPortfolio = async () => {
     try {
@@ -344,7 +344,9 @@ const InvestmentPortfolio = ({ familyId, className }: InvestmentPortfolioProps) 
 
                 {/* Action Menu */}
                 <div className="flex-shrink-0 ml-2">
-                  <button className="p-2 rounded-lg hover:bg-white/[0.05] transition-colors">
+                  <button className="p-2 rounded-lg hover:bg-white/[0.05] transition-colors"
+                    onClick={(e: React.MouseEvent) => e.stopPropagation()}
+                  >
                     <MoreHorizontal className="w-4 h-4 text-white/60" />
                   </button>
                 </div>

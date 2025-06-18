@@ -109,7 +109,7 @@ const OverviewCard = ({
   title: string; 
   value: string; 
   change: { amount: number; percentage: number };
-  icon: any; 
+  icon: React.ComponentType<{ className?: string }>; 
   color: string;
 }) => {
   const [isVisible, setIsVisible] = useState(true);
@@ -183,11 +183,11 @@ const CleanDashboard = () => {
     .filter(t => t.amount > 0)
     .reduce((sum, t) => sum + t.amount, 0);
 
-  const handleTransactionClick = (transaction: any) => {
+  const handleTransactionClick = (transaction: { id: string; amount: number; description: string; category: string }) => {
     console.log('Transaction clicked:', transaction);
   };
 
-  const handleAccountClick = (account: any) => {
+  const handleAccountClick = (account: { id: string; name: string; balance: number; type: string }) => {
     console.log('Account clicked:', account);
   };
 

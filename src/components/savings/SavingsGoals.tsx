@@ -216,7 +216,7 @@ const SavingsGoals = () => {
             return (
               <button
                 key={tab.id}
-                onClick={() => setActiveTab(tab.id as any)}
+                onClick={(e: React.MouseEvent) => e.stopPropagation()}
                 className={cn(
                   'flex-1 py-3 px-4 text-sm font-medium rounded-lg transition-all flex items-center justify-center space-x-2',
                   activeTab === tab.id

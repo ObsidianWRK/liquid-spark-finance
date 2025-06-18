@@ -196,7 +196,13 @@ describe('Phase 3 Performance Optimizations', () => {
 
   describe('Memory Usage Optimization', () => {
     it('should not cause memory leaks with memoized components', () => {
-      const initialMemory = (performance as any).memory?.usedJSHeapSize || 0;
+      interface PerformanceMemory extends Performance {
+        memory?: {
+          usedJSHeapSize: number;
+        };
+      }
+      
+      const initialMemory = (performance as PerformanceMemory).memory?.usedJSHeapSize || 0;
       
       // Render and unmount components multiple times
       for (let i = 0; i < 10; i++) {
@@ -206,7 +212,7 @@ describe('Phase 3 Performance Optimizations', () => {
         unmount();
       }
 
-      const finalMemory = (performance as any).memory?.usedJSHeapSize || 0;
+      const finalMemory = (performance as PerformanceMemory).memory?.usedJSHeapSize || 0;
       const memoryIncrease = finalMemory - initialMemory;
       
       // Memory increase should be minimal (less than 5MB)
@@ -282,3 +288,19 @@ export const measureComponentPerformance = async (
     p95: times.sort((a, b) => a - b)[Math.floor(times.length * 0.95)]
   };
 };
+
+interface PerformanceMemory extends Performance {
+  memory?: {
+    usedJSHeapSize: number;
+  };
+}
+
+const memoryBefore = (performance as PerformanceMemory).memory?.usedJSHeapSize || 0;
+
+// Simulate component mounting/unmounting cycles
+for (let i = 0; i < 100; i++) {
+  const { unmount } = render(<MemoryTestComponent />);
+  unmount();
+}
+
+const memoryAfter = (performance as PerformanceMemory).memory?.usedJSHeapSize || 0;

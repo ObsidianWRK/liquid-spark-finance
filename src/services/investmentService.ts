@@ -173,7 +173,14 @@ class InvestmentService {
     const holding: Holding = {
       id: this.generateHoldingId(),
       accountId,
-      ...data,
+      symbol: data.symbol,
+      name: data.name,
+      shares: data.quantity,
+      purchasePrice: data.averageCostPerShare,
+      quantity: data.quantity,
+      averageCostPerShare: data.averageCostPerShare,
+      assetType: data.assetType,
+      sector: data.sector,
       costBasis: data.averageCostPerShare * data.quantity,
       currentPrice: 0,
       marketValue: 0,
@@ -329,7 +336,7 @@ class InvestmentService {
     }
 
     let stocks = 0, bonds = 0, crypto = 0, other = 0;
-    const cash = 0, commodities = 0, reits = 0;
+    const cash = 0, commodities = 0, reitsPercentage = 0;
     const sectors: Record<string, number> = {};
 
     for (const holding of holdings) {
@@ -344,7 +351,7 @@ class InvestmentService {
       } else if (holding.assetType === 'bond') {
         bonds += percentage;
       } else if (holding.assetType === 'reit') {
-        reits += percentage;
+        reitsPercentage += percentage;
       } else if (holding.assetType === 'crypto') {
         crypto += percentage;
       } else if (holding.assetType === 'etf' || holding.assetType === 'mutual_fund') {
@@ -365,7 +372,7 @@ class InvestmentService {
       stocks,
       bonds,
       cash,
-      reits,
+      reits: reitsPercentage,
       commodities,
       crypto,
       other,

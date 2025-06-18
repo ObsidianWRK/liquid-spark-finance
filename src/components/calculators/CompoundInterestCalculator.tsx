@@ -155,6 +155,34 @@ const CompoundInterestCalculator = React.memo<SecureCalculatorProps>(({ security
     { value: 365, label: 'Daily' }
   ];
 
+  const calculateResults = useCallback(() => {
+    if (!principal || !rate || !years) return [];
+    
+    const results = [];
+    const monthlyRate = rate / 100 / 12;
+    const months = years * 12;
+    
+    for (let month = 0; month <= months; month++) {
+      const compoundInterest = principal * Math.pow(1 + monthlyRate, month);
+      const contributionTotal = monthlyContribution * month;
+      const contributionInterest = monthlyContribution * 
+        ((Math.pow(1 + monthlyRate, month) - 1) / monthlyRate);
+      
+      const totalValue = compoundInterest + contributionInterest;
+      
+      results.push({
+        month,
+        year: Math.floor(month / 12),
+        principalValue: principal,
+        contributionValue: contributionTotal,
+        interestEarned: totalValue - principal - contributionTotal,
+        totalValue: totalValue
+      });
+    }
+    
+    return results;
+  }, [principal, rate, years]);
+
   return (
     <div className="max-w-6xl mx-auto p-6 space-y-8">
       <h1 className="text-3xl font-bold text-white mb-8">Compound Interest Calculator</h1>

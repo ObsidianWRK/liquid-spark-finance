@@ -51,7 +51,13 @@ const TransactionManager = ({ familyId, accountId, compact = false }: Transactio
   const loadTransactions = async () => {
     setLoading(true);
     try {
-      const filters: any = {
+      const filters: { 
+        category?: string; 
+        minAmount?: number; 
+        maxAmount?: number; 
+        dateRange?: { start: Date; end: Date };
+        accountId?: string;
+      } = {
         query: searchQuery || undefined,
         categories: selectedCategories.length > 0 ? selectedCategories : undefined,
         accountIds: accountId ? [accountId] : undefined,
@@ -114,11 +120,11 @@ const TransactionManager = ({ familyId, accountId, compact = false }: Transactio
     }
   }, [selectedTransactions.size, transactions]);
 
-  const handleBulkUpdate = async (updates: any) => {
+  const handleBulkUpdate = async (updates: { transactionIds: string[]; changes: Partial<Transaction> }) => {
     try {
       await transactionService.bulkUpdateTransactions(
         Array.from(selectedTransactions),
-        updates
+        updates.changes
       );
       await loadTransactions();
       setSelectedTransactions(new Set());
@@ -377,7 +383,7 @@ const TransactionManager = ({ familyId, accountId, compact = false }: Transactio
             
             <div className="flex items-center gap-3">
               <select
-                onChange={(e) => e.target.value && handleBulkUpdate({ category: e.target.value })}
+                onChange={(e) => e.target.value && handleBulkUpdate({ changes: { category: e.target.value } })}
                 className="bg-white/[0.05] border border-white/[0.08] rounded-lg text-white text-sm py-2 px-3"
               >
                 <option value="">Set Category...</option>
@@ -389,7 +395,7 @@ const TransactionManager = ({ familyId, accountId, compact = false }: Transactio
               </select>
               
               <button
-                onClick={() => handleBulkUpdate({ excludeFromBudget: true })}
+                onClick={() => handleBulkUpdate({ changes: { excludeFromBudget: true } })}
                 className="px-3 py-2 bg-white/[0.05] border border-white/[0.08] rounded-lg text-white/80 hover:text-white text-sm transition-colors"
               >
                 Exclude from Budget

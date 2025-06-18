@@ -32,6 +32,7 @@ export const UnifiedInsightsPage = React.memo<UnifiedInsightsPageProps>(({
 }) => {
   const [activeTab, setActiveTab] = useState<string>('overview');
   const [selectedTimeframe, setSelectedTimeframe] = useState<string>('30d');
+  const [currentView, setCurrentView] = useState<string>('comprehensive');
 
   // Memoized calculations to prevent unnecessary re-computations
   const metrics = useMemo(() => {
@@ -57,20 +58,20 @@ export const UnifiedInsightsPage = React.memo<UnifiedInsightsPageProps>(({
     setSelectedTimeframe(timeframe);
   }, []);
 
-  const renderVariantContent = useCallback(() => {
-    switch (config.variant) {
-      case 'comprehensive':
-        return renderComprehensiveView();
+  const renderView = useCallback(() => {
+    switch (currentView) {
       case 'simple':
         return renderSimpleView();
       case 'enhanced':
         return renderEnhancedView();
       case 'refined':
         return renderRefinedView();
+      case 'comprehensive':
+        return renderComprehensiveView();
       default:
         return renderDefaultView();
     }
-  }, [config.variant, metrics, scoreData, trendData, activeTab]);
+  }, [currentView, renderSimpleView, renderEnhancedView, renderRefinedView, renderComprehensiveView, renderDefaultView]);
 
   const renderComprehensiveView = () => (
     <div className="space-y-6">
@@ -251,7 +252,7 @@ export const UnifiedInsightsPage = React.memo<UnifiedInsightsPageProps>(({
   return (
     <div className={`insights-container ${className}`}>
       <div className={`insights-content ${config.layout.responsive ? 'responsive-padding-md' : 'p-6'}`}>
-        {renderVariantContent()}
+        {renderView()}
       </div>
     </div>
   );

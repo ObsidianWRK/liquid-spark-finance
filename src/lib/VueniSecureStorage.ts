@@ -6,21 +6,21 @@ import { generateSecureToken } from '../utils/secureRandom';
 const VUENI_STORAGE_KEY = SecurityEnvValidator.getValidatedEncryptionKey('VITE_VUENI_ENCRYPTION_KEY');
 
 export class VueniSecureStorage {
-  private static encrypt(data: any): string {
+  private static encrypt<T>(data: T): string {
     return CryptoJS.AES.encrypt(JSON.stringify(data), VUENI_STORAGE_KEY).toString();
   }
   
-  private static decrypt(encryptedData: string): any {
+  private static decrypt<T>(encryptedData: string): T {
     const bytes = CryptoJS.AES.decrypt(encryptedData, VUENI_STORAGE_KEY);
     return JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
   }
   
-  static setFinancialData(key: string, value: any): void {
+  static setFinancialData<T>(key: string, value: T): void {
     this.logVueniAccess('SET_FINANCIAL', key);
     localStorage.setItem(`vueni_${key}`, this.encrypt(value));
   }
   
-  static getFinancialData(key: string): any {
+  static getFinancialData<T>(key: string): T | null {
     this.logVueniAccess('GET_FINANCIAL', key);
     const encrypted = localStorage.getItem(`vueni_${key}`);
     return encrypted ? this.decrypt(encrypted) : null;

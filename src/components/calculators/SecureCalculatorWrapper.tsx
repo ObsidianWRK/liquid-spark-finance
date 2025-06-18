@@ -3,7 +3,7 @@
  * Implements input validation, rate limiting, and XSS protection
  */
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Button } from '@/components/ui/button';
 import { Shield, AlertTriangle, Clock } from 'lucide-react';
@@ -22,6 +22,10 @@ interface SecurityState {
   lastCalculation: Date | null;
   securityLevel: 'normal' | 'elevated' | 'locked';
   consecutiveErrors: number;
+}
+
+interface ValidationResult {
+  // Define the structure of the validation result
 }
 
 /**
@@ -115,7 +119,7 @@ export function SecureCalculatorWrapper({
   // Provide security context to child components
   const securityContext = {
     sanitize: security.sanitize,
-    validateInput: (type: string, value: unknown) => {
+    validateInput: (type: string, value: string | number) => {
       try {
         switch (type) {
           case 'amount':
@@ -271,7 +275,7 @@ export function useSecureCalculator(calculatorName: string) {
     remainingRequests: 100
   });
 
-  const validateAndSanitizeInput = (type: string, value: any) => {
+  const validateAndSanitizeInput = (type: string, value: string | number) => {
     // Check rate limit before processing
     if (security.rateLimit.isRateLimited(`calculator:${calculatorName}`)) {
       setSecurityState(prev => ({ ...prev, isRateLimited: true }));

@@ -2,11 +2,15 @@ import { test, expect } from '@playwright/test';
 import { HookValidationMonitor, commonTestScenarios } from './hook-validation-config';
 
 test.describe('Quick Hook Validation', () => {
+  test.beforeEach(async ({ page }) => {
+    // Reset hook violations tracking
+    const hookViolations: string[] = [];
+  });
+
   test('should quickly validate basic navigation without hook violations', async ({ page }) => {
     console.log('🚀 Starting quick hook validation test...');
     
     const monitor = new HookValidationMonitor(page);
-    const hookViolations: string[] = [];
     
     // Monitor for hook violations
     page.on('console', (msg) => {

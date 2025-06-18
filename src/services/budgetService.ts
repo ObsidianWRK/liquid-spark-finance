@@ -29,7 +29,7 @@ class BudgetService {
   private recommendations: Map<string, BudgetRecommendation[]> = new Map();
 
   // Legacy support
-  private legacyCategories: any[] = [];
+  private legacyCategories: Array<{ id: string; name: string; type: string }> = [];
 
   // Default budget category allocations (based on 50/30/20 rule and expert recommendations)
   private defaultCategoryAllocations: Record<TransactionCategory, {

@@ -12,13 +12,13 @@ const SESSION_TIMEOUT = 30 * 60 * 1000;
  * Implements PCI-DSS considerations and financial compliance standards
  */
 export class VueniSecureStorage {
-  private static sessionData = new Map<string, { data: any; timestamp: number; encrypted: boolean }>();
+  private static sessionData = new Map<string, { data: unknown; timestamp: number; encrypted: boolean }>();
   private static auditLog: Array<{ action: string; key: string; timestamp: string; userAgent?: string }> = [];
 
   /**
    * Encrypts data with AES-256 and adds integrity check
    */
-  private static encrypt(data: any): string {
+  private static encrypt<T>(data: T): string {
     try {
       const jsonString = JSON.stringify(data);
       const timestamp = Date.now().toString();
@@ -34,7 +34,7 @@ export class VueniSecureStorage {
   /**
    * Decrypts data and verifies integrity
    */
-  private static decrypt(encryptedData: string): any {
+  private static decrypt<T>(encryptedData: string): T {
     try {
       const bytes = CryptoJS.AES.decrypt(encryptedData, SECRET_KEY);
       const decryptedString = bytes.toString(CryptoJS.enc.Utf8);
@@ -68,7 +68,7 @@ export class VueniSecureStorage {
   /**
    * Stores encrypted financial data with audit trail
    */
-  static setItem(key: string, value: any, options: { sensitive?: boolean; sessionOnly?: boolean } = {}): void {
+  static setItem<T>(key: string, value: T, options: { sensitive?: boolean; sessionOnly?: boolean } = {}): void {
     try {
       this.validateFinancialDataKey(key);
       
@@ -96,7 +96,7 @@ export class VueniSecureStorage {
   /**
    * Retrieves and decrypts financial data
    */
-  static getItem(key: string): any {
+  static getItem<T>(key: string): T | null {
     try {
       this.validateFinancialDataKey(key);
 

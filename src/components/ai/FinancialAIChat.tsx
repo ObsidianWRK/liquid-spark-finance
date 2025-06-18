@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { 
   Send, 
   Bot, 
@@ -26,109 +26,114 @@ interface FinancialAIChatProps {
 
 interface ChatMessage {
   id: string;
-  role: 'user' | 'assistant';
+  type: 'user' | 'assistant';
   content: string;
   timestamp: Date;
-  insights?: any[];
-  recommendations?: any[];
+  suggestions?: string[];
+}
+
+interface FinancialContext {
+  totalBalance: number;
+  monthlySpending: number;
+  savingsGoals: number;
+  creditScore: number;
+  investments: number;
+  recentTransactions: Array<{
+    id: string;
+    amount: number;
+    description: string;
+    category: string;
+  }>;
 }
 
 const FinancialAIChat = ({ familyId, className, compact = false }: FinancialAIChatProps) => {
   const [messages, setMessages] = useState<ChatMessage[]>([]);
-  const [input, setInput] = useState('');
-  const [loading, setLoading] = useState(false);
-  const [context, setContext] = useState<any>(null);
+  const [currentInput, setCurrentInput] = useState<string>('');
+  const [isLoading, setIsLoading] = useState(false);
+  const [financialContext, setFinancialContext] = useState<FinancialContext | null>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
+
+  const loadChatHistory = useCallback(async () => {
+    try {
+      const history = await aiFinancialService.getChatHistory(familyId);
+      setMessages(history);
+    } catch (error) {
+      console.error('Failed to load chat history:', error);
+    }
+  }, [familyId]);
+
+  const loadFinancialContext = useCallback(async () => {
+    try {
+      const [family, accounts, budgets, goals] = await Promise.all([
+        familyService.getFamilyData(familyId),
+        accountService.getAccountSummary(familyId),
+        budgetService.getBudgetSummary(familyId),
+        savingsGoalsService.getUserGoals(familyId)
+      ]);
+
+      setFinancialContext({
+        totalBalance: accounts.totalBalance,
+        monthlySpending: budgets.totalSpent,
+        savingsGoals: goals.length,
+        creditScore: 750, // This would come from credit service
+        investments: accounts.totalInvestments || 0,
+        recentTransactions: accounts.recentTransactions || []
+      });
+    } catch (error) {
+      console.error('Failed to load financial context:', error);
+    }
+  }, [familyId]);
 
   useEffect(() => {
     loadChatHistory();
     loadFinancialContext();
-  }, [familyId]);
+  }, [loadChatHistory, loadFinancialContext]);
 
   useEffect(() => {
     scrollToBottom();
   }, [messages]);
 
-  const loadChatHistory = async () => {
-    try {
-      const history = aiFinancialService.getChatHistory(familyId);
-      setMessages(history);
-    } catch (error) {
-      console.error('Failed to load chat history:', error);
-    }
-  };
-
-  const loadFinancialContext = async () => {
-    try {
-      const [family, accounts, stats, analytics] = await Promise.all([
-        familyService.getFamilyById(familyId),
-        accountService.getFamilyAccounts(familyId),
-        familyService.calculateFamilyStats(familyId),
-        transactionService.generateAnalytics(familyId, 'month')
-      ]);
-
-      const recentTransactions = await transactionService.searchTransactions(familyId, {
-        dateRange: {
-          start: new Date(Date.now() - 30 * 24 * 60 * 60 * 1000),
-          end: new Date()
-        }
-      });
-
-      setContext({
-        family,
-        accounts,
-        recentTransactions: recentTransactions.slice(0, 20),
-        budgets: [], // TODO: Add budgets
-        stats,
-        analytics
-      });
-    } catch (error) {
-      console.error('Failed to load financial context:', error);
-    }
-  };
-
   const handleSendMessage = async () => {
-    if (!input.trim() || loading || !context) return;
+    if (!currentInput.trim() || isLoading || !financialContext) return;
 
     const userMessage: ChatMessage = {
       id: `msg_${Date.now()}_user`,
-      role: 'user',
-      content: input.trim(),
+      type: 'user',
+      content: currentInput.trim(),
       timestamp: new Date()
     };
 
     setMessages(prev => [...prev, userMessage]);
-    setInput('');
-    setLoading(true);
+    setCurrentInput('');
+    setIsLoading(true);
 
     try {
       const response = await aiFinancialService.processFinancialQuery(
         familyId,
-        input.trim(),
-        context
+        currentInput.trim(),
+        financialContext
       );
 
       const assistantMessage: ChatMessage = {
         id: `msg_${Date.now()}_assistant`,
-        role: 'assistant',
+        type: 'assistant',
         content: response.content,
         timestamp: new Date(),
-        insights: response.insights,
-        recommendations: response.recommendations
+        suggestions: response.recommendations
       };
 
       setMessages(prev => [...prev, assistantMessage]);
     } catch (error) {
       const errorMessage: ChatMessage = {
         id: `msg_${Date.now()}_error`,
-        role: 'assistant',
+        type: 'assistant',
         content: 'I apologize, but I encountered an error processing your request. Please try again.',
         timestamp: new Date()
       };
       setMessages(prev => [...prev, errorMessage]);
     } finally {
-      setLoading(false);
+      setIsLoading(false);
     }
   };
 
@@ -192,7 +197,7 @@ const FinancialAIChat = ({ familyId, className, compact = false }: FinancialAICh
     "How's my emergency fund looking?"
   ];
 
-  if (!context) {
+  if (!financialContext) {
     return (
       <div className={cn("flex items-center justify-center p-8", className)}>
         <div className="text-center">
@@ -248,7 +253,7 @@ const FinancialAIChat = ({ familyId, className, compact = false }: FinancialAICh
                 {suggestedQuestions.slice(0, compact ? 3 : 5).map((question, index) => (
                   <button
                     key={index}
-                    onClick={() => setInput(question)}
+                    onClick={() => setCurrentInput(question)}
                     className="block w-full text-left p-3 bg-white/[0.03] hover:bg-white/[0.05] border border-white/[0.05] rounded-lg text-white/80 hover:text-white text-sm transition-all"
                   >
                     "{question}"
@@ -259,16 +264,16 @@ const FinancialAIChat = ({ familyId, className, compact = false }: FinancialAICh
           </div>
         ) : (
           messages.map((message) => (
-            <div key={message.id} className={cn("flex gap-3", message.role === 'user' ? 'justify-end' : 'justify-start')}>
-              <div className={cn("flex gap-3 max-w-[80%]", message.role === 'user' ? 'flex-row-reverse' : 'flex-row')}>
+            <div key={message.id} className={cn("flex gap-3", message.type === 'user' ? 'justify-end' : 'justify-start')}>
+              <div className={cn("flex gap-3 max-w-[80%]", message.type === 'user' ? 'flex-row-reverse' : 'flex-row')}>
                 {/* Avatar */}
                 <div className={cn(
                   "w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0",
-                  message.role === 'user' 
+                  message.type === 'user' 
                     ? "bg-green-500/20" 
                     : "bg-blue-500/20"
                 )}>
-                  {message.role === 'user' ? (
+                  {message.type === 'user' ? (
                     <User className="w-4 h-4 text-green-400" />
                   ) : (
                     <Bot className="w-4 h-4 text-blue-400" />
@@ -278,61 +283,29 @@ const FinancialAIChat = ({ familyId, className, compact = false }: FinancialAICh
                 {/* Message Content */}
                 <div className={cn(
                   "flex flex-col gap-2",
-                  message.role === 'user' ? 'items-end' : 'items-start'
+                  message.type === 'user' ? 'items-end' : 'items-start'
                 )}>
                   <div className={cn(
                     "rounded-2xl px-4 py-3 max-w-full",
-                    message.role === 'user'
+                    message.type === 'user'
                       ? "bg-blue-500 text-white"
                       : "bg-white/[0.05] border border-white/[0.08] text-white"
                   )}>
                     <p className="text-sm leading-relaxed whitespace-pre-wrap">{message.content}</p>
                   </div>
 
-                  {/* Insights */}
-                  {message.insights && message.insights.length > 0 && (
+                  {/* Suggestions */}
+                  {message.suggestions && message.suggestions.length > 0 && (
                     <div className="space-y-2 w-full max-w-lg">
-                      {message.insights.map((insight) => (
+                      {message.suggestions.map((suggestion, index) => (
                         <div
-                          key={insight.id}
-                          className={cn(
-                            "p-3 rounded-xl border text-sm",
-                            getInsightColor(insight.impact)
-                          )}
-                        >
-                          <div className="flex items-center gap-2 mb-2">
-                            {getInsightIcon(insight.type)}
-                            <span className="font-medium">{insight.title}</span>
-                          </div>
-                          <p className="text-xs opacity-90">{insight.description}</p>
-                        </div>
-                      ))}
-                    </div>
-                  )}
-
-                  {/* Recommendations */}
-                  {message.recommendations && message.recommendations.length > 0 && (
-                    <div className="space-y-2 w-full max-w-lg">
-                      {message.recommendations.map((rec) => (
-                        <div
-                          key={rec.id}
+                          key={index}
                           className="p-3 bg-purple-500/20 border border-purple-500/30 rounded-xl text-sm"
                         >
                           <div className="flex items-center gap-2 mb-2">
                             <Target className="w-4 h-4 text-purple-400" />
-                            <span className="font-medium text-purple-400">{rec.title}</span>
+                            <span className="font-medium text-purple-400">{suggestion}</span>
                           </div>
-                          <p className="text-xs text-white/80 mb-2">{rec.description}</p>
-                          {rec.actionItems && rec.actionItems.length > 0 && (
-                            <ul className="space-y-1">
-                              {rec.actionItems.map((item: string, index: number) => (
-                                <li key={index} className="text-xs text-white/70 flex items-start gap-1">
-                                  <span className="text-purple-400 mt-0.5">•</span>
-                                  <span>{item}</span>
-                                </li>
-                              ))}
-                            </ul>
-                          )}
                         </div>
                       ))}
                     </div>
@@ -345,7 +318,7 @@ const FinancialAIChat = ({ familyId, className, compact = false }: FinancialAICh
           ))
         )}
 
-        {loading && (
+        {isLoading && (
           <div className="flex gap-3 justify-start">
             <div className="w-8 h-8 bg-blue-500/20 rounded-full flex items-center justify-center">
               <Bot className="w-4 h-4 text-blue-400" />
@@ -368,20 +341,20 @@ const FinancialAIChat = ({ familyId, className, compact = false }: FinancialAICh
         <div className="flex gap-3">
           <textarea
             ref={inputRef}
-            value={input}
-            onChange={(e) => setInput(e.target.value)}
+            value={currentInput}
+            onChange={(e) => setCurrentInput(e.target.value)}
             onKeyPress={handleKeyPress}
             placeholder="Ask me about your finances..."
             className="flex-1 bg-white/[0.05] border border-white/[0.08] rounded-xl px-4 py-3 text-white placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500/50 resize-none"
             rows={1}
-            disabled={loading}
+            disabled={isLoading}
           />
           <button
             onClick={handleSendMessage}
-            disabled={!input.trim() || loading}
+            disabled={!currentInput.trim() || isLoading}
             className={cn(
               "p-3 rounded-xl transition-all",
-              input.trim() && !loading
+              currentInput.trim() && !isLoading
                 ? "bg-blue-500 hover:bg-blue-600 text-white"
                 : "bg-white/[0.05] text-white/40 cursor-not-allowed"
             )}

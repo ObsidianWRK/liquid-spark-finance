@@ -354,7 +354,17 @@ export class AccountService {
   private async createAccountFromPlaid(data: {
     familyId: string;
     connectionId: string;
-    plaidAccount: any;
+    plaidAccount: {
+      id: string;
+      name: string;
+      type: string;
+      subtype: string;
+      balances: {
+        available: number | null;
+        current: number;
+        limit: number | null;
+      };
+    };
     institutionId: string;
   }): Promise<Account> {
     const institution = this.institutions.get(data.institutionId);

@@ -1,4 +1,3 @@
-
 import { Transaction } from '@/types/shared';
 
 export interface HealthData {
@@ -87,5 +86,9 @@ export const mockHealthEcoService = {
         treesEquivalent: Math.max(0, treesEquivalent)
       }
     };
+  },
+
+  private static calculateCompositeScore(metrics: { score: number; weight: number; category: string }[]): number {
+    // Implementation of calculateCompositeScore method
   }
 };

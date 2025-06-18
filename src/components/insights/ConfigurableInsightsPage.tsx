@@ -196,7 +196,11 @@ const LoadingSpinner = () => (
 );
 
 // Enhanced Score Card Component
-const EnhancedScoreDisplay = ({ scores, layout, animationsEnabled }: any) => {
+const EnhancedScoreDisplay = ({ scores, layout, animationsEnabled }: { 
+  scores: { credit: number; eco: number; wellness: number }; 
+  layout: string; 
+  animationsEnabled: boolean 
+}) => {
   if (layout.compactMode) {
     return (
       <div className="flex justify-center gap-6">
@@ -229,7 +233,12 @@ const EnhancedScoreDisplay = ({ scores, layout, animationsEnabled }: any) => {
 };
 
 // Quick Metrics Component using Universal Cards
-const QuickMetrics = ({ financialData, wellnessData, ecoData, layout }: any) => {
+const QuickMetrics = ({ financialData, wellnessData, ecoData, layout }: { 
+  financialData: Record<string, unknown>; 
+  wellnessData: Record<string, unknown>; 
+  ecoData: Record<string, unknown>; 
+  layout: string 
+}) => {
   const metrics = [
     {
       icon: DollarSign,

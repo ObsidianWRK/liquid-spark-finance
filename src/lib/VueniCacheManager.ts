@@ -307,11 +307,14 @@ export class VueniCacheManager {
   }
 
   // Export cache contents for debugging
-  exportCache(): any {
-    const items: any[] = [];
+  exportCache(): { key: string; value: unknown; timestamp: number; expiresAt: number }[] {
+    const items: { key: string; value: unknown; timestamp: number; expiresAt: number }[] = [];
     this.cache.forEach((item, key) => {
       items.push({
         key,
+        value: item.data,
+        timestamp: item.timestamp,
+        expiresAt: item.expiresAt
         size: this.formatSize(item.size || 0),
         expiresIn: Math.max(0, item.expiresAt - Date.now()),
         accessCount: item.accessCount,

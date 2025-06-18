@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { 
   Building2, 
   Search, 
@@ -28,30 +28,39 @@ const AccountLinking = ({ familyId, onAccountsLinked, onClose }: AccountLinkingP
   const [step, setStep] = useState<'search' | 'connect' | 'select' | 'success'>('search');
   const [institutions, setInstitutions] = useState<Institution[]>([]);
   const [selectedInstitution, setSelectedInstitution] = useState<Institution | null>(null);
-  const [searchQuery, setSearchQuery] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [linkedAccounts, setLinkedAccounts] = useState<Account[]>([]);
+  const [isConnecting, setIsConnecting] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
+
+  const loadInstitutions = useCallback(async () => {
+    try {
+      setLoading(true);
+      const data = await accountService.getInstitutions(searchQuery);
+      setInstitutions(data);
+    } catch (error) {
+      console.error('Failed to load institutions:', error);
+    } finally {
+      setLoading(false);
+    }
+  }, [searchQuery]);
 
   useEffect(() => {
     loadInstitutions();
-  }, [searchQuery]);
-
-  const loadInstitutions = async () => {
-    try {
-      const data = await accountService.getSupportedInstitutions(searchQuery);
-      setInstitutions(data);
-    } catch (err) {
-      setError('Failed to load institutions');
-    }
-  };
+  }, [loadInstitutions]);
 
   const handleInstitutionSelect = (institution: Institution) => {
     setSelectedInstitution(institution);
     setStep('connect');
   };
 
-  const handlePlaidSuccess = async (publicToken: string, accounts: any[]) => {
+  const handlePlaidSuccess = async (publicToken: string, accounts: Array<{
+    id: string;
+    name: string;
+    type: string;
+    subtype: string;
+  }>) => {
     if (!selectedInstitution) return;
 
     setLoading(true);
