@@ -311,7 +311,7 @@ export const ConfigurableInsightsPage = React.memo<ConfigurableInsightsPageProps
   const [showLayoutSettings, setShowLayoutSettings] = useState(false);
   const [isVisible, setIsVisible] = useState(true);
 
-  // Memoized data calculations
+  // Memoized data calculations with proper net worth and formatting
   const financialData = useMemo(() => {
     const monthlyIncome = transactions
       .filter(t => t.amount > 0 && new Date(t.date).getMonth() === new Date().getMonth())
@@ -321,24 +321,40 @@ export const ConfigurableInsightsPage = React.memo<ConfigurableInsightsPageProps
       .filter(t => t.amount < 0 && new Date(t.date).getMonth() === new Date().getMonth())
       .reduce((sum, t) => sum + t.amount, 0));
 
-    const totalBalance = accounts.reduce((sum, acc) => sum + acc.balance, 0);
-    const spendingRatio = monthlyIncome > 0 ? (monthlySpending / monthlyIncome) * 100 : 0;
-    const emergencyFundMonths = monthlySpending > 0 ? totalBalance / monthlySpending : 0;
-    const savingsRate = monthlyIncome > 0 ? ((monthlyIncome - monthlySpending) / monthlyIncome) * 100 : 0;
+    // Proper net worth calculation (assets - liabilities)
+    const totalAssets = accounts
+      .filter(acc => {
+        const type = acc.type?.toLowerCase() || '';
+        return !type.includes('credit') && !type.includes('loan') && acc.balance > 0;
+      })
+      .reduce((sum, acc) => sum + Math.max(0, acc.balance), 0);
+
+    const totalLiabilities = accounts
+      .filter(acc => {
+        const type = acc.type?.toLowerCase() || '';
+        return type.includes('credit') || type.includes('loan') || acc.balance < 0;
+      })
+      .reduce((sum, acc) => sum + Math.abs(Math.min(0, acc.balance)), 0);
+
+    const totalBalance = Math.round(totalAssets - totalLiabilities); // True net worth, rounded
+    
+    const spendingRatio = monthlyIncome > 0 ? Math.round((monthlySpending / monthlyIncome) * 100) : 0;
+    const emergencyFundMonths = monthlySpending > 0 ? Math.round((totalAssets / monthlySpending) * 10) / 10 : 0;
+    const savingsRate = monthlyIncome > 0 ? Math.round(((monthlyIncome - monthlySpending) / monthlyIncome) * 100) : 0;
     
     const creditCardDebt = Math.abs(accounts
       .filter(acc => acc.type === 'Credit Card' && acc.balance < 0)
       .reduce((sum, acc) => sum + acc.balance, 0));
-    const debtToIncomeRatio = monthlyIncome > 0 ? (creditCardDebt / (monthlyIncome * 12)) * 100 : 0;
+    const debtToIncomeRatio = monthlyIncome > 0 ? Math.round((creditCardDebt / (monthlyIncome * 12)) * 100) : 0;
     
     const completedTransactions = transactions.filter(t => t.status === 'completed').length;
     const totalTransactions = transactions.length;
-    const billPaymentScore = totalTransactions > 0 ? (completedTransactions / totalTransactions) * 100 : 100;
+    const billPaymentScore = totalTransactions > 0 ? Math.round((completedTransactions / totalTransactions) * 100) : 100;
 
     return {
-      overallScore: scores.financial,
-      monthlyIncome,
-      monthlySpending,
+      overallScore: Math.round(scores.financial || 75), // Rounded score
+      monthlyIncome: Math.round(monthlyIncome),
+      monthlySpending: Math.round(monthlySpending),
       totalBalance,
       savingsRate,
       spendingRatio,

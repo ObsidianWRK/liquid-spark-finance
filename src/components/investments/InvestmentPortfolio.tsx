@@ -29,7 +29,7 @@ const InvestmentPortfolio = ({ familyId, className }: InvestmentPortfolioProps) 
 
   useEffect(() => {
     loadPortfolio();
-  }, [loadPortfolio]);
+  }, [familyId]);
 
   const loadPortfolio = async () => {
     try {

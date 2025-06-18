@@ -72,6 +72,7 @@ const GoalCard = React.memo<GoalCardProps>(({ goal, onGoalUpdate }) => {
         to: 'transparent',
         direction: 'to-br'
       }}
+      style={{ isolation: 'isolate' }}
     >
       {/* Goal Header */}
       <div className="flex items-start justify-between mb-4">
@@ -208,24 +209,24 @@ const GoalCard = React.memo<GoalCardProps>(({ goal, onGoalUpdate }) => {
 
       {/* Completion Badge */}
       {goal.isCompleted && (
-        <div className="absolute top-4 right-4 bg-green-500 text-white px-2 py-1 rounded-full text-xs font-medium flex items-center space-x-1">
+        <div className="absolute top-4 right-4 z-20 bg-green-500 text-white px-2 py-1 rounded-full text-xs font-medium flex items-center space-x-1 max-w-[calc(100%-2rem)] overflow-hidden shadow-lg border border-green-400/30">
           <span>✓</span>
-          <span>Complete</span>
+          <span className="truncate">Complete</span>
         </div>
       )}
 
       {/* Urgency Indicator */}
       {!goal.isCompleted && daysLeft <= 30 && daysLeft > 0 && (
-        <div className="absolute top-4 right-4 bg-orange-500 text-white px-2 py-1 rounded-full text-xs font-medium flex items-center space-x-1">
-          <Clock className="w-3 h-3" />
-          <span>Soon</span>
+        <div className="absolute top-4 right-4 z-20 bg-orange-500 text-white px-2 py-1 rounded-full text-xs font-medium flex items-center space-x-1 max-w-[calc(100%-2rem)] overflow-hidden shadow-lg border border-orange-400/30">
+          <Clock className="w-3 h-3 flex-shrink-0" />
+          <span className="truncate">Soon</span>
         </div>
       )}
 
       {!goal.isCompleted && daysLeft <= 0 && (
-        <div className="absolute top-4 right-4 bg-red-500 text-white px-2 py-1 rounded-full text-xs font-medium flex items-center space-x-1">
-          <Clock className="w-3 h-3" />
-          <span>Overdue</span>
+        <div className="absolute top-4 right-4 z-20 bg-red-500 text-white px-2 py-1 rounded-full text-xs font-medium flex items-center space-x-1 max-w-[calc(100%-2rem)] overflow-hidden animate-pulse shadow-lg border border-red-400/30">
+          <Clock className="w-3 h-3 flex-shrink-0" />
+          <span className="truncate">Overdue</span>
         </div>
       )}
     </UniversalCard>

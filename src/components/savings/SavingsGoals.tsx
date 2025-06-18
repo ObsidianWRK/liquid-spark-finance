@@ -9,7 +9,11 @@ import { cn } from '@/lib/utils';
 import { useNavigate } from 'react-router-dom';
 import { CardShell } from '@/components/ui/CardShell';
 
-const SavingsGoals = () => {
+interface SavingsGoalsProps {
+  compact?: boolean;
+}
+
+const SavingsGoals = ({ compact = false }: SavingsGoalsProps) => {
   const [goals, setGoals] = useState<SavingsGoal[]>([]);
   const [insights, setInsights] = useState<SavingsInsight[]>([]);
   const [loading, setLoading] = useState(true);
@@ -93,6 +97,91 @@ const SavingsGoals = () => {
               <div className="h-48 bg-white/[0.02] rounded-xl border border-white/[0.08]"></div>
             </div>
           </div>
+        </div>
+      </div>
+    );
+  }
+
+  // Compact mode for dashboard widget
+  if (compact) {
+    return (
+      <div className="bg-black text-white">
+        <div className="p-4 space-y-4">
+          <div className="flex items-center justify-between">
+            <h2 className="text-lg font-bold text-white flex items-center space-x-2">
+              <Target className="w-5 h-5 text-green-400" />
+              <span>Savings Goals</span>
+            </h2>
+            <button
+              onClick={() => navigate('/savings')}
+              className="text-xs text-blue-400 hover:text-blue-300 transition-colors"
+            >
+              View All
+            </button>
+          </div>
+          
+          {loading ? (
+            <div className="space-y-3">
+              {[...Array(2)].map((_, i) => (
+                <div key={i} className="h-16 bg-white/[0.02] rounded-lg border border-white/[0.08] animate-pulse"></div>
+              ))}
+            </div>
+          ) : goals.length === 0 ? (
+            <div className="bg-white/[0.02] rounded-lg border border-white/[0.08] p-4 text-center">
+              <Target className="w-8 h-8 text-gray-400 mx-auto mb-2 opacity-50" />
+              <p className="text-sm text-gray-400 mb-2">No goals yet</p>
+              <button
+                onClick={() => navigate('/savings')}
+                className="text-xs text-blue-400 hover:text-blue-300 transition-colors"
+              >
+                Create your first goal
+              </button>
+            </div>
+          ) : (
+            <div className="space-y-3">
+              {goals.slice(0, 3).map((goal) => {
+                const progress = (goal.currentAmount / goal.targetAmount) * 100;
+                const daysLeft = Math.ceil((new Date(goal.targetDate).getTime() - Date.now()) / (1000 * 60 * 60 * 24));
+                
+                return (
+                  <div 
+                    key={goal.id} 
+                    className="bg-white/[0.02] rounded-lg border border-white/[0.08] p-3 hover:bg-white/[0.03] transition-all relative overflow-hidden"
+                    style={{ isolation: 'isolate' }}
+                  >
+                    <div className="flex items-center justify-between mb-2">
+                      <div className="flex items-center space-x-2">
+                        <span className="text-sm">{goal.icon}</span>
+                        <span className="text-sm font-medium text-white truncate">{goal.name}</span>
+                      </div>
+                      {daysLeft <= 0 && !goal.isCompleted && (
+                        <span className="text-xs px-1.5 py-0.5 rounded-full bg-red-500/20 text-red-400 border border-red-500/30 animate-pulse whitespace-nowrap flex-shrink-0">
+                          Overdue
+                        </span>
+                      )}
+                    </div>
+                    
+                    <div className="space-y-1">
+                      <div className="flex justify-between text-xs">
+                        <span className="text-white">{formatCurrency(goal.currentAmount)}</span>
+                        <span className="text-slate-400">{formatCurrency(goal.targetAmount)}</span>
+                      </div>
+                      <div className="w-full bg-white/[0.1] rounded-full h-1.5">
+                        <div 
+                          className="h-1.5 rounded-full transition-all duration-500"
+                          style={{
+                            width: `${Math.min(progress, 100)}%`,
+                            background: progress >= 100 ? '#22c55e' : progress >= 75 ? '#84cc16' : progress >= 50 ? '#eab308' : '#ef4444'
+                          }}
+                        />
+                      </div>
+                      <div className="text-xs text-slate-400">{progress.toFixed(0)}% complete</div>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          )}
         </div>
       </div>
     );
@@ -251,13 +340,13 @@ const SavingsGoals = () => {
                 </button>
               </div>
             ) : (
-              <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
+              <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-8 w-full">
                 {goals.map((goal) => {
                   const progress = parseFloat(formatProgress(goal.currentAmount, goal.targetAmount));
                   const daysLeft = Math.ceil((new Date(goal.targetDate).getTime() - new Date().getTime()) / (1000 * 60 * 60 * 24));
                   
                   return (
-                    <div key={goal.id} className="bg-white/[0.02] rounded-xl border border-white/[0.08] p-6 hover:bg-white/[0.03] transition-all">
+                    <div key={goal.id} className="bg-white/[0.02] rounded-xl border border-white/[0.08] p-6 hover:bg-white/[0.03] transition-all relative overflow-hidden" style={{ isolation: 'isolate' }}>
                       <div className="flex items-start justify-between mb-4">
                         <div className="flex items-center space-x-3">
                           <div className="text-2xl">{goal.icon}</div>
@@ -320,7 +409,7 @@ const SavingsGoals = () => {
                           <div className="flex items-center space-x-2">
                             <Clock className="w-4 h-4 text-gray-400" />
                             {daysLeft <= 0 ? (
-                              <span className="text-xs px-2 py-1 rounded-full bg-red-500/20 text-red-400 border border-red-500/30 animate-pulse">
+                              <span className="text-xs px-2 py-1 rounded-full bg-red-500/20 text-red-400 border border-red-500/30 animate-pulse whitespace-nowrap">
                                 Overdue
                               </span>
                             ) : (

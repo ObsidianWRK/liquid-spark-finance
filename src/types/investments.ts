@@ -9,7 +9,7 @@ export interface Holding {
   accountId: string;
   quantity: number;
   averageCostPerShare: number;
-  assetType: 'stock' | 'etf' | 'bond' | 'crypto' | 'reit' | 'commodity' | 'cash';
+  assetType: 'stock' | 'etf' | 'bond' | 'crypto' | 'reit' | 'commodity' | 'cash' | 'mutual_fund';
   costBasis: number;
   marketValue: number;
   unrealizedGainLoss: number;
@@ -53,7 +53,7 @@ export interface InvestmentAccount {
 export interface Portfolio {
   id: string;
   familyId: string;
-  name: string;
+  name?: string;
   description?: string;
   totalValue: number;
   totalCostBasis: number;
@@ -61,31 +61,22 @@ export interface Portfolio {
   totalGainLossPercent: number;
   accounts: InvestmentAccount[];
   holdings: Holding[];
-  assetAllocation: AssetAllocation;
-  performanceMetrics: PerformanceMetrics;
+  allocation: AssetAllocation;
+  performance: PerformanceMetrics;
   riskMetrics: RiskMetrics;
-  createdAt: Date;
-  updatedAt: Date;
+  lastUpdated: Date;
 }
 
 export interface PerformanceMetrics {
   totalReturn: number;
-  totalReturnPercent: number;
   annualizedReturn: number;
+  returns: Record<string, number>;
   sharpeRatio: number;
   volatility: number;
   maxDrawdown: number;
-  beta: number;
   alpha: number;
-  periodReturn: {
-    '1d': number;
-    '1w': number;
-    '1m': number;
-    '3m': number;
-    '6m': number;
-    '1y': number;
-    'ytd': number;
-  };
+  beta: number;
+  rSquared: number;
 }
 
 export interface AssetAllocation {
@@ -97,21 +88,22 @@ export interface AssetAllocation {
   crypto: number;
   other: number;
   sectors: Record<string, number>;
-  geographical: {
-    domestic: number;
-    international: number;
-    emerging: number;
+  regions: {
+    US: number;
+    International: number;
+    Emerging: number;
   };
 }
 
 export interface RiskMetrics {
-  overallRisk: 'low' | 'moderate' | 'high';
-  diversificationScore: number;
   concentrationRisk: number;
-  sectorConcentration: Record<string, number>;
-  topHoldingsPercentage: number;
-  volatilityRating: number;
-  recommendations: string[];
+  sectorConcentration: number;
+  geographicRisk: number;
+  currencyRisk: number;
+  correlation: number;
+  var95: number;
+  var99: number;
+  expectedShortfall: number;
 }
 
 export interface PortfolioSnapshot {

@@ -280,7 +280,7 @@ export default function Index() {
                   />
                 </div>
                 <div>
-                  <SavingsGoals />
+                  <SavingsGoals compact={true} />
                 </div>
               </div>
             </div>
@@ -301,10 +301,12 @@ export default function Index() {
             onTabChange={handleViewChange}
           />
           
-          <main className="flex-1 overflow-y-auto pt-24 pb-32">
+          <main className="flex-1 overflow-y-auto pt-24 pb-safe" style={{ paddingBottom: 'max(8rem, env(safe-area-inset-bottom) + 6rem)' }}>
             <div className="min-h-full">
               {renderCurrentView()}
             </div>
+            {/* Extra bottom spacing to ensure content is never clipped */}
+            <div className="h-16"></div>
           </main>
           </div>
       </div>
