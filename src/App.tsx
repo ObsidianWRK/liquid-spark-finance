@@ -7,6 +7,7 @@ import { lazy, Suspense } from 'react';
 import { UniversalCard } from '@/components/ui/UniversalCard';
 import { LiquidGlassProvider } from '@/hooks/useLiquidGlass.tsx';
 import { FeatureFlagProvider } from '@/components/shared/VueniFeatureFlags';
+import GlobalGradientBackground from '@/components/ui/GlobalGradientBackground';
 
 const queryClient = new QueryClient();
 
@@ -49,6 +50,7 @@ const App = () => (
     <FeatureFlagProvider preset="production">
       <LiquidGlassProvider>
         <TooltipProvider>
+          <GlobalGradientBackground />
           <Toaster />
           <Sonner />
           <BrowserRouter>

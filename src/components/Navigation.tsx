@@ -138,12 +138,12 @@ const Navigation = React.memo<NavigationProps>(({ activeTab, onTabChange }) => {
       )}
 
       {/* iOS 26 Style Seamless Navigation Bar */}
-      <div className="fixed bottom-0 left-0 right-0 z-50">
-        <div className="bottom-navigation mx-4 mb-4">
+      <div className="fixed bottom-0 left-0 right-0 z-50 safe-area-bottom">
+        <div className="bottom-navigation">
           <nav aria-label="Main navigation" className="ios26-nav-bubble">
-            <div className="flex items-center max-w-md sm:max-w-2xl md:max-w-4xl lg:max-w-6xl xl:max-w-7xl mx-auto">
+            <div className="flex items-center justify-around w-full">
               {/* Main Navigation Tabs - Seamless touching bubbles */}
-              <div className="flex items-center flex-1">
+              <div className="flex items-center justify-around flex-1">
                 {mainTabs.map((tab, index) => {
                   const IconComponent = tab.icon;
                   const isActive = activeTab === tab.id;

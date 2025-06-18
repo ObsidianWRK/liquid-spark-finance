@@ -136,7 +136,7 @@ export default function Index() {
   // Error display after hooks
   if (error) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-gray-900 via-black to-gray-900 flex items-center justify-center">
+      <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
           <h2 className="text-2xl font-bold text-red-400 mb-4">Error Loading Dashboard</h2>
           <p className="text-white/70">{error}</p>
@@ -154,7 +154,7 @@ export default function Index() {
   // Loading display after hooks  
   if (loading || !isDataValid) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-gray-900 via-black to-gray-900 flex items-center justify-center">
+      <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500 mx-auto mb-4"></div>
           <p className="text-white/70">Loading your financial dashboard...</p>
@@ -277,7 +277,7 @@ export default function Index() {
 
   return (
     <ErrorBoundary>
-      <div className="min-h-screen bg-gradient-to-br from-gray-900 via-black to-gray-900">
+      <div className="min-h-screen">
         <PerformanceMonitor />
         <LiquidGlassTopMenuBar />
         

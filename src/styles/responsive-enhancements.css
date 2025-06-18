@@ -10,6 +10,33 @@
   --glass-border-mobile: rgba(255, 255, 255, 0.1);
   --glass-border-desktop: rgba(255, 255, 255, 0.15);
   
+  /* Theme tokens for consistent design */
+  --nav-height-mobile: 4rem;
+  --nav-height-tablet: 5rem;
+  --nav-height-desktop: 6rem;
+  --nav-height-large: 7rem;
+  
+  --nav-icon-size-mobile: 1.25rem;
+  --nav-icon-size-desktop: 1.75rem;
+  
+  --nav-font-size-mobile: 0.75rem;
+  --nav-font-size-desktop: 0.875rem;
+  
+  --nav-border-radius: 9999px;
+  --card-border-radius: 1.5rem;
+  
+  /* Glass effect tokens */
+  --glass-bg: rgba(255, 255, 255, 0.03);
+  --glass-bg-hover: rgba(255, 255, 255, 0.05);
+  --glass-bg-active: rgba(99, 102, 241, 0.15);
+  --glass-border: rgba(255, 255, 255, 0.06);
+  --glass-blur: blur(24px);
+  
+  /* Animation durations */
+  --duration-fast: 150ms;
+  --duration-normal: 250ms;
+  --duration-slow: 500ms;
+  
   /* Responsive spacing scale */
   --spacing-xs: 0.5rem; /* 8px */
   --spacing-sm: 0.75rem; /* 12px */
@@ -241,23 +268,25 @@ html:not(.dark) [class*="text-muted"] {
    Navigation Bar Responsive Fixes
    ============================================== */
 
-/* Full-width navigation */
+/* Full-width navigation with safe area support */
 .bottom-navigation {
   width: 100% !important;
   left: 0 !important;
   right: 0 !important;
   /* Mobile: Compact size */
   height: 4rem; /* 64px */
-  padding-left: 1rem;
-  padding-right: 1rem;
+  padding-left: 0;
+  padding-right: 0;
+  padding-bottom: env(safe-area-inset-bottom, 0);
 }
 
 /* Tablet: Medium size */
 @media (min-width: 768px) {
   .bottom-navigation {
     height: 5rem; /* 80px */
-    padding-left: 1.5rem;
-    padding-right: 1.5rem;
+    padding-left: 0;
+    padding-right: 0;
+    padding-bottom: env(safe-area-inset-bottom, 0);
   }
 }
 
@@ -265,8 +294,9 @@ html:not(.dark) [class*="text-muted"] {
 @media (min-width: 1024px) {
   .bottom-navigation {
     height: 6rem; /* 96px */
-    padding-left: 2rem;
-    padding-right: 2rem;
+    padding-left: 0;
+    padding-right: 0;
+    padding-bottom: env(safe-area-inset-bottom, 0);
   }
 }
 
@@ -274,36 +304,39 @@ html:not(.dark) [class*="text-muted"] {
 @media (min-width: 1440px) {
   .bottom-navigation {
     height: 7rem; /* 112px */
-    padding-left: 3rem;
-    padding-right: 3rem;
+    padding-left: 0;
+    padding-right: 0;
+    padding-bottom: env(safe-area-inset-bottom, 0);
   }
 }
 
 /* Navigation icon responsive sizing */
 .nav-icon {
   /* Mobile: Small icons */
-  width: 1.25rem; /* 20px */
-  height: 1.25rem; /* 20px */
+  width: var(--nav-icon-size-mobile);
+  height: var(--nav-icon-size-mobile);
+  min-width: 0; /* Prevent flex shrinking */
 }
 
 /* Desktop: Larger, more accessible icons */
 @media (min-width: 1024px) {
   .nav-icon {
-    width: 1.75rem; /* 28px */
-    height: 1.75rem; /* 28px */
+    width: var(--nav-icon-size-desktop);
+    height: var(--nav-icon-size-desktop);
   }
 }
 
 /* Navigation text responsive sizing */
 .nav-text {
   /* Mobile: Small text */
-  font-size: 0.75rem; /* 12px */
+  font-size: var(--nav-font-size-mobile);
+  min-width: 0; /* Prevent flex shrinking */
 }
 
 /* Desktop: Larger, more readable text */
 @media (min-width: 1024px) {
   .nav-text {
-    font-size: 0.875rem; /* 14px */
+    font-size: var(--nav-font-size-desktop);
     font-weight: 500;
   }
 }
@@ -498,33 +531,116 @@ html:not(.dark) [class*="text-muted"] {
 }
 
 /* ==============================================
+   Global Gradient Background
+   ============================================== */
+.global-gradient-background {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(to bottom right, 
+    rgb(17, 24, 39),     /* gray-900 */
+    rgb(0, 0, 0),        /* black */
+    rgb(17, 24, 39)      /* gray-900 */
+  );
+  pointer-events: none;
+  will-change: transform;
+}
+
+/* Dark mode gradient variation */
+@media (prefers-color-scheme: dark) {
+  .global-gradient-background {
+    background: linear-gradient(to bottom right,
+      rgba(17, 24, 39, 0.95),
+      rgba(0, 0, 0, 0.98),
+      rgba(17, 24, 39, 0.95)
+    );
+  }
+  
+  /* Dark mode theme tokens */
+  :root {
+    --glass-bg: rgba(255, 255, 255, 0.02);
+    --glass-bg-hover: rgba(255, 255, 255, 0.04);
+    --glass-bg-active: rgba(99, 102, 241, 0.12);
+    --glass-border: rgba(255, 255, 255, 0.04);
+  }
+}
+
+/* High performance mode */
+@media (prefers-reduced-motion: no-preference) {
+  .global-gradient-background::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(
+      circle at 30% 50%,
+      rgba(99, 102, 241, 0.05),  /* blue accent */
+      transparent 70%
+    );
+    animation: gradientShift 30s ease-in-out infinite;
+  }
+}
+
+@keyframes gradientShift {
+  0%, 100% { transform: translate(0, 0); }
+  50% { transform: translate(-10%, 10%); }
+}
+
+/* ==============================================
+   Safe Area Support
+   ============================================== */
+.safe-area-bottom {
+  padding-bottom: env(safe-area-inset-bottom, 0);
+}
+
+.safe-area-top {
+  padding-top: env(safe-area-inset-top, 0);
+}
+
+.safe-area-left {
+  padding-left: env(safe-area-inset-left, 0);
+}
+
+.safe-area-right {
+  padding-right: env(safe-area-inset-right, 0);
+}
+
+/* ==============================================
    iOS 26 Navigation Bubble Styles
    ============================================== */
 .ios26-nav-bubble {
   display: flex;
-  background: rgba(255, 255, 255, 0.03);
-  backdrop-filter: blur(24px) saturate(180%);
-  -webkit-backdrop-filter: blur(24px) saturate(180%);
-  border: 1px solid rgba(255, 255, 255, 0.06);
-  border-radius: 9999px; /* Fully rounded */
+  justify-content: space-around;
+  align-items: center;
+  background: var(--glass-bg);
+  backdrop-filter: var(--glass-blur) saturate(180%);
+  -webkit-backdrop-filter: var(--glass-blur) saturate(180%);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--nav-border-radius);
   overflow: hidden;
+  width: 100%;
+  transition: all var(--duration-normal) ease;
 }
 
 /* Individual nav item base style */
 .ios26-nav-item {
   position: relative;
-  transition: background 0.25s ease, transform 0.25s ease;
+  transition: background var(--duration-normal) ease, transform var(--duration-normal) ease;
+  flex: 1;
+  min-width: 0; /* Prevent items from growing too wide */
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 /* Active state */
 .ios26-nav-item-active {
-  background: rgba(99, 102, 241, 0.15);
+  background: var(--glass-bg-active);
 }
 
 /* Hover / focus states */
 .ios26-nav-item:hover,
 .ios26-nav-item:focus-visible {
-  background: rgba(255, 255, 255, 0.05);
+  background: var(--glass-bg-hover);
   transform: translateY(-2px);
 }
 

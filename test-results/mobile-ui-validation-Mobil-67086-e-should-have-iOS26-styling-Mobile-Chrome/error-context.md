@@ -1,0 +1,128 @@
+# Page snapshot
+
+```yaml
+- region "Notifications (F8)":
+  - list
+- button "Performance Monitor":
+  - img
+- text: Vueni
+- button "Open menu":
+  - img
+- button "Notifications":
+  - img
+- switch "Switch to light mode" [checked]
+- text: Switch to light mode
+- button "Profile":
+  - img
+- navigation "Main navigation":
+  - button "Navigate to Home": Home
+  - button "Navigate to Accounts": Accounts
+  - button "Navigate to Transactions": Transactions
+  - button "Navigate to Insights": Insights
+  - button "More navigation options": More
+- button "Add new transaction"
+- main:
+  - heading "Checking" [level=3]
+  - paragraph: Main Account
+  - paragraph: $12,450.00
+  - paragraph: "Available: $11,200.00"
+  - text: Active
+  - img
+  - heading "Recent Activity" [level=4]
+  - paragraph: Checking
+  - paragraph: Main Account
+  - button "Hide account balance" [pressed]
+  - heading "$12,450.00" [level=1]
+  - paragraph: "Available: $11,200.00"
+  - group "Account performance": 12.5% vs last month
+  - heading "***Credit Score***" [level=3]
+  - text: Updated 6/18/2025
+  - img
+  - text: "680"
+  - heading "Good" [level=3]
+  - img
+  - paragraph: You have good credit with opportunities to improve.
+  - text: +5% vs last month
+  - heading "***Key Factors***" [level=4]
+  - img
+  - text: Payment History 35%
+  - img
+  - text: Credit Utilization 30%
+  - img
+  - text: Length of Credit History 15% ***View Full Credit Report***
+  - heading "Recent Transactions" [level=3]
+  - text: 10 of 10 6/14/2025
+  - button "W Whole Foods Market Groceries Jun 14 -$127.43"
+  - button "A Apple Store Electronics Jun 14 -$899.00"
+  - button "A Amazon Shopping Jun 14 -$156.78"
+  - text: 6/13/2025
+  - button "S Salary Deposit Income Jun 13 +$3,250.00"
+  - button "B Best Buy Electronics Jun 13 -$234.99"
+  - button "S Starbucks Coffee Jun 13 -$6.85"
+  - text: 6/12/2025
+  - button "T Target Shopping Jun 12 -$89.42"
+  - button "G Gas Station Transportation Jun 12 -$45.20"
+  - text: 6/11/2025
+  - button "N Netflix Entertainment Jun 11 -$15.99"
+  - button "U Uber Transportation Jun 11 -$23.45"
+  - button "Dashboard":
+    - img
+    - text: Dashboard
+  - heading "Savings Goals" [level=1]:
+    - img
+    - text: Savings Goals
+  - paragraph: Track your progress and build wealth systematically
+  - button "New Goal":
+    - img
+    - text: New Goal
+  - img
+  - heading "Total Saved" [level=3]
+  - paragraph: Across all goals
+  - text: $15,500 48.4% of target
+  - img
+  - heading "Total Targets" [level=3]
+  - paragraph: Goal amounts
+  - text: $32,000 3 active goals
+  - img
+  - heading "Completed" [level=3]
+  - paragraph: Goals achieved
+  - text: 0 0% success rate
+  - img
+  - heading "Overall Progress" [level=3]
+  - paragraph: Average completion
+  - text: 48%
+  - button "My Goals":
+    - img
+    - text: My Goals
+  - button "Insights":
+    - img
+    - text: Insights
+  - text: 🛡️
+  - heading "Emergency Fund" [level=3]
+  - paragraph: Emergency Fund
+  - button:
+    - img
+  - text: Progress 56.7% $8,500 of $15,000 $6,500 left
+  - img
+  - text: 12/30/2024
+  - img
+  - text: Overdue ✈️
+  - heading "Vacation to Japan" [level=3]
+  - paragraph: Vacation
+  - button:
+    - img
+  - text: Progress 56% $2,800 of $5,000 $2,200 left
+  - img
+  - text: 9/14/2024
+  - img
+  - text: Overdue 🚗
+  - heading "New Car" [level=3]
+  - paragraph: Car
+  - button:
+    - img
+  - text: Progress 35% $4,200 of $12,000 $7,800 left
+  - img
+  - text: 2/28/2025
+  - img
+  - text: Overdue
+```
