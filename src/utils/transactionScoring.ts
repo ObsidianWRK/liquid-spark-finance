@@ -1,17 +1,17 @@
+// Transaction scoring utilities
+export interface TransactionData {
+  id: string;
+  merchant: string;
+  category: { name: string; color: string };
+  amount: number;
+  date: string;
+  status: 'completed' | 'pending' | 'failed';
+}
 
 export interface TransactionScores {
   financial: number;  // 0-100
   health: number;     // 0-100
   eco: number;        // 0-100
-}
-
-interface TransactionData {
-  merchant: string;
-  amount: number;
-  category: {
-    name: string;
-  };
-  description?: string;
 }
 
 export function calculateTransactionScores(transaction: TransactionData): TransactionScores {
@@ -20,39 +20,39 @@ export function calculateTransactionScores(transaction: TransactionData): Transa
   const ecoScore = calculateEcoScore(transaction);
   
   return { 
-    financial: financialScore, 
-    health: healthScore, 
-    eco: ecoScore 
+    financial: Math.round(financialScore), 
+    health: Math.round(healthScore), 
+    eco: Math.round(ecoScore) 
   };
 }
 
 function calculateFinancialScore(transaction: TransactionData): number {
-  const { category, amount } = transaction;
+  const { merchant, category, amount } = transaction;
   
-  let score = 50;
+  let score = 50; // Base score
   
-  // Category impact
-  const categoryScores: Record<string, number> = {
-    'Investment': 90,
-    'Savings': 85,
-    'Income': 95,
-    'Healthcare': 75,
-    'Utilities': 70,
-    'Groceries': 65,
-    'Transportation': 50,
-    'Entertainment': 30,
-    'Dining': 35,
-    'Shopping': 25,
-    'Coffee': 20
-  };
+  // Essential spending gets higher scores
+  const essentialCategories = ['groceries', 'utilities', 'healthcare', 'insurance', 'gas'];
+  if (essentialCategories.some(cat => category.name.toLowerCase().includes(cat))) {
+    score += 20;
+  }
   
-  score = categoryScores[category.name] || 50;
+  // Discretionary spending gets lower scores
+  const discretionaryCategories = ['entertainment', 'dining', 'shopping', 'travel'];
+  if (discretionaryCategories.some(cat => category.name.toLowerCase().includes(cat))) {
+    score -= 10;
+  }
   
-  // Amount impact (higher amounts = lower score for discretionary spending)
-  const discretionaryCategories = ['Entertainment', 'Dining', 'Shopping', 'Coffee'];
-  if (discretionaryCategories.includes(category.name)) {
-    if (Math.abs(amount) > 100) score -= 20;
-    else if (Math.abs(amount) > 50) score -= 10;
+  // Amount factor (smaller amounts are better for discretionary)
+  const absAmount = Math.abs(amount);
+  if (absAmount > 500) score -= 20;
+  else if (absAmount > 200) score -= 10;
+  else if (absAmount > 100) score -= 5;
+  
+  // Subscription services (good for budgeting)
+  const subscriptionKeywords = ['netflix', 'spotify', 'gym', 'insurance', 'phone'];
+  if (subscriptionKeywords.some(keyword => merchant.toLowerCase().includes(keyword))) {
+    score += 15;
   }
   
   return Math.max(0, Math.min(100, score));

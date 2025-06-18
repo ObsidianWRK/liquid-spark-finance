@@ -125,6 +125,7 @@ const OptimizedProfile = React.memo(() => {
   }, [updateState]);
 
   const handleBackToDashboard = useCallback(() => {
+    console.log('🏠 Back to Dashboard button clicked!'); // Debug log
     navigate('/', { replace: true });
   }, [navigate]);
 
@@ -146,6 +147,7 @@ const OptimizedProfile = React.memo(() => {
       // Escape key or Ctrl+H to go back to dashboard
       if (event.key === 'Escape' || (event.ctrlKey && event.key === 'h')) {
         event.preventDefault();
+        console.log('⌨️ Keyboard shortcut triggered for back to dashboard');
         handleBackToDashboard();
       }
     };
@@ -163,9 +165,10 @@ const OptimizedProfile = React.memo(() => {
           <div className="flex items-center mb-4">
             <button
               onClick={handleBackToDashboard}
-              className="flex items-center space-x-2 text-white/70 hover:text-white transition-colors duration-200 group"
+              className="flex items-center space-x-2 text-white/70 hover:text-white transition-all duration-200 group cursor-pointer bg-transparent border-none outline-none focus:outline-none focus:ring-2 focus:ring-blue-500/50 rounded-lg p-2 -m-2"
               aria-label="Back to Dashboard (Press Escape or Ctrl+H)"
               title="Back to Dashboard (Press Escape or Ctrl+H)"
+              type="button"
             >
               <ArrowLeft className="w-5 h-5 group-hover:translate-x-[-2px] transition-transform duration-200" />
               <span className="font-medium">Back to Dashboard</span>

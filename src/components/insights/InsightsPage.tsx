@@ -57,31 +57,32 @@ const InsightsPage = ({ transactions, accounts }: InsightsPageProps) => {
     }));
   }, []);
 
-  // Calculate financial health metrics
+  // Calculate financial metrics
   const metrics = useMemo(() => {
+    const currentMonth = new Date().getMonth();
+    
     const monthlyIncome = transactions
-      .filter(t => t.amount > 0 && new Date(t.date).getMonth() === new Date().getMonth())
+      .filter(t => t.amount > 0 && new Date(t.date).getMonth() === currentMonth)
       .reduce((sum, t) => sum + t.amount, 0);
 
     const monthlySpending = Math.abs(transactions
-      .filter(t => t.amount < 0 && new Date(t.date).getMonth() === new Date().getMonth())
+      .filter(t => t.amount < 0 && new Date(t.date).getMonth() === currentMonth)
       .reduce((sum, t) => sum + t.amount, 0));
 
     const totalBalance = accounts.reduce((sum, acc) => sum + acc.balance, 0);
-    const monthlyExpenses = monthlySpending;
     
-    const spendingRatio = monthlyIncome > 0 ? (monthlySpending / monthlyIncome) * 100 : 0;
-    const emergencyFundMonths = monthlyExpenses > 0 ? totalBalance / monthlyExpenses : 0;
-    const savingsRate = monthlyIncome > 0 ? ((monthlyIncome - monthlySpending) / monthlyIncome) * 100 : 0;
+    const spendingRatio = monthlyIncome > 0 ? Math.round((monthlySpending / monthlyIncome) * 100) : 0;
+    const emergencyFundMonths = monthlySpending > 0 ? Math.round((totalBalance / monthlySpending) * 10) / 10 : 0;
+    const savingsRate = monthlyIncome > 0 ? Math.round(((monthlyIncome - monthlySpending) / monthlyIncome) * 100) : 0;
     
     const creditCardDebt = Math.abs(accounts
       .filter(acc => acc.type === 'Credit Card' && acc.balance < 0)
       .reduce((sum, acc) => sum + acc.balance, 0));
-    const debtToIncomeRatio = monthlyIncome > 0 ? (creditCardDebt / (monthlyIncome * 12)) * 100 : 0;
+    const debtToIncomeRatio = monthlyIncome > 0 ? Math.round((creditCardDebt / (monthlyIncome * 12)) * 100) : 0;
     
     const completedTransactions = transactions.filter(t => t.status === 'completed').length;
     const totalTransactions = transactions.length;
-    const billPaymentScore = totalTransactions > 0 ? (completedTransactions / totalTransactions) * 100 : 100;
+    const billPaymentScore = totalTransactions > 0 ? Math.round((completedTransactions / totalTransactions) * 100) : 100;
     
     return {
       spendingRatio,
@@ -89,13 +90,13 @@ const InsightsPage = ({ transactions, accounts }: InsightsPageProps) => {
       savingsRate,
       debtToIncomeRatio,
       billPaymentScore,
-      monthlyIncome,
-      monthlySpending,
-      totalBalance
+      monthlyIncome: Math.round(monthlyIncome),
+      monthlySpending: Math.round(monthlySpending),
+      totalBalance: Math.round(totalBalance)
     };
   }, [transactions, accounts]);
 
-  // Calculate overall health score
+  // Calculate overall health score with proper rounding
   const healthScore = useMemo(() => {
     const weights = {
       spendingRatio: 0.25,
@@ -122,10 +123,10 @@ const InsightsPage = ({ transactions, accounts }: InsightsPageProps) => {
       investmentScore * weights.investments
     );
 
-    return Math.round(totalScore);
+    return Math.round(totalScore); // Ensure rounded financial score
   }, [metrics]);
 
-  // Get health and eco data
+  // Get health and eco data with proper rounding
   const healthData = useMemo(() => mockHealthEcoService.getHealthScore(transactions), [transactions]);
   const ecoData = useMemo(() => mockHealthEcoService.getEcoScore(transactions), [transactions]);
 

@@ -44,11 +44,13 @@ export const mockHealthEcoService = {
     if (fastFoodSpending < 50) baseScore += 10;
     if (healthcareSpending > 50) baseScore += 10;
 
+    const finalHealthScore = Math.min(100, Math.max(0, baseScore));
+
     return {
-      score: Math.min(100, Math.max(0, baseScore)),
+      score: Math.round(finalHealthScore),
       trends: {
-        exercise: Math.min(100, (fitnessSpending / 10) + 40),
-        nutrition: Math.max(0, 80 - (fastFoodSpending / 5)),
+        exercise: Math.round(Math.min(100, (fitnessSpending / 10) + 40)),
+        nutrition: Math.round(Math.max(0, 80 - (fastFoodSpending / 5))),
         sleep: 75,
         stress: 65
       }
@@ -74,11 +76,11 @@ export const mockHealthEcoService = {
     const treesEquivalent = Math.round(co2Saved / 20);
 
     return {
-      score: finalScore,
+      score: Math.round(finalScore),
       metrics: {
-        carbonFootprint: Math.max(0, 100 - finalScore),
-        sustainableSpending: Math.min(100, (sustainableSpending / 500) * 100),
-        greenTransport: Math.max(0, 100 - (transportSpending / 2)),
+        carbonFootprint: Math.round(Math.max(0, 100 - finalScore)),
+        sustainableSpending: Math.round(Math.min(100, (sustainableSpending / 500) * 100)),
+        greenTransport: Math.round(Math.max(0, 100 - (transportSpending / 2))),
         renewableEnergy: 85
       },
       monthlyImpact: {
