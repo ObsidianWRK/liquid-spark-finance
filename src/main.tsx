@@ -1,3 +1,17 @@
+// Process polyfill for browser compatibility
+if (typeof window !== "undefined" && typeof (window as any).process === "undefined") {
+  (window as any).process = {
+    env: {},
+    browser: true,
+    version: "",
+    platform: "browser",
+    nextTick: (fn: Function) => setTimeout(fn, 0)
+  };
+}
+if (typeof window !== "undefined" && typeof (window as any).global === "undefined") {
+  (window as any).global = window;
+}
+
 import { createRoot } from 'react-dom/client'
 import App from './App.tsx'
 import './index.css'

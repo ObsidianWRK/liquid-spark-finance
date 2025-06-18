@@ -1,4 +1,5 @@
 import React, { useState, useCallback, useMemo } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { UserPreferences } from '@/types/shared';
 import { UniversalCard } from '@/components/ui/UniversalCard';
 import { shouldComponentUpdate } from '@/utils/optimizedHelpers';
@@ -8,7 +9,9 @@ import {
   Bell, 
   Shield, 
   Palette,
-  ChevronRight 
+  ChevronRight,
+  ArrowLeft,
+  Home
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
@@ -37,6 +40,8 @@ interface OptimizedProfileState {
 }
 
 const OptimizedProfile = React.memo(() => {
+  const navigate = useNavigate();
+
   // Consolidated state (was 40+ separate useState calls)
   const [state, setState] = useState<OptimizedProfileState>({
     activeSection: 'profile',
@@ -119,25 +124,92 @@ const OptimizedProfile = React.memo(() => {
     updateState({ activeSection: sectionId });
   }, [updateState]);
 
+  const handleBackToDashboard = useCallback(() => {
+    navigate('/', { replace: true });
+  }, [navigate]);
+
   // Memoized active section component
   const ActiveSectionComponent = useMemo(() => {
     const section = sections.find(s => s.id === state.activeSection);
     return section?.component || ProfileSection;
   }, [sections, state.activeSection]);
 
+  // Get current section label for breadcrumb
+  const currentSectionLabel = useMemo(() => {
+    const section = sections.find(s => s.id === state.activeSection);
+    return section?.label || 'Profile';
+  }, [sections, state.activeSection]);
+
+  // Add keyboard shortcuts effect
+  React.useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      // Escape key or Ctrl+H to go back to dashboard
+      if (event.key === 'Escape' || (event.ctrlKey && event.key === 'h')) {
+        event.preventDefault();
+        handleBackToDashboard();
+      }
+    };
+
+    document.addEventListener('keydown', handleKeyDown);
+    return () => document.removeEventListener('keydown', handleKeyDown);
+  }, [handleBackToDashboard]);
+
   return (
     <div className="min-h-screen bg-black text-white p-4 md:p-6">
       <div className="max-w-6xl mx-auto">
-        {/* Header */}
+        {/* Header with Navigation */}
         <div className="mb-8">
+          {/* Back to Dashboard Button */}
+          <div className="flex items-center mb-4">
+            <button
+              onClick={handleBackToDashboard}
+              className="flex items-center space-x-2 text-white/70 hover:text-white transition-colors duration-200 group"
+              aria-label="Back to Dashboard (Press Escape or Ctrl+H)"
+              title="Back to Dashboard (Press Escape or Ctrl+H)"
+            >
+              <ArrowLeft className="w-5 h-5 group-hover:translate-x-[-2px] transition-transform duration-200" />
+              <span className="font-medium">Back to Dashboard</span>
+            </button>
+          </div>
+
+          {/* Title and Breadcrumb */}
+          <div className="flex items-center space-x-2 mb-2">
+            <Home className="w-5 h-5 text-white/40" />
+            <span className="text-white/40">/</span>
+            <span className="text-white/60">Profile</span>
+            {state.activeSection !== 'profile' && (
+              <>
+                <span className="text-white/40">/</span>
+                <span className="text-white">{currentSectionLabel}</span>
+              </>
+            )}
+          </div>
+          
           <h1 className="text-3xl font-bold text-white mb-2">Profile Settings</h1>
           <p className="text-white/60">Manage your account preferences and privacy settings</p>
+          
+          {/* Keyboard shortcut hint */}
+          <div className="mt-2 text-xs text-white/40">
+            Press <kbd className="px-1 py-0.5 bg-white/10 rounded text-white/60">Esc</kbd> or{' '}
+            <kbd className="px-1 py-0.5 bg-white/10 rounded text-white/60">Ctrl+H</kbd> to return to dashboard
+          </div>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
           {/* Sidebar Navigation */}
           <div className="lg:col-span-1">
             <UniversalCard variant="glass" className="p-4">
+              {/* Quick Return to Dashboard */}
+              <div className="mb-4 pb-4 border-b border-white/10">
+                <button
+                  onClick={handleBackToDashboard}
+                  className="w-full flex items-center space-x-3 p-3 rounded-lg text-white/70 hover:text-white hover:bg-white/5 transition-colors"
+                >
+                  <Home className="w-5 h-5" />
+                  <span className="font-medium">Dashboard</span>
+                </button>
+              </div>
+
               <nav className="space-y-2">
                 {sections.map((section) => (
                   <SectionNavItem
@@ -158,6 +230,7 @@ const OptimizedProfile = React.memo(() => {
               updateProfile={updateProfile}
               updatePreferences={updatePreferences}
               updateState={updateState}
+              onBackToDashboard={handleBackToDashboard}
             />
           </div>
         </div>
@@ -201,9 +274,18 @@ const SectionNavItem = React.memo<{
 SectionNavItem.displayName = 'SectionNavItem';
 
 // Optimized Section Components (consolidated from multiple large components)
-const ProfileSection = React.memo<SectionProps>(({ state, updateProfile }) => (
+const ProfileSection = React.memo<SectionProps>(({ state, updateProfile, updateState, onBackToDashboard }) => (
   <UniversalCard variant="glass" className="p-6">
-    <h2 className="text-xl font-semibold text-white mb-6">Profile Information</h2>
+    <div className="flex items-center justify-between mb-6">
+      <h2 className="text-xl font-semibold text-white">Profile Information</h2>
+      <button
+        onClick={onBackToDashboard}
+        className="flex items-center space-x-2 px-3 py-2 text-sm text-white/70 hover:text-white hover:bg-white/10 rounded-lg transition-colors"
+      >
+        <Home className="w-4 h-4" />
+        <span>Dashboard</span>
+      </button>
+    </div>
     
     <div className="space-y-6">
       <div className="flex items-center space-x-4">
@@ -220,34 +302,52 @@ const ProfileSection = React.memo<SectionProps>(({ state, updateProfile }) => (
         <OptimizedFormField
           label="Full Name"
           value={state.profile.name}
-          onChange={(value) => updateProfile({ name: value })}
+          onChange={(value) => updateProfile?.({ name: value })}
         />
         <OptimizedFormField
           label="Email"
           value={state.profile.email}
-          onChange={(value) => updateProfile({ email: value })}
+          onChange={(value) => updateProfile?.({ email: value })}
         />
       </div>
       
       <OptimizedFormField
         label="Bio"
         value={state.profile.bio}
-        onChange={(value) => updateProfile({ bio: value })}
+        onChange={(value) => updateProfile?.({ bio: value })}
         multiline
       />
+      
+      <div className="flex justify-end">
+        <button 
+          className="px-6 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg transition-colors"
+          onClick={() => updateState?.({ isEditing: false })}
+        >
+          Save Changes
+        </button>
+      </div>
     </div>
   </UniversalCard>
 ));
 
-const PreferencesSection = React.memo<SectionProps>(({ state, updatePreferences }) => (
+const PreferencesSection = React.memo<SectionProps>(({ state, updatePreferences, onBackToDashboard }) => (
   <UniversalCard variant="glass" className="p-6">
-    <h2 className="text-xl font-semibold text-white mb-6">Preferences</h2>
+    <div className="flex items-center justify-between mb-6">
+      <h2 className="text-xl font-semibold text-white">Preferences</h2>
+      <button
+        onClick={onBackToDashboard}
+        className="flex items-center space-x-2 px-3 py-2 text-sm text-white/70 hover:text-white hover:bg-white/10 rounded-lg transition-colors"
+      >
+        <Home className="w-4 h-4" />
+        <span>Dashboard</span>
+      </button>
+    </div>
     
     <div className="space-y-6">
       <OptimizedSelectField
         label="Theme"
         value={state.preferences.theme}
-        onChange={(value) => updatePreferences({ theme: value as any })}
+        onChange={(value) => updatePreferences?.({ theme: value as any })}
         options={[
           { value: 'light', label: 'Light' },
           { value: 'dark', label: 'Dark' },
@@ -258,7 +358,7 @@ const PreferencesSection = React.memo<SectionProps>(({ state, updatePreferences 
       <OptimizedSelectField
         label="Currency"
         value={state.preferences.currency}
-        onChange={(value) => updatePreferences({ currency: value })}
+        onChange={(value) => updatePreferences?.({ currency: value })}
         options={[
           { value: 'USD', label: 'USD ($)' },
           { value: 'EUR', label: 'EUR (€)' },
@@ -269,16 +369,25 @@ const PreferencesSection = React.memo<SectionProps>(({ state, updatePreferences 
   </UniversalCard>
 ));
 
-const NotificationsSection = React.memo<SectionProps>(({ state, updatePreferences }) => (
+const NotificationsSection = React.memo<SectionProps>(({ state, updatePreferences, onBackToDashboard }) => (
   <UniversalCard variant="glass" className="p-6">
-    <h2 className="text-xl font-semibold text-white mb-6">Notifications</h2>
+    <div className="flex items-center justify-between mb-6">
+      <h2 className="text-xl font-semibold text-white">Notifications</h2>
+      <button
+        onClick={onBackToDashboard}
+        className="flex items-center space-x-2 px-3 py-2 text-sm text-white/70 hover:text-white hover:bg-white/10 rounded-lg transition-colors"
+      >
+        <Home className="w-4 h-4" />
+        <span>Dashboard</span>
+      </button>
+    </div>
     
     <div className="space-y-4">
       <OptimizedToggleField
         label="Email Notifications"
         description="Receive updates via email"
         checked={state.preferences.notifications.email}
-        onChange={(checked) => updatePreferences({
+        onChange={(checked) => updatePreferences?.({
           notifications: { ...state.preferences.notifications, email: checked }
         })}
       />
@@ -287,7 +396,7 @@ const NotificationsSection = React.memo<SectionProps>(({ state, updatePreference
         label="Push Notifications"
         description="Receive push notifications on your device"
         checked={state.preferences.notifications.push}
-        onChange={(checked) => updatePreferences({
+        onChange={(checked) => updatePreferences?.({
           notifications: { ...state.preferences.notifications, push: checked }
         })}
       />
@@ -295,16 +404,25 @@ const NotificationsSection = React.memo<SectionProps>(({ state, updatePreference
   </UniversalCard>
 ));
 
-const PrivacySection = React.memo<SectionProps>(({ state, updatePreferences }) => (
+const PrivacySection = React.memo<SectionProps>(({ state, updatePreferences, onBackToDashboard }) => (
   <UniversalCard variant="glass" className="p-6">
-    <h2 className="text-xl font-semibold text-white mb-6">Privacy & Security</h2>
+    <div className="flex items-center justify-between mb-6">
+      <h2 className="text-xl font-semibold text-white">Privacy & Security</h2>
+      <button
+        onClick={onBackToDashboard}
+        className="flex items-center space-x-2 px-3 py-2 text-sm text-white/70 hover:text-white hover:bg-white/10 rounded-lg transition-colors"
+      >
+        <Home className="w-4 h-4" />
+        <span>Dashboard</span>
+      </button>
+    </div>
     
     <div className="space-y-4">
       <OptimizedToggleField
         label="Share Data"
         description="Allow sharing anonymized data for insights"
         checked={state.preferences.privacy.shareData}
-        onChange={(checked) => updatePreferences({
+        onChange={(checked) => updatePreferences?.({
           privacy: { ...state.preferences.privacy, shareData: checked }
         })}
       />
@@ -313,7 +431,7 @@ const PrivacySection = React.memo<SectionProps>(({ state, updatePreferences }) =
         label="Analytics"
         description="Help improve the app with usage analytics"
         checked={state.preferences.privacy.analytics}
-        onChange={(checked) => updatePreferences({
+        onChange={(checked) => updatePreferences?.({
           privacy: { ...state.preferences.privacy, analytics: checked }
         })}
       />
@@ -321,9 +439,18 @@ const PrivacySection = React.memo<SectionProps>(({ state, updatePreferences }) =
   </UniversalCard>
 ));
 
-const AppearanceSection = React.memo<SectionProps>(({ state, updatePreferences }) => (
+const AppearanceSection = React.memo<SectionProps>(({ state, updatePreferences, onBackToDashboard }) => (
   <UniversalCard variant="glass" className="p-6">
-    <h2 className="text-xl font-semibold text-white mb-6">Appearance</h2>
+    <div className="flex items-center justify-between mb-6">
+      <h2 className="text-xl font-semibold text-white">Appearance</h2>
+      <button
+        onClick={onBackToDashboard}
+        className="flex items-center space-x-2 px-3 py-2 text-sm text-white/70 hover:text-white hover:bg-white/10 rounded-lg transition-colors"
+      >
+        <Home className="w-4 h-4" />
+        <span>Dashboard</span>
+      </button>
+    </div>
     
     <div className="space-y-6">
       <div>
@@ -332,7 +459,7 @@ const AppearanceSection = React.memo<SectionProps>(({ state, updatePreferences }
           {(['light', 'dark', 'system'] as const).map((theme) => (
             <button
               key={theme}
-              onClick={() => updatePreferences({ theme })}
+              onClick={() => updatePreferences?.({ theme })}
               className={cn(
                 'p-4 rounded-lg border transition-colors',
                 state.preferences.theme === theme
@@ -357,6 +484,7 @@ interface SectionProps {
   updateProfile?: (updates: Partial<OptimizedProfileState['profile']>) => void;
   updatePreferences?: (updates: Partial<UserPreferences>) => void;
   updateState?: (updates: Partial<OptimizedProfileState>) => void;
+  onBackToDashboard: () => void;
 }
 
 const OptimizedFormField = React.memo<{

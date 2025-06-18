@@ -50,13 +50,14 @@ export default defineConfig(({ mode }) => ({
   // Server config removed for Vercel compatibility
   // Vercel handles hosting automatically
   define: {
-    'process.env.NODE_ENV': JSON.stringify(mode === 'production' ? 'production' : 'development'),
+    'process.env.NODE_ENV': JSON.stringify(mode === 'production' ? 'production' : 'development'),,
     // Security flags for production
     '__VUENI_SECURITY_ENABLED__': mode === 'production',
     '__VUENI_DEBUG_ENABLED__': mode === 'development'
   },
   // Security optimizations
   server: {
+    https: mode === 'development' ? false : true,
     headers: mode === 'production' ? {
       'Strict-Transport-Security': 'max-age=31536000; includeSubDomains; preload',
       'X-Content-Type-Options': 'nosniff',
