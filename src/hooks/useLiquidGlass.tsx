@@ -118,7 +118,7 @@ export const LiquidGlassProvider = ({ children }: { children: ReactNode }) => {
   const [settings, setSettings] = useState<LiquidGlassSettings>(() => {
     // Load settings from secure storage if available
     try {
-      const saved = secureStorage.getItem('liquidGlassSettings');
+      const saved = secureStorage.getItem('vueni:liquidGlassSettings');
       return saved ? { ...defaultSettings, ...saved } : defaultSettings;
     } catch {
       return defaultSettings;
@@ -136,7 +136,7 @@ export const LiquidGlassProvider = ({ children }: { children: ReactNode }) => {
     
     // Save to secure storage
     try {
-      secureStorage.setItem('liquidGlassSettings', newSettings);
+      secureStorage.setItem('vueni:liquidGlassSettings', newSettings);
     } catch {
       // Ignore storage errors
     }
@@ -145,7 +145,7 @@ export const LiquidGlassProvider = ({ children }: { children: ReactNode }) => {
   const resetSettings = () => {
     setSettings(defaultSettings);
     try {
-      secureStorage.removeItem('liquidGlassSettings');
+      secureStorage.removeItem('vueni:liquidGlassSettings');
     } catch {
       // Ignore storage errors
     }

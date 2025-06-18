@@ -46,6 +46,10 @@ const CreditScoreCard = React.memo(() => {
     return (range: string) => descriptions[range as keyof typeof descriptions] || '';
   }, []);
 
+  const handleViewFullReport = useCallback(() => {
+    navigate('/credit-score');
+  }, [navigate]);
+
   if (loading) {
     return (
       <div className="liquid-glass-card p-6 animate-pulse">
@@ -120,16 +124,9 @@ const CreditScoreCard = React.memo(() => {
       {/* Optimized Action Button */}
       <UniversalCard
         variant="glass"
-        className="cursor-pointer"
+        className="cursor-pointer hover:scale-105 transition-transform"
         interactive
-        hover={{ scale: true, glow: true }}
-        onClick={useCallback(() => navigate('/credit-score'), [navigate])}
-        gradient={{
-          from: 'blue-500/20',
-          to: 'cyan-500/20',
-          direction: 'to-r'
-        }}
-        border={{ style: 'glow', color: 'border-blue-500/30' }}
+        onClick={handleViewFullReport}
       >
         <div className="py-3 text-center">
           <span className="text-white font-bold text-lg tracking-wide">
