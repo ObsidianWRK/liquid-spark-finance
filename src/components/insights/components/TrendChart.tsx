@@ -1,7 +1,7 @@
 import React from 'react';
 
 interface TrendChartProps {
-  data: any[];
+  data: { date: string; value: number }[];
   timeframe: string;
   onTimeframeChange: (timeframe: string) => void;
 }

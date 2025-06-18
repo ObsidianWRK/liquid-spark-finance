@@ -13,7 +13,7 @@ import { VueniSecurityMonitoring } from '@/utils/monitoring';
 interface SecureCalculatorWrapperProps {
   calculatorName: string;
   children: React.ReactNode;
-  onSecurityEvent?: (event: string, details: any) => void;
+  onSecurityEvent?: (event: string, details: unknown) => void;
 }
 
 interface SecurityState {
@@ -73,7 +73,7 @@ export function SecureCalculatorWrapper({
   }, [calculatorName, onSecurityEvent]);
 
   // Handle security violations
-  const handleSecurityViolation = (violationType: string, details: any) => {
+  const handleSecurityViolation = (violationType: string, details: unknown) => {
     setSecurityState(prev => {
       const newConsecutiveErrors = prev.consecutiveErrors + 1;
       let newSecurityLevel = prev.securityLevel;
@@ -115,7 +115,7 @@ export function SecureCalculatorWrapper({
   // Provide security context to child components
   const securityContext = {
     sanitize: security.sanitize,
-    validateInput: (type: string, value: any) => {
+    validateInput: (type: string, value: unknown) => {
       try {
         switch (type) {
           case 'amount':

@@ -3,9 +3,9 @@ import { Transaction, Account, InsightMetric } from '@/types/shared';
 // Optimized utility functions with memoization and performance improvements
 // Consolidates helper functions scattered across multiple files
 
-export const memoize = <T extends (...args: any[]) => any>(fn: T): T => {
+export const memoize = <T extends (...args: unknown[]) => unknown>(fn: T): T => {
   const cache = new Map();
-  return ((...args: any[]) => {
+  return ((...args: unknown[]) => {
     const key = JSON.stringify(args);
     if (cache.has(key)) {
       return cache.get(key);
@@ -37,7 +37,7 @@ export const formatDate = memoize((date: string, format: 'short' | 'long' | 'rel
         month: 'long',
         day: 'numeric'
       });
-    case 'relative':
+    case 'relative': {
       const now = new Date();
       const diffTime = Math.abs(now.getTime() - dateObj.getTime());
       const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
@@ -46,6 +46,7 @@ export const formatDate = memoize((date: string, format: 'short' | 'long' | 'rel
       if (diffDays === 1) return 'Yesterday';
       if (diffDays < 7) return `${diffDays} days ago`;
       return dateObj.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+    }
     default:
       return dateObj.toLocaleDateString('en-US', {
         month: 'short',
@@ -223,7 +224,7 @@ export const getCategoryColor = memoize((category: string) => {
 });
 
 // Performance monitoring utilities
-export const debounce = <T extends (...args: any[]) => any>(
+export const debounce = <T extends (...args: unknown[]) => unknown>(
   func: T,
   delay: number
 ): (...args: Parameters<T>) => void => {
@@ -235,7 +236,7 @@ export const debounce = <T extends (...args: any[]) => any>(
   };
 };
 
-export const throttle = <T extends (...args: any[]) => any>(
+export const throttle = <T extends (...args: unknown[]) => unknown>(
   func: T,
   delay: number
 ): (...args: Parameters<T>) => void => {
@@ -251,7 +252,7 @@ export const throttle = <T extends (...args: any[]) => any>(
 };
 
 // React performance utilities
-export const shallowEqual = (obj1: any, obj2: any): boolean => {
+export const shallowEqual = (obj1: unknown, obj2: unknown): boolean => {
   const keys1 = Object.keys(obj1);
   const keys2 = Object.keys(obj2);
   
@@ -259,7 +260,7 @@ export const shallowEqual = (obj1: any, obj2: any): boolean => {
     return false;
   }
   
-  for (let key of keys1) {
+  for (const key of keys1) {
     if (obj1[key] !== obj2[key]) {
       return false;
     }
@@ -269,7 +270,7 @@ export const shallowEqual = (obj1: any, obj2: any): boolean => {
 };
 
 // Optimized component update check
-export const shouldComponentUpdate = (prevProps: any, nextProps: any): boolean => {
+export const shouldComponentUpdate = (prevProps: unknown, nextProps: unknown): boolean => {
   return !shallowEqual(prevProps, nextProps);
 };
 

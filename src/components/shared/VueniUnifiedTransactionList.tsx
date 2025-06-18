@@ -280,7 +280,7 @@ export const VueniUnifiedTransactionList: React.FC<VueniUnifiedTransactionListPr
 
   // Process and filter transactions
   const processedTransactions = useMemo(() => {
-    let filtered = transactions.filter(transaction => {
+    const filtered = transactions.filter(transaction => {
       const matchesSearch = !activeFeatures.searchable || 
         transaction.merchant.toLowerCase().includes(searchQuery.toLowerCase()) ||
         transaction.category.name.toLowerCase().includes(searchQuery.toLowerCase());

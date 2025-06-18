@@ -76,7 +76,7 @@ test.describe('Vueni Performance Testing', () => {
       }));
 
       // Store in window for component access
-      (window as any).mockTransactions = mockTransactions;
+      (window as unknown as { mockTransactions?: typeof mockTransactions }).mockTransactions = mockTransactions;
     });
 
     // Measure rendering performance with large dataset
@@ -86,7 +86,7 @@ test.describe('Vueni Performance Testing', () => {
     await page.evaluate(() => {
       // Dispatch custom event that components might listen to
       window.dispatchEvent(new CustomEvent('vueni-load-mock-data', {
-        detail: (window as any).mockTransactions
+        detail: (window as unknown as { mockTransactions?: unknown }).mockTransactions
       }));
     });
 
@@ -111,8 +111,18 @@ test.describe('Vueni Performance Testing', () => {
 
   test('should optimize bundle size and loading', async ({ page }) => {
     // Track network requests
-    const requests: any[] = [];
-    const responses: any[] = [];
+    interface NetworkRequest {
+      url: string;
+      method: string;
+      resourceType: string;
+    }
+    interface NetworkResponse {
+      url: string;
+      status: number;
+      headers: Record<string, string>;
+    }
+    const requests: NetworkRequest[] = [];
+    const responses: NetworkResponse[] = [];
 
     page.on('request', (request) => {
       requests.push({

@@ -6,7 +6,7 @@ test.describe('Quick Hook Validation', () => {
     console.log('🚀 Starting quick hook validation test...');
     
     const monitor = new HookValidationMonitor(page);
-    let hookViolations: string[] = [];
+    const hookViolations: string[] = [];
     
     // Monitor for hook violations
     page.on('console', (msg) => {

@@ -405,7 +405,7 @@ test.describe('Mobile and Cross-Browser Testing', () => {
       // Check for memory leaks (basic test)
       const metrics = await page.evaluate(() => {
         if ('memory' in performance) {
-          return (performance as any).memory;
+          return (performance as unknown as { memory?: { usedJSHeapSize: number; totalJSHeapSize: number; jsHeapSizeLimit: number } }).memory;
         }
         return null;
       });

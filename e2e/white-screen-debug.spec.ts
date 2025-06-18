@@ -74,7 +74,7 @@ test.describe('White Screen Debugging', () => {
       'a[href]' // Links
     ];
     
-    let foundElements: string[] = [];
+    const foundElements: string[] = [];
     for (const selector of criticalElements) {
       const elements = await page.locator(selector).count();
       if (elements > 0) {

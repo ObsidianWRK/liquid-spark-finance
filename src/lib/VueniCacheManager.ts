@@ -228,7 +228,7 @@ export class VueniCacheManager {
     }
   }
 
-  private estimateSize(data: any): number {
+  private estimateSize(data: unknown): number {
     if (typeof data === 'string') {
       return data.length * 2; // UTF-16 encoding
     }
@@ -258,7 +258,7 @@ export class VueniCacheManager {
     return JSON.stringify(data).length * 2; // Fallback
   }
 
-  private compress(data: any): any {
+  private compress(data: unknown): unknown {
     // Simple compression simulation (in real implementation, use a compression library)
     if (typeof data === 'object') {
       const compressed = {
@@ -270,14 +270,14 @@ export class VueniCacheManager {
     return data;
   }
 
-  private decompress(data: any): any {
+  private decompress(data: unknown): unknown {
     if (this.isCompressed(data)) {
       return JSON.parse(data.data);
     }
     return data;
   }
 
-  private isCompressed(data: any): boolean {
+  private isCompressed(data: unknown): data is { __compressed: true; data: string } {
     return typeof data === 'object' && data.__compressed === true;
   }
 

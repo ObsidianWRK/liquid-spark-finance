@@ -200,11 +200,11 @@ test.describe('Comprehensive Hook Validation Suite', () => {
       stressCPU();
       
       // Add memory stress
-      const memoryStress = [];
+      const memoryStress: number[][] = [];
       for (let i = 0; i < 1000; i++) {
         memoryStress.push(new Array(1000).fill(Math.random()));
       }
-      (window as any).memoryStress = memoryStress;
+      (window as unknown as { memoryStress?: number[][] }).memoryStress = memoryStress;
     });
     
     // Navigate under stress
@@ -222,7 +222,7 @@ test.describe('Comprehensive Hook Validation Suite', () => {
     
     // Clean up stress
     await page.evaluate(() => {
-      delete (window as any).memoryStress;
+      delete (window as unknown as { memoryStress?: number[][] }).memoryStress;
     });
     
     await page.waitForTimeout(1000);

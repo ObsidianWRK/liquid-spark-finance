@@ -101,7 +101,7 @@ const EnterpriseTransactionView: React.FC<EnterpriseTransactionViewProps> = ({
 
   // Filter and sort transactions
   const processedTransactions = useMemo(() => {
-    let filtered = transactions.filter(transaction =>
+    const filtered = transactions.filter(transaction =>
       transaction.merchant.toLowerCase().includes(searchQuery.toLowerCase()) ||
       transaction.category.toLowerCase().includes(searchQuery.toLowerCase())
     );
@@ -113,11 +113,11 @@ const EnterpriseTransactionView: React.FC<EnterpriseTransactionViewProps> = ({
 
       // Handle special cases
       if (sortField === 'amount') {
-        aValue = a.amount as any;
-        bValue = b.amount as any;
+        aValue = a.amount as unknown as string;
+        bValue = b.amount as unknown as string;
       } else if (sortField === 'date') {
-        aValue = new Date(a.date + ' ' + a.time).getTime() as any;
-        bValue = new Date(b.date + ' ' + b.time).getTime() as any;
+        aValue = new Date(a.date + ' ' + a.time).getTime() as unknown as string;
+        bValue = new Date(b.date + ' ' + b.time).getTime() as unknown as string;
       }
 
       if (aValue < bValue) return sortDirection === 'asc' ? -1 : 1;

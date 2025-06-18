@@ -214,12 +214,13 @@ describe('Security Validation', () => {
     expect(storedValue).not.toContain('1234567890');
   });
 
-  it('should handle encryption errors gracefully', () => {
+  it('should handle encryption errors gracefully', async () => {
     // Mock encryption failure
     const originalConsoleError = console.error;
     console.error = vi.fn();
     
-    vi.mocked(require('crypto-js').AES.encrypt).mockImplementationOnce(() => {
+    const cryptoJs = await import('crypto-js');
+    vi.mocked(cryptoJs.AES.encrypt).mockImplementationOnce(() => {
       throw new Error('Encryption failed');
     });
     
@@ -238,7 +239,8 @@ describe('Security Validation', () => {
     VueniSecureStorage.setFinancialData('test', { data: 'test' });
     
     // Mock decryption failure
-    vi.mocked(require('crypto-js').AES.decrypt).mockImplementationOnce(() => {
+    const cryptoJs2 = await import('crypto-js');
+    vi.mocked(cryptoJs2.AES.decrypt).mockImplementationOnce(() => {
       throw new Error('Decryption failed');
     });
     

@@ -135,9 +135,9 @@ export const generateNetWorthData = (): NetWorthData[] => {
   const currentDate = new Date();
   
   // Starting values 3 years ago
-  let baseAssets = 125000; // Starting assets
-  let baseLiabilities = 45000; // Starting liabilities
-  let monthlyNetSavings = 850; // Average monthly net worth increase
+  const baseAssets = 125000; // Starting assets
+  const baseLiabilities = 45000; // Starting liabilities
+  const monthlyNetSavings = 850; // Average monthly net worth increase
   
   // Historical data (3 years = 36 months)
   for (let i = 35; i >= 0; i--) {

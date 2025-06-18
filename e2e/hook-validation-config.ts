@@ -130,7 +130,7 @@ export class ComponentValidator {
     return await this.page.evaluate(() => {
       // Check for React fiber nodes or dev tools
       const hasReactFiber = document.querySelector('[data-reactroot]') !== null;
-      const hasReactDevTools = (window as any).__REACT_DEVTOOLS_GLOBAL_HOOK__ !== undefined;
+      const hasReactDevTools = (window as unknown as { __REACT_DEVTOOLS_GLOBAL_HOOK__?: unknown }).__REACT_DEVTOOLS_GLOBAL_HOOK__ !== undefined;
       return hasReactFiber || hasReactDevTools;
     });
   }
@@ -163,8 +163,9 @@ export class PerformanceTester {
       }
       
       // Force garbage collection if available
-      if ((window as any).gc) {
-        (window as any).gc();
+      const windowWithGC = window as unknown as { gc?: () => void };
+      if (windowWithGC.gc) {
+        windowWithGC.gc();
       }
     });
   }
@@ -174,8 +175,9 @@ export class PerformanceTester {
     await this.page.evaluate(() => {
       // CPU intensive operation
       const start = Date.now();
+      let cpuWork = 0;
       while (Date.now() - start < 1000) {
-        Math.random() * Math.random();
+        cpuWork += Math.random() * Math.random();
       }
     });
   }

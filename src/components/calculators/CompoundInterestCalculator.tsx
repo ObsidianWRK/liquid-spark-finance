@@ -14,12 +14,12 @@ interface CompoundData {
 
 interface SecureCalculatorProps {
   securityContext?: {
-    validateInput: (type: string, value: any) => any;
+    validateInput: (type: string, value: unknown) => unknown;
     onCalculationSuccess: () => void;
     onCalculationError: (error: Error) => void;
     securityLevel: string;
   };
-  onSecurityEvent?: (violationType: string, details: any) => void;
+  onSecurityEvent?: (violationType: string, details: unknown) => void;
 }
 
 const CompoundInterestCalculator = React.memo<SecureCalculatorProps>(({ securityContext, onSecurityEvent }) => {
@@ -37,7 +37,7 @@ const CompoundInterestCalculator = React.memo<SecureCalculatorProps>(({ security
   // Memoized expensive calculation to prevent unnecessary recalculations
   const compoundData = useMemo((): CompoundData[] => {
     const data: CompoundData[] = [];
-    let currentPrincipal = principal;
+    const currentPrincipal = principal;
     const monthlyRate = rate / 100 / compoundFreq;
     const periodsPerYear = compoundFreq;
     

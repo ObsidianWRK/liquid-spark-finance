@@ -79,11 +79,11 @@ test.describe('Performance and Stress Testing for Hook Violations', () => {
     // Inject memory pressure
     await page.evaluate(() => {
       // Create some memory pressure
-      const memoryArray: any[] = [];
+      const memoryArray: number[][] = [];
       for (let i = 0; i < 1000; i++) {
         memoryArray.push(new Array(1000).fill(Math.random()));
       }
-      (window as any).memoryPressure = memoryArray;
+      (window as unknown as { memoryPressure?: number[][] }).memoryPressure = memoryArray;
     });
     
     const tabs = ['dashboard', 'accounts', 'transactions', 'insights'];
@@ -100,14 +100,15 @@ test.describe('Performance and Stress Testing for Hook Violations', () => {
         // Add more memory pressure each cycle
         await page.evaluate((cycleNum) => {
           const additionalMemory = new Array(500).fill(`cycle-${cycleNum}-${Math.random()}`);
-          (window as any).memoryPressure.push(additionalMemory);
+          const windowWithMemory = window as unknown as { memoryPressure?: (number[][] | string[])[] };
+          windowWithMemory.memoryPressure?.push(additionalMemory);
         }, cycle);
       }
     }
     
     // Clean up memory
     await page.evaluate(() => {
-      delete (window as any).memoryPressure;
+      delete (window as unknown as { memoryPressure?: unknown }).memoryPressure;
     });
     
     await page.waitForTimeout(1000);
