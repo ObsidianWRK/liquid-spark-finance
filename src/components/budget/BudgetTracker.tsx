@@ -37,8 +37,8 @@ const BudgetTracker = ({ familyId, className }: BudgetTrackerProps) => {
       setError(null);
       
       const [budgetData, goalsData] = await Promise.all([
-        budgetService.getBudgetSummary(familyId),
-        savingsGoalsService.getUserGoals(familyId)
+        budgetService.getActiveBudget(familyId),
+        savingsGoalsService.getGoals(familyId)
       ]);
       
       setBudget(budgetData);
@@ -466,7 +466,7 @@ const BudgetTracker = ({ familyId, className }: BudgetTrackerProps) => {
         ].map(({ id, label, icon: Icon }) => (
           <button
             key={id}
-            onClick={(e: React.MouseEvent) => e.stopPropagation()}
+            onClick={() => setSelectedView(id as any)}
             className={cn(
               "flex-1 flex items-center justify-center gap-2 px-4 py-2 rounded-lg transition-all",
               selectedView === id

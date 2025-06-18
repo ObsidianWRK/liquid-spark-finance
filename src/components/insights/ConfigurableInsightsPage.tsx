@@ -9,7 +9,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { cn } from '@/lib/utils';
 import { SharedScoreCircle, ScoreGroup } from '../shared/SharedScoreCircle';
 import { formatPercentage, getScoreColor } from '@/utils/formatters';
-import { UniversalCard } from '../ui/UniversalCard';
+import { UnifiedCard } from '../ui/UnifiedCard';
 import { UniversalMetricCard } from './UniversalMetricCard';
 import { UniversalScoreCard } from './UniversalScoreCard';
 
@@ -198,7 +198,7 @@ const LoadingSpinner = () => (
 // Enhanced Score Card Component
 const EnhancedScoreDisplay = ({ scores, layout, animationsEnabled }: { 
   scores: { credit: number; eco: number; wellness: number }; 
-  layout: string; 
+  layout: LayoutConfig;
   animationsEnabled: boolean 
 }) => {
   if (layout.compactMode) {
@@ -222,7 +222,7 @@ const EnhancedScoreDisplay = ({ scores, layout, animationsEnabled }: {
             score={score as number}
             type={type as any}
             size="lg"
-            label={type === 'health' ? 'Wellness Score' : type === 'eco' ? 'Eco Impact' : 'Financial Health'}
+            label={type === 'wellness' ? 'Wellness Score' : type === 'eco' ? 'Eco Impact' : 'Financial Health'}
             showLabel={true}
             animated={animationsEnabled}
           />
@@ -234,38 +234,58 @@ const EnhancedScoreDisplay = ({ scores, layout, animationsEnabled }: {
 
 // Quick Metrics Component using Universal Cards
 const QuickMetrics = ({ financialData, wellnessData, ecoData, layout }: { 
-  financialData: Record<string, unknown>; 
-  wellnessData: Record<string, unknown>; 
-  ecoData: Record<string, unknown>; 
-  layout: string 
+  financialData: {
+    monthlySpending: number;
+    spendingRatio: number;
+    savingsRate: number;
+  };
+  wellnessData: {
+    monthlySpending: Record<string, number>;
+  };
+  ecoData: {
+    monthlyImpact: {
+      co2Saved: number;
+    };
+  };
+  layout: LayoutConfig;
 }) => {
+  const monthlySpending = financialData?.monthlySpending ?? 0;
+  const spendingRatio = financialData?.spendingRatio ?? 0;
+  const savingsRate = financialData?.savingsRate ?? 0;
+  
+  const wellnessTotal = wellnessData?.monthlySpending 
+    ? Object.values(wellnessData.monthlySpending).reduce((sum: number, amount: number) => sum + (amount || 0), 0)
+    : 0;
+    
+  const co2Saved = ecoData?.monthlyImpact?.co2Saved ?? 0;
+
   const metrics = [
     {
       icon: DollarSign,
       label: 'Monthly Spending',
-      value: `$${financialData.monthlySpending.toLocaleString()}`,
-      change: financialData.spendingRatio,
+      value: `$${monthlySpending.toLocaleString()}`,
+      change: spendingRatio,
       color: '#3B82F6',
     },
     {
       icon: Heart,
       label: 'Wellness Investment',
-      value: `$${Object.values(wellnessData.monthlySpending).reduce((sum: number, amount: number) => sum + amount, 0).toLocaleString()}`,
+      value: `$${wellnessTotal.toLocaleString()}`,
       change: 12,
       color: '#EF4444',
     },
     {
       icon: Leaf,
       label: 'CO₂ Saved',
-      value: `${ecoData.monthlyImpact.co2Saved}kg`,
+      value: `${co2Saved}kg`,
       change: 8,
       color: '#10B981',
     },
     {
       icon: PiggyBank,
       label: 'Savings Rate',
-      value: `${financialData.savingsRate.toFixed(1)}%`,
-      change: financialData.savingsRate > 20 ? 5 : -3,
+      value: `${savingsRate.toFixed(1)}%`,
+      change: savingsRate > 20 ? 5 : -3,
       color: '#8B5CF6',
     },
   ];
@@ -306,7 +326,7 @@ export const ConfigurableInsightsPage = React.memo<ConfigurableInsightsPageProps
     ...variantLayouts[variant],
     ...customLayout,
   }));
-  const [scores, setScores] = useState({ financial: 0, health: 0, eco: 0 });
+  const [scores, setScores] = useState({ credit: 0, wellness: 0, eco: 0 }); // WHY: Fixed property names to match interface
   const [isLoading, setIsLoading] = useState(true);
   const [showLayoutSettings, setShowLayoutSettings] = useState(false);
   const [isVisible, setIsVisible] = useState(true);
@@ -414,13 +434,13 @@ export const ConfigurableInsightsPage = React.memo<ConfigurableInsightsPageProps
         // Simulate score calculation
         await new Promise(resolve => setTimeout(resolve, 500));
         setScores({
-          financial: 72 + Math.floor(Math.random() * 20),
-          health: 75 + Math.floor(Math.random() * 20),
+          credit: 72 + Math.floor(Math.random() * 20), // WHY: Fixed property name to match interface
+          wellness: 75 + Math.floor(Math.random() * 20), // WHY: Fixed property name to match interface  
           eco: 82 + Math.floor(Math.random() * 15),
         });
       } catch (error) {
         console.error('Error loading scores:', error);
-        setScores({ financial: 72, health: 75, eco: 82 });
+        setScores({ credit: 72, wellness: 75, eco: 82 }); // WHY: Fixed property names to match interface
       } finally {
         setIsLoading(false);
       }
@@ -435,8 +455,8 @@ export const ConfigurableInsightsPage = React.memo<ConfigurableInsightsPageProps
 
     const interval = setInterval(() => {
       setScores(prev => ({
-        financial: Math.max(0, Math.min(100, prev.financial + (Math.random() - 0.5) * 4)),
-        health: Math.max(0, Math.min(100, prev.health + (Math.random() - 0.5) * 4)),
+        credit: Math.max(0, Math.min(100, prev.credit + (Math.random() - 0.5) * 4)), // WHY: Fixed property name
+        wellness: Math.max(0, Math.min(100, prev.wellness + (Math.random() - 0.5) * 4)), // WHY: Fixed property name
         eco: Math.max(0, Math.min(100, prev.eco + (Math.random() - 0.5) * 4)),
       }));
     }, layout.refreshInterval);
@@ -459,14 +479,14 @@ export const ConfigurableInsightsPage = React.memo<ConfigurableInsightsPageProps
 
   if (isLoading) {
     return (
-      <UniversalCard variant="glass" className={cn('w-full text-white', className)}>
+      <UnifiedCard variant="default" className={cn('w-full text-white', className)}>
         <div className="flex items-center justify-center py-20">
           <div className="flex items-center space-x-4">
             <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-white/50"></div>
             <span className="text-white text-lg">Loading insights...</span>
           </div>
         </div>
-      </UniversalCard>
+      </UnifiedCard>
     );
   }
 
@@ -474,7 +494,7 @@ export const ConfigurableInsightsPage = React.memo<ConfigurableInsightsPageProps
     <div className={cn('w-full text-white space-y-6', className)} data-testid="configurable-insights">
       {/* Header */}
       {layout.showHeader && (
-        <UniversalCard variant="glass" className="p-6">
+        <UnifiedCard variant="default" className="p-6">
           <div className="flex items-center justify-between">
             <div>
               <h1 className={cn(
@@ -525,12 +545,12 @@ export const ConfigurableInsightsPage = React.memo<ConfigurableInsightsPageProps
               )}
             </div>
           </div>
-        </UniversalCard>
+        </UnifiedCard>
       )}
 
       {/* Layout Settings */}
       {showLayoutSettings && enableFeatureFlags && (
-        <UniversalCard variant="glass" className="p-4">
+        <UnifiedCard variant="default" className="p-4">
           <h3 className="text-lg font-semibold text-white mb-4">Layout Settings</h3>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             <div className="flex items-center justify-between">
@@ -562,12 +582,12 @@ export const ConfigurableInsightsPage = React.memo<ConfigurableInsightsPageProps
               />
             </div>
           </div>
-        </UniversalCard>
+        </UnifiedCard>
       )}
 
       {/* Tab Navigation */}
       {layout.showTabs && (
-        <UniversalCard variant="glass" className="p-2">
+        <UnifiedCard variant="default" className="p-2">
           <div className="flex flex-wrap justify-center gap-2">
             {tabs.map((tab) => {
               const Icon = tab.icon;
@@ -590,7 +610,7 @@ export const ConfigurableInsightsPage = React.memo<ConfigurableInsightsPageProps
               );
             })}
           </div>
-        </UniversalCard>
+        </UnifiedCard>
       )}
 
       {/* Content */}
@@ -599,7 +619,7 @@ export const ConfigurableInsightsPage = React.memo<ConfigurableInsightsPageProps
           <div className="space-y-6">
             {/* Score Overview */}
             {layout.showScoreCards && (
-              <UniversalCard variant="glass" className="p-6">
+              <UnifiedCard variant="default" className="p-6">
                 <h3 className={cn(
                   "font-bold text-white mb-6 text-center",
                   layout.compactMode ? "text-lg" : "text-xl"
@@ -611,7 +631,7 @@ export const ConfigurableInsightsPage = React.memo<ConfigurableInsightsPageProps
                   layout={layout}
                   animationsEnabled={layout.animationsEnabled}
                 />
-              </UniversalCard>
+              </UnifiedCard>
             )}
 
             {/* Quick Metrics */}

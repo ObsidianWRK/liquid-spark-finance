@@ -286,6 +286,166 @@ const InvestmentPortfolio = ({ familyId, className }: InvestmentPortfolioProps) 
     </div>
   );
 
+  const renderAllocation = () => (
+    <div className="space-y-6">
+      {/* Asset Allocation Overview */}
+      <div className="bg-white/[0.02] rounded-2xl border border-white/[0.08] p-6">
+        <h3 className="text-xl font-bold text-white mb-6 flex items-center gap-3">
+          <Target className="w-6 h-6 text-blue-400" />
+          Asset Allocation Management
+        </h3>
+        
+        {/* Main Allocation Grid */}
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-8">
+          <div className="text-center">
+            <div className="w-16 h-16 mx-auto mb-3 rounded-full bg-blue-500/20 flex items-center justify-center">
+              <span className="text-2xl font-bold text-blue-400">{portfolio.allocation.stocks.toFixed(0)}%</span>
+            </div>
+            <p className="text-white/60 text-sm mb-1">Stocks</p>
+            <p className="text-blue-400 font-semibold">{formatCurrency(portfolio.totalValue * portfolio.allocation.stocks / 100)}</p>
+          </div>
+          <div className="text-center">
+            <div className="w-16 h-16 mx-auto mb-3 rounded-full bg-green-500/20 flex items-center justify-center">
+              <span className="text-2xl font-bold text-green-400">{portfolio.allocation.bonds.toFixed(0)}%</span>
+            </div>
+            <p className="text-white/60 text-sm mb-1">Bonds</p>
+            <p className="text-green-400 font-semibold">{formatCurrency(portfolio.totalValue * portfolio.allocation.bonds / 100)}</p>
+          </div>
+          <div className="text-center">
+            <div className="w-16 h-16 mx-auto mb-3 rounded-full bg-yellow-500/20 flex items-center justify-center">
+              <span className="text-2xl font-bold text-yellow-400">{portfolio.allocation.cash.toFixed(0)}%</span>
+            </div>
+            <p className="text-white/60 text-sm mb-1">Cash</p>
+            <p className="text-yellow-400 font-semibold">{formatCurrency(portfolio.totalValue * portfolio.allocation.cash / 100)}</p>
+          </div>
+          <div className="text-center">
+            <div className="w-16 h-16 mx-auto mb-3 rounded-full bg-purple-500/20 flex items-center justify-center">
+              <span className="text-2xl font-bold text-purple-400">{portfolio.allocation.other.toFixed(0)}%</span>
+            </div>
+            <p className="text-white/60 text-sm mb-1">Other</p>
+            <p className="text-purple-400 font-semibold">{formatCurrency(portfolio.totalValue * portfolio.allocation.other / 100)}</p>
+          </div>
+        </div>
+
+        {/* Allocation Actions */}
+        <div className="flex flex-wrap gap-3 justify-center">
+          <button className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-xl transition-colors flex items-center gap-2">
+            <Target className="w-4 h-4" />
+            Rebalance Portfolio
+          </button>
+          <button className="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-xl transition-colors flex items-center gap-2">
+            <Plus className="w-4 h-4" />
+            Add Asset Class
+          </button>
+          <button className="bg-purple-500 hover:bg-purple-600 text-white px-4 py-2 rounded-xl transition-colors flex items-center gap-2">
+            <BarChart3 className="w-4 h-4" />
+            Optimize Allocation
+          </button>
+        </div>
+      </div>
+
+      {/* Sector Allocation Details */}
+      {Object.keys(portfolio.allocation.sectors).length > 0 && (
+        <div className="bg-white/[0.02] rounded-2xl border border-white/[0.08] p-6">
+          <h3 className="text-lg font-bold text-white mb-4 flex items-center gap-3">
+            <PieChart className="w-5 h-5 text-green-400" />
+            Sector Allocation
+          </h3>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {Object.entries(portfolio.allocation.sectors).map(([sector, percentage]) => (
+              <div key={sector} className="flex items-center justify-between p-4 bg-white/[0.03] rounded-xl border border-white/[0.05]">
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-blue-500/20 to-purple-500/20 flex items-center justify-center">
+                    <Activity className="w-5 h-5 text-blue-400" />
+                  </div>
+                  <div>
+                    <p className="font-medium text-white">{sector}</p>
+                    <p className="text-white/60 text-sm">{formatCurrency(portfolio.totalValue * percentage / 100)}</p>
+                  </div>
+                </div>
+                <div className="text-right">
+                  <p className="text-lg font-bold text-white">{percentage.toFixed(1)}%</p>
+                  <div className="w-16 bg-white/[0.05] rounded-full h-2 mt-1">
+                    <div 
+                      className="bg-gradient-to-r from-blue-500 to-purple-500 h-2 rounded-full transition-all duration-300"
+                      style={{ width: `${Math.min(percentage, 100)}%` }}
+                    ></div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* Risk vs Return Analysis */}
+      <div className="bg-white/[0.02] rounded-2xl border border-white/[0.08] p-6">
+        <h3 className="text-lg font-bold text-white mb-4 flex items-center gap-3">
+          <AlertTriangle className="w-5 h-5 text-yellow-400" />
+          Risk vs Return Analysis
+        </h3>
+        
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="text-center p-4 bg-white/[0.03] rounded-xl border border-white/[0.05]">
+            <Shield className="w-8 h-8 text-green-400 mx-auto mb-3" />
+            <p className="text-white/60 text-sm mb-1">Conservative</p>
+            <p className="text-lg font-bold text-green-400">Low Risk</p>
+            <p className="text-white/60 text-xs">20% Stocks, 70% Bonds, 10% Cash</p>
+          </div>
+          <div className="text-center p-4 bg-blue-500/10 rounded-xl border border-blue-500/20">
+            <Target className="w-8 h-8 text-blue-400 mx-auto mb-3" />
+            <p className="text-white/60 text-sm mb-1">Current Allocation</p>
+            <p className="text-lg font-bold text-blue-400">Moderate Risk</p>
+            <p className="text-white/60 text-xs">{portfolio.allocation.stocks.toFixed(0)}% Stocks, {portfolio.allocation.bonds.toFixed(0)}% Bonds</p>
+          </div>
+          <div className="text-center p-4 bg-white/[0.03] rounded-xl border border-white/[0.05]">
+            <TrendingUp className="w-8 h-8 text-red-400 mx-auto mb-3" />
+            <p className="text-white/60 text-sm mb-1">Aggressive</p>
+            <p className="text-lg font-bold text-red-400">High Risk</p>
+            <p className="text-white/60 text-xs">80% Stocks, 15% Bonds, 5% Cash</p>
+          </div>
+        </div>
+      </div>
+
+      {/* Allocation History & Rebalancing */}
+      <div className="bg-white/[0.02] rounded-2xl border border-white/[0.08] p-6">
+        <h3 className="text-lg font-bold text-white mb-4 flex items-center gap-3">
+          <BarChart3 className="w-5 h-5 text-purple-400" />
+          Recent Allocation Changes
+        </h3>
+        
+        <div className="space-y-4">
+          <div className="flex items-center justify-between p-4 bg-white/[0.03] rounded-xl border border-white/[0.05]">
+            <div className="flex items-center gap-3">
+              <div className="w-8 h-8 bg-blue-500/20 rounded-lg flex items-center justify-center">
+                <TrendingUp className="w-4 h-4 text-blue-400" />
+              </div>
+              <div>
+                <p className="font-medium text-white">Increased stock allocation</p>
+                <p className="text-white/60 text-sm">Rebalanced on Dec 15, 2024</p>
+              </div>
+            </div>
+            <span className="text-blue-400 font-bold">+5%</span>
+          </div>
+
+          <div className="flex items-center justify-between p-4 bg-white/[0.03] rounded-xl border border-white/[0.05]">
+            <div className="flex items-center gap-3">
+              <div className="w-8 h-8 bg-green-500/20 rounded-lg flex items-center justify-center">
+                <Shield className="w-4 h-4 text-green-400" />
+              </div>
+              <div>
+                <p className="font-medium text-white">Added bond diversification</p>
+                <p className="text-white/60 text-sm">Rebalanced on Dec 1, 2024</p>
+              </div>
+            </div>
+            <span className="text-green-400 font-bold">+3%</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+
   const renderHoldings = () => (
     <div className="space-y-4">
       <div className="flex items-center justify-between">
@@ -388,7 +548,7 @@ const InvestmentPortfolio = ({ familyId, className }: InvestmentPortfolioProps) 
       {selectedView === 'overview' && renderOverview()}
       {selectedView === 'holdings' && renderHoldings()}
       {selectedView === 'performance' && renderOverview()} {/* Reuse overview for now */}
-      {selectedView === 'allocation' && renderOverview()} {/* Reuse overview for now */}
+      {selectedView === 'allocation' && renderAllocation()}
     </div>
   );
 };

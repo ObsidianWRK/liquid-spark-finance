@@ -950,14 +950,15 @@ html:not(.dark) [class*="text-muted"] {
 html, body {
   /* Ensure full-height layout for scroll containers */
   height: 100%;
-  /* Prevent browser bounce and nested scroll lag */
-  overscroll-behavior: contain;
-  /* Maintain horizontal clipping while allowing normal vertical scroll */
+  /* WHY: Fixed scroll behavior - removed overscroll-behavior that can cause scroll lag */
+  /* Maintain horizontal clipping while allowing immediate vertical scroll */
   overflow-x: hidden;
   overflow-y: auto;
   width: 100%;
   margin: 0;
   padding: 0;
+  /* WHY: Added scroll-behavior smooth for immediate response */
+  scroll-behavior: smooth;
 }
 
 /* ==============================================
@@ -1212,5 +1213,10 @@ html, body {
 
 /* Root container needs to stretch the full viewport height so the first wheel delta scrolls immediately */
 #root {
-  min-height: 100%;
+  min-height: 100vh; /* WHY: Changed from 100% to 100vh for immediate viewport fill */
+  width: 100%;
+  /* WHY: Ensure root is the primary scroll container */
+  position: relative;
+  overflow-x: hidden;
+  overflow-y: auto;
 } 
