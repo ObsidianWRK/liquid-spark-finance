@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useMemo, Suspense, lazy } from 'react';
 import { Heart, Leaf, DollarSign, TrendingUp, Calendar, BarChart3 } from 'lucide-react';
 import { SharedScoreCircle } from '@/components/shared';
+import { Transaction, Account } from '@/types/shared';
 
 // Lazy load heavy components for performance
 const FinancialCard = lazy(() => import('./FinancialCard'));
@@ -18,27 +19,6 @@ const LoadingSpinner = () => (
     <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-white/50"></div>
   </div>
 );
-
-interface Transaction {
-  id: string;
-  merchant: string;
-  category: {
-    name: string;
-    color: string;
-  };
-  amount: number;
-  date: string;
-  status: 'completed' | 'pending' | 'failed';
-}
-
-interface Account {
-  id: string;
-  type: string;
-  nickname: string;
-  balance: number;
-  availableBalance: number;
-  currency: string;
-}
 
 interface NewInsightsPageProps {
   transactions: Transaction[];

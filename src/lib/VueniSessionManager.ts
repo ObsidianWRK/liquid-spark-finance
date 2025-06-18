@@ -1,4 +1,5 @@
 import { VueniSecureStorage } from './VueniSecureStorage';
+import { generateSecureSessionId, generateSecureCSRFToken } from '../utils/secureRandom';
 
 export interface VueniSession {
   id: string;
@@ -71,7 +72,7 @@ export class VueniSessionManager {
   }
   
   private static generateSessionId(): string {
-    return 'vueni_' + Math.random().toString(36).substring(2) + Date.now().toString(36);
+    return generateSecureSessionId('vueni');
   }
   
   // Auto-logout on inactivity
@@ -100,9 +101,9 @@ export class VueniSessionManager {
     resetTimer();
   }
   
-  // CSRF Protection
+  // CSRF Protection with secure random generation
   static generateCSRFToken(): string {
-    const token = Math.random().toString(36).substring(2) + Date.now().toString(36);
+    const token = generateSecureCSRFToken();
     sessionStorage.setItem('vueni_csrf_token', token);
     return token;
   }

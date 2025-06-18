@@ -1,6 +1,9 @@
 import CryptoJS from 'crypto-js';
+import { SecurityEnvValidator } from '../utils/envValidation';
+import { generateSecureToken } from '../utils/secureRandom';
 
-const VUENI_STORAGE_KEY = import.meta.env.VITE_VUENI_ENCRYPTION_KEY || 'vueni-secure-key-2024';
+// Get validated encryption key from environment
+const VUENI_STORAGE_KEY = SecurityEnvValidator.getValidatedEncryptionKey('VITE_VUENI_ENCRYPTION_KEY');
 
 export class VueniSecureStorage {
   private static encrypt(data: any): string {
@@ -55,7 +58,7 @@ export class VueniSecureStorage {
   private static getSessionId(): string {
     let sessionId = sessionStorage.getItem('vueni_session_id');
     if (!sessionId) {
-      sessionId = CryptoJS.lib.WordArray.random(128/8).toString();
+      sessionId = generateSecureToken(16); // 16 bytes = 32 hex characters
       sessionStorage.setItem('vueni_session_id', sessionId);
     }
     return sessionId;

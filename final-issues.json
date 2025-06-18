@@ -1,0 +1,170 @@
+[
+  {
+    "filePath": "src/utils/crypto.ts",
+    "lineNumber": 4,
+    "severity": "blocker",
+    "issue": "Hardcoded fallback encryption key 'liquid-spark-secure-key-2024' in source code",
+    "fixRecommendation": "Remove hardcoded fallback key. Environment variable should be required, not have a fallback.",
+    "agent": "A5"
+  },
+  {
+    "filePath": "src/lib/VueniSecureStorage.ts",
+    "lineNumber": 3,
+    "severity": "blocker", 
+    "issue": "Hardcoded fallback encryption key 'vueni-secure-key-2024' in source code",
+    "fixRecommendation": "Remove hardcoded fallback key. Make environment variable mandatory for production use.",
+    "agent": "A5"
+  },
+  {
+    "filePath": "vercel.json",
+    "lineNumber": 10,
+    "severity": "critical",
+    "issue": "CSP directive allows 'unsafe-inline' and 'unsafe-eval' for scripts - major security risk for financial platform",
+    "fixRecommendation": "Remove 'unsafe-inline' and 'unsafe-eval' from script-src. Use nonces or hashes for inline scripts instead.",
+    "agent": "A3,A5"
+  },
+  {
+    "filePath": "src/components/insights/",
+    "lineNumber": 1,
+    "severity": "critical",
+    "issue": "19 duplicate insight page components causing 94KB bundle bloat - InsightsPage, NewInsightsPage, RefinedInsightsPage, etc.",
+    "fixRecommendation": "Consolidate to 2-3 core components: BaseInsightsPage, EnhancedInsightsPage, and ConfigurableInsightsPage with variant props",
+    "agent": "A1,A4"
+  },
+  {
+    "filePath": "src/components/insights/components/",
+    "lineNumber": 1,
+    "severity": "high",
+    "issue": "11 duplicate card components - ComprehensiveEcoCard exists in both insights/ and insights/components/",
+    "fixRecommendation": "Remove duplicate implementations and flatten component structure",
+    "agent": "A1,A4"
+  },
+  {
+    "filePath": "package.json",
+    "lineNumber": 116,
+    "severity": "high",
+    "issue": "CVE-2024-GHSA-67mh-4wv8-2f99 in esbuild via vite@5.4.19",
+    "fixRecommendation": "Update vite from ^5.4.1 to ^6.2.0 to resolve esbuild security vulnerability",
+    "agent": "A2"
+  },
+  {
+    "filePath": "Root Directory",
+    "lineNumber": 0,
+    "severity": "high",
+    "issue": "18 markdown documentation files in root directory causing repository bloat",
+    "fixRecommendation": "Consolidate documentation into /docs directory structure",
+    "agent": "A4,A8"
+  },
+  {
+    "filePath": "src/components/calculators/",
+    "lineNumber": 0,
+    "severity": "high",
+    "issue": "11 calculator components completely lack individual React component tests",
+    "fixRecommendation": "Create comprehensive test suites for each calculator with input validation, calculation accuracy, and accessibility testing",
+    "agent": "A7"
+  },
+  {
+    "filePath": "src/components/calculators/LoanCalculator.tsx",
+    "lineNumber": 95,
+    "severity": "high",
+    "issue": "GlassSlider components missing aria-label for screen readers on all financial calculators",
+    "fixRecommendation": "Add aria-label and aria-valuetext to all slider components for accessibility compliance",
+    "agent": "A6"
+  },
+  {
+    "filePath": "src/components/calculators/SecureCalculatorWrapper.tsx",
+    "lineNumber": 0,
+    "severity": "high",
+    "issue": "Security wrapper component has no unit tests despite critical security function",
+    "fixRecommendation": "Create comprehensive tests for input sanitization, rate limiting, CSRF protection",
+    "agent": "A7"
+  },
+  {
+    "filePath": "src/hooks/use-toast.ts",
+    "lineNumber": 1,
+    "severity": "medium",
+    "issue": "Duplicate toast hook implementation - exists in both hooks/ and components/ui/",
+    "fixRecommendation": "Remove one implementation and update imports to use single source",
+    "agent": "A1"
+  },
+  {
+    "filePath": "vercel.json",
+    "lineNumber": 102,
+    "severity": "medium",
+    "issue": "Environment variable name mismatch - vercel.json uses 'VITE_ENCRYPTION_KEY' but code uses 'VITE_VUENI_ENCRYPTION_KEY'",
+    "fixRecommendation": "Standardize environment variable naming to match code usage",
+    "agent": "A3"
+  },
+  {
+    "filePath": "src/components/transactions/",
+    "lineNumber": 0,
+    "severity": "medium",
+    "issue": "9 transaction components with overlapping functionality causing redundancy",
+    "fixRecommendation": "Consolidate to UnifiedTransactionList.tsx with variant props",
+    "agent": "A4"
+  },
+  {
+    "filePath": "eslint.config.js",
+    "lineNumber": 26,
+    "severity": "medium",
+    "issue": "TypeScript unused variables rule disabled globally, reducing code quality enforcement",
+    "fixRecommendation": "Enable '@typescript-eslint/no-unused-vars': 'warn' and fix actual unused imports",
+    "agent": "A1,A8"
+  },
+  {
+    "filePath": "src/services/",
+    "lineNumber": 0,
+    "severity": "medium",
+    "issue": "Budget, credit score, and investment services missing comprehensive unit tests",
+    "fixRecommendation": "Add tests for service layer CRUD operations, persistence, encryption, and error handling",
+    "agent": "A7"
+  },
+  {
+    "filePath": "src/lib/VueniSessionManager.ts",
+    "lineNumber": 104,
+    "severity": "medium",
+    "issue": "Weak CSRF token generation using Math.random()",
+    "fixRecommendation": "Use crypto.getRandomValues() for cryptographically secure random number generation",
+    "agent": "A5"
+  },
+  {
+    "filePath": "src/components/ui/chart.tsx",
+    "lineNumber": 79,
+    "severity": "medium",
+    "issue": "Use of dangerouslySetInnerHTML with dynamic content",
+    "fixRecommendation": "Validate and sanitize the CSS content before injecting, or use safer method",
+    "agent": "A5"
+  },
+  {
+    "filePath": "src/components/insights/EcoScore.tsx",
+    "lineNumber": 75,
+    "severity": "medium",
+    "issue": "SVG circular progress chart lacks accessibility attributes",
+    "fixRecommendation": "Add role='img', aria-label='Eco score X out of 100', and aria-describedby",
+    "agent": "A6"
+  },
+  {
+    "filePath": "package.json",
+    "lineNumber": 41,
+    "severity": "medium",
+    "issue": "@hookform/resolvers@3.9.0 significantly outdated (latest: 5.1.1)",
+    "fixRecommendation": "Update to @hookform/resolvers@^5.1.1 for security patches and compatibility",
+    "agent": "A2"
+  },
+  {
+    "filePath": "vite.config.ts",
+    "lineNumber": 22,
+    "severity": "low",
+    "issue": "Source maps disabled in production build may hinder debugging",
+    "fixRecommendation": "Consider enabling external source maps for production debugging",
+    "agent": "A3"
+  },
+  {
+    "filePath": "src/components/shared/index.ts",
+    "lineNumber": 1,
+    "severity": "low",
+    "issue": "Barrel export file exports many components causing potential bundle bloat",
+    "fixRecommendation": "Implement tree-shaking friendly exports or remove unused exports",
+    "agent": "A1"
+  }
+]

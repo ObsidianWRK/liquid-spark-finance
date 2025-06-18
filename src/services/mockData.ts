@@ -1,26 +1,6 @@
-export interface Account {
-  id: string;
-  type: string;
-  nickname: string;
-  balance: number;
-  availableBalance: number;
-  currency: string;
-}
+import { Transaction, Account } from '@/types/shared';
 
-export interface Transaction {
-  id: string;
-  merchant: string;
-  category: {
-    name: string;
-    color: string;
-  };
-  amount: number;
-  date: string;
-  status: 'completed' | 'pending' | 'failed';
-  trackingNumber?: string;
-  shippingProvider?: 'UPS' | 'FedEx' | 'USPS';
-  deliveryStatus?: 'In Transit' | 'Delivered' | 'Out for Delivery';
-}
+export type { Transaction, Account } from '@/types/shared';
 
 export const mockData = {
   accounts: [

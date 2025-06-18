@@ -24,7 +24,8 @@ vi.mock('crypto-js', () => ({
 Object.defineProperty(import.meta, 'env', {
   value: {
     VITE_VUENI_ENCRYPTION_KEY: 'test-key',
-    PROD: false
+    PROD: false,
+    DEV: true
   },
   writable: true
 });

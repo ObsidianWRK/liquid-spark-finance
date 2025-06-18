@@ -1,6 +1,6 @@
 import React from 'react';
-import { BaseCardProps } from '@/types/shared';
 import { cn } from '@/lib/utils';
+import { LucideIcon } from 'lucide-react';
 
 // Universal Card Component - Consolidates:
 // - GlassCard.tsx
@@ -11,195 +11,290 @@ import { cn } from '@/lib/utils';
 // - ComprehensiveWellnessCard.tsx (529 lines)
 // Total consolidation: ~1,200 lines → ~150 lines (88% reduction)
 
-interface UniversalCardProps extends BaseCardProps {
+interface UniversalCardProps {
+  variant?: 'glass' | 'solid' | 'eco' | 'wellness' | 'financial' | 'minimal';
+  size?: 'sm' | 'md' | 'lg' | 'xl';
   blur?: 'light' | 'medium' | 'heavy';
-  glow?: boolean;
-  gradient?: {
-    from: string;
-    to: string;
-    direction?: 'to-r' | 'to-l' | 'to-t' | 'to-b' | 'to-br' | 'to-tr';
-  };
-  border?: {
-    style: 'none' | 'solid' | 'gradient' | 'glow';
-    color?: string;
-    width?: 'thin' | 'medium' | 'thick';
-  };
-  hover?: {
-    scale?: boolean;
-    glow?: boolean;
-    blur?: boolean;
-  };
+  className?: string;
+  children?: React.ReactNode;
+  
+  // Data props for insight cards
+  title?: string;
+  value?: string | number;
+  icon?: LucideIcon;
+  iconColor?: string;
+  score?: number;
+  trend?: 'up' | 'down' | 'stable';
+  trendValue?: string;
+  
+  // Layout props
+  orientation?: 'horizontal' | 'vertical';
+  showBackground?: boolean;
+  interactive?: boolean;
   onClick?: () => void;
+  
+  // Advanced props for comprehensive cards
+  data?: {
+    metrics?: Array<{
+      label: string;
+      value: string | number;
+      icon?: LucideIcon;
+      color?: string;
+    }>;
+    trends?: Array<{
+      label: string;
+      trend: 'up' | 'down' | 'stable';
+      value?: string;
+    }>;
+    spending?: Array<{
+      category: string;
+      amount: number;
+      color?: string;
+    }>;
+  };
 }
 
 export const UniversalCard = React.memo<UniversalCardProps>(({
-  children,
-  className = '',
-  variant = 'default',
+  variant = 'glass',
   size = 'md',
-  interactive = false,
-  loading = false,
   blur = 'medium',
-  glow = false,
-  gradient,
-  border = { style: 'solid', width: 'thin' },
-  hover = { scale: false, glow: false, blur: false },
-  onClick
+  className,
+  children,
+  title,
+  value,
+  icon: Icon,
+  iconColor = '#6366f1',
+  score,
+  trend,
+  trendValue,
+  orientation = 'vertical',
+  showBackground = true,
+  interactive = false,
+  onClick,
+  data,
+  ...props
 }) => {
-  // Base card styles with performance optimizations
-  const baseStyles = 'relative transition-all duration-300 ease-out will-change-transform';
-  
-  // Variant styles (consolidated from multiple card components)
-  const variantStyles = {
-    default: 'bg-white/5 backdrop-blur-md border border-white/10',
-    glass: getGlassStyles(blur),
-    solid: 'bg-slate-800 border border-slate-700',
-    outlined: 'bg-transparent border-2 border-white/20'
-  };
-
-  // Size styles
-  const sizeStyles = {
-    sm: 'p-3 rounded-lg',
-    md: 'p-4 rounded-xl', 
-    lg: 'p-6 rounded-2xl'
-  };
-
-  // Interactive styles
-  const interactiveStyles = interactive || onClick ? 'cursor-pointer select-none' : '';
-  
-  // Hover effects (performance optimized)
-  const hoverStyles = (interactive || onClick) ? [
-    hover.scale && 'hover:scale-[1.02]',
-    hover.glow && 'hover:shadow-lg hover:shadow-blue-500/20',
-    hover.blur && 'hover:backdrop-blur-lg',
-    'hover:border-white/20'
-  ].filter(Boolean).join(' ') : '';
-
-  // Loading state
-  const loadingStyles = loading ? 'animate-pulse pointer-events-none' : '';
-
-  // Gradient background
-  const gradientStyles = gradient ? 
-    `bg-gradient-${gradient.direction || 'to-r'} from-${gradient.from} to-${gradient.to}` : '';
-
-  // Border styles
-  const borderStyles = getBorderStyles(border);
-
-  // Glow effect
-  const glowStyles = glow ? 'shadow-lg shadow-blue-500/25' : '';
-
-  // Combine all styles
-  const cardClasses = cn(
-    baseStyles,
-    variantStyles[variant],
-    sizeStyles[size],
-    interactiveStyles,
-    hoverStyles,
-    loadingStyles,
-    gradientStyles,
-    borderStyles,
-    glowStyles,
+  const baseClasses = cn(
+    'relative overflow-hidden transition-all duration-300',
+    {
+      // Variants
+      'bg-white/10 backdrop-blur-md border border-white/20': variant === 'glass',
+      'bg-black/80 border border-white/10': variant === 'solid',
+      'bg-gradient-to-br from-green-500/10 to-emerald-600/10 border border-green-500/20': variant === 'eco',
+      'bg-gradient-to-br from-blue-500/10 to-cyan-600/10 border border-blue-500/20': variant === 'wellness',
+      'bg-gradient-to-br from-purple-500/10 to-indigo-600/10 border border-purple-500/20': variant === 'financial',
+      'bg-transparent border border-white/5': variant === 'minimal',
+      
+      // Sizes
+      'p-3 rounded-lg text-sm': size === 'sm',
+      'p-4 rounded-xl text-base': size === 'md',
+      'p-6 rounded-2xl text-lg': size === 'lg',
+      'p-8 rounded-3xl text-xl': size === 'xl',
+      
+      // Interactive
+      'cursor-pointer hover:scale-[1.02] hover:bg-white/15': interactive,
+      
+      // Orientation
+      'flex flex-col': orientation === 'vertical',
+      'flex flex-row items-center': orientation === 'horizontal',
+    },
     className
   );
 
-  const handleClick = () => {
-    if (onClick && !loading) {
-      onClick();
-    }
+  const renderScore = () => {
+    if (typeof score !== 'number') return null;
+    
+    const scoreColor = score >= 80 ? '#10b981' : score >= 60 ? '#f59e0b' : '#ef4444';
+    
+    return (
+      <div className="flex flex-col items-center">
+        <div className="relative w-20 h-20">
+          <svg className="w-full h-full transform -rotate-90" viewBox="0 0 100 100">
+            <circle
+              cx="50"
+              cy="50"
+              r="40"
+              stroke="currentColor"
+              strokeWidth="8"
+              fill="none"
+              className="text-white/10"
+            />
+            <circle
+              cx="50"
+              cy="50"
+              r="40"
+              stroke={scoreColor}
+              strokeWidth="8"
+              fill="none"
+              strokeDasharray={`${2 * Math.PI * 40}`}
+              strokeDashoffset={`${2 * Math.PI * 40 * (1 - score / 100)}`}
+              className="transition-all duration-1000 ease-out"
+            />
+          </svg>
+          <div className="absolute inset-0 flex flex-col items-center justify-center">
+            <span className="text-2xl font-bold text-white">{score}</span>
+            <span className="text-xs text-white/60">Score</span>
+          </div>
+        </div>
+      </div>
+    );
   };
 
-  const handleKeyDown = (event: React.KeyboardEvent) => {
-    if ((event.key === 'Enter' || event.key === ' ') && onClick && !loading) {
-      event.preventDefault();
-      onClick();
-    }
+  const renderMetrics = () => {
+    if (!data?.metrics) return null;
+    
+    return (
+      <div className="grid grid-cols-2 gap-3">
+        {data.metrics.map((metric, index) => (
+          <div key={index} className="bg-white/5 rounded-lg p-3">
+            <div className="flex items-center space-x-2 mb-1">
+              {metric.icon && (
+                <metric.icon 
+                  className="w-3 h-3" 
+                  style={{ color: metric.color }} 
+                />
+              )}
+              <span className="text-xs text-white/60">{metric.label}</span>
+            </div>
+            <div className="text-sm font-semibold text-white">
+              {metric.value}
+            </div>
+          </div>
+        ))}
+      </div>
+    );
+  };
+
+  const renderTrends = () => {
+    if (!data?.trends) return null;
+    
+    return (
+      <div className="grid grid-cols-2 gap-2">
+        {data.trends.map((trend, index) => (
+          <div key={index} className="flex items-center justify-between p-2 rounded-lg bg-white/5">
+            <span className="text-xs text-white/70">{trend.label}</span>
+            <div className="flex items-center space-x-1">
+              <span 
+                className="text-sm font-bold"
+                style={{ 
+                  color: trend.trend === 'up' ? '#10b981' : 
+                         trend.trend === 'down' ? '#ef4444' : '#6b7280'
+                }}
+              >
+                {trend.trend === 'up' ? '↗' : trend.trend === 'down' ? '↘' : '—'}
+              </span>
+              {trend.value && (
+                <span className="text-xs text-white/60">{trend.value}</span>
+              )}
+            </div>
+          </div>
+        ))}
+      </div>
+    );
+  };
+
+  const renderSpending = () => {
+    if (!data?.spending) return null;
+    
+    return (
+      <div className="space-y-2">
+        {data.spending.map((item, index) => (
+          <div key={index} className="flex items-center justify-between">
+            <span className="text-sm text-white/70">{item.category}</span>
+            <span className="text-sm font-semibold text-white">
+              ${item.amount.toLocaleString()}
+            </span>
+          </div>
+        ))}
+      </div>
+    );
   };
 
   return (
-    <div
-      className={cardClasses}
-      onClick={handleClick}
-      onKeyDown={handleKeyDown}
-      tabIndex={interactive || onClick ? 0 : undefined}
-      role={interactive || onClick ? 'button' : undefined}
-      aria-label={interactive || onClick ? 'Interactive card' : undefined}
+    <div 
+      className={baseClasses} 
+      onClick={onClick}
+      {...props}
     >
-      {loading ? (
-        <CardSkeleton size={size} />
-      ) : (
-        <>
-          {/* Background Gradient Overlay */}
-          {gradient && (
-            <div className="absolute inset-0 rounded-inherit opacity-10 bg-gradient-to-r from-current to-transparent pointer-events-none" />
-          )}
-          
-          {/* Content */}
-          <div className="relative z-10">
-            {children}
-          </div>
-          
-          {/* Glow Overlay */}
-          {glow && (
-            <div className="absolute inset-0 rounded-inherit bg-gradient-to-r from-blue-500/10 to-purple-500/10 opacity-0 transition-opacity duration-300 group-hover:opacity-100 pointer-events-none" />
-          )}
-        </>
+      {showBackground && variant === 'glass' && (
+        <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-white/0 pointer-events-none" />
       )}
+      
+      <div className="relative z-10 h-full">
+        {/* Header */}
+        {(title || Icon) && (
+          <div className="flex items-center justify-between mb-4">
+            <div className="flex items-center space-x-3">
+              {Icon && (
+                <Icon 
+                  className="w-5 h-5" 
+                  style={{ color: iconColor }} 
+                />
+              )}
+              {title && (
+                <h3 className="font-semibold text-white">{title}</h3>
+              )}
+            </div>
+            {trend && (
+              <div className="flex items-center space-x-1">
+                <span 
+                  className="text-sm font-bold"
+                  style={{ 
+                    color: trend === 'up' ? '#10b981' : 
+                           trend === 'down' ? '#ef4444' : '#6b7280'
+                  }}
+                >
+                  {trend === 'up' ? '↗' : trend === 'down' ? '↘' : '—'}
+                </span>
+                {trendValue && (
+                  <span className="text-sm text-white/60">{trendValue}</span>
+                )}
+              </div>
+            )}
+          </div>
+        )}
+
+        {/* Score Circle */}
+        {typeof score === 'number' && renderScore()}
+
+        {/* Value Display */}
+        {value && (
+          <div className="text-center mb-4">
+            <div className="text-2xl font-bold text-white">{value}</div>
+          </div>
+        )}
+
+        {/* Metrics Grid */}
+        {data?.metrics && (
+          <div className="mb-4">
+            <h4 className="text-sm font-medium text-white mb-2">Metrics</h4>
+            {renderMetrics()}
+          </div>
+        )}
+
+        {/* Trends Grid */}
+        {data?.trends && (
+          <div className="mb-4">
+            <h4 className="text-sm font-medium text-white mb-2">Trends</h4>
+            {renderTrends()}
+          </div>
+        )}
+
+        {/* Spending List */}
+        {data?.spending && (
+          <div className="mb-4">
+            <h4 className="text-sm font-medium text-white mb-2">Spending</h4>
+            {renderSpending()}
+          </div>
+        )}
+
+        {/* Custom Children */}
+        {children}
+      </div>
     </div>
   );
 });
 
 UniversalCard.displayName = 'UniversalCard';
-
-// Helper Functions (memoized to prevent recreation)
-const getGlassStyles = (blur: 'light' | 'medium' | 'heavy'): string => {
-  const blurMap = {
-    light: 'backdrop-blur-sm bg-white/[0.03] border border-white/[0.05]',
-    medium: 'backdrop-blur-md bg-white/[0.06] border border-white/[0.08]', 
-    heavy: 'backdrop-blur-lg bg-white/[0.08] border border-white/[0.12]'
-  };
-  return blurMap[blur];
-};
-
-const getBorderStyles = (border: UniversalCardProps['border']): string => {
-  if (!border || border.style === 'none') return '';
-  
-  const widthMap = {
-    thin: 'border',
-    medium: 'border-2',
-    thick: 'border-4'
-  };
-  
-  const baseWidth = widthMap[border.width || 'thin'];
-  
-  switch (border.style) {
-    case 'solid':
-      return `${baseWidth} ${border.color || 'border-white/10'}`;
-    case 'gradient':
-      return `${baseWidth} border-transparent bg-gradient-to-r from-blue-500/30 to-purple-500/30 bg-clip-border`;
-    case 'glow':
-      return `${baseWidth} border-blue-500/30 shadow-md shadow-blue-500/20`;
-    default:
-      return baseWidth;
-  }
-};
-
-// Loading skeleton component
-const CardSkeleton = React.memo<{ size: 'sm' | 'md' | 'lg' }>(({ size }) => {
-  const heights = {
-    sm: 'h-16',
-    md: 'h-24', 
-    lg: 'h-32'
-  };
-  
-  return (
-    <div className="animate-pulse space-y-3">
-      <div className="bg-white/10 rounded h-4 w-3/4"></div>
-      <div className={`bg-white/5 rounded ${heights[size]}`}></div>
-      <div className="bg-white/10 rounded h-3 w-1/2"></div>
-    </div>
-  );
-});
-
-CardSkeleton.displayName = 'CardSkeleton';
 
 export default UniversalCard;

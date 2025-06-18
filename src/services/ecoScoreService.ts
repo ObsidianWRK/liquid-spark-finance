@@ -7,14 +7,7 @@
   sustainability provider (e.g. Sustain.Life, Greenly, Doconomy).
 */
 
-interface Transaction {
-  id: string;
-  merchant?: string;
-  category?: {
-    name: string;
-  };
-  amount: number; // negative = spend, positive = income
-}
+import { Transaction } from '@/types/shared';
 
 export interface EcoBreakdown {
   totalKgCO2e: number;

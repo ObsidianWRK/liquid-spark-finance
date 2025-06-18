@@ -102,7 +102,7 @@ export const useAnimationDelay = () => {
  */
 export const useLayoutDebug = (componentName: string) => {
   useEffect(() => {
-    if (process.env.NODE_ENV === 'development') {
+    if (import.meta.env.DEV) {
       console.log(`${componentName} mounted:`, {
         viewport: { width: window.innerWidth, height: window.innerHeight },
         userAgent: navigator.userAgent,

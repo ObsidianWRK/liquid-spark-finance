@@ -2,18 +2,7 @@ import React from 'react';
 import TransactionItem from './TransactionItem';
 import TransactionWithScores from './TransactionWithScores';
 import { calculateTransactionScores } from '@/utils/transactionScoring';
-
-interface Transaction {
-  id: string;
-  merchant: string;
-  category: {
-    name: string;
-    color: string;
-  };
-  amount: number;
-  date: string;
-  status: 'completed' | 'pending' | 'failed';
-}
+import { Transaction } from '@/types/shared';
 
 interface TransactionListProps {
   transactions: Transaction[];

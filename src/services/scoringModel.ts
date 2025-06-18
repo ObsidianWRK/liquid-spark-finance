@@ -1,20 +1,6 @@
 import { calculateHealthScore, fetchHealthMetrics } from './healthKitService';
 import { calculateEcoScore } from './ecoScoreService';
-
-interface Transaction {
-  id: string;
-  merchant?: string;
-  category?: { name: string; };
-  amount: number;
-  date: string;
-  status?: 'completed' | 'pending' | 'failed';
-}
-
-interface Account {
-  id: string;
-  type: string;
-  balance: number;
-}
+import { Transaction, Account } from '@/types/shared';
 
 export interface ScoreSummary {
   financial: number;

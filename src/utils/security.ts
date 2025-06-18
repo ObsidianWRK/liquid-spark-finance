@@ -359,12 +359,12 @@ export class VueniSecurityMonitor {
     }
 
     // Log to console in development
-    if (process.env.NODE_ENV === 'development') {
+    if (import.meta.env.DEV) {
       console.warn('[VueniSecurityMonitor]', event);
     }
 
     // In production, send to monitoring service
-    if (process.env.NODE_ENV === 'production') {
+    if (import.meta.env.PROD) {
       this.sendToMonitoringService(event);
     }
   }

@@ -2,8 +2,7 @@ import React, { useState } from 'react';
 import AppShell from '@/components/layout/AppShell';
 import CleanAccountCard from '@/components/financial/CleanAccountCard';
 import CleanCreditScoreCard from '@/components/financial/CleanCreditScoreCard';
-import { UnifiedTransactionList } from '@/components/shared';
-import { OptimizedTransactionList } from '@/components/transactions/OptimizedTransactionList';
+import { VueniUnifiedTransactionList } from '@/components/shared';
 import SimpleGlassCard from '@/components/ui/SimpleGlassCard';
 import { colors } from '@/theme/colors';
 import { 

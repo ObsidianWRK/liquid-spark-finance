@@ -4,6 +4,7 @@
  */
 
 import { VueniSecureStorage } from './crypto';
+import { generateSecureId } from './secureRandom';
 
 export interface SecurityEvent {
   id: string;
@@ -145,12 +146,12 @@ export class VueniSecurityMonitoring {
     this.checkAlertConditions(event);
 
     // Log to console in development
-    if (process.env.NODE_ENV === 'development') {
+    if (import.meta.env.DEV) {
       console.warn(`[VueniSecurity] ${severity.toUpperCase()}: ${type}`, event);
     }
 
     // Send to external monitoring in production
-    if (process.env.NODE_ENV === 'production') {
+    if (import.meta.env.PROD) {
       this.sendToExternalMonitoring(event);
     }
   }
@@ -326,7 +327,7 @@ export class VueniSecurityMonitoring {
     this.persistAlerts();
 
     // Send alert in production
-    if (process.env.NODE_ENV === 'production') {
+    if (import.meta.env.PROD) {
       this.sendAlert(alert);
     } else {
       console.warn('[VueniSecurity Alert]', alert);
@@ -382,14 +383,14 @@ export class VueniSecurityMonitoring {
    * Generates a unique event ID
    */
   private static generateEventId(): string {
-    return `evt_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+    return generateSecureId('evt');
   }
 
   /**
    * Generates a unique alert ID
    */
   private static generateAlertId(): string {
-    return `alt_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+    return generateSecureId('alt');
   }
 
   /**

@@ -1,12 +1,5 @@
 
-interface Transaction {
-  id: string;
-  merchant?: string;
-  category?: {
-    name: string;
-  };
-  amount: number;
-}
+import { Transaction } from '@/types/shared';
 
 export interface HealthData {
   score: number;

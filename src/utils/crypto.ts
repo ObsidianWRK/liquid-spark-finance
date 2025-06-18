@@ -1,7 +1,8 @@
 import CryptoJS from 'crypto-js';
+import { SecurityEnvValidator } from './envValidation';
 
-// Use environment variable or fallback to a default key (should be changed in production)
-const SECRET_KEY = process.env.VITE_ENCRYPTION_KEY || 'liquid-spark-secure-key-2024';
+// Get validated encryption key from environment
+const SECRET_KEY = SecurityEnvValidator.getValidatedEncryptionKey('VITE_VUENI_ENCRYPTION_KEY');
 
 // Session timeout for sensitive data (30 minutes)
 const SESSION_TIMEOUT = 30 * 60 * 1000;
@@ -196,12 +197,12 @@ export class VueniSecureStorage {
       this.auditLog.shift();
     }
 
-    if (process.env.NODE_ENV === 'development') {
+    if (import.meta.env.DEV) {
       console.log(`[VueniSecureStorage] ${action}: ${this.maskSensitiveKey(key)}`, metadata);
     }
 
     // In production, send to audit service
-    if (process.env.NODE_ENV === 'production') {
+    if (import.meta.env.PROD) {
       this.sendToAuditService(logEntry);
     }
   }
@@ -221,7 +222,7 @@ export class VueniSecureStorage {
     console.warn('[VueniSecureStorage Security Event]', securityEvent);
 
     // In production, this would trigger security monitoring alerts
-    if (process.env.NODE_ENV === 'production') {
+    if (import.meta.env.PROD) {
       this.sendSecurityAlert(securityEvent);
     }
   }
@@ -308,14 +309,6 @@ export class SecureStorage extends VueniSecureStorage {
   static clear(): void {
     super.clear('VUENI_CLEAR_ALL_DATA');
   }
-
-  // Audit logging for compliance
-  private static logAccess(action: string, key: string): void {
-    if (process.env.NODE_ENV === 'development') {
-      console.log(`[SecureStorage] ${action}: ${key} at ${new Date().toISOString()}`);
-    }
-    // In production, this would send to a proper audit log service
-  }
 }
 
 // Helper functions for backward compatibility
@@ -364,9 +357,17 @@ export const hashData = (data: string): string => {
   return CryptoJS.SHA256(data).toString();
 };
 
-// Generate secure random tokens
+// Generate secure random tokens using crypto.getRandomValues()
 export const generateSecureToken = (length: number = 32): string => {
-  return CryptoJS.lib.WordArray.random(length).toString();
+  if (typeof window !== 'undefined' && window.crypto && window.crypto.getRandomValues) {
+    // Browser environment - use Web Crypto API
+    const array = new Uint8Array(length);
+    window.crypto.getRandomValues(array);
+    return Array.from(array, byte => byte.toString(16).padStart(2, '0')).join('');
+  } else {
+    // Fallback to CryptoJS for non-browser environments
+    return CryptoJS.lib.WordArray.random(length).toString();
+  }
 };
 
 // Mask financial data for display

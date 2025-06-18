@@ -2,24 +2,14 @@ import React, { useState } from 'react';
 import GlassCard from './GlassCard';
 import { TransactionScores } from '@/utils/transactionScoring';
 import { Package, Truck, Plane } from 'lucide-react';
-
-interface Transaction {
-  id: string;
-  merchant: string;
-  category: {
-    name: string;
-    color: string;
-  };
-  amount: number;
-  date: string;
-  status: 'completed' | 'pending' | 'failed';
-  trackingNumber?: string;
-  shippingProvider?: 'UPS' | 'FedEx' | 'USPS';
-  deliveryStatus?: 'In Transit' | 'Out for Delivery' | 'Delivered';
-}
+import { Transaction } from '@/types/shared';
 
 interface TransactionWithScoresProps {
-  transaction: Transaction;
+  transaction: Transaction & {
+    trackingNumber?: string;
+    shippingProvider?: 'UPS' | 'FedEx' | 'USPS';
+    deliveryStatus?: 'In Transit' | 'Out for Delivery' | 'Delivered';
+  };
   scores: TransactionScores;
   currency: string;
 }

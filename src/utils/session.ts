@@ -4,6 +4,7 @@
  */
 
 import { VueniSecureStorage } from './crypto';
+import { generateSecureToken } from './secureRandom';
 import { VueniSecurityMonitor } from './security';
 
 export interface VueniSession {
@@ -305,14 +306,7 @@ export class VueniSessionManager {
    * Generates a cryptographically secure session ID
    */
   private static generateSessionId(): string {
-    if (typeof crypto !== 'undefined' && crypto.getRandomValues) {
-      const array = new Uint8Array(32);
-      crypto.getRandomValues(array);
-      return Array.from(array, byte => byte.toString(16).padStart(2, '0')).join('');
-    } else {
-      // Fallback for environments without crypto API
-      return Date.now().toString(36) + Math.random().toString(36).substr(2);
-    }
+    return generateSecureToken(32);
   }
 
   /**

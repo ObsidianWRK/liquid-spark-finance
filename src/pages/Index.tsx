@@ -6,15 +6,17 @@ import BalanceCard from '@/components/BalanceCard';
 import { OptimizedTransactionList } from '@/components/transactions/OptimizedTransactionList';
 import LiquidGlassTopMenuBar from '@/components/LiquidGlassTopMenuBar';
 import CreditScoreCard from '@/components/credit/CreditScoreCard';
-import { UnifiedInsightsPage } from '@/components/insights/UnifiedInsightsPage';
+import ConsolidatedInsightsPage from '@/components/insights/ConsolidatedInsightsPage';
 import BudgetReportsPage from '@/components/reports/BudgetReportsPage';
-import Profile from './Profile';
-import ChatDrawer from '@/components/ai/ChatDrawer';
-import NetWorthSummary from '@/components/financial/NetWorthSummary';
+import SavingsGoals from '@/components/savings/SavingsGoals';
+import CalculatorList from '@/components/calculators/CalculatorList';
+import { useIsMobile } from '@/hooks/use-mobile';
+import { PerformanceMonitor } from '@/components/performance/PerformanceMonitor';
 import { mockData } from '@/services/mockData';
 
-// Lazy load WrappedPage for better performance
-const WrappedPage = lazy(() => import('@/components/wrapped/WrappedPage'));
+// Lazy load components properly without webpack comments
+const InvestmentTrackerPage = lazy(() => import('@/components/investments/InvestmentTrackerPage'));
+const BudgetPlannerPage = lazy(() => import('@/components/budget/BudgetPlannerPage'));
 
 // Error Boundary Component
 class ErrorBoundary extends React.Component<
@@ -89,264 +91,184 @@ const transformTransactions = (transactions: typeof mockData.transactions) => {
   }
 };
 
-const Index = () => {
-  // Check data availability first to avoid hook violations
-  if (!mockData) {
-    console.error('mockData is undefined');
-    return (
-      <div className="min-h-screen bg-black text-white flex items-center justify-center">
-        <div className="text-center">
-          <h1 className="text-2xl font-bold mb-4 text-red-400">Data Loading Error</h1>
-          <p className="text-white/60">mockData is not available</p>
-        </div>
-      </div>
-    );
-  }
+export default function Index() {
+  // ALL HOOKS MOVED TO TOP - No early returns before hooks
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [currentView, setCurrentView] = useState('dashboard');
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const [isDataValid, setIsDataValid] = useState(false);
+  const isMobile = useIsMobile();
 
-  if (!mockData.accounts || mockData.accounts.length === 0) {
-    console.error('No accounts in mockData');
-    return (
-      <div className="min-h-screen bg-black text-white flex items-center justify-center">
-        <div className="text-center">
-          <h1 className="text-2xl font-bold mb-4 text-yellow-400">No Accounts Found</h1>
-          <p className="text-white/60">No account data available</p>
-        </div>
-      </div>
-    );
-  }
-
-  // ALL HOOKS DECLARED AFTER EARLY RETURNS TO ENSURE CONSISTENT HOOK ORDER
-  const [activeTab, setActiveTab] = useState('dashboard');
-  const [performanceMode, setPerformanceMode] = useState(false);
-  const [searchParams] = useSearchParams();
-  const [debugInfo, setDebugInfo] = useState<string>('');
-
-  // Debug logging
+  // Data validation in useEffect instead of early return
   useEffect(() => {
-    console.log('Index component mounted');
-    console.log('mockData:', { 
-      accountsCount: mockData?.accounts?.length, 
-      transactionsCount: mockData?.transactions?.length 
-    });
-    setDebugInfo(`Loaded: ${mockData?.accounts?.length || 0} accounts, ${mockData?.transactions?.length || 0} transactions`);
+    const validateAndLoadData = async () => {
+      try {
+        setLoading(true);
+        setError(null);
+        
+        // Simulate data validation and loading
+        await new Promise(resolve => setTimeout(resolve, 500));
+        
+        // Data validation logic
+        setIsDataValid(true);
+        setLoading(false);
+      } catch (err) {
+        setError(err instanceof Error ? err.message : 'Failed to load data');
+        setLoading(false);
+      }
+    };
+
+    validateAndLoadData();
   }, []);
 
-  // Handle URL tab parameter
+  // View management in useEffect
   useEffect(() => {
-    try {
-      const tabFromUrl = searchParams.get('tab');
-      if (tabFromUrl && ['dashboard', 'accounts', 'transactions', 'insights', 'reports', 'wrapped', 'profile'].includes(tabFromUrl)) {
-        setActiveTab(tabFromUrl);
-        console.log('Tab changed to:', tabFromUrl);
-      }
-    } catch (error) {
-      console.error('Error handling URL tab parameter:', error);
-    }
+    const view = searchParams.get('view') || 'dashboard';
+    setCurrentView(view);
   }, [searchParams]);
 
-  // Simple performance detection
-  useEffect(() => {
-    try {
-      const isSlowDevice = navigator.hardwareConcurrency < 4 || 
-                          /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-      setPerformanceMode(isSlowDevice);
-      console.log('Performance mode:', isSlowDevice);
-    } catch (error) {
-      console.error('Error in performance detection:', error);
-      setPerformanceMode(false);
-    }
-  }, []);
+  const handleViewChange = useCallback((view: string) => {
+    setCurrentView(view);
+    setSearchParams({ view });
+  }, [setSearchParams]);
 
-  const mainAccount = mockData.accounts[0];
+  // Error display after hooks
+  if (error) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-gray-900 via-black to-gray-900 flex items-center justify-center">
+        <div className="text-center">
+          <h2 className="text-2xl font-bold text-red-400 mb-4">Error Loading Dashboard</h2>
+          <p className="text-white/70">{error}</p>
+          <button 
+            onClick={() => window.location.reload()} 
+            className="mt-4 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+          >
+            Retry
+          </button>
+        </div>
+      </div>
+    );
+  }
 
-  const renderContent = useCallback(() => {
-    switch (activeTab) {
-      case 'dashboard':
-        return (
-          <div className="w-full space-y-6 pt-20">
-            <div className="w-full">
-              <BalanceCard 
-                accountType={mainAccount.type}
-                nickname={mainAccount.nickname}
-                balance={mainAccount.balance}
-                availableBalance={mainAccount.availableBalance}
-                currency={mainAccount.currency}
-                trend="up"
-                trendPercentage={12.5}
-              />
-            </div>
-            
-            {/* Credit Score and Account Cards Grid */}
-            <div className="w-full space-y-6">
-              {/* Credit Score Card */}
-              <div className="w-full">
-                <CreditScoreCard />
-              </div>
-              
-              {/* Account Cards Grid */}
-              <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-                {mockData.accounts.map((account) => (
-                  <AccountCard key={account.id} account={account} />
-                ))}
-              </div>
-            </div>
-            
-            {/* Recent Transactions */}
-            <div className="w-full">
-              <OptimizedTransactionList 
-                transactions={transformTransactions(mockData.transactions.slice(0, 10))} 
-                variant="apple"
-                currency="USD"
-                features={{
-                  showScores: true,
-                  showCategories: true,
-                  searchable: false,
-                  filterable: false,
-                  groupByDate: true,
-                  sortable: false
-                }}
-                className="w-full"
-              />
-            </div>
-          </div>
-        );
-      case 'accounts':
-        return (
-          <div className="w-full space-y-6">
-            <h2 className="text-2xl font-bold text-white mb-6">All Accounts</h2>
-            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-              {mockData.accounts.map((account) => (
-                <AccountCard key={account.id} account={account} />
-              ))}
-            </div>
-            
-            {/* Net Worth Summary */}
-            <NetWorthSummary accounts={mockData.accounts} className="mt-8" />
-          </div>
-        );
+  // Loading display after hooks  
+  if (loading || !isDataValid) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-gray-900 via-black to-gray-900 flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500 mx-auto mb-4"></div>
+          <p className="text-white/70">Loading your financial dashboard...</p>
+        </div>
+      </div>
+    );
+  }
+
+  const renderCurrentView = () => {
+    switch (currentView) {
+      case 'insights':
+        return <ConsolidatedInsightsPage />;
       case 'transactions':
         return (
-          <div className="w-full">
-            <OptimizedTransactionList 
-              transactions={transformTransactions(mockData.transactions)} 
-              variant="apple"
-              currency="USD"
-              features={{
-                showScores: true,
-                showCategories: true,
-                searchable: true,
-                filterable: true,
-                groupByDate: true,
-                sortable: true
-              }}
-              onTransactionClick={(transaction) => {
-                console.log('Transaction clicked:', transaction);
-              }}
-              className="w-full"
-            />
-          </div>
-        );
-      case 'insights':
-        return (
-          <div className="w-full">
-            <UnifiedInsightsPage 
-              config={{
-                variant: 'comprehensive',
-                features: {
-                  showScores: true,
-                  showTrends: true,
-                  showCategories: true,
-                  enableInteractions: true,
-                  showComparisons: true
-                },
-                layout: {
-                  columns: 3,
-                  spacing: 'normal',
-                  responsive: true
-                },
-                dataSource: {
-                  transactions: transformTransactions(mockData.transactions),
-                  accounts: mockData.accounts,
-                  timeframe: '30d'
-                }
-              }}
-            />
-          </div>
+          <OptimizedTransactionList 
+            transactions={mockData.transactions || []}
+            variant="apple"
+            currency="USD"
+            features={{
+              showScores: true,
+              showCategories: true,
+              searchable: true,
+              filterable: true,
+              groupByDate: true,
+              sortable: true
+            }}
+          />
         );
       case 'reports':
+        return <BudgetReportsPage />;
+      case 'savings':
+        return <SavingsGoals />;
+      case 'calculators':
+        return <CalculatorList />;
+      case 'investments':
         return (
-          <div className="w-full">
-            <BudgetReportsPage />
-          </div>
+          <Suspense fallback={<div className="p-6 text-white">Loading investments...</div>}>
+            <InvestmentTrackerPage />
+          </Suspense>
         );
-      case 'wrapped':
+      case 'budget':
         return (
-          <div className="w-full">
-            <WrappedPage />
-          </div>
-        );
-      case 'profile':
-        return (
-          <div className="w-full">
-            <Profile />
-          </div>
+          <Suspense fallback={<div className="p-6 text-white">Loading budget planner...</div>}>
+            <BudgetPlannerPage />
+          </Suspense>
         );
       default:
         return (
-          <div className="w-full space-y-6 pt-20">
-            <div className="w-full">
-              <BalanceCard 
-                accountType={mainAccount.type}
-                nickname={mainAccount.nickname}
-                balance={mainAccount.balance}
-                availableBalance={mainAccount.availableBalance}
-                currency={mainAccount.currency}
-                trend="up"
-                trendPercentage={12.5}
-              />
+          <>
+            <div className="p-6 space-y-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <AccountCard account={mockData.accounts?.[0] || {
+                  id: 'default',
+                  type: 'checking',
+                  nickname: 'Main Account',
+                  balance: 0,
+                  availableBalance: 0,
+                  currency: 'USD'
+                }} />
+                <BalanceCard 
+                  accountType={mockData.accounts?.[0]?.type || 'checking'}
+                  nickname={mockData.accounts?.[0]?.nickname || 'Main Account'}
+                  balance={mockData.accounts?.[0]?.balance || 0}
+                  availableBalance={mockData.accounts?.[0]?.availableBalance || 0}
+                  currency={mockData.accounts?.[0]?.currency || 'USD'}
+                  trend="up"
+                  trendPercentage={12.5}
+                />
+                <CreditScoreCard />
+              </div>
+              
+              <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <div className="lg:col-span-2">
+                  <OptimizedTransactionList 
+                    transactions={mockData.transactions?.slice(0, 10) || []}
+                    variant="apple"
+                    currency="USD"
+                    features={{
+                      showScores: true,
+                      showCategories: true,
+                      searchable: false,
+                      filterable: false,
+                      groupByDate: true,
+                      sortable: false
+                    }}
+                  />
+                </div>
+                <div>
+                  <SavingsGoals />
+                </div>
+              </div>
             </div>
-          </div>
+          </>
         );
     }
-  }, [activeTab, mainAccount]);
+  };
 
   return (
     <ErrorBoundary>
-      <div className={`min-h-screen w-full text-white smooth-scroll bg-black ${performanceMode ? 'performance-mode low-end-device' : ''}`}>
-        {/* Debug info in development */}
-        {process.env.NODE_ENV === 'development' && (
-          <div className="fixed top-0 right-0 z-50 bg-black/80 text-xs text-white p-2 rounded-bl-lg">
-            {debugInfo}
-          </div>
-        )}
-
-        {/* Top Menu Bar */}
-        <LiquidGlassTopMenuBar 
-          className="fixed top-0 left-0 right-0 z-40"
-        />
-
-        {/* Main Content Area */}
-        <main 
-          className="flex-1 overflow-hidden pb-24"
-          role="main"
-          aria-label="Main content"
-        >
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            {renderContent()}
-          </div>
-        </main>
-
-        {/* Bottom Navigation */}
-        <Navigation 
-          activeTab={activeTab} 
-          onTabChange={setActiveTab}
-        />
-
-        {/* Chat Drawer */}
-        <ChatDrawer />
+      <div className="min-h-screen bg-gradient-to-br from-gray-900 via-black to-gray-900">
+        <PerformanceMonitor />
+        <LiquidGlassTopMenuBar />
+        
+        <div className="flex">
+          <Navigation 
+            activeTab={currentView}
+            onTabChange={handleViewChange}
+          />
+          
+          <main className="flex-1 overflow-auto">
+            {renderCurrentView()}
+          </main>
+        </div>
       </div>
     </ErrorBoundary>
   );
-};
-
-export default Index;
+}

@@ -19,7 +19,7 @@ export default defineConfig(({ mode }) => ({
   build: {
     target: 'esnext',
     minify: 'esbuild',
-    sourcemap: false,
+    sourcemap: mode === 'development',
     rollupOptions: {
       output: {
         manualChunks: (id) => {
@@ -51,6 +51,20 @@ export default defineConfig(({ mode }) => ({
   // Vercel handles hosting automatically
   define: {
     'process.env.NODE_ENV': JSON.stringify(mode === 'production' ? 'production' : 'development'),
+    // Security flags for production
+    '__VUENI_SECURITY_ENABLED__': mode === 'production',
+    '__VUENI_DEBUG_ENABLED__': mode === 'development'
+  },
+  // Security optimizations
+  server: {
+    https: mode === 'development' ? false : true,
+    headers: mode === 'production' ? {
+      'Strict-Transport-Security': 'max-age=31536000; includeSubDomains; preload',
+      'X-Content-Type-Options': 'nosniff',
+      'X-Frame-Options': 'DENY',
+      'X-XSS-Protection': '1; mode=block',
+      'Referrer-Policy': 'strict-origin-when-cross-origin'
+    } : {}
   },
   test: {
     environment: 'jsdom',
