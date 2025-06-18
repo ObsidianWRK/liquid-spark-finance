@@ -1,3 +1,5 @@
-// Optimized Profile - Route to optimized implementation
+// Optimized Profile - Vercel-Compatible Export
 // Original Profile.tsx: 764 lines → OptimizedProfile.tsx: 200 lines (74% reduction)
-export { default } from './OptimizedProfile';
+import OptimizedProfile from './OptimizedProfile';
+
+export default OptimizedProfile;

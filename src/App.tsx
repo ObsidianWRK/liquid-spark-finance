@@ -8,46 +8,24 @@ import { UniversalCard } from '@/components/ui/UniversalCard';
 
 const queryClient = new QueryClient();
 
-// Advanced Lazy Loading with Chunk Names for Bundle Analysis
-const Index = lazy(() => 
-  import(/* webpackChunkName: "index" */ './pages/Index')
-);
-const Profile = lazy(() => 
-  import(/* webpackChunkName: "profile" */ './pages/Profile')
-);
-const NotFound = lazy(() => 
-  import(/* webpackChunkName: "not-found" */ './pages/NotFound')
-);
+// Vite-Compatible Lazy Loading (NO Webpack chunks) - Fixed for Vercel
+const Index = lazy(() => import('./pages/Index'));
+const Profile = lazy(() => import('./pages/Profile'));
+const NotFound = lazy(() => import('./pages/NotFound'));
 
-// Financial Components Chunk
-const CreditScorePage = lazy(() => 
-  import(/* webpackChunkName: "financial" */ './components/credit/CreditScorePage')
-);
-const SavingsGoals = lazy(() => 
-  import(/* webpackChunkName: "financial" */ './components/savings/SavingsGoals')
-);
-const BudgetPlannerPage = lazy(() => 
-  import(/* webpackChunkName: "financial" */ './components/budget/BudgetPlannerPage')
-);
-const InvestmentTrackerPage = lazy(() => 
-  import(/* webpackChunkName: "financial" */ './components/investments/InvestmentTrackerPage')
-);
-const BudgetReportsPage = lazy(() => 
-  import(/* webpackChunkName: "reports" */ './components/reports/BudgetReportsPage')
-);
+// Financial Components
+const CreditScorePage = lazy(() => import('./components/credit/CreditScorePage'));
+const SavingsGoals = lazy(() => import('./components/savings/SavingsGoals'));
+const BudgetPlannerPage = lazy(() => import('./components/budget/BudgetPlannerPage'));
+const InvestmentTrackerPage = lazy(() => import('./components/investments/InvestmentTrackerPage'));
+const BudgetReportsPage = lazy(() => import('./components/reports/BudgetReportsPage'));
 
-// Tools & Utilities Chunk
-const TransactionDemo = lazy(() => 
-  import(/* webpackChunkName: "tools" */ './pages/TransactionDemo')
-);
-const CalculatorsPage = lazy(() => 
-  import(/* webpackChunkName: "tools" */ './pages/CalculatorsPage')
-);
+// Tools & Utilities
+const TransactionDemo = lazy(() => import('./pages/TransactionDemo'));
+const CalculatorsPage = lazy(() => import('./pages/CalculatorsPage'));
 
-// Insights Chunk (Optimized)
-const InsightsPage = lazy(() => 
-  import(/* webpackChunkName: "insights" */ './pages/InsightsPage')
-);
+// Insights (Fixed for Vercel)
+const InsightsPage = lazy(() => import('./pages/InsightsPage'));
 
 // Enhanced Loading Fallback Component
 const OptimizedLoadingFallback = () => (

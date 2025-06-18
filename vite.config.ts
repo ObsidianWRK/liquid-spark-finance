@@ -47,13 +47,10 @@ export default defineConfig(({ mode }) => ({
     },
     chunkSizeWarningLimit: 1000
   },
-  server: {
-    host: "::",
-    port: 8080,
-  },
-  preview: {
-    port: 8080,
-    host: true
+  // Server config removed for Vercel compatibility
+  // Vercel handles hosting automatically
+  define: {
+    'process.env.NODE_ENV': JSON.stringify(mode === 'production' ? 'production' : 'development'),
   },
   test: {
     environment: 'jsdom',
