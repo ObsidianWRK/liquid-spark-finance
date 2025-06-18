@@ -948,8 +948,14 @@ html:not(.dark) [class*="text-muted"] {
 
 /* Global overrides for full-screen */
 html, body {
-  width: 100%;
+  /* Ensure full-height layout for scroll containers */
+  height: 100%;
+  /* Prevent browser bounce and nested scroll lag */
+  overscroll-behavior: contain;
+  /* Maintain horizontal clipping while allowing normal vertical scroll */
   overflow-x: hidden;
+  overflow-y: auto;
+  width: 100%;
   margin: 0;
   padding: 0;
 }
@@ -1124,4 +1130,87 @@ html, body {
   .bottom-fab-large-desktop {
     bottom: calc(var(--bottom-nav-height) + 3rem);
   }
+}
+
+/* ==============================================
+   Desktop Space Utilization Enhancements
+   ============================================== */
+
+/* Better desktop container widths */
+@media (min-width: 1024px) {
+  .main-content-container {
+    max-width: none !important;
+    width: 100% !important;
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+}
+
+@media (min-width: 1440px) {
+  .main-content-container {
+    padding-left: 3rem;
+    padding-right: 3rem;
+  }
+}
+
+@media (min-width: 1920px) {
+  .main-content-container {
+    padding-left: 4rem;
+    padding-right: 4rem;
+  }
+}
+
+/* Enhanced transaction layout for desktop */
+@media (min-width: 1024px) {
+  .transaction-view-responsive {
+    /* Desktop: Better utilization of space */
+    display: block;
+    width: 100%;
+  }
+  
+  .transaction-list {
+    gap: 0.5rem;
+  }
+}
+
+/* Remove artificial container constraints on desktop */
+@media (min-width: 1024px) {
+  .max-w-md,
+  .max-w-lg,
+  .max-w-xl,
+  .max-w-2xl,
+  .max-w-3xl,
+  .max-w-4xl,
+  .max-w-5xl,
+  .max-w-6xl,
+  .max-w-7xl {
+    max-width: none !important;
+  }
+  
+  .container {
+    max-width: none !important;
+    width: 100% !important;
+  }
+}
+
+/* Better desktop header spacing */
+@media (min-width: 1024px) {
+  .page-header-desktop {
+    padding: 2rem 0 1.5rem 0;
+  }
+  
+  .page-header-desktop h1 {
+    font-size: 2.5rem;
+    line-height: 1.2;
+  }
+  
+  .page-header-desktop p {
+    font-size: 1.125rem;
+    margin-top: 0.5rem;
+  }
+}
+
+/* Root container needs to stretch the full viewport height so the first wheel delta scrolls immediately */
+#root {
+  min-height: 100%;
 } 

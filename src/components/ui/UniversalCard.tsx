@@ -1,6 +1,7 @@
 import React from 'react';
 import { cn } from '@/lib/utils';
 import { LucideIcon } from 'lucide-react';
+import { formatFinancialScore } from '@/utils/formatters';
 
 // Universal Card Component - Consolidates:
 // - GlassCard.tsx
@@ -106,6 +107,8 @@ export const UniversalCard = React.memo<UniversalCardProps>(({
     
     const scoreColor = score >= 80 ? '#10b981' : score >= 60 ? '#f59e0b' : '#ef4444';
     
+    const displayScore = formatFinancialScore(score);
+    
     return (
       <div className="flex flex-col items-center">
         <div className="relative w-20 h-20">
@@ -132,7 +135,7 @@ export const UniversalCard = React.memo<UniversalCardProps>(({
             />
           </svg>
           <div className="absolute inset-0 flex flex-col items-center justify-center">
-            <span className="text-2xl font-bold text-white">{score}</span>
+            <span className="text-2xl font-bold text-white">{displayScore}</span>
             <span className="text-xs text-white/60">Score</span>
           </div>
         </div>

@@ -1,8 +1,13 @@
 import React, { useState, useEffect, useMemo, Suspense, lazy } from 'react';
-import { Heart, Leaf, DollarSign, TrendingUp, Calendar, BarChart3 } from 'lucide-react';
-import { SharedScoreCircle } from '@/components/shared';
+import { Heart, Leaf, DollarSign, TrendingUp, Calendar, BarChart3, ArrowLeft } from 'lucide-react';
+import { SharedScoreCircle } from '@/components/shared/SharedScoreCircle';
 import { Transaction, Account } from '@/types/shared';
 import { formatScore, formatPercentage } from '@/utils/formatters';
+import { useNavigate } from 'react-router-dom';
+import { generateScoreSummary } from '@/services/scoringModel';
+import { mockHealthEcoService } from '@/services/mockHealthEcoService';
+import { mockHistoricalService } from '@/services/mockHistoricalData';
+import { cn } from '@/lib/utils';
 
 // Lazy load heavy components for performance
 const FinancialCard = lazy(() => import('./FinancialCard'));
@@ -11,9 +16,6 @@ const EcoCard = lazy(() => import('./EcoCard'));
 const TimeSeriesChart = lazy(() => import('./TimeSeriesChart'));
 const SpendingTrendsChart = lazy(() => import('./SpendingTrendsChart'));
 const CategoryTrendsChart = lazy(() => import('./CategoryTrendsChart'));
-import { generateScoreSummary } from '@/services/scoringModel';
-import { mockHealthEcoService } from '@/services/mockHealthEcoService';
-import { mockHistoricalService } from '@/services/mockHistoricalData';
 
 const LoadingSpinner = () => (
   <div className="flex items-center justify-center py-12">
@@ -27,6 +29,7 @@ interface NewInsightsPageProps {
 }
 
 const NewInsightsPage: React.FC<NewInsightsPageProps> = ({ transactions, accounts }) => {
+  const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState('overview');
   const [scores, setScores] = useState({ financial: 0, health: 0, eco: 0 });
   const [isLoading, setIsLoading] = useState(true);
@@ -59,7 +62,7 @@ const NewInsightsPage: React.FC<NewInsightsPageProps> = ({ transactions, account
     
     const completedTransactions = transactions.filter(t => t.status === 'completed').length;
     const totalTransactions = transactions.length;
-    const billPaymentScore = totalTransactions > 0 ? (completedTransactions / totalTransactions) * 100 : 100;
+    const billPaymentScore = totalTransactions > 0 ? Math.round((completedTransactions / totalTransactions) * 100) : 100;
 
     return {
       overallScore: scores.financial,
@@ -167,6 +170,15 @@ const NewInsightsPage: React.FC<NewInsightsPageProps> = ({ transactions, account
   return (
     <div className="w-full text-white">
       <div className="w-full px-4 sm:px-6 lg:px-8 py-6 sm:py-8 lg:py-12 max-w-7xl mx-auto">
+        {/* Back Button */}
+        <button
+          onClick={() => navigate('/')}
+          className="flex items-center gap-2 px-3 py-2 rounded-xl text-white/80 hover:text-white hover:bg-white/[0.05] transition-colors mb-6"
+        >
+          <ArrowLeft className="w-4 h-4" />
+          <span className="text-sm">Dashboard</span>
+        </button>
+
         {/* Header */}
         <div className="text-center mb-8 sm:mb-12">
           <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-4">

@@ -18,8 +18,10 @@ import {
   AlertTriangle,
   ArrowRight,
   Zap,
-  Brain
+  Brain,
+  ArrowLeft
 } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import { financialPlanningService } from '@/services/financialPlanningService';
 import { FinancialGoal, GoalCategory, PlanningRecommendation } from '@/types/financialPlanning';
 import { cn } from '@/lib/utils';
@@ -29,6 +31,7 @@ interface FinancialPlanningPageProps {
 }
 
 const FinancialPlanningPage = ({ familyId = 'demo_family' }: FinancialPlanningPageProps) => {
+  const navigate = useNavigate();
   const [goals, setGoals] = useState<FinancialGoal[]>([]);
   const [healthScore, setHealthScore] = useState<any>(null);
   const [recommendations, setRecommendations] = useState<PlanningRecommendation[]>([]);
@@ -218,6 +221,15 @@ const FinancialPlanningPage = ({ familyId = 'demo_family' }: FinancialPlanningPa
 
   return (
     <div className="p-6 space-y-8">
+      {/* Back Button */}
+      <button
+        onClick={() => navigate('/')}
+        className="flex items-center gap-2 px-3 py-2 rounded-xl text-white/80 hover:text-white hover:bg-white/[0.05] transition-colors"
+      >
+        <ArrowLeft className="w-4 h-4" />
+        <span className="text-sm">Dashboard</span>
+      </button>
+
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>

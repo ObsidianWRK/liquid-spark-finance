@@ -136,7 +136,7 @@ export const OptimizedTransactionList = React.memo<TransactionListProps>(({
         return {
           container: '',
           item: 'hover:bg-white/5 border-b border-white/10 last:border-b-0',
-          spacing: 'py-4 px-5'
+          spacing: 'py-4 px-5 lg:py-3 lg:px-6'
         };
       case 'modern':
         return {
@@ -236,7 +236,7 @@ export const OptimizedTransactionList = React.memo<TransactionListProps>(({
       {/* Transaction List */}
       <div 
         className={cn(
-          'max-h-96 overflow-y-auto transaction-scroll-container', 
+          'max-h-96 md:max-h-[60vh] lg:max-h-[70vh] overflow-y-auto transaction-scroll-container', 
           variantStyles.container
         )}
         style={{
@@ -317,7 +317,7 @@ const TransactionItem = React.memo<{
   return (
     <div
       className={cn(
-        'flex items-center justify-between cursor-pointer transition-colors',
+        'grid grid-cols-[auto,1fr,auto,auto] lg:grid-cols-[auto,2fr,1fr,auto,auto] items-center cursor-pointer transition-colors gap-3 lg:gap-4',
         styles.item,
         styles.spacing
       )}
@@ -331,59 +331,57 @@ const TransactionItem = React.memo<{
         }
       }}
     >
-      {/* Left Side */}
-      <div className="flex items-center space-x-3">
-        {/* Category Icon */}
-        <div 
-          className="w-10 h-10 rounded-lg flex items-center justify-center text-white font-semibold text-sm"
-          style={{ backgroundColor: transaction.category.color + '30' }}
-        >
-          {transaction.merchant.charAt(0).toUpperCase()}
-        </div>
+      {/* Category Icon */}
+      <div 
+        className="w-10 h-10 lg:w-8 lg:h-8 rounded-lg flex items-center justify-center text-white font-semibold text-sm lg:text-xs"
+        style={{ backgroundColor: transaction.category.color + '30' }}
+      >
+        {transaction.merchant.charAt(0).toUpperCase()}
+      </div>
 
-        {/* Transaction Details */}
-        <div className="space-y-1">
-          <div className="font-medium text-white">{transaction.merchant}</div>
-          <div className="flex items-center space-x-2">
-            {features.showCategories && (
-              <span className="text-xs text-white/60">{transaction.category.name}</span>
-            )}
-            <span className="text-xs text-white/60">{formatDate(transaction.date)}</span>
-          </div>
+      {/* Transaction Details */}
+      <div className="min-w-0">
+        <div className="font-medium text-white truncate">{transaction.merchant}</div>
+        <div className="flex items-center space-x-2">
+          {features.showCategories && (
+            <span className="text-xs text-white/60 truncate">{transaction.category.name}</span>
+          )}
         </div>
       </div>
 
-      {/* Right Side */}
-      <div className="text-right space-y-1">
-        {/* Amount */}
-        <div className={cn(
-          'font-semibold',
-          transaction.amount < 0 ? 'text-red-400' : 'text-green-400'
-        )}>
-          {transaction.amount < 0 ? '-' : '+'}{formatAmount(transaction.amount)}
-        </div>
-
-        {/* Scores */}
-        {features.showScores && transaction.scores && (
-          <div className="flex space-x-1">
-            <div className="w-6 h-6 rounded-full bg-green-500/20 flex items-center justify-center">
-              <span className="text-xs text-green-400 font-semibold">
-                {transaction.scores.health}
-              </span>
-            </div>
-            <div className="w-6 h-6 rounded-full bg-blue-500/20 flex items-center justify-center">
-              <span className="text-xs text-blue-400 font-semibold">
-                {transaction.scores.eco}
-              </span>
-            </div>
-            <div className="w-6 h-6 rounded-full bg-purple-500/20 flex items-center justify-center">
-              <span className="text-xs text-purple-400 font-semibold">
-                {transaction.scores.financial}
-              </span>
-            </div>
-          </div>
-        )}
+      {/* Date - Hidden on mobile, shown on desktop */}
+      <div className="hidden lg:block text-sm text-white/60">
+        {formatDate(transaction.date)}
       </div>
+
+      {/* Amount */}
+      <div className={cn(
+        'font-semibold text-right',
+        transaction.amount < 0 ? 'text-red-400' : 'text-green-400'
+      )}>
+        {transaction.amount < 0 ? '-' : '+'}{formatAmount(transaction.amount)}
+      </div>
+
+      {/* Scores */}
+      {features.showScores && transaction.scores && (
+        <div className="flex space-x-1">
+          <div className="w-6 h-6 lg:w-5 lg:h-5 rounded-full bg-green-500/20 flex items-center justify-center">
+            <span className="text-xs lg:text-[10px] text-green-400 font-semibold">
+              {transaction.scores.health}
+            </span>
+          </div>
+          <div className="w-6 h-6 lg:w-5 lg:h-5 rounded-full bg-blue-500/20 flex items-center justify-center">
+            <span className="text-xs lg:text-[10px] text-blue-400 font-semibold">
+              {transaction.scores.eco}
+            </span>
+          </div>
+          <div className="w-6 h-6 lg:w-5 lg:h-5 rounded-full bg-purple-500/20 flex items-center justify-center">
+            <span className="text-xs lg:text-[10px] text-purple-400 font-semibold">
+              {transaction.scores.financial}
+            </span>
+          </div>
+        </div>
+      )}
     </div>
   );
 });

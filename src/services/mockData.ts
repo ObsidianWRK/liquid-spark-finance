@@ -1,6 +1,558 @@
 import { Transaction, Account } from '@/types/shared';
+import { AccountCardDTO, accountToCardDTO } from '@/types/accounts';
 
 export type { Transaction, Account } from '@/types/shared';
+
+// CC: Enhanced mock data with ≥20 accounts for Smart Accounts Deck requirements
+export const mockAccountsEnhanced = [
+  {
+    id: 'acc_001',
+    familyId: 'demo_family',
+    name: 'Main Checking',
+    accountType: 'depository' as const,
+    accountSubtype: 'checking' as const,
+    institutionName: 'Chase Bank',
+    balance: 12450.00,
+    availableBalance: 11200.00,
+    currency: 'USD',
+    isActive: true,
+    isManual: false,
+    syncStatus: 'active' as const,
+    metadata: {
+      accountNumber: '****1234',
+      apy: 0.01,
+      fees: [],
+      sparklineData: [12200, 12300, 12100, 12400, 12450]
+    },
+    createdAt: new Date(),
+    updatedAt: new Date()
+  },
+  {
+    id: 'acc_002',
+    familyId: 'demo_family',
+    name: 'Emergency Fund',
+    accountType: 'depository' as const,
+    accountSubtype: 'savings' as const,
+    institutionName: 'Bank of America',
+    balance: 25780.50,
+    availableBalance: 25780.50,
+    currency: 'USD',
+    isActive: true,
+    isManual: false,
+    syncStatus: 'active' as const,
+    metadata: {
+      accountNumber: '****5678',
+      apy: 2.15,
+      fees: [],
+      sparklineData: [25200, 25400, 25600, 25700, 25780]
+    },
+    createdAt: new Date(),
+    updatedAt: new Date()
+  },
+  {
+    id: 'acc_003',
+    familyId: 'demo_family',
+    name: 'Rewards Card',
+    accountType: 'credit' as const,
+    accountSubtype: 'credit_card' as const,
+    institutionName: 'Wells Fargo',
+    balance: -1245.30,
+    availableBalance: 8754.70,
+    currency: 'USD',
+    isActive: true,
+    isManual: false,
+    syncStatus: 'active' as const,
+    metadata: {
+      accountNumber: '****9012',
+      creditLimit: 10000,
+      fees: [],
+      sparklineData: [-1100, -1200, -1300, -1200, -1245]
+    },
+    createdAt: new Date(),
+    updatedAt: new Date()
+  },
+  {
+    id: 'acc_004',
+    familyId: 'demo_family',
+    name: 'Investment Portfolio',
+    accountType: 'investment' as const,
+    accountSubtype: 'brokerage' as const,
+    institutionName: 'Schwab',
+    balance: 45600.25,
+    availableBalance: 45600.25,
+    currency: 'USD',
+    isActive: true,
+    isManual: false,
+    syncStatus: 'active' as const,
+    metadata: {
+      accountNumber: '****3456',
+      fees: [],
+      sparklineData: [44800, 45200, 45100, 45400, 45600]
+    },
+    createdAt: new Date(),
+    updatedAt: new Date()
+  },
+  // CC: Additional 20 accounts for Smart Accounts Deck virtual scrolling
+  {
+    id: 'acc_005',
+    familyId: 'demo_family',
+    name: 'Business Checking',
+    accountType: 'depository' as const,
+    accountSubtype: 'checking' as const,
+    institutionName: 'JPMorgan Chase',
+    balance: 8920.14,
+    availableBalance: 8920.14,
+    currency: 'USD',
+    isActive: true,
+    isManual: false,
+    syncStatus: 'active' as const,
+    metadata: {
+      accountNumber: '****7890',
+      apy: 0.05,
+      fees: [],
+      sparklineData: [8800, 8850, 8900, 8880, 8920]
+    },
+    createdAt: new Date(),
+    updatedAt: new Date()
+  },
+  {
+    id: 'acc_006',
+    familyId: 'demo_family',
+    name: '401(k) Retirement',
+    accountType: 'investment' as const,
+    accountSubtype: '401k' as const,
+    institutionName: 'Fidelity',
+    balance: 174250.67,
+    availableBalance: 174250.67,
+    currency: 'USD',
+    isActive: true,
+    isManual: false,
+    syncStatus: 'active' as const,
+    metadata: {
+      accountNumber: '****4567',
+      fees: [],
+      sparklineData: [172000, 173000, 173500, 174000, 174250]
+    },
+    createdAt: new Date(),
+    updatedAt: new Date()
+  },
+  {
+    id: 'acc_007',
+    familyId: 'demo_family',
+    name: 'Traditional IRA',
+    accountType: 'investment' as const,
+    accountSubtype: 'ira' as const,
+    institutionName: 'Vanguard',
+    balance: 62340.22,
+    availableBalance: 62340.22,
+    currency: 'USD',
+    isActive: true,
+    isManual: false,
+    syncStatus: 'active' as const,
+    metadata: {
+      accountNumber: '****8901',
+      fees: [],
+      sparklineData: [61800, 62000, 62100, 62200, 62340]
+    },
+    createdAt: new Date(),
+    updatedAt: new Date()
+  },
+  {
+    id: 'acc_008',
+    familyId: 'demo_family',
+    name: 'Health Savings',
+    accountType: 'depository' as const,
+    accountSubtype: 'savings' as const,
+    institutionName: 'HSA Bank',
+    balance: 12450.11,
+    availableBalance: 12450.11,
+    currency: 'USD',
+    isActive: true,
+    isManual: false,
+    syncStatus: 'active' as const,
+    metadata: {
+      accountNumber: '****2345',
+      apy: 1.75,
+      fees: [],
+      sparklineData: [12200, 12300, 12350, 12400, 12450]
+    },
+    createdAt: new Date(),
+    updatedAt: new Date()
+  },
+  {
+    id: 'acc_009',
+    familyId: 'demo_family',
+    name: 'College 529 Plan',
+    accountType: 'investment' as const,
+    accountSubtype: '529' as const,
+    institutionName: 'T. Rowe Price',
+    balance: 18230.89,
+    availableBalance: 18230.89,
+    currency: 'USD',
+    isActive: true,
+    isManual: false,
+    syncStatus: 'active' as const,
+    metadata: {
+      accountNumber: '****6789',
+      fees: [],
+      sparklineData: [17800, 18000, 18100, 18150, 18230]
+    },
+    createdAt: new Date(),
+    updatedAt: new Date()
+  },
+  {
+    id: 'acc_010',
+    familyId: 'demo_family',
+    name: 'Emergency Savings',
+    accountType: 'depository' as const,
+    accountSubtype: 'savings' as const,
+    institutionName: 'Ally Bank',
+    balance: 8500.00,
+    availableBalance: 8500.00,
+    currency: 'USD',
+    isActive: true,
+    isManual: false,
+    syncStatus: 'active' as const,
+    metadata: {
+      accountNumber: '****0123',
+      apy: 4.25,
+      fees: [],
+      sparklineData: [8200, 8300, 8400, 8450, 8500]
+    },
+    createdAt: new Date(),
+    updatedAt: new Date()
+  },
+  {
+    id: 'acc_011',
+    familyId: 'demo_family',
+    name: 'Travel Rewards',
+    accountType: 'credit' as const,
+    accountSubtype: 'credit_card' as const,
+    institutionName: 'American Express',
+    balance: -2890.45,
+    availableBalance: 7109.55,
+    currency: 'USD',
+    isActive: true,
+    isManual: false,
+    syncStatus: 'active' as const,
+    metadata: {
+      accountNumber: '****4567',
+      creditLimit: 10000,
+      fees: [],
+      sparklineData: [-2500, -2700, -2800, -2850, -2890]
+    },
+    createdAt: new Date(),
+    updatedAt: new Date()
+  },
+  {
+    id: 'acc_012',
+    familyId: 'demo_family',
+    name: 'Business Savings',
+    accountType: 'depository' as const,
+    accountSubtype: 'savings' as const,
+    institutionName: 'Capital One',
+    balance: 34567.89,
+    availableBalance: 34567.89,
+    currency: 'USD',
+    isActive: true,
+    isManual: false,
+    syncStatus: 'active' as const,
+    metadata: {
+      accountNumber: '****8901',
+      apy: 3.50,
+      fees: [],
+      sparklineData: [34000, 34200, 34400, 34500, 34567]
+    },
+    createdAt: new Date(),
+    updatedAt: new Date()
+  },
+  {
+    id: 'acc_013',
+    familyId: 'demo_family',
+    name: 'Roth IRA',
+    accountType: 'investment' as const,
+    accountSubtype: 'roth_ira' as const,
+    institutionName: 'E*TRADE',
+    balance: 56789.12,
+    availableBalance: 56789.12,
+    currency: 'USD',
+    isActive: true,
+    isManual: false,
+    syncStatus: 'active' as const,
+    metadata: {
+      accountNumber: '****2345',
+      fees: [],
+      sparklineData: [56200, 56400, 56600, 56700, 56789]
+    },
+    createdAt: new Date(),
+    updatedAt: new Date()
+  },
+  {
+    id: 'acc_014',
+    familyId: 'demo_family',
+    name: 'Cash Management',
+    accountType: 'depository' as const,
+    accountSubtype: 'checking' as const,
+    institutionName: 'Goldman Sachs',
+    balance: 15678.90,
+    availableBalance: 15678.90,
+    currency: 'USD',
+    isActive: true,
+    isManual: false,
+    syncStatus: 'active' as const,
+    metadata: {
+      accountNumber: '****6789',
+      apy: 2.75,
+      fees: [],
+      sparklineData: [15400, 15500, 15600, 15650, 15678]
+    },
+    createdAt: new Date(),
+    updatedAt: new Date()
+  },
+  {
+    id: 'acc_015',
+    familyId: 'demo_family',
+    name: 'Cashback Card',
+    accountType: 'credit' as const,
+    accountSubtype: 'credit_card' as const,
+    institutionName: 'Discover',
+    balance: -567.23,
+    availableBalance: 9432.77,
+    currency: 'USD',
+    isActive: true,
+    isManual: false,
+    syncStatus: 'active' as const,
+    metadata: {
+      accountNumber: '****0123',
+      creditLimit: 10000,
+      fees: [],
+      sparklineData: [-400, -500, -550, -560, -567]
+    },
+    createdAt: new Date(),
+    updatedAt: new Date()
+  },
+  {
+    id: 'acc_016',
+    familyId: 'demo_family',
+    name: 'Money Market',
+    accountType: 'depository' as const,
+    accountSubtype: 'savings' as const,
+    institutionName: 'Marcus by Goldman Sachs',
+    balance: 67890.34,
+    availableBalance: 67890.34,
+    currency: 'USD',
+    isActive: true,
+    isManual: false,
+    syncStatus: 'active' as const,
+    metadata: {
+      accountNumber: '****4567',
+      apy: 4.10,
+      fees: [],
+      sparklineData: [67200, 67500, 67700, 67800, 67890]
+    },
+    createdAt: new Date(),
+    updatedAt: new Date()
+  },
+  {
+    id: 'acc_017',
+    familyId: 'demo_family',
+    name: 'Crypto Portfolio',
+    accountType: 'investment' as const,
+    accountSubtype: 'brokerage' as const,
+    institutionName: 'Coinbase',
+    balance: 12345.67,
+    availableBalance: 12345.67,
+    currency: 'USD',
+    isActive: true,
+    isManual: false,
+    syncStatus: 'active' as const,
+    metadata: {
+      accountNumber: '****8901',
+      fees: [],
+      sparklineData: [11000, 11500, 12000, 12200, 12345]
+    },
+    createdAt: new Date(),
+    updatedAt: new Date()
+  },
+  {
+    id: 'acc_018',
+    familyId: 'demo_family',
+    name: 'Student Loan',
+    accountType: 'loan' as const,
+    accountSubtype: 'student' as const,
+    institutionName: 'Navient',
+    balance: -23456.78,
+    availableBalance: 0,
+    currency: 'USD',
+    isActive: true,
+    isManual: false,
+    syncStatus: 'active' as const,
+    metadata: {
+      accountNumber: '****2345',
+      fees: [],
+      sparklineData: [-24000, -23800, -23600, -23500, -23456]
+    },
+    createdAt: new Date(),
+    updatedAt: new Date()
+  },
+  {
+    id: 'acc_019',
+    familyId: 'demo_family',
+    name: 'Auto Loan',
+    accountType: 'loan' as const,
+    accountSubtype: 'auto' as const,
+    institutionName: 'Chase Auto Finance',
+    balance: -18765.43,
+    availableBalance: 0,
+    currency: 'USD',
+    isActive: true,
+    isManual: false,
+    syncStatus: 'active' as const,
+    metadata: {
+      accountNumber: '****6789',
+      fees: [],
+      sparklineData: [-19500, -19200, -19000, -18800, -18765]
+    },
+    createdAt: new Date(),
+    updatedAt: new Date()
+  },
+  {
+    id: 'acc_020',
+    familyId: 'demo_family',
+    name: 'Home Equity LOC',
+    accountType: 'credit' as const,
+    accountSubtype: 'line_of_credit' as const,
+    institutionName: 'Wells Fargo',
+    balance: -5432.10,
+    availableBalance: 44567.90,
+    currency: 'USD',
+    isActive: true,
+    isManual: false,
+    syncStatus: 'active' as const,
+    metadata: {
+      accountNumber: '****0123',
+      creditLimit: 50000,
+      fees: [],
+      sparklineData: [-5000, -5200, -5300, -5400, -5432]
+    },
+    createdAt: new Date(),
+    updatedAt: new Date()
+  },
+  {
+    id: 'acc_021',
+    familyId: 'demo_family',
+    name: 'CD Ladder 1',
+    accountType: 'depository' as const,
+    accountSubtype: 'cd' as const,
+    institutionName: 'Navy Federal',
+    balance: 25000.00,
+    availableBalance: 0,
+    currency: 'USD',
+    isActive: true,
+    isManual: false,
+    syncStatus: 'active' as const,
+    metadata: {
+      accountNumber: '****4567',
+      apy: 4.75,
+      fees: [],
+      sparklineData: [24800, 24900, 24950, 24975, 25000]
+    },
+    createdAt: new Date(),
+    updatedAt: new Date()
+  },
+  {
+    id: 'acc_022',
+    familyId: 'demo_family',
+    name: 'Brokerage Account',
+    accountType: 'investment' as const,
+    accountSubtype: 'brokerage' as const,
+    institutionName: 'TD Ameritrade',
+    balance: 89012.34,
+    availableBalance: 89012.34,
+    currency: 'USD',
+    isActive: true,
+    isManual: false,
+    syncStatus: 'active' as const,
+    metadata: {
+      accountNumber: '****8901',
+      fees: [],
+      sparklineData: [87000, 88000, 88500, 88800, 89012]
+    },
+    createdAt: new Date(),
+    updatedAt: new Date()
+  },
+  {
+    id: 'acc_023',
+    familyId: 'demo_family',
+    name: 'Joint Savings',
+    accountType: 'depository' as const,
+    accountSubtype: 'savings' as const,
+    institutionName: 'USAA',
+    balance: 43210.98,
+    availableBalance: 43210.98,
+    currency: 'USD',
+    isActive: true,
+    isManual: false,
+    syncStatus: 'active' as const,
+    metadata: {
+      accountNumber: '****2345',
+      apy: 3.25,
+      fees: [],
+      sparklineData: [42800, 43000, 43100, 43150, 43210]
+    },
+    createdAt: new Date(),
+    updatedAt: new Date()
+  },
+  {
+    id: 'acc_024',
+    familyId: 'demo_family',
+    name: 'Premium Card',
+    accountType: 'credit' as const,
+    accountSubtype: 'credit_card' as const,
+    institutionName: 'Chase Sapphire',
+    balance: -4567.89,
+    availableBalance: 20432.11,
+    currency: 'USD',
+    isActive: true,
+    isManual: false,
+    syncStatus: 'active' as const,
+    metadata: {
+      accountNumber: '****6789',
+      creditLimit: 25000,
+      fees: [],
+      sparklineData: [-4200, -4300, -4400, -4500, -4567]
+    },
+    createdAt: new Date(),
+    updatedAt: new Date()
+  }
+];
+
+// CC: Enhanced institution data with logos and branding for Smart Accounts Deck
+export const mockInstitutions = {
+  'Chase Bank': { name: 'Chase Bank', color: '#117A65', logo: '/institution-logos/chase.png' },
+  'Bank of America': { name: 'Bank of America', color: '#E51B23', logo: '/institution-logos/boa.png' },
+  'Wells Fargo': { name: 'Wells Fargo', color: '#D71E2B', logo: '/institution-logos/wells-fargo.png' },
+  'Schwab': { name: 'Charles Schwab', color: '#00A0DF', logo: '/institution-logos/schwab.png' },
+  'JPMorgan Chase': { name: 'JPMorgan Chase', color: '#117A65', logo: '/institution-logos/chase.png' },
+  'Fidelity': { name: 'Fidelity', color: '#00653A', logo: '/institution-logos/fidelity.png' },
+  'Vanguard': { name: 'Vanguard', color: '#B41E3B', logo: '/institution-logos/vanguard.png' },
+  'HSA Bank': { name: 'HSA Bank', color: '#4A90E2', logo: '/institution-logos/hsa-bank.png' },
+  'T. Rowe Price': { name: 'T. Rowe Price', color: '#003DA5', logo: '/institution-logos/trowe.png' },
+  'Ally Bank': { name: 'Ally Bank', color: '#8B4C9A', logo: '/institution-logos/ally.png' },
+  'American Express': { name: 'American Express', color: '#006FCF', logo: '/institution-logos/amex.png' },
+  'Capital One': { name: 'Capital One', color: '#004879', logo: '/institution-logos/capital-one.png' },
+  'E*TRADE': { name: 'E*TRADE', color: '#6633CC', logo: '/institution-logos/etrade.png' },
+  'Goldman Sachs': { name: 'Goldman Sachs', color: '#1E3A8A', logo: '/institution-logos/goldman.png' },
+  'Discover': { name: 'Discover', color: '#FF6000', logo: '/institution-logos/discover.png' },
+  'Marcus by Goldman Sachs': { name: 'Marcus', color: '#1E3A8A', logo: '/institution-logos/marcus.png' },
+  'Coinbase': { name: 'Coinbase', color: '#0052FF', logo: '/institution-logos/coinbase.png' },
+  'Navient': { name: 'Navient', color: '#0066CC', logo: '/institution-logos/navient.png' },
+  'Chase Auto Finance': { name: 'Chase Auto', color: '#117A65', logo: '/institution-logos/chase.png' },
+  'Navy Federal': { name: 'Navy Federal', color: '#003F7F', logo: '/institution-logos/navy-federal.png' },
+  'TD Ameritrade': { name: 'TD Ameritrade', color: '#00A651', logo: '/institution-logos/td-ameritrade.png' },
+  'USAA': { name: 'USAA', color: '#003F7F', logo: '/institution-logos/usaa.png' },
+  'Chase Sapphire': { name: 'Chase Sapphire', color: '#117A65', logo: '/institution-logos/chase-sapphire.png' }
+};
 
 export const mockData = {
   accounts: [
@@ -367,4 +919,15 @@ export const mockData = {
       deliveryStatus: 'Delivered' as const
     }
   ] as Transaction[]
+};
+
+// Helper function to generate AccountCardDTO from mock data
+export const getCompactAccountCards = (): AccountCardDTO[] => {
+  return mockAccountsEnhanced.map(account => 
+    accountToCardDTO(
+      account, 
+      mockData.transactions.filter(t => Math.random() > 0.7), // Random subset of transactions
+      mockInstitutions[account.institutionName || 'Chase Bank']
+    )
+  );
 }; 

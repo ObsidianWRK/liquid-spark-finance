@@ -1,6 +1,6 @@
 import React, { memo, useEffect, useState, useMemo } from 'react';
 import { cn } from '@/lib/utils';
-import { formatScore } from '@/utils/formatters';
+import { formatScore, formatFinancialScore } from '@/utils/formatters';
 
 export type ScoreType = 'health' | 'eco' | 'financial';
 
@@ -140,16 +140,16 @@ export const SharedScoreCircle = memo(({
               sizeClasses[size]
             )}
           >
-            {Math.round(normalizedScore)}
+            {type === 'financial' ? formatFinancialScore(normalizedScore) : formatScore(normalizedScore)}
           </span>
           {showLabel && (
             <span 
               className={cn(
                 "text-white/60 leading-none mt-1",
-                size <= 80 ? "text-xs" : "text-sm"
+                "text-xs"
               )}
             >
-              {label || type === 'financial' ? 'Financial' : type === 'health' ? 'Health' : 'Eco'}
+              {label || (type === 'financial' ? 'Financial' : type === 'health' ? 'Health' : 'Eco')}
             </span>
           )}
         </div>

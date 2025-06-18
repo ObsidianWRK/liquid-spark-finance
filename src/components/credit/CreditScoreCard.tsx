@@ -76,7 +76,7 @@ const CreditScoreCard = React.memo(() => {
     <UniversalCard variant="glass" className="p-6" interactive>
       {/* Header */}
       <div className="flex items-center justify-between mb-6">
-        <h3 className="text-2xl font-black text-white tracking-wide">***Credit Score***</h3>
+        <h3 className="text-2xl font-black text-white tracking-wide">Credit Score</h3>
         <div className="text-xs text-slate-400 font-medium italic">
           Updated {new Date(creditScore.lastUpdated).toLocaleDateString()}
         </div>
@@ -103,7 +103,7 @@ const CreditScoreCard = React.memo(() => {
 
       {/* Quick Factors */}
       <div className="space-y-3 mb-6">
-        <h4 className="text-white font-black text-sm tracking-wide">***Key Factors***</h4>
+        <h4 className="text-white font-black text-sm tracking-wide">Key Factors</h4>
         {creditScore.factors.slice(0, 3).map((factor, index) => (
           <div key={index} className="flex items-center justify-between">
             <div className="flex items-center space-x-2">
@@ -130,7 +130,7 @@ const CreditScoreCard = React.memo(() => {
       >
         <div className="py-3 text-center">
           <span className="text-white font-bold text-lg tracking-wide">
-            ***View Full Credit Report***
+            View Full Credit Report
           </span>
         </div>
       </UniversalCard>

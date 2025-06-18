@@ -1,5 +1,33 @@
 import { lazy } from 'react';
 
+// Type definitions for browser APIs
+interface NavigatorConnection {
+  effectiveType: '4g' | '3g' | '2g' | 'slow-2g';
+  downlink: number;
+  rtt: number;
+}
+
+interface NavigatorMemory {
+  deviceMemory: number;
+}
+
+interface PerformanceMemory {
+  usedJSHeapSize: number;
+  totalJSHeapSize: number;
+  jsHeapSizeLimit: number;
+}
+
+declare global {
+  interface Navigator {
+    connection?: NavigatorConnection;
+    deviceMemory?: number;
+  }
+  
+  interface Performance {
+    memory?: PerformanceMemory;
+  }
+}
+
 // Vueni Code Splitting Configuration for optimal performance
 export const VueniLazyComponents = {
   // Core Pages - Lazy loaded for better performance
@@ -75,7 +103,7 @@ export const VueniPreloadStrategies = {
 
   // Preload components based on user navigation
   preloadOnHover: (componentName: keyof typeof VueniLazyComponents) => {
-    const importMap: Record<string, () => Promise<any>> = {
+    const importMap: Record<string, () => Promise<{ default?: React.ComponentType<any> }>> = {
       VueniTransactions: () => import('@/pages/Transactions'),
       VueniInsights: () => import('@/pages/Insights'),
       VueniSettings: () => import('@/pages/Settings'),
@@ -115,7 +143,7 @@ export const VueniOptimizationUtils = {
   shouldLoadComponent: (componentName: string, userAgent?: string): boolean => {
     // Don't load heavy components on slow connections
     if ('connection' in navigator) {
-      const connection = (navigator as any).connection;
+      const connection = navigator.connection;
       if (connection.effectiveType === 'slow-2g' || connection.effectiveType === '2g') {
         const heavyComponents = ['VueniSpendingChart', 'VueniCashFlowChart', 'VueniReportsEngine'];
         return !heavyComponents.includes(componentName);
@@ -152,7 +180,7 @@ export const VueniOptimizationUtils = {
     }
 
     // Calculate optimal window size based on device capabilities
-    const deviceMemory = (navigator as any).deviceMemory || 4; // Default to 4GB
+    const deviceMemory = navigator.deviceMemory || 4; // Default to 4GB
     const baseWindowSize = Math.min(50, Math.max(20, deviceMemory * 10));
     
     return {
@@ -186,7 +214,7 @@ export const VueniPerformanceMonitor = {
   // Monitor memory usage
   trackMemoryUsage: (componentName: string) => {
     if ('memory' in performance) {
-      const memory = (performance as any).memory;
+      const memory = performance.memory;
       console.log(`[Vueni Memory] ${componentName} - Used: ${(memory.usedJSHeapSize / 1024 / 1024).toFixed(2)}MB`);
       
       // Warn if memory usage is high

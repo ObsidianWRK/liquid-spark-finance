@@ -1,8 +1,7 @@
 import React, { useState, useEffect, useCallback, lazy, Suspense } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import Navigation from '@/components/Navigation';
-import AccountCard from '@/components/AccountCard';
-import BalanceCard from '@/components/BalanceCard';
+import CompactAccountCard from '@/components/financial/CompactAccountCard';
 import { OptimizedTransactionList } from '@/components/transactions/OptimizedTransactionList';
 import LiquidGlassTopMenuBar from '@/components/LiquidGlassTopMenuBar';
 import CreditScoreCard from '@/components/credit/CreditScoreCard';
@@ -12,7 +11,12 @@ import SavingsGoals from '@/components/savings/SavingsGoals';
 import CalculatorList from '@/components/calculators/CalculatorList';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { PerformanceMonitor } from '@/components/performance/PerformanceMonitor';
-import { mockData } from '@/services/mockData';
+import { mockData, getCompactAccountCards } from '@/services/mockData';
+// CC: New Feature Cloud and Smart Accounts Deck imports
+import FeatureCloud from '@/components/FeatureCloud';
+import { VirtualizedDeck } from '@/components/AccountDeck/VirtualizedDeck';
+import { isFeatureEnabled, trackFeatureUsage } from '@/utils/featureFlags';
+import { transformToAccountRowData } from '@/utils/accountTransformers';
 
 // Lazy load components properly without webpack comments
 const InvestmentTrackerPage = lazy(() => import('@/components/investments/InvestmentTrackerPage'));
@@ -100,6 +104,7 @@ export default function Index() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [isDataValid, setIsDataValid] = useState(false);
+  const [balanceVisibility, setBalanceVisibility] = useState<Record<string, boolean>>({});
   const isMobile = useIsMobile();
 
   // Data validation in useEffect instead of early return
@@ -134,6 +139,18 @@ export default function Index() {
     setCurrentView(view);
     setSearchParams({ tab: view });
   }, [setSearchParams]);
+
+  const handleToggleBalance = useCallback((accountId: string) => {
+    setBalanceVisibility(prev => ({
+      ...prev,
+      [accountId]: !prev[accountId]
+    }));
+  }, []);
+
+  const handleQuickAction = useCallback((accountId: string, action: string) => {
+    console.log(`Quick action ${action} for account ${accountId}`);
+    // TODO: Implement quick actions
+  }, []);
 
   // Error display after hooks
   if (error) {
@@ -179,14 +196,18 @@ export default function Index() {
               </div>
             </div>
             
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {mockData.accounts?.map(account => (
-                <AccountCard key={account.id} account={account} />
-              )) || (
-                <div className="col-span-full text-center py-12">
-                  <p className="text-white/60">No accounts connected yet</p>
-                </div>
-              )}
+            {/* Compact Account Cards Grid */}
+            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+              {getCompactAccountCards().map(account => (
+                <CompactAccountCard
+                  key={account.id}
+                  account={account}
+                  showBalance={balanceVisibility[account.id] ?? true}
+                  onToggleBalance={() => handleToggleBalance(account.id)}
+                  onQuickAction={(action) => handleQuickAction(account.id, action)}
+                  className="h-fit"
+                />
+              ))}
             </div>
           </div>
         );
@@ -194,19 +215,33 @@ export default function Index() {
         return <ConsolidatedInsightsPage />;
       case 'transactions':
         return (
-            <OptimizedTransactionList 
-            transactions={mockData.transactions || []}
-              variant="apple"
-              currency="USD"
-              features={{
-                showScores: true,
-                showCategories: true,
-                searchable: true,
-                filterable: true,
-                groupByDate: true,
-                sortable: true
-              }}
-          />
+          <div className="max-w-none w-full">
+            <div className="p-4 md:p-6 lg:p-8">
+              <div className="mb-6">
+                <h1 className="text-2xl lg:text-3xl font-bold text-white mb-2">Recent Transactions</h1>
+                <p className="text-white/60">
+                  {mockData.transactions?.length || 0} transactions • 30 of 30
+                </p>
+              </div>
+              
+              <div className="max-w-none">
+                <OptimizedTransactionList 
+                  transactions={mockData.transactions || []}
+                  variant="apple"
+                  currency="USD"
+                  features={{
+                    showScores: true,
+                    showCategories: true,
+                    searchable: true,
+                    filterable: true,
+                    groupByDate: true,
+                    sortable: true
+                  }}
+                  className="w-full"
+                />
+              </div>
+            </div>
+          </div>
         );
       case 'reports':
         return <BudgetReportsPage />;
@@ -241,26 +276,54 @@ export default function Index() {
       default:
         return (
           <>
+            {/* CC: Feature Cloud Hero Section (R1 requirement) */}
+            {isFeatureEnabled('FEATURE_CLOUD') && (
+              <div className="relative py-16 px-6">
+                <FeatureCloud 
+                  className="max-w-6xl mx-auto"
+                />
+              </div>
+            )}
+
             <div className="p-6 space-y-6">
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <AccountCard account={mockData.accounts?.[0] || {
-                  id: 'default',
-                  type: 'checking',
-                  nickname: 'Main Account',
-                  balance: 0,
-                  availableBalance: 0,
-                  currency: 'USD'
-                }} />
-              <BalanceCard 
-                  accountType={mockData.accounts?.[0]?.type || 'checking'}
-                  nickname={mockData.accounts?.[0]?.nickname || 'Main Account'}
-                  balance={mockData.accounts?.[0]?.balance || 0}
-                  availableBalance={mockData.accounts?.[0]?.availableBalance || 0}
-                  currency={mockData.accounts?.[0]?.currency || 'USD'}
-                trend="up"
-                trendPercentage={12.5}
-              />
-                <CreditScoreCard />
+              {/* CC: Smart Accounts Deck and Compact Account Cards Grid */}
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                {/* Smart Accounts Deck (R2 requirement) */}
+                {isFeatureEnabled('SMART_ACCOUNTS_DECK') && (
+                  <div>
+                    <VirtualizedDeck 
+                      accounts={transformToAccountRowData()}
+                      height={400}
+                      onAccountClick={(account) => {
+                        trackFeatureUsage('smart_accounts_deck', 'account_clicked');
+                        console.log('Account clicked:', account);
+                      }}
+                    />
+                  </div>
+                )}
+                
+                {/* Compact Enterprise Account Cards */}
+                <div>
+                  <div className="mb-4">
+                    <h2 className="text-xl font-bold text-white">Quick Access</h2>
+                    <p className="text-white/60 text-sm">
+                      {getCompactAccountCards().length} accounts • Total Balance: $83.8K
+                    </p>
+                  </div>
+                  
+                  <div className="grid grid-cols-1 xl:grid-cols-2 gap-4">
+                    {getCompactAccountCards().slice(0, 4).map(account => (
+                      <CompactAccountCard
+                        key={account.id}
+                        account={account}
+                        showBalance={balanceVisibility[account.id] ?? true}
+                        onToggleBalance={() => handleToggleBalance(account.id)}
+                        onQuickAction={(action) => handleQuickAction(account.id, action)}
+                        className="h-fit"
+                      />
+                    ))}
+                  </div>
+                </div>
               </div>
               
               <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
@@ -279,7 +342,8 @@ export default function Index() {
                     }}
                   />
                 </div>
-                <div>
+                <div className="space-y-6">
+                  <CreditScoreCard />
                   <SavingsGoals compact={true} />
                 </div>
               </div>
@@ -295,7 +359,7 @@ export default function Index() {
         <PerformanceMonitor />
         <LiquidGlassTopMenuBar />
         
-        <div className="flex flex-1 overflow-hidden">
+        <div className="flex flex-1">
           <Navigation 
             activeTab={currentView}
             onTabChange={handleViewChange}

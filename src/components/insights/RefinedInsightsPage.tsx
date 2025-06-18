@@ -82,7 +82,7 @@ const RefinedInsightsPage = ({ transactions, accounts }: InsightsPageProps) => {
     
     const completedTransactions = transactions.filter(t => t.status === 'completed').length;
     const totalTransactions = transactions.length;
-    const billPaymentScore = totalTransactions > 0 ? (completedTransactions / totalTransactions) * 100 : 100;
+    const billPaymentScore = totalTransactions > 0 ? Math.round((completedTransactions / totalTransactions) * 100) : 100;
     
     return {
       spendingRatio,

@@ -1,10 +1,11 @@
-
 import React, { useState } from 'react';
 import GlassCard from '@/components/GlassCard';
-import { Calendar, Download, TrendingDown, TrendingUp, AlertCircle } from 'lucide-react';
+import { Calendar, Download, TrendingDown, TrendingUp, AlertCircle, ArrowLeft } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import { mockReportService, BudgetReport } from '@/services/mockReportService';
 
 const BudgetReportsPage = () => {
+  const navigate = useNavigate();
   const [selectedMonth, setSelectedMonth] = useState('May');
   const [selectedYear, setSelectedYear] = useState(2024);
   
@@ -42,6 +43,15 @@ const BudgetReportsPage = () => {
 
   return (
     <div className="space-y-6">
+      {/* Back Button */}
+      <button
+        onClick={() => navigate('/')}
+        className="flex items-center gap-2 px-3 py-2 rounded-xl text-white/80 hover:text-white hover:bg-white/[0.05] transition-colors"
+      >
+        <ArrowLeft className="w-4 h-4" />
+        <span className="text-sm">Dashboard</span>
+      </button>
+
       {/* Header Controls */}
       <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between">
         <div>

@@ -3,13 +3,31 @@
  */
 
 /**
- * Format score with exactly 1 decimal place
+ * Format score with configurable precision (0-2 decimal places)
  * @param value - The score value to format
- * @returns Formatted score string (e.g., "85.7", "92.0")
+ * @param precision - Number of decimal places (0, 1, or 2). Default is 0 for integer display
+ * @param locale - Locale for formatting. Default is 'en-US'
+ * @returns Formatted score string (e.g., "79", "79.4", "79.37")
  */
-export const formatScore = (value: number): string => {
-  // Ensure exactly 1 decimal place
-  return value.toFixed(1);
+export const formatScore = (value: number, precision: 0 | 1 | 2 = 0, locale: string = 'en-US'): string => {
+  // Clamp precision to valid range
+  const validPrecision = Math.max(0, Math.min(2, precision)) as 0 | 1 | 2;
+  
+  // Use Intl.NumberFormat for locale-safe formatting
+  return new Intl.NumberFormat(locale, {
+    minimumFractionDigits: validPrecision,
+    maximumFractionDigits: validPrecision,
+    useGrouping: false // No thousands separators for scores
+  }).format(value);
+};
+
+/**
+ * Format financial score specifically (always integer for consistency)
+ * @param value - The financial score value to format
+ * @returns Formatted integer score string
+ */
+export const formatFinancialScore = (value: number): string => {
+  return formatScore(value, 0);
 };
 
 /**
