@@ -3,6 +3,7 @@ import { accountService } from './accountService';
 import { transactionService } from './transactionService';
 import { investmentService } from './investmentService';
 import { budgetService } from './budgetService';
+import { Transaction } from '@/types/accounts';
 
 export interface ChartDataPoint {
   date: string;
@@ -68,6 +69,14 @@ export interface FinancialMetric {
   format: 'currency' | 'percentage' | 'number';
   color: string;
   icon: string;
+}
+
+export interface SpendingInsight {
+  type: 'warning' | 'success' | 'info';
+  title: string;
+  description: string;
+  value: number;
+  category: string;
 }
 
 export interface DashboardData {
@@ -155,53 +164,86 @@ export class VisualizationService {
       });
     }
 
+    // Generate 12 months of cash flow history
     const mockCashFlowHistory: CashFlowData[] = [];
     for (let i = 11; i >= 0; i--) {
-      const date = new Date(currentDate);
+      const date = new Date();
       date.setMonth(date.getMonth() - i);
       
-      const income = 5200 + (Math.random() - 0.5) * 800;
-      const expenses = 3950 + (Math.random() - 0.5) * 600;
+      // Simulate realistic income and expenses with seasonal variations
+      const baseIncome = 7500;
+      const seasonalFactor = 1 + (Math.sin((date.getMonth() / 12) * 2 * Math.PI) * 0.1); // ±10% seasonal variation
+      const income = baseIncome * seasonalFactor + (Math.random() - 0.5) * 800;
+      
+      // Expenses vary with some correlation to income
+      const baseExpenses = 5800;
+      const expenseFactor = 0.9 + (Math.random() * 0.4); // 90%-130% of base
+      const expenses = baseExpenses * expenseFactor;
+      
+      const netCashFlow = income - expenses;
+      
+      // Calculate rolling average (last 3 months)
+      const rollingAverage = mockCashFlowHistory.length > 0 
+        ? mockCashFlowHistory.slice(-3).reduce((sum, h) => sum + h.netCashFlow, netCashFlow) / Math.min(mockCashFlowHistory.length + 1, 4)
+        : netCashFlow;
       
       mockCashFlowHistory.push({
         date: date.toISOString().split('T')[0],
-        income,
-        expenses,
-        netCashFlow: income - expenses,
-        monthlyAverage: 1250
+        income: Math.round(income),
+        expenses: Math.round(expenses),
+        netCashFlow: Math.round(netCashFlow),
+        monthlyAverage: Math.round(rollingAverage)
       });
     }
 
     const mockSpendingTrends: SpendingTrendData[] = [
       {
+        category: 'Housing & Utilities',
+        currentMonth: 2850,
+        previousMonth: 2780,
+        change: 70,
+        changePercent: 2.5,
+        trend: 'up',
+        color: '#3b82f6'
+      },
+      {
         category: 'Food & Dining',
-        currentMonth: 1250,
-        previousMonth: 1015,
-        change: 235,
-        changePercent: 23.1,
+        currentMonth: 1425,
+        previousMonth: 1150,
+        change: 275,
+        changePercent: 23.9,
         trend: 'up',
         color: '#ef4444'
       },
       {
         category: 'Transportation',
         currentMonth: 680,
-        previousMonth: 800,
-        change: -120,
-        changePercent: -15,
+        previousMonth: 820,
+        change: -140,
+        changePercent: -17.1,
         trend: 'down',
         color: '#10b981'
       },
       {
-        category: 'Entertainment',
-        currentMonth: 420,
-        previousMonth: 495,
-        change: -75,
-        changePercent: -15.2,
+        category: 'Healthcare & Insurance',
+        currentMonth: 750,
+        previousMonth: 720,
+        change: 30,
+        changePercent: 4.2,
+        trend: 'stable',
+        color: '#06b6d4'
+      },
+      {
+        category: 'Entertainment & Recreation',
+        currentMonth: 525,
+        previousMonth: 680,
+        change: -155,
+        changePercent: -22.8,
         trend: 'down',
         color: '#8b5cf6'
       },
       {
-        category: 'Shopping',
+        category: 'Shopping & Personal',
         currentMonth: 890,
         previousMonth: 745,
         change: 145,
@@ -210,13 +252,22 @@ export class VisualizationService {
         color: '#f59e0b'
       },
       {
-        category: 'Utilities',
-        currentMonth: 285,
-        previousMonth: 290,
-        change: -5,
-        changePercent: -1.7,
-        trend: 'stable',
-        color: '#6b7280'
+        category: 'Education & Development',
+        currentMonth: 320,
+        previousMonth: 350,
+        change: -30,
+        changePercent: -8.6,
+        trend: 'down',
+        color: '#6366f1'
+      },
+      {
+        category: 'Savings & Investments',
+        currentMonth: 1650,
+        previousMonth: 1500,
+        change: 150,
+        changePercent: 10.0,
+        trend: 'up',
+        color: '#10b981'
       }
     ];
 
@@ -660,9 +711,9 @@ export class VisualizationService {
   /**
    * Get spending insights with trend analysis
    */
-  async getSpendingInsights(familyId: string): Promise<any[]> {
+  async getSpendingInsights(familyId: string): Promise<SpendingInsight[]> {
     const trends = await this.getSpendingTrends(familyId);
-    const insights = [];
+    const insights: SpendingInsight[] = [];
 
     // High spending increase alerts
     const increasingSpending = trends.filter(t => t.changePercent > 20);
@@ -692,7 +743,7 @@ export class VisualizationService {
   }
 
   // Helper methods
-  private groupTransactionsByCategory(transactions: any[]): Record<string, number> {
+  private groupTransactionsByCategory(transactions: Transaction[]): Record<string, number> {
     const grouped: Record<string, number> = {};
     
     for (const transaction of transactions) {

@@ -33,7 +33,7 @@ class InvestmentService {
     },
     
     getHistoricalPrices: async (symbol: string, days: number): Promise<Array<{ date: Date; price: number }>> => {
-      const currentPrice = await this.getCurrentPrice(symbol);
+      const currentPrice = await this.marketDataService.getCurrentPrice(symbol);
       const prices: Array<{ date: Date; price: number }> = [];
       
       for (let i = days; i >= 0; i--) {
@@ -73,7 +73,11 @@ class InvestmentService {
         const portfolioData = data as { holdings?: unknown[] };
         if (portfolioData.holdings) {
           portfolioData.holdings.forEach((holding: unknown) => {
-            this.holdings.set(holding.id, holding);
+            // Type check and cast holding to ensure it has required properties
+            if (holding && typeof holding === 'object' && 'id' in holding && 'symbol' in holding) {
+              const typedHolding = holding as Holding;
+              this.holdings.set(typedHolding.id, typedHolding);
+            }
           });
         }
       }
@@ -98,46 +102,139 @@ class InvestmentService {
     };
     this.accounts.set(demoAccount.id, demoAccount);
 
-    // Create demo holdings
+    // Create demo cash account (using brokerage type for cash equivalents)
+    const demoCashAccount: InvestmentAccount = {
+      id: 'demo_cash_account',
+      familyId: 'demo_family',
+      institution: 'Demo Bank',
+      accountType: 'brokerage', // Use brokerage for cash equivalents
+      accountNumber: '****5678',
+      name: 'High Yield Savings',
+      balance: 15000,
+      isActive: true,
+      createdAt: new Date(),
+      updatedAt: new Date()
+    };
+    this.accounts.set(demoCashAccount.id, demoCashAccount);
+
+    // Create diverse demo holdings including all asset types
     const demoHoldings = [
+      // Stock Holdings (65% of portfolio)
       {
         symbol: 'AAPL',
         name: 'Apple Inc.',
-        quantity: 10,
+        quantity: 25,
+        shares: 25,
         averageCostPerShare: 140,
+        purchasePrice: 140,
+        costBasis: 25 * 140,
         assetType: 'stock' as const,
         sector: 'Technology'
       },
       {
         symbol: 'MSFT', 
         name: 'Microsoft Corp.',
-        quantity: 5,
+        quantity: 15,
+        shares: 15,
         averageCostPerShare: 230,
+        purchasePrice: 230,
+        costBasis: 15 * 230,
         assetType: 'stock' as const,
         sector: 'Technology'
       },
       {
         symbol: 'VTI',
         name: 'Vanguard Total Market ETF',
-        quantity: 15,
+        quantity: 35,
+        shares: 35,
         averageCostPerShare: 180,
+        purchasePrice: 180,
+        costBasis: 35 * 180,
         assetType: 'etf' as const,
         sector: 'Diversified'
       },
       {
-        symbol: 'TSLA',
-        name: 'Tesla Inc.',
-        quantity: 3,
-        averageCostPerShare: 260,
+        symbol: 'GOOGL',
+        name: 'Alphabet Inc.',
+        quantity: 8,
+        shares: 8,
+        averageCostPerShare: 142,
+        purchasePrice: 142,
+        costBasis: 8 * 142,
         assetType: 'stock' as const,
-        sector: 'Automotive'
-      }
+        sector: 'Technology'
+      },
+      // Bond Holdings (20% of portfolio)
+      {
+        symbol: 'BND',
+        name: 'Vanguard Total Bond Market ETF',
+        quantity: 280,
+        shares: 280,
+        averageCostPerShare: 75,
+        purchasePrice: 75,
+        costBasis: 280 * 75,
+        assetType: 'bond' as const,
+        sector: 'Fixed Income'
+      },
+      {
+        symbol: 'TIP',
+        name: 'iShares TIPS Bond ETF',
+        quantity: 90,
+        shares: 90,
+        averageCostPerShare: 115,
+        purchasePrice: 115,
+        costBasis: 90 * 115,
+        assetType: 'bond' as const,
+        sector: 'Fixed Income'
+      },
+      // REIT Holdings (5% of portfolio)
+      {
+        symbol: 'VNQ',
+        name: 'Vanguard Real Estate ETF',
+        quantity: 60,
+        shares: 60,
+        averageCostPerShare: 95,
+        purchasePrice: 95,
+        costBasis: 60 * 95,
+        assetType: 'reit' as const,
+        sector: 'Real Estate'
+      },
+      // Crypto Holdings (3% of portfolio)
+      {
+        symbol: 'BTC',
+        name: 'Bitcoin',
+        quantity: 0.15,
+        shares: 0.15,
+        averageCostPerShare: 45000,
+        purchasePrice: 45000,
+        costBasis: 0.15 * 45000,
+        assetType: 'crypto' as const,
+        sector: 'Cryptocurrency'
+      },
+      // Cash position (7% of portfolio) - will be handled separately
     ];
 
     for (const holdingData of demoHoldings) {
       if (!Array.from(this.holdings.values()).some(h => h.symbol === holdingData.symbol)) {
         await this.addHolding(demoAccount.id, holdingData);
       }
+    }
+
+    // Add cash holding to cash account
+    const cashHolding = {
+      symbol: 'CASH',
+      name: 'Cash & Cash Equivalents',
+      quantity: 1,
+      shares: 1,
+      averageCostPerShare: 12500, // $12,500 in cash
+      purchasePrice: 12500,
+      costBasis: 12500,
+      assetType: 'cash' as const,
+      sector: 'Cash'
+    };
+
+    if (!Array.from(this.holdings.values()).some(h => h.symbol === 'CASH')) {
+      await this.addHolding(demoCashAccount.id, cashHolding);
     }
   }
 
