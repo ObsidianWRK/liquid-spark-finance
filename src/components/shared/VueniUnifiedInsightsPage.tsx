@@ -15,8 +15,8 @@ const TimeSeriesChart = lazy(() => import('@/components/insights/TimeSeriesChart
 const SpendingTrendsChart = lazy(() => import('@/components/insights/SpendingTrendsChart'));
 const CategoryTrendsChart = lazy(() => import('@/components/insights/CategoryTrendsChart'));
 const FinancialCard = lazy(() => import('@/components/insights/FinancialCard'));
-const WellnessCard = lazy(() => import('@/components/insights/WellnessCard'));
-const EcoCard = lazy(() => import('@/components/insights/EcoCard'));
+const ComprehensiveWellnessCard = lazy(() => import('@/components/insights/components/ComprehensiveWellnessCard'));
+const ComprehensiveEcoCard = lazy(() => import('@/components/insights/components/ComprehensiveEcoCard'));
 const AnimatedCircularProgress = lazy(() => import('@/components/insights/components/AnimatedCircularProgress'));
 const EnhancedMetricCard = lazy(() => import('@/components/insights/components/EnhancedMetricCard'));
 
@@ -652,13 +652,24 @@ export const VueniUnifiedInsightsPage = React.memo<VueniUnifiedInsightsPageProps
 
         {activeTab === 'health' && layout.showDetailedCards && (
           <Suspense fallback={<LoadingSpinner />}>
-            <WellnessCard data={wellnessData} />
+            <ComprehensiveWellnessCard 
+              score={wellnessData.overallScore}
+              healthKitData={{}}
+              spendingCategories={wellnessData.monthlySpending}
+              trends={wellnessData.healthTrends}
+            />
           </Suspense>
         )}
 
         {activeTab === 'eco' && layout.showDetailedCards && (
           <Suspense fallback={<LoadingSpinner />}>
-            <EcoCard data={ecoData} />
+            <ComprehensiveEcoCard 
+              score={ecoData.overallScore}
+              ecoMetrics={{}}
+              spendingCategories={ecoData.monthlySpending}
+              monthlyImpact={ecoData.monthlyImpact}
+              trends={ecoData.environmentalTrends}
+            />
           </Suspense>
         )}
 
@@ -666,8 +677,19 @@ export const VueniUnifiedInsightsPage = React.memo<VueniUnifiedInsightsPageProps
           <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
             <Suspense fallback={<LoadingSpinner />}>
               <FinancialCard data={financialData} />
-              <WellnessCard data={wellnessData} />
-              <EcoCard data={ecoData} />
+              <ComprehensiveWellnessCard 
+                score={wellnessData.overallScore}
+                healthKitData={{}}
+                spendingCategories={wellnessData.monthlySpending}
+                trends={wellnessData.healthTrends}
+              />
+              <ComprehensiveEcoCard 
+                score={ecoData.overallScore}
+                ecoMetrics={{}}
+                spendingCategories={ecoData.monthlySpending}
+                monthlyImpact={ecoData.monthlyImpact}
+                trends={ecoData.environmentalTrends}
+              />
             </Suspense>
           </div>
         )}

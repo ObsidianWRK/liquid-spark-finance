@@ -169,18 +169,18 @@ export default function Index() {
         return <ConsolidatedInsightsPage />;
       case 'transactions':
         return (
-          <OptimizedTransactionList 
+            <OptimizedTransactionList 
             transactions={mockData.transactions || []}
-            variant="apple"
-            currency="USD"
-            features={{
-              showScores: true,
-              showCategories: true,
-              searchable: true,
-              filterable: true,
-              groupByDate: true,
-              sortable: true
-            }}
+              variant="apple"
+              currency="USD"
+              features={{
+                showScores: true,
+                showCategories: true,
+                searchable: true,
+                filterable: true,
+                groupByDate: true,
+                sortable: true
+              }}
           />
         );
       case 'reports':
@@ -214,15 +214,15 @@ export default function Index() {
                   availableBalance: 0,
                   currency: 'USD'
                 }} />
-                <BalanceCard 
+              <BalanceCard 
                   accountType={mockData.accounts?.[0]?.type || 'checking'}
                   nickname={mockData.accounts?.[0]?.nickname || 'Main Account'}
                   balance={mockData.accounts?.[0]?.balance || 0}
                   availableBalance={mockData.accounts?.[0]?.availableBalance || 0}
                   currency={mockData.accounts?.[0]?.currency || 'USD'}
-                  trend="up"
-                  trendPercentage={12.5}
-                />
+                trend="up"
+                trendPercentage={12.5}
+              />
                 <CreditScoreCard />
               </div>
               
@@ -267,7 +267,7 @@ export default function Index() {
           <main className="flex-1 overflow-auto">
             {renderCurrentView()}
           </main>
-        </div>
+          </div>
       </div>
     </ErrorBoundary>
   );

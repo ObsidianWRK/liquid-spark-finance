@@ -1,7 +1,7 @@
 import React from 'react';
 import { DollarSign, PiggyBank, CreditCard, TrendingUp, Shield, Calendar } from 'lucide-react';
 import { SharedScoreCircle } from '@/components/shared';
-import MetricCard from './MetricCard';
+import { UniversalMetricCard } from './UniversalMetricCard';
 
 interface FinancialData {
   overallScore: number;
@@ -147,13 +147,15 @@ const FinancialCard: React.FC<FinancialCardProps> = ({ data }) => {
       {/* Key Metrics Grid */}
       <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 sm:gap-4 mb-4 sm:mb-6">
         {keyMetrics.map((metric, index) => (
-          <MetricCard
+          <UniversalMetricCard
             key={metric.label}
             title={metric.label}
             value={metric.value}
-            icon={metric.icon}
+            icon={<metric.icon />}
             color={metric.color}
             trend={metric.trend}
+            size="sm"
+            variant="default"
           />
         ))}
       </div>
