@@ -34,7 +34,7 @@ const MortgagePayoffCalculator = () => {
           <input type="number" value={extraPayment} onChange={(e) => setExtraPayment(+e.target.value)} className="w-full p-2 rounded bg-white/5 text-white border border-white/10" />
         </label>
       </div>
-      <button onClick={handleCalculate} className="px-4 py-2 rounded bg-blue-600 hover:bg-blue-700 text-white">
+              <button onClick={handleCalculate} className="w-full py-3 px-6 rounded-xl bg-white/10 hover:bg-white/20 border border-white/20 hover:border-white/30 text-white font-semibold transition-all duration-200">
         Calculate
       </button>
       {result && (

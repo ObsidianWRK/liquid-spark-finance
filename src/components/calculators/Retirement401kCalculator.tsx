@@ -232,7 +232,7 @@ const Retirement401kCalculator = () => {
             
             <button
               onClick={handleCalculate}
-              className="w-full py-3 px-6 rounded-xl bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white font-semibold transition-all duration-200 transform hover:scale-105"
+              className="w-full py-3 px-6 rounded-xl bg-white/10 hover:bg-white/20 border border-white/20 hover:border-white/30 text-white font-semibold transition-all duration-200"
             >
               Calculate Retirement
             </button>
