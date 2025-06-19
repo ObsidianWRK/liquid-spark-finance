@@ -163,6 +163,9 @@ export interface AccountCardDTO {
     name: string;           // "Chase", "Bank of America", "Wells Fargo"
     logo?: string;          // Institution logo URL
     color?: string;         // Brand color for accents
+    percentChange30d?: number; // Balance change vs 30 days (%)
+    category?: 'CHECKING' | 'SAVINGS' | 'CREDIT' | 'INVESTMENT';
+    utilPercent?: number;      // For credit cards
   };
   
   // Account Details
@@ -207,6 +210,11 @@ export interface AccountCardDTO {
     label: string;
     enabled: boolean;
   }>;
+
+  // New UI fields
+  category?: 'CHECKING' | 'SAVINGS' | 'CREDIT' | 'INVESTMENT';
+  percentChange30d?: number;
+  utilPercent?: number;
 }
 
 // Helper function to transform Account to AccountCardDTO
@@ -255,7 +263,15 @@ export function accountToCardDTO(
     monthlySpend: monthlySpending,
     spendDelta: calculateSpendDelta(transactions),
     alerts: generateSmartAlerts(account, transactions),
-    quickActions: getQuickActions(account.accountType)
+    quickActions: getQuickActions(account.accountType),
+    category: account.accountType === 'depository' ? 'CHECKING' : account.accountType === 'credit' ? 'CREDIT' : account.accountType === 'investment' ? 'INVESTMENT' : undefined,
+    // Approximate 30-day change using spending delta (negative => down)
+    percentChange30d: (() => {
+      const delta = calculateSpendDelta(transactions);
+      if (!delta) return undefined;
+      return delta.trend === 'up' ? -delta.percentage : delta.percentage;
+    })(),
+    utilPercent: account.accountType === 'credit' ? calculateCreditUtilization(account) : undefined
   };
 }
 

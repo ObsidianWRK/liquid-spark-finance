@@ -1,9 +1,10 @@
 import React, { useState, useMemo, useCallback, useEffect } from 'react';
 import { calculateFinancialFreedomYears } from '@/utils/calculators';
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Area, AreaChart } from 'recharts';
+import { LineChart } from '@/components/charts';
 
 interface ProjectionData {
   year: number;
+  date: string;
   balance: number;
   totalWithdrawn: number;
 }
@@ -23,7 +24,13 @@ const FinancialFreedomCalculator = () => {
     let months = 0;
     
     // Add initial point
-    data.push({ year: 0, balance: initialSavings, totalWithdrawn: 0 });
+    const startDate = new Date();
+    data.push({ 
+      year: 0, 
+      date: startDate.toISOString(),
+      balance: initialSavings, 
+      totalWithdrawn: 0 
+    });
     
     const MAX_MONTHS = 50 * 12;
     while (balance > 0 && months < MAX_MONTHS) {
@@ -33,8 +40,12 @@ const FinancialFreedomCalculator = () => {
       
       // Add data point every 12 months
       if (months % 12 === 0) {
+        const futureDate = new Date(startDate);
+        futureDate.setMonth(futureDate.getMonth() + months);
+        
         data.push({
           year: months / 12,
+          date: futureDate.toISOString(),
           balance: Math.max(0, balance),
           totalWithdrawn
         });
@@ -171,72 +182,36 @@ const FinancialFreedomCalculator = () => {
 
       {/* Chart Section */}
       {projectionData.length > 0 && (
-        <div className="bg-white/5 backdrop-blur-xl rounded-3xl p-6 border border-white/10">
-          <h2 className="text-xl font-semibold text-white mb-6">Savings Projection Over Time</h2>
-          <div className="h-96">
-            <ResponsiveContainer width="100%" height="100%">
-              <AreaChart data={projectionData}>
-                <defs>
-                  <linearGradient id="balanceGradient" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="5%" stopColor="#3B82F6" stopOpacity={0.3}/>
-                    <stop offset="95%" stopColor="#3B82F6" stopOpacity={0}/>
-                  </linearGradient>
-                  <linearGradient id="withdrawnGradient" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="5%" stopColor="#10B981" stopOpacity={0.3}/>
-                    <stop offset="95%" stopColor="#10B981" stopOpacity={0}/>
-                  </linearGradient>
-                </defs>
-                <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.1)" />
-                <XAxis 
-                  dataKey="year" 
-                  stroke="#fff" 
-                  fontSize={12}
-                  tickFormatter={(value) => `Year ${value}`}
-                />
-                <YAxis 
-                  stroke="#fff" 
-                  fontSize={12}
-                  tickFormatter={(value) => formatCurrency(value)}
-                />
-                <Tooltip 
-                  formatter={formatTooltip}
-                  labelFormatter={(value) => `Year ${value}`}
-                  contentStyle={{
-                    backgroundColor: 'rgba(0,0,0,0.8)',
-                    border: '1px solid rgba(255,255,255,0.2)',
-                    borderRadius: '12px',
-                    color: '#fff'
-                  }}
-                />
-                <Area
-                  type="monotone"
-                  dataKey="balance"
-                  stroke="#3B82F6"
-                  fillOpacity={1}
-                  fill="url(#balanceGradient)"
-                  strokeWidth={2}
-                />
-                <Line
-                  type="monotone"
-                  dataKey="totalWithdrawn"
-                  stroke="#10B981"
-                  strokeWidth={2}
-                  dot={{ fill: '#10B981', strokeWidth: 2, r: 4 }}
-                />
-              </AreaChart>
-            </ResponsiveContainer>
-          </div>
-          <div className="flex justify-center space-x-8 mt-4">
-            <div className="flex items-center space-x-2">
-              <div className="w-4 h-4 bg-blue-500 rounded"></div>
-              <span className="text-white/80 text-sm">Remaining Balance</span>
-            </div>
-            <div className="flex items-center space-x-2">
-              <div className="w-4 h-4 bg-green-500 rounded"></div>
-              <span className="text-white/80 text-sm">Total Withdrawn</span>
-            </div>
-          </div>
-        </div>
+        <LineChart
+          data={projectionData}
+          series={[
+            {
+              dataKey: 'balance',
+              label: 'Remaining Balance',
+              color: '#007AFF', // Apple system blue
+            },
+            {
+              dataKey: 'totalWithdrawn',
+              label: 'Total Withdrawn',
+              color: '#32D74B', // Apple system green
+            }
+          ]}
+          title="Savings Projection Over Time"
+          multiSeries={true}
+          financialType="currency"
+          trendAnalysis={true}
+          dimensions={{ height: 384, responsive: true }}
+          legend={{ show: true, position: 'bottom' }}
+          lineConfig={{
+            smoothLines: true,
+            strokeWidth: 'medium',
+            showDots: true,
+            gradientFill: true,
+            gradientOpacity: 0.15,
+            hoverEffects: true,
+          }}
+          className="bg-white/5 backdrop-blur-xl rounded-3xl p-6 border border-white/10"
+        />
       )}
     </div>
   );

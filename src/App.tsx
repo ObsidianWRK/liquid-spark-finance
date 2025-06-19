@@ -8,6 +8,8 @@ import { UniversalCard } from '@/components/ui/UniversalCard';
 import { LiquidGlassProvider } from '@/hooks/useLiquidGlass.tsx';
 import { FeatureFlagProvider } from '@/components/shared/VueniFeatureFlags';
 import GlobalGradientBackground from '@/components/ui/GlobalGradientBackground';
+import { BiometricsProvider } from '@/providers/BiometricsProvider';
+import './styles/accessibility.css';
 
 const queryClient = new QueryClient();
 
@@ -49,31 +51,33 @@ const App = () => (
   <QueryClientProvider client={queryClient}>
     <FeatureFlagProvider preset="production">
       <LiquidGlassProvider>
-        <TooltipProvider>
-          <GlobalGradientBackground />
-          <Toaster />
-          <Sonner />
-          <BrowserRouter>
-            <Suspense fallback={<OptimizedLoadingFallback />}>
-              <Routes>
-                <Route path="/" element={<Index />} />
-                <Route path="/profile" element={<Profile />} />
-                <Route path="/credit-score" element={<CreditScorePage />} />
-                <Route path="/savings" element={<SavingsGoals />} />
-                <Route path="/transactions" element={<TransactionDemo />} />
-                <Route path="/budget-planner" element={<BudgetPlannerPage />} />
-                <Route path="/goal-setting" element={<SavingsGoals />} />
-                <Route path="/investment-tracker" element={<InvestmentTrackerPage />} />
-                <Route path="/calculators" element={<CalculatorsPage />} />
-                <Route path="/calculators/:id" element={<CalculatorsPage />} />
-                <Route path="/reports" element={<BudgetReportsPage />} />
-                <Route path="/insights" element={<InsightsPage />} />
-                {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-                <Route path="*" element={<NotFound />} />
-              </Routes>
-            </Suspense>
-          </BrowserRouter>
-        </TooltipProvider>
+        <BiometricsProvider autoStart={true} debugMode={import.meta.env.DEV}>
+          <TooltipProvider>
+            <GlobalGradientBackground />
+            <Toaster />
+            <Sonner />
+            <BrowserRouter>
+              <Suspense fallback={<OptimizedLoadingFallback />}>
+                <Routes>
+                  <Route path="/" element={<Index />} />
+                  <Route path="/profile" element={<Profile />} />
+                  <Route path="/credit-score" element={<CreditScorePage />} />
+                  <Route path="/savings" element={<SavingsGoals />} />
+                  <Route path="/transactions" element={<TransactionDemo />} />
+                  <Route path="/budget-planner" element={<BudgetPlannerPage />} />
+                  <Route path="/goal-setting" element={<SavingsGoals />} />
+                  <Route path="/investment-tracker" element={<InvestmentTrackerPage />} />
+                  <Route path="/calculators" element={<CalculatorsPage />} />
+                  <Route path="/calculators/:id" element={<CalculatorsPage />} />
+                  <Route path="/reports" element={<BudgetReportsPage />} />
+                  <Route path="/insights" element={<InsightsPage />} />
+                  {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+                  <Route path="*" element={<NotFound />} />
+                </Routes>
+              </Suspense>
+            </BrowserRouter>
+          </TooltipProvider>
+        </BiometricsProvider>
       </LiquidGlassProvider>
     </FeatureFlagProvider>
   </QueryClientProvider>

@@ -17,7 +17,8 @@ import {
   Eye,
   EyeOff
 } from 'lucide-react';
-import { PieChart as RechartsPieChart, Cell, ResponsiveContainer, AreaChart, Area, XAxis, YAxis, Tooltip, Pie } from 'recharts';
+import { PieChart as RechartsPieChart, Cell, ResponsiveContainer, Pie } from 'recharts';
+import { AreaChart } from '@/components/charts';
 
 interface Account {
   id: string;
@@ -219,41 +220,39 @@ const NetWorthSummary = ({ accounts, className }: NetWorthSummaryProps) => {
           </div>
           
           <div className="h-40 sm:h-48">
-            <ResponsiveContainer width="100%" height="100%">
-              <AreaChart data={trendData}>
-                <defs>
-                  <linearGradient id="netWorthGradient" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="5%" stopColor={colors.accent.blue} stopOpacity={0.3}/>
-                    <stop offset="95%" stopColor={colors.accent.blue} stopOpacity={0}/>
-                  </linearGradient>
-                </defs>
-                <XAxis 
-                  dataKey="month" 
-                  axisLine={false} 
-                  tickLine={false}
-                  tick={{ fill: 'rgba(255,255,255,0.6)', fontSize: isMobile ? 10 : 12 }}
-                  interval={isMobile ? 1 : 0}
-                />
-                <YAxis hide />
-                <Tooltip 
-                  formatter={(value: number) => [formatCurrency(value), 'Net Worth']}
-                  contentStyle={{
-                    backgroundColor: 'rgba(0,0,0,0.8)',
-                    border: '1px solid rgba(255,255,255,0.2)',
-                    borderRadius: '12px',
-                    color: '#fff',
-                    fontSize: '12px'
-                  }}
-                />
-                <Area
-                  type="monotone"
-                  dataKey="value"
-                  stroke={colors.accent.blue}
-                  strokeWidth={isMobile ? 1.5 : 2}
-                  fill="url(#netWorthGradient)"
-                />
-              </AreaChart>
-            </ResponsiveContainer>
+            <AreaChart
+              data={trendData.map(item => ({ date: item.month, netWorth: item.value }))}
+              series={[
+                {
+                  dataKey: 'netWorth',
+                  label: 'Net Worth',
+                  color: colors.accent.blue,
+                }
+              ]}
+              financialType="currency"
+              areaConfig={{
+                fillOpacity: 0.3,
+                strokeWidth: isMobile ? 'thin' : 'medium',
+                smoothCurves: true,
+                gradientFill: true,
+                hoverEffects: true,
+              }}
+              dimensions={{
+                height: isMobile ? 160 : 192,
+                responsive: true,
+              }}
+              xAxis={{
+                show: true,
+                tickFormatter: (value) => value,
+              }}
+              yAxis={{
+                show: false,
+              }}
+              grid={{
+                show: false,
+              }}
+              className="w-full h-full"
+            />
           </div>
         </SimpleGlassCard>
 

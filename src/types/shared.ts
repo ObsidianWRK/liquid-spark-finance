@@ -19,6 +19,14 @@ export interface Transaction {
     financial: number;
   };
   type?: 'income' | 'expense';
+  paymentMethod?: {
+    accountName: string;
+    last4: string;
+    network?: string;
+  };
+  trackingNumber?: string;
+  shippingCarrier?: 'UPS' | 'FedEx' | 'USPS' | 'DHL' | 'Other';
+  shippingStatus?: 'DELIVERED' | 'OUT_FOR_DELIVERY' | 'IN_TRANSIT' | 'PENDING';
 }
 
 export interface Account {

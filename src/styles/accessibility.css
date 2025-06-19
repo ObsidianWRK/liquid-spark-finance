@@ -1,0 +1,288 @@
+/**
+ * Accessibility enhancements for chart components
+ * Implements WCAG 2.1 AA compliance and Apple accessibility standards
+ */
+
+/* Reduced Motion Support - Critical for WCAG compliance */
+@media (prefers-reduced-motion: reduce) {
+  /* Disable all animations and transitions for charts */
+  .chart-animation,
+  .area-chart,
+  .line-chart,
+  .stacked-bar-chart,
+  [class*="chart-"],
+  [class*="graph-"] {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    transform: none !important;
+  }
+
+  /* Disable Recharts animations specifically */
+  .recharts-wrapper .recharts-surface,
+  .recharts-cartesian-grid,
+  .recharts-line,
+  .recharts-area,
+  .recharts-bar,
+  .recharts-tooltip,
+  .recharts-legend {
+    animation: none !important;
+    transition: none !important;
+  }
+
+  /* Keep essential focus animations but make them instant */
+  :focus,
+  :focus-visible {
+    transition: outline 0.01ms !important;
+  }
+
+  /* Disable loading skeleton animations */
+  .animate-pulse {
+    animation: none !important;
+  }
+
+  /* Static alternatives for animated elements */
+  .animate-pulse > * {
+    opacity: 0.7 !important;
+  }
+}
+
+/* Enhanced Focus Indicators - Fix contrast issues */
+.chart-component:focus,
+.chart-component:focus-visible {
+  outline: 3px solid #007AFF;
+  outline-offset: 2px;
+  background: rgba(0, 122, 255, 0.1);
+  border: 2px solid rgba(0, 122, 255, 0.3);
+}
+
+/* Time Range Toggle Focus Enhancement */
+.time-range-toggle button:focus,
+.time-range-toggle button:focus-visible {
+  outline: 2px solid #007AFF;
+  outline-offset: 2px;
+  background: rgba(0, 122, 255, 0.15) !important;
+  border: 1px solid rgba(0, 122, 255, 0.4) !important;
+}
+
+/* Selected state with better contrast */
+.time-range-toggle button[aria-selected="true"] {
+  background: rgba(255, 255, 255, 0.25) !important;
+  border: 1px solid rgba(255, 255, 255, 0.4) !important;
+  color: #FFFFFF !important;
+}
+
+/* High Contrast Mode Support */
+@media (prefers-contrast: high) {
+  /* Increase stroke width for chart elements */
+  .recharts-line,
+  .recharts-area,
+  .recharts-bar {
+    stroke-width: 3px !important;
+  }
+
+  /* Enhanced border visibility */
+  .chart-component,
+  .time-range-toggle,
+  .tooltip {
+    border: 2px solid currentColor !important;
+  }
+
+  /* Strong focus indicators */
+  :focus,
+  :focus-visible {
+    outline: 4px solid currentColor !important;
+    outline-offset: 2px !important;
+  }
+
+  /* Text emphasis */
+  .chart-title,
+  .axis-label,
+  .tooltip-content {
+    font-weight: 600 !important;
+  }
+}
+
+/* Screen Reader Only Content */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Skip Link for Chart Navigation */
+.skip-link {
+  position: absolute;
+  top: -40px;
+  left: 6px;
+  background: #000000;
+  color: #FFFFFF;
+  padding: 8px;
+  text-decoration: none;
+  border-radius: 4px;
+  z-index: 1000;
+  font-size: 14px;
+  font-weight: 500;
+  border: 2px solid #007AFF;
+}
+
+.skip-link:focus {
+  top: 6px;
+}
+
+/* Chart Data Table Styling */
+.chart-data-table {
+  border-collapse: collapse;
+  width: 100%;
+  margin-top: 1rem;
+  font-size: 14px;
+}
+
+.chart-data-table th,
+.chart-data-table td {
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 8px 12px;
+  text-align: left;
+}
+
+.chart-data-table th {
+  background: rgba(255, 255, 255, 0.1);
+  font-weight: 600;
+  color: #FFFFFF;
+}
+
+.chart-data-table td {
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.chart-data-table caption {
+  padding: 8px 0;
+  font-weight: 600;
+  color: #FFFFFF;
+  text-align: left;
+}
+
+/* Touch Target Enhancements */
+@media (pointer: coarse) {
+  /* Ensure minimum 44x44px touch targets */
+  .time-range-toggle button,
+  .chart-interactive-element {
+    min-height: 44px;
+    min-width: 44px;
+    padding: 12px;
+  }
+
+  /* Increase spacing between interactive elements */
+  .time-range-toggle {
+    gap: 8px;
+  }
+}
+
+/* Keyboard Navigation Indicators */
+.chart-keyboard-navigation-active {
+  position: relative;
+}
+
+.chart-keyboard-navigation-active::before {
+  content: "Use arrow keys to navigate data points";
+  position: absolute;
+  top: -30px;
+  left: 0;
+  background: rgba(0, 0, 0, 0.9);
+  color: #FFFFFF;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  white-space: nowrap;
+  z-index: 100;
+  pointer-events: none;
+}
+
+/* Ensure tooltips are accessible */
+.chart-tooltip {
+  background: rgba(0, 0, 0, 0.95) !important;
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+  border-radius: 8px !important;
+  padding: 12px !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5) !important;
+}
+
+.chart-tooltip[role="tooltip"] {
+  z-index: 1000;
+}
+
+/* Live Region for Announcements */
+.chart-live-region {
+  position: absolute;
+  left: -10000px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+/* Error and Loading State Accessibility */
+.chart-error-state,
+.chart-loading-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  text-align: center;
+}
+
+.chart-error-state [role="img"],
+.chart-loading-state [role="img"] {
+  width: 48px;
+  height: 48px;
+  margin-bottom: 1rem;
+}
+
+/* Ensure proper color contrast for all states */
+.chart-component {
+  --focus-color: #007AFF;
+  --focus-bg: rgba(0, 122, 255, 0.1);
+  --error-color: #FF453A;
+  --success-color: #32D74B;
+  --warning-color: #FF9F0A;
+}
+
+/* Dark mode specific adjustments */
+@media (prefers-color-scheme: dark) {
+  .chart-data-table th {
+    background: rgba(255, 255, 255, 0.15);
+  }
+  
+  .chart-data-table th,
+  .chart-data-table td {
+    border-color: rgba(255, 255, 255, 0.15);
+  }
+}
+
+/* Light mode specific adjustments */
+@media (prefers-color-scheme: light) {
+  .chart-component {
+    --focus-color: #007AFF;
+    --focus-bg: rgba(0, 122, 255, 0.1);
+  }
+  
+  .chart-data-table th {
+    background: rgba(0, 0, 0, 0.05);
+    color: #000000;
+  }
+  
+  .chart-data-table td {
+    color: rgba(0, 0, 0, 0.8);
+  }
+  
+  .chart-data-table th,
+  .chart-data-table td {
+    border-color: rgba(0, 0, 0, 0.1);
+  }
+}

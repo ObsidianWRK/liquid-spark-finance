@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useCallback, lazy, Suspense } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import Navigation from '@/components/Navigation';
-import CompactAccountCard from '@/components/financial/CompactAccountCard';
+import AccountCard from '@/components/accounts/AccountCard';
+import { Grid } from '@/components/accounts/Grid';
 import { OptimizedTransactionList } from '@/components/transactions/OptimizedTransactionList';
 import LiquidGlassTopMenuBar from '@/components/LiquidGlassTopMenuBar';
 import ConsolidatedInsightsPage from '@/components/insights/ConsolidatedInsightsPage';
@@ -11,12 +12,14 @@ import CalculatorList from '@/components/calculators/CalculatorList';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { PerformanceMonitor } from '@/components/performance/PerformanceMonitor';
 import { mockData, getCompactAccountCards } from '@/services/mockData';
+import { Transaction } from '@/types/shared';
 // CC: New Feature Cloud and Smart Accounts Deck imports
 import FeatureCloud from '@/components/FeatureCloud';
 import { VirtualizedDeck } from '@/components/AccountDeck/VirtualizedDeck';
 import { isFeatureEnabled, trackFeatureUsage } from '@/utils/featureFlags';
 import { transformToAccountRowData } from '@/utils/accountTransformers';
 import CleanCreditScoreCard from '@/components/financial/CleanCreditScoreCard';
+import { BiometricMonitor, InterventionNudge, useBiometricInterventionStore } from '@/features/biometric-intervention';
 
 // Lazy load components properly without webpack comments
 const InvestmentTrackerPage = lazy(() => import('@/components/investments/InvestmentTrackerPage'));
@@ -66,36 +69,96 @@ class ErrorBoundary extends React.Component<
   }
 }
 
-// Transform mockData transactions to match OptimizedTransactionList format
-const transformTransactions = (transactions: typeof mockData.transactions) => {
-  try {
-    if (!transactions || transactions.length === 0) {
-      console.warn('No transactions available');
-      return [];
-    }
-    
-    return transactions.map(t => ({
-      id: t.id,
-      date: t.date,
-      description: t.merchant,
-      amount: Math.abs(t.amount),
-      category: {
-        name: t.category?.name?.toLowerCase() || 'other',
-        color: t.category?.color || '#6366f1'
+// Adapt mock transactions for new UI fields
+const adaptTransactions = (transactions: typeof mockData.transactions): Transaction[] => {
+  return transactions.map((t) => ({
+    ...t,
+    // Map legacy fields if present
+    shippingCarrier: (t as any).shippingCarrier ?? (t as any).shippingProvider ?? undefined,
+    shippingStatus: (t as any).shippingStatus ??
+      ((s => {
+        if (!s) return undefined;
+        const map: Record<string, string> = {
+          'Delivered': 'DELIVERED',
+          'Out for Delivery': 'OUT_FOR_DELIVERY',
+          'In Transit': 'IN_TRANSIT',
+          'Pending': 'PENDING'
+        };
+        return map[s] as any;
+      })((t as any).deliveryStatus)),
+    // Provide fallback paymentMethod mock if absent
+    paymentMethod: (t as any).paymentMethod ?? (t.amount < 0 ? {
+      accountName: 'Vueni Card',
+      last4: '4242',
+      network: 'Visa'
+    } : undefined)
+  })) as unknown as Transaction[];
+};
+
+// Demo component to showcase intervention system
+const DemoInterventionNudge: React.FC = () => {
+  const [showDemo, setShowDemo] = useState(false);
+  
+  useEffect(() => {
+    // Show demo intervention after 3 seconds for demonstration
+    const timer = setTimeout(() => setShowDemo(true), 3000);
+    return () => clearTimeout(timer);
+  }, []);
+
+  const mockEvent = {
+    id: 'demo-intervention-1',
+    type: 'intervention_triggered' as const,
+    stressLevel: {
+      score: 78,
+      confidence: 0.85,
+      baseline: 30,
+      trend: 'rising' as const,
+      timestamp: new Date().toISOString()
+    },
+    policy: {
+      id: 'high-stress-policy',
+      name: 'High Stress Spending Block',
+      enabled: true,
+      triggers: {
+        stressThreshold: 75,
+        spendingAmount: 50,
+        consecutiveHighStress: 2
       },
-      type: (t.amount < 0 ? 'expense' : 'income') as 'expense' | 'income',
-      merchant: t.merchant,
-      status: 'completed' as const,
-      scores: {
-        health: Math.floor(Math.random() * 100),
-        eco: Math.floor(Math.random() * 100),
-        financial: Math.floor(Math.random() * 100),
+      actions: {
+        cardFreeze: false,
+        nudgeMessage: true,
+        breathingExercise: true,
+        delayPurchase: 30,
+        safeToSpendReduction: 50
+      },
+      schedule: {
+        enabled: false,
+        startTime: '09:00',
+        endTime: '22:00',
+        daysOfWeek: [1, 2, 3, 4, 5]
       }
-    }));
-  } catch (error) {
-    console.error('Error transforming transactions:', error);
-    return [];
-  }
+    },
+    action: 'nudge_displayed',
+    outcome: 'prevented_purchase' as const,
+    timestamp: new Date().toISOString()
+  };
+
+  if (!showDemo) return null;
+
+  return (
+    <InterventionNudge
+      event={mockEvent}
+      onDismiss={() => setShowDemo(false)}
+      onProceedAnyway={() => {
+        console.log('User proceeded with purchase despite stress intervention');
+        setShowDemo(false);
+      }}
+      onTakeBreathing={() => {
+        console.log('User started breathing exercise');
+        setShowDemo(false);
+      }}
+    />
+  );
 };
 
 export default function Index() {
@@ -198,36 +261,41 @@ export default function Index() {
             </div>
             
             {/* Compact Account Cards Grid */}
-            <section className="cardGrid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+            <Grid>
               {getCompactAccountCards().map(account => (
-                <CompactAccountCard
+                <AccountCard
                   key={account.id}
-                  account={account}
+                  acct={{ ...account, category: account.accountType === 'Credit Card' ? 'CREDIT' : account.accountType.toUpperCase() as any }}
                   showBalance={balanceVisibility[account.id] ?? true}
-                  onToggleBalance={() => handleToggleBalance(account.id)}
-                  onQuickAction={(action) => handleQuickAction(account.id, action)}
-                  className="h-fit"
+                  onAction={(id, act) => handleQuickAction(id, act)}
                 />
               ))}
-            </section>
+            </Grid>
           </div>
         );
       case 'insights':
         return <ConsolidatedInsightsPage />;
       case 'transactions':
         return (
-          <div className="max-w-none w-full">
+          <div className="max-w-none w-full relative">
             <div className="p-4 md:p-6 lg:p-8">
-              <div className="mb-6">
-                <h1 className="text-2xl lg:text-3xl font-bold text-white mb-2">Recent Transactions</h1>
-                <p className="text-white/60">
-                  {mockData.transactions?.length || 0} transactions • 30 of 30
-                </p>
+              <div className="mb-6 flex items-start justify-between">
+                <div>
+                  <h1 className="text-2xl lg:text-3xl font-bold text-white mb-2">Recent Transactions</h1>
+                  <p className="text-white/60">
+                    {mockData.transactions?.length || 0} transactions • 30 of 30
+                  </p>
+                </div>
+                
+                {/* Compact Biometric Monitor */}
+                <div className="hidden lg:block">
+                  <BiometricMonitor compact={true} className="w-80" />
+                </div>
               </div>
               
               <div className="max-w-none">
                 <OptimizedTransactionList 
-                  transactions={mockData.transactions || []}
+                  transactions={adaptTransactions(mockData.transactions) || []}
                   variant="apple"
                   currency="USD"
                   features={{
@@ -242,6 +310,9 @@ export default function Index() {
                 />
               </div>
             </div>
+
+            {/* Demo Intervention Nudge - Shows how the system would work during a transaction */}
+            <DemoInterventionNudge />
           </div>
         );
       case 'reports':
@@ -318,25 +389,23 @@ export default function Index() {
                     </p>
                   </div>
                   
-                  <section className="cardGrid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
+                  <Grid>
                     {getCompactAccountCards().slice(0, 4).map(account => (
-                      <CompactAccountCard
+                      <AccountCard
                         key={account.id}
-                        account={account}
+                        acct={{ ...account, category: account.accountType === 'Credit Card' ? 'CREDIT' : account.accountType.toUpperCase() as any }}
                         showBalance={balanceVisibility[account.id] ?? true}
-                        onToggleBalance={() => handleToggleBalance(account.id)}
-                        onQuickAction={(action) => handleQuickAction(account.id, action)}
-                        className="h-fit"
+                        onAction={(id, act) => handleQuickAction(id, act)}
                       />
                     ))}
-                  </section>
+                  </Grid>
                 </div>
               </div>
               
               <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
                 <div className="lg:col-span-2">
                   <OptimizedTransactionList 
-                    transactions={mockData.transactions?.slice(0, 10) || []}
+                    transactions={adaptTransactions(mockData.transactions)?.slice(0, 10) || []}
                     variant="apple"
                     currency="USD"
                     features={{

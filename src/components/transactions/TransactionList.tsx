@@ -1,324 +1,153 @@
-import React, { useState } from 'react';
-import SimpleGlassCard from '@/components/ui/SimpleGlassCard';
-import { colors } from '@/theme/colors';
-import { 
-  Calendar, 
-  Filter, 
-  Search, 
-  Download,
-  ChevronDown,
-  TrendingUp,
-  TrendingDown,
-  Minus
-} from 'lucide-react';
+// TransactionList Revamp – unified, responsive, virtualized list
+// IMPORTANT: This file has been completely rewritten to satisfy the TransactionList Revamp spec.
 
-export interface Transaction {
-  id: string;
-  merchant: string;
-  category: string;
-  amount: number;
-  date: string;
-  status: 'completed' | 'pending' | 'failed';
-  scores?: {
-    health: number;
-    eco: number;
-    financial: number;
-  };
-  shipping?: {
-    trackingNumber: string;
-    provider: string;
-    status: string;
-  };
-}
+import React, { memo, useMemo } from 'react';
+import { FixedSizeList as List, ListChildComponentProps } from 'react-window';
+import { cn } from '@/lib/utils';
+import TransactionRow from './TransactionRow';
+import DateSeparator from './DateSeparator';
+import { Transaction } from '@/types/transactions';
+import { format } from 'date-fns';
 
 interface TransactionListProps {
   transactions: Transaction[];
-  onTransactionClick?: (transaction: Transaction) => void;
-  showFilters?: boolean;
+  isLoading?: boolean;
+  onTransactionClick?: (tx: Transaction) => void;
   className?: string;
 }
 
-const ScoreCircle = ({ score, type }: { score: number; type: 'health' | 'eco' | 'financial' }) => {
-  const getColor = () => {
-    switch (type) {
-      case 'health': return colors.accent.pink;
-      case 'eco': return colors.accent.green;
-      case 'financial': return colors.accent.blue;
-      default: return colors.accent.blue;
-    }
-  };
+// Internal flattened item representation (row or separator)
+interface RowItemSeparator {
+  type: 'separator';
+  dateKey: string;
+  date: Date;
+}
+interface RowItemTransaction {
+  type: 'transaction';
+  tx: Transaction;
+}
 
-  const getLabel = () => {
-    switch (type) {
-      case 'health': return 'H';
-      case 'eco': return 'E';
-      case 'financial': return 'F';
-      default: return 'F';
-    }
-  };
+type RowItem = RowItemSeparator | RowItemTransaction;
 
+const ROW_HEIGHT = 72; // px – consistent row & separator height
+const VIRTUALIZE_THRESHOLD = 500;
+
+const SkeletonRow = () => (
+  <div
+    className={cn(
+      'grid items-center gap-3 lg:gap-4',
+      'grid-cols-[48px_1fr_96px_110px_96px]',
+      'px-4 py-3 animate-pulse'
+    )}
+  >
+    <div className="w-10 h-10 rounded-lg bg-white/10" />
+    <div className="space-y-1">
+      <div className="h-3 w-24 bg-white/10 rounded" />
+      <div className="h-2 w-16 bg-white/10 rounded" />
+    </div>
+    <div className="h-3 w-16 bg-white/10 rounded" />
+    <div className="h-5 w-20 bg-white/10 rounded" />
+    <div className="h-3 w-20 bg-white/10 rounded" />
+  </div>
+);
+
+const buildRowItems = (transactions: Transaction[]): RowItem[] => {
+  // Sort transactions by date desc
+  const sorted = [...transactions].sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+  const items: RowItem[] = [];
+  let lastDateKey = '';
+  sorted.forEach((tx) => {
+    const date = new Date(tx.date);
+    const dateKey = format(date, 'yyyy-MM-dd');
+    if (dateKey !== lastDateKey) {
+      items.push({ type: 'separator', dateKey, date });
+      lastDateKey = dateKey;
+    }
+    items.push({ type: 'transaction', tx });
+  });
+  return items;
+};
+
+interface RowRendererData {
+  items: RowItem[];
+  onTransactionClick?: (tx: Transaction) => void;
+}
+
+const RowRenderer: React.FC<ListChildComponentProps<RowRendererData>> = ({ index, style, data }) => {
+  const item = data.items[index];
+  if (!item) return null;
+  if (item.type === 'separator') {
+    return (
+      <div style={style}>
+        <DateSeparator date={item.date} />
+      </div>
+    );
+  }
   return (
-    <div className="relative w-8 h-8 flex items-center justify-center">
-      <svg className="w-8 h-8 transform -rotate-90" viewBox="0 0 32 32">
-        <circle
-          cx="16"
-          cy="16"
-          r="12"
-          fill="none"
-          stroke="rgba(255,255,255,0.1)"
-          strokeWidth="2"
-        />
-        <circle
-          cx="16"
-          cy="16"
-          r="12"
-          fill="none"
-          stroke={getColor()}
-          strokeWidth="2"
-          strokeLinecap="round"
-          strokeDasharray={`${2 * Math.PI * 12}`}
-          strokeDashoffset={`${2 * Math.PI * 12 * (1 - score / 100)}`}
-          className="transition-all duration-300"
-        />
-      </svg>
-      <span className="absolute inset-0 flex items-center justify-center text-xs font-medium text-white">
-        {getLabel()}
-      </span>
+    <div style={style}>
+      <TransactionRow tx={item.tx} onClick={data.onTransactionClick} />
     </div>
   );
 };
 
-const TransactionItem = ({ 
-  transaction, 
-  onClick 
-}: { 
-  transaction: Transaction; 
-  onClick?: (transaction: Transaction) => void;
-}) => {
-  const formatAmount = (amount: number) => {
-    const formatted = Math.abs(amount).toLocaleString('en-US', {
-      style: 'currency',
-      currency: 'USD',
-      minimumFractionDigits: 2
-    });
-    return amount < 0 ? `-${formatted}` : `+${formatted}`;
-  };
+export const TransactionList: React.FC<TransactionListProps> = memo(({ transactions, isLoading = false, onTransactionClick, className }) => {
+  const items = useMemo(() => buildRowItems(transactions), [transactions]);
 
-  const getAmountColor = (amount: number) => {
-    if (amount > 0) return colors.financial.positive;
-    if (amount < 0) return colors.financial.negative;
-    return colors.financial.neutral;
-  };
-
-  const getStatusIcon = (amount: number) => {
-    if (amount > 0) return <TrendingUp className="w-4 h-4" />;
-    if (amount < 0) return <TrendingDown className="w-4 h-4" />;
-    return <Minus className="w-4 h-4" />;
-  };
-
-  return (
-    <div 
-      className="group flex items-center gap-4 p-4 hover:bg-white/[0.02] rounded-lg transition-all duration-200 cursor-pointer"
-      onClick={() => onClick?.(transaction)}
-    >
-      {/* Status Indicator */}
-      <div 
-        className="w-3 h-3 rounded-full flex-shrink-0"
-        style={{ 
-          backgroundColor: transaction.status === 'completed' 
-            ? colors.status.success 
-            : transaction.status === 'pending' 
-            ? colors.status.warning 
-            : colors.status.error 
-        }}
-      />
-
-      {/* Category Icon Placeholder */}
-      <div className="w-10 h-10 rounded-lg bg-white/[0.06] flex items-center justify-center flex-shrink-0">
-        <div 
-          className="w-4 h-4 flex items-center justify-center"
-          style={{ color: getAmountColor(transaction.amount) }}
-        >
-          {getStatusIcon(transaction.amount)}
-        </div>
-      </div>
-
-      {/* Transaction Details */}
-      <div className="flex-1 min-w-0">
-        <h4 className="font-medium text-white truncate group-hover:text-blue-300 transition-colors">
-          {transaction.merchant}
-        </h4>
-        <div className="flex items-center gap-2 mt-1">
-          <span className="text-sm text-white/60">{transaction.category}</span>
-          <span className="text-sm text-white/40">•</span>
-          <span className="text-sm text-white/40">
-            {new Date(transaction.date).toLocaleDateString()}
-          </span>
-        </div>
-      </div>
-
-      {/* Amount */}
-      <div className="text-right flex-shrink-0">
-        <div 
-          className="text-lg font-semibold"
-          style={{ color: getAmountColor(transaction.amount) }}
-        >
-          {formatAmount(transaction.amount)}
-        </div>
-        <div className="text-xs text-white/40 mt-1 capitalize">
-          {transaction.status}
-        </div>
-      </div>
-
-      {/* Score Circles */}
-      {transaction.scores && (
-        <div className="flex items-center gap-2 flex-shrink-0 ml-4">
-          <ScoreCircle score={transaction.scores.health} type="health" />
-          <ScoreCircle score={transaction.scores.eco} type="eco" />
-          <ScoreCircle score={transaction.scores.financial} type="financial" />
-        </div>
-      )}
-    </div>
-  );
-};
-
-const TransactionList = ({ 
-  transactions, 
-  onTransactionClick,
-  showFilters = true,
-  className 
-}: TransactionListProps) => {
-  const [searchQuery, setSearchQuery] = useState('');
-  const [selectedCategory, setSelectedCategory] = useState('all');
-  
-  // Group transactions by date
-  const groupedTransactions = React.useMemo(() => {
-    const filtered = transactions.filter(transaction => {
-      const matchesSearch = transaction.merchant.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                           transaction.category.toLowerCase().includes(searchQuery.toLowerCase());
-      const matchesCategory = selectedCategory === 'all' || transaction.category === selectedCategory;
-      return matchesSearch && matchesCategory;
-    });
-
-    return filtered.reduce((groups, transaction) => {
-      const date = new Date(transaction.date).toDateString();
-      if (!groups[date]) {
-        groups[date] = [];
-      }
-      groups[date].push(transaction);
-      return groups;
-    }, {} as Record<string, Transaction[]>);
-  }, [transactions, searchQuery, selectedCategory]);
-
-  const formatDateHeader = (dateString: string) => {
-    const date = new Date(dateString);
-    const today = new Date();
-    const yesterday = new Date(today);
-    yesterday.setDate(yesterday.getDate() - 1);
-
-    if (date.toDateString() === today.toDateString()) {
-      return 'Today';
-    } else if (date.toDateString() === yesterday.toDateString()) {
-      return 'Yesterday';
-    } else {
-      return date.toLocaleDateString('en-US', {
-        weekday: 'long',
-        month: 'long',
-        day: 'numeric'
-      });
-    }
-  };
-
-  const categories = React.useMemo(() => {
-    const cats = Array.from(new Set(transactions.map(t => t.category)));
-    return ['all', ...cats];
-  }, [transactions]);
-
-  return (
-    <SimpleGlassCard className={`p-6 ${className}`}>
-      {/* Header */}
-      <div className="flex items-center justify-between mb-6">
-        <h2 className="text-xl font-semibold text-white">Transactions</h2>
-        <div className="flex items-center gap-3">
-          <button className="p-2 rounded-lg bg-white/[0.06] hover:bg-white/[0.08] transition-colors">
-            <Download className="w-4 h-4 text-white/70" />
-          </button>
-          <button className="p-2 rounded-lg bg-white/[0.06] hover:bg-white/[0.08] transition-colors">
-            <Filter className="w-4 h-4 text-white/70" />
-          </button>
-        </div>
-      </div>
-
-      {/* Filters */}
-      {showFilters && (
-        <div className="flex gap-4 mb-6">
-          {/* Search */}
-          <div className="relative flex-1">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-white/40" />
-            <input
-              type="text"
-              placeholder="Search transactions..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-10 pr-4 py-2 bg-white/[0.06] border border-white/[0.08] rounded-lg text-white placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500/50 transition-all"
-            />
-          </div>
-
-          {/* Category Filter */}
-          <div className="relative">
-            <select
-              value={selectedCategory}
-              onChange={(e) => setSelectedCategory(e.target.value)}
-              className="appearance-none pl-4 pr-10 py-2 bg-white/[0.06] border border-white/[0.08] rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500/50 transition-all min-w-[140px]"
-            >
-              {categories.map(category => (
-                <option key={category} value={category} className="bg-gray-900">
-                  {category === 'all' ? 'All Categories' : category}
-                </option>
-              ))}
-            </select>
-            <ChevronDown className="absolute right-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-white/40 pointer-events-none" />
-          </div>
-        </div>
-      )}
-
-      {/* Transaction Groups */}
-      <div className="space-y-6">
-        {Object.entries(groupedTransactions).map(([date, dateTransactions]) => (
-          <div key={date}>
-            <h3 className="text-sm font-medium text-white/60 mb-3 px-2">
-              {formatDateHeader(date)}
-            </h3>
-            <div className="space-y-1">
-              {dateTransactions.map((transaction) => (
-                <TransactionItem 
-                  key={transaction.id} 
-                  transaction={transaction}
-                  onClick={onTransactionClick}
-                />
-              ))}
-            </div>
-          </div>
+  // Loading state skeletons
+  if (isLoading) {
+    return (
+      <div className={cn('space-y-2', className)} data-testid="transaction-list-loading">
+        {Array.from({ length: 8 }).map((_, i) => (
+          <SkeletonRow key={`sk-${i}`} />
         ))}
       </div>
+    );
+  }
 
-      {/* Empty State */}
-      {Object.keys(groupedTransactions).length === 0 && (
-        <div className="text-center py-12">
-          <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-white/[0.06] flex items-center justify-center">
-            <Calendar className="w-8 h-8 text-white/40" />
-          </div>
-          <p className="text-white/60 mb-2">No transactions found</p>
-          <p className="text-white/40 text-sm">
-            {searchQuery || selectedCategory !== 'all' 
-              ? 'Try adjusting your search or filters'
-              : 'Your transactions will appear here'
-            }
-          </p>
-        </div>
-      )}
-    </SimpleGlassCard>
+  // Empty state
+  if (transactions.length === 0) {
+    return (
+      <div className="text-center py-12 text-white/60" data-testid="transaction-list-empty">
+        No transactions to display.
+      </div>
+    );
+  }
+
+  // Decide whether to virtualize
+  const shouldVirtualize = transactions.length > VIRTUALIZE_THRESHOLD;
+
+  if (shouldVirtualize) {
+    const height = Math.min(window.innerHeight * 0.7, ROW_HEIGHT * 12);
+    return (
+      <List
+        height={height}
+        itemCount={items.length}
+        itemSize={ROW_HEIGHT}
+        itemData={{ items, onTransactionClick }}
+        width="100%"
+        overscanCount={8}
+        className={cn('transaction-scroll-container', className)}
+        data-testid="transaction-virtualized-list"
+      >
+        {RowRenderer}
+      </List>
+    );
+  }
+
+  // Non-virtualized list
+  return (
+    <div className={cn('space-y-1 transaction-scroll-container', className)} data-testid="transaction-list">
+      {items.map((item, idx) => (
+        item.type === 'separator' ? (
+          <DateSeparator key={item.dateKey} date={item.date} />
+        ) : (
+          <TransactionRow key={item.tx.id || idx} tx={item.tx} onClick={onTransactionClick} />
+        )
+      ))}
+    </div>
   );
-};
+});
+
+TransactionList.displayName = 'TransactionList';
 
 export default TransactionList; 

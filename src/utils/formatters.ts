@@ -2,14 +2,54 @@
  * Utility functions for formatting values in the insights system
  */
 
+import { usePrivacyStore } from "@/features/privacy-hide-amounts/store";
+
+/**
+ * Safe ratio calculation that handles division by zero
+ * @param numerator - The numerator value
+ * @param denominator - The denominator value (can be 0)
+ * @returns Number ratio or null if denominator is 0
+ */
+export const safeRatio = (numerator: number, denominator: number | 0): number | null => {
+  if (denominator === 0 || !isFinite(denominator) || !isFinite(numerator)) {
+    return null;
+  }
+  
+  const ratio = numerator / denominator;
+  return isFinite(ratio) ? ratio : null;
+};
+
+/**
+ * Format percentage with clamping to prevent extreme values
+ * @param value - The percentage value to format (as decimal, e.g., 0.25 for 25%)
+ * @param decimals - Number of decimal places (default: 1)
+ * @param clampTo - Optional clamping range (default: ±999%)
+ * @returns Formatted percentage string with % sign
+ */
+export const formatPercent = (
+  value: number | null, 
+  decimals: number = 1, 
+  clampTo: number = 999
+): string => {
+  if (value === null || !isFinite(value)) {
+    return '--';
+  }
+  
+  // Convert to percentage and clamp to prevent extreme values
+  const percentage = value * 100;
+  const clampedPercentage = Math.max(Math.min(percentage, clampTo), -clampTo);
+  
+  return `${clampedPercentage.toFixed(decimals)}%`;
+};
+
 /**
  * Format score with configurable precision (0-2 decimal places)
  * @param value - The score value to format
- * @param precision - Number of decimal places (0, 1, or 2). Default is 0 for integer display
+ * @param precision - Number of decimal places (0, 1, or 2). Default is 1 for score display
  * @param locale - Locale for formatting. Default is 'en-US'
  * @returns Formatted score string (e.g., "79", "79.4", "79.37")
  */
-export const formatScore = (value: number, precision: 0 | 1 | 2 = 0, locale: string = 'en-US'): string => {
+export const formatScore = (value: number, precision: 0 | 1 | 2 = 1, locale: string = 'en-US'): string => {
   // Clamp precision to valid range
   const validPrecision = Math.max(0, Math.min(2, precision)) as 0 | 1 | 2;
   
@@ -31,7 +71,7 @@ export const formatFinancialScore = (value: number): string => {
 };
 
 /**
- * Format percentage with consistent decimal places
+ * Format percentage with consistent decimal places (legacy function - use formatPercent for new code)
  * @param value - The percentage value to format
  * @param decimals - Number of decimal places (default: 1)
  * @returns Formatted percentage string with % sign
@@ -63,12 +103,20 @@ export const formatCurrency = (
   // Determine decimal places
   const shouldShowDecimals = decimals !== undefined ? decimals > 0 : value % 1 !== 0;
   
-  return new Intl.NumberFormat(locale, {
+  const hide = (usePrivacyStore as any)?.getState?.()?.setting?.hideAmounts;
+
+  const formatted = new Intl.NumberFormat(locale, {
     style: 'currency',
     currency: currency,
     minimumFractionDigits: shouldShowDecimals ? (decimals ?? 2) : 0,
     maximumFractionDigits: shouldShowDecimals ? (decimals ?? 2) : 0,
   }).format(value);
+
+  if (hide) {
+    return formatted.replace(/\d/g, '•');
+  }
+
+  return formatted;
 };
 
 /**

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { calculate401kBalance } from '@/utils/calculators';
-import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell, BarChart, Bar } from 'recharts';
+import { PieChart, Pie, Cell, BarChart, Bar, ResponsiveContainer } from 'recharts';
+import { AreaChart } from '@/components/charts';
 
 interface RetirementData {
   year: number;
@@ -278,92 +279,66 @@ const Retirement401kCalculator = () => {
           <div className="bg-white/5 backdrop-blur-xl rounded-3xl p-6 border border-white/10">
             <h2 className="text-xl font-semibold text-white mb-6">401(k) Growth Over Time</h2>
             <div className="h-64">
-              <ResponsiveContainer width="100%" height="100%">
-                <AreaChart data={projectionData}>
-                  <defs>
-                    <linearGradient id="employeeGradient" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="5%" stopColor="#3B82F6" stopOpacity={0.3}/>
-                      <stop offset="95%" stopColor="#3B82F6" stopOpacity={0}/>
-                    </linearGradient>
-                    <linearGradient id="matchGradient" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="5%" stopColor="#10B981" stopOpacity={0.3}/>
-                      <stop offset="95%" stopColor="#10B981" stopOpacity={0}/>
-                    </linearGradient>
-                    <linearGradient id="growthGradient" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="5%" stopColor="#F59E0B" stopOpacity={0.3}/>
-                      <stop offset="95%" stopColor="#F59E0B" stopOpacity={0}/>
-                    </linearGradient>
-                  </defs>
-                  <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.1)" />
-                  <XAxis 
-                    dataKey="age" 
-                    stroke="#fff" 
-                    fontSize={12}
-                    tickFormatter={(value) => `Age ${value}`}
-                  />
-                  <YAxis 
-                    stroke="#fff" 
-                    fontSize={12}
-                    tickFormatter={(value) => formatCurrency(value)}
-                  />
-                  <Tooltip 
-                    formatter={(value: number, name: string) => {
-                      const labels = {
-                        employeeContribution: 'Employee Contributions',
-                        employerMatch: 'Employer Match',
-                        investmentGrowth: 'Investment Growth',
-                        totalBalance: 'Total Balance'
-                      };
-                      return [formatCurrency(value), labels[name as keyof typeof labels] || name];
-                    }}
-                    labelFormatter={(value) => `Age ${value}`}
-                    contentStyle={{
-                      backgroundColor: 'rgba(0,0,0,0.8)',
-                      border: '1px solid rgba(255,255,255,0.2)',
-                      borderRadius: '12px',
-                      color: '#fff'
-                    }}
-                  />
-                  <Area
-                    type="monotone"
-                    dataKey="employeeContribution"
-                    stackId="1"
-                    stroke="#3B82F6"
-                    fill="url(#employeeGradient)"
-                    strokeWidth={2}
-                  />
-                  <Area
-                    type="monotone"
-                    dataKey="employerMatch"
-                    stackId="1"
-                    stroke="#10B981"
-                    fill="url(#matchGradient)"
-                    strokeWidth={2}
-                  />
-                  <Area
-                    type="monotone"
-                    dataKey="investmentGrowth"
-                    stackId="1"
-                    stroke="#F59E0B"
-                    fill="url(#growthGradient)"
-                    strokeWidth={2}
-                  />
-                </AreaChart>
-              </ResponsiveContainer>
-            </div>
-            <div className="flex justify-center space-x-6 mt-4 text-xs">
-              <div className="flex items-center space-x-2">
-                <div className="w-3 h-3 bg-blue-500 rounded"></div>
-                <span className="text-white/80">Employee</span>
-              </div>
-              <div className="flex items-center space-x-2">
-                <div className="w-3 h-3 bg-green-500 rounded"></div>
-                <span className="text-white/80">Employer</span>
-              </div>
-              <div className="flex items-center space-x-2">
-                <div className="w-3 h-3 bg-yellow-500 rounded"></div>
-                <span className="text-white/80">Growth</span>
-              </div>
+              <AreaChart
+                data={projectionData.map(item => ({
+                  date: `Age ${item.age}`,
+                  employeeContribution: item.employeeContribution,
+                  employerMatch: item.employerMatch,
+                  investmentGrowth: item.investmentGrowth,
+                }))}
+                series={[
+                  {
+                    dataKey: 'employeeContribution',
+                    label: 'Employee Contributions',
+                    color: '#3B82F6',
+                  },
+                  {
+                    dataKey: 'employerMatch',
+                    label: 'Employer Match', 
+                    color: '#10B981',
+                  },
+                  {
+                    dataKey: 'investmentGrowth',
+                    label: 'Investment Growth',
+                    color: '#F59E0B',
+                  },
+                ]}
+                financialType="currency"
+                stackedData={true}
+                areaConfig={{
+                  stackedAreas: true,
+                  fillOpacity: 0.3,
+                  strokeWidth: 'medium',
+                  smoothCurves: true,
+                  gradientFill: true,
+                  hoverEffects: true,
+                }}
+                dimensions={{
+                  height: 256,
+                  responsive: true,
+                }}
+                xAxis={{
+                  show: true,
+                  tickFormatter: (value) => value,
+                }}
+                yAxis={{
+                  show: true,
+                  tickFormatter: (value) => formatCurrency(value),
+                }}
+                grid={{
+                  show: true,
+                  horizontal: true,
+                  vertical: false,
+                  strokeDasharray: "3 3",
+                  opacity: 0.1,
+                }}
+                legend={{
+                  show: true,
+                  position: 'bottom',
+                  align: 'center',
+                }}
+                className="w-full h-full"
+              />
             </div>
           </div>
 

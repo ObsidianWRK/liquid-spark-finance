@@ -1,12 +1,14 @@
 import React, { useState, useMemo, useCallback, useEffect } from 'react';
 import { calculateCompoundInterest } from '@/utils/calculators';
-import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, BarChart, Bar } from 'recharts';
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
+import { LineChart } from '@/components/charts';
 import { SecureCalculatorWrapper, useSecureCalculator } from './SecureCalculatorWrapper';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { AlertTriangle } from 'lucide-react';
 
 interface CompoundData {
   year: number;
+  date: string;
   principal: number;
   interest: number;
   total: number;
@@ -44,6 +46,7 @@ const CompoundInterestCalculator = React.memo<SecureCalculatorProps>(({ security
     // Add initial data point
     data.push({
       year: 0,
+      date: new Date().toISOString(),
       principal: principal,
       interest: 0,
       total: principal
@@ -68,8 +71,13 @@ const CompoundInterestCalculator = React.memo<SecureCalculatorProps>(({ security
       const totalInterest = compoundAmount + contributionGrowth - totalContributions;
       const totalValue = totalContributions + totalInterest;
       
+      // Create a date for this year
+      const futureDate = new Date();
+      futureDate.setFullYear(futureDate.getFullYear() + year);
+      
       data.push({
         year,
+        date: futureDate.toISOString(),
         principal: totalContributions,
         interest: totalInterest,
         total: totalValue
@@ -368,77 +376,41 @@ const CompoundInterestCalculator = React.memo<SecureCalculatorProps>(({ security
       {chartData.length > 0 && (
         <div className="grid lg:grid-cols-2 gap-8">
           {/* Growth Projection Chart */}
-          <div className="bg-white/5 backdrop-blur-xl rounded-3xl p-6 border border-white/10">
-            <h2 className="text-xl font-semibold text-white mb-6">Growth Projection Over Time</h2>
-            <div className="h-64">
-              <ResponsiveContainer width="100%" height="100%">
-                <AreaChart data={chartData}>
-                  <defs>
-                    <linearGradient id="principalGradient" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="5%" stopColor="#3B82F6" stopOpacity={0.3}/>
-                      <stop offset="95%" stopColor="#3B82F6" stopOpacity={0}/>
-                    </linearGradient>
-                    <linearGradient id="interestGradient" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="5%" stopColor="#10B981" stopOpacity={0.3}/>
-                      <stop offset="95%" stopColor="#10B981" stopOpacity={0}/>
-                    </linearGradient>
-                  </defs>
-                  <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.1)" />
-                  <XAxis 
-                    dataKey="year" 
-                    stroke="#fff" 
-                    fontSize={12}
-                    tickFormatter={(value) => `Year ${value}`}
-                  />
-                  <YAxis 
-                    stroke="#fff" 
-                    fontSize={12}
-                    tickFormatter={(value) => formatCurrency(value)}
-                  />
-                  <Tooltip 
-                    formatter={(value: number, name: string) => {
-                      const label = name === 'principal' ? 'Contributions' : 
-                                    name === 'interest' ? 'Interest Earned' : 'Total Value';
-                      return [formatCurrency(value), label];
-                    }}
-                    labelFormatter={(value) => `Year ${value}`}
-                    contentStyle={{
-                      backgroundColor: 'rgba(0,0,0,0.8)',
-                      border: '1px solid rgba(255,255,255,0.2)',
-                      borderRadius: '12px',
-                      color: '#fff'
-                    }}
-                  />
-                  <Area
-                    type="monotone"
-                    dataKey="principal"
-                    stackId="1"
-                    stroke="#3B82F6"
-                    fill="url(#principalGradient)"
-                    strokeWidth={2}
-                  />
-                  <Area
-                    type="monotone"
-                    dataKey="interest"
-                    stackId="1"
-                    stroke="#10B981"
-                    fill="url(#interestGradient)"
-                    strokeWidth={2}
-                  />
-                </AreaChart>
-              </ResponsiveContainer>
-            </div>
-            <div className="flex justify-center space-x-8 mt-4">
-              <div className="flex items-center space-x-2">
-                <div className="w-4 h-4 bg-blue-500 rounded"></div>
-                <span className="text-white/80 text-sm">Contributions</span>
-              </div>
-              <div className="flex items-center space-x-2">
-                <div className="w-4 h-4 bg-green-500 rounded"></div>
-                <span className="text-white/80 text-sm">Interest Earned</span>
-              </div>
-            </div>
-          </div>
+          <LineChart
+            data={chartData}
+            series={[
+              {
+                dataKey: 'total',
+                label: 'Total Value',
+                color: '#007AFF', // Apple system blue
+              },
+              {
+                dataKey: 'principal',
+                label: 'Contributions',
+                color: '#32D74B', // Apple system green
+              },
+              {
+                dataKey: 'interest',
+                label: 'Interest Earned',
+                color: '#FF9F0A', // Apple system orange
+              }
+            ]}
+            title="Growth Projection Over Time"
+            multiSeries={true}
+            financialType="currency"
+            trendAnalysis={true}
+            dimensions={{ height: 320, responsive: true }}
+            legend={{ show: true, position: 'bottom' }}
+            lineConfig={{
+              smoothLines: true,
+              strokeWidth: 'medium',
+              showDots: true,
+              gradientFill: true,
+              gradientOpacity: 0.1,
+              hoverEffects: true,
+            }}
+            className="bg-white/5 backdrop-blur-xl rounded-3xl p-6 border border-white/10"
+          />
 
           {/* Yearly Growth Bar Chart */}
           <div className="bg-white/5 backdrop-blur-xl rounded-3xl p-6 border border-white/10">

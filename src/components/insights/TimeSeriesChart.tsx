@@ -1,6 +1,5 @@
 import React from 'react';
-// import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend } from 'recharts';
-import { MultiLineChart } from '@/components/ui/lightweight-charts';
+import { LineChart } from '@/components/charts';
 import { HistoricalScore } from '@/services/mockHistoricalData';
 
 interface TimeSeriesChartProps {
@@ -10,40 +9,44 @@ interface TimeSeriesChartProps {
 }
 
 const TimeSeriesChart: React.FC<TimeSeriesChartProps> = ({ data, title, showLegend = true }) => {
-  // Configure lines for MultiLineChart
-  const lines = [
+  // Configure series for Apple-style LineChart
+  const series = [
     {
       dataKey: 'financial',
-      stroke: '#3b82f6',
-      label: 'Financial Health'
+      label: 'Financial Health',
+      color: '#007AFF', // Apple system blue
     },
     {
       dataKey: 'health', 
-      stroke: '#ef4444',
-      label: 'Wellness Score'
+      label: 'Wellness Score',
+      color: '#FF453A', // Apple system red
     },
     {
       dataKey: 'eco',
-      stroke: '#10b981', 
-      label: 'Eco Impact'
+      label: 'Eco Impact',
+      color: '#32D74B', // Apple system green
     }
   ];
 
   return (
-    <div className="liquid-glass-fallback rounded-2xl p-6">
-      <h3 className="text-lg sm:text-xl font-bold text-white mb-6">{title}</h3>
-      <div className="h-80">
-        <MultiLineChart
-          data={data as any[]}
-          lines={lines}
-          width={600}
-          height={300}
-          xAxisKey="date"
-          showLegend={showLegend}
-          className="w-full h-full"
-        />
-      </div>
-    </div>
+    <LineChart
+      data={data}
+      series={series}
+      title={title}
+      multiSeries={true}
+      financialType="percentage"
+      trendAnalysis={true}
+      dimensions={{ height: 320, responsive: true }}
+      legend={{ show: showLegend }}
+      lineConfig={{
+        smoothLines: true,
+        strokeWidth: 'medium',
+        showDots: false,
+        gradientFill: false,
+        hoverEffects: true,
+      }}
+      className="liquid-glass-fallback rounded-2xl p-6"
+    />
   );
 };
 

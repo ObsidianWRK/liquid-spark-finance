@@ -91,6 +91,12 @@ export interface TransactionMetadata {
   exchangeRate?: number;
   scores?: TransactionScores;
   enrichment?: TransactionEnrichment;
+  tracking_number?: string;
+  carrier?: 'UPS' | 'FedEx' | 'USPS' | 'DHL' | 'Other';
+  shipping_status?: 'DELIVERED' | 'OUT_FOR_DELIVERY' | 'IN_TRANSIT' | 'PENDING';
+  payment_account_name?: string;
+  payment_last4?: string;
+  payment_network?: string;
 }
 
 export interface TransactionScores {

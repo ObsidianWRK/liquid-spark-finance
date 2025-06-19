@@ -1,0 +1,143 @@
+[
+  {
+    "id": "acc_chase_checking_001",
+    "institution": {
+      "name": "Chase Bank",
+      "id": "ins_chase",
+      "logo": "https://logos.clearbit.com/chase.com",
+      "color": "#004879"
+    },
+    "type": "checking",
+    "name": "Chase Total Checking",
+    "mask": "4521",
+    "balance": 4250.75,
+    "availableBalance": 4250.75,
+    "currency": "USD",
+    "isActive": true,
+    "lastTransaction": {
+      "merchant": "Starbucks",
+      "amount": -5.67,
+      "date": "2024-01-15T09:30:00Z",
+      "pending": false
+    },
+    "metadata": {
+      "accountNumber": "****4521",
+      "routingNumber": "021000021",
+      "openedDate": "2020-03-15T00:00:00Z",
+      "monthlyFee": 12.00,
+      "minimumBalance": 1500.00
+    }
+  },
+  {
+    "id": "acc_bofa_savings_001",
+    "institution": {
+      "name": "Bank of America",
+      "id": "ins_bofa",
+      "logo": "https://logos.clearbit.com/bankofamerica.com", 
+      "color": "#E31837"
+    },
+    "type": "savings",
+    "name": "Advantage Savings",
+    "mask": "8932",
+    "balance": 15750.42,
+    "availableBalance": 15750.42,
+    "currency": "USD",
+    "isActive": true,
+    "lastTransaction": {
+      "merchant": "Interest Payment",
+      "amount": 18.25,
+      "date": "2024-01-01T00:00:00Z",
+      "pending": false
+    },
+    "metadata": {
+      "accountNumber": "****8932",
+      "interestRate": 0.015,
+      "compoundingPeriod": "monthly"
+    }
+  },
+  {
+    "id": "acc_wells_credit_001", 
+    "institution": {
+      "name": "Wells Fargo",
+      "id": "ins_wells",
+      "logo": "https://logos.clearbit.com/wellsfargo.com",
+      "color": "#D50032"
+    },
+    "type": "credit",
+    "name": "Cash Wise Visa",
+    "mask": "1847",
+    "balance": -1285.63,
+    "availableBalance": 3714.37,
+    "currency": "USD",
+    "isActive": true,
+    "creditLimit": 5000.00,
+    "lastTransaction": {
+      "merchant": "Amazon",
+      "amount": -89.99,
+      "date": "2024-01-14T14:22:00Z",
+      "pending": true
+    },
+    "metadata": {
+      "accountNumber": "****1847",
+      "apr": 0.1899,
+      "minimumPayment": 35.00,
+      "paymentDueDate": "2024-02-05T00:00:00Z"
+    }
+  },
+  {
+    "id": "acc_schwab_investment_001",
+    "institution": {
+      "name": "Charles Schwab",
+      "id": "ins_schwab", 
+      "logo": "https://logos.clearbit.com/schwab.com",
+      "color": "#00A0DF"
+    },
+    "type": "investment",
+    "name": "Brokerage Account",
+    "mask": "7409",
+    "balance": 42850.19,
+    "availableBalance": 1250.00,
+    "currency": "USD",
+    "isActive": true,
+    "lastTransaction": {
+      "merchant": "VTSAX Purchase",
+      "amount": -1000.00,
+      "date": "2024-01-12T16:00:00Z",
+      "pending": false
+    },
+    "metadata": {
+      "accountNumber": "****7409",
+      "managementFee": 0.0025,
+      "totalReturn": 0.087
+    }
+  },
+  {
+    "id": "acc_citi_credit_001",
+    "institution": {
+      "name": "Citibank",
+      "id": "ins_citi",
+      "logo": "https://logos.clearbit.com/citibank.com",
+      "color": "#DC143C"
+    },
+    "type": "credit",
+    "name": "Double Cash Card",
+    "mask": "2156",
+    "balance": -567.23,
+    "availableBalance": 2432.77,
+    "currency": "USD", 
+    "isActive": true,
+    "creditLimit": 3000.00,
+    "lastTransaction": {
+      "merchant": "Whole Foods",
+      "amount": -127.45,
+      "date": "2024-01-13T18:45:00Z",
+      "pending": false
+    },
+    "metadata": {
+      "accountNumber": "****2156",
+      "apr": 0.1649,
+      "rewardsRate": 0.02,
+      "cashbackEarned": 145.67
+    }
+  }
+] 

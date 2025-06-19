@@ -8,6 +8,7 @@ import {
 import { UnifiedCard } from '@/components/ui/UnifiedCard';
 import { Search, Filter, ChevronDown, TrendingUp, TrendingDown } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { carrierUrl, prettyShipStatus } from '@/utils/shipping';
 
 // Optimized Transaction List - Consolidates:
 // - TransactionList.tsx
@@ -258,10 +259,10 @@ export const OptimizedTransactionList = React.memo<TransactionListProps>(({
                 'grid-cols-[auto,1fr,auto]',
                 // Tablet: Icon + Details + Amount + Scores (4 columns when scores present)
                 features.showScores ? 'md:grid-cols-[auto,1fr,auto,auto]' : 'md:grid-cols-[auto,1fr,auto]',
-                // Desktop: Icon + Details + Date + Amount + Scores (5 columns)  
-                features.showScores 
-                  ? 'lg:grid-cols-[auto,2fr,minmax(80px,auto),auto,auto]'
-                  : 'lg:grid-cols-[auto,2fr,minmax(80px,auto),auto]',
+                // Desktop: Icon + Details + Date + Payment + Shipping + Amount + Scores
+                features.showScores
+                  ? 'lg:grid-cols-[auto,2fr,minmax(80px,auto),minmax(120px,auto),minmax(140px,auto),auto,auto]'
+                  : 'lg:grid-cols-[auto,2fr,minmax(80px,auto),minmax(120px,auto),minmax(140px,auto),auto]',
                 variantStyles.spacing
               )}
               role="presentation"
@@ -340,10 +341,10 @@ const TransactionItem = React.memo<{
         'grid-cols-[auto,1fr,auto]',
         // Tablet: Icon + Details + Amount + Scores (4 columns when scores present)
         features.showScores && transaction.scores ? 'md:grid-cols-[auto,1fr,auto,auto]' : 'md:grid-cols-[auto,1fr,auto]',
-        // Desktop: Icon + Details + Date + Amount + Scores (5 columns)  
-        features.showScores && transaction.scores 
-          ? 'lg:grid-cols-[auto,2fr,minmax(80px,auto),auto,auto]'
-          : 'lg:grid-cols-[auto,2fr,minmax(80px,auto),auto]',
+        // Desktop: Icon + Details + Date + Payment + Shipping + Amount + Scores (7 columns when scores present)
+        features.showScores && transaction.scores
+          ? 'lg:grid-cols-[auto,2fr,minmax(80px,auto),minmax(120px,auto),minmax(140px,auto),auto,auto]'
+          : 'lg:grid-cols-[auto,2fr,minmax(80px,auto),minmax(120px,auto),minmax(140px,auto),auto]',
         styles.item,
         styles.spacing
       )}
@@ -381,11 +382,45 @@ const TransactionItem = React.memo<{
             <span className="lg:hidden whitespace-nowrap">{formatDate(transaction.date)}</span>
           )}
         </div>
+        {/* Mobile shipping status inline second row*/}
+        {transaction.trackingNumber && (
+          <div className="flex lg:hidden items-center gap-1 text-xs text-white/50 mt-0.5">
+            {prettyShipStatus(transaction.shippingStatus)}
+          </div>
+        )}
       </div>
 
       {/* Date - Desktop only, properly aligned */}
       <div className="hidden lg:flex lg:justify-end text-sm text-white/60 min-w-[80px] whitespace-nowrap">
         {formatDate(transaction.date)}
+      </div>
+
+      {/* Payment Method - Desktop only */}
+      <div className="hidden lg:flex lg:items-center text-xs text-white/70 min-w-[120px] whitespace-nowrap">
+        {transaction.paymentMethod ? (
+          <div className="flex items-center gap-1">
+            <span>{transaction.paymentMethod.accountName}</span>
+            <span>•••• {transaction.paymentMethod.last4}</span>
+          </div>
+        ) : (
+          <span className="text-white/40">—</span>
+        )}
+      </div>
+
+      {/* Shipping Status - Desktop only */}
+      <div className="hidden lg:flex lg:items-center text-xs text-white/70 min-w-[140px] whitespace-nowrap">
+        {transaction.trackingNumber ? (
+          <a 
+            href={carrierUrl(transaction.shippingCarrier, transaction.trackingNumber)} 
+            target="_blank" 
+            rel="noopener noreferrer" 
+            className="hover:underline flex items-center gap-1"
+          >
+            {prettyShipStatus(transaction.shippingStatus)}
+          </a>
+        ) : (
+          <span className="text-white/40">—</span>
+        )}
       </div>
 
       {/* Amount */}

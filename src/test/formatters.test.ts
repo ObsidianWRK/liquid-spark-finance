@@ -6,18 +6,85 @@ import {
   formatCompactNumber,
   formatDecimal,
   formatLargeNumber,
-  formatFinancialScore
+  formatFinancialScore,
+  safeRatio,
+  formatPercent
 } from '@/utils/formatters';
 
 describe('Formatter Functions', () => {
+  describe('safeRatio', () => {
+    test('calculates ratio correctly for normal cases', () => {
+      expect(safeRatio(10, 2)).toBe(5);
+      expect(safeRatio(100, 50)).toBe(2);
+      expect(safeRatio(-10, 2)).toBe(-5);
+      expect(safeRatio(0, 10)).toBe(0);
+    });
+
+    test('returns null for division by zero', () => {
+      expect(safeRatio(10, 0)).toBe(null);
+      expect(safeRatio(-10, 0)).toBe(null);
+      expect(safeRatio(0, 0)).toBe(null);
+    });
+
+    test('handles infinite values', () => {
+      expect(safeRatio(10, Infinity)).toBe(null);
+      expect(safeRatio(10, -Infinity)).toBe(null);
+      expect(safeRatio(Infinity, 10)).toBe(null);
+    });
+
+    test('handles NaN values', () => {
+      expect(safeRatio(10, NaN)).toBe(null);
+      expect(safeRatio(NaN, 10)).toBe(null);
+    });
+  });
+
+  describe('formatPercent', () => {
+    test('formats percentages correctly', () => {
+      expect(formatPercent(0.25)).toBe('25.0%');
+      expect(formatPercent(0.5)).toBe('50.0%');
+      expect(formatPercent(1.0)).toBe('100.0%');
+      expect(formatPercent(-0.1)).toBe('-10.0%');
+    });
+
+    test('clamps extreme percentage values', () => {
+      expect(formatPercent(30.8)).toBe('999.0%'); // 3080% clamped to 999%
+      expect(formatPercent(70.12)).toBe('999.0%'); // 7012% clamped to 999%
+      expect(formatPercent(-30.8)).toBe('-999.0%'); // -3080% clamped to -999%
+    });
+
+    test('handles null and invalid values', () => {
+      expect(formatPercent(null)).toBe('--');
+      expect(formatPercent(Infinity)).toBe('--');
+      expect(formatPercent(-Infinity)).toBe('--');
+      expect(formatPercent(NaN)).toBe('--');
+    });
+
+    test('respects decimal places', () => {
+      expect(formatPercent(0.123, 0)).toBe('12%');
+      expect(formatPercent(0.123, 1)).toBe('12.3%');
+      expect(formatPercent(0.123, 2)).toBe('12.30%');
+    });
+
+    test('respects custom clamp values', () => {
+      expect(formatPercent(5.0, 1, 100)).toBe('100.0%'); // 500% clamped to 100%
+      expect(formatPercent(-5.0, 1, 100)).toBe('-100.0%'); // -500% clamped to -100%
+    });
+  });
+
   describe('formatScore', () => {
-    test('formats score with exactly 1 decimal place', () => {
+    test('formats score with default precision', () => {
       expect(formatScore(85.73829)).toBe('85.7');
       expect(formatScore(92)).toBe('92.0');
       expect(formatScore(100)).toBe('100.0');
       expect(formatScore(0)).toBe('0.0');
-      expect(formatScore(45.95)).toBe('46.0'); // Rounds up
-      expect(formatScore(45.94)).toBe('45.9'); // Rounds down
+      expect(formatScore(45.95)).toBe('46.0');
+      expect(formatScore(45.94)).toBe('45.9');
+    });
+
+    test('respects precision parameter', () => {
+      expect(formatScore(85.789, 0)).toBe('86');
+      expect(formatScore(85.789, 1)).toBe('85.8');
+      expect(formatScore(85.789, 2)).toBe('85.79');
     });
 
     test('handles edge cases', () => {

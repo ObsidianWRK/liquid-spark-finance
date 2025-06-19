@@ -15,8 +15,21 @@ import {
 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import FinancialDashboard from './FinancialDashboard';
+import { BankLinkingPanel } from '@/features/bank-linking';
 import { visualizationService } from '@/services/visualizationService';
 import { cn } from '@/lib/utils';
+import { SubscriptionsPanel } from '@/features/subscriptions';
+import { BillNegotiationPanel } from '@/features/bill-negotiation';
+import { SmartSavingsPanel } from '@/features/smart-savings';
+import { SharedBudgetsPanel } from '@/features/shared-budgets';
+import { AgeOfMoneyCard } from '@/features/age-of-money';
+import { PrivacyToggle } from '@/features/privacy-hide-amounts';
+import { AdvisorChatPanel } from '@/features/advisor-chat';
+import { SafeToSpendCard } from '@/features/safe-to-spend';
+import { WidgetsPanel } from '@/features/widgets';
+import { BiometricMonitorCard } from './health/BiometricMonitorCard';
+import { WellnessScoreCard } from './health/WellnessScoreCard';
+import { LinkedAccountsCard } from './LinkedAccountsCard';
 
 const DashboardPage = () => {
   const navigate = useNavigate();
@@ -124,6 +137,8 @@ const DashboardPage = () => {
           <button className="bg-white/[0.05] hover:bg-white/[0.08] text-white/80 hover:text-white p-2 rounded-xl transition-colors border border-white/[0.08] flex items-center justify-center">
             <Settings className="w-4 h-4" />
           </button>
+
+          <PrivacyToggle />
         </div>
       </div>
 
@@ -157,6 +172,45 @@ const DashboardPage = () => {
           </div>
         </div>
       </div>
+
+      {/* Bank Linking & Mock Accounts */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <BankLinkingPanel />
+        <LinkedAccountsCard compact={false} />
+      </div>
+
+      {/* Subscriptions Detection */}
+      <SubscriptionsPanel />
+
+      {/* Bill Negotiation */}
+      <BillNegotiationPanel />
+
+      {/* Smart Savings */}
+      <SmartSavingsPanel />
+
+      {/* Shared Budgets */}
+      <SharedBudgetsPanel />
+
+      {/* Age of Money */}
+      <AgeOfMoneyCard />
+
+      {/* Advisor Chat */}
+      <AdvisorChatPanel />
+
+      {/* Health & Wellness Monitoring */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        {/* Safe to Spend */}
+        <SafeToSpendCard />
+
+        {/* Wellness Score */}
+        <WellnessScoreCard size="md" showDetails={true} />
+
+        {/* Biometric Stress Monitoring */}
+        <BiometricMonitorCard compact={true} />
+      </div>
+
+      {/* Home Screen Widgets */}
+      <WidgetsPanel />
 
       {/* Main Dashboard */}
       <FinancialDashboard familyId="demo_family" timeframe={selectedTimeframe} />

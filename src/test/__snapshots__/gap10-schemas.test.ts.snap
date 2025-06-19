@@ -1,0 +1,111 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Gap-10 Domain Schemas > validates AdvisorThread 1`] = `
+{
+  "id": "thread1",
+  "isEscalated": false,
+  "messages": [
+    {
+      "content": "Hi!",
+      "createdAt": "2025-06-19T14:20:41.036Z",
+      "id": "msg1",
+      "sender": "user",
+    },
+  ],
+  "userId": "user1",
+}
+`;
+
+exports[`Gap-10 Domain Schemas > validates AgeMetric 1`] = `
+{
+  "averageDaysHeld": 27,
+  "calculatedAt": "2025-06-19T14:20:41.034Z",
+}
+`;
+
+exports[`Gap-10 Domain Schemas > validates AutosavePlan 1`] = `
+{
+  "accountId": "acc1",
+  "cadence": "weekly",
+  "id": "plan1",
+  "isActive": true,
+  "nextTransferDate": "2025-06-19T14:20:41.032Z",
+  "targetAmount": 50,
+}
+`;
+
+exports[`Gap-10 Domain Schemas > validates HomeWidget 1`] = `
+{
+  "config": {},
+  "id": "widget1",
+  "position": 1,
+  "type": "balance",
+}
+`;
+
+exports[`Gap-10 Domain Schemas > validates Household 1`] = `
+{
+  "createdAt": "2025-06-19T14:20:41.033Z",
+  "id": "house1",
+  "members": [
+    {
+      "role": "owner",
+      "userId": "user1",
+    },
+    {
+      "role": "member",
+      "userId": "user2",
+    },
+  ],
+  "name": "Smith Family",
+}
+`;
+
+exports[`Gap-10 Domain Schemas > validates LinkedAccount 1`] = `
+{
+  "createdAt": "2025-06-19T14:20:41.024Z",
+  "displayName": "Mock Checking",
+  "id": "acc1",
+  "institutionName": "Mock Bank",
+  "lastFour": "1234",
+  "provider": "mock",
+  "type": "checking",
+  "updatedAt": "2025-06-19T14:20:41.024Z",
+}
+`;
+
+exports[`Gap-10 Domain Schemas > validates NegotiationCase 1`] = `
+{
+  "chargeId": "rc1",
+  "id": "case1",
+  "status": "queued",
+  "submittedAt": "2025-06-19T14:20:41.032Z",
+}
+`;
+
+exports[`Gap-10 Domain Schemas > validates PrivacySetting 1`] = `
+{
+  "hideAmounts": true,
+  "updatedAt": "2025-06-19T14:20:41.035Z",
+}
+`;
+
+exports[`Gap-10 Domain Schemas > validates RecurringCharge 1`] = `
+{
+  "accountId": "acc1",
+  "amount": 15.99,
+  "frequency": "monthly",
+  "id": "rc1",
+  "merchantName": "Netflix",
+  "nextDueDate": "2025-06-19T14:20:41.030Z",
+  "status": "active",
+}
+`;
+
+exports[`Gap-10 Domain Schemas > validates SpendableCash 1`] = `
+{
+  "amount": 1200,
+  "calculatedAt": "2025-06-19T14:20:41.036Z",
+  "payday": "2025-06-19T14:20:41.036Z",
+}
+`;

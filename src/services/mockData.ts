@@ -551,7 +551,10 @@ export const mockInstitutions = {
   'Navy Federal': { name: 'Navy Federal', color: '#003F7F', logo: '/institution-logos/navy-federal.png' },
   'TD Ameritrade': { name: 'TD Ameritrade', color: '#00A651', logo: '/institution-logos/td-ameritrade.png' },
   'USAA': { name: 'USAA', color: '#003F7F', logo: '/institution-logos/usaa.png' },
-  'Chase Sapphire': { name: 'Chase Sapphire', color: '#117A65', logo: '/institution-logos/chase-sapphire.png' }
+  'Chase Sapphire': { name: 'Chase Sapphire', color: '#117A65', logo: '/institution-logos/chase-sapphire.png' },
+  'Robinhood': { name: 'Robinhood', color: '#00C805', logo: '/institution-logos/robinhood.png' },
+  'WeBull': { name: 'WeBull', color: '#2962FF', logo: '/institution-logos/webull.png' },
+  'Chime': { name: 'Chime', color: '#0BBF6D', logo: '/institution-logos/chime.png' }
 };
 
 export const mockData = {
