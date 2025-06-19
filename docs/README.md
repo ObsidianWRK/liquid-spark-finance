@@ -1,3 +1,20 @@
+# Vueni Finance Documentation Index
+
+This directory houses all project documentation, organized for clarity and ease-of-use.
+
+## Sections
+
+| Folder | Purpose |
+| ------ | ------- |
+| `guides/` | Hands-on setup, usage, and migration guides |
+| `reports/` | Post-mortems, audits, analysis & implementation reports |
+| `changelogs/` | Changelog and release notes |
+| `architecture/` | Diagrams & blueprints |
+| `api/` | API references |
+| `procedures/` | Internal procedures & playbooks |
+
+---
+
 # Vueni Documentation
 
 Welcome to the comprehensive documentation for the Vueni application. This documentation provides everything you need to understand, develop, test, and deploy the application.
