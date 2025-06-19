@@ -1,5 +1,5 @@
 import React from "react";
-import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
+import { UniversalCard } from "@/components/ui/UniversalCard";
 import { AdvisorChatButton } from "./AdvisorChatButton";
 import { ChatDialog } from "./ChatDialog";
 import { MessageCircle } from "lucide-react";
@@ -7,15 +7,15 @@ import { MessageCircle } from "lucide-react";
 export const AdvisorChatPanel: React.FC = () => {
   return (
     <>
-      <Card>
-        <CardHeader className="flex-row items-center gap-2 space-y-0">
-          <MessageCircle className="text-primary" />
-          <CardTitle>Ask an Advisor</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <AdvisorChatButton />
-        </CardContent>
-      </Card>
+      <UniversalCard
+        variant="glass"
+        size="md"
+        title="Ask an Advisor"
+        icon={MessageCircle}
+        iconColor="#3b82f6"
+      >
+        <AdvisorChatButton />
+      </UniversalCard>
       <ChatDialog />
     </>
   );

@@ -1,20 +1,22 @@
 import React from "react";
-import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
+import { UniversalCard } from "@/components/ui/UniversalCard";
 import { CreateHouseholdForm } from "./CreateHouseholdForm";
 import { HouseholdsList } from "./HouseholdsList";
 import { Users } from "lucide-react";
 
 export const SharedBudgetsPanel: React.FC = () => {
   return (
-    <Card>
-      <CardHeader className="flex-row items-center gap-2 space-y-0">
-        <Users className="text-primary" />
-        <CardTitle>Shared Budgets</CardTitle>
-      </CardHeader>
-      <CardContent className="space-y-4">
+    <UniversalCard
+      variant="glass"
+      size="md"
+      title="Shared Budgets"
+      icon={Users}
+      iconColor="#8b5cf6"
+    >
+      <div className="space-y-4">
         <CreateHouseholdForm />
         <HouseholdsList />
-      </CardContent>
-    </Card>
+      </div>
+    </UniversalCard>
   );
 }; 

@@ -1,0 +1,102 @@
+/**
+ * Quick Access Rail Performance Optimizations
+ * Ensures 60fps smooth scrolling and minimal layout thrashing
+ */
+
+/* Remove scrollbar for clean aesthetic while maintaining accessibility */
+.scrollbar-hide {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;     /* Firefox */
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;             /* Chrome, Safari, Opera */
+}
+
+/* Snap scrolling for precise card positioning */
+.snap-x {
+  scroll-snap-type: x mandatory;
+}
+
+.snap-start {
+  scroll-snap-align: start;
+}
+
+/* GPU-accelerated transforms for smooth animations */
+.quick-access-card {
+  transform: translateZ(0);  /* Force GPU acceleration */
+  will-change: transform;    /* Hint browser for optimization */
+  backface-visibility: hidden; /* Reduce paint operations */
+}
+
+/* Optimized hover animations using transforms instead of layout changes */
+.quick-access-card:hover {
+  transform: translateZ(0) scale(1.02);
+  transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Lazy loading placeholder with skeleton animation */
+.account-icon-skeleton {
+  background: linear-gradient(90deg, rgba(255,255,255,0.05) 25%, rgba(255,255,255,0.1) 50%, rgba(255,255,255,0.05) 75%);
+  background-size: 200% 100%;
+  animation: skeleton-shimmer 1.5s infinite;
+}
+
+@keyframes skeleton-shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+/* Contain layout and style for better performance */
+.quick-access-rail {
+  contain: layout style;
+}
+
+/* Optimized focus ring with transform instead of box-shadow */
+.quick-access-card:focus-visible {
+  outline: 2px solid #3b82f6;
+  outline-offset: 2px;
+  border-radius: 1rem;
+}
+
+/* Reduce motion for accessibility while maintaining core functionality */
+@media (prefers-reduced-motion: reduce) {
+  .quick-access-card {
+    will-change: auto;
+    transition: none;
+  }
+  
+  .quick-access-card:hover {
+    transform: none;
+  }
+  
+  .account-icon-skeleton {
+    animation: none;
+    background: rgba(255,255,255,0.05);
+  }
+}
+
+/* High-performance grid layout for desktop */
+.quick-access-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+  contain: layout style;
+}
+
+/* Optimized scroll indicators */
+.scroll-indicators {
+  contain: layout paint;
+  will-change: transform;
+}
+
+/* Touch-friendly navigation buttons */
+.scroll-nav-button {
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+} 

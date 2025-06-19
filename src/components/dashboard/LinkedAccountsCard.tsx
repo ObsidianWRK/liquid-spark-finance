@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { Building2, CreditCard, PiggyBank, TrendingUp, Plus, RefreshCw } from 'lucide-react';
+import { Building2, CreditCard, PiggyBank, TrendingUp, Plus, RefreshCw, Banknote, CheckCircle } from 'lucide-react';
 import { CardSkeleton } from './health/CardSkeleton';
 import { formatCurrency } from '@/utils/formatters';
 import { cn } from '@/lib/utils';
+import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 
 interface MockAccount {
   id: string;
@@ -354,118 +355,30 @@ export const LinkedAccountsCard: React.FC<LinkedAccountsCardProps> = ({
 
   // Full view
   return (
-    <CardSkeleton 
-      variant="default"
-      className={className}
-    >
-      {/* Header */}
-      <div className="flex items-center justify-between mb-6">
-        <div className="flex items-center space-x-2">
-          <Building2 className="w-6 h-6 text-blue-400" />
-          <h3 className="text-xl font-semibold text-white">Linked Bank Accounts</h3>
-        </div>
-        
-        <div className="flex items-center space-x-3">
-          <span className="text-sm text-white/60">
-            {accounts.length} accounts • Mock Mode
-          </span>
-          {onAddAccount && (
-            <button
-              onClick={onAddAccount}
-              className="flex items-center space-x-1 px-3 py-1.5 bg-blue-500/20 border border-blue-500/30 rounded-lg text-blue-400 hover:bg-blue-500/30 transition-colors"
-            >
-              <Plus className="w-4 h-4" />
-              <span className="text-sm">Add Account</span>
-            </button>
-          )}
-        </div>
-      </div>
-
-      {/* Net Worth Summary */}
-      <div className="bg-gradient-to-r from-blue-500/10 to-green-500/10 border border-white/10 rounded-xl p-4 mb-6">
-        <div className="flex items-center justify-between">
-          <div>
-            <p className="text-sm text-white/70">Total Net Worth</p>
-            <p className={cn(
-              'text-2xl font-bold',
-              calculateNetWorth() >= 0 ? 'text-green-400' : 'text-red-400'
-            )}>
-              {formatCurrency(calculateNetWorth())}
-            </p>
-          </div>
-          
-          <div className="text-right">
-            <p className="text-sm text-white/70">Accounts</p>
-            <div className="flex items-center space-x-1">
-              <span className="text-lg font-semibold text-white">{accounts.length}</span>
-              <span className="text-sm text-white/60">linked</span>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Accounts List */}
-      <div className="space-y-3">
-        {accounts.map((account) => (
-          <div 
-            key={account.id}
-            className="flex items-center justify-between p-4 bg-white/[0.03] border border-white/[0.06] rounded-xl hover:bg-white/[0.05] transition-colors account-item"
-            data-testid="account-card"
-          >
-            <div className="flex items-center space-x-4">
-              <div 
-                className="w-12 h-12 rounded-xl flex items-center justify-center"
-                style={{ backgroundColor: `${account.institution.color}20` }}
-              >
-                {getAccountIcon(account.type)}
-              </div>
-              
+    <Card>
+      <CardHeader className="flex-row items-center gap-2 space-y-0">
+        <Banknote className="text-primary" />
+        <CardTitle>Mock Linked Accounts</CardTitle>
+      </CardHeader>
+      <CardContent className="space-y-3">
+        {accounts.map((account, index) => (
+          <div key={index} className="flex items-center justify-between p-3 bg-white/[0.03] rounded-lg">
+            <div className="flex items-center gap-3">
+              <CheckCircle className="w-4 h-4 text-green-400" />
               <div>
-                <div className="flex items-center space-x-2">
-                  <h4 className="font-semibold text-white">{account.name}</h4>
-                  <span className="text-xs text-white/60 bg-white/10 px-2 py-0.5 rounded">
-                    {getAccountTypeLabel(account.type)}
-                  </span>
-                </div>
-                <p className="text-sm text-white/70">
-                  {account.institution.name} • •••• {account.mask}
-                </p>
-                
-                {account.lastTransaction && (
-                  <p className="text-xs text-white/60 mt-1">
-                    Last: {account.lastTransaction.merchant} • {formatCurrency(Math.abs(account.lastTransaction.amount))}
-                  </p>
-                )}
+                <p className="font-medium text-white">{account.name}</p>
+                <p className="text-xs text-muted-foreground">****{account.mask}</p>
               </div>
             </div>
-            
             <div className="text-right">
-              <p className={cn('text-lg font-semibold', getBalanceColor(account))}>
-                {formatCurrency(Math.abs(account.balance))}
+              <p className={`font-bold ${account.balance < 0 ? 'text-red-400' : 'text-green-400'}`}>
+                {formatCurrency(account.balance)}
               </p>
-              
-              {account.type === 'credit' && account.creditLimit && (
-                <p className="text-xs text-white/60">
-                  {formatCurrency(account.availableBalance)} available
-                </p>
-              )}
-              
-              {account.type !== 'credit' && (
-                <p className="text-xs text-white/60">
-                  {account.currency}
-                </p>
-              )}
+              <p className="text-xs text-muted-foreground capitalize">{account.type}</p>
             </div>
           </div>
         ))}
-      </div>
-
-      {/* Footer */}
-      <div className="mt-6 pt-4 border-t border-white/10">
-        <p className="text-xs text-white/60 text-center">
-          🚀 Demo Mode: Using mock account data • Last updated: {new Date().toLocaleTimeString()}
-        </p>
-      </div>
-    </CardSkeleton>
+      </CardContent>
+    </Card>
   );
 }; 

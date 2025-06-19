@@ -1,4 +1,5 @@
 @import './styles/responsive-enhancements.css'; /* responsive enhancements */
+@import './styles/quick-access-performance.css'; /* Quick Access Rail performance */
 @import './styles/performance-optimized.css';
 @import './styles/account-card.css';
 @import './styles/calculator-overrides.css';

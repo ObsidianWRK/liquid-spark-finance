@@ -3,6 +3,7 @@ import { useSearchParams } from 'react-router-dom';
 import Navigation from '@/components/Navigation';
 import AccountCard from '@/components/accounts/AccountCard';
 import { Grid } from '@/components/accounts/Grid';
+import { QuickAccessRail } from '@/components/accounts/QuickAccessRail';
 import { OptimizedTransactionList } from '@/components/transactions/OptimizedTransactionList';
 import LiquidGlassTopMenuBar from '@/components/LiquidGlassTopMenuBar';
 import ConsolidatedInsightsPage from '@/components/insights/ConsolidatedInsightsPage';
@@ -380,25 +381,28 @@ export default function Index() {
                   </div>
                 )}
                 
-                {/* Compact Enterprise Account Cards */}
+                {/* Enhanced Quick Access Rail */}
                 <div>
-                  <div className="mb-4">
-                    <h2 className="text-xl font-bold text-white">Quick Access</h2>
-                    <p className="text-white/60 text-sm">
-                      {getCompactAccountCards().length} accounts • Total Balance: $83.8K
-                    </p>
-                  </div>
-                  
-                  <Grid>
-                    {getCompactAccountCards().slice(0, 4).map(account => (
-                      <AccountCard
-                        key={account.id}
-                        acct={{ ...account, category: account.accountType === 'Credit Card' ? 'CREDIT' : account.accountType.toUpperCase() as any }}
-                        showBalance={balanceVisibility[account.id] ?? true}
-                        onAction={(id, act) => handleQuickAction(id, act)}
-                      />
-                    ))}
-                  </Grid>
+                  <QuickAccessRail
+                    accounts={getCompactAccountCards()}
+                    title="Quick Access"
+                    subtitle={`${getCompactAccountCards().length} accounts • Total Balance: $83.8K`}
+                    showBalance={Object.values(balanceVisibility).some(v => v !== false)}
+                    onToggleBalance={() => {
+                      const allHidden = Object.values(balanceVisibility).every(v => v === false);
+                      const newVisibility: Record<string, boolean> = {};
+                      getCompactAccountCards().forEach(account => {
+                        newVisibility[account.id] = allHidden;
+                      });
+                      setBalanceVisibility(newVisibility);
+                    }}
+                    onAccountSelect={(accountId) => {
+                      console.log('Selected account:', accountId);
+                      // TODO: Navigate to account details
+                    }}
+                    onViewAll={() => handleViewChange('accounts')}
+                    maxVisibleDesktop={6}
+                  />
                 </div>
               </div>
               

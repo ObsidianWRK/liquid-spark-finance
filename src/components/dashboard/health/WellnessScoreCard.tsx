@@ -4,6 +4,7 @@ import { CardSkeleton } from './CardSkeleton';
 import { WellnessMetric } from './MetricDisplay';
 import { useWellnessScore, useBiometricTrends, useBiometrics } from '@/providers/BiometricsProvider';
 import { cn } from '@/lib/utils';
+import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 
 interface WellnessScoreCardProps {
   className?: string;
@@ -98,158 +99,33 @@ export const WellnessScoreCard: React.FC<WellnessScoreCardProps> = ({
   };
 
   return (
-    <CardSkeleton
-      variant={size === 'sm' ? 'compact' : size === 'lg' ? 'expanded' : 'default'}
-      className={className}
-      interactive={!!onClick}
-      onClick={onClick}
-    >
-      {/* Header */}
-      <div className="flex items-center justify-between mb-4">
-        <div className="flex items-center space-x-2">
-          <Heart className="w-5 h-5 text-pink-400" />
-          <span className={cn(
-            'font-semibold text-white',
-            textSizes[size].label
-          )}>
-            Wellness Score
-          </span>
-        </div>
-        
-        <div className="flex items-center space-x-1">
-          {getTrendIcon()}
-          <span className={cn(
-            'text-white/60',
-            textSizes[size].subtitle
-          )}>
-            {getTrendText()}
-          </span>
-        </div>
-      </div>
-
-      {/* Score Circle */}
-      <div className="flex justify-center mb-4">
-        <div className="relative">
-          <svg width={circleSize} height={circleSize} className="transform -rotate-90">
-            <circle
-              cx={circleSize / 2}
-              cy={circleSize / 2}
-              r={radius}
-              stroke="rgba(255, 255, 255, 0.1)"
-              strokeWidth={strokeWidth}
-              fill="none"
-            />
-            <circle
-              cx={circleSize / 2}
-              cy={circleSize / 2}
-              r={radius}
-              stroke={getScoreColor(wellnessScore)}
-              strokeWidth={strokeWidth}
-              fill="none"
-              strokeDasharray={circumference}
-              strokeDashoffset={strokeDashoffset}
-              strokeLinecap="round"
-              className="transition-all duration-1000 ease-out"
-              style={{
-                filter: `drop-shadow(0 0 8px ${getScoreColor(wellnessScore)}40)`
-              }}
-            />
-          </svg>
-          
-          <div className="absolute inset-0 flex flex-col justify-center items-center">
-            <span 
-              className={cn(
-                'font-bold transition-all duration-1000 ease-out',
-                textSizes[size].score
-              )}
-              style={{ color: getScoreColor(wellnessScore) }}
-            >
-              {Math.round(animatedScore)}
-            </span>
-            <span className={cn(
-              'text-white/50',
-              textSizes[size].subtitle
-            )}>
-              /100
-            </span>
-          </div>
-        </div>
-      </div>
-
-      {/* Score Label */}
-      <div className="text-center mb-4">
-        <div className={cn(
-          'font-semibold text-white mb-1',
-          textSizes[size].label
-        )}>
-          {getScoreLabel(wellnessScore)}
-        </div>
-        {showDetails && (
-          <div className={cn(
-            'text-white/60',
-            textSizes[size].subtitle
-          )}>
-            Based on stress, HRV, and vitals
-          </div>
-        )}
-      </div>
-
-      {/* Details Section */}
-      {showDetails && size !== 'sm' && (
-        <div className="space-y-3">
-          {/* Component Breakdown */}
-          <div className="grid grid-cols-3 gap-2 text-center">
-            <div className="p-2 bg-white/[0.03] rounded-lg">
-              <div className="flex items-center justify-center mb-1">
-                <Shield className="w-3 h-3 text-blue-400 mr-1" />
-                <span className="text-xs text-white/70">Stress</span>
+    <Card>
+      <CardHeader className="flex-row items-center gap-2 space-y-0">
+        <Heart className="text-pink-400" />
+        <CardTitle>Wellness Score</CardTitle>
+      </CardHeader>
+      <CardContent>
+        <div className="text-center">
+          <div className="text-3xl font-bold text-pink-400">{Math.round(animatedScore)}</div>
+          <p className="text-sm text-muted-foreground">Overall wellness</p>
+          {showDetails && (
+            <div className="mt-4 space-y-2 text-xs text-muted-foreground">
+              <div className="flex justify-between">
+                <span>Sleep Quality</span>
+                <span>85%</span>
               </div>
-              <div className={cn(
-                'font-semibold',
-                (100 - (state.stressIndex || 0)) >= 70 ? 'text-green-400' :
-                (100 - (state.stressIndex || 0)) >= 50 ? 'text-yellow-400' : 'text-red-400'
-              )}>
-                {Math.round(100 - (state.stressIndex || 0))}
+              <div className="flex justify-between">
+                <span>Activity Level</span>
+                <span>72%</span>
               </div>
-            </div>
-            
-            <div className="p-2 bg-white/[0.03] rounded-lg">
-              <div className="flex items-center justify-center mb-1">
-                <Activity className="w-3 h-3 text-green-400 mr-1" />
-                <span className="text-xs text-white/70">HRV</span>
+              <div className="flex justify-between">
+                <span>Stress Management</span>
+                <span>78%</span>
               </div>
-              <div className={cn(
-                'font-semibold',
-                (state.heartRateVariability || 0) >= 40 ? 'text-green-400' :
-                (state.heartRateVariability || 0) >= 25 ? 'text-yellow-400' : 'text-red-400'
-              )}>
-                {Math.round(state.heartRateVariability || 0)}
-              </div>
-            </div>
-            
-            <div className="p-2 bg-white/[0.03] rounded-lg">
-              <div className="flex items-center justify-center mb-1">
-                <Heart className="w-3 h-3 text-red-400 mr-1" />
-                <span className="text-xs text-white/70">Heart</span>
-              </div>
-              <div className={cn(
-                'font-semibold',
-                (state.heartRate || 0) >= 60 && (state.heartRate || 0) <= 100 ? 'text-green-400' :
-                (state.heartRate || 0) >= 50 && (state.heartRate || 0) <= 120 ? 'text-yellow-400' : 'text-red-400'
-              )}>
-                {Math.round(state.heartRate || 0)}
-              </div>
-            </div>
-          </div>
-
-          {/* Last updated */}
-          {state.lastReading && (
-            <div className="text-xs text-white/60 text-center pt-2 border-t border-white/10">
-              Updated {new Date(state.lastReading).toLocaleTimeString()}
             </div>
           )}
         </div>
-      )}
-    </CardSkeleton>
+      </CardContent>
+    </Card>
   );
 }; 

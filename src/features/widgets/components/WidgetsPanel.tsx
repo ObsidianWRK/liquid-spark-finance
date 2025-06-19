@@ -1,9 +1,9 @@
 import React, { useEffect } from "react";
-import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
+import { UniversalCard } from "@/components/ui/UniversalCard";
 import { useWidgetsStore } from "../store";
 import { WidgetPreview } from "./WidgetPreview";
 import { AddWidgetButtons } from "./AddWidgetButtons";
-import { Smartphone } from "lucide-react";
+import { Grid } from "lucide-react";
 
 export const WidgetsPanel: React.FC = () => {
   const { widgets, loading, refresh } = useWidgetsStore((s) => ({
@@ -17,17 +17,19 @@ export const WidgetsPanel: React.FC = () => {
   }, [refresh]);
 
   return (
-    <Card>
-      <CardHeader className="flex-row items-center gap-2 space-y-0">
-        <Smartphone className="text-primary" />
-        <CardTitle>Home Screen Widgets</CardTitle>
-      </CardHeader>
-      <CardContent className="space-y-4">
+    <UniversalCard
+      variant="glass"
+      size="md"
+      title="Home Screen Widgets"
+      icon={Grid}
+      iconColor="#f59e0b"
+    >
+      <div className="space-y-4">
         <AddWidgetButtons />
         {loading && widgets.length === 0 ? (
-          <p className="text-muted-foreground">Loading widgets...</p>
+          <p className="text-white/60">Loading widgets...</p>
         ) : widgets.length === 0 ? (
-          <p className="text-muted-foreground">No widgets configured yet.</p>
+          <p className="text-white/60">No widgets configured yet.</p>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {widgets.map((widget) => (
@@ -35,7 +37,7 @@ export const WidgetsPanel: React.FC = () => {
             ))}
           </div>
         )}
-      </CardContent>
-    </Card>
+      </div>
+    </UniversalCard>
   );
 }; 

@@ -7,7 +7,8 @@ import { savingsGoalsService } from '@/services/savingsGoalsService';
 import { SavingsGoal, SavingsInsight } from '@/types/savingsGoals';
 import { cn } from '@/lib/utils';
 import { useNavigate } from 'react-router-dom';
-import { CardShell } from '@/components/ui/CardShell';
+import { UnifiedCard } from '@/components/ui/UnifiedCard';
+import { formatCurrency } from '@/utils/formatters';
 
 interface SavingsGoalsProps {
   compact?: boolean;
@@ -55,15 +56,6 @@ const SavingsGoals = ({ compact = false }: SavingsGoalsProps) => {
   const completedGoals = goals.filter(goal => goal.isCompleted).length;
   const overallProgress = totalTargets > 0 ? (totalSaved / totalTargets) * 100 : 0;
 
-  const formatCurrency = (amount: number) => {
-    return new Intl.NumberFormat('en-US', {
-      style: 'currency',
-      currency: 'USD',
-      minimumFractionDigits: 0,
-      maximumFractionDigits: 0,
-    }).format(amount);
-  };
-
   const formatProgress = (current: number, target: number) => {
     return target > 0 ? ((current / target) * 100).toFixed(1) : '0';
   };
@@ -74,14 +66,6 @@ const SavingsGoals = ({ compact = false }: SavingsGoalsProps) => {
     if (percentage >= 50) return 'text-yellow-400';
     if (percentage >= 25) return 'text-orange-400';
     return 'text-red-400';
-  };
-
-  const getProgressBarGradient = (percentage: number) => {
-    if (percentage >= 100) return 'bg-gradient-to-r from-lime-500 to-green-500';
-    if (percentage >= 75) return 'bg-gradient-to-r from-yellow-500 to-lime-500';
-    if (percentage >= 50) return 'bg-gradient-to-r from-orange-500 to-yellow-500';
-    if (percentage >= 25) return 'bg-gradient-to-r from-red-500 to-orange-500';
-    return 'bg-gradient-to-r from-red-600 to-red-500';
   };
 
   if (loading) {
@@ -105,85 +89,77 @@ const SavingsGoals = ({ compact = false }: SavingsGoalsProps) => {
   // Compact mode for dashboard widget
   if (compact) {
     return (
-      <div className="bg-white/[0.02] rounded-2xl border border-white/[0.08] backdrop-blur-md text-white">
-        <div className="p-4 space-y-4">
-          <div className="flex items-center justify-between">
-            <h2 className="text-lg font-bold text-white flex items-center space-x-2">
-              <Target className="w-5 h-5 text-green-400" />
-              <span>Savings Goals</span>
-            </h2>
+      <UnifiedCard
+        title="Savings Goals"
+        icon={Target}
+        iconColor="text-green-400"
+        variant="default"
+        size="lg"
+        className="text-white"
+      >
+        {loading ? (
+          <div className="space-y-3">
+            {[...Array(2)].map((_, i) => (
+              <div key={i} className="h-16 bg-white/[0.02] rounded-xl border border-white/[0.08] animate-pulse"></div>
+            ))}
+          </div>
+        ) : goals.length === 0 ? (
+          <div className="text-center py-6">
+            <Target className="w-8 h-8 text-gray-400 mx-auto mb-2 opacity-50" />
+            <p className="text-sm text-gray-400 mb-2">No goals yet</p>
             <button
               onClick={() => navigate('/savings')}
               className="text-xs text-blue-400 hover:text-blue-300 transition-colors"
             >
-              View All
+              Create your first goal
             </button>
           </div>
-          
-          {loading ? (
-            <div className="space-y-3">
-              {[...Array(2)].map((_, i) => (
-                <div key={i} className="h-16 bg-white/[0.02] rounded-2xl border border-white/[0.08] animate-pulse"></div>
-              ))}
-            </div>
-          ) : goals.length === 0 ? (
-            <div className="bg-white/[0.02] rounded-2xl border border-white/[0.08] p-4 text-center">
-              <Target className="w-8 h-8 text-gray-400 mx-auto mb-2 opacity-50" />
-              <p className="text-sm text-gray-400 mb-2">No goals yet</p>
+        ) : (
+          <div className="space-y-3">
+            {goals.slice(0, 3).map((goal) => {
+              const progress = (goal.currentAmount / goal.targetAmount) * 100;
+              const daysLeft = Math.ceil((new Date(goal.targetDate).getTime() - Date.now()) / (1000 * 60 * 60 * 24));
+              
+              return (
+                <UnifiedCard
+                  key={goal.id}
+                  title={goal.name}
+                  subtitle={goal.category}
+                  metric={formatCurrency(goal.currentAmount, { currency: 'USD' })}
+                  delta={{
+                    value: Math.round(progress),
+                    format: 'percentage',
+                    label: 'complete'
+                  }}
+                  icon={goal.icon}
+                  progress={{
+                    value: goal.currentAmount,
+                    max: goal.targetAmount,
+                    color: progress >= 100 ? '#22c55e' : progress >= 75 ? '#84cc16' : progress >= 50 ? '#eab308' : '#ef4444',
+                    showLabel: false
+                  }}
+                  badge={daysLeft <= 0 && !goal.isCompleted ? {
+                    text: 'Overdue',
+                    variant: 'error'
+                  } : undefined}
+                  size="sm"
+                  className="hover:bg-white/[0.03] transition-all cursor-pointer"
+                  onClick={() => navigate('/savings')}
+                />
+              );
+            })}
+            
+            <div className="pt-3 border-t border-white/[0.06]">
               <button
                 onClick={() => navigate('/savings')}
-                className="text-xs text-blue-400 hover:text-blue-300 transition-colors"
+                className="w-full text-sm text-blue-400 hover:text-blue-300 transition-colors text-center"
               >
-                Create your first goal
+                View All Goals →
               </button>
             </div>
-          ) : (
-            <div className="space-y-3">
-              {goals.slice(0, 3).map((goal) => {
-                const progress = (goal.currentAmount / goal.targetAmount) * 100;
-                const daysLeft = Math.ceil((new Date(goal.targetDate).getTime() - Date.now()) / (1000 * 60 * 60 * 24));
-                
-                return (
-                  <div 
-                    key={goal.id} 
-                    className="bg-white/[0.02] rounded-2xl border border-white/[0.08] p-4 hover:bg-white/[0.03] transition-all relative overflow-hidden"
-                    style={{ isolation: 'isolate' }}
-                  >
-                    <div className="flex items-center justify-between mb-2">
-                      <div className="flex items-center space-x-2">
-                        <span className="text-sm">{goal.icon}</span>
-                        <span className="text-sm font-medium text-white truncate">{goal.name}</span>
-                      </div>
-                      {daysLeft <= 0 && !goal.isCompleted && (
-                        <span className="text-xs px-1.5 py-0.5 rounded-full bg-red-500/20 text-red-400 border border-red-500/30 animate-pulse whitespace-nowrap flex-shrink-0">
-                          Overdue
-                        </span>
-                      )}
-                    </div>
-                    
-                    <div className="space-y-1">
-                      <div className="flex justify-between text-xs">
-                        <span className="text-white">{formatCurrency(goal.currentAmount)}</span>
-                        <span className="text-slate-400">{formatCurrency(goal.targetAmount)}</span>
-                      </div>
-                      <div className="w-full bg-white/[0.1] rounded-full h-1.5">
-                        <div 
-                          className="h-1.5 rounded-full transition-all duration-500"
-                          style={{
-                            width: `${Math.min(progress, 100)}%`,
-                            background: progress >= 100 ? '#22c55e' : progress >= 75 ? '#84cc16' : progress >= 50 ? '#eab308' : '#ef4444'
-                          }}
-                        />
-                      </div>
-                      <div className="text-xs text-slate-400">{progress.toFixed(0)}% complete</div>
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-          )}
-        </div>
-      </div>
+          </div>
+        )}
+      </UnifiedCard>
     );
   }
 
@@ -193,7 +169,7 @@ const SavingsGoals = ({ compact = false }: SavingsGoalsProps) => {
         {/* Back */}
         <button
           onClick={() => navigate('/')}
-          className="liquid-glass-button flex items-center gap-2 px-3 py-2 rounded-xl text-white/80 hover:text-white transition-colors mb-4"
+          className="flex items-center gap-2 px-3 py-2 rounded-xl text-white/80 hover:text-white transition-colors mb-4 hover:bg-white/[0.05]"
         >
           <ArrowLeft className="w-4 h-4" />
           <span className="text-sm">Dashboard</span>
@@ -211,89 +187,75 @@ const SavingsGoals = ({ compact = false }: SavingsGoalsProps) => {
           
           <button
             onClick={() => setShowGoalCreator(true)}
-            className="liquid-glass-button px-6 py-3 rounded-xl font-medium hover:bg-white/[0.08] transition-all flex items-center space-x-2 text-white border border-white/[0.12] backdrop-blur-md"
+            className="px-6 py-3 bg-white/[0.05] border border-white/[0.12] rounded-xl font-medium hover:bg-white/[0.08] transition-all flex items-center space-x-2 text-white backdrop-blur-md"
           >
             <Plus className="w-5 h-5" />
             <span>New Goal</span>
           </button>
         </div>
 
-        {/* Overview Stats */}
+        {/* Overview Stats using UnifiedCard */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-          <div className="bg-white/[0.02] rounded-xl border border-white/[0.08] p-6">
-            <div className="flex items-center space-x-3 mb-4">
-              <div className="w-10 h-10 bg-green-500/20 rounded-xl flex items-center justify-center">
-                <DollarSign className="w-5 h-5 text-green-400" />
-              </div>
-              <div>
-                <h3 className="font-semibold text-white">Total Saved</h3>
-                <p className="text-sm text-gray-400">Across all goals</p>
-              </div>
-            </div>
-            <div className="text-2xl font-bold text-white mb-1">
-              {formatCurrency(totalSaved)}
-            </div>
-            <div className="text-sm text-green-400">
-              {formatProgress(totalSaved, totalTargets)}% of target
-            </div>
-          </div>
+          <UnifiedCard
+            title="Total Saved"
+            subtitle="Across all goals"
+            metric={formatCurrency(totalSaved, { currency: 'USD' })}
+            delta={{
+              value: parseFloat(formatProgress(totalSaved, totalTargets)),
+              format: 'percentage',
+              label: 'of target'
+            }}
+            icon={DollarSign}
+            iconColor="text-green-400"
+            variant="default"
+            size="lg"
+          />
 
-          <div className="bg-white/[0.02] rounded-xl border border-white/[0.08] p-6">
-            <div className="flex items-center space-x-3 mb-4">
-              <div className="w-10 h-10 bg-blue-500/20 rounded-xl flex items-center justify-center">
-                <Target className="w-5 h-5 text-blue-400" />
-              </div>
-              <div>
-                <h3 className="font-semibold text-white">Total Targets</h3>
-                <p className="text-sm text-gray-400">Goal amounts</p>
-              </div>
-            </div>
-            <div className="text-2xl font-bold text-white mb-1">
-              {formatCurrency(totalTargets)}
-            </div>
-            <div className="text-sm text-blue-400">
-              {goals.length} active goals
-            </div>
-          </div>
+          <UnifiedCard
+            title="Total Targets"
+            subtitle="Goal amounts"
+            metric={formatCurrency(totalTargets, { currency: 'USD' })}
+            delta={{
+              value: goals.length,
+              format: 'number',
+              label: 'active goals'
+            }}
+            icon={Target}
+            iconColor="text-blue-400"
+            variant="default"
+            size="lg"
+          />
 
-          <div className="bg-white/[0.02] rounded-xl border border-white/[0.08] p-6">
-            <div className="flex items-center space-x-3 mb-4">
-              <div className="w-10 h-10 bg-purple-500/20 rounded-xl flex items-center justify-center">
-                <Award className="w-5 h-5 text-purple-400" />
-              </div>
-              <div>
-                <h3 className="font-semibold text-white">Completed</h3>
-                <p className="text-sm text-gray-400">Goals achieved</p>
-              </div>
-            </div>
-            <div className="text-2xl font-bold text-white mb-1">
-              {completedGoals}
-            </div>
-            <div className="text-sm text-purple-400">
-              {goals.length > 0 ? ((completedGoals / goals.length) * 100).toFixed(0) : 0}% success rate
-            </div>
-          </div>
+          <UnifiedCard
+            title="Completed"
+            subtitle="Goals achieved"
+            metric={completedGoals.toString()}
+            delta={{
+              value: Math.round(goals.length > 0 ? (completedGoals / goals.length) * 100 : 0),
+              format: 'percentage',
+              label: 'success rate'
+            }}
+            icon={Award}
+            iconColor="text-purple-400"
+            variant="default"
+            size="lg"
+          />
 
-          <div className="bg-white/[0.02] rounded-xl border border-white/[0.08] p-6">
-            <div className="flex items-center space-x-3 mb-4">
-              <div className="w-10 h-10 bg-orange-500/20 rounded-xl flex items-center justify-center">
-                <Percent className="w-5 h-5 text-orange-400" />
-              </div>
-              <div>
-                <h3 className="font-semibold text-white">Overall Progress</h3>
-                <p className="text-sm text-gray-400">Average completion</p>
-              </div>
-            </div>
-            <div className={cn('text-2xl font-bold mb-1', getProgressColor(overallProgress))}>
-              {overallProgress.toFixed(0)}%
-            </div>
-            <div className="w-full bg-white/[0.1] rounded-full h-2 overflow-hidden">
-              <div 
-                className={cn('h-2 transition-all duration-500', getProgressBarGradient(overallProgress))}
-                style={{ width: `${Math.min(overallProgress, 100)}%` }}
-              />
-            </div>
-          </div>
+          <UnifiedCard
+            title="Overall Progress"
+            subtitle="Average completion"
+            metric={`${Math.round(overallProgress)}%`}
+            progress={{
+              value: overallProgress,
+              max: 100,
+              color: overallProgress >= 80 ? '#22c55e' : overallProgress >= 60 ? '#84cc16' : overallProgress >= 40 ? '#eab308' : overallProgress >= 20 ? '#f97316' : '#ef4444',
+              showLabel: false
+            }}
+            icon={Percent}
+            iconColor="text-orange-400"
+            variant="default"
+            size="lg"
+          />
         </div>
 
         {/* Tab Navigation */}
@@ -325,20 +287,28 @@ const SavingsGoals = ({ compact = false }: SavingsGoalsProps) => {
         {activeTab === 'goals' && (
           <div>
             {goals.length === 0 ? (
-              <div className="bg-white/[0.02] rounded-xl border border-white/[0.08] p-12 text-center">
-                <Target className="w-16 h-16 text-gray-400 mx-auto mb-4 opacity-50" />
-                <h3 className="text-xl font-bold text-white mb-2">No Savings Goals Yet</h3>
-                <p className="text-gray-400 mb-6 max-w-md mx-auto">
-                  Start your financial journey by creating your first savings goal. Whether it's an emergency fund, vacation, or major purchase, we'll help you get there.
-                </p>
-                <button
-                  onClick={() => setShowGoalCreator(true)}
-                  className="liquid-glass-button px-6 py-3 rounded-xl font-medium hover:bg-white/[0.08] transition-all flex items-center space-x-2 mx-auto text-white border border-white/[0.12] backdrop-blur-md"
-                >
-                  <Plus className="w-5 h-5" />
-                  <span>Create Your First Goal</span>
-                </button>
-              </div>
+              <UnifiedCard
+                title="No Savings Goals Yet"
+                subtitle="Start your financial journey by creating your first savings goal"
+                icon={Target}
+                iconColor="text-gray-400"
+                variant="default"
+                size="lg"
+                className="text-center py-12"
+              >
+                <div className="space-y-4">
+                  <p className="text-gray-400 max-w-md mx-auto">
+                    Whether it's an emergency fund, vacation, or major purchase, we'll help you get there.
+                  </p>
+                  <button
+                    onClick={() => setShowGoalCreator(true)}
+                    className="px-6 py-3 bg-white/[0.05] border border-white/[0.12] rounded-xl font-medium hover:bg-white/[0.08] transition-all flex items-center space-x-2 mx-auto text-white backdrop-blur-md"
+                  >
+                    <Plus className="w-5 h-5" />
+                    <span>Create Your First Goal</span>
+                  </button>
+                </div>
+              </UnifiedCard>
             ) : (
               <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-8 w-full">
                 {goals.map((goal) => {
@@ -346,84 +316,69 @@ const SavingsGoals = ({ compact = false }: SavingsGoalsProps) => {
                   const daysLeft = Math.ceil((new Date(goal.targetDate).getTime() - new Date().getTime()) / (1000 * 60 * 60 * 24));
                   
                   return (
-                    <div key={goal.id} className="bg-white/[0.02] rounded-xl border border-white/[0.08] p-6 hover:bg-white/[0.03] transition-all relative overflow-hidden" style={{ isolation: 'isolate' }}>
-                      <div className="flex items-start justify-between mb-4">
-                        <div className="flex items-center space-x-3">
-                          <div className="text-2xl">{goal.icon}</div>
-                          <div>
-                            <h3 className="font-semibold text-white">{goal.name}</h3>
-                            <p className="text-sm text-gray-400">{goal.category}</p>
+                    <UnifiedCard
+                      key={goal.id}
+                      title={goal.name}
+                      subtitle={goal.category}
+                      metric={formatCurrency(goal.currentAmount, { currency: 'USD' })}
+                      delta={{
+                        value: goal.targetAmount - goal.currentAmount,
+                        format: 'currency',
+                        label: 'remaining'
+                      }}
+                      icon={goal.icon}
+                      progress={{
+                        value: goal.currentAmount,
+                        max: goal.targetAmount,
+                        color: progress >= 100 ? '#22c55e' : progress >= 75 ? '#84cc16' : progress >= 50 ? '#eab308' : progress >= 25 ? '#f97316' : '#ef4444',
+                        showLabel: true
+                      }}
+                      badge={goal.isCompleted ? {
+                        text: 'Complete',
+                        variant: 'success'
+                      } : daysLeft <= 0 ? {
+                        text: 'Overdue',
+                        variant: 'error'
+                      } : daysLeft <= 30 ? {
+                        text: `${daysLeft} days left`,
+                        variant: 'warning'
+                      } : undefined}
+                      variant="default"
+                      size="lg"
+                      interactive={true}
+                      className="hover:bg-white/[0.03] transition-all relative overflow-hidden"
+                    >
+                      {/* Additional Goal Details */}
+                      <div className="mt-4 space-y-3">
+                        {/* Target Amount */}
+                        <div className="flex justify-between items-center text-sm">
+                          <span className="text-white/60">Target</span>
+                          <span className="text-white font-medium">{formatCurrency(goal.targetAmount, { currency: 'USD' })}</span>
+                        </div>
+                        
+                        {/* Due Date */}
+                        <div className="flex justify-between items-center text-sm">
+                          <span className="text-white/60">Due Date</span>
+                          <div className="flex items-center space-x-1">
+                            <Calendar className="w-3 h-3 text-white/60" />
+                            <span className="text-white/80">
+                              {new Date(goal.targetDate).toLocaleDateString('en-US', {
+                                month: 'short',
+                                day: 'numeric',
+                                year: 'numeric'
+                              })}
+                            </span>
                           </div>
                         </div>
-                        {goal.isCompleted ? (
-                          <CheckCircle2 className="w-6 h-6 text-green-400" />
-                        ) : (
-                          <button className="p-2 hover:bg-white/[0.05] rounded-xl transition-colors">
-                            <MoreHorizontal className="w-4 h-4 text-gray-400" />
+
+                        {/* Action Button */}
+                        {!goal.isCompleted && (
+                          <button className="w-full mt-4 py-2 bg-white/[0.05] border border-white/[0.12] rounded-lg text-white/80 hover:bg-white/[0.08] hover:text-white transition-all text-sm font-medium">
+                            Add Contribution
                           </button>
                         )}
                       </div>
-
-                      <div className="space-y-4">
-                        {/* Progress */}
-                        <div>
-                          <div className="flex justify-between items-center mb-2">
-                            <span className="text-sm text-gray-400">Progress</span>
-                            <span className={cn('text-sm font-medium', getProgressColor(progress))}>
-                              {progress}%
-                            </span>
-                          </div>
-                          <div className="w-full bg-white/[0.1] rounded-full h-2 overflow-hidden">
-                            <div 
-                              className={cn('h-2 transition-all duration-500', getProgressBarGradient(progress))}
-                              style={{ width: `${Math.min(progress, 100)}%` }}
-                            />
-                          </div>
-                        </div>
-
-                        {/* Amount Details */}
-                        <div className="flex justify-between items-center">
-                          <div>
-                            <div className="text-lg font-bold text-white">
-                              {formatCurrency(goal.currentAmount)}
-                            </div>
-                            <div className="text-sm text-gray-400">
-                              of {formatCurrency(goal.targetAmount)}
-                            </div>
-                          </div>
-                          <div className="text-right">
-                            <div className="text-sm text-gray-400">
-                              {formatCurrency(goal.targetAmount - goal.currentAmount)} left
-                            </div>
-                          </div>
-                        </div>
-
-                        {/* Time Details */}
-                        <div className="flex items-center justify-between pt-3 border-t border-white/[0.05]">
-                          <div className="flex items-center space-x-2">
-                            <Calendar className="w-4 h-4 text-gray-400" />
-                            <span className="text-sm text-gray-400">
-                              {new Date(goal.targetDate).toLocaleDateString()}
-                            </span>
-                          </div>
-                          <div className="flex items-center space-x-2">
-                            <Clock className="w-4 h-4 text-gray-400" />
-                            {daysLeft <= 0 ? (
-                              <span className="text-xs px-2 py-1 rounded-full bg-red-500/20 text-red-400 border border-red-500/30 animate-pulse whitespace-nowrap">
-                                Overdue
-                              </span>
-                            ) : (
-                              <span className={cn(
-                                'text-sm',
-                                daysLeft < 30 ? 'text-orange-400' : daysLeft < 90 ? 'text-yellow-400' : 'text-gray-400'
-                              )}>
-                                {daysLeft} days left
-                              </span>
-                            )}
-                          </div>
-                        </div>
-                      </div>
-                    </div>
+                    </UnifiedCard>
                   );
                 })}
               </div>
@@ -434,11 +389,15 @@ const SavingsGoals = ({ compact = false }: SavingsGoalsProps) => {
         {activeTab === 'insights' && (
           <div className="space-y-6">
             {insights.length === 0 ? (
-              <div className="bg-white/[0.02] rounded-xl border border-white/[0.08] p-12 text-center">
-                <TrendingUp className="w-16 h-16 text-gray-400 mx-auto mb-4 opacity-50" />
-                <h3 className="text-xl font-bold text-white mb-2">No Insights Available</h3>
-                <p className="text-gray-400">Create some goals to get personalized insights and recommendations.</p>
-              </div>
+              <UnifiedCard
+                title="No Insights Available"
+                subtitle="Create some goals to get personalized insights and recommendations"
+                icon={TrendingUp}
+                iconColor="text-gray-400"
+                variant="default"
+                size="lg"
+                className="text-center py-12"
+              />
             ) : (
               <SavingsInsights insights={insights} />
             )}

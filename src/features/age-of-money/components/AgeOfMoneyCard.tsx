@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
 import { useAgeOfMoneyStore } from "../store";
-import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
-import AnimatedCircularProgress from "@/components/insights/components/AnimatedCircularProgress";
+import { UniversalCard } from "@/components/ui/UniversalCard";
 import { Clock } from "lucide-react";
 
 export const AgeOfMoneyCard: React.FC = () => {
@@ -16,18 +15,29 @@ export const AgeOfMoneyCard: React.FC = () => {
   }, [refresh]);
 
   return (
-    <Card className="flex flex-col items-center p-6">
-      <CardHeader className="flex-row items-center gap-2 space-y-0">
-        <Clock className="text-primary" />
-        <CardTitle>Age of Money</CardTitle>
-      </CardHeader>
-      <CardContent>
-        {metric ? (
-          <AnimatedCircularProgress value={metric.averageDaysHeld} maxValue={120} label="days" />
-        ) : (
-          <p className="text-muted-foreground">{loading ? "Calculating…" : "No data"}</p>
-        )}
-      </CardContent>
-    </Card>
+    <UniversalCard
+      variant="glass"
+      size="md"
+      title="Age of Money"
+      icon={Clock}
+      iconColor="#06b6d4"
+      score={metric ? Math.min(metric.averageDaysHeld, 100) : undefined}
+      orientation="vertical"
+    >
+      {!metric && (
+        <div className="text-center">
+          <p className="text-white/60 text-sm">
+            {loading ? "Calculating…" : "No data available"}
+          </p>
+        </div>
+      )}
+      {metric && (
+        <div className="text-center mt-4">
+          <p className="text-white/60 text-sm">
+            Average {metric.averageDaysHeld} days held
+          </p>
+        </div>
+      )}
+    </UniversalCard>
   );
 }; 

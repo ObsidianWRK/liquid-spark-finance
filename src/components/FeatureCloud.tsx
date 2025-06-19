@@ -101,8 +101,9 @@ const FeatureCloud: React.FC<FeatureCloudProps> = ({
         <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl text-white leading-tight">
           <span className="font-bold">Intelligence you can{' '}</span>
           <span className="font-light italic bg-gradient-to-r from-blue-400 via-purple-400 to-green-400 bg-clip-text text-transparent">
-            bank on
-          </span>
+            bank
+          </span>{' '}
+          <span className="font-bold">on</span>
         </h1>
         <p className="text-lg sm:text-xl md:text-2xl text-white/70 mt-4 max-w-3xl mx-auto px-4">
           Experience the power of intelligent financial management
