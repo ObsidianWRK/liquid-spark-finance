@@ -109,22 +109,6 @@ test.describe('React Hook Violations Detection', () => {
     expect(hookOrderErrors, `Hook order violations detected: ${hookOrderErrors.join(', ')}`).toHaveLength(0);
   });
 
-  test('should validate ThemeToggle component hook fix', async ({ page }) => {
-    // Look for theme toggle component
-    const themeToggle = page.locator('[data-testid="theme-toggle"], button[aria-label*="theme"], button[title*="theme"]');
-    
-    if (await themeToggle.count() > 0) {
-      hookMonitor.reset();
-      
-      // Interact with theme toggle
-      await themeToggle.first().click();
-      await page.waitForTimeout(500);
-      
-      const errors = hookMonitor.getErrors();
-      expect(errors, `ThemeToggle hook violations: ${errors.join(', ')}`).toHaveLength(0);
-    }
-  });
-
   test('should validate PerformanceMonitor component hook fix', async ({ page }) => {
     // Check if performance monitor is enabled (development mode)
     const perfMonitor = page.locator('[data-testid="performance-monitor"], .performance-monitor');

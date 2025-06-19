@@ -17,6 +17,8 @@ import {
 import { budgetService } from '@/services/budgetService';
 import { Budget, BudgetCategory, SavingsGoal } from '@/types/budgets';
 import { cn } from '@/lib/utils';
+import { mockData } from '@/services/mockData';
+import { TransactionCategory } from '@/types/transactions';
 
 interface BudgetTrackerProps {
   familyId: string;
@@ -40,8 +42,83 @@ const BudgetTracker = ({ familyId, className }: BudgetTrackerProps) => {
         budgetService.getFamilySavingsGoals(familyId) // WHY: Use budgetService which returns the correct SavingsGoal type
       ]);
       
-      setBudget(budgetData);
-      setGoals(goalsData);
+      // -----------------------------------------------------------
+      // Populate budget spent amounts using available mock transactions
+      // -----------------------------------------------------------
+      const populateSpentFromMock = (budgetToPopulate: Budget | null) => {
+        if (!budgetToPopulate) return budgetToPopulate;
+
+        const expenses = mockData.transactions.filter(t => t.amount < 0);
+
+        // Helper to map mock category labels -> internal TransactionCategory keys
+        const mapCategory = (label: string): TransactionCategory => {
+          const l = label.toLowerCase();
+          if (['grocery', 'groceries', 'dining', 'coffee', 'food'].some(k => l.includes(k))) return 'food';
+          if (['electronics', 'shopping', 'amazon', 'nike', 'best buy', 'home depot', 'home improvement', 'walmart', 'target', 'ebay'].some(k => l.includes(k))) return 'shopping';
+          if (['gas', 'uber', 'lyft', 'transportation'].some(k => l.includes(k))) return 'transportation';
+          if (['entertainment', 'netflix', 'spotify', 'apple music', 'movie', 'concert', 'gym'].some(k => l.includes(k))) return 'entertainment';
+          if (['health', 'pharmacy', 'cvs', 'healthcare', 'gym'].some(k => l.includes(k))) return 'healthcare';
+          if (['utilities', 'electric', 'water', 'internet', 'phone'].some(k => l.includes(k))) return 'utilities';
+          if (['debt', 'loan', 'payment', 'mortgage'].some(k => l.includes(k))) return 'debt_payments';
+          if (['saving', 'investment', '401', 'ira'].some(k => l.includes(k))) return 'savings';
+          if (['housing', 'rent', 'property'].some(k => l.includes(k))) return 'housing';
+          return 'other';
+        };
+
+        // Reset spent before recalculation to avoid double-counting on reloads
+        budgetToPopulate.categories.forEach(cat => {
+          cat.spentAmount = 0;
+          cat.remainingAmount = cat.budgetedAmount;
+          cat.overageAmount = 0;
+        });
+
+        // Accumulate expenses per category
+        expenses.forEach(txn => {
+          const catKey = mapCategory(txn.category.name || 'other');
+          const category = budgetToPopulate.categories.find(c => c.categoryName === catKey);
+          if (category) {
+            const amount = Math.abs(txn.amount);
+            category.spentAmount += amount;
+            category.remainingAmount = Math.max(category.budgetedAmount - category.spentAmount, 0);
+            category.overageAmount = Math.max(category.spentAmount - category.budgetedAmount, 0);
+          }
+        });
+
+        // Recalculate totals
+        budgetToPopulate.totalSpent = budgetToPopulate.categories.reduce((sum, c) => sum + c.spentAmount, 0);
+        budgetToPopulate.totalRemaining = Math.max(budgetToPopulate.totalBudgeted - budgetToPopulate.totalSpent, 0);
+
+        return budgetToPopulate;
+      };
+
+      const enrichedBudget = populateSpentFromMock(budgetData);
+
+      // -----------------------------------------------------------
+      // Enrich savings goals with mock progress based on contribution schedule
+      // -----------------------------------------------------------
+      const populateGoalsProgress = (goals: SavingsGoal[]): SavingsGoal[] => {
+        return goals.map(goal => {
+          const targetDate = goal.targetDate instanceof Date ? goal.targetDate : new Date(goal.targetDate);
+          const monthsTotal = Math.max(1, Math.ceil((targetDate.getTime() - Date.now()) / (30 * 24 * 60 * 60 * 1000)) + 12); // fallback 12 months horizon
+
+          // Estimate months elapsed since 1 year ago (for demo)
+          const monthsElapsed = Math.min(12, 12 - Math.ceil(monthsTotal / 12));
+
+          const estimatedAmount = goal.monthlyContribution * monthsElapsed;
+          const currentAmount = Math.min(estimatedAmount, goal.targetAmount);
+
+          return {
+            ...goal,
+            currentAmount,
+            status: currentAmount >= goal.targetAmount ? 'completed' : 'in_progress'
+          };
+        });
+      };
+
+      const enrichedGoals = populateGoalsProgress(goalsData);
+
+      setBudget(enrichedBudget);
+      setGoals(enrichedGoals);
     } catch (err) {
       setError('Failed to load budget data');
       console.error('Budget loading error:', err);

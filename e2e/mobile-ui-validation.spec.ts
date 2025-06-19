@@ -6,65 +6,6 @@ test.describe('Mobile UI Validation - iOS26 Design Compliance', () => {
     await page.waitForLoadState('networkidle');
   });
 
-  test.describe('Toggle Styling Fixes', () => {
-    test('theme toggle should have iOS26 styling', async ({ page }) => {
-      // Find the theme toggle
-      const themeToggle = page.locator('[aria-label*="Switch to"]');
-      await expect(themeToggle).toBeVisible();
-
-      // Check that the toggle has proper iOS26 styling
-      const toggleRoot = themeToggle.locator('xpath=..');
-      await expect(toggleRoot).toHaveCSS('border-radius', '9999px'); // Fully rounded
-      
-      // Verify switch dimensions (h-7 w-12 = 28px height, 48px width)
-      const boundingBox = await themeToggle.boundingBox();
-      expect(boundingBox?.height).toBeCloseTo(28, 3);
-      expect(boundingBox?.width).toBeCloseTo(48, 3);
-    });
-
-    test('toggle should not have background bleed', async ({ page }) => {
-      const themeToggle = page.locator('[aria-label*="Switch to"]');
-      
-      // Get computed styles to check for proper background containment
-      const styles = await themeToggle.evaluate((el) => {
-        const computedStyle = window.getComputedStyle(el);
-        return {
-          overflow: computedStyle.overflow,
-          borderRadius: computedStyle.borderRadius,
-          border: computedStyle.border
-        };
-      });
-
-      // Should have proper containment
-      expect(styles.overflow).toBe('hidden');
-      expect(styles.borderRadius).toContain('9999px');
-    });
-
-    test('toggle colors should match Vueni dark theme', async ({ page }) => {
-      const themeToggle = page.locator('[aria-label*="Switch to"]');
-      
-      // Test initial unchecked state (should be gray)
-      const uncheckedColor = await themeToggle.evaluate((el) => {
-        return window.getComputedStyle(el).backgroundColor;
-      });
-      
-      // Should be gray-ish (not green)
-      expect(uncheckedColor).not.toContain('rgb(34, 197, 94)'); // Not green-500
-      
-      // Click to check state
-      await themeToggle.click();
-      await page.waitForTimeout(300); // Wait for transition
-      
-      // Test checked state (should be blue)
-      const checkedColor = await themeToggle.evaluate((el) => {
-        return window.getComputedStyle(el).backgroundColor;
-      });
-      
-      // Should be blue-ish
-      expect(checkedColor).toMatch(/rgb\(\s*(?:37|59|99),\s*(?:82|130|102),\s*(?:246|235|241)\s*\)/);
-    });
-  });
-
   test.describe('Mobile Navigation Bar Responsiveness', () => {
     test('top navigation should not overlap on mobile screens', async ({ page }) => {
       // Test on various mobile viewport sizes
@@ -192,13 +133,6 @@ test.describe('Mobile UI Validation - iOS26 Design Compliance', () => {
       await expect(focusedElement).toBeVisible();
     });
 
-    test('toggle should have proper ARIA labels', async ({ page }) => {
-      const themeToggle = page.locator('[aria-label*="Switch to"]');
-      
-      const ariaLabel = await themeToggle.getAttribute('aria-label');
-      expect(ariaLabel).toMatch(/Switch to (light|dark) mode/);
-    });
-
     test('navigation buttons should have proper ARIA labels', async ({ page }) => {
       await page.setViewportSize({ width: 1280, height: 800 });
 
@@ -214,71 +148,5 @@ test.describe('Mobile UI Validation - iOS26 Design Compliance', () => {
     });
   });
 
-  test.describe('Visual Regression Prevention', () => {
-    test('toggle should have smooth animations', async ({ page }) => {
-      const themeToggle = page.locator('[aria-label*="Switch to"]');
-      
-      // Get initial position
-      const initialState = await themeToggle.evaluate((el) => {
-        const thumb = el.querySelector('[class*="thumb"]');
-        return {
-          transform: thumb ? window.getComputedStyle(thumb).transform : '',
-          transition: window.getComputedStyle(el).transition
-        };
-      });
-
-      // Click toggle
-      await themeToggle.click();
-      await page.waitForTimeout(50); // Small delay to catch transition
-
-      // Check that transition is defined
-      expect(initialState.transition).toContain('0.3s');
-    });
-
-    test('no visual overflow or clipping', async ({ page }) => {
-      const mobileViewports = [
-        { width: 320, height: 568 },
-        { width: 375, height: 667 },
-        { width: 768, height: 1024 }
-      ];
-
-      for (const viewport of mobileViewports) {
-        await page.setViewportSize(viewport);
-        await page.waitForTimeout(100);
-
-        // Check for any elements that might be clipped
-        const clippedElements = await page.evaluate(() => {
-          const elements = document.querySelectorAll('*');
-          const clipped = [];
-          
-          for (const el of elements) {
-            const rect = el.getBoundingClientRect();
-            if (rect.right > window.innerWidth || rect.bottom > window.innerHeight) {
-              if (el.tagName !== 'HTML' && el.tagName !== 'BODY') {
-                clipped.push({
-                  tag: el.tagName,
-                  class: el.className,
-                  right: rect.right,
-                  bottom: rect.bottom,
-                  windowWidth: window.innerWidth,
-                  windowHeight: window.innerHeight
-                });
-              }
-            }
-          }
-          return clipped;
-        });
-
-        // Filter out acceptable overflows (like modals, dropdowns)
-        const problematicClipping = clippedElements.filter(el => 
-          !el.class.includes('fixed') && 
-          !el.class.includes('absolute') &&
-          !el.class.includes('modal') &&
-          !el.class.includes('dropdown')
-        );
-
-        expect(problematicClipping).toHaveLength(0);
-      }
-    });
-  });
+  // Removed Visual Regression Prevention tests as theme toggle and associated visual checks are deprecated.
 }); 

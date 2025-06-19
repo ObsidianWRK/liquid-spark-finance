@@ -48,8 +48,8 @@ export class CreditScoreService {
 
     // Mock data for now - replace with actual API call
     const scoreData: CreditScore = {
-      score: 680,
-      scoreRange: 'Good',
+      score: 750,
+      scoreRange: 'Very Good',
       lastUpdated: new Date().toISOString(),
       provider: 'FICO',
       factors: [

@@ -185,24 +185,37 @@ const CompactAccountCard: React.FC<CompactAccountCardProps> = ({
 
       {/* Quick Actions */}
       {account.quickActions && account.quickActions.length > 0 && (
-        <div className="flex gap-2 mt-4">
-          {account.quickActions.map((action) => (
-            <Button
-              key={action.type}
-              variant="outline"
-              size="sm"
-              disabled={!action.enabled}
-              onClick={(e) => {
-                e.stopPropagation();
-                onQuickAction?.(action.type);
-              }}
-              className="flex-1 h-8 text-xs bg-white/5 border-white/10 text-white hover:bg-white/10"
-            >
-              {action.type === 'transfer' && <Send className="w-3 h-3 mr-1" />}
-              {action.type === 'deposit' && <Download className="w-3 h-3 mr-1" />}
-              {action.label}
-            </Button>
-          ))}
+        <div
+          className={cn(
+            account.quickActions.length > 2
+              ? "grid grid-cols-2 gap-2 mt-4"
+              : "flex gap-2 mt-4 flex-wrap"
+          )}
+        >
+          {account.quickActions!.map((action, idx) => {
+            const spanFull = account.quickActions!.length > 2 && idx === 2; // 3rd action
+            return (
+              <Button
+                key={action.type}
+                variant="outline"
+                size="sm"
+                disabled={!action.enabled}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  onQuickAction?.(action.type);
+                }}
+                className={cn(
+                  "h-8 text-xs bg-white/5 border-white/10 text-white hover:bg-white/10 truncate",
+                  account.quickActions!.length > 2 ? "w-full" : "flex-1",
+                  spanFull && "col-span-2"
+                )}
+              >
+                {action.type === 'transfer' && <Send className="w-3 h-3 mr-1" />}
+                {action.type === 'deposit' && <Download className="w-3 h-3 mr-1" />}
+                {action.label}
+              </Button>
+            );
+          })}
         </div>
       )}
     </UnifiedCard>

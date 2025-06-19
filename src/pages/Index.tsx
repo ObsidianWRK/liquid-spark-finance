@@ -198,7 +198,7 @@ export default function Index() {
             </div>
             
             {/* Compact Account Cards Grid */}
-            <section className="cardGrid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+            <section className="cardGrid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
               {getCompactAccountCards().map(account => (
                 <CompactAccountCard
                   key={account.id}

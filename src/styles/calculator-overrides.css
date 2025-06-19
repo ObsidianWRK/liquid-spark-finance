@@ -1,0 +1,24 @@
+@layer utilities {
+  /*
+    Calculator card overrides
+    Bring calculator input/result/chart sections inline with global UnifiedCard styling
+    without touching existing component code. We scope the rules to descendants of
+    `.calculator-content` (in SecureCalculatorWrapper) so that other usages of these
+    utility classes remain unaffected across the application.
+  */
+
+  /* Background + border + radius */
+  .calculator-content .bg-white\/5 {
+    @apply bg-white/[0.02] border border-white/[0.08] rounded-2xl;
+  }
+
+  /* Ensure borders that were previously at 10% opacity use the unified 8% token */
+  .calculator-content .border-white\/10 {
+    @apply border-white/[0.08];
+  }
+
+  /* Normalise oversized corner radius */
+  .calculator-content .rounded-3xl {
+    @apply rounded-2xl;
+  }
+} 

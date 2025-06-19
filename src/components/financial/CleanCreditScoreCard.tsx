@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import SimpleGlassCard from '@/components/ui/SimpleGlassCard';
 import { colors } from '@/theme/colors';
 import { 
@@ -8,6 +9,7 @@ import {
   ArrowRight,
   Info
 } from 'lucide-react';
+import { creditScoreService } from '@/services/creditScoreService';
 
 interface CreditScoreData {
   score: number;
@@ -28,27 +30,48 @@ interface CleanCreditScoreCardProps {
 }
 
 const CleanCreditScoreCard = ({ 
-  creditData = {
-    score: 750,
-    maxScore: 850,
-    change: { amount: 15, period: 'last month' },
-    utilization: 23,
-    rating: 'Good',
-    nextReviewDate: '2025-07-15'
-  },
+  creditData,
   onViewReport,
   className 
 }: CleanCreditScoreCardProps) => {
+  const navigate = useNavigate();
+  const [data, setData] = useState<CreditScoreData | null>(creditData ?? null);
   const [animatedScore, setAnimatedScore] = useState(0);
   const [animatedUtilization, setAnimatedUtilization] = useState(0);
 
+  // Fetch data if not provided via props to keep in sync with CreditScorePage
   useEffect(() => {
+    if (!data) {
+      (async () => {
+        try {
+          const current = await creditScoreService.getCurrentScore();
+          // Map service data to CreditScoreData shape
+          setData({
+            score: current.score,
+            maxScore: 850,
+            change: {
+              amount: current.score - 750, // Mock change calculation
+              period: 'last month'
+            },
+            utilization: current.factors?.find(f => f.factor === 'Credit Utilization')?.percentage ?? 23,
+            rating: current.scoreRange,
+            nextReviewDate: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString()
+          });
+        } catch (e) {
+          console.error('Failed to fetch credit score for card', e);
+        }
+      })();
+    }
+  }, [data]);
+
+  useEffect(() => {
+    if (!data) return;
     const timer = setTimeout(() => {
-      setAnimatedScore(creditData.score);
-      setAnimatedUtilization(creditData.utilization);
+      setAnimatedScore(data.score);
+      setAnimatedUtilization(data.utilization);
     }, 300);
     return () => clearTimeout(timer);
-  }, [creditData.score, creditData.utilization]);
+  }, [data]);
 
   const getScoreColor = (score: number) => {
     if (score >= 740) return colors.status.success;
@@ -64,7 +87,11 @@ const CleanCreditScoreCard = ({
     return 'Poor';
   };
 
-  const scorePercentage = (animatedScore / creditData.maxScore) * 100;
+  if (!data) {
+    return null; // or skeleton state (omitted for brevity)
+  }
+
+  const scorePercentage = (animatedScore / data.maxScore) * 100;
   const circumference = 2 * Math.PI * 45; // radius of 45
   const strokeDashoffset = circumference - (scorePercentage / 100) * circumference;
 
@@ -106,7 +133,7 @@ const CleanCreditScoreCard = ({
               cy="50"
               r="45"
               fill="none"
-              stroke={getScoreColor(creditData.score)}
+              stroke={getScoreColor(data.score)}
               strokeWidth="6"
               strokeLinecap="round"
               strokeDasharray={circumference}
@@ -119,12 +146,12 @@ const CleanCreditScoreCard = ({
           <div className="absolute inset-0 flex flex-col items-center justify-center">
             <div 
               className="text-3xl font-bold"
-              style={{ color: getScoreColor(creditData.score) }}
+              style={{ color: getScoreColor(data.score) }}
             >
               {animatedScore}
             </div>
             <div className="text-xs text-white/60">
-              out of {creditData.maxScore}
+              out of {data.maxScore}
             </div>
           </div>
         </div>
@@ -134,28 +161,28 @@ const CleanCreditScoreCard = ({
       <div className="text-center mb-6">
         <div 
           className="text-lg font-semibold mb-1"
-          style={{ color: getScoreColor(creditData.score) }}
+          style={{ color: getScoreColor(data.score) }}
         >
-          {getScoreRating(creditData.score)}
+          {getScoreRating(data.score)}
         </div>
         <div className="flex items-center justify-center gap-2">
           <div 
             className="flex items-center gap-1"
             style={{ 
-              color: creditData.change.amount >= 0 ? colors.status.success : colors.status.error 
+              color: data.change.amount >= 0 ? colors.status.success : colors.status.error 
             }}
           >
-            {creditData.change.amount >= 0 ? (
+            {data.change.amount >= 0 ? (
               <TrendingUp className="w-4 h-4" />
             ) : (
               <TrendingDown className="w-4 h-4" />
             )}
             <span className="text-sm font-medium">
-              {creditData.change.amount >= 0 ? '+' : ''}{creditData.change.amount}
+              {data.change.amount >= 0 ? '+' : ''}{data.change.amount}
             </span>
           </div>
           <span className="text-white/60 text-sm">
-            {creditData.change.period}
+            {data.change.period}
           </span>
         </div>
       </div>
@@ -190,7 +217,14 @@ const CleanCreditScoreCard = ({
 
       {/* Action Button */}
       <button 
-        onClick={onViewReport}
+        onClick={() => {
+          if (onViewReport) {
+            onViewReport();
+          } else {
+            // Fallback: navigate to credit tab on dashboard
+            navigate('/?tab=credit');
+          }
+        }}
         className="w-full flex items-center justify-between p-3 rounded-2xl bg-white/[0.06] hover:bg-white/[0.08] transition-all duration-200 group"
       >
         <span className="text-white font-medium">View Full Report</span>
@@ -200,7 +234,7 @@ const CleanCreditScoreCard = ({
       {/* Next Review */}
       <div className="mt-4 pt-4 border-t border-white/[0.08]">
         <p className="text-xs text-white/50 text-center">
-          Next review: {new Date(creditData.nextReviewDate).toLocaleDateString()}
+          Next review: {new Date(data.nextReviewDate).toLocaleDateString()}
         </p>
       </div>
     </SimpleGlassCard>

@@ -1,6 +1,7 @@
 @import './styles/responsive-enhancements.css'; /* responsive enhancements */
 @import './styles/performance-optimized.css';
 @import './styles/account-card.css';
+@import './styles/calculator-overrides.css';
 
 @tailwind base;
 @tailwind components;

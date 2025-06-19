@@ -415,32 +415,30 @@ const InvestmentPortfolio = ({ familyId, className }: InvestmentPortfolioProps) 
           Recent Allocation Changes
         </h3>
         
-        <div className="space-y-4">
-          <div className="flex items-center justify-between p-4 bg-white/[0.03] rounded-xl border border-white/[0.05]">
-            <div className="flex items-center gap-3">
-              <div className="w-8 h-8 bg-blue-500/20 rounded-lg flex items-center justify-center">
-                <TrendingUp className="w-4 h-4 text-blue-400" />
-              </div>
-              <div>
-                <p className="font-medium text-white">Increased stock allocation</p>
-                <p className="text-white/60 text-sm">Rebalanced on Dec 15, 2024</p>
-              </div>
+        <div className="flex items-center justify-between p-4 bg-white/[0.03] rounded-xl border border-white/[0.05]">
+          <div className="flex items-center gap-3">
+            <div className="w-8 h-8 bg-blue-500/20 rounded-lg flex items-center justify-center">
+              <TrendingUp className="w-4 h-4 text-blue-400" />
             </div>
-            <span className="text-blue-400 font-bold">+5%</span>
+            <div>
+              <p className="font-medium text-white">Increased stock allocation</p>
+              <p className="text-white/60 text-sm">Rebalanced on Dec 15, 2024</p>
+            </div>
           </div>
+          <span className="text-blue-400 font-bold">+5%</span>
+        </div>
 
-          <div className="flex items-center justify-between p-4 bg-white/[0.03] rounded-xl border border-white/[0.05]">
-            <div className="flex items-center gap-3">
-              <div className="w-8 h-8 bg-green-500/20 rounded-lg flex items-center justify-center">
-                <Shield className="w-4 h-4 text-green-400" />
-              </div>
-              <div>
-                <p className="font-medium text-white">Added bond diversification</p>
-                <p className="text-white/60 text-sm">Rebalanced on Dec 1, 2024</p>
-              </div>
+        <div className="flex items-center justify-between p-4 bg-white/[0.03] rounded-xl border border-white/[0.05] mt-4">
+          <div className="flex items-center gap-3">
+            <div className="w-8 h-8 bg-green-500/20 rounded-lg flex items-center justify-center">
+              <Shield className="w-4 h-4 text-green-400" />
             </div>
-            <span className="text-green-400 font-bold">+3%</span>
+            <div>
+              <p className="font-medium text-white">Added bond diversification</p>
+              <p className="text-white/60 text-sm">Rebalanced on Dec 1, 2024</p>
+            </div>
           </div>
+          <span className="text-green-400 font-bold">+3%</span>
         </div>
       </div>
     </div>
@@ -491,7 +489,7 @@ const InvestmentPortfolio = ({ familyId, className }: InvestmentPortfolioProps) 
                   </div>
                 </div>
 
-                <div className="text-right">
+                <div className="ml-auto text-right">
                   <p className="font-bold text-white">{formatCurrency(holding.marketValue)}</p>
                   <p className={cn("text-sm", getPerformanceColor(holding.unrealizedGainLoss))}>
                     {formatCurrency(holding.unrealizedGainLoss)} ({formatPercentage(holding.unrealizedGainLossPercent)})

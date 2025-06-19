@@ -10,7 +10,6 @@ interface FeatureCloudProps {
     text: string;
     emoji: string;
     size?: 'sm' | 'md' | 'lg';
-    delay?: number;
     route?: string;
   }>;
   onKeywordClick?: (keyword: string, route?: string) => void;
@@ -18,16 +17,16 @@ interface FeatureCloudProps {
 
 // CC: Default feature keywords with financial focus and their routes
 const defaultKeywords = [
-  { text: 'Smart Banking', emoji: '🏦', size: 'lg' as const, delay: 0, route: 'accounts' },
-  { text: 'AI Insights', emoji: '🤖', size: 'md' as const, delay: 0.1, route: 'insights' },
-  { text: 'Investment', emoji: '📈', size: 'md' as const, delay: 0.2, route: 'investments' },
-  { text: 'Budgeting', emoji: '💰', size: 'sm' as const, delay: 0.3, route: 'budget' },
-  { text: 'Goals', emoji: '🎯', size: 'sm' as const, delay: 0.4, route: 'savings' },
-  { text: 'Analytics', emoji: '📊', size: 'md' as const, delay: 0.5, route: 'analytics' },
-  { text: 'Security', emoji: '🔒', size: 'sm' as const, delay: 0.6, route: 'dashboard' },
-  { text: 'Planning', emoji: '📋', size: 'lg' as const, delay: 0.7, route: 'planning' },
-  { text: 'Savings', emoji: '🐷', size: 'md' as const, delay: 0.8, route: 'savings' },
-  { text: 'Credit', emoji: '💳', size: 'sm' as const, delay: 0.9, route: 'credit' }
+  { text: 'Smart Banking', emoji: '🏦', size: 'lg' as const, route: 'accounts' },
+  { text: 'AI Insights', emoji: '🤖', size: 'md' as const, route: 'insights' },
+  { text: 'Investment', emoji: '📈', size: 'md' as const, route: 'investments' },
+  { text: 'Budgeting', emoji: '💰', size: 'sm' as const, route: 'budget' },
+  { text: 'Goals', emoji: '🎯', size: 'sm' as const, route: 'savings' },
+  { text: 'Analytics', emoji: '📊', size: 'md' as const, route: 'analytics' },
+  { text: 'Security', emoji: '🔒', size: 'sm' as const, route: 'dashboard' },
+  { text: 'Planning', emoji: '📋', size: 'lg' as const, route: 'planning' },
+  { text: 'Savings', emoji: '🐷', size: 'md' as const, route: 'savings' },
+  { text: 'Credit', emoji: '💳', size: 'sm' as const, route: 'credit' }
 ];
 
 // CC: Framer Motion stagger animation variants
@@ -35,10 +34,7 @@ const containerVariants = {
   hidden: { opacity: 0 },
   visible: {
     opacity: 1,
-    transition: {
-      staggerChildren: 0.1,
-      delayChildren: 0.2
-    }
+    transition: { when: "beforeChildren", duration: 0.4 }
   }
 };
 
@@ -125,7 +121,7 @@ const FeatureCloud: React.FC<FeatureCloudProps> = ({
           <motion.button
             key={`${keyword.text}-${index}`}
             variants={itemVariants}
-            custom={keyword.delay}
+            // Appear simultaneously with parent animation
             whileHover={{ 
               scale: 1.05,
               boxShadow: "0 10px 30px rgba(59, 130, 246, 0.3)"

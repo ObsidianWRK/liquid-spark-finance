@@ -16,7 +16,6 @@ import {
   Menu
 } from 'lucide-react';
 import LiquidGlassSVGFilters from '@/components/ui/LiquidGlassSVGFilters';
-import ThemeToggle from './ThemeToggle';
 import { cn } from '@/lib/utils';
 import { useNavigate } from 'react-router-dom';
 import {
@@ -375,8 +374,6 @@ const LiquidGlassTopMenuBar = ({ className, onMenuItemClick }: MenuBarProps) => 
                 <Bell className="w-4 h-4 sm:w-5 sm:h-5" />
                 <span className="absolute -top-1 -right-1 w-2 h-2 sm:w-3 sm:h-3 bg-red-500 rounded-full border border-black/20"></span>
               </button>
-
-              <ThemeToggle />
 
               <button 
                 onClick={() => navigate('/profile')}
