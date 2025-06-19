@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useCallback } from 'react';
+import React, { useState, useMemo, useCallback, useEffect } from 'react';
 import { calculateCompoundInterest } from '@/utils/calculators';
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, BarChart, Bar } from 'recharts';
 import { SecureCalculatorWrapper, useSecureCalculator } from './SecureCalculatorWrapper';
@@ -105,8 +105,9 @@ const CompoundInterestCalculator = React.memo<SecureCalculatorProps>(({ security
           break;
       }
     } catch (error) {
-      setInputErrors(prev => ({ ...prev, [field]: error.message }));
-      onSecurityEvent?.('invalid_input', { field, value, error: error.message });
+      const errorMessage = error instanceof Error ? error.message : 'Invalid input';
+      setInputErrors(prev => ({ ...prev, [field]: errorMessage }));
+      onSecurityEvent?.('invalid_input', { field, value, error: errorMessage });
     }
   }, [securityContext, validateAndSanitizeInput, onSecurityEvent]);
 
@@ -133,6 +134,13 @@ const CompoundInterestCalculator = React.memo<SecureCalculatorProps>(({ security
       setInputErrors(prev => ({ ...prev, calculation: error.message }));
     }
   }, [principal, rate, years, compoundFreq, monthlyContribution, securityContext, performSecureCalculation, compoundData]);
+
+  // Auto-calculate on component mount and when inputs change
+  useEffect(() => {
+    if (principal > 0 && rate > 0 && years > 0) {
+      handleCalculate();
+    }
+  }, [principal, rate, years, compoundFreq, monthlyContribution, handleCalculate]);
 
   // Memoized currency formatter
   const formatCurrency = useMemo(() => {
@@ -356,76 +364,123 @@ const CompoundInterestCalculator = React.memo<SecureCalculatorProps>(({ security
         )}
       </div>
 
-      {/* Chart Section */}
+      {/* Charts Section */}
       {chartData.length > 0 && (
-        <div className="bg-white/5 backdrop-blur-xl rounded-3xl p-6 border border-white/10">
-          <h2 className="text-xl font-semibold text-white mb-6">Growth Projection Over Time</h2>
-          <div className="h-96">
-            <ResponsiveContainer width="100%" height="100%">
-              <AreaChart data={chartData}>
-                <defs>
-                  <linearGradient id="principalGradient" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="5%" stopColor="#3B82F6" stopOpacity={0.3}/>
-                    <stop offset="95%" stopColor="#3B82F6" stopOpacity={0}/>
-                  </linearGradient>
-                  <linearGradient id="interestGradient" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="5%" stopColor="#10B981" stopOpacity={0.3}/>
-                    <stop offset="95%" stopColor="#10B981" stopOpacity={0}/>
-                  </linearGradient>
-                </defs>
-                <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.1)" />
-                <XAxis 
-                  dataKey="year" 
-                  stroke="#fff" 
-                  fontSize={12}
-                  tickFormatter={(value) => `Year ${value}`}
-                />
-                <YAxis 
-                  stroke="#fff" 
-                  fontSize={12}
-                  tickFormatter={(value) => formatCurrency(value)}
-                />
-                <Tooltip 
-                  formatter={(value: number, name: string) => {
-                    const label = name === 'principal' ? 'Contributions' : 
-                                  name === 'interest' ? 'Interest Earned' : 'Total Value';
-                    return [formatCurrency(value), label];
-                  }}
-                  labelFormatter={(value) => `Year ${value}`}
-                  contentStyle={{
-                    backgroundColor: 'rgba(0,0,0,0.8)',
-                    border: '1px solid rgba(255,255,255,0.2)',
-                    borderRadius: '12px',
-                    color: '#fff'
-                  }}
-                />
-                <Area
-                  type="monotone"
-                  dataKey="principal"
-                  stackId="1"
-                  stroke="#3B82F6"
-                  fill="url(#principalGradient)"
-                  strokeWidth={2}
-                />
-                <Area
-                  type="monotone"
-                  dataKey="interest"
-                  stackId="1"
-                  stroke="#10B981"
-                  fill="url(#interestGradient)"
-                  strokeWidth={2}
-                />
-              </AreaChart>
-            </ResponsiveContainer>
-          </div>
-          <div className="flex justify-center space-x-8 mt-4">
-            <div className="flex items-center space-x-2">
-              <div className="w-4 h-4 bg-blue-500 rounded"></div>
-              <span className="text-white/80 text-sm">Contributions</span>
+        <div className="grid lg:grid-cols-2 gap-8">
+          {/* Growth Projection Chart */}
+          <div className="bg-white/5 backdrop-blur-xl rounded-3xl p-6 border border-white/10">
+            <h2 className="text-xl font-semibold text-white mb-6">Growth Projection Over Time</h2>
+            <div className="h-64">
+              <ResponsiveContainer width="100%" height="100%">
+                <AreaChart data={chartData}>
+                  <defs>
+                    <linearGradient id="principalGradient" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="5%" stopColor="#3B82F6" stopOpacity={0.3}/>
+                      <stop offset="95%" stopColor="#3B82F6" stopOpacity={0}/>
+                    </linearGradient>
+                    <linearGradient id="interestGradient" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="5%" stopColor="#10B981" stopOpacity={0.3}/>
+                      <stop offset="95%" stopColor="#10B981" stopOpacity={0}/>
+                    </linearGradient>
+                  </defs>
+                  <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.1)" />
+                  <XAxis 
+                    dataKey="year" 
+                    stroke="#fff" 
+                    fontSize={12}
+                    tickFormatter={(value) => `Year ${value}`}
+                  />
+                  <YAxis 
+                    stroke="#fff" 
+                    fontSize={12}
+                    tickFormatter={(value) => formatCurrency(value)}
+                  />
+                  <Tooltip 
+                    formatter={(value: number, name: string) => {
+                      const label = name === 'principal' ? 'Contributions' : 
+                                    name === 'interest' ? 'Interest Earned' : 'Total Value';
+                      return [formatCurrency(value), label];
+                    }}
+                    labelFormatter={(value) => `Year ${value}`}
+                    contentStyle={{
+                      backgroundColor: 'rgba(0,0,0,0.8)',
+                      border: '1px solid rgba(255,255,255,0.2)',
+                      borderRadius: '12px',
+                      color: '#fff'
+                    }}
+                  />
+                  <Area
+                    type="monotone"
+                    dataKey="principal"
+                    stackId="1"
+                    stroke="#3B82F6"
+                    fill="url(#principalGradient)"
+                    strokeWidth={2}
+                  />
+                  <Area
+                    type="monotone"
+                    dataKey="interest"
+                    stackId="1"
+                    stroke="#10B981"
+                    fill="url(#interestGradient)"
+                    strokeWidth={2}
+                  />
+                </AreaChart>
+              </ResponsiveContainer>
             </div>
-            <div className="flex items-center space-x-2">
-              <div className="w-4 h-4 bg-green-500 rounded"></div>
-              <span className="text-white/80 text-sm">Interest Earned</span>
+            <div className="flex justify-center space-x-8 mt-4">
+              <div className="flex items-center space-x-2">
+                <div className="w-4 h-4 bg-blue-500 rounded"></div>
+                <span className="text-white/80 text-sm">Contributions</span>
+              </div>
+              <div className="flex items-center space-x-2">
+                <div className="w-4 h-4 bg-green-500 rounded"></div>
+                <span className="text-white/80 text-sm">Interest Earned</span>
+              </div>
+            </div>
+          </div>
+
+          {/* Yearly Growth Bar Chart */}
+          <div className="bg-white/5 backdrop-blur-xl rounded-3xl p-6 border border-white/10">
+            <h2 className="text-xl font-semibold text-white mb-6">Annual Growth Breakdown</h2>
+            <div className="h-64">
+              <ResponsiveContainer width="100%" height="100%">
+                <BarChart data={chartData.slice(1, 6)}>
+                  <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.1)" />
+                  <XAxis 
+                    dataKey="year" 
+                    stroke="#fff" 
+                    fontSize={12}
+                    tickFormatter={(value) => `Year ${value}`}
+                  />
+                  <YAxis 
+                    stroke="#fff" 
+                    fontSize={12}
+                    tickFormatter={(value) => formatCurrency(value)}
+                  />
+                  <Tooltip 
+                    formatter={(value: number) => [formatCurrency(value), 'Amount']}
+                    contentStyle={{
+                      backgroundColor: 'rgba(0,0,0,0.8)',
+                      border: '1px solid rgba(255,255,255,0.2)',
+                      borderRadius: '12px',
+                      color: '#fff'
+                    }}
+                  />
+                  <Bar dataKey="principal" fill="#3B82F6" radius={[4, 4, 0, 0]} />
+                  <Bar dataKey="interest" fill="#10B981" radius={[4, 4, 0, 0]} />
+                </BarChart>
+              </ResponsiveContainer>
+            </div>
+            <div className="flex justify-center space-x-8 mt-4">
+              <div className="flex items-center space-x-2">
+                <div className="w-4 h-4 bg-blue-500 rounded"></div>
+                <span className="text-white/80 text-sm">Principal</span>
+              </div>
+              <div className="flex items-center space-x-2">
+                <div className="w-4 h-4 bg-green-500 rounded"></div>
+                <span className="text-white/80 text-sm">Interest</span>
+              </div>
             </div>
           </div>
         </div>

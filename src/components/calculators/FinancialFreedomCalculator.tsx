@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo, useCallback, useEffect } from 'react';
 import { calculateFinancialFreedomYears } from '@/utils/calculators';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Area, AreaChart } from 'recharts';
 
@@ -50,6 +50,13 @@ const FinancialFreedomCalculator = () => {
     setYears(result);
     setProjectionData(projData);
   };
+
+  // Auto-calculate on component mount and when inputs change
+  useEffect(() => {
+    if (savings > 0 && monthlyExpenses > 0 && growthRate > 0) {
+      handleCalculate();
+    }
+  }, [savings, monthlyExpenses, growthRate]);
 
   const formatCurrency = (value: number) => {
     return new Intl.NumberFormat('en-US', {
