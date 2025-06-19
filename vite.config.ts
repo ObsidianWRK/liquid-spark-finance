@@ -23,22 +23,22 @@ export default defineConfig(({ mode }) => ({
     rollupOptions: {
       output: {
         manualChunks: (id) => {
-          // Phase 3: Advanced chunk optimization
+          // Vendor chunking strategy 
           if (id.includes('node_modules')) {
-            if (id.includes('react') || id.includes('react-dom')) return 'vendor';
-            if (id.includes('@radix-ui')) return 'ui';
-            if (id.includes('recharts')) return 'charts';
-            if (id.includes('crypto-js')) return 'crypto';
+            // Framework chunks  
+            if (id.includes('react') || id.includes('react-dom')) return 'react';
+            if (id.includes('framer-motion')) return 'animations';
             if (id.includes('react-router')) return 'routing';
             return 'vendor';
           }
           
           // Application chunks
-          if (id.includes('/insights/')) return 'insights';
-          if (id.includes('/calculators/')) return 'calculators';
-          if (id.includes('/components/ui/UniversalCard')) return 'universal-card';
-          if (id.includes('/performance/')) return 'performance';
-          if (id.includes('/transactions/Optimized')) return 'optimized-transactions';
+          if (id.includes('components/calculators') || id.includes('pages/Calculator')) return 'calculators';
+          if (id.includes('components/insights') || id.includes('insights')) return 'insights';
+          if (id.includes('recharts') || id.includes('charts')) return 'charts';
+          if (id.includes('components/ui/UniversalCard') || id.includes('universal-card')) return 'universal-card';
+          if (id.includes('components/transactions') || id.includes('transaction')) return 'optimized-transactions';
+          if (id.includes('performance') || id.includes('Performance')) return 'performance';
         },
         chunkFileNames: 'assets/[name]-[hash].js',
         entryFileNames: 'assets/[name]-[hash].js',
@@ -51,12 +51,7 @@ export default defineConfig(({ mode }) => ({
   // Vercel handles hosting automatically
   define: {
     'process.env.NODE_ENV': JSON.stringify(mode === 'production' ? 'production' : 'development'),
-    // Fix crypto-js browser compatibility - process polyfills
-    'process.env': JSON.stringify({}),
-    'process.browser': true,
-    'process.version': JSON.stringify(''),
-    'process.platform': JSON.stringify('browser'),
-    'process.nextTick': JSON.stringify('setTimeout'),
+    // Global polyfills
     'global': 'globalThis',
     // Security flags for production
     '__VUENI_SECURITY_ENABLED__': mode === 'production',
@@ -123,5 +118,9 @@ export default defineConfig(({ mode }) => ({
       include: ['src/**/*.bench.{js,ts}'],
       exclude: ['node_modules/', 'dist/']
     }
-  }
+  },
+  // Performance optimizations  
+  optimizeDeps: {
+    include: ['react', 'react-dom'],
+  },
 }))

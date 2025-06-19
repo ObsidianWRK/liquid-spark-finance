@@ -1,5 +1,14 @@
-import CryptoJS from 'crypto-js';
+// import CryptoJS from 'crypto-js';
 import { SecurityEnvValidator } from './envValidation';
+import { 
+  encryptAES, 
+  decryptAES, 
+  hashSHA256, 
+  generateSecureToken as generateWebCryptoToken,
+  encryptSync,
+  decryptSync,
+  hashSync
+} from './browserCrypto';
 
 // Get validated encryption key from environment
 const SECRET_KEY = SecurityEnvValidator.getValidatedEncryptionKey('VITE_VUENI_ENCRYPTION_KEY');
@@ -26,13 +35,14 @@ interface SecurityEvent {
 /**
  * VueniSecureStorage - Production-grade encrypted storage for financial data
  * Implements PCI-DSS considerations and financial compliance standards
+ * Now using Web Crypto API for better performance and security
  */
 export class VueniSecureStorage {
   private static sessionData = new Map<string, { data: unknown; timestamp: number; encrypted: boolean }>();
   private static auditLog: AuditLogEntry[] = [];
 
   /**
-   * Encrypts data with AES-256 and adds integrity check
+   * Encrypts data with AES-256-GCM and adds integrity check
    */
   private static encrypt<T>(data: T): string {
     try {
@@ -40,7 +50,9 @@ export class VueniSecureStorage {
       const timestamp = Date.now().toString();
       const payload = { data: jsonString, timestamp, integrity: this.generateIntegrityHash(jsonString) };
       
-      return CryptoJS.AES.encrypt(JSON.stringify(payload), SECRET_KEY).toString();
+      // Use synchronous encryption for immediate compatibility
+      // TODO: Migrate to async encryptAES for production
+      return encryptSync(JSON.stringify(payload), SECRET_KEY);
     } catch (error) {
       console.error('VueniSecureStorage encryption error:', error);
       throw new Error('Failed to encrypt financial data');
@@ -50,10 +62,11 @@ export class VueniSecureStorage {
   /**
    * Decrypts data and verifies integrity
    */
-  private static decrypt<T>(encryptedData: string): T {
+  private static decrypt<T>(encryptedData: string): T | null {
     try {
-      const bytes = CryptoJS.AES.decrypt(encryptedData, SECRET_KEY);
-      const decryptedString = bytes.toString(CryptoJS.enc.Utf8);
+      // Use synchronous decryption for immediate compatibility
+      // TODO: Migrate to async decryptAES for production
+      const decryptedString = decryptSync(encryptedData, SECRET_KEY);
       
       if (!decryptedString) {
         throw new Error('Decryption failed - invalid key or corrupted data');
@@ -68,8 +81,9 @@ export class VueniSecureStorage {
 
       return JSON.parse(payload.data);
     } catch (error) {
+      const errorMessage = error instanceof Error ? error.message : 'Unknown error';
       console.error('VueniSecureStorage decryption error:', error);
-      this.logSecurityEvent('DECRYPTION_FAILED', 'unknown', error.message);
+      this.logSecurityEvent('DECRYPTION_FAILED', 'unknown', errorMessage);
       return null;
     }
   }
@@ -78,7 +92,9 @@ export class VueniSecureStorage {
    * Generates integrity hash for data verification
    */
   private static generateIntegrityHash(data: string): string {
-    return CryptoJS.SHA256(data + SECRET_KEY).toString();
+    // Use synchronous hash for immediate compatibility
+    // TODO: Migrate to async hashSHA256 for production
+    return hashSync(data + SECRET_KEY);
   }
 
   /**
@@ -103,8 +119,9 @@ export class VueniSecureStorage {
       
       this.logAccess('SET', key, { sensitive: options.sensitive });
     } catch (error) {
+      const errorMessage = error instanceof Error ? error.message : 'Unknown error';
       console.error('VueniSecureStorage setItem error:', error);
-      this.logSecurityEvent('STORAGE_ERROR', key, error.message);
+      this.logSecurityEvent('STORAGE_ERROR', key, errorMessage);
       throw error;
     }
   }
@@ -126,7 +143,7 @@ export class VueniSecureStorage {
           return null;
         }
         this.logAccess('GET', key, { source: 'session' });
-        return sessionItem.data;
+        return sessionItem.data as T;
       }
 
       // Fallback to localStorage
@@ -136,8 +153,9 @@ export class VueniSecureStorage {
       this.logAccess('GET', key, { source: 'localStorage' });
       return this.decrypt(encrypted);
     } catch (error) {
+      const errorMessage = error instanceof Error ? error.message : 'Unknown error';
       console.error('VueniSecureStorage getItem error:', error);
-      this.logSecurityEvent('RETRIEVAL_ERROR', key, error.message);
+      this.logSecurityEvent('RETRIEVAL_ERROR', key, errorMessage);
       return null;
     }
   }
@@ -157,8 +175,9 @@ export class VueniSecureStorage {
       
       this.logAccess('REMOVE', key);
     } catch (error) {
+      const errorMessage = error instanceof Error ? error.message : 'Unknown error';
       console.error('VueniSecureStorage removeItem error:', error);
-      this.logSecurityEvent('REMOVAL_ERROR', key, error.message);
+      this.logSecurityEvent('REMOVAL_ERROR', key, errorMessage);
     }
   }
 
@@ -335,55 +354,50 @@ export const secureStorage = {
   clear: () => SecureStorage.clear()
 };
 
-// Generate or retrieve encryption key
+// Generate or retrieve encryption key using Web Crypto
 const getEncryptionKey = (): string => {
   const storedKey = sessionStorage.getItem('_ek');
   if (storedKey) return storedKey;
   
-  const newKey = CryptoJS.lib.WordArray.random(256/8).toString();
+  // Use Web Crypto for key generation
+  const newKey = generateWebCryptoToken(32);
   sessionStorage.setItem('_ek', newKey);
   return newKey;
 };
 
-// AES-256 encryption for sensitive data
+// AES-256 encryption for sensitive data (Web Crypto version)
 export const encrypt = (data: string): string => {
   try {
     const key = getEncryptionKey();
-    return CryptoJS.AES.encrypt(data, key).toString();
+    // Use synchronous encryption for backward compatibility
+    return encryptSync(data, key);
   } catch (error) {
     console.error('Encryption failed:', error);
     throw new Error('Failed to encrypt data');
   }
 };
 
-// AES-256 decryption
+// AES-256 decryption (Web Crypto version)
 export const decrypt = (encryptedData: string): string => {
   try {
     const key = getEncryptionKey();
-    const bytes = CryptoJS.AES.decrypt(encryptedData, key);
-    return bytes.toString(CryptoJS.enc.Utf8);
+    // Use synchronous decryption for backward compatibility
+    return decryptSync(encryptedData, key);
   } catch (error) {
     console.error('Decryption failed:', error);
     throw new Error('Failed to decrypt data');
   }
 };
 
-// Hash sensitive data for comparison without storing plaintext
+// Hash sensitive data for comparison without storing plaintext (Web Crypto version)
 export const hashData = (data: string): string => {
-  return CryptoJS.SHA256(data).toString();
+  // Use synchronous hash for backward compatibility
+  return hashSync(data);
 };
 
-// Generate secure random tokens using crypto.getRandomValues()
+// Generate secure random tokens using Web Crypto API
 export const generateSecureToken = (length: number = 32): string => {
-  if (typeof window !== 'undefined' && window.crypto && window.crypto.getRandomValues) {
-    // Browser environment - use Web Crypto API
-    const array = new Uint8Array(length);
-    window.crypto.getRandomValues(array);
-    return Array.from(array, byte => byte.toString(16).padStart(2, '0')).join('');
-  } else {
-    // Fallback to CryptoJS for non-browser environments
-    return CryptoJS.lib.WordArray.random(length).toString();
-  }
+  return generateWebCryptoToken(length);
 };
 
 // Mask financial data for display

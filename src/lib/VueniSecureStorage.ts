@@ -1,6 +1,7 @@
-import CryptoJS from 'crypto-js';
+// import CryptoJS from 'crypto-js';
 import { SecurityEnvValidator } from '../utils/envValidation';
 import { generateSecureToken } from '../utils/secureRandom';
+import { encryptSync, decryptSync } from '../utils/browserCrypto';
 
 // Get validated encryption key from environment
 const VUENI_STORAGE_KEY = SecurityEnvValidator.getValidatedEncryptionKey('VITE_VUENI_ENCRYPTION_KEY');
@@ -18,12 +19,14 @@ export class VueniSecureStorage {
   private static sessionData = new Map<string, SessionItem>();
 
   private static encrypt<T>(data: T): string {
-    return CryptoJS.AES.encrypt(JSON.stringify(data), VUENI_STORAGE_KEY).toString();
+    // Use Web Crypto API for encryption
+    return encryptSync(JSON.stringify(data), VUENI_STORAGE_KEY);
   }
   
   private static decrypt<T>(encryptedData: string): T {
-    const bytes = CryptoJS.AES.decrypt(encryptedData, VUENI_STORAGE_KEY);
-    return JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
+    // Use Web Crypto API for decryption  
+    const decryptedString = decryptSync(encryptedData, VUENI_STORAGE_KEY);
+    return JSON.parse(decryptedString);
   }
 
   private static validateFinancialDataKey(key: string): void {
