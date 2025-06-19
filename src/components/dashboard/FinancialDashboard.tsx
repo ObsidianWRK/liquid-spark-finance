@@ -143,7 +143,7 @@ const FinancialDashboard = ({ familyId, timeframe = '3m', className }: Financial
 
   const renderNetWorthChart = () => (
     <ResponsiveContainer width="100%" height={300}>
-      <AreaChart data={dashboardData.netWorthHistory}>
+      <AreaChart data={dashboardData?.netWorthHistory || []}>
         <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
         <XAxis 
           dataKey="date" 
@@ -188,7 +188,7 @@ const FinancialDashboard = ({ familyId, timeframe = '3m', className }: Financial
 
   const renderCashFlowChart = () => (
     <ResponsiveContainer width="100%" height={300}>
-      <ComposedChart data={dashboardData.cashFlowHistory}>
+      <ComposedChart data={dashboardData?.cashFlowHistory || []}>
         <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
         <XAxis 
           dataKey="date" 
@@ -226,7 +226,7 @@ const FinancialDashboard = ({ familyId, timeframe = '3m', className }: Financial
 
   const renderSpendingChart = () => (
     <ResponsiveContainer width="100%" height={300}>
-      <BarChart data={dashboardData.spendingTrends.slice(0, 8)} layout="horizontal">
+      <BarChart data={(dashboardData?.spendingTrends || []).slice(0, 8)} layout="horizontal">
         <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
         <XAxis 
           type="number"
@@ -261,7 +261,7 @@ const FinancialDashboard = ({ familyId, timeframe = '3m', className }: Financial
     <ResponsiveContainer width="100%" height={300}>
       <RechartsPieChart>
         <Pie
-          data={dashboardData.portfolioAllocation}
+          data={dashboardData?.portfolioAllocation || []}
           cx="50%"
           cy="50%"
           innerRadius={60}
@@ -269,7 +269,7 @@ const FinancialDashboard = ({ familyId, timeframe = '3m', className }: Financial
           paddingAngle={2}
           dataKey="value"
         >
-          {dashboardData.portfolioAllocation.map((entry, index) => (
+          {(dashboardData?.portfolioAllocation || []).map((entry, index) => (
             <Cell key={`cell-${index}`} fill={entry.color} />
           ))}
         </Pie>
@@ -294,7 +294,7 @@ const FinancialDashboard = ({ familyId, timeframe = '3m', className }: Financial
     <div className={cn("space-y-8", className)}>
       {/* Key Metrics */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {dashboardData.keyMetrics.map((metric) => (
+        {(dashboardData?.keyMetrics || []).map((metric) => (
           <div key={metric.id} className="bg-white/[0.02] rounded-2xl border border-white/[0.08] p-6 hover:bg-white/[0.03] transition-all duration-300">
             <div className="flex items-center justify-between mb-4">
               <div className="flex items-center gap-3">
@@ -373,7 +373,7 @@ const FinancialDashboard = ({ familyId, timeframe = '3m', className }: Financial
         </h2>
         
         <div className="space-y-4">
-          {dashboardData.budgetPerformance.slice(0, 6).map((budget, index) => (
+          {(dashboardData?.budgetPerformance || []).slice(0, 6).map((budget, index) => (
             <div key={index} className="flex items-center justify-between">
               <div className="flex items-center gap-3 flex-1 min-w-0">
                 <div className="w-8 h-8 rounded-lg flex items-center justify-center" style={{ backgroundColor: `${budget.color}20`, color: budget.color }}>
@@ -420,7 +420,7 @@ const FinancialDashboard = ({ familyId, timeframe = '3m', className }: Financial
         </h2>
         
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {dashboardData.portfolioAllocation.map((allocation, index) => (
+          {(dashboardData?.portfolioAllocation || []).map((allocation, index) => (
             <div key={index} className="bg-white/[0.03] rounded-xl p-4 border border-white/[0.05]">
               <div className="flex items-center justify-between mb-3">
                 <div className="flex items-center gap-3">
