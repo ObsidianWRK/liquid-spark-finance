@@ -183,7 +183,7 @@ const UniversalMetricCard = memo(({
         <div className="flex items-center justify-between mb-2 md:mb-3">
           <div className="flex items-center space-x-2">
             <div 
-              className={`${config.iconPadding} rounded-lg md:rounded-xl backdrop-blur-sm ${variantStyles.iconContainer}`}
+              className={`${config.iconPadding} rounded-xl backdrop-blur-sm ${variantStyles.iconContainer}`}
               style={{ background: `${color}15` }}
             >
               {React.cloneElement(icon, { 

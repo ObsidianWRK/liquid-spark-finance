@@ -145,7 +145,7 @@ export const PerformanceMonitor = React.memo<PerformanceMonitorProps>(({
 
             {/* Key Metrics */}
             <div className="grid grid-cols-2 gap-3">
-              <div className="bg-white/5 rounded-lg p-3">
+              <div className="bg-white/5 rounded-xl p-3">
                 <div className="flex items-center space-x-2 mb-1">
                   <Clock className="w-3 h-3 text-blue-400" />
                   <span className="text-xs text-white/60">Render Time</span>
@@ -155,7 +155,7 @@ export const PerformanceMonitor = React.memo<PerformanceMonitorProps>(({
                 </div>
               </div>
 
-              <div className="bg-white/5 rounded-lg p-3">
+              <div className="bg-white/5 rounded-xl p-3">
                 <div className="flex items-center space-x-2 mb-1">
                   <Zap className="w-3 h-3 text-green-400" />
                   <span className="text-xs text-white/60">Memory</span>
@@ -165,7 +165,7 @@ export const PerformanceMonitor = React.memo<PerformanceMonitorProps>(({
                 </div>
               </div>
 
-              <div className="bg-white/5 rounded-lg p-3">
+              <div className="bg-white/5 rounded-xl p-3">
                 <div className="flex items-center space-x-2 mb-1">
                   <TrendingUp className="w-3 h-3 text-purple-400" />
                   <span className="text-xs text-white/60">Components</span>
@@ -175,7 +175,7 @@ export const PerformanceMonitor = React.memo<PerformanceMonitorProps>(({
                 </div>
               </div>
 
-              <div className="bg-white/5 rounded-lg p-3">
+              <div className="bg-white/5 rounded-xl p-3">
                 <div className="flex items-center space-x-2 mb-1">
                   <Activity className="w-3 h-3 text-orange-400" />
                   <span className="text-xs text-white/60">Re-renders</span>
@@ -214,7 +214,7 @@ export const PerformanceMonitor = React.memo<PerformanceMonitorProps>(({
             </div>
 
             {/* Performance Tips */}
-            <div className="bg-blue-500/10 rounded-lg p-3 border border-blue-500/20">
+            <div className="bg-blue-500/10 rounded-xl p-3 border border-blue-500/20">
               <div className="text-xs font-semibold text-blue-400 mb-1">Optimization Tips</div>
               <div className="text-xs text-white/70 space-y-1">
                 {performanceScore < 70 && (

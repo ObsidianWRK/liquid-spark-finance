@@ -190,23 +190,60 @@ export const generateIntegrityHash = async (data: string, secret: string): Promi
   return await hashSHA256(data + secret);
 };
 
-// Backward compatibility functions
-export const encryptData = encryptAES;
-export const decryptData = decryptAES;
-export const hashData = hashSHA256;
+// CryptoJS compatibility layer
+export class WebCryptoJS {
+  static AES = {
+    encrypt: async (data: string, key: string): Promise<{ toString: () => string }> => {
+      const encrypted = await encryptAES(data, key);
+      return { toString: () => encrypted };
+    },
+    
+    decrypt: async (encryptedData: string, key: string): Promise<{ toString: (encoding: any) => string }> => {
+      const decrypted = await decryptAES(encryptedData, key);
+      return { 
+        toString: (encoding: any) => {
+          if (encoding === WebCryptoJS.enc.Utf8) {
+            return decrypted;
+          }
+          return decrypted;
+        }
+      };
+    }
+  };
 
-// Simple synchronous wrapper for immediate compatibility (not as secure)
+  static SHA256 = {
+    hash: async (data: string): Promise<{ toString: () => string }> => {
+      const hashed = await hashSHA256(data);
+      return { toString: () => hashed };
+    }
+  };
+
+  static enc = {
+    Utf8: Symbol('utf8')
+  };
+
+  static lib = {
+    WordArray: {
+      random: (bytes: number): { toString: () => string } => {
+        const hex = generateSecureRandom(bytes);
+        return { toString: () => hex };
+      }
+    }
+  };
+}
+
+// Simple synchronous wrapper (not recommended for production, but needed for compatibility)
 export const encryptSync = (data: string, key: string): string => {
   // This is a simplified base64 encoding for immediate compatibility
-  // In production, you should migrate to the async version
-  console.warn('Using synchronous encryption fallback - consider migrating to async encryptAES');
+  // In production, you should use the async version
+  console.warn('Using synchronous encryption fallback - consider migrating to async version');
   const payload = { data, key: key.slice(0, 8), timestamp: Date.now() };
   return btoa(JSON.stringify(payload));
 };
 
 export const decryptSync = (encryptedData: string, key: string): string => {
   // This is a simplified base64 decoding for immediate compatibility
-  console.warn('Using synchronous decryption fallback - consider migrating to async decryptAES');
+  console.warn('Using synchronous decryption fallback - consider migrating to async version');
   try {
     const payload = JSON.parse(atob(encryptedData));
     if (payload.key !== key.slice(0, 8)) {
@@ -227,4 +264,4 @@ export const hashSync = (data: string): string => {
     hash = hash & hash;
   }
   return Math.abs(hash).toString(16);
-};
+}; 

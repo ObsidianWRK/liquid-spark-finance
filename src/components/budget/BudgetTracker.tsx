@@ -203,7 +203,7 @@ const BudgetTracker = ({ familyId, className }: BudgetTrackerProps) => {
                 return (
                   <div key={category.id} className="flex items-center justify-between">
                     <div className="flex items-center gap-3 flex-1 min-w-0">
-                      <div className="w-8 h-8 rounded-lg bg-blue-500/20 flex items-center justify-center">
+                      <div className="w-8 h-8 rounded-xl bg-blue-500/20 flex items-center justify-center">
                         <Target className="w-4 h-4 text-blue-400" />
                       </div>
                       <div className="flex-1 min-w-0">
@@ -220,7 +220,7 @@ const BudgetTracker = ({ familyId, className }: BudgetTrackerProps) => {
                             ></div>
                           </div>
                           <span className={cn(
-                            "text-xs px-2 py-1 rounded-lg border font-medium",
+                            "text-xs px-2 py-1 rounded-xl border font-medium",
                             getStatusColor(status)
                           )}>
                             {formatPercentage(progress)}
@@ -255,7 +255,7 @@ const BudgetTracker = ({ familyId, className }: BudgetTrackerProps) => {
               return (
                 <div key={goal.id} className="flex items-center justify-between">
                   <div className="flex items-center gap-3 flex-1 min-w-0">
-                    <div className="w-8 h-8 rounded-lg bg-green-500/20 flex items-center justify-center">
+                    <div className="w-8 h-8 rounded-xl bg-green-500/20 flex items-center justify-center">
                       {getGoalStatusIcon(goal.status)}
                     </div>
                     <div className="flex-1 min-w-0">
@@ -386,7 +386,10 @@ const BudgetTracker = ({ familyId, className }: BudgetTrackerProps) => {
 
       {goals.map((goal) => {
         const progress = getGoalProgress(goal);
-        const monthsRemaining = Math.ceil((goal.targetDate.getTime() - Date.now()) / (30 * 24 * 60 * 60 * 1000));
+        
+        // Safely handle targetDate - ensure it's a Date object
+        const targetDate = goal.targetDate instanceof Date ? goal.targetDate : new Date(goal.targetDate);
+        const monthsRemaining = Math.ceil((targetDate.getTime() - Date.now()) / (30 * 24 * 60 * 60 * 1000));
         
         return (
           <div
@@ -438,7 +441,7 @@ const BudgetTracker = ({ familyId, className }: BudgetTrackerProps) => {
             <div className="flex items-center justify-between text-sm">
               <div className="flex items-center gap-4">
                 <span className="text-white/60">Target Date:</span>
-                <span className="text-white">{goal.targetDate.toLocaleDateString()}</span>
+                <span className="text-white">{targetDate.toLocaleDateString()}</span>
               </div>
               {goal.autoContribute && (
                 <span className="text-green-400 flex items-center gap-1">

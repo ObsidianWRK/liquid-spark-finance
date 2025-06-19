@@ -1,5 +1,6 @@
 import React, { useMemo } from 'react';
-import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend } from 'recharts';
+// import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend } from 'recharts';
+import { SimpleAreaChart } from '@/components/ui/lightweight-charts';
 import { MonthlySpending } from '@/services/mockHistoricalData';
 
 interface SpendingTrendsChartProps {
@@ -8,114 +9,75 @@ interface SpendingTrendsChartProps {
 }
 
 const SpendingTrendsChart = React.memo<SpendingTrendsChartProps>(({ data, title }) => {
-  // Memoized formatters to prevent recreation on every render
-  const formatCurrency = useMemo(() => {
-    const formatter = new Intl.NumberFormat('en-US', {
-      style: 'currency',
-      currency: 'USD',
-      minimumFractionDigits: 0,
-      maximumFractionDigits: 0,
-    });
-    return (value: number) => formatter.format(value);
-  }, []);
-
-  const formatDate = useMemo(() => {
-    const formatter = new Intl.DateTimeFormat('en-US', { month: 'short', year: '2-digit' });
-    return (dateStr: string) => {
-      const date = new Date(dateStr);
-      return formatter.format(date);
-    };
-  }, []);
-
-  const formatTooltipDate = useMemo(() => {
-    const formatter = new Intl.DateTimeFormat('en-US', { month: 'long', year: 'numeric' });
-    return (dateStr: string) => {
-      const date = new Date(dateStr);
-      return formatter.format(date);
-    };
-  }, []);
+  // Transform data for individual area charts
+  const incomeData = useMemo(() => 
+    data.map((item, index) => ({ x: index, y: item.income, label: item.date })), [data]
+  );
+  
+  const spendingData = useMemo(() => 
+    data.map((item, index) => ({ x: index, y: item.spending, label: item.date })), [data]
+  );
+  
+  const savingsData = useMemo(() => 
+    data.map((item, index) => ({ x: index, y: item.savings, label: item.date })), [data]
+  );
 
   return (
     <div className="liquid-glass-fallback rounded-2xl p-6">
       <h3 className="text-lg sm:text-xl font-bold text-white mb-6">{title}</h3>
-      <div className="h-80">
-        <ResponsiveContainer width="100%" height="100%">
-          <AreaChart data={data} margin={{ top: 20, right: 30, left: 20, bottom: 20 }}>
-            <defs>
-              <linearGradient id="incomeGradient" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="5%" stopColor="#10b981" stopOpacity={0.3}/>
-                <stop offset="95%" stopColor="#10b981" stopOpacity={0}/>
-              </linearGradient>
-              <linearGradient id="spendingGradient" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="5%" stopColor="#ef4444" stopOpacity={0.3}/>
-                <stop offset="95%" stopColor="#ef4444" stopOpacity={0}/>
-              </linearGradient>
-              <linearGradient id="savingsGradient" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="5%" stopColor="#3b82f6" stopOpacity={0.3}/>
-                <stop offset="95%" stopColor="#3b82f6" stopOpacity={0}/>
-              </linearGradient>
-            </defs>
-            <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.1)" />
-            <XAxis 
-              dataKey="date" 
-              stroke="#fff" 
-              fontSize={12}
-              tickFormatter={formatDate}
+      <div className="h-80 space-y-4">
+        {/* Combined view */}
+        <div className="relative h-full">
+          <div className="absolute inset-0">
+            <SimpleAreaChart
+              data={incomeData}
+              width={600}
+              height={240}
+              strokeColor="#10b981"
+              fillColor="#10b981"
+              gradientId="incomeGradient"
+              className="absolute inset-0"
             />
-            <YAxis 
-              stroke="#fff" 
-              fontSize={12}
-              tickFormatter={formatCurrency}
+          </div>
+          <div className="absolute inset-0">
+            <SimpleAreaChart
+              data={spendingData}
+              width={600}
+              height={240}
+              strokeColor="#ef4444"
+              fillColor="#ef4444"
+              gradientId="spendingGradient"
+              className="absolute inset-0 opacity-80"
             />
-            <Tooltip 
-              formatter={(value: number, name: string) => {
-                const displayName = name === 'income' ? 'Income' : 
-                                  name === 'spending' ? 'Spending' : 
-                                  name === 'savings' ? 'Savings' : name;
-                return [formatCurrency(value), displayName];
-              }}
-              labelFormatter={(value) => formatTooltipDate(value)}
-              contentStyle={{
-                backgroundColor: 'rgba(0,0,0,0.9)',
-                border: '1px solid rgba(255,255,255,0.2)',
-                borderRadius: '12px',
-                color: '#fff'
-              }}
+          </div>
+          <div className="absolute inset-0">
+            <SimpleAreaChart
+              data={savingsData}
+              width={600}
+              height={240}
+              strokeColor="#3b82f6"
+              fillColor="#3b82f6"
+              gradientId="savingsGradient"
+              className="absolute inset-0 opacity-60"
             />
-            <Legend 
-              wrapperStyle={{ color: '#fff', paddingTop: '20px' }}
-              formatter={(value) => 
-                value === 'income' ? 'Income' : 
-                value === 'spending' ? 'Spending' : 
-                value === 'savings' ? 'Savings' : value
-              }
-            />
-            <Area
-              type="monotone"
-              dataKey="income"
-              stackId="1"
-              stroke="#10b981"
-              fill="url(#incomeGradient)"
-              strokeWidth={2}
-            />
-            <Area
-              type="monotone"
-              dataKey="spending"
-              stackId="2"
-              stroke="#ef4444"
-              fill="url(#spendingGradient)"
-              strokeWidth={2}
-            />
-            <Area
-              type="monotone"
-              dataKey="savings"
-              stackId="3"
-              stroke="#3b82f6"
-              fill="url(#savingsGradient)"
-              strokeWidth={2}
-            />
-          </AreaChart>
-        </ResponsiveContainer>
+          </div>
+        </div>
+        
+        {/* Legend */}
+        <div className="flex justify-center space-x-6 mt-4">
+          <div className="flex items-center space-x-2">
+            <div className="w-4 h-4 rounded bg-green-500" />
+            <span className="text-white text-sm">Income</span>
+          </div>
+          <div className="flex items-center space-x-2">
+            <div className="w-4 h-4 rounded bg-red-500" />
+            <span className="text-white text-sm">Spending</span>
+          </div>
+          <div className="flex items-center space-x-2">
+            <div className="w-4 h-4 rounded bg-blue-500" />
+            <span className="text-white text-sm">Savings</span>
+          </div>
+        </div>
       </div>
     </div>
   );

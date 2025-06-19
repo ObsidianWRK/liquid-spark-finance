@@ -80,12 +80,33 @@ class BudgetService {
         // Load new budget data
         const budgetData = data as any;
         if (budgetData.budgets) {
-          budgetData.budgets.forEach((budget: Budget) => {
+          budgetData.budgets.forEach((budget: any) => {
+            // Convert date strings back to Date objects
+            budget.startDate = new Date(budget.startDate);
+            budget.endDate = new Date(budget.endDate);
+            budget.createdAt = new Date(budget.createdAt);
+            budget.updatedAt = new Date(budget.updatedAt);
+            
             this.budgets.set(budget.id, budget);
           });
         }
         if (budgetData.goals) {
-          budgetData.goals.forEach((goal: SavingsGoal) => {
+          budgetData.goals.forEach((goal: any) => {
+            // Convert date strings back to Date objects
+            goal.targetDate = new Date(goal.targetDate);
+            goal.createdAt = new Date(goal.createdAt);
+            goal.updatedAt = new Date(goal.updatedAt);
+            
+            // Convert milestone dates
+            if (goal.milestones) {
+              goal.milestones.forEach((milestone: any) => {
+                milestone.targetDate = new Date(milestone.targetDate);
+                if (milestone.completedDate) {
+                  milestone.completedDate = new Date(milestone.completedDate);
+                }
+              });
+            }
+            
             this.goals.set(goal.id, goal);
           });
         }
@@ -167,7 +188,8 @@ class BudgetService {
             description: 'Halfway point - $9,000 saved'
           }
         ],
-        tags: ['emergency', 'security', 'priority']
+        tags: ['emergency', 'security', 'priority'],
+        isArchived: false
       });
 
       await this.createSavingsGoal({
@@ -183,7 +205,8 @@ class BudgetService {
         autoContribute: false,
         contributionRules: [],
         milestones: [],
-        tags: ['vacation', 'travel', 'family']
+        tags: ['vacation', 'travel', 'family'],
+        isArchived: false
       });
     }
   }

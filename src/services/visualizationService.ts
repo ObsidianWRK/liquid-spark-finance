@@ -106,8 +106,11 @@ export class VisualizationService {
   /**
    * Get comprehensive dashboard data for a family
    */
-  async getDashboardData(familyId: string): Promise<DashboardData> {
+  async getDashboardData(familyId: string, timeframe: '1m' | '3m' | '6m' | '1y' = '3m'): Promise<DashboardData> {
     try {
+      // Convert timeframe to months
+      const months = this.convertTimeframeToMonths(timeframe);
+      
       const [
         netWorthHistory,
         cashFlowHistory,
@@ -116,8 +119,8 @@ export class VisualizationService {
         budgetPerformance,
         keyMetrics
       ] = await Promise.all([
-        this.getNetWorthHistory(familyId),
-        this.getCashFlowHistory(familyId),
+        this.getNetWorthHistory(familyId, months),
+        this.getCashFlowHistory(familyId, months),
         this.getSpendingTrends(familyId),
         this.getPortfolioAllocation(familyId),
         this.getBudgetPerformance(familyId),
@@ -135,18 +138,34 @@ export class VisualizationService {
       };
     } catch (error) {
       console.error('Error loading dashboard data, using mock data:', error);
-      return this.getMockDashboardData();
+      return this.getMockDashboardData(timeframe);
+    }
+  }
+
+  /**
+   * Convert timeframe string to number of months
+   */
+  private convertTimeframeToMonths(timeframe: '1m' | '3m' | '6m' | '1y'): number {
+    switch (timeframe) {
+      case '1m': return 1;
+      case '3m': return 3;
+      case '6m': return 6;
+      case '1y': return 12;
+      default: return 3;
     }
   }
 
   /**
    * Fallback mock data for development/demo
    */
-  private getMockDashboardData(): DashboardData {
+  private getMockDashboardData(timeframe: '1m' | '3m' | '6m' | '1y' = '3m'): DashboardData {
     const mockNetWorthHistory: NetWorthData[] = [];
     const currentDate = new Date();
     
-    for (let i = 11; i >= 0; i--) {
+    // Calculate the number of months based on the timeframe
+    const months = this.convertTimeframeToMonths(timeframe);
+    
+    for (let i = months - 1; i >= 0; i--) {
       const date = new Date(currentDate);
       date.setMonth(date.getMonth() - i);
       
@@ -166,7 +185,7 @@ export class VisualizationService {
 
     // Generate 12 months of cash flow history
     const mockCashFlowHistory: CashFlowData[] = [];
-    for (let i = 11; i >= 0; i--) {
+    for (let i = months - 1; i >= 0; i--) {
       const date = new Date();
       date.setMonth(date.getMonth() - i);
       
@@ -466,7 +485,7 @@ export class VisualizationService {
     } catch (error) {
       console.error('Error generating net worth history, using mock data:', error);
       // Return subset of mock data
-      return this.getMockDashboardData().netWorthHistory;
+      return this.getMockDashboardData('3m').netWorthHistory;
     }
   }
 
@@ -517,7 +536,7 @@ export class VisualizationService {
       return history;
     } catch (error) {
       console.error('Error generating cash flow history, using mock data:', error);
-      return this.getMockDashboardData().cashFlowHistory;
+      return this.getMockDashboardData('3m').cashFlowHistory;
     }
   }
 
@@ -540,9 +559,9 @@ export class VisualizationService {
         })
       ]);
 
-      // Group by category
-      const currentSpending = this.groupTransactionsByCategory(currentTransactions);
-      const previousSpending = this.groupTransactionsByCategory(previousTransactions);
+      // Group by category - ensure we handle the correct transaction type
+      const currentSpending = this.groupTransactionsByCategory(currentTransactions.filter(t => t.category));
+      const previousSpending = this.groupTransactionsByCategory(previousTransactions.filter(t => t.category));
 
       const categories = new Set([...Object.keys(currentSpending), ...Object.keys(previousSpending)]);
       const trends: SpendingTrendData[] = [];
@@ -572,7 +591,7 @@ export class VisualizationService {
       return trends.sort((a, b) => b.currentMonth - a.currentMonth);
     } catch (error) {
       console.error('Error generating spending trends, using mock data:', error);
-      return this.getMockDashboardData().spendingTrends;
+      return this.getMockDashboardData('3m').spendingTrends;
     }
   }
 
@@ -643,7 +662,7 @@ export class VisualizationService {
       return allocationData;
     } catch (error) {
       console.error('Error generating portfolio allocation, using mock data:', error);
-      return this.getMockDashboardData().portfolioAllocation;
+      return this.getMockDashboardData('3m').portfolioAllocation;
     }
   }
 
@@ -683,7 +702,7 @@ export class VisualizationService {
       }).sort((a, b) => b.spent - a.spent);
     } catch (error) {
       console.error('Error generating budget performance, using mock data:', error);
-      return this.getMockDashboardData().budgetPerformance;
+      return this.getMockDashboardData('3m').budgetPerformance;
     }
   }
 
@@ -701,10 +720,10 @@ export class VisualizationService {
       }
 
       // Use mock data since we don't have real data structure
-      return this.getMockDashboardData().keyMetrics;
+      return this.getMockDashboardData('3m').keyMetrics;
     } catch (error) {
       console.error('Error generating key metrics, using mock data:', error);
-      return this.getMockDashboardData().keyMetrics;
+      return this.getMockDashboardData('3m').keyMetrics;
     }
   }
 
@@ -743,13 +762,14 @@ export class VisualizationService {
   }
 
   // Helper methods
-  private groupTransactionsByCategory(transactions: Transaction[]): Record<string, number> {
+  private groupTransactionsByCategory(transactions: any[]): Record<string, number> {
     const grouped: Record<string, number> = {};
     
     for (const transaction of transactions) {
       if (transaction.amount >= 0) continue; // Skip income
       
       const category = transaction.category;
+      if (!category) continue; // Skip transactions without category
       const amount = Math.abs(transaction.amount);
       
       grouped[category] = (grouped[category] || 0) + amount;

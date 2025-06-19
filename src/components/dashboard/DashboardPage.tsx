@@ -159,7 +159,7 @@ const DashboardPage = () => {
       </div>
 
       {/* Main Dashboard */}
-      <FinancialDashboard familyId="demo_family" />
+      <FinancialDashboard familyId="demo_family" timeframe={selectedTimeframe} />
 
       {/* Additional Analytics Sections */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">

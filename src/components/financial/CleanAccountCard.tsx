@@ -78,7 +78,7 @@ const CleanAccountCard = ({ account, onClick, className }: CleanAccountCardProps
       {/* Header */}
       <div className="flex items-start justify-between mb-4">
         <div className="flex items-center gap-3">
-          <div className="p-2 rounded-lg bg-white/[0.06]">
+          <div className="p-2 rounded-xl bg-white/[0.06]">
             {getAccountIcon(account.accountType)}
           </div>
           <div>
@@ -96,7 +96,7 @@ const CleanAccountCard = ({ account, onClick, className }: CleanAccountCardProps
             e.stopPropagation();
             toggleBalanceVisibility();
           }}
-          className="p-2 rounded-lg bg-white/[0.06] hover:bg-white/[0.08] transition-colors"
+          className="p-2 rounded-xl bg-white/[0.06] hover:bg-white/[0.08] transition-colors"
           aria-label={isBalanceVisible ? "Hide balance" : "Show balance"}
         >
           {isBalanceVisible ? (
