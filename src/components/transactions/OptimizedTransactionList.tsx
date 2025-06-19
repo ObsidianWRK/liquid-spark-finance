@@ -317,7 +317,16 @@ const TransactionItem = React.memo<{
   return (
     <div
       className={cn(
-        'grid grid-cols-[auto,1fr,auto,auto] lg:grid-cols-[auto,2fr,1fr,auto,auto] items-center cursor-pointer transition-colors gap-3 lg:gap-4',
+        // Fixed grid layout with consistent column alignment
+        'grid items-center cursor-pointer transition-colors gap-3 lg:gap-4',
+        // Mobile: Icon + Details + Amount (3 columns)
+        'grid-cols-[auto,1fr,auto]',
+        // Tablet: Icon + Details + Amount + Scores (4 columns when scores present)
+        features.showScores && transaction.scores ? 'md:grid-cols-[auto,1fr,auto,auto]' : 'md:grid-cols-[auto,1fr,auto]',
+        // Desktop: Icon + Details + Date + Amount + Scores (5 columns)  
+        features.showScores && transaction.scores 
+          ? 'lg:grid-cols-[auto,2fr,minmax(80px,auto),auto,auto]'
+          : 'lg:grid-cols-[auto,2fr,minmax(80px,auto),auto]',
         styles.item,
         styles.spacing
       )}
@@ -333,7 +342,7 @@ const TransactionItem = React.memo<{
     >
       {/* Category Icon */}
       <div 
-        className="w-10 h-10 lg:w-8 lg:h-8 rounded-lg flex items-center justify-center text-white font-semibold text-sm lg:text-xs"
+        className="w-10 h-10 lg:w-8 lg:h-8 rounded-lg flex items-center justify-center text-white font-semibold text-sm lg:text-xs flex-shrink-0"
         style={{ backgroundColor: transaction.category.color + '30' }}
       >
         {transaction.merchant.charAt(0).toUpperCase()}
@@ -342,29 +351,37 @@ const TransactionItem = React.memo<{
       {/* Transaction Details */}
       <div className="min-w-0">
         <div className="font-medium text-white truncate">{transaction.merchant}</div>
-        <div className="flex items-center space-x-2">
+        <div className="flex items-center space-x-2 text-xs text-white/60">
           {features.showCategories && (
-            <span className="text-xs text-white/60 truncate">{transaction.category.name}</span>
+            <>
+              <span className="truncate">{transaction.category.name}</span>
+              {/* Show date on mobile inline with category */}
+              <span className="lg:hidden">•</span>
+              <span className="lg:hidden whitespace-nowrap">{formatDate(transaction.date)}</span>
+            </>
+          )}
+          {!features.showCategories && (
+            <span className="lg:hidden whitespace-nowrap">{formatDate(transaction.date)}</span>
           )}
         </div>
       </div>
 
-      {/* Date - Hidden on mobile, shown on desktop */}
-      <div className="hidden lg:block text-sm text-white/60">
+      {/* Date - Desktop only, properly aligned */}
+      <div className="hidden lg:flex lg:justify-end text-sm text-white/60 min-w-[80px] whitespace-nowrap">
         {formatDate(transaction.date)}
       </div>
 
       {/* Amount */}
       <div className={cn(
-        'font-semibold text-right',
+        'font-semibold text-right whitespace-nowrap',
         transaction.amount < 0 ? 'text-red-400' : 'text-green-400'
       )}>
         {transaction.amount < 0 ? '-' : '+'}{formatAmount(transaction.amount)}
       </div>
 
-      {/* Scores */}
+      {/* Scores - Only show when scores exist and feature is enabled */}
       {features.showScores && transaction.scores && (
-        <div className="flex space-x-1">
+        <div className="hidden md:flex space-x-1 flex-shrink-0">
           <div className="w-6 h-6 lg:w-5 lg:h-5 rounded-full bg-green-500/20 flex items-center justify-center">
             <span className="text-xs lg:text-[10px] text-green-400 font-semibold">
               {transaction.scores.health}
