@@ -4,7 +4,6 @@ import Navigation from '@/components/Navigation';
 import CompactAccountCard from '@/components/financial/CompactAccountCard';
 import { OptimizedTransactionList } from '@/components/transactions/OptimizedTransactionList';
 import LiquidGlassTopMenuBar from '@/components/LiquidGlassTopMenuBar';
-import CreditScoreCard from '@/components/credit/CreditScoreCard';
 import ConsolidatedInsightsPage from '@/components/insights/ConsolidatedInsightsPage';
 import BudgetReportsPage from '@/components/reports/BudgetReportsPage';
 import SavingsGoals from '@/components/savings/SavingsGoals';
@@ -17,6 +16,7 @@ import FeatureCloud from '@/components/FeatureCloud';
 import { VirtualizedDeck } from '@/components/AccountDeck/VirtualizedDeck';
 import { isFeatureEnabled, trackFeatureUsage } from '@/utils/featureFlags';
 import { transformToAccountRowData } from '@/utils/accountTransformers';
+import CleanCreditScoreCard from '@/components/financial/CleanCreditScoreCard';
 
 // Lazy load components properly without webpack comments
 const InvestmentTrackerPage = lazy(() => import('@/components/investments/InvestmentTrackerPage'));
@@ -198,7 +198,7 @@ export default function Index() {
             </div>
             
             {/* Compact Account Cards Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+            <section className="cardGrid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
               {getCompactAccountCards().map(account => (
                 <CompactAccountCard
                   key={account.id}
@@ -209,7 +209,7 @@ export default function Index() {
                   className="h-fit"
                 />
               ))}
-            </div>
+            </section>
           </div>
         );
       case 'insights':
@@ -318,7 +318,7 @@ export default function Index() {
                     </p>
                   </div>
                   
-                  <div className="grid grid-cols-1 xl:grid-cols-2 gap-4">
+                  <section className="cardGrid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
                     {getCompactAccountCards().slice(0, 4).map(account => (
                       <CompactAccountCard
                         key={account.id}
@@ -329,7 +329,7 @@ export default function Index() {
                         className="h-fit"
                       />
                     ))}
-                  </div>
+                  </section>
                 </div>
               </div>
               
@@ -350,7 +350,7 @@ export default function Index() {
                   />
                 </div>
                 <div className="space-y-6">
-                  <CreditScoreCard />
+                  <CleanCreditScoreCard />
                   <SavingsGoals compact={true} />
                 </div>
               </div>

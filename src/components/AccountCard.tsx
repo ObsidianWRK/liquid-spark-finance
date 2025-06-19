@@ -29,7 +29,7 @@ const AccountCard = React.memo<AccountCardProps>(({ account, recentTransactions 
   return (
     <UniversalCard
       variant="glass"
-      className="stagger-item cursor-pointer"
+      className="card w-full min-w-[18rem] sm:max-w-[20rem] lg:max-w-[22rem] xl:max-w-[24rem] stagger-item cursor-pointer"
       interactive
       hover={{ scale: true, glow: true }}
       onClick={useCallback(() => setIsExpanded(prev => !prev), [])}

@@ -1,0 +1,11 @@
+@tailwind components;
+
+@layer components {
+  .card {
+    @apply bg-neutral-900 rounded-2xl shadow-[0_0_8px_rgba(0,0,0,0.35)] transition-all;
+  }
+
+  .cardGrid {
+    @apply grid gap-6 sm:gap-5 lg:gap-6 xl:gap-8;
+  }
+} 

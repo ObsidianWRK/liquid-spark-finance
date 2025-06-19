@@ -5,7 +5,7 @@ import {
   TransactionClickHandler,
   CategoryFilterHandler 
 } from '@/types/shared';
-import { CardShell } from '@/components/ui/CardShell';
+import { UnifiedCard } from '@/components/ui/UnifiedCard';
 import { Search, Filter, ChevronDown, TrendingUp, TrendingDown } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
@@ -156,8 +156,9 @@ export const OptimizedTransactionList = React.memo<TransactionListProps>(({
   const variantStyles = getVariantStyles();
 
   return (
-    <CardShell 
-      accent="blue" 
+    <UnifiedCard
+      variant="default"
+      size="lg"
       className={cn('overflow-hidden p-0', className)}
     >
       {/* Header with Search and Filters */}
@@ -182,7 +183,7 @@ export const OptimizedTransactionList = React.memo<TransactionListProps>(({
                 placeholder="Search transactions..."
                 value={searchTerm}
                 onChange={handleSearchChange}
-                className="w-full bg-white/10 border border-white/20 rounded-lg py-2 pl-10 pr-4 text-white placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-blue-500/50"
+                className="w-full bg-white/10 border border-white/20 rounded-xl py-2 pl-10 pr-4 text-white placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-blue-500/50"
               />
             </div>
           )}
@@ -193,7 +194,7 @@ export const OptimizedTransactionList = React.memo<TransactionListProps>(({
               <select
                 value={selectedCategory}
                 onChange={(e) => handleCategoryChange(e.target.value)}
-                className="bg-white/10 border border-white/20 rounded-lg py-2 pl-3 pr-8 text-white focus:outline-none focus:ring-2 focus:ring-blue-500/50 appearance-none"
+                className="bg-white/10 border border-white/20 rounded-xl py-2 pl-3 pr-8 text-white focus:outline-none focus:ring-2 focus:ring-blue-500/50 appearance-none"
               >
                 <option value="all">All Categories</option>
                 {categories.map(category => (
@@ -215,7 +216,7 @@ export const OptimizedTransactionList = React.memo<TransactionListProps>(({
                 key={field}
                 onClick={() => handleSort(field)}
                 className={cn(
-                  'px-3 py-1 rounded-lg text-xs font-medium transition-colors',
+                  'px-3 py-1 rounded-xl text-xs font-medium transition-colors',
                   sortField === field
                     ? 'bg-blue-500/20 text-blue-400'
                     : 'bg-white/10 text-white/60 hover:text-white/80'
@@ -247,15 +248,31 @@ export const OptimizedTransactionList = React.memo<TransactionListProps>(({
       >
         {Object.entries(groupedTransactions).map(([date, groupTransactions]) => (
           <div key={date}>
-            {/* Date Header (if grouping enabled) */}
+            {/* Date Header (if grouping enabled) - Uses same grid structure as transaction rows */}
             {features.groupByDate && (
-              <div className="sticky top-0 bg-zinc-800/60 backdrop-blur-md px-4 py-2 border-b border-white/10 z-10">
-                <div className="text-sm font-medium text-white/80">
-                  {date === new Date().toDateString() ? 'Today' : 
-                   date === new Date(Date.now() - 86400000).toDateString() ? 'Yesterday' :
-                   new Date(date).toLocaleDateString()}
-                </div>
+              <div className={cn(
+                'sticky top-0 bg-zinc-800/60 backdrop-blur-md py-2 border-b border-white/10 z-10',
+                // Use same grid layout as transaction rows for perfect alignment
+                'grid items-center gap-3 lg:gap-4',
+                // Mobile: Icon + Details + Amount (3 columns)
+                'grid-cols-[auto,1fr,auto]',
+                // Tablet: Icon + Details + Amount + Scores (4 columns when scores present)
+                features.showScores ? 'md:grid-cols-[auto,1fr,auto,auto]' : 'md:grid-cols-[auto,1fr,auto]',
+                // Desktop: Icon + Details + Date + Amount + Scores (5 columns)  
+                features.showScores 
+                  ? 'lg:grid-cols-[auto,2fr,minmax(80px,auto),auto,auto]'
+                  : 'lg:grid-cols-[auto,2fr,minmax(80px,auto),auto]',
+                variantStyles.spacing
+              )}
+              role="presentation"
+            >
+              {/* Date text in first column to align with transaction icons */}
+              <div className="text-sm font-medium text-white/80 col-span-full">
+                {date === new Date().toDateString() ? 'Today' : 
+                 date === new Date(Date.now() - 86400000).toDateString() ? 'Yesterday' :
+                 new Date(date).toLocaleDateString()}
               </div>
+            </div>
             )}
 
             {/* Transactions in Group */}
@@ -282,7 +299,7 @@ export const OptimizedTransactionList = React.memo<TransactionListProps>(({
           </div>
         )}
       </div>
-    </CardShell>
+    </UnifiedCard>
   );
 });
 
@@ -342,7 +359,7 @@ const TransactionItem = React.memo<{
     >
       {/* Category Icon */}
       <div 
-        className="w-10 h-10 lg:w-8 lg:h-8 rounded-lg flex items-center justify-center text-white font-semibold text-sm lg:text-xs flex-shrink-0"
+        className="w-10 h-10 lg:w-8 lg:h-8 rounded-xl flex items-center justify-center text-white font-semibold text-sm lg:text-xs flex-shrink-0"
         style={{ backgroundColor: transaction.category.color + '30' }}
       >
         {transaction.merchant.charAt(0).toUpperCase()}
