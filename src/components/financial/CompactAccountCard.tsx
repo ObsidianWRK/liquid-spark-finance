@@ -117,7 +117,7 @@ const CompactAccountCard: React.FC<CompactAccountCardProps> = ({
       {/* Metrics Grid */}
       <div className="grid grid-cols-2 gap-3 text-sm mt-4">
         {/* Available/Pending */}
-        <div className="bg-white/5 rounded-lg p-3">
+        <div className="bg-white/5 rounded-xl p-3">
           <div className="text-white/60 text-xs mb-1">
             {account.pendingCount ? 'Pending' : 'Available'}
           </div>
@@ -130,7 +130,7 @@ const CompactAccountCard: React.FC<CompactAccountCardProps> = ({
         </div>
 
         {/* APY/Utilization */}
-        <div className="bg-white/5 rounded-lg p-3">
+        <div className="bg-white/5 rounded-xl p-3">
           <div className="text-white/60 text-xs mb-1">
             {account.accountType === 'Credit Card' ? 'Utilization' : 'APY'}
           </div>
@@ -148,7 +148,7 @@ const CompactAccountCard: React.FC<CompactAccountCardProps> = ({
 
       {/* Last Transaction */}
       {account.lastTransaction && (
-        <div className="flex items-center gap-2 p-3 bg-white/5 rounded-lg mt-4">
+        <div className="flex items-center gap-2 p-3 bg-white/5 rounded-xl mt-4">
           <div className="w-8 h-8 bg-white/10 rounded-full flex items-center justify-center">
             <ArrowDownRight className="w-4 h-4 text-white/60" />
           </div>
@@ -171,7 +171,7 @@ const CompactAccountCard: React.FC<CompactAccountCardProps> = ({
         <div className="space-y-2 mt-4">
           {account.alerts.map((alert, idx) => (
             <div key={idx} className={cn(
-              "flex items-center gap-2 p-2 rounded-lg text-xs",
+              "flex items-center gap-2 p-2 rounded-xl text-xs",
               alert.severity === 'critical' ? 'bg-red-500/20 text-red-400 border border-red-500/30' :
               alert.severity === 'warning' ? 'bg-yellow-500/20 text-yellow-400 border border-yellow-500/30' :
               'bg-blue-500/20 text-blue-400 border border-blue-500/30'

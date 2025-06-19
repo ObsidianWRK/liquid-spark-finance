@@ -105,7 +105,7 @@ const SavingsGoals = ({ compact = false }: SavingsGoalsProps) => {
   // Compact mode for dashboard widget
   if (compact) {
     return (
-      <div className="bg-black text-white">
+      <div className="bg-white/[0.02] rounded-2xl border border-white/[0.08] backdrop-blur-md text-white">
         <div className="p-4 space-y-4">
           <div className="flex items-center justify-between">
             <h2 className="text-lg font-bold text-white flex items-center space-x-2">
@@ -123,11 +123,11 @@ const SavingsGoals = ({ compact = false }: SavingsGoalsProps) => {
           {loading ? (
             <div className="space-y-3">
               {[...Array(2)].map((_, i) => (
-                <div key={i} className="h-16 bg-white/[0.02] rounded-lg border border-white/[0.08] animate-pulse"></div>
+                <div key={i} className="h-16 bg-white/[0.02] rounded-2xl border border-white/[0.08] animate-pulse"></div>
               ))}
             </div>
           ) : goals.length === 0 ? (
-            <div className="bg-white/[0.02] rounded-lg border border-white/[0.08] p-4 text-center">
+            <div className="bg-white/[0.02] rounded-2xl border border-white/[0.08] p-4 text-center">
               <Target className="w-8 h-8 text-gray-400 mx-auto mb-2 opacity-50" />
               <p className="text-sm text-gray-400 mb-2">No goals yet</p>
               <button
@@ -146,7 +146,7 @@ const SavingsGoals = ({ compact = false }: SavingsGoalsProps) => {
                 return (
                   <div 
                     key={goal.id} 
-                    className="bg-white/[0.02] rounded-lg border border-white/[0.08] p-3 hover:bg-white/[0.03] transition-all relative overflow-hidden"
+                    className="bg-white/[0.02] rounded-2xl border border-white/[0.08] p-4 hover:bg-white/[0.03] transition-all relative overflow-hidden"
                     style={{ isolation: 'isolate' }}
                   >
                     <div className="flex items-center justify-between mb-2">
@@ -222,7 +222,7 @@ const SavingsGoals = ({ compact = false }: SavingsGoalsProps) => {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
           <div className="bg-white/[0.02] rounded-xl border border-white/[0.08] p-6">
             <div className="flex items-center space-x-3 mb-4">
-              <div className="w-10 h-10 bg-green-500/20 rounded-lg flex items-center justify-center">
+              <div className="w-10 h-10 bg-green-500/20 rounded-xl flex items-center justify-center">
                 <DollarSign className="w-5 h-5 text-green-400" />
               </div>
               <div>
@@ -240,7 +240,7 @@ const SavingsGoals = ({ compact = false }: SavingsGoalsProps) => {
 
           <div className="bg-white/[0.02] rounded-xl border border-white/[0.08] p-6">
             <div className="flex items-center space-x-3 mb-4">
-              <div className="w-10 h-10 bg-blue-500/20 rounded-lg flex items-center justify-center">
+              <div className="w-10 h-10 bg-blue-500/20 rounded-xl flex items-center justify-center">
                 <Target className="w-5 h-5 text-blue-400" />
               </div>
               <div>
@@ -258,7 +258,7 @@ const SavingsGoals = ({ compact = false }: SavingsGoalsProps) => {
 
           <div className="bg-white/[0.02] rounded-xl border border-white/[0.08] p-6">
             <div className="flex items-center space-x-3 mb-4">
-              <div className="w-10 h-10 bg-purple-500/20 rounded-lg flex items-center justify-center">
+              <div className="w-10 h-10 bg-purple-500/20 rounded-xl flex items-center justify-center">
                 <Award className="w-5 h-5 text-purple-400" />
               </div>
               <div>
@@ -276,7 +276,7 @@ const SavingsGoals = ({ compact = false }: SavingsGoalsProps) => {
 
           <div className="bg-white/[0.02] rounded-xl border border-white/[0.08] p-6">
             <div className="flex items-center space-x-3 mb-4">
-              <div className="w-10 h-10 bg-orange-500/20 rounded-lg flex items-center justify-center">
+              <div className="w-10 h-10 bg-orange-500/20 rounded-xl flex items-center justify-center">
                 <Percent className="w-5 h-5 text-orange-400" />
               </div>
               <div>
@@ -308,7 +308,7 @@ const SavingsGoals = ({ compact = false }: SavingsGoalsProps) => {
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id as 'goals' | 'insights')}
                 className={cn(
-                  'flex-1 py-3 px-4 text-sm font-medium rounded-lg transition-all flex items-center justify-center space-x-2',
+                  'flex-1 py-3 px-4 text-sm font-medium rounded-xl transition-all flex items-center justify-center space-x-2',
                   activeTab === tab.id
                     ? 'bg-gradient-to-r from-blue-500 to-blue-600 text-white shadow-lg shadow-blue-500/25'
                     : 'text-white/60 hover:text-white hover:bg-white/10'
@@ -358,7 +358,7 @@ const SavingsGoals = ({ compact = false }: SavingsGoalsProps) => {
                         {goal.isCompleted ? (
                           <CheckCircle2 className="w-6 h-6 text-green-400" />
                         ) : (
-                          <button className="p-2 hover:bg-white/[0.05] rounded-lg transition-colors">
+                          <button className="p-2 hover:bg-white/[0.05] rounded-xl transition-colors">
                             <MoreHorizontal className="w-4 h-4 text-gray-400" />
                           </button>
                         )}

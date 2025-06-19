@@ -25,7 +25,7 @@ export const unifiedCardTokens = {
 
   // Border Radius
   radius: {
-    sm: 'rounded-lg',
+    sm: 'rounded-xl',
     md: 'rounded-xl',
     lg: 'rounded-2xl',
     xl: 'rounded-3xl'

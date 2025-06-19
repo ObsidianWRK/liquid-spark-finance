@@ -39,22 +39,23 @@ import { cn } from '@/lib/utils';
 
 interface FinancialDashboardProps {
   familyId: string;
+  timeframe?: '1m' | '3m' | '6m' | '1y';
   className?: string;
 }
 
-const FinancialDashboard = ({ familyId, className }: FinancialDashboardProps) => {
+const FinancialDashboard = ({ familyId, timeframe = '3m', className }: FinancialDashboardProps) => {
   const [dashboardData, setDashboardData] = useState<DashboardData | null>(null);
   const [loading, setLoading] = useState(true);
   const [selectedChart, setSelectedChart] = useState<'networth' | 'cashflow' | 'spending' | 'portfolio'>('networth');
 
   useEffect(() => {
     loadDashboardData();
-  }, [familyId]);
+  }, [familyId, timeframe]);
 
   const loadDashboardData = async () => {
     try {
       setLoading(true);
-      const data = await visualizationService.getDashboardData(familyId);
+      const data = await visualizationService.getDashboardData(familyId, timeframe);
       setDashboardData(data);
     } catch (error) {
       console.error('Failed to load dashboard data:', error);
@@ -283,7 +284,7 @@ const FinancialDashboard = ({ familyId, className }: FinancialDashboardProps) =>
         />
         <Legend 
           wrapperStyle={{ color: '#fff' }}
-          formatter={(value, entry) => `${value} (${entry.payload?.percentage.toFixed(1)}%)`}
+          formatter={(value, entry: any) => `${value} (${entry.payload?.percentage?.toFixed(1) || 0}%)`}
         />
       </RechartsPieChart>
     </ResponsiveContainer>

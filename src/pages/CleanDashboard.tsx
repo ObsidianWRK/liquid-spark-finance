@@ -118,7 +118,7 @@ const OverviewCard = ({
     <SimpleGlassCard className="p-6">
       <div className="flex items-start justify-between mb-4">
         <div className="flex items-center gap-3">
-          <div className="p-2 rounded-lg bg-white/[0.06]">
+          <div className="p-2 rounded-xl bg-white/[0.06]">
             <Icon className="w-5 h-5" style={{ color }} />
           </div>
           <div>
@@ -128,7 +128,7 @@ const OverviewCard = ({
         
         <button
           onClick={() => setIsVisible(!isVisible)}
-          className="p-2 rounded-lg bg-white/[0.06] hover:bg-white/[0.08] transition-colors"
+                      className="p-2 rounded-xl bg-white/[0.06] hover:bg-white/[0.08] transition-colors"
         >
           {isVisible ? (
             <EyeOff className="w-4 h-4 text-white/70" />

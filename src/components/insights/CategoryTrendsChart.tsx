@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend } from 'recharts';
+import React, { useState, useMemo } from 'react';
+// import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend } from 'recharts';
+import { MultiLineChart } from '@/components/ui/lightweight-charts';
 import { CategoryTrend } from '@/services/mockHistoricalData';
 
 interface CategoryTrendsChartProps {
@@ -47,24 +48,14 @@ const CategoryTrendsChart: React.FC<CategoryTrendsChartProps> = ({ data, type, t
     conservation: 'Conservation'
   };
 
-  const formatCurrency = (value: number) => {
-    return new Intl.NumberFormat('en-US', {
-      style: 'currency',
-      currency: 'USD',
-      minimumFractionDigits: 0,
-      maximumFractionDigits: 0,
-    }).format(value);
-  };
-
-  const formatDate = (dateStr: string) => {
-    const date = new Date(dateStr);
-    return date.toLocaleDateString('en-US', { month: 'short', year: '2-digit' });
-  };
-
-  const formatTooltipDate = (dateStr: string) => {
-    const date = new Date(dateStr);
-    return date.toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
-  };
+  // Create lines configuration for visible categories
+  const lines = useMemo(() => {
+    return Array.from(visibleCategories).map(category => ({
+      dataKey: category,
+      stroke: categoryColors[category as keyof typeof categoryColors],
+      label: categoryLabels[category as keyof typeof categoryLabels]
+    }));
+  }, [visibleCategories]);
 
   const toggleCategory = (category: string) => {
     const newVisible = new Set(visibleCategories);
@@ -102,52 +93,15 @@ const CategoryTrendsChart: React.FC<CategoryTrendsChartProps> = ({ data, type, t
       </div>
 
       <div className="h-80">
-        <ResponsiveContainer width="100%" height="100%">
-          <LineChart data={data} margin={{ top: 20, right: 30, left: 20, bottom: 20 }}>
-            <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.1)" />
-            <XAxis 
-              dataKey="date" 
-              stroke="#fff" 
-              fontSize={12}
-              tickFormatter={formatDate}
-            />
-            <YAxis 
-              stroke="#fff" 
-              fontSize={12}
-              tickFormatter={formatCurrency}
-            />
-            <Tooltip 
-              formatter={(value: number, name: string) => {
-                const displayName = categoryLabels[name as keyof typeof categoryLabels] || name;
-                return [formatCurrency(value), displayName];
-              }}
-              labelFormatter={(value) => formatTooltipDate(value)}
-              contentStyle={{
-                backgroundColor: 'rgba(0,0,0,0.9)',
-                border: '1px solid rgba(255,255,255,0.2)',
-                borderRadius: '12px',
-                color: '#fff'
-              }}
-            />
-            <Legend 
-              wrapperStyle={{ color: '#fff', paddingTop: '20px' }}
-              formatter={(value) => categoryLabels[value as keyof typeof categoryLabels] || value}
-            />
-            {categories.map(category => (
-              visibleCategories.has(category) && (
-                <Line
-                  key={category}
-                  type="monotone"
-                  dataKey={category}
-                  stroke={categoryColors[category as keyof typeof categoryColors]}
-                  strokeWidth={2}
-                  dot={{ fill: categoryColors[category as keyof typeof categoryColors], strokeWidth: 2, r: 3 }}
-                  activeDot={{ r: 5, fill: categoryColors[category as keyof typeof categoryColors] }}
-                />
-              )
-            ))}
-          </LineChart>
-        </ResponsiveContainer>
+        <MultiLineChart
+          data={data as any[]}
+          lines={lines}
+          width={600}
+          height={300}
+          xAxisKey="date"
+          showLegend={false} // We have our own category toggles
+          className="w-full h-full"
+        />
       </div>
     </div>
   );
