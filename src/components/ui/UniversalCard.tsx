@@ -78,13 +78,13 @@ export const UniversalCard = React.memo<UniversalCardProps>(({
   const baseClasses = cn(
     'relative overflow-hidden transition-all duration-300',
     {
-      // Variants
-      'bg-white/10 backdrop-blur-md border border-white/20': variant === 'glass',
-      'bg-black/80 border border-white/10': variant === 'solid',
-      'bg-gradient-to-br from-green-500/10 to-emerald-600/10 border border-green-500/20': variant === 'eco',
-      'bg-gradient-to-br from-blue-500/10 to-cyan-600/10 border border-blue-500/20': variant === 'wellness',
-      'bg-gradient-to-br from-purple-500/10 to-indigo-600/10 border border-purple-500/20': variant === 'financial',
-      'bg-transparent border border-white/5': variant === 'minimal',
+      // Variants - Updated to use unified design tokens
+      'bg-white/[0.02] backdrop-blur-md border border-white/[0.08] hover:bg-white/[0.03]': variant === 'glass',
+      'bg-black/80 border border-white/[0.08]': variant === 'solid',
+      'bg-gradient-to-br from-green-500/10 to-emerald-600/10 border border-green-500/20 bg-white/[0.02]': variant === 'eco',
+      'bg-gradient-to-br from-blue-500/10 to-cyan-600/10 border border-blue-500/20 bg-white/[0.02]': variant === 'wellness',
+      'bg-gradient-to-br from-purple-500/10 to-indigo-600/10 border border-purple-500/20 bg-white/[0.02]': variant === 'financial',
+      'bg-white/[0.02] border border-white/[0.05]': variant === 'minimal',
       
       // Sizes
       'p-3 rounded-lg text-sm': size === 'sm',
@@ -93,7 +93,7 @@ export const UniversalCard = React.memo<UniversalCardProps>(({
       'p-8 rounded-3xl text-xl': size === 'xl',
       
       // Interactive
-      'cursor-pointer hover:scale-[1.02] hover:bg-white/15': interactive,
+      'cursor-pointer hover:scale-[1.02]': interactive,
       
       // Orientation
       'flex flex-col': orientation === 'vertical',
@@ -120,7 +120,7 @@ export const UniversalCard = React.memo<UniversalCardProps>(({
               stroke="currentColor"
               strokeWidth="8"
               fill="none"
-              className="text-white/10"
+              className="text-white/[0.05]"
             />
             <circle
               cx="50"
@@ -148,7 +148,7 @@ export const UniversalCard = React.memo<UniversalCardProps>(({
     return (
       <div className="grid grid-cols-2 gap-3">
         {data.metrics.map((metric, index) => (
-          <div key={index} className="bg-white/5 rounded-lg p-3">
+          <div key={index} className="bg-white/[0.03] border border-white/[0.05] rounded-lg p-3 hover:bg-white/[0.05] transition-all">
             <div className="flex items-center space-x-2 mb-1">
               {metric.icon && (
                 <metric.icon 
@@ -173,7 +173,7 @@ export const UniversalCard = React.memo<UniversalCardProps>(({
     return (
       <div className="grid grid-cols-2 gap-2">
         {data.trends.map((trend, index) => (
-          <div key={index} className="flex items-center justify-between p-2 rounded-lg bg-white/5">
+          <div key={index} className="flex items-center justify-between p-2 rounded-lg bg-white/[0.03] border border-white/[0.05]">
             <span className="text-xs text-white/70">{trend.label}</span>
             <div className="flex items-center space-x-1">
               <span 
@@ -201,8 +201,8 @@ export const UniversalCard = React.memo<UniversalCardProps>(({
     return (
       <div className="space-y-2">
         {data.spending.map((item, index) => (
-          <div key={index} className="flex items-center justify-between">
-            <span className="text-sm text-white/70">{item.category}</span>
+          <div key={index} className="flex items-center justify-between p-2 rounded-lg bg-white/[0.03] border border-white/[0.05]">
+            <span className="text-sm text-white/70 capitalize">{item.category}</span>
             <span className="text-sm font-semibold text-white">
               ${item.amount.toLocaleString()}
             </span>
@@ -219,7 +219,7 @@ export const UniversalCard = React.memo<UniversalCardProps>(({
       {...props}
     >
       {showBackground && variant === 'glass' && (
-        <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-white/0 pointer-events-none" />
+        <div className="absolute inset-0 bg-gradient-to-br from-white/[0.02] to-white/0 pointer-events-none" />
       )}
       
       <div className="relative z-10 h-full">
@@ -228,13 +228,15 @@ export const UniversalCard = React.memo<UniversalCardProps>(({
           <div className="flex items-center justify-between mb-4">
             <div className="flex items-center space-x-3">
               {Icon && (
-                <Icon 
-                  className="w-5 h-5" 
-                  style={{ color: iconColor }} 
-                />
+                <div className="w-10 h-10 rounded-xl bg-white/[0.05] flex items-center justify-center">
+                  <Icon 
+                    className="w-5 h-5" 
+                    style={{ color: iconColor }} 
+                  />
+                </div>
               )}
               {title && (
-                <h3 className="font-semibold text-white">{title}</h3>
+                <h3 className="font-medium text-white/80">{title}</h3>
               )}
             </div>
             {trend && (
@@ -269,7 +271,7 @@ export const UniversalCard = React.memo<UniversalCardProps>(({
         {/* Metrics Grid */}
         {data?.metrics && (
           <div className="mb-4">
-            <h4 className="text-sm font-medium text-white mb-2">Metrics</h4>
+            <h4 className="text-sm font-medium text-white/80 mb-3">Metrics</h4>
             {renderMetrics()}
           </div>
         )}
@@ -277,7 +279,7 @@ export const UniversalCard = React.memo<UniversalCardProps>(({
         {/* Trends Grid */}
         {data?.trends && (
           <div className="mb-4">
-            <h4 className="text-sm font-medium text-white mb-2">Trends</h4>
+            <h4 className="text-sm font-medium text-white/80 mb-3">Trends</h4>
             {renderTrends()}
           </div>
         )}
@@ -285,7 +287,7 @@ export const UniversalCard = React.memo<UniversalCardProps>(({
         {/* Spending List */}
         {data?.spending && (
           <div className="mb-4">
-            <h4 className="text-sm font-medium text-white mb-2">Spending</h4>
+            <h4 className="text-sm font-medium text-white/80 mb-3">Spending</h4>
             {renderSpending()}
           </div>
         )}
