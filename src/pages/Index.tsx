@@ -169,7 +169,14 @@ export default function Index() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [isDataValid, setIsDataValid] = useState(false);
-  const [balanceVisibility, setBalanceVisibility] = useState<Record<string, boolean>>({});
+  // Initialize balance visibility with all accounts visible by default
+  const [balanceVisibility, setBalanceVisibility] = useState<Record<string, boolean>>(() => {
+    const initialVisibility: Record<string, boolean> = {};
+    getCompactAccountCards().forEach(account => {
+      initialVisibility[account.id] = true; // Show balances by default
+    });
+    return initialVisibility;
+  });
   const isMobile = useIsMobile();
 
   // Data validation in useEffect instead of early return
@@ -387,12 +394,14 @@ export default function Index() {
                     accounts={getCompactAccountCards()}
                     title="Quick Access"
                     subtitle={`${getCompactAccountCards().length} accounts • Total Balance: $83.8K`}
-                    showBalance={Object.values(balanceVisibility).some(v => v !== false)}
+                    showBalance={Object.values(balanceVisibility).some(v => v === true)}
                     onToggleBalance={() => {
-                      const allHidden = Object.values(balanceVisibility).every(v => v === false);
+                      // Check if any balance is currently visible
+                      const anyVisible = Object.values(balanceVisibility).some(v => v === true);
+                      // Toggle all accounts to the opposite state
                       const newVisibility: Record<string, boolean> = {};
                       getCompactAccountCards().forEach(account => {
-                        newVisibility[account.id] = allHidden;
+                        newVisibility[account.id] = !anyVisible; // If any visible, hide all. If all hidden, show all.
                       });
                       setBalanceVisibility(newVisibility);
                     }}

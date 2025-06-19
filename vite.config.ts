@@ -1,126 +1,62 @@
-import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react-swc'
-import path from 'path'
-import { defineConfig as defineVitestConfig } from 'vitest/config'
+import { defineConfig } from "vite";
+import react from "@vitejs/plugin-react-swc";
+import path from "path";
 import { componentTagger } from "lovable-tagger";
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => ({
+  server: {
+    host: "::",
+    port: 8080,
+  },
   plugins: [
     react(),
-    mode === 'development' && componentTagger(),
+    mode === 'development' &&
+    componentTagger(),
   ].filter(Boolean),
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),
     },
-    extensions: [".mjs", ".js", ".jsx", ".tsx", ".ts", ".json"]
   },
   build: {
-    target: 'esnext',
+    // Production optimizations
+    target: 'es2015',
     minify: 'esbuild',
-    sourcemap: mode === 'development',
+    sourcemap: false,
     rollupOptions: {
       output: {
-        manualChunks: (id) => {
-          // Vendor chunking strategy 
-          if (id.includes('node_modules')) {
-            // Framework chunks  
-            if (id.includes('react') || id.includes('react-dom')) return 'react';
-            if (id.includes('framer-motion')) return 'animations';
-            if (id.includes('react-router')) return 'routing';
-            return 'vendor';
-          }
-          
-          // Application chunks
-          if (id.includes('components/calculators') || id.includes('pages/Calculator')) return 'calculators';
-          if (id.includes('components/insights') || id.includes('insights')) return 'insights';
-          if (id.includes('recharts') || id.includes('charts')) return 'charts';
-          if (id.includes('components/ui/UniversalCard') || id.includes('universal-card')) return 'universal-card';
-          if (id.includes('components/transactions') || id.includes('transaction')) return 'optimized-transactions';
-          if (id.includes('performance') || id.includes('Performance')) return 'performance';
+        // Manual chunk splitting for better caching
+        manualChunks: {
+          vendor: ['react', 'react-dom'],
+          ui: ['@radix-ui/react-dialog', '@radix-ui/react-popover', '@radix-ui/react-dropdown-menu'],
+          icons: ['lucide-react'],
+          charts: ['recharts'],
+          utils: ['clsx', 'tailwind-merge', 'date-fns'],
+          router: ['react-router-dom'],
         },
-        chunkFileNames: 'assets/[name]-[hash].js',
-        entryFileNames: 'assets/[name]-[hash].js',
-        assetFileNames: 'assets/[name]-[hash].[ext]'
-      }
+      },
     },
-    chunkSizeWarningLimit: 1000
+    // Chunk size warnings
+    chunkSizeWarningLimit: 1000,
   },
-  // Server config removed for Vercel compatibility
-  // Vercel handles hosting automatically
-  define: {
-    'process.env.NODE_ENV': JSON.stringify(mode === 'production' ? 'production' : 'development'),
-    // Global polyfills
-    'global': 'globalThis',
-    // Security flags for production
-    '__VUENI_SECURITY_ENABLED__': mode === 'production',
-    '__VUENI_DEBUG_ENABLED__': mode === 'development'
-  },
-  // Security optimizations
-  server: {
-    headers: mode === 'production' ? {
-      'Strict-Transport-Security': 'max-age=31536000; includeSubDomains; preload',
-      'X-Content-Type-Options': 'nosniff',
-      'X-Frame-Options': 'DENY',
-      'X-XSS-Protection': '1; mode=block',
-      'Referrer-Policy': 'strict-origin-when-cross-origin'
-    } : {}
-  },
-  test: {
-    environment: 'jsdom',
-    globals: true,
-    setupFiles: ['./src/test/setup.ts'],
-    coverage: {
-      provider: 'v8',
-      reporter: ['text', 'json', 'html'],
-      exclude: [
-        'node_modules/',
-        'src/test/',
-        '**/*.d.ts',
-        '**/*.config.ts',
-        'dist/',
-        'e2e/',
-        'docs/',
-        '*.config.js',
-        '*.config.ts'
-      ],
-      thresholds: {
-        global: {
-          branches: 80,
-          functions: 80,
-          lines: 80,
-          statements: 80
-        },
-        // Critical components require higher coverage
-        'src/utils/calculators.ts': {
-          branches: 95,
-          functions: 100,
-          lines: 95,
-          statements: 95
-        },
-        'src/utils/security.ts': {
-          branches: 90,
-          functions: 95,
-          lines: 90,
-          statements: 90
-        },
-        'src/utils/crypto.ts': {
-          branches: 90,
-          functions: 95,
-          lines: 90,
-          statements: 90
-        }
-      }
-    },
-    // Performance testing configuration
-    benchmark: {
-      include: ['src/**/*.bench.{js,ts}'],
-      exclude: ['node_modules/', 'dist/']
-    }
-  },
-  // Performance optimizations  
   optimizeDeps: {
-    include: ['react', 'react-dom'],
+    // Pre-bundle dependencies for faster dev startup
+    include: [
+      'react',
+      'react-dom',
+      'lucide-react',
+      '@radix-ui/react-dialog',
+      '@radix-ui/react-popover',
+      '@radix-ui/react-dropdown-menu',
+      'recharts',
+      'clsx',
+      'tailwind-merge',
+      'date-fns',
+    ],
   },
-}))
+  // CSS optimizations
+  css: {
+    devSourcemap: false,
+  },
+}));
