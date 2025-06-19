@@ -136,7 +136,6 @@ export const UniversalCard = React.memo<UniversalCardProps>(({
           </svg>
           <div className="absolute inset-0 flex flex-col items-center justify-center">
             <span className="text-2xl font-bold text-white">{displayScore}</span>
-            <span className="text-xs text-white/60">Score</span>
           </div>
         </div>
       </div>
