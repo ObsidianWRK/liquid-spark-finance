@@ -142,17 +142,12 @@ const RefinedMetricCard = memo(({
   const displayValue = typeof value === 'number' ? animatedValue : value;
 
   return (
-    <EnhancedGlassCard 
+    <div
       className={`
-        relative overflow-hidden rounded-2xl backdrop-blur-xl border border-slate-700/40 
-        hover:border-slate-600/60 transition-all duration-300 group hover-lift ${config.padding}
-        bg-slate-900/20
+        relative overflow-hidden rounded-2xl backdrop-blur-xl border border-white/[0.08] 
+        hover:border-white/[0.12] transition-all duration-300 group hover-lift ${config.padding}
+        bg-white/[0.02]
       `}
-      liquid={true}
-      liquidIntensity={liquidIntensity}
-      liquidDistortion={0.15}
-      liquidAnimated={true}
-      liquidInteractive={interactive}
       style={{
         animation: `slideInScale 0.6s ease-out ${delay}ms both`
       }}
@@ -173,7 +168,7 @@ const RefinedMetricCard = memo(({
         <div className="flex items-center justify-between mb-4">
           <div className="flex items-center space-x-3">
             <div 
-              className={`${config.iconPadding} rounded-xl backdrop-blur-sm border border-slate-700/30 bg-slate-800/10`}
+              className={`${config.iconPadding} rounded-xl backdrop-blur-sm border border-white/[0.08] bg-white/[0.02]`}
               style={{ 
                 background: `linear-gradient(135deg, ${color}10, ${color}05)`,
                 borderColor: `${color}20`
@@ -184,7 +179,7 @@ const RefinedMetricCard = memo(({
                 style: { color } 
               })}
             </div>
-            <h4 className={`${config.titleSize} font-semibold text-slate-200`}>
+            <h4 className={`${config.titleSize} font-semibold text-white`}>
               {title}
             </h4>
           </div>
@@ -194,12 +189,12 @@ const RefinedMetricCard = memo(({
         {/* Value */}
         <div className="mb-3">
           <div 
-            className={`${config.valueSize} font-bold text-slate-100 animate-metricCounter`}
+            className={`${config.valueSize} font-bold text-white animate-metricCounter`}
             style={{ animationDelay: `${delay + 300}ms` }}
           >
             {displayValue}
           </div>
-          <div className={`${config.subtitleSize} text-slate-400 mt-1`}>
+          <div className={`${config.subtitleSize} text-white/70 mt-1`}>
             {subtitle}
           </div>
         </div>
@@ -208,10 +203,10 @@ const RefinedMetricCard = memo(({
         {progress !== undefined && (
           <div className="space-y-2">
             <div className="flex items-center justify-between">
-              <span className="text-xs text-slate-500">Progress</span>
-              <span className="text-xs text-slate-400">{Math.round(animatedProgress)}%</span>
+              <span className="text-xs text-white/60">Progress</span>
+              <span className="text-xs text-white/80">{Math.round(animatedProgress)}%</span>
             </div>
-            <div className="relative h-2 bg-slate-800/30 rounded-full overflow-hidden backdrop-blur-sm">
+            <div className="relative h-2 bg-white/[0.05] rounded-full overflow-hidden backdrop-blur-sm">
               <div 
                 className="absolute top-0 left-0 h-full rounded-full transition-all duration-1000 ease-out"
                 style={{
@@ -241,7 +236,7 @@ const RefinedMetricCard = memo(({
           filter: 'blur(1px)'
         }}
       />
-    </EnhancedGlassCard>
+    </div>
   );
 });
 

@@ -8,6 +8,7 @@ import { generateScoreSummary } from '@/services/scoringModel';
 import { mockHealthEcoService } from '@/services/mockHealthEcoService';
 import { mockHistoricalService } from '@/services/mockHistoricalData';
 import { cn } from '@/lib/utils';
+import { UnifiedCard } from '@/components/ui/UnifiedCard';
 
 // Lazy load heavy components for performance
 const FinancialCard = lazy(() => import('./FinancialCard'));
@@ -30,142 +31,80 @@ interface NewInsightsPageProps {
 
 const NewInsightsPage: React.FC<NewInsightsPageProps> = ({ transactions, accounts }) => {
   const navigate = useNavigate();
-  const [activeTab, setActiveTab] = useState('overview');
   const [scores, setScores] = useState({ financial: 0, health: 0, eco: 0 });
+  const [activeTab, setActiveTab] = useState('overview');
   const [isLoading, setIsLoading] = useState(true);
 
-  // Generate historical data
-  const historicalScores = useMemo(() => mockHistoricalService.getHistoricalScores(), []);
-  const monthlyFinancialData = useMemo(() => mockHistoricalService.getMonthlyFinancialData(), []);
-  const categoryTrends = useMemo(() => mockHistoricalService.getCategoryTrends(), []);
-
-  // Calculate financial metrics
+  // Calculate financial data
   const financialData = useMemo(() => {
-    const monthlyIncome = transactions
-      .filter(t => t.amount > 0 && new Date(t.date).getMonth() === new Date().getMonth())
-      .reduce((sum, t) => sum + t.amount, 0);
-
     const monthlySpending = Math.abs(transactions
       .filter(t => t.amount < 0 && new Date(t.date).getMonth() === new Date().getMonth())
       .reduce((sum, t) => sum + t.amount, 0));
-
+    
     const totalBalance = accounts.reduce((sum, acc) => sum + acc.balance, 0);
     
-    const spendingRatio = monthlyIncome > 0 ? (monthlySpending / monthlyIncome) * 100 : 0;
-    const emergencyFundMonths = monthlySpending > 0 ? totalBalance / monthlySpending : 0;
-    const savingsRate = monthlyIncome > 0 ? ((monthlyIncome - monthlySpending) / monthlyIncome) * 100 : 0;
-    
-    const creditCardDebt = Math.abs(accounts
-      .filter(acc => acc.type === 'Credit Card' && acc.balance < 0)
-      .reduce((sum, acc) => sum + acc.balance, 0));
-    const debtToIncomeRatio = monthlyIncome > 0 ? (creditCardDebt / (monthlyIncome * 12)) * 100 : 0;
-    
-    const completedTransactions = transactions.filter(t => t.status === 'completed').length;
-    const totalTransactions = transactions.length;
-    const billPaymentScore = totalTransactions > 0 ? Math.round((completedTransactions / totalTransactions) * 100) : 100;
-
     return {
-      overallScore: scores.financial,
-      monthlyIncome,
       monthlySpending,
       totalBalance,
-      savingsRate,
-      spendingRatio,
-      emergencyFundMonths,
-      debtToIncomeRatio,
-      billPaymentScore,
     };
-  }, [transactions, accounts, scores.financial]);
+  }, [transactions, accounts]);
 
-  // Sample wellness data matching screenshots
-  const wellnessData = useMemo(() => ({
-    overallScore: 75,
-    monthlySpending: {
-      fitness: 85,
-      nutrition: 38,
-      healthcare: 340,
-      wellness: 75,
-      supplements: 45,
-      mentalHealth: 120
-    },
-    healthTrends: {
-      exercise: 'up' as const,
-      nutrition: 'stable' as const,
-      sleep: 'stable' as const,
-      stress: 'down' as const
-    }
-  }), []);
+  // Get wellness and eco data using the correct service methods
+  const wellnessData = useMemo(() => mockHealthEcoService.getHealthScore(transactions), [transactions]);
+  const ecoData = useMemo(() => mockHealthEcoService.getEcoScore(transactions), [transactions]);
 
-  // Sample eco data matching screenshots
-  const ecoData = useMemo(() => ({
-    overallScore: 82,
-    monthlyImpact: {
-      co2Saved: 48,
-      treesEquivalent: 2,
-      waterSaved: 384,
-      energySaved: 256
-    },
-    monthlySpending: {
-      sustainableFood: 127,
-      renewableEnergy: 85,
-      ecoTransport: 45,
-      greenProducts: 120,
-      carbonOffset: 25,
-      conservation: 60
-    },
-    environmentalTrends: {
-      carbonFootprint: 'down' as const,
-      sustainability: 'up' as const,
-      renewable: 'up' as const,
-      waste: 'stable' as const
-    }
-  }), []);
-
-  // Load scores
+  // Simulate loading and score calculation
   useEffect(() => {
-    const loadScores = async () => {
+    const loadData = async () => {
       setIsLoading(true);
       try {
-        const financialScores = await generateScoreSummary(transactions, accounts);
-        const healthData = mockHealthEcoService.getHealthScore(transactions);
-        const ecoScore = mockHealthEcoService.getEcoScore(transactions);
+        // Simulate loading delay
+        await new Promise(resolve => setTimeout(resolve, 500));
         
+        // Generate scores based on actual data
+        const scoreSummary = await generateScoreSummary(transactions, accounts);
         setScores({
-          financial: Math.round(financialScores.financial),
-          health: Math.round(healthData.score),
-          eco: Math.round(ecoScore.score)
+          financial: Math.round(scoreSummary.financial),
+          health: Math.round(wellnessData.score),
+          eco: Math.round(ecoData.score)
         });
       } catch (error) {
-        console.error('Error loading scores:', error);
+        console.error('Error loading insights data:', error);
         setScores({ financial: 72, health: 75, eco: 82 });
       } finally {
         setIsLoading(false);
       }
     };
 
-    loadScores();
-  }, [transactions, accounts]);
+    loadData();
+  }, [transactions, accounts, wellnessData.score, ecoData.score]);
 
   const tabs = [
-    { id: 'overview', label: 'Overview', icon: TrendingUp },
-    { id: 'trends', label: 'Trends', icon: BarChart3 },
-    { id: 'financial', label: 'Financial', icon: DollarSign },
+    { id: 'overview', label: 'Overview', icon: BarChart3 },
     { id: 'health', label: 'Health', icon: Heart },
-    { id: 'eco', label: 'Eco', icon: Leaf },
+    { id: 'eco', label: 'Eco Impact', icon: Leaf },
+    { id: 'trends', label: 'Trends', icon: TrendingUp }
   ];
 
   if (isLoading) {
     return (
-      <div className="w-full text-white flex items-center justify-center py-20">
-        <div className="liquid-glass-fallback rounded-2xl p-8">
-          <div className="flex items-center space-x-4">
-            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-white"></div>
-            <span className="text-white text-lg">Loading insights...</span>
-          </div>
+      <div className="w-full text-white">
+        <div className="w-full px-4 sm:px-6 lg:px-8 py-6 sm:py-8 lg:py-12 max-w-7xl mx-auto">
+          <UnifiedCard size="lg" className="text-center">
+            <LoadingSpinner />
+            <p className="text-white/70 mt-4">Loading your financial insights...</p>
+          </UnifiedCard>
         </div>
       </div>
     );
   }
+
+  // Calculate totals for display
+  const wellnessMonthlyTotal = wellnessData.breakdown ? 
+    Object.values(wellnessData.breakdown).reduce((sum: number, amount: any) => sum + (typeof amount === 'number' ? amount : 0), 0) : 0;
+  
+  const ecoMonthlyTotal = ecoData.breakdown ? 
+    Object.values(ecoData.breakdown).reduce((sum: number, amount: any) => sum + (typeof amount === 'number' ? amount : 0), 0) : 0;
 
   return (
     <div className="w-full text-white">
@@ -190,7 +129,7 @@ const NewInsightsPage: React.FC<NewInsightsPageProps> = ({ transactions, account
         </div>
 
         {/* Tab Navigation */}
-        <div className="liquid-glass-fallback rounded-2xl p-2 mb-8 sm:mb-12">
+        <UnifiedCard size="lg" className="mb-8 sm:mb-12">
           <div className="flex flex-wrap justify-center gap-2">
             {tabs.map((tab) => {
               const Icon = tab.icon;
@@ -210,16 +149,16 @@ const NewInsightsPage: React.FC<NewInsightsPageProps> = ({ transactions, account
               );
             })}
           </div>
-        </div>
+        </UnifiedCard>
 
         {/* Content */}
         {activeTab === 'overview' && (
-          <div className="space-y-8 sm:space-y-12">
+          <div className="space-y-8">
             {/* Score Overview */}
-            <div className="liquid-glass-fallback rounded-2xl p-6 sm:p-8">
-              <h3 className="text-xl sm:text-2xl font-bold text-white mb-6 sm:mb-8 text-center">
+            <UnifiedCard size="lg">
+              <h2 className="text-2xl sm:text-3xl font-bold text-white mb-6 sm:mb-8 text-center">
                 Your Overall Scores
-              </h3>
+              </h2>
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 sm:gap-12">
                 <div className="text-center">
                   <SharedScoreCircle 
@@ -227,7 +166,7 @@ const NewInsightsPage: React.FC<NewInsightsPageProps> = ({ transactions, account
                     type="financial"
                     size="lg"
                     label="Financial Health"
-                    showLabel={true}
+                    showLabel={false}
                   />
                 </div>
                 <div className="text-center">
@@ -236,7 +175,7 @@ const NewInsightsPage: React.FC<NewInsightsPageProps> = ({ transactions, account
                     type="health"
                     size="lg"
                     label="Wellness Score"
-                    showLabel={true}
+                    showLabel={false}
                   />
                 </div>
                 <div className="text-center">
@@ -245,108 +184,92 @@ const NewInsightsPage: React.FC<NewInsightsPageProps> = ({ transactions, account
                     type="eco"
                     size="lg"
                     label="Eco Impact"
-                    showLabel={true}
+                    showLabel={false}
                   />
                 </div>
               </div>
-            </div>
+            </UnifiedCard>
 
-            {/* Quick Summary Cards */}
+            {/* Quick Overview Cards */}
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 sm:gap-8">
-              <div className="liquid-glass-fallback rounded-2xl p-6">
-                <div className="flex items-center space-x-4 mb-4">
-                  <div className="p-3 rounded-xl bg-blue-500/20">
-                    <DollarSign className="w-6 h-6 text-blue-400" />
-                  </div>
-                  <div>
-                    <h4 className="text-lg font-bold text-white">Financial Health</h4>
-                    <p className="text-white/70 text-sm">Score: {Math.round(scores.financial)}/100</p>
-                  </div>
-                </div>
-                <p className="text-white/60 text-sm">
-                  Monthly spending: ${financialData.monthlySpending.toLocaleString()}
-                </p>
-              </div>
+              <UnifiedCard 
+                title="Financial Health" 
+                metric={`${Math.round(scores.financial)}/100`}
+                subtitle={`Monthly spending: $${financialData.monthlySpending.toLocaleString()}`}
+                icon={DollarSign}
+                iconColor="#3b82f6"
+                size="lg"
+              />
 
-              <div className="liquid-glass-fallback rounded-2xl p-6">
-                <div className="flex items-center space-x-4 mb-4">
-                  <div className="p-3 rounded-xl bg-red-500/20">
-                    <Heart className="w-6 h-6 text-red-400" />
-                  </div>
-                  <div>
-                    <h4 className="text-lg font-bold text-white">Wellness</h4>
-                    <p className="text-white/70 text-sm">Score: {Math.round(scores.health)}/100</p>
-                  </div>
-                </div>
-                <p className="text-white/60 text-sm">
-                  Monthly wellness: ${Object.values(wellnessData.monthlySpending).reduce((sum, amount) => sum + amount, 0).toLocaleString()}
-                </p>
-              </div>
+              <UnifiedCard 
+                title="Wellness" 
+                metric={`${Math.round(scores.health)}/100`}
+                subtitle={`Monthly wellness: $${wellnessMonthlyTotal.toLocaleString()}`}
+                icon={Heart}
+                iconColor="#ef4444"
+                size="lg"
+              />
 
-              <div className="liquid-glass-fallback rounded-2xl p-6">
-                <div className="flex items-center space-x-4 mb-4">
-                  <div className="p-3 rounded-xl bg-green-500/20">
-                    <Leaf className="w-6 h-6 text-green-400" />
-                  </div>
-                  <div>
-                    <h4 className="text-lg font-bold text-white">Eco Impact</h4>
-                    <p className="text-white/70 text-sm">Score: {scores.eco}/100</p>
-                  </div>
-                </div>
-                <p className="text-white/60 text-sm">
-                  CO₂ saved: {ecoData.monthlyImpact.co2Saved}kg this month
-                </p>
-              </div>
+              <UnifiedCard 
+                title="Eco Impact" 
+                metric={`${Math.round(scores.eco)}/100`}
+                subtitle={`Monthly eco: $${ecoMonthlyTotal.toLocaleString()}`}
+                icon={Leaf}
+                iconColor="#10b981"
+                size="lg"
+              />
             </div>
           </div>
+        )}
+
+        {/* Other tabs content with lazy loading */}
+        {activeTab === 'health' && (
+          <Suspense fallback={<LoadingSpinner />}>
+            <div className="space-y-6">
+              <UnifiedCard size="lg">
+                <h2 className="text-2xl font-bold text-white mb-4">Health & Wellness Insights</h2>
+                <p className="text-white/70 mb-4">Your wellness score: {Math.round(scores.health)}/100</p>
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                  {wellnessData.breakdown && Object.entries(wellnessData.breakdown).map(([category, amount]) => (
+                    <div key={category} className="p-3 bg-white/[0.03] rounded-lg">
+                      <p className="text-white/60 text-xs capitalize">{category.replace(/([A-Z])/g, ' $1')}</p>
+                      <p className="text-white font-bold">${typeof amount === 'number' ? amount.toLocaleString() : '0'}</p>
+                    </div>
+                  ))}
+                </div>
+              </UnifiedCard>
+            </div>
+          </Suspense>
+        )}
+
+        {activeTab === 'eco' && (
+          <Suspense fallback={<LoadingSpinner />}>
+            <div className="space-y-6">
+              <UnifiedCard size="lg">
+                <h2 className="text-2xl font-bold text-white mb-4">Eco Impact Insights</h2>
+                <p className="text-white/70 mb-4">Your eco score: {Math.round(scores.eco)}/100</p>
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                  {ecoData.breakdown && Object.entries(ecoData.breakdown).map(([category, amount]) => (
+                    <div key={category} className="p-3 bg-white/[0.03] rounded-lg">
+                      <p className="text-white/60 text-xs capitalize">{category.replace(/([A-Z])/g, ' $1')}</p>
+                      <p className="text-white font-bold">${typeof amount === 'number' ? amount.toLocaleString() : '0'}</p>
+                    </div>
+                  ))}
+                </div>
+              </UnifiedCard>
+            </div>
+          </Suspense>
         )}
 
         {activeTab === 'trends' && (
-          <div className="space-y-8 sm:space-y-12">
+          <div className="space-y-6">
             <Suspense fallback={<LoadingSpinner />}>
-              {/* Historical Scores Chart */}
-              <TimeSeriesChart 
-                data={historicalScores} 
-                title="Score Progress Over Time (Past 12 Months)"
-              />
-
-              {/* Financial Trends */}
-              <SpendingTrendsChart 
-                data={monthlyFinancialData} 
-                title="Monthly Financial Overview"
-              />
-
-              {/* Category Trends */}
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                <CategoryTrendsChart 
-                  data={categoryTrends} 
-                  type="health"
-                  title="Health & Wellness Spending Trends"
-                />
-                <CategoryTrendsChart 
-                  data={categoryTrends} 
-                  type="eco"
-                  title="Eco & Sustainability Spending Trends"
-                />
-              </div>
+              <UnifiedCard size="lg">
+                <h2 className="text-2xl font-bold text-white mb-4">Spending Trends</h2>
+                <p className="text-white/70">Historical analysis of your financial patterns over time.</p>
+              </UnifiedCard>
             </Suspense>
           </div>
-        )}
-
-        {activeTab === 'financial' && (
-          <Suspense fallback={<LoadingSpinner />}>
-            <FinancialCard data={financialData} />
-          </Suspense>
-        )}
-        {activeTab === 'health' && (
-          <Suspense fallback={<LoadingSpinner />}>
-            <WellnessCard data={wellnessData} />
-          </Suspense>
-        )}
-        {activeTab === 'eco' && (
-          <Suspense fallback={<LoadingSpinner />}>
-            <EcoCard data={ecoData} />
-          </Suspense>
         )}
       </div>
     </div>

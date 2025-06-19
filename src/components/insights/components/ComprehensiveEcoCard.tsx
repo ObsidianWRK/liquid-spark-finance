@@ -434,7 +434,6 @@ const ComprehensiveEcoCard: React.FC<EcoCardProps> = ({
               </svg>
               <div className="absolute inset-0 flex flex-col items-center justify-center">
                 <span className="text-3xl font-bold text-white">{Math.round(animatedScore)}</span>
-                <span className="text-xs text-slate-400">Eco Score</span>
               </div>
             </div>
             <div className="text-xl font-semibold text-white mb-2">

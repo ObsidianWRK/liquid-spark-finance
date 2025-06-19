@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { Heart, Leaf, DollarSign, TrendingUp } from 'lucide-react';
 import { SharedScoreCircle } from '@/components/shared';
+import { UnifiedCard } from '@/components/ui/UnifiedCard';
 
 interface Transaction {
   id: string;
@@ -72,12 +73,12 @@ const SimpleInsightsPage: React.FC<SimpleInsightsPageProps> = ({ transactions, a
   if (isLoading) {
     return (
       <div className="w-full text-white flex items-center justify-center py-20">
-        <div className="liquid-glass-fallback rounded-2xl p-8">
+        <UnifiedCard size="lg">
           <div className="flex items-center space-x-4">
             <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-white"></div>
             <span className="text-white text-lg">Loading insights...</span>
           </div>
-        </div>
+        </UnifiedCard>
       </div>
     );
   }
@@ -96,7 +97,7 @@ const SimpleInsightsPage: React.FC<SimpleInsightsPageProps> = ({ transactions, a
         </div>
 
         {/* Score Overview */}
-        <div className="liquid-glass-fallback rounded-2xl p-6 sm:p-8 mb-8">
+        <UnifiedCard size="lg" className="mb-8">
           <h3 className="text-xl sm:text-2xl font-bold text-white mb-6 sm:mb-8 text-center">
             Your Overall Scores
           </h3>
@@ -107,7 +108,7 @@ const SimpleInsightsPage: React.FC<SimpleInsightsPageProps> = ({ transactions, a
                 type="financial"
                 size="lg"
                 label="Financial Health"
-                showLabel={true}
+                showLabel={false}
               />
             </div>
             <div className="text-center">
@@ -116,7 +117,7 @@ const SimpleInsightsPage: React.FC<SimpleInsightsPageProps> = ({ transactions, a
                 type="health"
                 size="lg"
                 label="Wellness Score"
-                showLabel={true}
+                showLabel={false}
               />
             </div>
             <div className="text-center">
@@ -125,49 +126,37 @@ const SimpleInsightsPage: React.FC<SimpleInsightsPageProps> = ({ transactions, a
                 type="eco"
                 size="lg"
                 label="Eco Impact"
-                showLabel={true}
+                showLabel={false}
               />
             </div>
           </div>
-        </div>
+        </UnifiedCard>
 
         {/* Quick Summary */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          <div className="liquid-glass-fallback rounded-2xl p-6">
-            <div className="flex items-center space-x-4 mb-4">
-              <div className="p-3 rounded-xl bg-blue-500/20">
-                <DollarSign className="w-6 h-6 text-blue-400" />
-              </div>
-              <div>
-                <h4 className="text-lg font-bold text-white">Monthly Spending</h4>
-                <p className="text-white/70 text-sm">${financialData.monthlySpending.toLocaleString()}</p>
-              </div>
-            </div>
-          </div>
+          <UnifiedCard 
+            title="Monthly Spending" 
+            metric={`$${financialData.monthlySpending.toLocaleString()}`}
+            icon={DollarSign}
+            iconColor="#3b82f6"
+            size="lg"
+          />
 
-          <div className="liquid-glass-fallback rounded-2xl p-6">
-            <div className="flex items-center space-x-4 mb-4">
-              <div className="p-3 rounded-xl bg-green-500/20">
-                <TrendingUp className="w-6 h-6 text-green-400" />
-              </div>
-              <div>
-                <h4 className="text-lg font-bold text-white">Total Balance</h4>
-                <p className="text-white/70 text-sm">${financialData.totalBalance.toLocaleString()}</p>
-              </div>
-            </div>
-          </div>
+          <UnifiedCard 
+            title="Total Balance" 
+            metric={`$${financialData.totalBalance.toLocaleString()}`}
+            icon={TrendingUp}
+            iconColor="#10b981"
+            size="lg"
+          />
 
-          <div className="liquid-glass-fallback rounded-2xl p-6">
-            <div className="flex items-center space-x-4 mb-4">
-              <div className="p-3 rounded-xl bg-purple-500/20">
-                <Heart className="w-6 h-6 text-purple-400" />
-              </div>
-              <div>
-                <h4 className="text-lg font-bold text-white">System Status</h4>
-                <p className="text-white/70 text-sm">All systems operational</p>
-              </div>
-            </div>
-          </div>
+          <UnifiedCard 
+            title="System Status" 
+            metric="All systems operational"
+            icon={Heart}
+            iconColor="#8b5cf6"
+            size="lg"
+          />
         </div>
       </div>
     </div>

@@ -20,7 +20,7 @@ const AnimatedCircularProgress = memo(({
   color = '#007AFF',
   animationDuration = 1000,
   delay = 0,
-  showLabel = true,
+  showLabel = false,
   label = 'out of 100',
   maxValue = 100
 }: AnimatedCircularProgressProps) => {
@@ -83,7 +83,7 @@ const AnimatedCircularProgress = memo(({
         className="transform -rotate-90"
         viewBox={`0 0 ${responsiveSize} ${responsiveSize}`}
         role="img"
-        aria-label={`Progress: ${Math.round(animatedValue)} ${label}`}
+        aria-label={`Progress: ${Math.round(animatedValue)}`}
       >
         {/* Enhanced background circle */}
         <circle
@@ -115,7 +115,7 @@ const AnimatedCircularProgress = memo(({
         />
       </svg>
       
-      {/* Center content with responsive sizing */}
+      {/* Center content with responsive sizing - removed label display */}
       <div className="absolute inset-0 flex flex-col items-center justify-center">
         <span 
           className="font-bold text-white tabular-nums"
@@ -127,14 +127,6 @@ const AnimatedCircularProgress = memo(({
         >
           {formatScore(animatedValue).replace('.', '.')}
         </span>
-        {showLabel && (
-          <span 
-            className="text-white/60 mt-1"
-            style={{ fontSize: `${responsiveSize * 0.1}px` }}
-          >
-            {label}
-          </span>
-        )}
       </div>
     </div>
   );
