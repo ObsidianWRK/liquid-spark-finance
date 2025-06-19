@@ -1,6 +1,6 @@
 import React, { useState, useMemo, useCallback, useEffect } from 'react';
-import { calculateFinancialFreedomYears } from '@/utils/calculators';
-import { LineChart } from '@/components/charts';
+import { calculateFinancialFreedomYears } from '@/shared/utils/calculators';
+import { LineChart } from '@/shared/ui/charts';
 
 interface ProjectionData {
   year: number;

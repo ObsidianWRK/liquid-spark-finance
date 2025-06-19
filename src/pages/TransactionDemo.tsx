@@ -3,7 +3,7 @@ import { VueniUnifiedTransactionList } from '@/components/shared';
 import MobileTransactionScreen from '@/screens/MobileTransactionScreen';
 import EnterpriseTransactionView from '@/features/transactions/components/EnterpriseTransactionView';
 import { Smartphone, Tablet, Monitor } from 'lucide-react';
-import { cn } from '@/lib/utils';
+import { cn } from '@/shared/lib/utils';
 
 const TransactionDemo: React.FC = () => {
   const [view, setView] = useState<'mobile' | 'tablet' | 'desktop'>('desktop');

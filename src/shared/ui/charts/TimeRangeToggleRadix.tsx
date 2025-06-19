@@ -6,7 +6,7 @@
 
 import React, { memo, forwardRef, useImperativeHandle, useRef } from 'react';
 import * as ToggleGroup from '@radix-ui/react-toggle-group';
-import { cn } from '@/lib/utils';
+import { cn } from '@/shared/lib/utils';
 import { appleGraphTokens } from '@/theme/graph-tokens';
 import { TimeRangeOption } from './types';
 

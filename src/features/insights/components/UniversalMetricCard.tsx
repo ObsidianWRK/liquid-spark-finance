@@ -1,6 +1,6 @@
 import React, { memo, ReactNode } from 'react';
 import { ChevronRight, TrendingUp, TrendingDown, Minus } from 'lucide-react';
-import { UniversalCard } from '../ui/UniversalCard';
+import { UniversalCard } from '@/shared/ui/UniversalCard';
 
 // Universal Metric Card that consolidates:
 // - EnhancedMetricCard.tsx

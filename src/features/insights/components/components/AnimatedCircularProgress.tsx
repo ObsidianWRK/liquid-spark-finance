@@ -1,5 +1,5 @@
 import React, { memo, useEffect, useState, useMemo, useRef } from 'react';
-import { formatScore } from '@/utils/formatters';
+import { formatScore } from '@/shared/utils/formatters';
 
 interface AnimatedCircularProgressProps {
   value: number;

@@ -3,7 +3,7 @@ import { useBankLinkingStore } from "../store";
 import { Card, CardContent, CardHeader, CardTitle, CardFooter } from "@/shared/ui/card";
 import { Button } from "@/shared/ui/button";
 import { Banknote, X } from "lucide-react";
-import { cn } from "@/lib/utils";
+import { cn } from "@/shared/lib/utils";
 
 export const LinkedAccountsList: React.FC<{ className?: string }> = ({ className }) => {
   const { accounts, loading, refresh, unlink } = useBankLinkingStore((s) => ({

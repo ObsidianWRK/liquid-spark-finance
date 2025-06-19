@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { calculateThreeFundPortfolioReturn } from '@/utils/calculators';
+import { calculateThreeFundPortfolioReturn } from '@/shared/utils/calculators';
 
 const ThreeFundPortfolioCalculator = () => {
   const [usReturn, setUsReturn] = useState(8);

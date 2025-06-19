@@ -1,7 +1,7 @@
 import React from 'react';
-import { cn } from '@/lib/utils';
+import { cn } from '@/shared/lib/utils';
 import { LucideIcon } from 'lucide-react';
-import { formatFinancialScore } from '@/utils/formatters';
+import { formatFinancialScore } from '@/shared/utils/formatters';
 
 // Universal Card Component - Consolidates:
 // - GlassCard.tsx

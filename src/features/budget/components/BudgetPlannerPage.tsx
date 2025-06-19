@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { budgetService } from '@/features/budgetService';
+import { budgetService } from '@/features/budget/api/budgetService';
 import { Budget, SavingsGoal } from '@/types/budgets';
 import BudgetTracker from './BudgetTracker';
 import {
@@ -13,7 +13,7 @@ import {
   AlertCircle
 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
-import { cn } from '@/lib/utils';
+import { cn } from '@/shared/lib/utils';
 
 const BudgetPlannerPage = () => {
   const navigate = useNavigate();

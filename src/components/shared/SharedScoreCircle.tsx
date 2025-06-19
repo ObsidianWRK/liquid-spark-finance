@@ -1,6 +1,6 @@
 import React, { memo, useEffect, useState, useMemo } from 'react';
-import { cn } from '@/lib/utils';
-import { formatScore, formatFinancialScore } from '@/utils/formatters';
+import { cn } from '@/shared/lib/utils';
+import { formatScore, formatFinancialScore } from '@/shared/utils/formatters';
 
 export type ScoreType = 'health' | 'eco' | 'financial';
 

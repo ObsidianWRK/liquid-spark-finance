@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import { AreaChart } from '@/components/charts';
+import { AreaChart } from '@/shared/ui/charts';
 import { MonthlySpending } from '@/features/mockHistoricalData';
 
 interface SpendingTrendsChartProps {

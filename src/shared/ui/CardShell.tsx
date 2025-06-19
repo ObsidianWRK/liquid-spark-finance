@@ -1,5 +1,5 @@
 import React, { FC, PropsWithChildren } from 'react';
-import { cn } from '@/lib/utils';
+import { cn } from '@/shared/lib/utils';
 
 export interface CardShellProps extends PropsWithChildren {
   accent: 'green' | 'yellow' | 'blue' | 'red' | 'purple';

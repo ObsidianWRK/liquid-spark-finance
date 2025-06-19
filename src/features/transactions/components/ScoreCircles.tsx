@@ -1,7 +1,7 @@
 
 import React from 'react';
 import ScoreCircle from './ScoreCircle';
-import { TransactionScores } from '@/utils/transactionScoring';
+import { TransactionScores } from '@/shared/utils/transactionScoring';
 
 interface ScoreCirclesProps {
   scores: TransactionScores;

@@ -13,9 +13,9 @@ import {
   Zap
 } from 'lucide-react';
 import { RetirementPlan, RiskProfile } from '@/types/financialPlanning';
-import { financialPlanningService } from '@/features/financialPlanningService';
+import { financialPlanningService } from '@/features/planning/api/financialPlanningService';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart as RechartsPieChart, Cell, Pie } from 'recharts';
-import { cn } from '@/lib/utils';
+import { cn } from '@/shared/lib/utils';
 
 interface RetirementPlannerProps {
   familyId: string;

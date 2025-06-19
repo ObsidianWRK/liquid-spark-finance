@@ -12,7 +12,7 @@ import React, {
   useImperativeHandle,
   useRef
 } from 'react';
-import { cn } from '@/lib/utils';
+import { cn } from '@/shared/lib/utils';
 import { GraphBase } from './GraphBase';
 import { 
   appleGraphTokens,

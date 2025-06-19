@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { X, Target, Calendar, DollarSign } from 'lucide-react';
-import { savingsGoalsService } from '@/features/savingsGoalsService';
+import { savingsGoalsService } from '@/features/savings/api/savingsGoalsService';
 import { SavingsGoal, GoalCategory } from '@/types/savingsGoals';
 
 interface GoalCreatorProps {

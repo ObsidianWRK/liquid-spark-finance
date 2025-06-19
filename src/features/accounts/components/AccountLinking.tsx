@@ -15,8 +15,8 @@ import {
   GraduationCap
 } from 'lucide-react';
 import { Institution, Account } from '@/types/accounts';
-import { accountService } from '@/features/accountService';
-import { cn } from '@/lib/utils';
+import { accountService } from '@/features/accounts/api/accountService';
+import { cn } from '@/shared/lib/utils';
 
 interface AccountLinkingProps {
   familyId: string;

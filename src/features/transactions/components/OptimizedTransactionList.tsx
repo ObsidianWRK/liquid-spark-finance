@@ -7,8 +7,8 @@ import {
 } from '@/types/shared';
 import { UnifiedCard } from '@/shared/ui/UnifiedCard';
 import { Search, Filter, ChevronDown, TrendingUp, TrendingDown } from 'lucide-react';
-import { cn } from '@/lib/utils';
-import { carrierUrl, prettyShipStatus } from '@/utils/shipping';
+import { cn } from '@/shared/lib/utils';
+import { carrierUrl, prettyShipStatus } from '@/shared/utils/shipping';
 
 // Optimized Transaction List - Consolidates:
 // - TransactionList.tsx

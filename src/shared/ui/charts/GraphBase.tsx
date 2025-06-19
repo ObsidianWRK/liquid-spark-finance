@@ -29,7 +29,7 @@ import {
   Bar,
   Cell
 } from 'recharts';
-import { cn } from '@/lib/utils';
+import { cn } from '@/shared/lib/utils';
 import { 
   appleGraphTokens,
   getGraphColor,
@@ -50,7 +50,7 @@ import {
 } from './types';
 import TimeRangeToggle from './TimeRangeToggle';
 import TimeRangeToggleRadix from './TimeRangeToggleRadix';
-import { useTimeRange } from '@/hooks/useTimeRange';
+import { useTimeRange } from '@/shared/hooks/useTimeRange';
 
 // Time control component with Apple-style segmented control
 const TimeControl: React.FC<{

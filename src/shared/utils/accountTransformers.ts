@@ -1,6 +1,6 @@
 // CC: Data transformation utilities for Smart Accounts Deck
 import { AccountRowData } from '@/components/AccountDeck/AccountRow';
-import { mockAccountsEnhanced, mockInstitutions } from '@/features/mockData';
+import { mockAccountsEnhanced, mockInstitutions } from '@/services/mockData';
 
 // CC: Transform account data to AccountRowData format for Smart Accounts Deck
 export const transformToAccountRowData = (): AccountRowData[] => {

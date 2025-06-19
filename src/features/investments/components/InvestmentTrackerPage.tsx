@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { investmentService } from '@/features/investmentService';
+import { investmentService } from '@/features/investments/api/investmentService';
 import { Portfolio } from '@/types/investments';
 import InvestmentPortfolio from './InvestmentPortfolio';
 import {
@@ -13,7 +13,7 @@ import {
   ArrowLeft
 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
-import { cn } from '@/lib/utils';
+import { cn } from '@/shared/lib/utils';
 
 const InvestmentTrackerPage = () => {
   const navigate = useNavigate();

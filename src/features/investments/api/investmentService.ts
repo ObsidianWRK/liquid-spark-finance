@@ -1,5 +1,5 @@
 import { Investment, InvestmentAccount, Portfolio, Holding, PerformanceMetrics, AssetAllocation, RiskMetrics } from '@/types/investments';
-import { secureStorage } from '@/utils/crypto';
+import { secureStorage } from '@/shared/utils/crypto';
 
 /**
  * Investment Portfolio Management Service

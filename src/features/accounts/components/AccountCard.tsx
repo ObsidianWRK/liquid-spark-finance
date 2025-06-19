@@ -1,7 +1,7 @@
 import React from 'react';
 import { AccountCardDTO } from '@/types/accounts';
-import { cn } from '@/lib/utils';
-import { formatCurrency, formatPercent, safeRatio } from '@/utils/formatters';
+import { cn } from '@/shared/lib/utils';
+import { formatCurrency, formatPercent, safeRatio } from '@/shared/utils/formatters';
 import { Send, Download, ArrowUpRight, ArrowDownRight, TrendingUp, CreditCard, DollarSign, PiggyBank } from 'lucide-react';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/shared/ui/tooltip';
 

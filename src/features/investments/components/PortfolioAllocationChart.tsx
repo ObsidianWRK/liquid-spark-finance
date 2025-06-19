@@ -5,7 +5,7 @@
 
 import React, { useMemo, useCallback, useState } from 'react';
 import { StackedBarChart, StackedBarDataPoint } from '@/components/charts/StackedBarChart';
-import { investmentService } from '@/features/investmentService';
+import { investmentService } from '@/features/investments/api/investmentService';
 import { Portfolio } from '@/types/investments';
 import { TrendingUp, PieChart, Target, BarChart3, Rebalance, Settings, AlertTriangle } from 'lucide-react';
 import { Button } from '@/shared/ui/button';

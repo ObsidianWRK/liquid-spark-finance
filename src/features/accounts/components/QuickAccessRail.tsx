@@ -2,8 +2,8 @@ import React, { useEffect, useRef, useState, useCallback } from 'react';
 import { QuickAccessCard } from './QuickAccessCard';
 import { AccountCardDTO } from '@/types/accounts';
 import { ChevronLeft, ChevronRight, Eye, EyeOff } from 'lucide-react';
-import { cn } from '@/lib/utils';
-import { useIsMobile } from '@/hooks/use-mobile';
+import { cn } from '@/shared/lib/utils';
+import { useIsMobile } from '@/shared/hooks/use-mobile';
 
 interface QuickAccessRailProps {
   accounts: AccountCardDTO[];

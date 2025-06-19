@@ -18,7 +18,7 @@ import {
   EyeOff
 } from 'lucide-react';
 import { PieChart as RechartsPieChart, Cell, ResponsiveContainer, Pie } from 'recharts';
-import { AreaChart } from '@/components/charts';
+import { AreaChart } from '@/shared/ui/charts';
 
 interface Account {
   id: string;

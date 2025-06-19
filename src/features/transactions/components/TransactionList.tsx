@@ -3,7 +3,7 @@
 
 import React, { memo, useMemo } from 'react';
 import { FixedSizeList as List, ListChildComponentProps } from 'react-window';
-import { cn } from '@/lib/utils';
+import { cn } from '@/shared/lib/utils';
 import TransactionRow from './TransactionRow';
 import DateSeparator from './DateSeparator';
 import { Transaction } from '@/types/transactions';

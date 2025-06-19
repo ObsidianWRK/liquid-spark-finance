@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { convertCurrency } from '@/utils/calculators';
+import { convertCurrency } from '@/shared/utils/calculators';
 
 const ExchangeRateCalculator = () => {
   const [amount, setAmount] = useState(100);

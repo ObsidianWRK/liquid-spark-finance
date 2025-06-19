@@ -5,9 +5,9 @@ import { Button } from '@/shared/ui/button';
 import { Badge } from '@/shared/ui/badge';
 import { Switch } from '@/shared/ui/switch';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/shared/ui/select';
-import { cn } from '@/lib/utils';
+import { cn } from '@/shared/lib/utils';
 import { SharedScoreCircle, ScoreGroup } from './SharedScoreCircle';
-import { InputSanitizer } from '@/utils/sanitize';
+import { InputSanitizer } from '@/shared/utils/sanitize';
 
 // Lazy load heavy components for performance
 const TimeSeriesChart = lazy(() => import('@/features/insights/components/TimeSeriesChart'));

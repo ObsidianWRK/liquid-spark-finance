@@ -1,6 +1,6 @@
-import { calculateHealthScore, fetchHealthMetrics } from './healthKitService';
+import { calculateHealthScore, fetchHealthMetrics } from '@/features/biometric-intervention/api/healthKitService';
 import { calculateEcoScore } from './ecoScoreService';
-import { Transaction, Account } from '@/types/shared';
+import { Transaction, Account } from '@/shared/types/shared';
 
 export interface ScoreSummary {
   financial: number;

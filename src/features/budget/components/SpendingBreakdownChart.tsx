@@ -5,7 +5,7 @@
 
 import React, { useMemo, useCallback } from 'react';
 import { StackedBarChart, StackedBarDataPoint } from '@/components/charts/StackedBarChart';
-import { mockData } from '@/features/mockData';
+import { mockData } from '@/services/mockData';
 import { Transaction, TransactionCategory } from '@/types/transactions';
 import { Calendar, TrendingDown, Filter, Download, Share2 } from 'lucide-react';
 import { Button } from '@/shared/ui/button';

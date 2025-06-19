@@ -1,6 +1,6 @@
 
 import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
-import { secureStorage } from '@/utils/crypto';
+import { secureStorage } from '@/shared/utils/crypto';
 
 interface LiquidGlassSettings {
   enabled: boolean;

@@ -1,7 +1,7 @@
 import React, { useState, useMemo, useCallback, useEffect } from 'react';
-import { calculateCompoundInterest } from '@/utils/calculators';
+import { calculateCompoundInterest } from '@/shared/utils/calculators';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
-import { LineChart } from '@/components/charts';
+import { LineChart } from '@/shared/ui/charts';
 import { SecureCalculatorWrapper, useSecureCalculator } from './SecureCalculatorWrapper';
 import { Alert, AlertDescription } from '@/shared/ui/alert';
 import { AlertTriangle } from 'lucide-react';

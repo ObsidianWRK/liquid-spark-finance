@@ -3,7 +3,7 @@ import * as MenubarPrimitive from "@radix-ui/react-menubar"
 import { Check, ChevronRight, Circle } from "lucide-react"
 import LiquidGlassSVGFilters from '@/shared/ui/LiquidGlassSVGFilters'
 
-import { cn } from "@/lib/utils"
+import { cn } from "@/shared/lib/utils"
 
 const MenubarMenu = MenubarPrimitive.Menu
 

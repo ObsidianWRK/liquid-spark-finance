@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { calculate401kBalance } from '@/utils/calculators';
+import { calculate401kBalance } from '@/shared/utils/calculators';
 import { PieChart, Pie, Cell, BarChart, Bar, ResponsiveContainer } from 'recharts';
-import { AreaChart } from '@/components/charts';
+import { AreaChart } from '@/shared/ui/charts';
 
 interface RetirementData {
   year: number;

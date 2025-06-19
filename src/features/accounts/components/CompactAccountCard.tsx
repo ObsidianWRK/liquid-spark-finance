@@ -3,7 +3,7 @@ import { UnifiedCard } from '@/shared/ui/UnifiedCard';
 import { Badge } from '@/shared/ui/badge';
 import { Button } from '@/shared/ui/button';
 import { AccountCardDTO } from '@/types/accounts';
-import { formatCurrency } from '@/utils/formatters';
+import { formatCurrency } from '@/shared/utils/formatters';
 import { 
   Eye, 
   EyeOff, 
@@ -16,7 +16,7 @@ import {
   AlertTriangle,
   Banknote
 } from 'lucide-react';
-import { cn } from '@/lib/utils';
+import { cn } from '@/shared/lib/utils';
 
 interface CompactAccountCardProps {
   account: AccountCardDTO;

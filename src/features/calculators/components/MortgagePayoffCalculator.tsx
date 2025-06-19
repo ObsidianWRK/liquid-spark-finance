@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { calculateMortgagePayoffSavings } from '@/utils/calculators';
+import { calculateMortgagePayoffSavings } from '@/shared/utils/calculators';
 
 const MortgagePayoffCalculator = () => {
   const [principal, setPrincipal] = useState(300000);

@@ -14,7 +14,7 @@ import {
 import { Family, FamilyMember, FamilyInvitation } from '@/types/family';
 import { familyService } from '@/features/familyService';
 import { Switch } from '@/shared/ui/switch';
-import { cn } from '@/lib/utils';
+import { cn } from '@/shared/lib/utils';
 
 interface FamilyManagementProps {
   familyId: string;

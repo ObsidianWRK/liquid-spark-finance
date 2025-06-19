@@ -13,9 +13,9 @@ import {
   Shield,
   Activity
 } from 'lucide-react';
-import { investmentService } from '@/features/investmentService';
+import { investmentService } from '@/features/investments/api/investmentService';
 import { Portfolio, Holding } from '@/types/investments';
-import { cn } from '@/lib/utils';
+import { cn } from '@/shared/lib/utils';
 
 interface InvestmentPortfolioProps {
   familyId: string;

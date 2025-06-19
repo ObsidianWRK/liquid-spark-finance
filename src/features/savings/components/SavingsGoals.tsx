@@ -3,12 +3,12 @@ import { Plus, Target, TrendingUp, Award, Calendar, DollarSign, Percent, MoreHor
 import GoalCard from './GoalCard';
 import GoalCreator from './GoalCreator';
 import SavingsInsights from './SavingsInsights';
-import { savingsGoalsService } from '@/features/savingsGoalsService';
+import { savingsGoalsService } from '@/features/savings/api/savingsGoalsService';
 import { SavingsGoal, SavingsInsight } from '@/types/savingsGoals';
-import { cn } from '@/lib/utils';
+import { cn } from '@/shared/lib/utils';
 import { useNavigate } from 'react-router-dom';
 import { UnifiedCard } from '@/shared/ui/UnifiedCard';
-import { formatCurrency } from '@/utils/formatters';
+import { formatCurrency } from '@/shared/utils/formatters';
 
 interface SavingsGoalsProps {
   compact?: boolean;

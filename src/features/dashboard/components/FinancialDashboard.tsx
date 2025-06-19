@@ -31,8 +31,8 @@ import {
   ResponsiveContainer,
   ComposedChart
 } from 'recharts';
-import { visualizationService, DashboardData, FinancialMetric } from '@/features/visualizationService';
-import { cn } from '@/lib/utils';
+import { visualizationService, DashboardData, FinancialMetric } from '@/features/dashboard/api/visualizationService';
+import { cn } from '@/shared/lib/utils';
 import { UniversalCard } from '@/shared/ui/UniversalCard';
 
 // Helper to map string names to actual Icon components

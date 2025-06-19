@@ -3,7 +3,7 @@ import { useSubscriptionsStore } from "../store";
 import { Card, CardContent, CardHeader, CardTitle, CardFooter } from "@/shared/ui/card";
 import { Button } from "@/shared/ui/button";
 import { Repeat, XCircle } from "lucide-react";
-import { cn } from "@/lib/utils";
+import { cn } from "@/shared/lib/utils";
 
 export const RecurringChargesList: React.FC<{ className?: string }> = ({ className }) => {
   const { charges, loading, detect, cancel } = useSubscriptionsStore((s) => ({

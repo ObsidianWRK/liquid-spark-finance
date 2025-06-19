@@ -8,8 +8,8 @@ import {
   InterventionEvent,
   BiometricPreferences
 } from "./types";
-import { biometricService } from "@/features/biometricService";
-import { BiometricReading, InterventionAlert } from "@/types";
+import { biometricService } from "@/features/biometric-intervention/api/biometricService";
+import { BiometricReading, InterventionAlert } from "./types";
 
 // Temporary mock service until real service is implemented
 const mockBiometricInterventionService = {

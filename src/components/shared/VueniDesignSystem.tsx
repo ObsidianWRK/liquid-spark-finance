@@ -1,5 +1,5 @@
 import React, { memo, forwardRef } from 'react';
-import { cn } from '@/lib/utils';
+import { cn } from '@/shared/lib/utils';
 import { Card } from '@/shared/ui/card';
 import { Button } from '@/shared/ui/button';
 

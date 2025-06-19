@@ -1,5 +1,5 @@
 import React, { ReactNode } from 'react';
-import { cn } from '@/lib/utils';
+import { cn } from '@/shared/lib/utils';
 import { LucideIcon, TrendingUp, TrendingDown, Minus, ArrowUp, ArrowDown } from 'lucide-react';
 import { unifiedCardTokens, getCardClasses } from '@/theme/unified-card-tokens';
 

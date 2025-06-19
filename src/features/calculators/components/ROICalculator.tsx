@@ -1,5 +1,5 @@
 import React, { useState, useMemo, useCallback } from 'react';
-import { calculateROI } from '@/utils/calculators';
+import { calculateROI } from '@/shared/utils/calculators';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell } from 'recharts';
 import { UniversalCard } from '@/shared/ui/UniversalCard';
 

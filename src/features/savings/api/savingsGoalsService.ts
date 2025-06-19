@@ -1,5 +1,5 @@
 import { SavingsGoal, Contribution, SavingsInsight } from '@/types/savingsGoals';
-import { VueniSecureStorage } from '@/utils/crypto';
+import { VueniSecureStorage } from '@/shared/utils/crypto';
 
 export class SavingsGoalsService {
   private static instance: SavingsGoalsService;

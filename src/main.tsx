@@ -30,8 +30,8 @@ if (typeof window !== "undefined" && typeof window.global === "undefined") {
 import { createRoot } from 'react-dom/client'
 import App from './App.tsx'
 import './index.css'
-import './styles/scroll-fix.css' // WHY: Critical fix for double scroll issue - must load after index.css
-import { SecurityEnvValidator } from './utils/envValidation'
+import './app/styles/scroll-fix.css' // WHY: Critical fix for double scroll issue - must load after index.css
+import { SecurityEnvValidator } from './shared/utils/envValidation'
 
 // Validate security environment before app startup
 try {

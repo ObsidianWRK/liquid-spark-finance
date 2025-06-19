@@ -2,7 +2,7 @@ import React, { useEffect, useMemo } from 'react';
 import { Heart, Activity, Thermometer, Wind, Watch, TrendingUp, TrendingDown, Minus } from 'lucide-react';
 import { Badge } from '@/shared/ui/badge';
 import { Button } from '@/shared/ui/button';
-import { cn } from '@/lib/utils';
+import { cn } from '@/shared/lib/utils';
 import { useBiometricInterventionStore } from '../store';
 import { StressLevel, BiometricData } from '../types';
 

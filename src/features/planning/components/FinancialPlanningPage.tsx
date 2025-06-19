@@ -22,9 +22,9 @@ import {
   ArrowLeft
 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
-import { financialPlanningService } from '@/features/financialPlanningService';
+import { financialPlanningService } from '@/features/planning/api/financialPlanningService';
 import { FinancialGoal, GoalCategory, PlanningRecommendation } from '@/types/financialPlanning';
-import { cn } from '@/lib/utils';
+import { cn } from '@/shared/lib/utils';
 
 interface FinancialPlanningPageProps {
   familyId?: string;

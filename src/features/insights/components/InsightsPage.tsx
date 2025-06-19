@@ -3,7 +3,7 @@ import { Heart, Leaf, DollarSign, TrendingUp, Calendar, BarChart3 } from 'lucide
 import { SharedScoreCircle } from '@/components/shared/SharedScoreCircle';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/shared/ui/tabs';
 import { Transaction, Account } from '@/types/shared';
-import { formatScore, formatPercentage } from '@/utils/formatters';
+import { formatScore, formatPercentage } from '@/shared/utils/formatters';
 import { generateScoreSummary } from '@/features/scoringModel';
 import { mockHealthEcoService } from '@/features/mockHealthEcoService';
 import { UnifiedCard } from '@/shared/ui/UnifiedCard';

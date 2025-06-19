@@ -20,9 +20,9 @@ import {
   AlertCircle
 } from 'lucide-react';
 import { Transaction, TransactionCategory } from '@/types/transactions';
-import { transactionService } from '@/features/transactionService';
+import { transactionService } from '@/features/transactions/api/transactionService';
 import { Switch } from '@/shared/ui/switch';
-import { cn } from '@/lib/utils';
+import { cn } from '@/shared/lib/utils';
 
 interface TransactionManagerProps {
   familyId: string;

@@ -1,8 +1,8 @@
-@import './styles/responsive-enhancements.css'; /* responsive enhancements */
-@import './styles/quick-access-performance.css'; /* Quick Access Rail performance */
-@import './styles/performance-optimized.css';
-@import './styles/account-card.css';
-@import './styles/calculator-overrides.css';
+@import './app/styles/responsive-enhancements.css'; /* responsive enhancements */
+@import './app/styles/quick-access-performance.css'; /* Quick Access Rail performance */
+@import './app/styles/performance-optimized.css';
+@import './app/styles/account-card.css';
+@import './app/styles/calculator-overrides.css';
 
 @tailwind base;
 @tailwind components;

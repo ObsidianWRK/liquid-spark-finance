@@ -2,7 +2,7 @@ import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import { TrendingUp, TrendingDown, AlertCircle, CheckCircle } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import AnimatedCircularProgress from '../insights/components/AnimatedCircularProgress';
-import { creditScoreService } from '@/features/creditScoreService';
+import { creditScoreService } from '@/features/credit/api/creditScoreService';
 import { CreditScore } from '@/types/creditScore';
 import { UniversalCard } from '@/shared/ui/UniversalCard';
 import { OptimizedScoreCard } from '@/features/insights/components/components/OptimizedScoreCard';

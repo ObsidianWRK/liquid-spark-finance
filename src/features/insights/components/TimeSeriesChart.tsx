@@ -1,5 +1,5 @@
 import React from 'react';
-import { LineChart } from '@/components/charts';
+import { LineChart } from '@/shared/ui/charts';
 import { HistoricalScore } from '@/features/mockHistoricalData';
 
 interface TimeSeriesChartProps {

@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Building2, CreditCard, PiggyBank, TrendingUp, Plus, RefreshCw, Banknote, CheckCircle } from 'lucide-react';
 import { CardSkeleton } from './health/CardSkeleton';
-import { formatCurrency } from '@/utils/formatters';
-import { cn } from '@/lib/utils';
+import { formatCurrency } from '@/shared/utils/formatters';
+import { cn } from '@/shared/lib/utils';
 
 interface MockAccount {
   id: string;

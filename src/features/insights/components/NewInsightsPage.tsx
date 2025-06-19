@@ -2,12 +2,12 @@ import React, { useState, useEffect, useMemo, Suspense, lazy } from 'react';
 import { Heart, Leaf, DollarSign, TrendingUp, Calendar, BarChart3, ArrowLeft } from 'lucide-react';
 import { SharedScoreCircle } from '@/components/shared/SharedScoreCircle';
 import { Transaction, Account } from '@/types/shared';
-import { formatScore, formatPercentage } from '@/utils/formatters';
+import { formatScore, formatPercentage } from '@/shared/utils/formatters';
 import { useNavigate } from 'react-router-dom';
-import { generateScoreSummary } from '@/features/scoringModel';
-import { mockHealthEcoService } from '@/features/mockHealthEcoService';
-import { mockHistoricalService } from '@/features/mockHistoricalData';
-import { cn } from '@/lib/utils';
+import { generateScoreSummary } from '@/services/scoringModel';
+import { mockHealthEcoService } from '@/services/mockHealthEcoService';
+import { mockHistoricalService } from '@/services/mockHistoricalData';
+import { cn } from '@/shared/lib/utils';
 import { UnifiedCard } from '@/shared/ui/UnifiedCard';
 
 // Lazy load heavy components for performance

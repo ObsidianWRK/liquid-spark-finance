@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useEffect, useState, useRef, useCallback, useMemo } from 'react';
 import { Subscription } from 'rxjs';
-import { wellnessEngine, BiometricsState, WellnessTrigger } from '@/features/biometrics/WellnessEngine';
-import { biometricStream, BiometricReading } from '@/features/biometrics/BiometricStream';
+import { wellnessEngine, BiometricsState, WellnessTrigger } from '@/features/biometric-intervention/api/WellnessEngine';
+import { biometricStream, BiometricReading } from '@/features/biometric-intervention/api/BiometricStream';
 
 // Context selector types
 type BiometricsSelector<T> = (state: BiometricsState) => T;

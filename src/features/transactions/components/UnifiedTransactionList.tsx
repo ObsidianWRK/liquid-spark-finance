@@ -13,7 +13,7 @@ import {
 } from 'lucide-react';
 import { UniversalCard } from '../ui/UniversalCard';
 import { UniversalScoreCircle } from './UniversalScoreCircle';
-import { cn } from '@/lib/utils';
+import { cn } from '@/shared/lib/utils';
 import { colors } from '@/theme/colors';
 
 // Unified Transaction List that consolidates:

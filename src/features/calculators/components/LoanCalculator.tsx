@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { calculateLoanPayment } from '@/utils/calculators';
+import { calculateLoanPayment } from '@/shared/utils/calculators';
 import GlassSlider from '@/shared/ui/GlassSlider';
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell, BarChart, Bar } from 'recharts';
 

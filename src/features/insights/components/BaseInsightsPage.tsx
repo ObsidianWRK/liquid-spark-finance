@@ -6,7 +6,7 @@ import { UniversalScoreCard } from './UniversalScoreCard';
 import ComprehensiveWellnessCard from './ComprehensiveWellnessCard';
 import ComprehensiveEcoCard from './ComprehensiveEcoCard';
 import { generateScoreSummary } from '@/features/scoringModel';
-import { formatPercentage, getScoreColor } from '@/utils/formatters';
+import { formatPercentage, getScoreColor } from '@/shared/utils/formatters';
 import { 
   usePerformanceOptimization, 
   useResponsiveBreakpoint, 

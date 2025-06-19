@@ -1,5 +1,5 @@
 import { CreditScore, CreditTip, ScoreHistoryPoint } from '@/types/creditScore';
-import { VueniSecureStorage } from '@/utils/crypto';
+import { VueniSecureStorage } from '@/shared/utils/crypto';
 
 export class CreditScoreService {
   private static instance: CreditScoreService;

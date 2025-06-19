@@ -16,7 +16,7 @@ import {
   Bar,
   Cell
 } from 'recharts';
-import { cn } from '@/lib/utils';
+import { cn } from '@/shared/lib/utils';
 import { 
   appleGraphTokens,
   getGraphColor,

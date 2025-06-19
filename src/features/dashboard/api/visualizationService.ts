@@ -1,9 +1,9 @@
-import { familyService } from './familyService';
-import { accountService } from './accountService';
-import { transactionService } from './transactionService';
-import { investmentService } from './investmentService';
-import { budgetService } from './budgetService';
-import { Transaction } from '@/types/accounts';
+import { familyService } from '@/features/shared-budgets/api/familyService';
+import { accountService } from '@/features/accounts/api/accountService';
+import { transactionService } from '@/features/transactions/api/transactionService';
+import { investmentService } from '@/features/investments/api/investmentService';
+import { budgetService } from '@/features/budget/api/budgetService';
+import { Transaction } from '@/shared/types/accounts';
 
 export interface ChartDataPoint {
   date: string;

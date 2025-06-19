@@ -1,7 +1,7 @@
-import { Transaction, Account } from '@/types/shared';
-import { AccountCardDTO, accountToCardDTO } from '@/types/accounts';
+import { Transaction, Account } from '@/shared/types/shared';
+import { AccountCardDTO, accountToCardDTO } from '@/shared/types/accounts';
 
-export type { Transaction, Account } from '@/types/shared';
+export type { Transaction, Account } from '@/shared/types/shared';
 
 // CC: Enhanced mock data with ≥20 accounts for Smart Accounts Deck requirements
 export const mockAccountsEnhanced = [

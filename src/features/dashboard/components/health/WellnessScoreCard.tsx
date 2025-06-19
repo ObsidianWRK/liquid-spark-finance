@@ -3,7 +3,7 @@ import { Heart, TrendingUp, TrendingDown, Minus, Shield, Activity } from 'lucide
 import { CardSkeleton } from './CardSkeleton';
 import { WellnessMetric } from './MetricDisplay';
 import { useWellnessScore, useBiometricTrends, useBiometrics } from '@/providers/BiometricsProvider';
-import { cn } from '@/lib/utils';
+import { cn } from '@/shared/lib/utils';
 
 interface WellnessScoreCardProps {
   className?: string;

@@ -14,7 +14,7 @@ import {
 } from '@/types/budgets';
 import { TransactionCategory } from '@/types/transactions';
 import { transactionService } from './transactionService';
-import { secureStorage } from '@/utils/crypto';
+import { secureStorage } from '@/shared/utils/crypto';
 
 /**
  * Advanced Budgeting & Goal Management Service

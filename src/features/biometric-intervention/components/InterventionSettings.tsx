@@ -7,7 +7,7 @@ import { Switch } from '@/shared/ui/switch';
 import { Input } from '@/shared/ui/input';
 import { Label } from '@/shared/ui/label';
 import { Slider } from '@/shared/ui/slider';
-import { cn } from '@/lib/utils';
+import { cn } from '@/shared/lib/utils';
 import { useBiometricInterventionStore } from '../store';
 import { InterventionPolicy } from '../types';
 

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import GlassCard from '@/components/GlassCard';
 import { Calendar, Download, TrendingDown, TrendingUp, AlertCircle, ArrowLeft } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
-import { mockReportService, BudgetReport } from '@/features/mockReportService';
+import { mockReportService, BudgetReport } from '@/services/mockReportService';
 
 const BudgetReportsPage = () => {
   const navigate = useNavigate();

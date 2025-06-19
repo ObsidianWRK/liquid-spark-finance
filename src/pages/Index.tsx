@@ -7,19 +7,19 @@ import { QuickAccessRail } from '@/features/accounts/components/QuickAccessRail'
 import { OptimizedTransactionList } from '@/features/transactions/components/OptimizedTransactionList';
 import LiquidGlassTopMenuBar from '@/components/LiquidGlassTopMenuBar';
 import ConsolidatedInsightsPage from '@/features/insights/components/ConsolidatedInsightsPage';
-import BudgetReportsPage from '@/features/reports/components/BudgetReportsPage';
+import BudgetReportsPage from '@/features/budget/components/BudgetReportsPage';
 import SavingsGoals from '@/features/savings/components/SavingsGoals';
 import CalculatorList from '@/features/calculators/components/CalculatorList';
-import { useIsMobile } from '@/hooks/use-mobile';
+import { useIsMobile } from '@/shared/hooks/use-mobile';
 import { PerformanceMonitor } from '@/components/performance/PerformanceMonitor';
-import { mockData, getCompactAccountCards } from '@/features/mockData';
+import { mockData, getCompactAccountCards } from '@/services/mockData';
 import { Transaction } from '@/types/shared';
 // CC: New Feature Cloud and Smart Accounts Deck imports
 import FeatureCloud from '@/components/FeatureCloud';
 import { VirtualizedDeck } from '@/components/AccountDeck/VirtualizedDeck';
-import { isFeatureEnabled, trackFeatureUsage } from '@/utils/featureFlags';
-import { transformToAccountRowData } from '@/utils/accountTransformers';
-import CleanCreditScoreCard from '@/features/financial/components/CleanCreditScoreCard';
+import { isFeatureEnabled, trackFeatureUsage } from '@/shared/utils/featureFlags';
+import { transformToAccountRowData } from '@/shared/utils/accountTransformers';
+import CleanCreditScoreCard from '@/features/credit/components/CleanCreditScoreCard';
 import { BiometricMonitor, InterventionNudge, useBiometricInterventionStore } from '@/features/biometric-intervention';
 
 // Lazy load components properly without webpack comments

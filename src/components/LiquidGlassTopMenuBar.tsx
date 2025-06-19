@@ -16,7 +16,7 @@ import {
   Menu
 } from 'lucide-react';
 import LiquidGlassSVGFilters from '@/shared/ui/LiquidGlassSVGFilters';
-import { cn } from '@/lib/utils';
+import { cn } from '@/shared/lib/utils';
 import { useNavigate } from 'react-router-dom';
 import {
   Menubar,

@@ -3,7 +3,7 @@ import React, { useMemo } from 'react';
 import { FixedSizeList as List } from 'react-window';
 import { motion } from 'framer-motion';
 import { AccountRow, AccountRowData } from './AccountRow';
-import { cn } from '@/lib/utils';
+import { cn } from '@/shared/lib/utils';
 
 interface VirtualizedDeckProps {
   accounts: AccountRowData[];

@@ -14,9 +14,9 @@ import {
 } from 'lucide-react';
 import { aiFinancialService } from '@/features/aiFinancialService';
 import { familyService } from '@/features/familyService';
-import { accountService } from '@/features/accountService';
-import { transactionService } from '@/features/transactionService';
-import { cn } from '@/lib/utils';
+import { accountService } from '@/features/accounts/api/accountService';
+import { transactionService } from '@/features/transactions/api/transactionService';
+import { cn } from '@/shared/lib/utils';
 
 interface FinancialAIChatProps {
   familyId: string;

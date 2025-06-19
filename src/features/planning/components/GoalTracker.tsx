@@ -17,8 +17,8 @@ import {
   Play
 } from 'lucide-react';
 import { FinancialGoal, GoalCategory } from '@/types/financialPlanning';
-import { financialPlanningService } from '@/features/financialPlanningService';
-import { cn } from '@/lib/utils';
+import { financialPlanningService } from '@/features/planning/api/financialPlanningService';
+import { cn } from '@/shared/lib/utils';
 
 interface GoalTrackerProps {
   familyId: string;

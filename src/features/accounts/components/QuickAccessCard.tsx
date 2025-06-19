@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react';
 import { UnifiedCard } from '@/shared/ui/UnifiedCard';
 import { AccountCardDTO } from '@/types/accounts';
-import { formatCurrency } from '@/utils/formatters';
+import { formatCurrency } from '@/shared/utils/formatters';
 import { 
   Building2, 
   CreditCard, 
@@ -12,7 +12,7 @@ import {
   ArrowDown,
   Minus
 } from 'lucide-react';
-import { cn } from '@/lib/utils';
+import { cn } from '@/shared/lib/utils';
 
 interface QuickAccessCardProps {
   account: AccountCardDTO;

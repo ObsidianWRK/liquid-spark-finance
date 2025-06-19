@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { UniversalCard } from '@/shared/ui/UniversalCard';
-import { creditScoreService } from '@/features/creditScoreService';
-import { accountService } from '@/features/accountService';
-import { investmentService } from '@/features/investmentService';
-import { budgetService } from '@/features/budgetService';
-import { biometricStream } from '@/features/biometrics/BiometricStream';
+import { creditScoreService } from '@/features/credit/api/creditScoreService';
+import { accountService } from '@/features/accounts/api/accountService';
+import { investmentService } from '@/features/investments/api/investmentService';
+import { budgetService } from '@/features/budget/api/budgetService';
+import { biometricStream } from '@/features/biometric-intervention/api/BiometricStream';
 import { 
   selectTotalWealth, 
   selectInvestmentAssets

@@ -9,7 +9,7 @@ import {
   ArrowRight,
   Info
 } from 'lucide-react';
-import { creditScoreService } from '@/features/creditScoreService';
+import { creditScoreService } from '@/features/credit/api/creditScoreService';
 
 interface CreditScoreData {
   score: number;

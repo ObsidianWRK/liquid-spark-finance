@@ -18,7 +18,7 @@ import FinancialDashboard from './FinancialDashboard';
 import { FinancialDashboardErrorBoundary } from './FinancialDashboardErrorBoundary';
 import { BankLinkingPanel } from '@/features/bank-linking';
 import { visualizationService } from '@/services/visualizationService';
-import { cn } from '@/lib/utils';
+import { cn } from '@/shared/lib/utils';
 import { SubscriptionsPanel } from '@/features/subscriptions';
 import { BillNegotiationPanel } from '@/features/bill-negotiation';
 import { SmartSavingsPanel } from '@/features/smart-savings';

@@ -14,10 +14,10 @@ import {
   Clock,
   ArrowRight
 } from 'lucide-react';
-import { budgetService } from '@/features/budgetService';
+import { budgetService } from '@/features/budget/api/budgetService';
 import { Budget, BudgetCategory, SavingsGoal } from '@/types/budgets';
-import { cn } from '@/lib/utils';
-import { mockData } from '@/features/mockData';
+import { cn } from '@/shared/lib/utils';
+import { mockData } from '@/services/mockData';
 import { TransactionCategory } from '@/types/transactions';
 
 interface BudgetTrackerProps {

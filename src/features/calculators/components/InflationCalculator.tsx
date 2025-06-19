@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { calculateInflationAdjustedValue } from '@/utils/calculators';
+import { calculateInflationAdjustedValue } from '@/shared/utils/calculators';
 
 const InflationCalculator = () => {
   const [currentPrice, setCurrentPrice] = useState(100);

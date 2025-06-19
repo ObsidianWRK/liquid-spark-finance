@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { calculateMaximumHomePrice } from '@/utils/calculators';
+import { calculateMaximumHomePrice } from '@/shared/utils/calculators';
 
 const HomeAffordabilityCalculator = () => {
   const [income, setIncome] = useState(120000);

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { calculatePortfolioBacktest } from '@/utils/calculators';
+import { calculatePortfolioBacktest } from '@/shared/utils/calculators';
 
 const StockBacktestCalculator = () => {
   const [initial, setInitial] = useState(10000);

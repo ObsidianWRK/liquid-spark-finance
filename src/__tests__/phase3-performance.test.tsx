@@ -7,7 +7,7 @@ import { CompoundInterestCalculator } from '@/features/calculators/components/Co
 import AccountCard from '@/components/AccountCard';
 import BalanceCard from '@/components/BalanceCard';
 import TransactionItem from '@/components/TransactionItem';
-import { mockData } from '@/features/mockData';
+import { mockData } from '@/services/mockData';
 
 // Phase 3 Performance Testing Suite
 describe('Phase 3 Performance Optimizations', () => {
