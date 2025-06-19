@@ -220,7 +220,7 @@ export default function Index() {
   }, []);
 
   const handleQuickAction = useCallback((accountId: string, action: string) => {
-    console.log(`Quick action ${action} for account ${accountId}`);
+    // Quick action handler
     // TODO: Implement quick actions
   }, []);
 
@@ -382,7 +382,7 @@ export default function Index() {
                       height={400}
                       onAccountClick={(account) => {
                         trackFeatureUsage('smart_accounts_deck', 'account_clicked');
-                        console.log('Account clicked:', account);
+                        // Account click handler
                       }}
                     />
                   </div>

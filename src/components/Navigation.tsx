@@ -195,7 +195,7 @@ const Navigation = React.memo<NavigationProps>(({ activeTab, onTabChange }) => {
         aria-label="Add new transaction"
         onClick={() => {
           // Handle FAB action
-          console.log('FAB clicked');
+          // FAB action handler
         }}
       >
         <Plus className="nav-icon text-white" aria-hidden="true" />

@@ -125,7 +125,7 @@ const OptimizedProfile = React.memo(() => {
   }, [updateState]);
 
   const handleBackToDashboard = useCallback(() => {
-    console.log('🏠 Back to Dashboard button clicked!'); // Debug log
+    // Back to Dashboard navigation
     navigate('/', { replace: true });
   }, [navigate]);
 
@@ -147,7 +147,7 @@ const OptimizedProfile = React.memo(() => {
       // Escape key or Ctrl+H to go back to dashboard
       if (event.key === 'Escape' || (event.ctrlKey && event.key === 'h')) {
         event.preventDefault();
-        console.log('⌨️ Keyboard shortcut triggered for back to dashboard');
+        // Keyboard shortcut for dashboard navigation
         handleBackToDashboard();
       }
     };

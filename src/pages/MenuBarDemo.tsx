@@ -16,7 +16,7 @@ const MenuBarDemo = () => {
 
   const handleMenuItemClick = (item: string) => {
     setSelectedAction(item);
-    console.log('Menu item clicked:', item);
+    // Menu item clicked handler
   };
 
   return (

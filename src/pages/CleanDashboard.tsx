@@ -184,15 +184,15 @@ const CleanDashboard = () => {
     .reduce((sum, t) => sum + t.amount, 0);
 
   const handleTransactionClick = (transaction: { id: string; amount: number; description: string; category: string }) => {
-    console.log('Transaction clicked:', transaction);
+          // Transaction clicked handler
   };
 
   const handleAccountClick = (account: { id: string; name: string; balance: number; type: string }) => {
-    console.log('Account clicked:', account);
+          // Account clicked handler
   };
 
   const handleCreditReportClick = () => {
-    console.log('View credit report clicked');
+          // View credit report handler
   };
 
   if (activeTab !== 'dashboard') {

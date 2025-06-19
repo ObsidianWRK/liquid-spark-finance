@@ -214,7 +214,7 @@ const TransactionDemo: React.FC = () => {
                     searchable: true,
                     filterable: true,
                   }}
-                  onTransactionClick={(t) => console.log('Selected:', t)}
+                  onTransactionClick={(t) => {/* Transaction selected */}}
                 />
               </div>
             </div>
