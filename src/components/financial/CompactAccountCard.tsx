@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card } from '@/components/ui/card';
+import { UnifiedCard } from '@/components/ui/UnifiedCard';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { AccountCardDTO } from '@/types/accounts';
@@ -35,24 +35,17 @@ const CompactAccountCard: React.FC<CompactAccountCardProps> = ({
 }) => {
   const getAccountIcon = () => {
     switch (account.accountType) {
-      case 'Checking': return <Banknote className="w-5 h-5" />;
-      case 'Savings': return <TrendingUp className="w-5 h-5" />;
-      case 'Credit Card': return <CreditCard className="w-5 h-5" />;
-      case 'Investment': return <ArrowUpRight className="w-5 h-5" />;
-      default: return <Banknote className="w-5 h-5" />;
+      case 'Checking': return Banknote;
+      case 'Savings': return TrendingUp;
+      case 'Credit Card': return CreditCard;
+      case 'Investment': return ArrowUpRight;
+      default: return Banknote;
     }
   };
 
-  const getTrendIcon = () => {
-    if (!account.spendDelta) return null;
-    return account.spendDelta.trend === 'up' ? 
-      <ArrowUpRight className="w-3 h-3" /> : 
-      <ArrowDownRight className="w-3 h-3" />;
-  };
-
-  const getTrendColor = () => {
-    if (!account.spendDelta) return 'text-gray-500';
-    return account.spendDelta.trend === 'up' ? 'text-red-500' : 'text-green-500';
+  const getTrendDirection = () => {
+    if (!account.spendDelta) return undefined;
+    return account.spendDelta.trend === 'up' ? 'up' : 'down';
   };
 
   const getUtilizationColor = () => {
@@ -62,179 +55,157 @@ const CompactAccountCard: React.FC<CompactAccountCardProps> = ({
     return 'text-green-500';
   };
 
+  // Map spendDelta to UnifiedCard delta format
+  const delta = account.spendDelta ? {
+    value: account.spendDelta.percentage,
+    format: 'percentage' as const,
+    label: 'spending'
+  } : undefined;
+
   return (
-    <Card className={cn(
-      "relative overflow-hidden rounded-xl shadow-md bg-white/95 backdrop-blur-sm border border-white/20",
-      "hover:shadow-lg transition-all duration-300 hover:scale-[1.02]",
-      "max-w-sm w-full h-fit",
-      className
-    )}>
+    <UnifiedCard
+      variant="default"
+      size="lg"
+      className={cn("max-w-sm w-full", className)}
+      interactive
+      icon={getAccountIcon()}
+      iconColor={account.institution.color || '#6366f1'}
+      title={`${account.accountType} ••${account.last4}`}
+      subtitle={account.institution.name}
+      metric={showBalance ? formatCurrency(account.currentBalance, { currency: account.currency }) : '••••••'}
+      delta={delta}
+      trendDirection={getTrendDirection()}
+      badge={account.alerts && account.alerts.length > 0 ? {
+        text: `${account.alerts.length} Alert${account.alerts.length > 1 ? 's' : ''}`,
+        variant: account.alerts.some(a => a.severity === 'critical') ? 'error' : 'warning'
+      } : undefined}
+    >
       {/* Institution Brand Strip */}
       <div 
-        className="h-1 w-full"
+        className="absolute top-0 left-0 right-0 h-1 rounded-t-2xl"
         style={{ backgroundColor: account.institution.color || '#6366f1' }}
       />
 
-      <div className="p-4 space-y-4">
-        {/* Header Row */}
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            {account.institution.logo ? (
-              <img 
-                src={account.institution.logo} 
-                alt={account.institution.name}
-                className="w-6 h-6 rounded"
-              />
-            ) : (
-              <div className="w-6 h-6 rounded bg-gray-200 flex items-center justify-center">
-                {getAccountIcon()}
-              </div>
-            )}
-            <div>
-              <div className="font-medium text-gray-900 text-sm">
-                {account.accountType} ••{account.last4}
-              </div>
-              <div className="text-xs text-gray-500">
-                {account.institution.name}
-              </div>
-            </div>
-          </div>
-          
-          {onToggleBalance && (
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={onToggleBalance}
-              className="p-1 h-8 w-8"
-            >
-              {showBalance ? 
-                <Eye className="w-4 h-4" /> : 
-                <EyeOff className="w-4 h-4" />
-              }
-            </Button>
-          )}
+      {/* Toggle Balance Button */}
+      {onToggleBalance && (
+        <div className="absolute top-4 right-4">
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={(e) => {
+              e.stopPropagation();
+              onToggleBalance();
+            }}
+            className="p-1 h-8 w-8 bg-white/5 hover:bg-white/10"
+          >
+            {showBalance ? 
+              <Eye className="w-4 h-4" /> : 
+              <EyeOff className="w-4 h-4" />
+            }
+          </Button>
         </div>
+      )}
 
-        {/* Balance Row */}
-        <div className="flex items-baseline justify-between">
-          <div>
-            <div className="text-2xl font-bold text-gray-900">
-              {showBalance ? formatCurrency(account.currentBalance, { currency: account.currency }) : '••••••'}
-            </div>
-            {account.availableBalance !== undefined && 
-             account.availableBalance !== account.currentBalance && (
-              <div className="text-xs text-gray-500">
-                Available: {showBalance ? formatCurrency(account.availableBalance, { currency: account.currency }) : '••••••'}
-              </div>
-            )}
-          </div>
-
-          {/* Trend Chip */}
-          {account.spendDelta && (
-            <Badge 
-              variant="secondary" 
-              className={cn(
-                "text-xs px-2 py-1 flex items-center gap-1",
-                getTrendColor(),
-                "bg-gray-100"
-              )}
-            >
-              {getTrendIcon()}
-              {account.spendDelta.percentage}%
-            </Badge>
-          )}
+      {/* Available Balance */}
+      {account.availableBalance !== undefined && 
+       account.availableBalance !== account.currentBalance && (
+        <div className="text-sm text-white/60 mt-1">
+          Available: {showBalance ? formatCurrency(account.availableBalance, { currency: account.currency }) : '••••••'}
         </div>
+      )}
 
-        {/* Metrics Grid */}
-        <div className="grid grid-cols-2 gap-3 text-xs">
-          {/* Available/Pending */}
-          <div>
-            <div className="text-gray-500 font-medium">
-              {account.pendingCount ? 'Pending' : 'Available'}
-            </div>
-            <div className="text-gray-900 font-semibold">
-              {account.pendingCount ? 
-                `${account.pendingCount} txns` : 
-                (showBalance ? formatCurrency(account.availableBalance || account.currentBalance, { currency: account.currency }) : '••••••')
-              }
-            </div>
+      {/* Metrics Grid */}
+      <div className="grid grid-cols-2 gap-3 text-sm mt-4">
+        {/* Available/Pending */}
+        <div className="bg-white/5 rounded-lg p-3">
+          <div className="text-white/60 text-xs mb-1">
+            {account.pendingCount ? 'Pending' : 'Available'}
           </div>
-
-          {/* APY/Utilization */}
-          <div>
-            <div className="text-gray-500 font-medium">
-              {account.accountType === 'Credit Card' ? 'Utilization' : 'APY'}
-            </div>
-            <div className={cn(
-              "font-semibold",
-              account.accountType === 'Credit Card' ? getUtilizationColor() : "text-gray-900"
-            )}>
-              {account.accountType === 'Credit Card' && account.creditUtilization !== undefined ? 
-                `${account.creditUtilization}%` :
-                account.interestApy ? `${account.interestApy}%` : '--'
-              }
-            </div>
+          <div className="text-white font-semibold">
+            {account.pendingCount ? 
+              `${account.pendingCount} txns` : 
+              (showBalance ? formatCurrency(account.availableBalance || account.currentBalance, { currency: account.currency }) : '••••••')
+            }
           </div>
         </div>
 
-        {/* Last Transaction */}
-        {account.lastTransaction && (
-          <div className="flex items-center gap-2 p-2 bg-gray-50 rounded-lg">
-            <div className="w-6 h-6 bg-gray-200 rounded-full flex items-center justify-center">
-              <ArrowDownRight className="w-3 h-3 text-gray-600" />
-            </div>
-            <div className="flex-1 min-w-0">
-              <div className="text-sm font-medium text-gray-900 truncate">
-                {account.lastTransaction.merchant}
-              </div>
-              <div className="text-xs text-gray-500">
-                {account.lastTransaction.date}
-              </div>
-            </div>
-            <div className="text-sm font-semibold text-gray-900">
-              {showBalance ? formatCurrency(account.lastTransaction.amount, { currency: account.currency }) : '••••'}
-            </div>
+        {/* APY/Utilization */}
+        <div className="bg-white/5 rounded-lg p-3">
+          <div className="text-white/60 text-xs mb-1">
+            {account.accountType === 'Credit Card' ? 'Utilization' : 'APY'}
           </div>
-        )}
-
-        {/* Alerts */}
-        {account.alerts && account.alerts.length > 0 && (
-          <div className="space-y-1">
-            {account.alerts.map((alert, idx) => (
-              <div key={idx} className={cn(
-                "flex items-center gap-2 p-2 rounded-lg text-xs",
-                alert.severity === 'critical' ? 'bg-red-50 text-red-700' :
-                alert.severity === 'warning' ? 'bg-yellow-50 text-yellow-700' :
-                'bg-blue-50 text-blue-700'
-              )}>
-                <AlertTriangle className="w-3 h-3" />
-                <span>{alert.message}</span>
-              </div>
-            ))}
+          <div className={cn(
+            "font-semibold",
+            account.accountType === 'Credit Card' ? getUtilizationColor() : "text-white"
+          )}>
+            {account.accountType === 'Credit Card' && account.creditUtilization !== undefined ? 
+              `${account.creditUtilization}%` :
+              account.interestApy ? `${account.interestApy}%` : '--'
+            }
           </div>
-        )}
-
-        {/* Quick Actions */}
-        {account.quickActions && account.quickActions.length > 0 && (
-          <div className="flex gap-2">
-            {account.quickActions.map((action) => (
-              <Button
-                key={action.type}
-                variant="outline"
-                size="sm"
-                disabled={!action.enabled}
-                onClick={() => onQuickAction?.(action.type)}
-                className="flex-1 h-8 text-xs"
-              >
-                {action.type === 'transfer' && <Send className="w-3 h-3 mr-1" />}
-                {action.type === 'deposit' && <Download className="w-3 h-3 mr-1" />}
-                {action.label}
-              </Button>
-            ))}
-          </div>
-        )}
+        </div>
       </div>
-    </Card>
+
+      {/* Last Transaction */}
+      {account.lastTransaction && (
+        <div className="flex items-center gap-2 p-3 bg-white/5 rounded-lg mt-4">
+          <div className="w-8 h-8 bg-white/10 rounded-full flex items-center justify-center">
+            <ArrowDownRight className="w-4 h-4 text-white/60" />
+          </div>
+          <div className="flex-1 min-w-0">
+            <div className="text-sm font-medium text-white truncate">
+              {account.lastTransaction.merchant}
+            </div>
+            <div className="text-xs text-white/60">
+              {account.lastTransaction.date}
+            </div>
+          </div>
+          <div className="text-sm font-semibold text-white">
+            {showBalance ? formatCurrency(account.lastTransaction.amount, { currency: account.currency }) : '••••'}
+          </div>
+        </div>
+      )}
+
+      {/* Alerts */}
+      {account.alerts && account.alerts.length > 0 && (
+        <div className="space-y-2 mt-4">
+          {account.alerts.map((alert, idx) => (
+            <div key={idx} className={cn(
+              "flex items-center gap-2 p-2 rounded-lg text-xs",
+              alert.severity === 'critical' ? 'bg-red-500/20 text-red-400 border border-red-500/30' :
+              alert.severity === 'warning' ? 'bg-yellow-500/20 text-yellow-400 border border-yellow-500/30' :
+              'bg-blue-500/20 text-blue-400 border border-blue-500/30'
+            )}>
+              <AlertTriangle className="w-3 h-3" />
+              <span>{alert.message}</span>
+            </div>
+          ))}
+        </div>
+      )}
+
+      {/* Quick Actions */}
+      {account.quickActions && account.quickActions.length > 0 && (
+        <div className="flex gap-2 mt-4">
+          {account.quickActions.map((action) => (
+            <Button
+              key={action.type}
+              variant="outline"
+              size="sm"
+              disabled={!action.enabled}
+              onClick={(e) => {
+                e.stopPropagation();
+                onQuickAction?.(action.type);
+              }}
+              className="flex-1 h-8 text-xs bg-white/5 border-white/10 text-white hover:bg-white/10"
+            >
+              {action.type === 'transfer' && <Send className="w-3 h-3 mr-1" />}
+              {action.type === 'deposit' && <Download className="w-3 h-3 mr-1" />}
+              {action.label}
+            </Button>
+          ))}
+        </div>
+      )}
+    </UnifiedCard>
   );
 };
 

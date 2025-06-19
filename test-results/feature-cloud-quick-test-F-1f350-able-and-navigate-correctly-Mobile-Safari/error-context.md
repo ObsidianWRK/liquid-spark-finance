@@ -1,0 +1,198 @@
+# Page snapshot
+
+```yaml
+- region "Notifications (F8)":
+  - list
+- button "Performance Monitor":
+  - img
+- text: Vueni
+- button "Open menu":
+  - img
+- button "Notifications":
+  - img
+- switch "Switch to light mode" [checked]
+- text: Switch to light mode
+- button "Profile":
+  - img
+- navigation "Main navigation":
+  - button "Navigate to Home": Home
+  - button "Navigate to Accounts": Accounts
+  - button "Navigate to Transactions": Transactions
+  - button "Navigate to Analytics": Analytics
+  - button "More navigation options": More
+- button "Add new transaction"
+- main:
+  - heading "Intelligence you can bank on" [level=1]
+  - paragraph: Experience the power of intelligent financial management
+  - button "Navigate to Smart Banking":
+    - img "Smart Banking": 🏦
+    - text: Smart Banking
+  - button "Navigate to AI Insights":
+    - img "AI Insights": 🤖
+    - text: AI Insights
+  - button "Navigate to Investment":
+    - img "Investment": 📈
+    - text: Investment
+  - button "Navigate to Budgeting":
+    - img "Budgeting": 💰
+    - text: Budgeting
+  - button "Navigate to Goals":
+    - img "Goals": 🎯
+    - text: Goals
+  - button "Navigate to Analytics":
+    - img "Analytics": 📊
+    - text: Analytics
+  - button "Navigate to Security":
+    - img "Security": 🔒
+    - text: Security
+  - button "Navigate to Planning":
+    - img "Planning": 📋
+    - text: Planning
+  - button "Navigate to Savings":
+    - img "Savings": 🐷
+    - text: Savings
+  - button "Navigate to Credit":
+    - img "Credit": 💳
+    - text: Credit
+  - heading "Smart Accounts" [level=3]
+  - paragraph: 24 accounts • Scroll to view all
+  - text: C Main Checking Checking ••1234
+  - img "Trend sparkline showing up movement"
+  - text: $12,450
+  - img
+  - text: 0.4% B Emergency Fund Savings ••5678
+  - img "Trend sparkline showing up movement"
+  - text: $25,780.50
+  - img
+  - text: 0.3% W Rewards Card Credit Card ••9012
+  - img "Trend sparkline showing down movement"
+  - text: "-$1,245.30"
+  - img
+  - text: 3.8% C Investment Portfolio Brokerage ••3456
+  - img "Trend sparkline showing up movement"
+  - text: $45,600.25
+  - img
+  - text: 0.4% J Business Checking Checking ••7890
+  - img "Trend sparkline showing up movement"
+  - text: $8,920.14
+  - img
+  - text: 0.5% F 401(k) Retirement 401(k) ••4567
+  - img "Trend sparkline showing up movement"
+  - text: $174,250.67
+  - img
+  - text: 0.1% V Traditional IRA IRA ••8901
+  - img "Trend sparkline showing up movement"
+  - text: $62,340.22
+  - img
+  - text: 0.2% H Health Savings Savings ••2345
+  - img "Trend sparkline showing up movement"
+  - text: $12,450.11
+  - img
+  - text: 0.4% T College 529 Plan 529 Plan ••6789
+  - img "Trend sparkline showing up movement"
+  - text: $18,230.89
+  - img
+  - text: 0.4%
+  - button "+ Add Account"
+  - heading "Quick Access" [level=2]
+  - paragraph: "24 accounts • Total Balance: $83.8K"
+  - text: "[object Object]"
+  - heading "Checking ••1234" [level=3]
+  - paragraph: Chase Bank
+  - img
+  - paragraph: $12,450
+  - text: +546% spending
+  - button:
+    - img
+  - text: "Available: $11,200 Available $11,200 APY 0.01%"
+  - img
+  - text: Amazon Jun 14 -$156.78
+  - button "Transfer":
+    - img
+    - text: Transfer
+  - button "Pay"
+  - button "Deposit":
+    - img
+    - text: Deposit
+  - text: "[object Object]"
+  - heading "Savings ••5678" [level=3]
+  - paragraph: Bank of America
+  - paragraph: $25,780.50
+  - button:
+    - img
+  - text: Available $25,780.50 APY 2.15%
+  - img
+  - text: Home Depot Jun 10 -$120.33
+  - button "Transfer":
+    - img
+    - text: Transfer
+  - button "Pay"
+  - button "Deposit":
+    - img
+    - text: Deposit
+  - text: "[object Object]"
+  - heading "Credit Card ••9012" [level=3]
+  - paragraph: Wells Fargo
+  - img
+  - paragraph: "-$1,245.30"
+  - text: +2188% spending
+  - button:
+    - img
+  - text: "Available: $8,754.70 Available $8,754.70 Utilization 12%"
+  - img
+  - text: Apple Store Jun 14 -$899
+  - button "Transfer":
+    - img
+    - text: Transfer
+  - button "Pay"
+  - text: "[object Object]"
+  - heading "Investment ••3456" [level=3]
+  - paragraph: Charles Schwab
+  - img
+  - paragraph: $45,600.25
+  - text: +1572% spending
+  - button:
+    - img
+  - text: Available $45,600.25 APY --
+  - img
+  - text: Amazon Jun 14 -$156.78
+  - button "Transfer":
+    - img
+    - text: Transfer
+  - button "Pay"
+  - heading "Recent Transactions" [level=3]
+  - text: 10 of 10 6/14/2025
+  - button "W Whole Foods Market Groceries -$127.43"
+  - button "A Apple Store Electronics -$899.00"
+  - button "A Amazon Shopping -$156.78"
+  - text: 6/13/2025
+  - button "S Salary Deposit Income +$3,250.00"
+  - button "B Best Buy Electronics -$234.99"
+  - button "S Starbucks Coffee -$6.85"
+  - text: 6/12/2025
+  - button "T Target Shopping -$89.42"
+  - button "G Gas Station Transportation -$45.20"
+  - text: 6/11/2025
+  - button "N Netflix Entertainment -$15.99"
+  - button "U Uber Transportation -$23.45"
+  - heading "Credit Score" [level=3]
+  - text: Updated 6/18/2025
+  - img
+  - text: "680"
+  - heading "Good" [level=3]
+  - img
+  - paragraph: You have good credit with opportunities to improve.
+  - text: +5% vs last month
+  - heading "Key Factors" [level=4]
+  - img
+  - text: Payment History 35%
+  - img
+  - text: Credit Utilization 30%
+  - img
+  - text: Length of Credit History 15% View Full Credit Report
+  - heading "Savings Goals" [level=2]:
+    - img
+    - text: Savings Goals
+  - button "View All"
+  - text: 🛡️ Emergency Fund Overdue $8,500 $15,000 57% complete ✈️ Vacation to Japan Overdue $2,800 $5,000 56% complete 🚗 New Car Overdue $4,200 $12,000 35% complete
+```

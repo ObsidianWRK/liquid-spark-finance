@@ -210,7 +210,8 @@ const WrappedPage = () => {
   };
 
   return (
-    <div className="min-h-screen flex flex-col">
+    <div>
+      {/* WHY: Removed min-h-screen and flex to prevent double scroll */}
       {/* Progress Bar */}
       <div className="w-full bg-white/10 h-1 mb-6">
         <div 
@@ -220,7 +221,7 @@ const WrappedPage = () => {
       </div>
 
       {/* Main Content */}
-      <div className="flex-1 flex items-center justify-center p-4">
+      <div className="flex items-center justify-center p-4 min-h-[calc(100vh-8rem)]">
         <GlassCard 
           className={`w-full max-w-md p-8 glass-primary transition-all duration-500 ${
             isVisible ? 'opacity-100 transform translate-y-0' : 'opacity-0 transform translate-y-4'

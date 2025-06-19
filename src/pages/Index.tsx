@@ -23,6 +23,7 @@ const InvestmentTrackerPage = lazy(() => import('@/components/investments/Invest
 const BudgetPlannerPage = lazy(() => import('@/components/budget/BudgetPlannerPage'));
 const DashboardPage = lazy(() => import('@/components/dashboard/DashboardPage'));
 const FinancialPlanningPage = lazy(() => import('@/components/planning/FinancialPlanningPage'));
+const CreditScorePage = lazy(() => import('@/components/credit/CreditScorePage'));
 
 // Error Boundary Component
 class ErrorBoundary extends React.Component<
@@ -273,6 +274,12 @@ export default function Index() {
             <FinancialPlanningPage familyId="demo_family" />
           </Suspense>
         );
+      case 'credit':
+        return (
+          <Suspense fallback={<div className="p-6 text-white">Loading credit score...</div>}>
+            <CreditScorePage />
+          </Suspense>
+        );
       default:
         return (
           <>
@@ -355,18 +362,20 @@ export default function Index() {
 
   return (
     <ErrorBoundary>
-      <div className="min-h-screen flex flex-col">
+      <div>
+        {/* WHY: Removed min-h-screen and flex - let content flow naturally */}
         <PerformanceMonitor />
         <LiquidGlassTopMenuBar />
         
-        <div className="flex flex-1">
+        <div className="flex">
           <Navigation 
             activeTab={currentView}
             onTabChange={handleViewChange}
           />
           
-          <main className="flex-1 overflow-y-auto pt-24 pb-safe" style={{ paddingBottom: 'max(8rem, env(safe-area-inset-bottom) + 6rem)' }}>
-            <div className="min-h-full">
+          <main className="flex-1 pt-24 pb-safe" style={{ paddingBottom: 'max(8rem, env(safe-area-inset-bottom) + 6rem)' }}>
+            {/* WHY: Let main content flow naturally without height constraints */}
+            <div>
               {renderCurrentView()}
             </div>
             {/* Extra bottom spacing to ensure content is never clipped */}

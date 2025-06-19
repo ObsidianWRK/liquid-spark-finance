@@ -1,6 +1,7 @@
 // CC: Feature Cloud hero component with configurable keywords and emoji icons
 import React from 'react';
 import { motion } from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
 import { cn } from '@/lib/utils';
 
 interface FeatureCloudProps {
@@ -10,21 +11,23 @@ interface FeatureCloudProps {
     emoji: string;
     size?: 'sm' | 'md' | 'lg';
     delay?: number;
+    route?: string;
   }>;
+  onKeywordClick?: (keyword: string, route?: string) => void;
 }
 
-// CC: Default feature keywords with financial focus
+// CC: Default feature keywords with financial focus and their routes
 const defaultKeywords = [
-  { text: 'Smart Banking', emoji: '🏦', size: 'lg' as const, delay: 0 },
-  { text: 'AI Insights', emoji: '🤖', size: 'md' as const, delay: 0.1 },
-  { text: 'Investment', emoji: '📈', size: 'md' as const, delay: 0.2 },
-  { text: 'Budgeting', emoji: '💰', size: 'sm' as const, delay: 0.3 },
-  { text: 'Goals', emoji: '🎯', size: 'sm' as const, delay: 0.4 },
-  { text: 'Analytics', emoji: '📊', size: 'md' as const, delay: 0.5 },
-  { text: 'Security', emoji: '🔒', size: 'sm' as const, delay: 0.6 },
-  { text: 'Planning', emoji: '📋', size: 'lg' as const, delay: 0.7 },
-  { text: 'Savings', emoji: '🐷', size: 'md' as const, delay: 0.8 },
-  { text: 'Credit', emoji: '💳', size: 'sm' as const, delay: 0.9 }
+  { text: 'Smart Banking', emoji: '🏦', size: 'lg' as const, delay: 0, route: 'accounts' },
+  { text: 'AI Insights', emoji: '🤖', size: 'md' as const, delay: 0.1, route: 'insights' },
+  { text: 'Investment', emoji: '📈', size: 'md' as const, delay: 0.2, route: 'investments' },
+  { text: 'Budgeting', emoji: '💰', size: 'sm' as const, delay: 0.3, route: 'budget' },
+  { text: 'Goals', emoji: '🎯', size: 'sm' as const, delay: 0.4, route: 'savings' },
+  { text: 'Analytics', emoji: '📊', size: 'md' as const, delay: 0.5, route: 'analytics' },
+  { text: 'Security', emoji: '🔒', size: 'sm' as const, delay: 0.6, route: 'dashboard' },
+  { text: 'Planning', emoji: '📋', size: 'lg' as const, delay: 0.7, route: 'planning' },
+  { text: 'Savings', emoji: '🐷', size: 'md' as const, delay: 0.8, route: 'savings' },
+  { text: 'Credit', emoji: '💳', size: 'sm' as const, delay: 0.9, route: 'credit' }
 ];
 
 // CC: Framer Motion stagger animation variants
@@ -59,8 +62,23 @@ const itemVariants = {
 
 const FeatureCloud: React.FC<FeatureCloudProps> = ({ 
   className,
-  keywords = defaultKeywords 
+  keywords = defaultKeywords,
+  onKeywordClick
 }) => {
+  const navigate = useNavigate();
+
+  // CC: Handle keyword click navigation
+  const handleKeywordClick = (keyword: { text: string; route?: string }) => {
+    if (onKeywordClick) {
+      onKeywordClick(keyword.text, keyword.route);
+    }
+    
+    if (keyword.route) {
+      // Navigate to the route
+      navigate(`/?tab=${keyword.route}`);
+    }
+  };
+
   // CC: Responsive sizing classes for keywords
   const getSizeClasses = (size: 'sm' | 'md' | 'lg') => {
     switch (size) {
@@ -104,7 +122,7 @@ const FeatureCloud: React.FC<FeatureCloudProps> = ({
         className="flex flex-wrap justify-center items-center gap-3 sm:gap-4 max-w-4xl mx-auto px-4"
       >
         {keywords.map((keyword, index) => (
-          <motion.div
+          <motion.button
             key={`${keyword.text}-${index}`}
             variants={itemVariants}
             custom={keyword.delay}
@@ -113,12 +131,14 @@ const FeatureCloud: React.FC<FeatureCloudProps> = ({
               boxShadow: "0 10px 30px rgba(59, 130, 246, 0.3)"
             }}
             whileTap={{ scale: 0.95 }}
+            onClick={() => handleKeywordClick(keyword)}
             className={cn(
               // CC: Liquid glass theme with 12px radius and surface.borderLight
               "rounded-xl border border-white/[0.08] bg-white/[0.02] backdrop-blur-md",
               "flex items-center gap-2 cursor-pointer transition-all duration-300",
               "hover:bg-white/[0.05] hover:border-white/[0.12]",
               "active:scale-95 select-none",
+              "focus:outline-none focus:ring-2 focus:ring-blue-400/50 focus:ring-offset-2 focus:ring-offset-black/50",
               getSizeClasses(keyword.size || 'md')
             )}
             style={{
@@ -126,6 +146,8 @@ const FeatureCloud: React.FC<FeatureCloudProps> = ({
               minWidth: 'fit-content',
               maxWidth: '200px'
             }}
+            type="button"
+            aria-label={`Navigate to ${keyword.text}`}
           >
             <span 
               className="text-xl sm:text-2xl flex-shrink-0"
@@ -140,7 +162,7 @@ const FeatureCloud: React.FC<FeatureCloudProps> = ({
             >
               {keyword.text}
             </span>
-          </motion.div>
+          </motion.button>
         ))}
       </motion.div>
 

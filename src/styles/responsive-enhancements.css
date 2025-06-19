@@ -947,18 +947,41 @@ html:not(.dark) [class*="text-muted"] {
 }
 
 /* Global overrides for full-screen */
-html, body {
-  /* Ensure full-height layout for scroll containers */
-  height: 100%;
-  /* WHY: Fixed scroll behavior - removed overscroll-behavior that can cause scroll lag */
-  /* Maintain horizontal clipping while allowing immediate vertical scroll */
-  overflow-x: hidden;
-  overflow-y: auto;
+html {
+  /* WHY: Remove fixed height - let HTML grow with content */
   width: 100%;
   margin: 0;
   padding: 0;
-  /* WHY: Added scroll-behavior smooth for immediate response */
+}
+
+body {
+  /* WHY: Body should grow naturally with content, not be constrained to viewport */
+  min-height: 100vh; /* Minimum viewport height but can grow */
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  /* WHY: No overflow-y setting - let body scroll naturally with content */
   scroll-behavior: smooth;
+  /* Prevent iOS bounce scrolling that can interfere */
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Root container needs to stretch but NOT create its own scroll context */
+#root {
+  /* WHY: Let root grow naturally with content */
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  /* WHY: REMOVED all height constraints and overflow settings */
+  position: relative;
+  /* Let content flow naturally */
+}
+
+/* Ensure main content areas don't create their own scroll contexts */
+main, .main-content, [role="main"] {
+  /* WHY: These should NOT have their own overflow - let body handle it */
+  overflow: visible !important;
 }
 
 /* ==============================================
@@ -1209,14 +1232,4 @@ html, body {
     font-size: 1.125rem;
     margin-top: 0.5rem;
   }
-}
-
-/* Root container needs to stretch the full viewport height so the first wheel delta scrolls immediately */
-#root {
-  min-height: 100vh; /* WHY: Changed from 100% to 100vh for immediate viewport fill */
-  width: 100%;
-  /* WHY: Ensure root is the primary scroll container */
-  position: relative;
-  overflow-x: hidden;
-  overflow-y: auto;
 } 

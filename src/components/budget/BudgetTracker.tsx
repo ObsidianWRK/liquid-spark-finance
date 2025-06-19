@@ -15,7 +15,6 @@ import {
   ArrowRight
 } from 'lucide-react';
 import { budgetService } from '@/services/budgetService';
-import { savingsGoalsService } from '@/services/savingsGoalsService';
 import { Budget, BudgetCategory, SavingsGoal } from '@/types/budgets';
 import { cn } from '@/lib/utils';
 
@@ -38,7 +37,7 @@ const BudgetTracker = ({ familyId, className }: BudgetTrackerProps) => {
       
       const [budgetData, goalsData] = await Promise.all([
         budgetService.getActiveBudget(familyId),
-        savingsGoalsService.getGoals(familyId)
+        budgetService.getFamilySavingsGoals(familyId) // WHY: Use budgetService which returns the correct SavingsGoal type
       ]);
       
       setBudget(budgetData);

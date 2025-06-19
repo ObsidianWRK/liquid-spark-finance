@@ -1,0 +1,107 @@
+/* ==============================================
+   DOUBLE SCROLL FIX - CRITICAL STYLES
+   
+   Root Cause: Multiple nested elements with height constraints
+   and overflow settings create competing scroll contexts.
+   
+   Solution: Establish single scroll context on document body
+   ============================================== */
+
+/* 1. Reset all height constraints to natural flow */
+html {
+  /* Let HTML be exactly as tall as needed */
+  height: auto !important;
+  overflow: visible !important;
+}
+
+body {
+  /* Body is the ONLY scroll container */
+  min-height: 100vh; /* Minimum viewport but can grow */
+  height: auto !important; /* Override any height: 100% */
+  overflow-x: hidden !important;
+  overflow-y: visible !important; /* Let body scroll naturally */
+  
+  /* Smooth scrolling */
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-y: auto;
+}
+
+/* 2. Root and main containers must not create scroll contexts */
+#root {
+  /* No height constraints - grow with content */
+  height: auto !important;
+  min-height: auto !important;
+  overflow: visible !important;
+}
+
+/* All main content areas */
+main, 
+.main-content,
+[role="main"],
+.flex.flex-col,
+.min-h-screen {
+  /* Override any height/overflow that creates scroll */
+  height: auto !important;
+  min-height: initial !important;
+  overflow: visible !important;
+}
+
+/* 3. Flex containers should not force viewport heights */
+.min-h-screen.flex.flex-col {
+  min-height: initial !important;
+  height: auto !important;
+}
+
+.flex-1 {
+  /* Flex-1 should grow but not create scroll */
+  overflow: visible !important;
+}
+
+/* 4. Fix navigation sidebars */
+aside,
+.fixed {
+  /* Fixed elements should not affect document flow */
+  overflow-y: auto; /* OK for fixed sidebars to scroll internally */
+  max-height: 100vh;
+}
+
+/* 5. Override any component-specific scroll containers */
+.overflow-y-auto:not(.transaction-scroll-container):not(.fixed):not(aside) {
+  overflow-y: visible !important;
+}
+
+/* 6. Ensure content can flow naturally */
+* {
+  /* Prevent any box from constraining height unnecessarily */
+  max-height: none !important;
+}
+
+/* Allow specific scroll containers that need it */
+.transaction-scroll-container,
+.modal-content,
+.dropdown-content,
+.select-content,
+[role="dialog"],
+[role="listbox"] {
+  /* These can have their own scroll */
+  max-height: initial !important;
+  overflow-y: auto !important;
+}
+
+/* 7. Mobile-specific fixes */
+@media (max-width: 768px) {
+  body {
+    /* Prevent iOS rubber band scrolling issues */
+    position: relative !important;
+    width: 100% !important;
+  }
+}
+
+/* 8. Print media - ensure content flows */
+@media print {
+  body, html, #root, main {
+    height: auto !important;
+    overflow: visible !important;
+  }
+} 
