@@ -1,0 +1,2302 @@
+[
+  {
+    "path": ".env",
+    "sha1": "ccccd94b74cece52f446006bf370e2b655c0d5a6",
+    "tag": "asset"
+  },
+  {
+    "path": ".env.example",
+    "sha1": "4b9b1ee322cc06e135560938a7335c2fb441bc6b",
+    "tag": "asset"
+  },
+  {
+    "path": ".github/ISSUE_TEMPLATE/agent-2-data-integrity.md",
+    "sha1": "d28e7c9a8828dd969fa6ac25a5b64a878778a9af",
+    "tag": "docs"
+  },
+  {
+    "path": ".github/ISSUE_TEMPLATE/agent-3-numeric-formatter.md",
+    "sha1": "6085ef52714a1dbd330f41d9bb491709e60eb2a7",
+    "tag": "docs"
+  },
+  {
+    "path": ".github/ISSUE_TEMPLATE/agent-4-card-stylist.md",
+    "sha1": "1e319beb0385f5de0f2eb7e5efc3382716f485bf",
+    "tag": "docs"
+  },
+  {
+    "path": ".github/ISSUE_TEMPLATE/agent-5-transactions-stylist.md",
+    "sha1": "69751decf70b8a73ff4cc77002dba35cb050a4a3",
+    "tag": "docs"
+  },
+  {
+    "path": ".github/ISSUE_TEMPLATE/agent-6-savings-goals-stylist.md",
+    "sha1": "d067ac3d7cee8b3d21d1102c45bd11f766ecc496",
+    "tag": "docs"
+  },
+  {
+    "path": ".github/ISSUE_TEMPLATE/agent-7-visual-qa.md",
+    "sha1": "f8f49ac46ddff16ec9efb735aeae516ebaaebba0",
+    "tag": "docs"
+  },
+  {
+    "path": ".github/ISSUE_TEMPLATE/agent-8-refactor-linter.md",
+    "sha1": "27b219900c2c57adbbca02527610ec9c4c9bf8a9",
+    "tag": "docs"
+  },
+  {
+    "path": ".github/ISSUE_TEMPLATE/unified-card-design-epic.md",
+    "sha1": "17af58be4daed55188f7b30b221b011c78f68c76",
+    "tag": "docs"
+  },
+  {
+    "path": ".gitignore",
+    "sha1": "f97396057473437884f392e366dbc5dc67109465",
+    "tag": "asset"
+  },
+  {
+    "path": ".vercelignore",
+    "sha1": "0d0875121d486665acb8307cf9a45040317a19e9",
+    "tag": "asset"
+  },
+  {
+    "path": "AGENT5_FINAL_VALIDATION_REPORT.md",
+    "sha1": "26b626623e547f7c788c1f6c8a6f68914b81b208",
+    "tag": "docs"
+  },
+  {
+    "path": "AGENT7_TESTING_VALIDATION_REPORT.md",
+    "sha1": "bcc62a9e6969bd776369d6d1f5528bc2fa8a91c2",
+    "tag": "docs"
+  },
+  {
+    "path": "AGENT_COORDINATION.md",
+    "sha1": "b95338cf17634c5a6af116041e368f98e1d2bf58",
+    "tag": "docs"
+  },
+  {
+    "path": "CHANGELOG.md",
+    "sha1": "0c133fd0da9cb20558e13300c86eb52f60c23dcf",
+    "tag": "docs"
+  },
+  {
+    "path": "CHANGELOG_AUDIT.md",
+    "sha1": "9a5ad3774cfb6ccf0b62b0363a6347b84a193314",
+    "tag": "docs"
+  },
+  {
+    "path": "CHANGELOG_FEATURE_CLOUD_SMART_ACCOUNTS.md",
+    "sha1": "398b539e7c22e87e74d7ae9b75e45e82afbbdda9",
+    "tag": "docs"
+  },
+  {
+    "path": "CLEAN_UI_INTEGRATION.md",
+    "sha1": "f80780d88a92444c6b4a6e1d7501415b9f4fc725",
+    "tag": "docs"
+  },
+  {
+    "path": "COMPACT_ACCOUNT_CARD_OVERHAUL_REPORT.md",
+    "sha1": "5877cd0b130bfad8e38e1eb6b1985bf35ccc452d",
+    "tag": "docs"
+  },
+  {
+    "path": "CRITICAL_FIXES_IMPLEMENTATION_REPORT.md",
+    "sha1": "75efb4628683d5d92333bd329aa46e7de3e48241",
+    "tag": "docs"
+  },
+  {
+    "path": "DECIMAL_CLAMP_MISSION_COMPLETE.md",
+    "sha1": "6a3f2c9b69d6a5bfe809267d4009ca56d5a22997",
+    "tag": "docs"
+  },
+  {
+    "path": "FEATURE_CLOUD_SMART_ACCOUNTS_IMPLEMENTATION.md",
+    "sha1": "5fe8f1b8e0de877165c997a40945d52fec73dd0b",
+    "tag": "docs"
+  },
+  {
+    "path": "FINAL_IMPLEMENTATION_REPORT.md",
+    "sha1": "b5e86d1710ef30581bd696433d7a97cf8e8df948",
+    "tag": "docs"
+  },
+  {
+    "path": "FINANCIAL_DECIMAL_FIXES_REPORT.md",
+    "sha1": "a128f7c2202d82eb4a0ff38b2e81940847aceb12",
+    "tag": "docs"
+  },
+  {
+    "path": "HOOK_VALIDATION_TESTING_GUIDE.md",
+    "sha1": "92cab67056cfcc1eb16b174b09194163912abf72",
+    "tag": "docs"
+  },
+  {
+    "path": "IMPLEMENTATION_GUIDE.md",
+    "sha1": "a213b1b3b32a2fa5c4c282ae0da11e7deceecb1d",
+    "tag": "docs"
+  },
+  {
+    "path": "IMPLEMENTATION_PLAN.md",
+    "sha1": "8c05e351f975ace3d80e83b38f1463ffc0aa976e",
+    "tag": "docs"
+  },
+  {
+    "path": "IMPORT_CONFLICT_FIX_REPORT.md",
+    "sha1": "6f224fc0747f58be4f096a15b621d87353b4a120",
+    "tag": "docs"
+  },
+  {
+    "path": "LIQUID_GLASS_USAGE.md",
+    "sha1": "af31a0154c26d7139f60e04cda27f70fb6b1e31c",
+    "tag": "docs"
+  },
+  {
+    "path": "MIGRATION_GUIDE.md",
+    "sha1": "70435c8065c0a6ae26c11537452b6987aa912119",
+    "tag": "docs"
+  },
+  {
+    "path": "MORE_MENU_NAVIGATION_ENHANCEMENT.md",
+    "sha1": "b858cb282617fb0956d960215c8e84d1ccf909c6",
+    "tag": "docs"
+  },
+  {
+    "path": "MULTI_AGENT_BUG_FIX_COMPLETION_REPORT.md",
+    "sha1": "23312db0e61405d8cd9bf2869e76a0caa96eb0c8",
+    "tag": "docs"
+  },
+  {
+    "path": "MULTI_AGENT_DEBUG_REPORT.md",
+    "sha1": "7ebc14f2b05a2e53c9b6c350b241e73922634e5e",
+    "tag": "docs"
+  },
+  {
+    "path": "NAVIGATION_ENHANCEMENT_REPORT.md",
+    "sha1": "b4cc4f12d3d189176a16c85b4a7c57340f1e7299",
+    "tag": "docs"
+  },
+  {
+    "path": "OPTIMIZATION_REPORT.md",
+    "sha1": "11ed254e4ed3903594c605a7df93fa7a478d47af",
+    "tag": "docs"
+  },
+  {
+    "path": "PHASE3_COMPLETION_SUMMARY.md",
+    "sha1": "7cf40cdfdf8fd0b7e0020d37385dac9f6ae6aab3",
+    "tag": "docs"
+  },
+  {
+    "path": "PHASE3_FINAL_DELIVERY_REPORT.md",
+    "sha1": "3e2145d4d81c45b5b2f495e43847b1dada720c73",
+    "tag": "docs"
+  },
+  {
+    "path": "PORTFOLIO_VISUALIZATION_FIX_REPORT.md",
+    "sha1": "0f0d9d9cce0627a5e0f843a079e95e25bef84d52",
+    "tag": "docs"
+  },
+  {
+    "path": "PRD_REFACTOR_INITIATIVE.json",
+    "sha1": "b6d3b911b85907add69855ca89f239b77b492cac",
+    "tag": "asset"
+  },
+  {
+    "path": "PROGRESS_REPORT.md",
+    "sha1": "6cdec82f8f38c4cbbc3a218b7118831394521bdb",
+    "tag": "docs"
+  },
+  {
+    "path": "README.md",
+    "sha1": "b5e8d740539b3575af94cd060ec1794c377be9a0",
+    "tag": "docs"
+  },
+  {
+    "path": "REFACTOR_LINTER_REPORT.md",
+    "sha1": "8c10ed02f60880b037bd7979a798253cab07eca2",
+    "tag": "docs"
+  },
+  {
+    "path": "REFACTOR_MASTER_REPORT.json",
+    "sha1": "b3fdda6a6a8ab25850bc2815c8b1a4e1bd74521d",
+    "tag": "asset"
+  },
+  {
+    "path": "SECURITY_AUDIT_REPORT.md",
+    "sha1": "aaecfc7972701f0c17821c81a5828bd4439d49e0",
+    "tag": "docs"
+  },
+  {
+    "path": "UI_BUG_FIXES_SUMMARY.md",
+    "sha1": "9ace5675839ea527bffae5ed2dedd6e5ca8d35d4",
+    "tag": "docs"
+  },
+  {
+    "path": "UI_REFACTOR_ACCESSIBILITY_REPORT.md",
+    "sha1": "a94b962a508488a697183ab0049aa139535b9b4b",
+    "tag": "docs"
+  },
+  {
+    "path": "UI_REFACTOR_COMPLETION_SUMMARY.md",
+    "sha1": "a2e064ff068944528443108474b0d7641b1ed041",
+    "tag": "docs"
+  },
+  {
+    "path": "UI_RUNTIME_BUG_BLITZ_REPORT.md",
+    "sha1": "474b0c78fdbc65ba93513b063c9d0cb9177854a9",
+    "tag": "docs"
+  },
+  {
+    "path": "UNIFIED_CARD_DESIGN_PROJECT.md",
+    "sha1": "d0b118c91b47a10851ca3856350289aa4b05ee41",
+    "tag": "docs"
+  },
+  {
+    "path": "UNIFIED_CARD_MIGRATION.md",
+    "sha1": "055dc36edd9ff94504c11d21b9fcbc547073bd9f",
+    "tag": "docs"
+  },
+  {
+    "path": "UNIFIED_CARD_MIGRATION_COMPLETE.md",
+    "sha1": "52d8f765511b53a2195e06d8a74cdafecb451397",
+    "tag": "docs"
+  },
+  {
+    "path": "VUENI_ANALYSIS_REPORT.md",
+    "sha1": "781278ee81512b9ef26ca18d2ce061855e125299",
+    "tag": "docs"
+  },
+  {
+    "path": "VUENI_CODEBASE_ANALYSIS.md",
+    "sha1": "781278ee81512b9ef26ca18d2ce061855e125299",
+    "tag": "docs"
+  },
+  {
+    "path": "VUENI_CONSOLIDATION_REPORT.md",
+    "sha1": "70e36476bc537f61f00b89b6bc8bbd5be42f9481",
+    "tag": "docs"
+  },
+  {
+    "path": "VUENI_MOBILE_UI_FIXES_REPORT.md",
+    "sha1": "455fd297e90d561bdf8f52fd534498f3f265e4a9",
+    "tag": "docs"
+  },
+  {
+    "path": "VUENI_PRODUCTION_READINESS_REPORT.md",
+    "sha1": "c1e769e32e693f43b03f109fed39c6f44ce4b17d",
+    "tag": "docs"
+  },
+  {
+    "path": "VUENI_SECURITY_IMPLEMENTATION_REPORT.md",
+    "sha1": "27d803188f38eb6dd6f9282405afba11aa809197",
+    "tag": "docs"
+  },
+  {
+    "path": "VercelFix.MD",
+    "sha1": "fc8a14eca0cbf9f43ab55bbef133981bf5839eca",
+    "tag": "asset"
+  },
+  {
+    "path": "backups/20250617_181014/ConfigurableInsightsPage.tsx",
+    "sha1": "906e8601171f3eeafff74d79551175095f97aa54",
+    "tag": "asset"
+  },
+  {
+    "path": "backups/20250617_181014/NewInsightsPage.tsx",
+    "sha1": "009ce6757f5d102f3820f35a0d68bd3643e34d52",
+    "tag": "asset"
+  },
+  {
+    "path": "backups/20250617_181014/VueniUnifiedInsightsPage.tsx",
+    "sha1": "d29936ad670244d2c7e91fa6cc5bb281cef99bfb",
+    "tag": "asset"
+  },
+  {
+    "path": "bun.lockb",
+    "sha1": "07b6973f3231f121a4cf286fdf1469e9f0b59e58",
+    "tag": "asset"
+  },
+  {
+    "path": "components.json",
+    "sha1": "e441ee3b73f210b323c7d82d9051fe1745d4c4f9",
+    "tag": "asset"
+  },
+  {
+    "path": "docs/API_REFERENCE.md",
+    "sha1": "8b56789bbf5ce3874c44489281b79df4d52acd99",
+    "tag": "docs"
+  },
+  {
+    "path": "docs/ARCHITECTURE_DIAGRAMS.md",
+    "sha1": "23a19e9540c4f27134f3dc574a7e828bddf3889d",
+    "tag": "docs"
+  },
+  {
+    "path": "docs/DEPLOYMENT_GUIDE.md",
+    "sha1": "2177077d032338ded8e45fffcde38bfb4bf89068",
+    "tag": "docs"
+  },
+  {
+    "path": "docs/README.md",
+    "sha1": "b117594d1a2fde5f62b1e6309ff390fa40437ae1",
+    "tag": "docs"
+  },
+  {
+    "path": "docs/REFACTORING_BLUEPRINT.md",
+    "sha1": "2f70d6f74f56bfffb1838f792c33ec3e4b59ac97",
+    "tag": "docs"
+  },
+  {
+    "path": "docs/SECURITY_ANALYSIS.md",
+    "sha1": "891f4bbb0a2a0b7e1ce10877064e44d44d37f6a1",
+    "tag": "docs"
+  },
+  {
+    "path": "docs/TESTING_STRATEGY.md",
+    "sha1": "ff723049b52a9dc7680157ed3e3be8703da89166",
+    "tag": "docs"
+  },
+  {
+    "path": "docs/dock-findings.md",
+    "sha1": "c4501bff00d2f6533b7cbb10d42162acbcdbf3f2",
+    "tag": "docs"
+  },
+  {
+    "path": "docs/feature-cloud-implementation-complete.md",
+    "sha1": "673aa65f847e3f9a1cecad8a09443170904f3eee",
+    "tag": "docs"
+  },
+  {
+    "path": "docs/unified-card-migration.md",
+    "sha1": "39d3d362fa50d53515167646dcae71198ea43a3b",
+    "tag": "docs"
+  },
+  {
+    "path": "e2e/all-interactions.spec.ts",
+    "sha1": "fff4dabcef3233dc0c7a7c03e80763eeea51872a",
+    "tag": "test"
+  },
+  {
+    "path": "e2e/all-pages-responsive-test.spec.ts",
+    "sha1": "d1faaa762575443a6ddd7e007929cc3b0e875089",
+    "tag": "test"
+  },
+  {
+    "path": "e2e/calculator-hub-test.spec.ts",
+    "sha1": "af8e9f5bf455bdf113b837dbfc2e8ea78ca80145",
+    "tag": "test"
+  },
+  {
+    "path": "e2e/comprehensive-hook-validation.spec.ts",
+    "sha1": "72d3e79a38864adce0d94fa7de3756f8c53be34c",
+    "tag": "test"
+  },
+  {
+    "path": "e2e/comprehensive-responsive-navigation.spec.ts",
+    "sha1": "597bf35b86bb48d41951ebb74293c764435674f6",
+    "tag": "test"
+  },
+  {
+    "path": "e2e/dashboard.spec.ts",
+    "sha1": "d34911125b3d82443944615cd4ffe303ab0030a9",
+    "tag": "test"
+  },
+  {
+    "path": "e2e/desktop-responsive-test.spec.ts",
+    "sha1": "62f0939db2f85b46410c16f35f2323f020e5a43d",
+    "tag": "test"
+  },
+  {
+    "path": "e2e/feature-cloud-debug.spec.ts",
+    "sha1": "e51b3ef804c0dee919528b159952637600b2e7d5",
+    "tag": "test"
+  },
+  {
+    "path": "e2e/feature-cloud-navigation.spec.ts",
+    "sha1": "f0610397de677faaecfa51ea7e5a1a86435cbf98",
+    "tag": "test"
+  },
+  {
+    "path": "e2e/feature-cloud-quick-test.spec.ts",
+    "sha1": "463560626f935694fb0bb4bd0e662e9e99da0958",
+    "tag": "test"
+  },
+  {
+    "path": "e2e/final-comprehensive-navigation.spec.ts",
+    "sha1": "f0a547a8d58d1b4500249a90569b2b77932e4fd7",
+    "tag": "test"
+  },
+  {
+    "path": "e2e/financial-calculators.spec.ts",
+    "sha1": "4d19a0fd86ac89717bfc6e48d97eaf53b9150136",
+    "tag": "test"
+  },
+  {
+    "path": "e2e/generate-ui-manifest.ts",
+    "sha1": "c75da8fef7c7a299cf98fb57b964a8509a80b1ef",
+    "tag": "test"
+  },
+  {
+    "path": "e2e/hook-validation-config.ts",
+    "sha1": "9680948f1e355630eaeeafe4f26b64a9bbf0a03f",
+    "tag": "test"
+  },
+  {
+    "path": "e2e/hook-violations.spec.ts",
+    "sha1": "9933ee43c0c23e8a7ca91d9f3df4b2e4e671f5fc",
+    "tag": "test"
+  },
+  {
+    "path": "e2e/mobile-cross-browser.spec.ts",
+    "sha1": "4ca286c2416c9c56978af8c867da7106381e1e79",
+    "tag": "test"
+  },
+  {
+    "path": "e2e/mobile-ui-validation.spec.ts",
+    "sha1": "eed1935cb231e0a8f96b0956b82b1152b45671b1",
+    "tag": "test"
+  },
+  {
+    "path": "e2e/navigation-hook-validation.spec.ts",
+    "sha1": "b677cd98681c5307e5a72cf2b3b0fbc82c3bd5f7",
+    "tag": "test"
+  },
+  {
+    "path": "e2e/performance-hook-validation.spec.ts",
+    "sha1": "87e72a231e63f90930c4f23215ce33dbec85ff33",
+    "tag": "test"
+  },
+  {
+    "path": "e2e/profile-navigation-test.spec.ts",
+    "sha1": "2814a8df5510c1e4131f62981e7fe02f94245df0",
+    "tag": "test"
+  },
+  {
+    "path": "e2e/quick-hook-validation.spec.ts",
+    "sha1": "e67b63e0e2d082f62ca4867a7a1c3a303c097b7a",
+    "tag": "test"
+  },
+  {
+    "path": "e2e/quick-validation.spec.ts",
+    "sha1": "0b73993ed6ec132d03b26ca5e5c93f2aa2eabbf5",
+    "tag": "test"
+  },
+  {
+    "path": "e2e/responsive-validation.spec.ts",
+    "sha1": "9691768b2b7b74bb2cb1cbcdaf3d041a530b96a4",
+    "tag": "test"
+  },
+  {
+    "path": "e2e/safe-area-dock-test.spec.ts",
+    "sha1": "9f0e406b0001c76928e1a9c5ffd56ac67162e2b8",
+    "tag": "test"
+  },
+  {
+    "path": "e2e/security.spec.ts",
+    "sha1": "a1743f0b1ccc396ef79967bc4672aa8d3af632ae",
+    "tag": "test"
+  },
+  {
+    "path": "e2e/transaction-alignment.spec.ts",
+    "sha1": "4f9e89c4a008427a4e6fe1fca3200c271e8a9297",
+    "tag": "test"
+  },
+  {
+    "path": "e2e/ui-refactor-validation.spec.ts",
+    "sha1": "5a68d8ee2f1481669f4d2978f92cf67ecee717f0",
+    "tag": "test"
+  },
+  {
+    "path": "e2e/unified-card-visual-regression.spec.ts",
+    "sha1": "7e8613d4a031cdc4f18e4a847009be6999dcb9ae",
+    "tag": "test"
+  },
+  {
+    "path": "e2e/user-journeys.spec.ts",
+    "sha1": "2dbd5a19fc4e99896722d5f105f4ad206d42d1a4",
+    "tag": "test"
+  },
+  {
+    "path": "e2e/visual-regression-dock.spec.ts",
+    "sha1": "e16cddfa648fbd6505f2f27dbfa3cc79a49800f6",
+    "tag": "test"
+  },
+  {
+    "path": "e2e/vueni-financial.spec.ts",
+    "sha1": "bffdc8481d3d03e40fec53bcc7a6115017787583",
+    "tag": "test"
+  },
+  {
+    "path": "e2e/vueni-performance.spec.ts",
+    "sha1": "0c6b9ecb444d5e46d9e665bd819fd5ba0ffb72a9",
+    "tag": "test"
+  },
+  {
+    "path": "e2e/white-screen-debug.spec.ts",
+    "sha1": "21e9e5a6c82e05f4d736508ad7d84ebf7756353f",
+    "tag": "test"
+  },
+  {
+    "path": "eslint-report.json",
+    "sha1": "5afd97ae4b071d544ce5213be5eab8f220073688",
+    "tag": "asset"
+  },
+  {
+    "path": "eslint.config.js",
+    "sha1": "f93596765c77549a243fec28f799671050369156",
+    "tag": "config"
+  },
+  {
+    "path": "feature-cloud-debug.png",
+    "sha1": "e27ffc57e00fd7341e68f8f648f455552fe88bb1",
+    "tag": "asset"
+  },
+  {
+    "path": "final-issues.json",
+    "sha1": "213fde6a7c16d1f9ff4761d88784ada86b5cc900",
+    "tag": "asset"
+  },
+  {
+    "path": "index.html",
+    "sha1": "b53eab144ea70cf7fa6d8454291056dbace30059",
+    "tag": "asset"
+  },
+  {
+    "path": "linter-issues.txt",
+    "sha1": "2212b9471ad3f8bae90db4c09b094276dc94d486",
+    "tag": "asset"
+  },
+  {
+    "path": "package-lock.json",
+    "sha1": "1285686c725ef22ee71d669ea2c069c854c5af72",
+    "tag": "asset"
+  },
+  {
+    "path": "package.json",
+    "sha1": "ceec3dd9e9c21bef5e0552a6fbc545c52101ae94",
+    "tag": "asset"
+  },
+  {
+    "path": "playwright-report/data/04b4dcbbcb1aa8e3ec629aacfa9166df0871ab8a.webm",
+    "sha1": "04b4dcbbcb1aa8e3ec629aacfa9166df0871ab8a",
+    "tag": "asset"
+  },
+  {
+    "path": "playwright-report/data/0543d89ad4515e24813f8eb1dfdb633a4c3fc9b5.png",
+    "sha1": "0543d89ad4515e24813f8eb1dfdb633a4c3fc9b5",
+    "tag": "asset"
+  },
+  {
+    "path": "playwright-report/data/146a005c86be615f50ae38d8b813667935165949.webm",
+    "sha1": "146a005c86be615f50ae38d8b813667935165949",
+    "tag": "asset"
+  },
+  {
+    "path": "playwright-report/data/14ed40a23ef915ab96545b627641137287a9b6b8.md",
+    "sha1": "14ed40a23ef915ab96545b627641137287a9b6b8",
+    "tag": "docs"
+  },
+  {
+    "path": "playwright-report/data/223312f2757ec6de9ab8ebdcd39bdcf644752443.webm",
+    "sha1": "223312f2757ec6de9ab8ebdcd39bdcf644752443",
+    "tag": "asset"
+  },
+  {
+    "path": "playwright-report/data/22c8ee20bed1969468649a752e15b6a066e8b86b.png",
+    "sha1": "22c8ee20bed1969468649a752e15b6a066e8b86b",
+    "tag": "asset"
+  },
+  {
+    "path": "playwright-report/data/240fc03012fb7b85a0c2c9105d7a5129574e97be.md",
+    "sha1": "240fc03012fb7b85a0c2c9105d7a5129574e97be",
+    "tag": "docs"
+  },
+  {
+    "path": "playwright-report/data/295f8ad2524e37f4efdafa08a60ef86ae6268fd9.png",
+    "sha1": "295f8ad2524e37f4efdafa08a60ef86ae6268fd9",
+    "tag": "asset"
+  },
+  {
+    "path": "playwright-report/data/2fe74987a012d83f76720306849b19f941a1d03e.png",
+    "sha1": "2fe74987a012d83f76720306849b19f941a1d03e",
+    "tag": "asset"
+  },
+  {
+    "path": "playwright-report/data/340a7fe4d1725853924b5f5bd3cde70d94b90a2f.webm",
+    "sha1": "340a7fe4d1725853924b5f5bd3cde70d94b90a2f",
+    "tag": "asset"
+  },
+  {
+    "path": "playwright-report/data/35fc95f9b26e6f7cdc0e8ae5f79793ca27130ba1.png",
+    "sha1": "35fc95f9b26e6f7cdc0e8ae5f79793ca27130ba1",
+    "tag": "asset"
+  },
+  {
+    "path": "playwright-report/data/3a11f415a0b5c30b516cbe9a4778ee9ab6a68e39.png",
+    "sha1": "3a11f415a0b5c30b516cbe9a4778ee9ab6a68e39",
+    "tag": "asset"
+  },
+  {
+    "path": "playwright-report/data/4482958ffcb8751250a0ce568d93fbb784ea6f9a.webm",
+    "sha1": "4482958ffcb8751250a0ce568d93fbb784ea6f9a",
+    "tag": "asset"
+  },
+  {
+    "path": "playwright-report/data/489900d68914c8d08d5653d76be18c3d1485e913.webm",
+    "sha1": "489900d68914c8d08d5653d76be18c3d1485e913",
+    "tag": "asset"
+  },
+  {
+    "path": "playwright-report/data/4c7e918bf74e60c48717bbaa238f35cf3150a8e0.png",
+    "sha1": "4c7e918bf74e60c48717bbaa238f35cf3150a8e0",
+    "tag": "asset"
+  },
+  {
+    "path": "playwright-report/data/4e780337e5ca00e36a8553200c2f7b467d462164.png",
+    "sha1": "4e780337e5ca00e36a8553200c2f7b467d462164",
+    "tag": "asset"
+  },
+  {
+    "path": "playwright-report/data/530efcc7778e04d88f519c70c7542d08f5e159e8.png",
+    "sha1": "530efcc7778e04d88f519c70c7542d08f5e159e8",
+    "tag": "asset"
+  },
+  {
+    "path": "playwright-report/data/630fdaf5bc70318693e7b842488e0b6ee1401f8c.webm",
+    "sha1": "630fdaf5bc70318693e7b842488e0b6ee1401f8c",
+    "tag": "asset"
+  },
+  {
+    "path": "playwright-report/data/6eedb52d4d869bc94272e9e034386286d8edf3ef.webm",
+    "sha1": "6eedb52d4d869bc94272e9e034386286d8edf3ef",
+    "tag": "asset"
+  },
+  {
+    "path": "playwright-report/data/717684810940f37bbae82f4697991a35329864a2.webm",
+    "sha1": "717684810940f37bbae82f4697991a35329864a2",
+    "tag": "asset"
+  },
+  {
+    "path": "playwright-report/data/79cb6051f5965e6de232d4f56bf3ea0cb3f3080a.md",
+    "sha1": "79cb6051f5965e6de232d4f56bf3ea0cb3f3080a",
+    "tag": "docs"
+  },
+  {
+    "path": "playwright-report/data/7f25a7787504717a53f1998c1b08f558fded1db0.png",
+    "sha1": "7f25a7787504717a53f1998c1b08f558fded1db0",
+    "tag": "asset"
+  },
+  {
+    "path": "playwright-report/data/88086fd22a4d5bfec253ef8ab43bb1ce492a5074.webm",
+    "sha1": "88086fd22a4d5bfec253ef8ab43bb1ce492a5074",
+    "tag": "asset"
+  },
+  {
+    "path": "playwright-report/data/8b2aba0742daac1f8c841c7c778a10f7c749a818.md",
+    "sha1": "8b2aba0742daac1f8c841c7c778a10f7c749a818",
+    "tag": "docs"
+  },
+  {
+    "path": "playwright-report/data/8fdbd586db0e7b0c4b7cb406037b8e2cbbc5b2de.png",
+    "sha1": "8fdbd586db0e7b0c4b7cb406037b8e2cbbc5b2de",
+    "tag": "asset"
+  },
+  {
+    "path": "playwright-report/data/9bc6457efb2b7264be46a02055ee0c5e72fd0858.png",
+    "sha1": "9bc6457efb2b7264be46a02055ee0c5e72fd0858",
+    "tag": "asset"
+  },
+  {
+    "path": "playwright-report/data/a9fb57f2709842a59645e12b98e64be46e1d47ad.webm",
+    "sha1": "a9fb57f2709842a59645e12b98e64be46e1d47ad",
+    "tag": "asset"
+  },
+  {
+    "path": "playwright-report/data/ab10240f31c2e88411204a64036bdd68129e69a8.webm",
+    "sha1": "ab10240f31c2e88411204a64036bdd68129e69a8",
+    "tag": "asset"
+  },
+  {
+    "path": "playwright-report/data/aec058599160f6f48bfe1afb6e780cae53d1664c.webm",
+    "sha1": "aec058599160f6f48bfe1afb6e780cae53d1664c",
+    "tag": "asset"
+  },
+  {
+    "path": "playwright-report/data/aece85e45c04f0f983738722657227e2b335dc36.png",
+    "sha1": "aece85e45c04f0f983738722657227e2b335dc36",
+    "tag": "asset"
+  },
+  {
+    "path": "playwright-report/data/afff28db7a3b6dadf66ff210f23af5a5bed401ed.webm",
+    "sha1": "afff28db7a3b6dadf66ff210f23af5a5bed401ed",
+    "tag": "asset"
+  },
+  {
+    "path": "playwright-report/data/b020001d5832c9a08ba6f69e9ead4841f77e5437.webm",
+    "sha1": "b020001d5832c9a08ba6f69e9ead4841f77e5437",
+    "tag": "asset"
+  },
+  {
+    "path": "playwright-report/data/b6aa65515147242412ad9379a2bbf814478f2eaf.webm",
+    "sha1": "b6aa65515147242412ad9379a2bbf814478f2eaf",
+    "tag": "asset"
+  },
+  {
+    "path": "playwright-report/data/bcee674c236f976ef3acf65ce8a8be5d41ebd281.png",
+    "sha1": "bcee674c236f976ef3acf65ce8a8be5d41ebd281",
+    "tag": "asset"
+  },
+  {
+    "path": "playwright-report/data/c4b46f785f083a13e771e4e6afda51af42a38948.webm",
+    "sha1": "c4b46f785f083a13e771e4e6afda51af42a38948",
+    "tag": "asset"
+  },
+  {
+    "path": "playwright-report/data/c55559c5234f48c68b1d5e2124f9332045da774b.webm",
+    "sha1": "c55559c5234f48c68b1d5e2124f9332045da774b",
+    "tag": "asset"
+  },
+  {
+    "path": "playwright-report/data/c83b97f7869d64437971653c9d1f6b24d33d3e03.webm",
+    "sha1": "c83b97f7869d64437971653c9d1f6b24d33d3e03",
+    "tag": "asset"
+  },
+  {
+    "path": "playwright-report/data/cbb1f2bd3b0725d558f409c2a23445138eb11c40.png",
+    "sha1": "cbb1f2bd3b0725d558f409c2a23445138eb11c40",
+    "tag": "asset"
+  },
+  {
+    "path": "playwright-report/data/d261e03bc13a49e50d38468add94d336873ad4c6.png",
+    "sha1": "d261e03bc13a49e50d38468add94d336873ad4c6",
+    "tag": "asset"
+  },
+  {
+    "path": "playwright-report/data/d926a666025b3640675b4e20555b8f8b81ddb86c.png",
+    "sha1": "d926a666025b3640675b4e20555b8f8b81ddb86c",
+    "tag": "asset"
+  },
+  {
+    "path": "playwright-report/data/da733b170d5e7e2f3a4cdfb267b552f122b2d517.png",
+    "sha1": "da733b170d5e7e2f3a4cdfb267b552f122b2d517",
+    "tag": "asset"
+  },
+  {
+    "path": "playwright-report/data/ea6e7b40252f0e4371a765546389703bb7b307b6.webm",
+    "sha1": "ea6e7b40252f0e4371a765546389703bb7b307b6",
+    "tag": "asset"
+  },
+  {
+    "path": "playwright-report/data/eb89bfe5df995f9c59c9baeba07bce956455a786.png",
+    "sha1": "eb89bfe5df995f9c59c9baeba07bce956455a786",
+    "tag": "asset"
+  },
+  {
+    "path": "playwright-report/data/edc35a3a661934bc36f209a82dbba59809dcf656.webm",
+    "sha1": "edc35a3a661934bc36f209a82dbba59809dcf656",
+    "tag": "asset"
+  },
+  {
+    "path": "playwright-report/data/f23722833ca0d15628d0c9dc719621c98e84069d.png",
+    "sha1": "f23722833ca0d15628d0c9dc719621c98e84069d",
+    "tag": "asset"
+  },
+  {
+    "path": "playwright-report/data/f8a78fae307779edf410ce0192de39f6b315630f.png",
+    "sha1": "f8a78fae307779edf410ce0192de39f6b315630f",
+    "tag": "asset"
+  },
+  {
+    "path": "playwright-report/index.html",
+    "sha1": "a7138ad683b90d77554e51dc0bd6195fa4d1ffe3",
+    "tag": "asset"
+  },
+  {
+    "path": "playwright.config.ts",
+    "sha1": "8c72580d3994bd16ce4e8ffcdf64ced89ac5fb8b",
+    "tag": "config"
+  },
+  {
+    "path": "postcss.config.js",
+    "sha1": "211016771cee108602ec598738d916b332ee0f02",
+    "tag": "config"
+  },
+  {
+    "path": "public/favicon.ico",
+    "sha1": "db98fcaaf06be921ed2b8f25ac80f0add9f4a787",
+    "tag": "asset"
+  },
+  {
+    "path": "public/manifest.json",
+    "sha1": "a4accb9890484c6071ccd1e5a6205bcab86f5e52",
+    "tag": "asset"
+  },
+  {
+    "path": "public/placeholder.svg",
+    "sha1": "ddc7d9ff1d2e3615f892ead918090e044e0afc6d",
+    "tag": "asset"
+  },
+  {
+    "path": "public/robots.txt",
+    "sha1": "08a1974887bb4d2b2a0d39869bf9d8d6dfe8e5dd",
+    "tag": "asset"
+  },
+  {
+    "path": "refactor-plan.md",
+    "sha1": "8bad28ba518a4db4fdc430869db62401e0e1ad95",
+    "tag": "docs"
+  },
+  {
+    "path": "scripts/generate-playwright-report.js",
+    "sha1": "8a41c09be776ebf0865e23c6f765337907e09aab",
+    "tag": "asset"
+  },
+  {
+    "path": "scripts/post-build.js",
+    "sha1": "05d51deb47f489c5a624b950cdd223e24e38201a",
+    "tag": "asset"
+  },
+  {
+    "path": "src/App.css",
+    "sha1": "d5bedd5c0965b2c2684f8148d80352e46503b13b",
+    "tag": "src"
+  },
+  {
+    "path": "src/App.tsx",
+    "sha1": "2eaaefb2d9f79ee1d2235e948f253d39dd4abaea",
+    "tag": "src"
+  },
+  {
+    "path": "src/__tests__/phase3-performance.test.tsx",
+    "sha1": "624cec8f56506602b8b2a32d115ab51b0b35a178",
+    "tag": "src"
+  },
+  {
+    "path": "src/components/AccountCard.tsx",
+    "sha1": "937d19163c00e048223e741b3414bfadda1a6420",
+    "tag": "src"
+  },
+  {
+    "path": "src/components/AccountDeck/AccountRow.tsx",
+    "sha1": "639e2289e8c8502f33fcdf67c6d542488e811da4",
+    "tag": "src"
+  },
+  {
+    "path": "src/components/AccountDeck/VirtualizedDeck.tsx",
+    "sha1": "64b325ceaa9595fcb154f5dbbbd14e6c4fd312ea",
+    "tag": "src"
+  },
+  {
+    "path": "src/components/BalanceCard.tsx",
+    "sha1": "02ab4b5dc99571877d01684fde6b30cca16a4fbc",
+    "tag": "src"
+  },
+  {
+    "path": "src/components/FeatureCloud.tsx",
+    "sha1": "32bbf6debd607390639ca55e35c8b6e19bb17367",
+    "tag": "src"
+  },
+  {
+    "path": "src/components/GlassCard.tsx",
+    "sha1": "fce3e0b9c1fc027e6ef3e68afca482f142dd6132",
+    "tag": "src"
+  },
+  {
+    "path": "src/components/LiquidGlassTopMenuBar.tsx",
+    "sha1": "186c18a8306f1c9315d67cd130a80e14f55f8613",
+    "tag": "src"
+  },
+  {
+    "path": "src/components/Navigation.tsx",
+    "sha1": "0d32d1026e3ca9cccb8163738a37d91f96e7be0c",
+    "tag": "src"
+  },
+  {
+    "path": "src/components/QuickActions.tsx",
+    "sha1": "14f1eebbc62ee0acffda604e32cdbba4dfa8f43a",
+    "tag": "src"
+  },
+  {
+    "path": "src/components/TransactionItem.tsx",
+    "sha1": "8d8e0b490308ece7c96338e6909a49fee0f83d34",
+    "tag": "src"
+  },
+  {
+    "path": "src/components/TransactionList.tsx",
+    "sha1": "2d049f0ec209a272d80d6d60c9d50b0cb6418902",
+    "tag": "src"
+  },
+  {
+    "path": "src/components/TransactionWithScores.tsx",
+    "sha1": "40e39ce3f4382d0cb05cc3aa4ccf480beac597ba",
+    "tag": "src"
+  },
+  {
+    "path": "src/components/accounts/AccountLinking.tsx",
+    "sha1": "283c1f9716e1b3c861bb94d4aaeecdb8de4ebc77",
+    "tag": "src"
+  },
+  {
+    "path": "src/components/accounts/AccountsOverview.tsx",
+    "sha1": "da39a3ee5e6b4b0d3255bfef95601890afd80709",
+    "tag": "src"
+  },
+  {
+    "path": "src/components/ai/ChatDrawer.tsx",
+    "sha1": "82d97342b112d413e6fd9deb01b3a30fc575466a",
+    "tag": "src"
+  },
+  {
+    "path": "src/components/ai/FinancialAIChat.tsx",
+    "sha1": "a378f2200f8c72ca1580f5cc0c81d138bbcfe08b",
+    "tag": "src"
+  },
+  {
+    "path": "src/components/budget/BudgetPlannerPage.tsx",
+    "sha1": "0f7b1af9527d2f4bb3986b023aef34f672ed8dab",
+    "tag": "src"
+  },
+  {
+    "path": "src/components/budget/BudgetTracker.tsx",
+    "sha1": "af08d837b7680ee1b1f7fd94a4869b97d6a6c98a",
+    "tag": "src"
+  },
+  {
+    "path": "src/components/calculators/CalculatorList.tsx",
+    "sha1": "461c5c25dcaefc3e0b1196a71e0df33d89e578b5",
+    "tag": "src"
+  },
+  {
+    "path": "src/components/calculators/CompoundInterestCalculator.tsx",
+    "sha1": "aa94f3f0c18e58c4102e680817d0dc56bce9d530",
+    "tag": "src"
+  },
+  {
+    "path": "src/components/calculators/ExchangeRateCalculator.tsx",
+    "sha1": "3cd88068c9398c45aa963462112ccf591d786b4d",
+    "tag": "src"
+  },
+  {
+    "path": "src/components/calculators/FinancialFreedomCalculator.tsx",
+    "sha1": "ee546de26e9791c216685fe3e975f75c69ea68c2",
+    "tag": "src"
+  },
+  {
+    "path": "src/components/calculators/HomeAffordabilityCalculator.tsx",
+    "sha1": "c384c13d81a2baedf9712d150ebb81b8f7d892ef",
+    "tag": "src"
+  },
+  {
+    "path": "src/components/calculators/InflationCalculator.tsx",
+    "sha1": "94b28fb417a9ea1853199acb51a04f9d10c33200",
+    "tag": "src"
+  },
+  {
+    "path": "src/components/calculators/LoanCalculator.tsx",
+    "sha1": "c4308554415871b43f06a55ddaedbe08d4aa5052",
+    "tag": "src"
+  },
+  {
+    "path": "src/components/calculators/MortgagePayoffCalculator.tsx",
+    "sha1": "62d8368a39e47eeaac6450fc26cfcf069d00c99c",
+    "tag": "src"
+  },
+  {
+    "path": "src/components/calculators/ROICalculator.tsx",
+    "sha1": "c3935ea718a4a8bff95b836ef4f833fff317ed8c",
+    "tag": "src"
+  },
+  {
+    "path": "src/components/calculators/Retirement401kCalculator.tsx",
+    "sha1": "4be3bf6bd9ffbe89d8876c3dfecb3464ff90c0bd",
+    "tag": "src"
+  },
+  {
+    "path": "src/components/calculators/SecureCalculatorWrapper.tsx",
+    "sha1": "d9f80854e50c93e4c4590c5265db174671acf9b2",
+    "tag": "src"
+  },
+  {
+    "path": "src/components/calculators/StockBacktestCalculator.tsx",
+    "sha1": "44338800a1e008a109bc6f42bf4b371b864d6e95",
+    "tag": "src"
+  },
+  {
+    "path": "src/components/calculators/ThreeFundPortfolioCalculator.tsx",
+    "sha1": "df006d025d49162ffdd71f4a09521ca0a9846326",
+    "tag": "src"
+  },
+  {
+    "path": "src/components/credit/CreditEducation.tsx",
+    "sha1": "7e4da652283cf661b709505a2f6ed30e2ae48fb5",
+    "tag": "src"
+  },
+  {
+    "path": "src/components/credit/CreditFactors.tsx",
+    "sha1": "8ec340211a5c1bd8dfd4e258734fef05347e9311",
+    "tag": "src"
+  },
+  {
+    "path": "src/components/credit/CreditScoreCard.tsx",
+    "sha1": "1a739b13e8c590e4be6991514fb82144dbb97c79",
+    "tag": "src"
+  },
+  {
+    "path": "src/components/credit/CreditScorePage.tsx",
+    "sha1": "9f08a55f2fc7ebfdf7334626849fceec72d41854",
+    "tag": "src"
+  },
+  {
+    "path": "src/components/credit/CreditTips.tsx",
+    "sha1": "fccab41ed68901504fc0bbc7234130b9a0ae8ce3",
+    "tag": "src"
+  },
+  {
+    "path": "src/components/credit/ScoreHistory.tsx",
+    "sha1": "d861dd445321804245b48b3606fce9d8136dd398",
+    "tag": "src"
+  },
+  {
+    "path": "src/components/dashboard/DashboardPage.tsx",
+    "sha1": "3548674833face4e4593f19f4a0242aaf0da860d",
+    "tag": "src"
+  },
+  {
+    "path": "src/components/dashboard/FinancialDashboard.tsx",
+    "sha1": "24bcfd8a57a72717d1c8a4ceab068cd788ddaf60",
+    "tag": "src"
+  },
+  {
+    "path": "src/components/examples/EnhancedEcoScore.tsx",
+    "sha1": "75ded5a2a3f9e178be593f36fa9265d610141e13",
+    "tag": "src"
+  },
+  {
+    "path": "src/components/family/FamilyManagement.tsx",
+    "sha1": "ccc7e85dfe3b28899b4fff17f10a3ffa1c28006a",
+    "tag": "src"
+  },
+  {
+    "path": "src/components/financial/CleanAccountCard.tsx",
+    "sha1": "202806b6a3f6bae6e9e90c3070ffd8e0f29826f5",
+    "tag": "src"
+  },
+  {
+    "path": "src/components/financial/CleanCreditScoreCard.tsx",
+    "sha1": "dbfa46c7bef16434af7229829ab985a5bb901433",
+    "tag": "src"
+  },
+  {
+    "path": "src/components/financial/CompactAccountCard.tsx",
+    "sha1": "04d188409c65fbc484986229505fa34e7ff220b6",
+    "tag": "src"
+  },
+  {
+    "path": "src/components/financial/NetWorthSummary.tsx",
+    "sha1": "ed28267f693fc8665ae555a7ddbfe5a3e0cab5b5",
+    "tag": "src"
+  },
+  {
+    "path": "src/components/insights/BaseInsightsPage.tsx",
+    "sha1": "bdc44880ee802e45cae613aedc9a93178408431f",
+    "tag": "src"
+  },
+  {
+    "path": "src/components/insights/CategoryTrendsChart.tsx",
+    "sha1": "4913b23bad370499914f2492c0e2a1238399cadd",
+    "tag": "src"
+  },
+  {
+    "path": "src/components/insights/ConfigurableInsightsPage.tsx",
+    "sha1": "f30325e3f5c834fa052e5da389a7e1c9f0c021f4",
+    "tag": "src"
+  },
+  {
+    "path": "src/components/insights/ConsolidatedInsightsPage.tsx",
+    "sha1": "027dd69451e0b73d810303e14223062a130c47a3",
+    "tag": "src"
+  },
+  {
+    "path": "src/components/insights/EcoCard.tsx",
+    "sha1": "149408ca29383d4b0abfc892da90b950942a0073",
+    "tag": "src"
+  },
+  {
+    "path": "src/components/insights/EcoScore.tsx",
+    "sha1": "f9627dd901978bf582331270be4ffc070efb76fc",
+    "tag": "src"
+  },
+  {
+    "path": "src/components/insights/EnhancedInsightsPage.tsx",
+    "sha1": "c1a77bb97b83dccf49d6faaf274fc63d5e83aeba",
+    "tag": "src"
+  },
+  {
+    "path": "src/components/insights/FinancialCard.tsx",
+    "sha1": "a3a0c2bcca400cc9b4428527a907d35f74dd7ac0",
+    "tag": "src"
+  },
+  {
+    "path": "src/components/insights/HealthScore.tsx",
+    "sha1": "005ef363118646c5f234c2920e4a141fb5979535",
+    "tag": "src"
+  },
+  {
+    "path": "src/components/insights/INSIGHTS_UPGRADE.md",
+    "sha1": "59d77c6000834cb315ed938975d051180426ca2a",
+    "tag": "src"
+  },
+  {
+    "path": "src/components/insights/InsightsPage.tsx",
+    "sha1": "4b4a3548bc1e984b440e02cdde7445e3f2742f6d",
+    "tag": "src"
+  },
+  {
+    "path": "src/components/insights/MetricCard.tsx",
+    "sha1": "712e79750b7074b8a2f2ff0f5e399da102fc83c4",
+    "tag": "src"
+  },
+  {
+    "path": "src/components/insights/NewInsightsPage.tsx",
+    "sha1": "bcd32fa7a8ea09e2206ddd40b54001cca347f4d6",
+    "tag": "src"
+  },
+  {
+    "path": "src/components/insights/OptimizedRefinedInsightsPage.tsx",
+    "sha1": "25ce55b973e7fc44f093164aee9054190ab2a942",
+    "tag": "src"
+  },
+  {
+    "path": "src/components/insights/RefinedInsightsPage.tsx",
+    "sha1": "ca09d5f181d4176caae143b6983827b87d3a3eec",
+    "tag": "src"
+  },
+  {
+    "path": "src/components/insights/SimpleInsightsPage.tsx",
+    "sha1": "4ec43a6061bc41aa8b120f91e33efedb9c19ea5a",
+    "tag": "src"
+  },
+  {
+    "path": "src/components/insights/SpendingTrendsChart.tsx",
+    "sha1": "7961116c886b182eb2d8bf87a6af793a941b7744",
+    "tag": "src"
+  },
+  {
+    "path": "src/components/insights/TimeSeriesChart.tsx",
+    "sha1": "e4eed3b41e837abd34cbfde60057e225c9bdfccf",
+    "tag": "src"
+  },
+  {
+    "path": "src/components/insights/UnifiedInsightsPage.tsx",
+    "sha1": "3c4aa6d625d1c0043d5de95ba50b9ae3778f1c18",
+    "tag": "src"
+  },
+  {
+    "path": "src/components/insights/UniversalMetricCard.tsx",
+    "sha1": "2676db00058420ce7660fcd848ba83c5411354ee",
+    "tag": "src"
+  },
+  {
+    "path": "src/components/insights/UniversalScoreCard.tsx",
+    "sha1": "97c9c291bf73c319245d087d28f79de667204144",
+    "tag": "src"
+  },
+  {
+    "path": "src/components/insights/WellnessCard.tsx",
+    "sha1": "7297fed804096e3c89068a268169fb3c69dd6488",
+    "tag": "src"
+  },
+  {
+    "path": "src/components/insights/components/AnimatedCircularProgress.tsx",
+    "sha1": "4f35ca63436d0ff66c962164e302f28c8cec2923",
+    "tag": "src"
+  },
+  {
+    "path": "src/components/insights/components/CategoryBreakdown.tsx",
+    "sha1": "6ab44b4a383dcd406051ed0caa18f67811f65a0b",
+    "tag": "src"
+  },
+  {
+    "path": "src/components/insights/components/ComprehensiveEcoCard.tsx",
+    "sha1": "983a1c7aa6b50e9fa3722c20f346ee317699c5fd",
+    "tag": "src"
+  },
+  {
+    "path": "src/components/insights/components/ComprehensiveWellnessCard.tsx",
+    "sha1": "7b0299fc46a6bc4b71789354b6ddc8159c51e6a8",
+    "tag": "src"
+  },
+  {
+    "path": "src/components/insights/components/EnhancedMetricCard.tsx",
+    "sha1": "1abf273d632a8de43e9a5aa307cbe59b1843a492",
+    "tag": "src"
+  },
+  {
+    "path": "src/components/insights/components/EnhancedScoreCard.tsx",
+    "sha1": "c4adbe4276948c6e27b0e672b9d58b5c9470f965",
+    "tag": "src"
+  },
+  {
+    "path": "src/components/insights/components/OptimizedScoreCard.tsx",
+    "sha1": "7978d6a1ed4a0f8f4f07d53bb7a2ae2817d62729",
+    "tag": "src"
+  },
+  {
+    "path": "src/components/insights/components/RefinedMetricCard.tsx",
+    "sha1": "24cfb6a597afbc0a529b2a6447aafe3fc8fd117b",
+    "tag": "src"
+  },
+  {
+    "path": "src/components/insights/components/RefinedScoreCard.tsx",
+    "sha1": "01c10e30b88226e265cab987ac9978eb301d6631",
+    "tag": "src"
+  },
+  {
+    "path": "src/components/insights/components/RefinedTrendCard.tsx",
+    "sha1": "16e7faadf937afe8c33f77f2422d14ab191f8fbf",
+    "tag": "src"
+  },
+  {
+    "path": "src/components/insights/components/TrendChart.tsx",
+    "sha1": "e407eaf82db6679c3c24d59050bda9ca1a18f24d",
+    "tag": "src"
+  },
+  {
+    "path": "src/components/investments/InvestmentPortfolio.tsx",
+    "sha1": "5b7f524455068905a2fce5cea02d536834d18071",
+    "tag": "src"
+  },
+  {
+    "path": "src/components/investments/InvestmentTrackerPage.tsx",
+    "sha1": "d704082e5c4d582684ec39e351777a7567ad77a3",
+    "tag": "src"
+  },
+  {
+    "path": "src/components/layout/AppShell.tsx",
+    "sha1": "66cb1ee131ce73ae4802bb013182d6270f2e6e68",
+    "tag": "src"
+  },
+  {
+    "path": "src/components/performance/PerformanceMonitor.tsx",
+    "sha1": "f3ffb1cd1799df6891ae1018d386580f2705eb78",
+    "tag": "src"
+  },
+  {
+    "path": "src/components/planning/FinancialPlanningPage.tsx",
+    "sha1": "61a8d09c0867f859b32517b455e5a5f1b4ce060b",
+    "tag": "src"
+  },
+  {
+    "path": "src/components/planning/GoalTracker.tsx",
+    "sha1": "a7437f9a0edc0cb905f21fececbaf81f3162175b",
+    "tag": "src"
+  },
+  {
+    "path": "src/components/planning/RetirementPlanner.tsx",
+    "sha1": "0f5bfaa37b2b55c85683df8b0c87a8042c77c92e",
+    "tag": "src"
+  },
+  {
+    "path": "src/components/reports/BudgetReportsPage.tsx",
+    "sha1": "c1b22767df04ad840b1b470f72ff9725e28a2aaa",
+    "tag": "src"
+  },
+  {
+    "path": "src/components/savings/GoalCard.tsx",
+    "sha1": "95cc700bcdf6eaca45afbcdb2b03eff523d3168f",
+    "tag": "src"
+  },
+  {
+    "path": "src/components/savings/GoalCreator.tsx",
+    "sha1": "8daab9f47696e80d249b346157e3ff1b0e539254",
+    "tag": "src"
+  },
+  {
+    "path": "src/components/savings/SavingsGoals.tsx",
+    "sha1": "442a486af9aa67d7bdaa7deb706367c8304c4d98",
+    "tag": "src"
+  },
+  {
+    "path": "src/components/savings/SavingsInsights.tsx",
+    "sha1": "f3728e17dcc5fa37ce37f7b419523b374d16e2b1",
+    "tag": "src"
+  },
+  {
+    "path": "src/components/shared/ConfigurableInsightsPage.tsx",
+    "sha1": "c701675ef14ad49a5683bd4ea2d3bab0d3fa31bb",
+    "tag": "src"
+  },
+  {
+    "path": "src/components/shared/SharedScoreCircle.tsx",
+    "sha1": "19364e22c06df682b8482bff31a83e3c81186ed7",
+    "tag": "src"
+  },
+  {
+    "path": "src/components/shared/VueniConsolidationDemo.tsx",
+    "sha1": "4e223eb5c66446c50daedf001300f5be659a276d",
+    "tag": "src"
+  },
+  {
+    "path": "src/components/shared/VueniDesignSystem.tsx",
+    "sha1": "e66615c83653a71d0997aecc1be7e650c925f001",
+    "tag": "src"
+  },
+  {
+    "path": "src/components/shared/VueniFeatureFlags.tsx",
+    "sha1": "2c13d6f280499b2ae46988cb787b8c0fcc33c238",
+    "tag": "src"
+  },
+  {
+    "path": "src/components/shared/VueniUnifiedInsightsPage.tsx",
+    "sha1": "5f3f465f003ee47027d89539a6c439bc7668a9db",
+    "tag": "src"
+  },
+  {
+    "path": "src/components/shared/VueniUnifiedTransactionList.tsx",
+    "sha1": "4397d00db0d6fca7e8387d92f0b0e39e8e41933f",
+    "tag": "src"
+  },
+  {
+    "path": "src/components/shared/index.ts",
+    "sha1": "861e9070bc86f1f73f28a1e5bcab52fbf6286e75",
+    "tag": "src"
+  },
+  {
+    "path": "src/components/transactions/EnterpriseTransactionView.tsx",
+    "sha1": "079d3665e74e1786c63b7081134e9227d0e49c3c",
+    "tag": "src"
+  },
+  {
+    "path": "src/components/transactions/OptimizedTransactionList.tsx",
+    "sha1": "37dc730e62f0dc9c8f8de38c2ea16ff772554456",
+    "tag": "src"
+  },
+  {
+    "path": "src/components/transactions/ScoreCircle.tsx",
+    "sha1": "06bd2b16e1f803c408cd36f7ffeb002580fa8139",
+    "tag": "src"
+  },
+  {
+    "path": "src/components/transactions/ScoreCircles.tsx",
+    "sha1": "12d632b0da55070acae2d8c2c65ac865fbcd4f7d",
+    "tag": "src"
+  },
+  {
+    "path": "src/components/transactions/ShippingInfo.tsx",
+    "sha1": "130d99cb0c81978234f751b7e6ac66b760a48f3b",
+    "tag": "src"
+  },
+  {
+    "path": "src/components/transactions/TransactionAmount.tsx",
+    "sha1": "7e52487eb4c4dfae5d2a1010e787e4786485bc3a",
+    "tag": "src"
+  },
+  {
+    "path": "src/components/transactions/TransactionList.tsx",
+    "sha1": "7f7e063bea984aa6c3e3bc7c76db1effe6fdbeab",
+    "tag": "src"
+  },
+  {
+    "path": "src/components/transactions/TransactionMain.tsx",
+    "sha1": "9b3631705f3050ba8fea8794d051869fe24c08c2",
+    "tag": "src"
+  },
+  {
+    "path": "src/components/transactions/TransactionManager.tsx",
+    "sha1": "3eab9eb1169a6462811a095789394e5802eacc1e",
+    "tag": "src"
+  },
+  {
+    "path": "src/components/transactions/TransactionStatus.tsx",
+    "sha1": "7d38428e429ff449d17f33aaf6bb17f00d65f477",
+    "tag": "src"
+  },
+  {
+    "path": "src/components/transactions/UnifiedTransactionList.tsx",
+    "sha1": "d7878ed8042902185c3760cfbcb8fd782c94f318",
+    "tag": "src"
+  },
+  {
+    "path": "src/components/ui/AccountTypeBadge.tsx",
+    "sha1": "bbc1ca90bb380a68871f8ce76f8cb3be7f07a37f",
+    "tag": "src"
+  },
+  {
+    "path": "src/components/ui/BackHeader.tsx",
+    "sha1": "2468dea39491bea7fe257f24d2b8107a0b7f1b85",
+    "tag": "src"
+  },
+  {
+    "path": "src/components/ui/CardShell.tsx",
+    "sha1": "d7ff8b236c380a7cc4bd6ed69f913fa457629d75",
+    "tag": "src"
+  },
+  {
+    "path": "src/components/ui/EnhancedGlassCard.tsx",
+    "sha1": "a90381c925f0d66fd32c37404715231feaebd676",
+    "tag": "src"
+  },
+  {
+    "path": "src/components/ui/GlassSlider.tsx",
+    "sha1": "91100e822858e65a5e8da38952caf91ae179977c",
+    "tag": "src"
+  },
+  {
+    "path": "src/components/ui/GlobalGradientBackground.tsx",
+    "sha1": "68029177bbefc3873cc9b687d11b906536e54460",
+    "tag": "src"
+  },
+  {
+    "path": "src/components/ui/LiquidGlass.tsx",
+    "sha1": "5a697a378b644fa12fa62a233105502a727e1683",
+    "tag": "src"
+  },
+  {
+    "path": "src/components/ui/LiquidGlassSVGFilters.tsx",
+    "sha1": "efc3f00dece282775d4a1ad9fda8053e79ea486b",
+    "tag": "src"
+  },
+  {
+    "path": "src/components/ui/NavPill.tsx",
+    "sha1": "9288b73ae9e9ebf2e8a0a9b28838a150bb25f604",
+    "tag": "src"
+  },
+  {
+    "path": "src/components/ui/SimpleGlassCard.tsx",
+    "sha1": "0428020ca96318b50c4ba9f2b45fadf017fbfbc4",
+    "tag": "src"
+  },
+  {
+    "path": "src/components/ui/UnifiedCard.tsx",
+    "sha1": "4d943011cd095b7aa7d9ce2c7b54a3e7145d25e3",
+    "tag": "src"
+  },
+  {
+    "path": "src/components/ui/UniversalCard.original.tsx",
+    "sha1": "0ff6b98f767c038750afb6389d63ebd662c7ace6",
+    "tag": "src"
+  },
+  {
+    "path": "src/components/ui/UniversalCard.tsx",
+    "sha1": "0ff6b98f767c038750afb6389d63ebd662c7ace6",
+    "tag": "src"
+  },
+  {
+    "path": "src/components/ui/accordion.tsx",
+    "sha1": "0133030b57ded062f7b55281b142070e307af57d",
+    "tag": "src"
+  },
+  {
+    "path": "src/components/ui/alert-dialog.tsx",
+    "sha1": "ad5a9a0315e78e245076b6a133f7b77e272479cc",
+    "tag": "src"
+  },
+  {
+    "path": "src/components/ui/alert.tsx",
+    "sha1": "f9e87ec8d6f05cc711959a0272788f294ac512be",
+    "tag": "src"
+  },
+  {
+    "path": "src/components/ui/aspect-ratio.tsx",
+    "sha1": "2fe875f854d13ec92e5625aa4705ee7097890d81",
+    "tag": "src"
+  },
+  {
+    "path": "src/components/ui/avatar.tsx",
+    "sha1": "a0d7409b7029464dfc27c14572b9828e6249d683",
+    "tag": "src"
+  },
+  {
+    "path": "src/components/ui/badge.tsx",
+    "sha1": "3c225ece8c03ac0ebf0655b3130d8fd79ee0217e",
+    "tag": "src"
+  },
+  {
+    "path": "src/components/ui/breadcrumb.tsx",
+    "sha1": "55dc2e49c701b03df870118807be959480c03835",
+    "tag": "src"
+  },
+  {
+    "path": "src/components/ui/button.tsx",
+    "sha1": "cb887e87010ee109aaa6511f417adb5c57c98251",
+    "tag": "src"
+  },
+  {
+    "path": "src/components/ui/calendar.tsx",
+    "sha1": "ccbd2e70560b8113dd6b8cc540c9f1e0ce59774e",
+    "tag": "src"
+  },
+  {
+    "path": "src/components/ui/card.tsx",
+    "sha1": "df6ba2ddbc64a8da679b437a0ed34f62590a9aa8",
+    "tag": "src"
+  },
+  {
+    "path": "src/components/ui/carousel.tsx",
+    "sha1": "dcd2aab5562e1751b377741c05e5c0b30d78a044",
+    "tag": "src"
+  },
+  {
+    "path": "src/components/ui/chart.tsx",
+    "sha1": "1ea04bdd59f8465e0e426f9d4b18fe805da2d69f",
+    "tag": "src"
+  },
+  {
+    "path": "src/components/ui/checkbox.tsx",
+    "sha1": "4d2ba8b7e5a3ccdaa50144e9530921feaf4c3251",
+    "tag": "src"
+  },
+  {
+    "path": "src/components/ui/collapsible.tsx",
+    "sha1": "a60bc9173fba93f3d049a7d9966ad6cfb2eaf727",
+    "tag": "src"
+  },
+  {
+    "path": "src/components/ui/command.tsx",
+    "sha1": "5cde61648c8eb5ed214bb1a7c86cc52e75fe13b7",
+    "tag": "src"
+  },
+  {
+    "path": "src/components/ui/context-menu.tsx",
+    "sha1": "9bd803be522248e16df588aa764b2b6d6d64f366",
+    "tag": "src"
+  },
+  {
+    "path": "src/components/ui/dialog.tsx",
+    "sha1": "4de9f2189f58f85dbc2b403ee2c94a70d1dbc681",
+    "tag": "src"
+  },
+  {
+    "path": "src/components/ui/drawer.tsx",
+    "sha1": "fe34067bb4415c8324ad4008e453e4b525cbef80",
+    "tag": "src"
+  },
+  {
+    "path": "src/components/ui/dropdown-menu.tsx",
+    "sha1": "1790cebd0df909c3c427f959f9e5f0bb0b3d3cb0",
+    "tag": "src"
+  },
+  {
+    "path": "src/components/ui/form.tsx",
+    "sha1": "6af38fec80eca96cd6baf2b883f07a29927be525",
+    "tag": "src"
+  },
+  {
+    "path": "src/components/ui/hover-card.tsx",
+    "sha1": "caf7d778f076d2be0fb58d1ea0832ff3d66914ef",
+    "tag": "src"
+  },
+  {
+    "path": "src/components/ui/input-otp.tsx",
+    "sha1": "ca82cb0775fd0df3e34d9e46b3071bc09d44853d",
+    "tag": "src"
+  },
+  {
+    "path": "src/components/ui/input.tsx",
+    "sha1": "7d8f3b46fa39f82308c318612e6001241faf1da1",
+    "tag": "src"
+  },
+  {
+    "path": "src/components/ui/label.tsx",
+    "sha1": "d6b85ad3d352bcc536ae3247c30d3f1a4fb4b684",
+    "tag": "src"
+  },
+  {
+    "path": "src/components/ui/lightweight-charts.tsx",
+    "sha1": "0ba0e2b559f92642a000c269d815c7cfbcb47cf8",
+    "tag": "src"
+  },
+  {
+    "path": "src/components/ui/menubar.tsx",
+    "sha1": "29846c8e819710a2cb29e92f6590068176983d0c",
+    "tag": "src"
+  },
+  {
+    "path": "src/components/ui/navigation-menu.tsx",
+    "sha1": "afb203cf61c9be2a933a025fd40ae09a1a945da8",
+    "tag": "src"
+  },
+  {
+    "path": "src/components/ui/pagination.tsx",
+    "sha1": "8a8968cf686e0885b3b3fb2077253ce15cd2da9a",
+    "tag": "src"
+  },
+  {
+    "path": "src/components/ui/popover.tsx",
+    "sha1": "da206fea927b6a35b4e8a0ca7a326fcd30c609b0",
+    "tag": "src"
+  },
+  {
+    "path": "src/components/ui/progress.tsx",
+    "sha1": "304ad57d0de756f16b96ba3ca8d731ceb7eaa0c2",
+    "tag": "src"
+  },
+  {
+    "path": "src/components/ui/radio-group.tsx",
+    "sha1": "cb3ad9ec8fff886ea7046d31ff6dc72dd931a605",
+    "tag": "src"
+  },
+  {
+    "path": "src/components/ui/resizable.tsx",
+    "sha1": "f5c6f7da2b722014ba61bbaede30517a9763477c",
+    "tag": "src"
+  },
+  {
+    "path": "src/components/ui/scroll-area.tsx",
+    "sha1": "07ca1c0102f09b8a23cf8ea9d8f02a5df797bb73",
+    "tag": "src"
+  },
+  {
+    "path": "src/components/ui/select.tsx",
+    "sha1": "6098d9b00474f2f2c49b19fb6ed17d3ce9860e04",
+    "tag": "src"
+  },
+  {
+    "path": "src/components/ui/separator.tsx",
+    "sha1": "443bca0122d1a88c605f25c3005df6a161409122",
+    "tag": "src"
+  },
+  {
+    "path": "src/components/ui/sheet.tsx",
+    "sha1": "a8f4f3d7aa673bd581f0dafd78efd77e22129333",
+    "tag": "src"
+  },
+  {
+    "path": "src/components/ui/sidebar.tsx",
+    "sha1": "287820e48506ebf961b307ff6f2ddea5ae2b2ce2",
+    "tag": "src"
+  },
+  {
+    "path": "src/components/ui/skeleton.tsx",
+    "sha1": "9e43ec961a184b4867cdcf052aaf5c9003847812",
+    "tag": "src"
+  },
+  {
+    "path": "src/components/ui/slider.tsx",
+    "sha1": "a171560e4d2911556b967dd34613e5bd1382a7ab",
+    "tag": "src"
+  },
+  {
+    "path": "src/components/ui/sonner.tsx",
+    "sha1": "62f4ed7ffad6ea62859fd8396b7f5569960ff4c9",
+    "tag": "src"
+  },
+  {
+    "path": "src/components/ui/switch.tsx",
+    "sha1": "7ba186c80dbd789a3d62d406c5ce29eecdb32a63",
+    "tag": "src"
+  },
+  {
+    "path": "src/components/ui/table.tsx",
+    "sha1": "a9cd54b0d5b222af89c0668f25c72196f4da5bfa",
+    "tag": "src"
+  },
+  {
+    "path": "src/components/ui/tabs.tsx",
+    "sha1": "365f0628dcb63ce66bda2da1b83cf431b9b01f3b",
+    "tag": "src"
+  },
+  {
+    "path": "src/components/ui/textarea.tsx",
+    "sha1": "306d1b67c08af42d884d260f76bea8266fa1560a",
+    "tag": "src"
+  },
+  {
+    "path": "src/components/ui/toast.tsx",
+    "sha1": "118262f563821b375e418331ccae58ce1f71d800",
+    "tag": "src"
+  },
+  {
+    "path": "src/components/ui/toaster.tsx",
+    "sha1": "b88f5fc529be7033b9c6b1f7e1e126ac47b640a4",
+    "tag": "src"
+  },
+  {
+    "path": "src/components/ui/toggle-group.tsx",
+    "sha1": "726d869561afb5fd5a92ecb0a459caba6a84bda0",
+    "tag": "src"
+  },
+  {
+    "path": "src/components/ui/toggle.tsx",
+    "sha1": "3e6672cde7490792949bba160839aa34377d7557",
+    "tag": "src"
+  },
+  {
+    "path": "src/components/ui/tooltip.tsx",
+    "sha1": "20d2b0e1e1ca91d5126842685ebd4d0de5f0d434",
+    "tag": "src"
+  },
+  {
+    "path": "src/components/ui/use-toast.ts",
+    "sha1": "01188eb19743fad52c8a1821421aedc8bf64b05a",
+    "tag": "src"
+  },
+  {
+    "path": "src/components/wrapped/WrappedPage.tsx",
+    "sha1": "a44bf321bea914477979f1ad320ee921e3debdc2",
+    "tag": "src"
+  },
+  {
+    "path": "src/config/security.ts",
+    "sha1": "d5d0c5fc241a978d6454677dd00f0ef10cba4e22",
+    "tag": "src"
+  },
+  {
+    "path": "src/hooks/use-mobile.tsx",
+    "sha1": "cdb9aae9ca8d354d767e8da4731ff7eb4a16d532",
+    "tag": "src"
+  },
+  {
+    "path": "src/hooks/use-toast.ts",
+    "sha1": "cbcd33a62acb6fdb85546fc41ec5a34470f9bd7e",
+    "tag": "src"
+  },
+  {
+    "path": "src/hooks/useFinancialMetrics.ts",
+    "sha1": "cd02c27809af98928d9585162e00e41364cf59e0",
+    "tag": "src"
+  },
+  {
+    "path": "src/hooks/useLiquidGlass.tsx",
+    "sha1": "5224229fcf3334b9e654ee46d742b643bd1455d9",
+    "tag": "src"
+  },
+  {
+    "path": "src/hooks/usePerformanceOptimization.ts",
+    "sha1": "4889d8db5e8904d1e64507f80952e188449985e3",
+    "tag": "src"
+  },
+  {
+    "path": "src/index.css",
+    "sha1": "09d9492c1918361c4c691ab39fc139548fba5945",
+    "tag": "src"
+  },
+  {
+    "path": "src/lib/VueniCacheManager.ts",
+    "sha1": "a2dec71dc2517b0b9c7b8b05ee9086cb77c8b5ec",
+    "tag": "src"
+  },
+  {
+    "path": "src/lib/VueniLazyImports.ts",
+    "sha1": "aafc01d435ca252013efc0d28489584ca0c1c462",
+    "tag": "src"
+  },
+  {
+    "path": "src/lib/VueniPerformanceMonitor.ts",
+    "sha1": "eb670209d40ac3a14c8f776dd33da397ce082400",
+    "tag": "src"
+  },
+  {
+    "path": "src/lib/VueniSecureStorage.ts",
+    "sha1": "0e690a86c1c550a602a127226cdaecff48b22af7",
+    "tag": "src"
+  },
+  {
+    "path": "src/lib/VueniSessionManager.ts",
+    "sha1": "c7d868eb20645931ecbada39b7b2c0211cb1930c",
+    "tag": "src"
+  },
+  {
+    "path": "src/lib/utils.ts",
+    "sha1": "03edf7b44c7cf1d3f48be4f72866007dbb63b8c6",
+    "tag": "src"
+  },
+  {
+    "path": "src/main.tsx",
+    "sha1": "fabeaab241f4ddeb6d833149b43ee4fe1128a09b",
+    "tag": "src"
+  },
+  {
+    "path": "src/pages/CalculatorsHub.tsx",
+    "sha1": "5dbdc9912577c6ae60984bb9552eea9d322721e1",
+    "tag": "src"
+  },
+  {
+    "path": "src/pages/CalculatorsPage.tsx",
+    "sha1": "fb952a9635c20688b6cbb84e317cade647cc991f",
+    "tag": "src"
+  },
+  {
+    "path": "src/pages/CleanDashboard.tsx",
+    "sha1": "7a3aa1d3dad8464e4b66c4bc6140d6f85932a5c2",
+    "tag": "src"
+  },
+  {
+    "path": "src/pages/DropdownTestPage.tsx",
+    "sha1": "f2970bb2386bb50e2190af454236c7a598beaec0",
+    "tag": "src"
+  },
+  {
+    "path": "src/pages/Index.tsx",
+    "sha1": "ba6dace3c0a3a668c378233454045ba08b93b2e9",
+    "tag": "src"
+  },
+  {
+    "path": "src/pages/InsightsPage.tsx",
+    "sha1": "2462c7dba7bad235d3de1e519644ec8f10747725",
+    "tag": "src"
+  },
+  {
+    "path": "src/pages/MenuBarDemo.tsx",
+    "sha1": "137690d1630af166851593fd80946918a2297d3d",
+    "tag": "src"
+  },
+  {
+    "path": "src/pages/NotFound.tsx",
+    "sha1": "371f4d8c1295da002bcd5751a0e08e3be4d17364",
+    "tag": "src"
+  },
+  {
+    "path": "src/pages/OptimizedProfile.tsx",
+    "sha1": "0e9ac17854fd53afa3b3fe4b7d6583bbeb638ed1",
+    "tag": "src"
+  },
+  {
+    "path": "src/pages/Profile.tsx",
+    "sha1": "5fc06c88b7d684eac0a35f9cba14f8b396ddc44b",
+    "tag": "src"
+  },
+  {
+    "path": "src/pages/TransactionDemo.tsx",
+    "sha1": "889181968a0bf0071af924d299bcf008c6d0f311",
+    "tag": "src"
+  },
+  {
+    "path": "src/screens/MobileTransactionScreen.tsx",
+    "sha1": "b1295bb7ee5ce3817a2c03ebcbd0da67199476a4",
+    "tag": "src"
+  },
+  {
+    "path": "src/selectors/financialSelectors.ts",
+    "sha1": "403a4a5e24690d781183ec0adaaea31be1260eab",
+    "tag": "src"
+  },
+  {
+    "path": "src/services/accountService.ts",
+    "sha1": "29019b8b239e7b636a07da05f5567a7f7aa7cc59",
+    "tag": "src"
+  },
+  {
+    "path": "src/services/aiFinancialService.ts",
+    "sha1": "24f04334b9239c46f6a14097a2bd53ac36baa4e8",
+    "tag": "src"
+  },
+  {
+    "path": "src/services/budgetService.ts",
+    "sha1": "e198a28b0acbb5542b6ea1da41beb415eb9f6d17",
+    "tag": "src"
+  },
+  {
+    "path": "src/services/creditScoreService.ts",
+    "sha1": "41c35898843a42627caab781f947ab67013bae3c",
+    "tag": "src"
+  },
+  {
+    "path": "src/services/ecoScoreService.ts",
+    "sha1": "aa5a2b5c8d8a24d4604aa9f8cf0364e9c9e43609",
+    "tag": "src"
+  },
+  {
+    "path": "src/services/familyService.ts",
+    "sha1": "ae2ca33984af19b9f340b5bd3caf6e793db4f4a4",
+    "tag": "src"
+  },
+  {
+    "path": "src/services/financialPlanningService.ts",
+    "sha1": "37be86c8b60b2baa595306eaf0692b6956976cea",
+    "tag": "src"
+  },
+  {
+    "path": "src/services/healthKitService.ts",
+    "sha1": "c2a348f16faccdef6b1c59e81402bf3234dced85",
+    "tag": "src"
+  },
+  {
+    "path": "src/services/investmentService.ts",
+    "sha1": "b776fe780499d6668302d74c076f557a53605ce7",
+    "tag": "src"
+  },
+  {
+    "path": "src/services/mockAiService.ts",
+    "sha1": "9d1ac99e8e384e34061a126b1c39b5e5de7a36fc",
+    "tag": "src"
+  },
+  {
+    "path": "src/services/mockData.ts",
+    "sha1": "8186826d01b9304981f5ada62b2fbb1c4d69e364",
+    "tag": "src"
+  },
+  {
+    "path": "src/services/mockHealthEcoService.ts",
+    "sha1": "56d9463a19ee0f1f7c9e2bbad49ad552d7ad2202",
+    "tag": "src"
+  },
+  {
+    "path": "src/services/mockHistoricalData.ts",
+    "sha1": "f8dc7fb766444cef43698ba4a998e68df31c0037",
+    "tag": "src"
+  },
+  {
+    "path": "src/services/mockReportService.ts",
+    "sha1": "ea08d0a88870b09f1782fbfebf89c0546af57952",
+    "tag": "src"
+  },
+  {
+    "path": "src/services/performanceService.ts",
+    "sha1": "0809881573afdf06818b4a00979b8bd7452c321a",
+    "tag": "src"
+  },
+  {
+    "path": "src/services/savingsGoalsService.ts",
+    "sha1": "9d1a7dd938d9c4dd9c90f9f8850e4d1ad8c4be76",
+    "tag": "src"
+  },
+  {
+    "path": "src/services/scoringModel.ts",
+    "sha1": "70bdbaed8b75513ecddee91d138dcc33937ed02d",
+    "tag": "src"
+  },
+  {
+    "path": "src/services/transactionService.ts",
+    "sha1": "dc25b57bef513569e71ddec54a8dc8ff02470778",
+    "tag": "src"
+  },
+  {
+    "path": "src/services/visualizationService.ts",
+    "sha1": "57985596b4858ad5c5f929b6bae96327f0db27b0",
+    "tag": "src"
+  },
+  {
+    "path": "src/styles/account-card.css",
+    "sha1": "25a410bec102bf27347b20567cc368568e7095fd",
+    "tag": "src"
+  },
+  {
+    "path": "src/styles/card-alignment.css",
+    "sha1": "8d2cb333217d18c035ca7d3af13dcc5d9412034c",
+    "tag": "src"
+  },
+  {
+    "path": "src/styles/glass.css",
+    "sha1": "74ca8b73f34be54f0385409e1a69e33b185ae6c9",
+    "tag": "src"
+  },
+  {
+    "path": "src/styles/liquid-backgrounds.css",
+    "sha1": "e392bff58c57d555c00528449b9085cf8bbff620",
+    "tag": "src"
+  },
+  {
+    "path": "src/styles/liquid-glass-wwdc.css",
+    "sha1": "63e458bfd777a47364be00f5d53c340502fc30cf",
+    "tag": "src"
+  },
+  {
+    "path": "src/styles/liquid-glass.css",
+    "sha1": "137275f72d22c10cce535daa57582f778e2fc5e3",
+    "tag": "src"
+  },
+  {
+    "path": "src/styles/performance-optimized.css",
+    "sha1": "7f0eb6bb228e35aa74a80611fdfd21fde89652ea",
+    "tag": "src"
+  },
+  {
+    "path": "src/styles/refined-animations.css",
+    "sha1": "4d9d5e987a773162d0fb5ac5cbacce415bab3dbb",
+    "tag": "src"
+  },
+  {
+    "path": "src/styles/responsive-enhancements.css",
+    "sha1": "fb3f41632ae4e94d803ceafc26def3748c7e4c29",
+    "tag": "src"
+  },
+  {
+    "path": "src/styles/scroll-fix.css",
+    "sha1": "9792c8ca18cde3d97e82f9591eebd7516e970b84",
+    "tag": "src"
+  },
+  {
+    "path": "src/test/calculators.test.ts",
+    "sha1": "5f3496c3216d4c0abb3537421002a631543d14ef",
+    "tag": "src"
+  },
+  {
+    "path": "src/test/components.test.tsx",
+    "sha1": "02404fbed1f7dd650ebda9c2039a06b1080c272f",
+    "tag": "src"
+  },
+  {
+    "path": "src/test/data-integrity.test.ts",
+    "sha1": "521b201f55b510f526c8958690a90c712b513b2e",
+    "tag": "src"
+  },
+  {
+    "path": "src/test/formatters.test.ts",
+    "sha1": "47edee76ea45a863d872e9df09751713e27f9183",
+    "tag": "src"
+  },
+  {
+    "path": "src/test/performance.bench.ts",
+    "sha1": "c42d254f71971b54be7ce9d5b06d4968b306461d",
+    "tag": "src"
+  },
+  {
+    "path": "src/test/regression.test.tsx",
+    "sha1": "6363a37e937c2ecea370cc5786a37386f0b746f2",
+    "tag": "src"
+  },
+  {
+    "path": "src/test/security.test.ts",
+    "sha1": "3eaf74f245603ba28b8adf8b972523d98a41af33",
+    "tag": "src"
+  },
+  {
+    "path": "src/test/selectors.test.ts",
+    "sha1": "4568277679a35d0d3c1861120b551a456af715bd",
+    "tag": "src"
+  },
+  {
+    "path": "src/test/setup.ts",
+    "sha1": "1d7567d2ddd199bf05581c45771655612fc1662b",
+    "tag": "src"
+  },
+  {
+    "path": "src/test/vueni-security.test.ts",
+    "sha1": "50d87fb00607ef2706077e9e61b34c427035acd5",
+    "tag": "src"
+  },
+  {
+    "path": "src/theme/colors.ts",
+    "sha1": "f1ec0bcee66b2f3b756049e353b44e7a42641f56",
+    "tag": "src"
+  },
+  {
+    "path": "src/theme/tokens.ts",
+    "sha1": "fd56625cdd718fc16e12e809e1b68b991aadfdf1",
+    "tag": "src"
+  },
+  {
+    "path": "src/theme/unified-card-tokens.ts",
+    "sha1": "44c85174f93a7d05d4cc933135951125de8c9d7c",
+    "tag": "src"
+  },
+  {
+    "path": "src/types/accounts.ts",
+    "sha1": "603eacf6030c6c726d284e7ebb21000d743c091a",
+    "tag": "src"
+  },
+  {
+    "path": "src/types/budget.ts",
+    "sha1": "64c8eb606696f71bcf16d82f5fc615f36eea2b6b",
+    "tag": "src"
+  },
+  {
+    "path": "src/types/budgets.ts",
+    "sha1": "cd01d016a458fdf4524450959287f359bd46ca08",
+    "tag": "src"
+  },
+  {
+    "path": "src/types/creditScore.ts",
+    "sha1": "261b4d54819cccb91d9a79bd24aa5df06945b87f",
+    "tag": "src"
+  },
+  {
+    "path": "src/types/family.ts",
+    "sha1": "b17955c11f1c0f664e749bbf7dd7b5bb1e8e6da9",
+    "tag": "src"
+  },
+  {
+    "path": "src/types/financialPlanning.ts",
+    "sha1": "58c56fdff6ae85a83d94860f2f1f23dae24ae6fc",
+    "tag": "src"
+  },
+  {
+    "path": "src/types/investments.ts",
+    "sha1": "80b7359eaae320fa61857e61871da7d32d2804d8",
+    "tag": "src"
+  },
+  {
+    "path": "src/types/savingsGoals.ts",
+    "sha1": "fca5a7d12aa2832c9ae8b7568927985c52f17ad1",
+    "tag": "src"
+  },
+  {
+    "path": "src/types/shared.ts",
+    "sha1": "38bcb98ada6b91e74b1372b877f6bcdfae4b33bb",
+    "tag": "src"
+  },
+  {
+    "path": "src/types/transactions.ts",
+    "sha1": "2360a8cd4684b3b0f8e08ecdc43059b11770d70b",
+    "tag": "src"
+  },
+  {
+    "path": "src/utils/accountTransformers.ts",
+    "sha1": "08c865c8a45a406d20e8989736e26aaad3ad5a4a",
+    "tag": "src"
+  },
+  {
+    "path": "src/utils/browserCrypto.ts",
+    "sha1": "1d8780213cf4fba7b68b829a5f328317e0d0e1db",
+    "tag": "src"
+  },
+  {
+    "path": "src/utils/calculators.ts",
+    "sha1": "8270563dda7fff90be948cfce76fa8ee39af77f0",
+    "tag": "src"
+  },
+  {
+    "path": "src/utils/crypto.ts",
+    "sha1": "fe4ca10f6b694a124f870c433a0a4d7c9f26c8eb",
+    "tag": "src"
+  },
+  {
+    "path": "src/utils/envValidation.ts",
+    "sha1": "8b21f2756980b8cfd31f14a12ce02190d9634067",
+    "tag": "src"
+  },
+  {
+    "path": "src/utils/featureFlags.ts",
+    "sha1": "debf75c3a8fa0b5e980a590e3888252e68a90abb",
+    "tag": "src"
+  },
+  {
+    "path": "src/utils/formatters.ts",
+    "sha1": "b22c65c116a8533c51776159db445f4e8cd31652",
+    "tag": "src"
+  },
+  {
+    "path": "src/utils/monitoring.ts",
+    "sha1": "27148c169915bf4d7d9c5d25bb07cdf1a9972359",
+    "tag": "src"
+  },
+  {
+    "path": "src/utils/optimizedHelpers.ts",
+    "sha1": "95be0128a91f4a47d977d2ab7be9b24a8bd87beb",
+    "tag": "src"
+  },
+  {
+    "path": "src/utils/performanceOptimizer.ts",
+    "sha1": "83793ed2be848be60b47edba7d2012921e80b788",
+    "tag": "src"
+  },
+  {
+    "path": "src/utils/sanitize.ts",
+    "sha1": "a32ff4fc07993aecc212f86bb8c53f8a5e71a61a",
+    "tag": "src"
+  },
+  {
+    "path": "src/utils/secureRandom.ts",
+    "sha1": "12b08e5201e570b003f222fa127ea7b19b36cc44",
+    "tag": "src"
+  },
+  {
+    "path": "src/utils/security.ts",
+    "sha1": "4de591d57843228346775e0f292f06774fe37aef",
+    "tag": "src"
+  },
+  {
+    "path": "src/utils/session.ts",
+    "sha1": "0480e9427708e80b979308e4423bbc1bdf0a3264",
+    "tag": "src"
+  },
+  {
+    "path": "src/utils/sessionManager.ts",
+    "sha1": "85d29b46b52cc3597a5a4b0a0993ee24c7a04a25",
+    "tag": "src"
+  },
+  {
+    "path": "src/utils/transactionScoring.ts",
+    "sha1": "119b1b950ff1bcc3bd10d2fde757843f57c3aced",
+    "tag": "src"
+  },
+  {
+    "path": "src/utils/webCrypto.ts",
+    "sha1": "14025246fc60deb14272d34af4df8ef44d6d5d8e",
+    "tag": "src"
+  },
+  {
+    "path": "src/vite-env.d.ts",
+    "sha1": "e2eac6bcc8767d416f859eb09486cc8709de95a5",
+    "tag": "src"
+  },
+  {
+    "path": "tailwind.config.ts",
+    "sha1": "5973aa9c26bb40d98b1b315ad186060c842b9417",
+    "tag": "config"
+  },
+  {
+    "path": "test-results/.playwright-artifacts-1/66303f7f-df1a-4397-8172-0fc6a0bd9740.webm",
+    "sha1": "24bcc43f9ac9d9b057d736e766bf919c180d1cdb",
+    "tag": "asset"
+  },
+  {
+    "path": "test-results/.playwright-artifacts-2/84c31de880d1b4bdcefdcbbec735b1c8.webm",
+    "sha1": "af4fca186bc13911414b8059682207039fbccb52",
+    "tag": "asset"
+  },
+  {
+    "path": "test-results/.playwright-artifacts-3/930bb4a235c4cd4d2ab9c155736e2296.webm",
+    "sha1": "1837dbc176a94e68aa7aa94a7fa8bd9489dbb8f3",
+    "tag": "asset"
+  },
+  {
+    "path": "test-results/.playwright-artifacts-4/b3f3aa2a4dce138fe38b0079856e4bda.webm",
+    "sha1": "025fbe267535c22f3c4a497958020ccccb396cac",
+    "tag": "asset"
+  },
+  {
+    "path": "test-results/transaction-alignment-Tran-4727e-transaction-rows-on-desktop-webkit/error-context.md",
+    "sha1": "952d613f29a4b54ca4f4d3bf342304e7e404f6bb",
+    "tag": "docs"
+  },
+  {
+    "path": "test-results/transaction-alignment-Tran-4727e-transaction-rows-on-desktop-webkit/test-failed-1.png",
+    "sha1": "782afb5b05bf048f63ebf1ce1ee6e7730a04448e",
+    "tag": "asset"
+  },
+  {
+    "path": "tsconfig.app.json",
+    "sha1": "87f21656339d301ce81886e5ded3e4cb9ad46af3",
+    "tag": "config"
+  },
+  {
+    "path": "tsconfig.json",
+    "sha1": "9c6a37fd930c7bb7a93ca2769dc4ba7506bc3112",
+    "tag": "config"
+  },
+  {
+    "path": "tsconfig.node.json",
+    "sha1": "a7b11148a3bd195c3e925ae609882b45078b2e1e",
+    "tag": "config"
+  },
+  {
+    "path": "typescript-report.txt",
+    "sha1": "da39a3ee5e6b4b0d3255bfef95601890afd80709",
+    "tag": "asset"
+  },
+  {
+    "path": "ui-map.json",
+    "sha1": "97d170e1550eee4afc0af065b78cda302a97674c",
+    "tag": "asset"
+  },
+  {
+    "path": "vercel.json",
+    "sha1": "0966d9320d0ce98adade5d48fda372fddf4d70ad",
+    "tag": "asset"
+  },
+  {
+    "path": "vite.config.original.ts",
+    "sha1": "acafe1087fd9cdaa2538a1f0cbbcbf897fb8558b",
+    "tag": "config"
+  },
+  {
+    "path": "vite.config.ts",
+    "sha1": "fd0a4c394d46e357ddc83d3ac30fd3003ce8c0f0",
+    "tag": "config"
+  },
+  {
+    "path": "vite.config.ts.backup",
+    "sha1": "acafe1087fd9cdaa2538a1f0cbbcbf897fb8558b",
+    "tag": "asset"
+  }
+]

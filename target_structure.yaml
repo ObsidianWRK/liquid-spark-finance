@@ -1,0 +1,28 @@
+---
+version: 1
+folders:
+  docs/
+    readme: "High-level repository overview"
+    subfolders:
+      guides/: "Step-by-step setup or usage guides"
+      reports/: "Post-mortems, audits, analysis & completion reports"
+      changelogs/: "Changelog and release notes"
+      architecture/: "Diagrams & technical blueprints"
+      api/: "Generated or hand-written API references"
+      procedures/: "Internal procedures & playbooks"
+  .github/ # preserved for GitHub workflows/templates
+naming_rules:
+  kebab_case: true
+  prefixes:
+    guide-: "Files under guides/"
+    report-: "Files under reports/"
+    changelog-: "Files under changelogs/"
+    diagram-: "Files under architecture/ when not an image"
+validation:
+  markdownlint: true
+  ignore:
+    - "docs/architecture/*.png"
+notes: |
+  • Only documentation markdown files are moved; source code remains untouched.
+  • Git history is preserved using git mv.
+  • Issue templates under .github/ISSUE_TEMPLATE are left as-is to keep GitHub integration working. 
