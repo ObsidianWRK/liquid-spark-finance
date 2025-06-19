@@ -43,6 +43,62 @@ interface FinancialDashboardProps {
   className?: string;
 }
 
+// ✅ BULLETPROOF: Runtime safety guards
+const safeArray = (arr: any[] | undefined | null): any[] => {
+  try {
+    return Array.isArray(arr) ? arr : [];
+  } catch {
+    return [];
+  }
+};
+
+const safeNumber = (num: number | undefined | null): number => {
+  try {
+    return typeof num === 'number' && !isNaN(num) && isFinite(num) ? num : 0;
+  } catch {
+    return 0;
+  }
+};
+
+const safeString = (str: string | undefined | null): string => {
+  try {
+    return typeof str === 'string' ? str : '';
+  } catch {
+    return '';
+  }
+};
+
+const safeDateFormatter = (value: any): string => {
+  try {
+    if (!value) return '';
+    const date = new Date(value);
+    if (isNaN(date.getTime())) return '';
+    return date.toLocaleDateString('en-US', { month: 'short' });
+  } catch {
+    return '';
+  }
+};
+
+const safeDateLabelFormatter = (label: any): string => {
+  try {
+    if (!label) return '';
+    const date = new Date(label);
+    if (isNaN(date.getTime())) return '';
+    return date.toLocaleDateString();
+  } catch {
+    return '';
+  }
+};
+
+const safeValueFormatter = (value: any): string => {
+  try {
+    const num = safeNumber(value);
+    return `$${(num / 1000).toFixed(0)}k`;
+  } catch {
+    return '$0k';
+  }
+};
+
 const FinancialDashboard = ({ familyId, timeframe = '3m', className }: FinancialDashboardProps) => {
   const [dashboardData, setDashboardData] = useState<DashboardData | null>(null);
   const [loading, setLoading] = useState(true);
@@ -56,32 +112,43 @@ const FinancialDashboard = ({ familyId, timeframe = '3m', className }: Financial
     try {
       setLoading(true);
       const data = await visualizationService.getDashboardData(familyId, timeframe);
-      setDashboardData(data);
+      // ✅ BULLETPROOF: Validate data structure before setting
+      if (data && typeof data === 'object') {
+        setDashboardData(data);
+      } else {
+        console.warn('Invalid dashboard data received, using fallback');
+        setDashboardData(null);
+      }
     } catch (error) {
       console.error('Failed to load dashboard data:', error);
+      setDashboardData(null);
     } finally {
       setLoading(false);
     }
   };
 
-  const formatCurrency = (value: number) => {
+  const formatCurrency = (value: number | undefined | null) => {
+    const safeValue = safeNumber(value);
     return new Intl.NumberFormat('en-US', {
       style: 'currency',
       currency: 'USD',
       minimumFractionDigits: 0,
       maximumFractionDigits: 0
-    }).format(value);
+    }).format(safeValue);
   };
 
-  const formatPercentage = (value: number) => {
-    return `${value >= 0 ? '+' : ''}${value.toFixed(1)}%`;
+  const formatPercentage = (value: number | undefined | null) => {
+    const safeValue = safeNumber(value);
+    return `${safeValue >= 0 ? '+' : ''}${safeValue.toFixed(1)}%`;
   };
 
-  const formatNumber = (value: number) => {
-    return value.toFixed(1);
+  const formatNumber = (value: number | undefined | null) => {
+    const safeValue = safeNumber(value);
+    return safeValue.toFixed(1);
   };
 
-  const getMetricIcon = (iconName: string) => {
+  const getMetricIcon = (iconName: string | undefined | null) => {
+    const safeName = safeString(iconName);
     const icons: Record<string, any> = {
       'trending-up': TrendingUp,
       'piggy-bank': Target,
@@ -89,23 +156,29 @@ const FinancialDashboard = ({ familyId, timeframe = '3m', className }: Financial
       'credit-card': CreditCard,
       'shield': Shield
     };
-    const Icon = icons[iconName] || Activity;
+    const Icon = icons[safeName] || Activity;
     return <Icon className="w-5 h-5" />;
   };
 
-  const getTrendIcon = (trend: string, changePercent: number) => {
-    if (Math.abs(changePercent) < 1) {
+  const getTrendIcon = (trend: string | undefined | null, changePercent: number | undefined | null) => {
+    const safeTrend = safeString(trend);
+    const safeChange = safeNumber(changePercent);
+    
+    if (Math.abs(safeChange) < 1) {
       return <Minus className="w-4 h-4 text-gray-400" />;
     }
-    if (trend === 'up' || changePercent > 0) {
+    if (safeTrend === 'up' || safeChange > 0) {
       return <ArrowUp className="w-4 h-4 text-green-400" />;
     }
     return <ArrowDown className="w-4 h-4 text-red-400" />;
   };
 
-  const getTrendColor = (trend: string, changePercent: number) => {
-    if (Math.abs(changePercent) < 1) return 'text-gray-400';
-    if (trend === 'up' || changePercent > 0) return 'text-green-400';
+  const getTrendColor = (trend: string | undefined | null, changePercent: number | undefined | null) => {
+    const safeTrend = safeString(trend);
+    const safeChange = safeNumber(changePercent);
+    
+    if (Math.abs(safeChange) < 1) return 'text-gray-400';
+    if (safeTrend === 'up' || safeChange > 0) return 'text-green-400';
     return 'text-red-400';
   };
 
@@ -141,24 +214,32 @@ const FinancialDashboard = ({ familyId, timeframe = '3m', className }: Financial
     );
   }
 
+  // ✅ BULLETPROOF: Extract safe data with fallbacks
+  const netWorthHistory = safeArray(dashboardData.netWorthHistory);
+  const cashFlowHistory = safeArray(dashboardData.cashFlowHistory);
+  const spendingTrends = safeArray(dashboardData.spendingTrends);
+  const portfolioAllocation = safeArray(dashboardData.portfolioAllocation);
+  const budgetPerformance = safeArray(dashboardData.budgetPerformance);
+  const keyMetrics = safeArray(dashboardData.keyMetrics);
+
   const renderNetWorthChart = () => (
     <ResponsiveContainer width="100%" height={300}>
-      <AreaChart data={dashboardData?.netWorthHistory || []}>
+      <AreaChart data={netWorthHistory}>
         <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
         <XAxis 
           dataKey="date" 
           stroke="#9ca3af"
           tick={{ fontSize: 12 }}
-          tickFormatter={(value) => new Date(value).toLocaleDateString('en-US', { month: 'short' })}
+          tickFormatter={safeDateFormatter}
         />
         <YAxis 
           stroke="#9ca3af"
           tick={{ fontSize: 12 }}
-          tickFormatter={(value) => `$${(value / 1000).toFixed(0)}k`}
+          tickFormatter={safeValueFormatter}
         />
         <Tooltip 
           formatter={(value: number) => [formatCurrency(value), '']}
-          labelFormatter={(label) => new Date(label).toLocaleDateString()}
+          labelFormatter={safeDateLabelFormatter}
           contentStyle={{ 
             backgroundColor: '#1f2937', 
             border: '1px solid #374151',
@@ -188,22 +269,22 @@ const FinancialDashboard = ({ familyId, timeframe = '3m', className }: Financial
 
   const renderCashFlowChart = () => (
     <ResponsiveContainer width="100%" height={300}>
-      <ComposedChart data={dashboardData?.cashFlowHistory || []}>
+      <ComposedChart data={cashFlowHistory}>
         <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
         <XAxis 
           dataKey="date" 
           stroke="#9ca3af"
           tick={{ fontSize: 12 }}
-          tickFormatter={(value) => new Date(value).toLocaleDateString('en-US', { month: 'short' })}
+          tickFormatter={safeDateFormatter}
         />
         <YAxis 
           stroke="#9ca3af"
           tick={{ fontSize: 12 }}
-          tickFormatter={(value) => `$${(value / 1000).toFixed(0)}k`}
+          tickFormatter={safeValueFormatter}
         />
         <Tooltip 
           formatter={(value: number) => [formatCurrency(value), '']}
-          labelFormatter={(label) => new Date(label).toLocaleDateString()}
+          labelFormatter={safeDateLabelFormatter}
           contentStyle={{ 
             backgroundColor: '#1f2937', 
             border: '1px solid #374151',
@@ -226,13 +307,13 @@ const FinancialDashboard = ({ familyId, timeframe = '3m', className }: Financial
 
   const renderSpendingChart = () => (
     <ResponsiveContainer width="100%" height={300}>
-      <BarChart data={(dashboardData?.spendingTrends || []).slice(0, 8)} layout="horizontal">
+      <BarChart data={spendingTrends.slice(0, 8)} layout="horizontal">
         <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
         <XAxis 
           type="number"
           stroke="#9ca3af"
           tick={{ fontSize: 12 }}
-          tickFormatter={(value) => `$${(value / 1000).toFixed(0)}k`}
+          tickFormatter={safeValueFormatter}
         />
         <YAxis 
           type="category"
@@ -240,7 +321,7 @@ const FinancialDashboard = ({ familyId, timeframe = '3m', className }: Financial
           stroke="#9ca3af"
           tick={{ fontSize: 12 }}
           width={100}
-          tickFormatter={(value) => value.replace('_', ' ').substring(0, 10)}
+          tickFormatter={(value) => safeString(value).replace('_', ' ').substring(0, 10)}
         />
         <Tooltip 
           formatter={(value: number) => [formatCurrency(value), '']}
@@ -261,7 +342,7 @@ const FinancialDashboard = ({ familyId, timeframe = '3m', className }: Financial
     <ResponsiveContainer width="100%" height={300}>
       <RechartsPieChart>
         <Pie
-          data={dashboardData?.portfolioAllocation || []}
+          data={portfolioAllocation}
           cx="50%"
           cy="50%"
           innerRadius={60}
@@ -269,8 +350,8 @@ const FinancialDashboard = ({ familyId, timeframe = '3m', className }: Financial
           paddingAngle={2}
           dataKey="value"
         >
-          {(dashboardData?.portfolioAllocation || []).map((entry, index) => (
-            <Cell key={`cell-${index}`} fill={entry.color} />
+          {portfolioAllocation.map((entry, index) => (
+            <Cell key={`cell-${index}`} fill={safeString(entry?.color) || '#3b82f6'} />
           ))}
         </Pie>
         <Tooltip 
@@ -284,7 +365,10 @@ const FinancialDashboard = ({ familyId, timeframe = '3m', className }: Financial
         />
         <Legend 
           wrapperStyle={{ color: '#fff' }}
-          formatter={(value, entry: any) => `${value} (${entry.payload?.percentage?.toFixed(1) || 0}%)`}
+          formatter={(value, entry: any) => {
+            const percentage = safeNumber(entry?.payload?.percentage);
+            return `${safeString(value)} (${percentage.toFixed(1)}%)`;
+          }}
         />
       </RechartsPieChart>
     </ResponsiveContainer>
@@ -294,37 +378,52 @@ const FinancialDashboard = ({ familyId, timeframe = '3m', className }: Financial
     <div className={cn("space-y-8", className)}>
       {/* Key Metrics */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {(dashboardData?.keyMetrics || []).map((metric) => (
-          <div key={metric.id} className="bg-white/[0.02] rounded-2xl border border-white/[0.08] p-6 hover:bg-white/[0.03] transition-all duration-300">
-            <div className="flex items-center justify-between mb-4">
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-xl bg-white/[0.05] flex items-center justify-center" style={{ color: metric.color }}>
-                  {getMetricIcon(metric.icon)}
+        {keyMetrics.map((metric, index) => {
+          // ✅ BULLETPROOF: Validate each metric object
+          if (!metric || typeof metric !== 'object') return null;
+          
+          const metricId = safeString(metric.id) || `metric-${index}`;
+          const metricLabel = safeString(metric.label) || 'Unknown';
+          const metricValue = safeNumber(metric.value);
+          const metricChange = safeNumber(metric.change);
+          const metricChangePercent = safeNumber(metric.changePercent);
+          const metricTrend = safeString(metric.trend) || 'stable';
+          const metricFormat = safeString(metric.format) || 'number';
+          const metricColor = safeString(metric.color) || '#3b82f6';
+          const metricIcon = safeString(metric.icon) || 'activity';
+          
+          return (
+            <div key={metricId} className="bg-white/[0.02] rounded-2xl border border-white/[0.08] p-6 hover:bg-white/[0.03] transition-all duration-300">
+              <div className="flex items-center justify-between mb-4">
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-xl bg-white/[0.05] flex items-center justify-center" style={{ color: metricColor }}>
+                    {getMetricIcon(metricIcon)}
+                  </div>
+                  <h3 className="font-medium text-white/80">{metricLabel}</h3>
                 </div>
-                <h3 className="font-medium text-white/80">{metric.label}</h3>
+                <div className="flex items-center gap-1">
+                  {getTrendIcon(metricTrend, metricChangePercent)}
+                </div>
               </div>
-              <div className="flex items-center gap-1">
-                {getTrendIcon(metric.trend, metric.changePercent)}
+              
+              <div className="space-y-2">
+                <p className="text-2xl font-bold text-white">
+                  {metricFormat === 'currency' && formatCurrency(metricValue)}
+                  {metricFormat === 'percentage' && formatPercentage(metricValue)}
+                  {metricFormat === 'number' && `${formatNumber(metricValue)} months`}
+                </p>
+                <div className="flex items-center gap-2 text-sm">
+                  <span className={getTrendColor(metricTrend, metricChangePercent)}>
+                    {metricFormat === 'currency' && formatCurrency(metricChange)}
+                    {metricFormat === 'percentage' && formatPercentage(metricChangePercent)}
+                    {metricFormat === 'number' && formatPercentage(metricChangePercent)}
+                  </span>
+                  <span className="text-white/60">vs last month</span>
+                </div>
               </div>
             </div>
-            
-            <div className="space-y-2">
-              <p className="text-2xl font-bold text-white">
-                {metric.format === 'currency' && formatCurrency(metric.value)}
-                {metric.format === 'percentage' && formatPercentage(metric.value)}
-                {metric.format === 'number' && `${formatNumber(metric.value)} months`}
-              </p>
-              <div className="flex items-center gap-2 text-sm">
-                <span className={getTrendColor(metric.trend, metric.changePercent)}>
-                  {metric.format === 'currency' && formatCurrency(metric.change)}
-                  {metric.format === 'percentage' && formatPercentage(metric.changePercent)}
-                  {metric.format === 'number' && formatPercentage(metric.changePercent)}
-                </span>
-                <span className="text-white/60">vs last month</span>
-              </div>
-            </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
 
       {/* Main Chart */}
@@ -373,42 +472,54 @@ const FinancialDashboard = ({ familyId, timeframe = '3m', className }: Financial
         </h2>
         
         <div className="space-y-4">
-          {(dashboardData?.budgetPerformance || []).slice(0, 6).map((budget, index) => (
-            <div key={index} className="flex items-center justify-between">
-              <div className="flex items-center gap-3 flex-1 min-w-0">
-                <div className="w-8 h-8 rounded-lg flex items-center justify-center" style={{ backgroundColor: `${budget.color}20`, color: budget.color }}>
-                  <Target className="w-4 h-4" />
-                </div>
-                <div className="flex-1 min-w-0">
-                  <p className="font-medium text-white capitalize truncate">{budget.category.replace('_', ' ')}</p>
-                  <div className="flex items-center gap-3 mt-1">
-                    <div className="flex-1 bg-white/[0.05] rounded-full h-2">
-                      <div 
-                        className="h-2 rounded-full transition-all duration-300"
-                        style={{ 
-                          width: `${Math.min(budget.progress, 100)}%`,
-                          backgroundColor: budget.color
-                        }}
-                      ></div>
+          {budgetPerformance.slice(0, 6).map((budget, index) => {
+            // ✅ BULLETPROOF: Validate each budget object
+            if (!budget || typeof budget !== 'object') return null;
+            
+            const category = safeString(budget.category) || 'Unknown';
+            const budgeted = safeNumber(budget.budgeted);
+            const spent = safeNumber(budget.spent);
+            const progress = safeNumber(budget.progress);
+            const status = safeString(budget.status) || 'on-track';
+            const color = safeString(budget.color) || '#10b981';
+            
+            return (
+              <div key={`budget-${index}`} className="flex items-center justify-between">
+                <div className="flex items-center gap-3 flex-1 min-w-0">
+                  <div className="w-8 h-8 rounded-lg flex items-center justify-center" style={{ backgroundColor: `${color}20`, color: color }}>
+                    <Target className="w-4 h-4" />
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <p className="font-medium text-white capitalize truncate">{category.replace('_', ' ')}</p>
+                    <div className="flex items-center gap-3 mt-1">
+                      <div className="flex-1 bg-white/[0.05] rounded-full h-2">
+                        <div 
+                          className="h-2 rounded-full transition-all duration-300"
+                          style={{ 
+                            width: `${Math.min(Math.max(progress, 0), 100)}%`,
+                            backgroundColor: color
+                          }}
+                        ></div>
+                      </div>
+                      <span className={cn(
+                        "text-xs px-2 py-1 rounded-lg border font-medium",
+                        status === 'over-budget' ? 'bg-red-500/20 text-red-400 border-red-500/30' :
+                        status === 'warning' ? 'bg-yellow-500/20 text-yellow-400 border-yellow-500/30' :
+                        'bg-green-500/20 text-green-400 border-green-500/30'
+                      )}>
+                        {progress.toFixed(0)}%
+                      </span>
                     </div>
-                    <span className={cn(
-                      "text-xs px-2 py-1 rounded-lg border font-medium",
-                      budget.status === 'over-budget' ? 'bg-red-500/20 text-red-400 border-red-500/30' :
-                      budget.status === 'warning' ? 'bg-yellow-500/20 text-yellow-400 border-yellow-500/30' :
-                      'bg-green-500/20 text-green-400 border-green-500/30'
-                    )}>
-                      {budget.progress.toFixed(0)}%
-                    </span>
                   </div>
                 </div>
+                
+                <div className="text-right">
+                  <p className="font-bold text-white">{formatCurrency(spent)}</p>
+                  <p className="text-white/60 text-sm">of {formatCurrency(budgeted)}</p>
+                </div>
               </div>
-              
-              <div className="text-right">
-                <p className="font-bold text-white">{formatCurrency(budget.spent)}</p>
-                <p className="text-white/60 text-sm">of {formatCurrency(budget.budgeted)}</p>
-              </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </div>
 
@@ -420,29 +531,41 @@ const FinancialDashboard = ({ familyId, timeframe = '3m', className }: Financial
         </h2>
         
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {(dashboardData?.portfolioAllocation || []).map((allocation, index) => (
-            <div key={index} className="bg-white/[0.03] rounded-xl p-4 border border-white/[0.05]">
-              <div className="flex items-center justify-between mb-3">
-                <div className="flex items-center gap-3">
-                  <div className="w-4 h-4 rounded-full" style={{ backgroundColor: allocation.color }}></div>
-                  <span className="font-medium text-white">{allocation.name}</span>
-                </div>
-                <span className="text-white/60 text-sm">{allocation.percentage.toFixed(1)}%</span>
-              </div>
-              
-              <div className="space-y-2">
-                <p className="text-lg font-bold text-white">{formatCurrency(allocation.value)}</p>
-                {allocation.change !== undefined && (
-                  <div className="flex items-center gap-2 text-sm">
-                    {getTrendIcon(allocation.changePercent! >= 0 ? 'up' : 'down', allocation.changePercent!)}
-                    <span className={getTrendColor(allocation.changePercent! >= 0 ? 'up' : 'down', allocation.changePercent!)}>
-                      {formatCurrency(allocation.change)} ({formatPercentage(allocation.changePercent!)})
-                    </span>
+          {portfolioAllocation.map((allocation, index) => {
+            // ✅ BULLETPROOF: Validate each allocation object
+            if (!allocation || typeof allocation !== 'object') return null;
+            
+            const name = safeString(allocation.name) || 'Unknown';
+            const value = safeNumber(allocation.value);
+            const percentage = safeNumber(allocation.percentage);
+            const color = safeString(allocation.color) || '#3b82f6';
+            const change = allocation.change !== undefined ? safeNumber(allocation.change) : undefined;
+            const changePercent = allocation.changePercent !== undefined ? safeNumber(allocation.changePercent) : undefined;
+            
+            return (
+              <div key={`allocation-${index}`} className="bg-white/[0.03] rounded-xl p-4 border border-white/[0.05]">
+                <div className="flex items-center justify-between mb-3">
+                  <div className="flex items-center gap-3">
+                    <div className="w-4 h-4 rounded-full" style={{ backgroundColor: color }}></div>
+                    <span className="font-medium text-white">{name}</span>
                   </div>
-                )}
+                  <span className="text-white/60 text-sm">{percentage.toFixed(1)}%</span>
+                </div>
+                
+                <div className="space-y-2">
+                  <p className="text-lg font-bold text-white">{formatCurrency(value)}</p>
+                  {change !== undefined && changePercent !== undefined && (
+                    <div className="flex items-center gap-2 text-sm">
+                      {getTrendIcon(changePercent >= 0 ? 'up' : 'down', changePercent)}
+                      <span className={getTrendColor(changePercent >= 0 ? 'up' : 'down', changePercent)}>
+                        {formatCurrency(change)} ({formatPercentage(changePercent)})
+                      </span>
+                    </div>
+                  )}
+                </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </div>
     </div>

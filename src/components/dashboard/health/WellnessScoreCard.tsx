@@ -4,7 +4,6 @@ import { CardSkeleton } from './CardSkeleton';
 import { WellnessMetric } from './MetricDisplay';
 import { useWellnessScore, useBiometricTrends, useBiometrics } from '@/providers/BiometricsProvider';
 import { cn } from '@/lib/utils';
-import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 
 interface WellnessScoreCardProps {
   className?: string;
@@ -66,7 +65,7 @@ export const WellnessScoreCard: React.FC<WellnessScoreCardProps> = ({
       case 'declining':
         return <TrendingDown className="w-4 h-4 text-red-400" />;
       default:
-        return <Minus className="w-4 h-4 text-gray-400" />;
+        return <Minus className="w-4 h-4 text-white/40" />;
     }
   };
 
@@ -99,33 +98,43 @@ export const WellnessScoreCard: React.FC<WellnessScoreCardProps> = ({
   };
 
   return (
-    <Card>
-      <CardHeader className="flex-row items-center gap-2 space-y-0">
-        <Heart className="text-pink-400" />
-        <CardTitle>Wellness Score</CardTitle>
-      </CardHeader>
-      <CardContent>
-        <div className="text-center">
-          <div className="text-3xl font-bold text-pink-400">{Math.round(animatedScore)}</div>
-          <p className="text-sm text-muted-foreground">Overall wellness</p>
-          {showDetails && (
-            <div className="mt-4 space-y-2 text-xs text-muted-foreground">
-              <div className="flex justify-between">
-                <span>Sleep Quality</span>
-                <span>85%</span>
-              </div>
-              <div className="flex justify-between">
-                <span>Activity Level</span>
-                <span>72%</span>
-              </div>
-              <div className="flex justify-between">
-                <span>Stress Management</span>
-                <span>78%</span>
-              </div>
-            </div>
-          )}
+    <div className={cn("bg-white/[0.02] rounded-2xl border border-white/[0.08] p-6 hover:bg-white/[0.03] transition-all duration-300", className)} onClick={onClick}>
+      <div className="flex items-center justify-between mb-4">
+        <div className="flex items-center gap-3">
+          <div className="w-10 h-10 rounded-xl bg-white/[0.05] flex items-center justify-center">
+            <Heart className="w-5 h-5 text-pink-400" />
+          </div>
+          <h3 className="font-medium text-white/80">Wellness Score</h3>
         </div>
-      </CardContent>
-    </Card>
+        <div className="flex items-center gap-1">
+          {getTrendIcon()}
+        </div>
+      </div>
+      
+      <div className="space-y-2">
+        <p className="text-2xl font-bold text-white">{Math.round(animatedScore)}</p>
+        <div className="flex items-center gap-2 text-sm">
+          <span className="text-pink-400">{getScoreLabel(animatedScore)}</span>
+          <span className="text-white/60">wellness</span>
+        </div>
+      </div>
+
+      {showDetails && (
+        <div className="mt-4 space-y-3">
+          <div className="flex items-center justify-between">
+            <span className="text-white/60 text-sm">Sleep Quality</span>
+            <span className="text-white/80 text-sm font-medium">85%</span>
+          </div>
+          <div className="flex items-center justify-between">
+            <span className="text-white/60 text-sm">Activity Level</span>
+            <span className="text-white/80 text-sm font-medium">72%</span>
+          </div>
+          <div className="flex items-center justify-between">
+            <span className="text-white/60 text-sm">Stress Management</span>
+            <span className="text-white/80 text-sm font-medium">78%</span>
+          </div>
+        </div>
+      )}
+    </div>
   );
 }; 

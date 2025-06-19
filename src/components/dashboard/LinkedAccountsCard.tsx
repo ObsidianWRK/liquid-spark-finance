@@ -3,7 +3,6 @@ import { Building2, CreditCard, PiggyBank, TrendingUp, Plus, RefreshCw, Banknote
 import { CardSkeleton } from './health/CardSkeleton';
 import { formatCurrency } from '@/utils/formatters';
 import { cn } from '@/lib/utils';
-import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 
 interface MockAccount {
   id: string;
@@ -355,30 +354,59 @@ export const LinkedAccountsCard: React.FC<LinkedAccountsCardProps> = ({
 
   // Full view
   return (
-    <Card>
-      <CardHeader className="flex-row items-center gap-2 space-y-0">
-        <Banknote className="text-primary" />
-        <CardTitle>Mock Linked Accounts</CardTitle>
-      </CardHeader>
-      <CardContent className="space-y-3">
+    <div className={cn("bg-white/[0.02] rounded-2xl border border-white/[0.08] p-6 hover:bg-white/[0.03] transition-all duration-300", className)}>
+      <div className="flex items-center justify-between mb-6">
+        <div className="flex items-center gap-3">
+          <div className="w-10 h-10 rounded-xl bg-white/[0.05] flex items-center justify-center">
+            <Banknote className="w-5 h-5 text-blue-400" />
+          </div>
+          <h3 className="font-medium text-white/80">Mock Linked Accounts</h3>
+        </div>
+        <span className="text-white/60 text-sm">{accounts.length} accounts</span>
+      </div>
+      
+      <div className="space-y-4">
         {accounts.map((account, index) => (
-          <div key={index} className="flex items-center justify-between p-3 bg-white/[0.03] rounded-lg">
+          <div key={index} className="flex items-center justify-between p-4 bg-white/[0.03] rounded-xl border border-white/[0.05] hover:bg-white/[0.05] transition-all">
             <div className="flex items-center gap-3">
-              <CheckCircle className="w-4 h-4 text-green-400" />
+              <div className="w-8 h-8 rounded-lg bg-white/[0.05] flex items-center justify-center">
+                {getAccountIcon(account.type)}
+              </div>
               <div>
                 <p className="font-medium text-white">{account.name}</p>
-                <p className="text-xs text-muted-foreground">****{account.mask}</p>
+                <div className="flex items-center gap-2">
+                  <p className="text-xs text-white/60">****{account.mask}</p>
+                  <span className="text-xs px-2 py-1 rounded-lg bg-white/[0.05] text-white/70 capitalize">
+                    {getAccountTypeLabel(account.type)}
+                  </span>
+                </div>
               </div>
             </div>
             <div className="text-right">
-              <p className={`font-bold ${account.balance < 0 ? 'text-red-400' : 'text-green-400'}`}>
+              <p className={cn("font-bold", getBalanceColor(account))}>
                 {formatCurrency(account.balance)}
               </p>
-              <p className="text-xs text-muted-foreground capitalize">{account.type}</p>
+              {account.type === 'credit' && account.creditLimit && (
+                <p className="text-xs text-white/60">
+                  Limit: {formatCurrency(account.creditLimit)}
+                </p>
+              )}
             </div>
           </div>
         ))}
-      </CardContent>
-    </Card>
+        
+        <div className="mt-6 pt-4 border-t border-white/[0.08]">
+          <div className="flex items-center justify-between">
+            <span className="font-medium text-white/80">Total Net Worth</span>
+            <span className={cn(
+              'text-lg font-bold',
+              calculateNetWorth() >= 0 ? 'text-green-400' : 'text-red-400'
+            )}>
+              {formatCurrency(calculateNetWorth())}
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
   );
 }; 
