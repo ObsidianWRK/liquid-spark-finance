@@ -158,11 +158,15 @@ const LiquidGlassTopMenuBar = ({ className, onMenuItemClick }: MenuBarProps) => 
             
             {/* Logo/Brand */}
             <div className="flex items-center space-x-2 sm:space-x-6 flex-shrink-0">
-              <div className="liquid-glass-button p-2 sm:p-3 rounded-xl">
+              <button
+                onClick={() => navigate('/')}
+                aria-label="Home"
+                className="liquid-glass-button p-2 sm:p-3 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-400/50"
+              >
                 <span className="text-white font-bold text-lg sm:text-xl bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
                   Vueni
                 </span>
-              </div>
+              </button>
 
               {/* Desktop Menu Items using Radix Menubar */}
               <div className="hidden lg:block">
