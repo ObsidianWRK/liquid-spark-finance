@@ -1,7 +1,7 @@
 import React, { useState, useMemo, useCallback } from 'react';
 import { ChevronDown, ChevronUp } from 'lucide-react';
 import { Account } from '@/types/shared';
-import { UniversalCard } from '@/components/ui/UniversalCard';
+import { UniversalCard } from '@/shared/ui/UniversalCard';
 
 interface AccountCardProps {
   account: Account;

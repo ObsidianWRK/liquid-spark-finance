@@ -73,7 +73,7 @@ export type {
 } from './TimeRangeToggleRadix';
 
 // Re-export commonly used types for convenience
-export type { ChartConfig } from '@/components/ui/chart';
+export type { ChartConfig } from '@/shared/ui/chart';
 
 // Utility constants
 export const CHART_TYPES = ['line', 'area', 'bar', 'stackedBar'] as const;

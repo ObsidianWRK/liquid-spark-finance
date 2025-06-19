@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import LiquidGlassSVGFilters from '@/components/ui/LiquidGlassSVGFilters';
+import LiquidGlassSVGFilters from '@/shared/ui/LiquidGlassSVGFilters';
 import { 
   Home, 
   CreditCard, 

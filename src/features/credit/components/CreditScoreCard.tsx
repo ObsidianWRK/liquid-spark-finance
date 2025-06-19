@@ -2,10 +2,10 @@ import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import { TrendingUp, TrendingDown, AlertCircle, CheckCircle } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import AnimatedCircularProgress from '../insights/components/AnimatedCircularProgress';
-import { creditScoreService } from '@/services/creditScoreService';
+import { creditScoreService } from '@/features/creditScoreService';
 import { CreditScore } from '@/types/creditScore';
-import { UniversalCard } from '@/components/ui/UniversalCard';
-import { OptimizedScoreCard } from '@/components/insights/components/OptimizedScoreCard';
+import { UniversalCard } from '@/shared/ui/UniversalCard';
+import { OptimizedScoreCard } from '@/features/insights/components/components/OptimizedScoreCard';
 
 const CreditScoreCard = React.memo(() => {
   const navigate = useNavigate();

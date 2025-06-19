@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { householdService } from "@/services/householdService";
+import { householdService } from "@/features/householdService";
 import { Household } from "@/types";
 
 interface SharedBudgetsState {

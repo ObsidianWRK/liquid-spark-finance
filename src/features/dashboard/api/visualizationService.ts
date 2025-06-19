@@ -111,14 +111,9 @@ export class VisualizationService {
       // Convert timeframe to months
       const months = this.convertTimeframeToMonths(timeframe);
       
-      const [
-        netWorthHistory,
-        cashFlowHistory,
-        spendingTrends,
-        portfolioAllocation,
-        budgetPerformance,
-        keyMetrics
-      ] = await Promise.all([
+      // 🛡️ BULLETPROOF: Use Promise.allSettled instead of Promise.all
+      // This prevents complete failure if any single service fails
+      const results = await Promise.allSettled([
         this.getNetWorthHistory(familyId, months),
         this.getCashFlowHistory(familyId, months),
         this.getSpendingTrends(familyId),
@@ -127,15 +122,46 @@ export class VisualizationService {
         this.getKeyMetrics(familyId)
       ]);
 
-      return {
+      // Extract results with fallback to mock data for failed promises
+      const mockData = this.getMockDashboardData(timeframe);
+      
+      const [
         netWorthHistory,
         cashFlowHistory,
         spendingTrends,
         portfolioAllocation,
         budgetPerformance,
-        keyMetrics,
+        keyMetrics
+      ] = results.map((result, index) => {
+        if (result.status === 'fulfilled' && result.value) {
+          return result.value;
+        } else {
+          // 🛡️ BULLETPROOF: Provide appropriate fallback for each failed service
+          console.warn(`Service ${index} failed, using mock data:`, result.status === 'rejected' ? result.reason : 'undefined result');
+          switch (index) {
+            case 0: return mockData.netWorthHistory;
+            case 1: return mockData.cashFlowHistory;
+            case 2: return mockData.spendingTrends;
+            case 3: return mockData.portfolioAllocation;
+            case 4: return mockData.budgetPerformance;
+            case 5: return mockData.keyMetrics;
+            default: return [];
+          }
+        }
+      });
+
+      // 🛡️ BULLETPROOF: Final validation that all required data is present
+      const safeData = {
+        netWorthHistory: Array.isArray(netWorthHistory) ? netWorthHistory : mockData.netWorthHistory,
+        cashFlowHistory: Array.isArray(cashFlowHistory) ? cashFlowHistory : mockData.cashFlowHistory,
+        spendingTrends: Array.isArray(spendingTrends) ? spendingTrends : mockData.spendingTrends,
+        portfolioAllocation: Array.isArray(portfolioAllocation) ? portfolioAllocation : mockData.portfolioAllocation,
+        budgetPerformance: Array.isArray(budgetPerformance) ? budgetPerformance : mockData.budgetPerformance,
+        keyMetrics: Array.isArray(keyMetrics) ? keyMetrics : mockData.keyMetrics,
         lastUpdated: new Date()
       };
+
+      return safeData;
     } catch (error) {
       console.error('Error loading dashboard data, using mock data:', error);
       return this.getMockDashboardData(timeframe);

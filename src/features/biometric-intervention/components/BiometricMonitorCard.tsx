@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useBiometricStore } from "../store";
-import { UniversalCard } from "@/components/ui/UniversalCard";
+import { UniversalCard } from "@/shared/ui/UniversalCard";
 import { Activity } from "lucide-react";
 
 export const BiometricMonitorCard: React.FC = () => {

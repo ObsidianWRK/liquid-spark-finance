@@ -15,6 +15,7 @@ import {
 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import FinancialDashboard from './FinancialDashboard';
+import { FinancialDashboardErrorBoundary } from './FinancialDashboardErrorBoundary';
 import { BankLinkingPanel } from '@/features/bank-linking';
 import { visualizationService } from '@/services/visualizationService';
 import { cn } from '@/lib/utils';
@@ -212,8 +213,10 @@ const DashboardPage = () => {
       {/* Home Screen Widgets */}
       <WidgetsPanel />
 
-      {/* Main Dashboard */}
-      <FinancialDashboard familyId="demo_family" timeframe={selectedTimeframe} />
+      {/* Main Dashboard - 🛡️ BULLETPROOF: Wrapped with Error Boundary */}
+      <FinancialDashboardErrorBoundary>
+        <FinancialDashboard familyId="demo_family" timeframe={selectedTimeframe} />
+      </FinancialDashboardErrorBoundary>
 
       {/* Additional Analytics Sections */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">

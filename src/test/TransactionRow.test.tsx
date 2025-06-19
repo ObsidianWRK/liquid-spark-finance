@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import { describe, it, expect } from 'vitest';
-import TransactionRow from '@/components/transactions/TransactionRow';
+import TransactionRow from '@/features/transactions/components/TransactionRow';
 import { Transaction } from '@/types/transactions';
 
 const baseTx: Transaction = {

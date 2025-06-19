@@ -4,8 +4,8 @@
  */
 
 import React, { useState, useEffect, useCallback } from 'react';
-import { Alert, AlertDescription } from '@/components/ui/alert';
-import { Button } from '@/components/ui/button';
+import { Alert, AlertDescription } from '@/shared/ui/alert';
+import { Button } from '@/shared/ui/button';
 import { Shield, AlertTriangle, Clock } from 'lucide-react';
 import { security } from '@/utils/security';
 import { VueniSecurityMonitoring } from '@/utils/monitoring';

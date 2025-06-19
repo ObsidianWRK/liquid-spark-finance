@@ -15,7 +15,7 @@ import {
   TrendingUp,
   Menu
 } from 'lucide-react';
-import LiquidGlassSVGFilters from '@/components/ui/LiquidGlassSVGFilters';
+import LiquidGlassSVGFilters from '@/shared/ui/LiquidGlassSVGFilters';
 import { cn } from '@/lib/utils';
 import { useNavigate } from 'react-router-dom';
 import {
@@ -26,8 +26,8 @@ import {
   MenubarItem,
   MenubarSeparator,
   MenubarShortcut,
-} from '@/components/ui/menubar';
-import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
+} from '@/shared/ui/menubar';
+import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/shared/ui/sheet';
 
 interface MenuBarProps {
   className?: string;

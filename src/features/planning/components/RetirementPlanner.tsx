@@ -13,7 +13,7 @@ import {
   Zap
 } from 'lucide-react';
 import { RetirementPlan, RiskProfile } from '@/types/financialPlanning';
-import { financialPlanningService } from '@/services/financialPlanningService';
+import { financialPlanningService } from '@/features/financialPlanningService';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart as RechartsPieChart, Cell, Pie } from 'recharts';
 import { cn } from '@/lib/utils';
 

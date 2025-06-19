@@ -1,5 +1,5 @@
 import React from "react";
-import { UniversalCard } from "@/components/ui/UniversalCard";
+import { UniversalCard } from "@/shared/ui/UniversalCard";
 import { AdvisorChatButton } from "./AdvisorChatButton";
 import { ChatDialog } from "./ChatDialog";
 import { MessageCircle } from "lucide-react";

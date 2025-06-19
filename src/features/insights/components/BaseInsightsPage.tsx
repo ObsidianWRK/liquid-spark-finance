@@ -5,7 +5,7 @@ import { UniversalMetricCard } from './UniversalMetricCard';
 import { UniversalScoreCard } from './UniversalScoreCard';
 import ComprehensiveWellnessCard from './ComprehensiveWellnessCard';
 import ComprehensiveEcoCard from './ComprehensiveEcoCard';
-import { generateScoreSummary } from '@/services/scoringModel';
+import { generateScoreSummary } from '@/features/scoringModel';
 import { formatPercentage, getScoreColor } from '@/utils/formatters';
 import { 
   usePerformanceOptimization, 

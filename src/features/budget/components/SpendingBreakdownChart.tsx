@@ -5,10 +5,10 @@
 
 import React, { useMemo, useCallback } from 'react';
 import { StackedBarChart, StackedBarDataPoint } from '@/components/charts/StackedBarChart';
-import { mockData } from '@/services/mockData';
+import { mockData } from '@/features/mockData';
 import { Transaction, TransactionCategory } from '@/types/transactions';
 import { Calendar, TrendingDown, Filter, Download, Share2 } from 'lucide-react';
-import { Button } from '@/components/ui/button';
+import { Button } from '@/shared/ui/button';
 
 interface SpendingBreakdownChartProps {
   familyId?: string;

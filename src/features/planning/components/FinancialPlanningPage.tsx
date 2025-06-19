@@ -22,7 +22,7 @@ import {
   ArrowLeft
 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
-import { financialPlanningService } from '@/services/financialPlanningService';
+import { financialPlanningService } from '@/features/financialPlanningService';
 import { FinancialGoal, GoalCategory, PlanningRecommendation } from '@/types/financialPlanning';
 import { cn } from '@/lib/utils';
 

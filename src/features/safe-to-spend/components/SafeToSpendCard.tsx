@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useSafeToSpendStore } from "../store";
-import { UniversalCard } from "@/components/ui/UniversalCard";
+import { UniversalCard } from "@/shared/ui/UniversalCard";
 import { formatCurrency } from "@/utils/formatters";
 import { DollarSign, Calendar } from "lucide-react";
 

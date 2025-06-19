@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 import { AreaChart } from '@/components/charts';
-import { MonthlySpending } from '@/services/mockHistoricalData';
+import { MonthlySpending } from '@/features/mockHistoricalData';
 
 interface SpendingTrendsChartProps {
   data: MonthlySpending[];

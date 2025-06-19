@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import { UnifiedCard } from '@/components/ui/UnifiedCard';
+import { UnifiedCard } from '@/shared/ui/UnifiedCard';
 import { AccountCardDTO } from '@/types/accounts';
 import { formatCurrency } from '@/utils/formatters';
 import { 

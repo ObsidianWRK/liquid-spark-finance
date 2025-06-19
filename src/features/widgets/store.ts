@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { widgetService } from "@/services/widgetService";
+import { widgetService } from "@/features/widgetService";
 import { HomeWidget } from "@/types";
 
 interface WidgetsState {

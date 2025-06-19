@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { bankLinkProvider } from "@/services/bankLinkProvider";
+import { bankLinkProvider } from "@/features/bankLinkProvider";
 import { LinkedAccount } from "@/types";
 
 interface BankLinkingState {

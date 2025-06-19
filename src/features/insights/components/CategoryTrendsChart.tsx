@@ -1,7 +1,7 @@
 import React, { useState, useMemo } from 'react';
 // import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend } from 'recharts';
-import { MultiLineChart } from '@/components/ui/lightweight-charts';
-import { CategoryTrend } from '@/services/mockHistoricalData';
+import { MultiLineChart } from '@/shared/ui/lightweight-charts';
+import { CategoryTrend } from '@/features/mockHistoricalData';
 
 interface CategoryTrendsChartProps {
   data: CategoryTrend[];

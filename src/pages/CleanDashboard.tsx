@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import AppShell from '@/components/layout/AppShell';
-import CleanAccountCard from '@/components/financial/CleanAccountCard';
-import CleanCreditScoreCard from '@/components/financial/CleanCreditScoreCard';
-import { VueniUnifiedTransactionList } from '@/components/shared';
-import SimpleGlassCard from '@/components/ui/SimpleGlassCard';
+import CleanAccountCard from '@/features/accounts/components/CleanAccountCard';
+import CleanCreditScoreCard from '@/features/credit/components/CleanCreditScoreCard';
+import { VueniUnifiedTransactionList } from '@/components/shared/VueniUnifiedTransactionList';
+import SimpleGlassCard from '@/shared/ui/SimpleGlassCard';
 import { colors } from '@/theme/colors';
 import { 
   DollarSign, 
@@ -13,6 +13,7 @@ import {
   Eye,
   EyeOff 
 } from 'lucide-react';
+import { OptimizedTransactionList } from '@/features/transactions/components/OptimizedTransactionList';
 
 // Mock data that matches your existing structure
 const mockAccounts = [

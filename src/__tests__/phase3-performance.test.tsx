@@ -1,13 +1,13 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { BrowserRouter } from 'react-router-dom';
-import { UnifiedInsightsPage } from '@/components/insights/UnifiedInsightsPage';
-import { OptimizedTransactionList } from '@/components/transactions/OptimizedTransactionList';
-import { CompoundInterestCalculator } from '@/components/calculators/CompoundInterestCalculator';
+import { UnifiedInsightsPage } from '@/features/insights/components/UnifiedInsightsPage';
+import { OptimizedTransactionList } from '@/features/transactions/components/OptimizedTransactionList';
+import { CompoundInterestCalculator } from '@/features/calculators/components/CompoundInterestCalculator';
 import AccountCard from '@/components/AccountCard';
 import BalanceCard from '@/components/BalanceCard';
 import TransactionItem from '@/components/TransactionItem';
-import { mockData } from '@/services/mockData';
+import { mockData } from '@/features/mockData';
 
 // Phase 3 Performance Testing Suite
 describe('Phase 3 Performance Optimizations', () => {

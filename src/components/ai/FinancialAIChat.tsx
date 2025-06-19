@@ -12,10 +12,10 @@ import {
   Trash2,
   RotateCcw
 } from 'lucide-react';
-import { aiFinancialService } from '@/services/aiFinancialService';
-import { familyService } from '@/services/familyService';
-import { accountService } from '@/services/accountService';
-import { transactionService } from '@/services/transactionService';
+import { aiFinancialService } from '@/features/aiFinancialService';
+import { familyService } from '@/features/familyService';
+import { accountService } from '@/features/accountService';
+import { transactionService } from '@/features/transactionService';
 import { cn } from '@/lib/utils';
 
 interface FinancialAIChatProps {

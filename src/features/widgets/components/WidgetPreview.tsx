@@ -2,7 +2,7 @@ import React from "react";
 import { HomeWidget } from "@/types";
 import { formatCurrency } from "@/utils/formatters";
 import { DollarSign, Banknote, X } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/shared/ui/button";
 import { useWidgetsStore } from "../store";
 
 interface WidgetPreviewProps {

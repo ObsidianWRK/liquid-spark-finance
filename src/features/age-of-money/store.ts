@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { ageMetricService } from "@/services/ageMetricService";
+import { ageMetricService } from "@/features/ageMetricService";
 import { AgeMetric } from "@/types";
 
 interface AgeOfMoneyState {

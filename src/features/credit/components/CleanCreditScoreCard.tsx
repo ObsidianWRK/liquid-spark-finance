@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import SimpleGlassCard from '@/components/ui/SimpleGlassCard';
+import SimpleGlassCard from '@/shared/ui/SimpleGlassCard';
 import { colors } from '@/theme/colors';
 import { 
   CreditCard, 
@@ -9,7 +9,7 @@ import {
   ArrowRight,
   Info
 } from 'lucide-react';
-import { creditScoreService } from '@/services/creditScoreService';
+import { creditScoreService } from '@/features/creditScoreService';
 
 interface CreditScoreData {
   score: number;

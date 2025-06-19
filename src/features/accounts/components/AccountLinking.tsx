@@ -15,7 +15,7 @@ import {
   GraduationCap
 } from 'lucide-react';
 import { Institution, Account } from '@/types/accounts';
-import { accountService } from '@/services/accountService';
+import { accountService } from '@/features/accountService';
 import { cn } from '@/lib/utils';
 
 interface AccountLinkingProps {

@@ -1,6 +1,6 @@
 import React from 'react';
 import { ScoreCardData } from '@/types/shared';
-import { UniversalCard } from '@/components/ui/UniversalCard';
+import { UniversalCard } from '@/shared/ui/UniversalCard';
 import { TrendingUp, TrendingDown, Minus } from 'lucide-react';
 import { cn } from '@/lib/utils';
 

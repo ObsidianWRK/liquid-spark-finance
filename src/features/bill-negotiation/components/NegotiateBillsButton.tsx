@@ -1,5 +1,5 @@
 import React from "react";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/shared/ui/button";
 import { useNegotiationStore } from "../store";
 import { useToast } from "@/hooks/use-toast";
 import { Handshake } from "lucide-react";

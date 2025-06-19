@@ -1,11 +1,11 @@
 import React, { useState, useEffect, useMemo, Suspense, lazy, useCallback } from 'react';
 import { Heart, Leaf, DollarSign, TrendingUp, TrendingDown, Calendar, BarChart3, Settings, Filter, Eye, EyeOff, Download, Zap, Target, Activity, Shield, PiggyBank, ChevronRight } from 'lucide-react';
-import { Card } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
-import { Switch } from '@/components/ui/switch';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Card } from '@/shared/ui/card';
+import { Button } from '@/shared/ui/button';
+import { Badge } from '@/shared/ui/badge';
+import { Switch } from '@/shared/ui/switch';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/shared/ui/select';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/shared/ui/tabs';
 import { cn } from '@/lib/utils';
 import { SharedScoreCircle, ScoreGroup } from '../shared/SharedScoreCircle';
 import { formatPercentage, getScoreColor } from '@/utils/formatters';
@@ -14,13 +14,13 @@ import { UniversalMetricCard } from './UniversalMetricCard';
 import { UniversalScoreCard } from './UniversalScoreCard';
 
 // Lazy load heavy components for performance
-const TimeSeriesChart = lazy(() => import('@/components/insights/TimeSeriesChart'));
-const SpendingTrendsChart = lazy(() => import('@/components/insights/SpendingTrendsChart'));
-const CategoryTrendsChart = lazy(() => import('@/components/insights/CategoryTrendsChart'));
-const FinancialCard = lazy(() => import('@/components/insights/FinancialCard'));
-const WellnessCard = lazy(() => import('@/components/insights/WellnessCard'));
-const EcoCard = lazy(() => import('@/components/insights/EcoCard'));
-const AnimatedCircularProgress = lazy(() => import('@/components/insights/components/AnimatedCircularProgress'));
+const TimeSeriesChart = lazy(() => import('@/features/insights/components/TimeSeriesChart'));
+const SpendingTrendsChart = lazy(() => import('@/features/insights/components/SpendingTrendsChart'));
+const CategoryTrendsChart = lazy(() => import('@/features/insights/components/CategoryTrendsChart'));
+const FinancialCard = lazy(() => import('@/features/insights/components/FinancialCard'));
+const WellnessCard = lazy(() => import('@/features/insights/components/WellnessCard'));
+const EcoCard = lazy(() => import('@/features/insights/components/EcoCard'));
+const AnimatedCircularProgress = lazy(() => import('@/features/insights/components/components/AnimatedCircularProgress'));
 
 // Configurable Insights Page that consolidates:
 // - VueniUnifiedInsightsPage.tsx

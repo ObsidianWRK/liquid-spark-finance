@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { autoSaveEngine } from "@/services/autoSaveEngine";
+import { autoSaveEngine } from "@/features/autoSaveEngine";
 import { AutosavePlan } from "@/types";
 
 interface SmartSavingsState {

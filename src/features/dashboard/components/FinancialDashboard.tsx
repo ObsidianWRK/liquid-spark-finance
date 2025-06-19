@@ -1,20 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import {
   TrendingUp,
-  TrendingDown,
   DollarSign,
   Target,
-  PieChart,
+  PieChart as PieChartIcon,
   BarChart3,
   Activity,
-  AlertCircle,
-  Zap,
-  Shield,
   CreditCard,
-  Calendar,
-  ArrowUp,
-  ArrowDown,
-  Minus
+  Shield,
+  Heart,
+  Leaf,
+  LucideIcon,
+  AlertTriangle,
 } from 'lucide-react';
 import {
   LineChart,
@@ -34,8 +31,25 @@ import {
   ResponsiveContainer,
   ComposedChart
 } from 'recharts';
-import { visualizationService, DashboardData, FinancialMetric } from '@/services/visualizationService';
+import { visualizationService, DashboardData, FinancialMetric } from '@/features/visualizationService';
 import { cn } from '@/lib/utils';
+import { UniversalCard } from '@/shared/ui/UniversalCard';
+
+// Helper to map string names to actual Icon components
+const iconMap: { [key: string]: LucideIcon } = {
+  'trending-up': TrendingUp,
+  'dollar-sign': DollarSign,
+  'piggy-bank': Target,
+  'credit-card': CreditCard,
+  'shield': Shield,
+  'activity': Activity,
+  'heart': Heart,
+  'leaf': Leaf,
+  'bar-chart-3': BarChart3
+};
+
+const getIconComponent = (iconName?: string | null): LucideIcon => (iconName ? iconMap[iconName] || Activity : Activity);
+
 
 interface FinancialDashboardProps {
   familyId: string;
@@ -43,531 +57,258 @@ interface FinancialDashboardProps {
   className?: string;
 }
 
-// ✅ BULLETPROOF: Runtime safety guards
-const safeArray = (arr: any[] | undefined | null): any[] => {
-  try {
-    return Array.isArray(arr) ? arr : [];
-  } catch {
-    return [];
-  }
-};
-
-const safeNumber = (num: number | undefined | null): number => {
-  try {
-    return typeof num === 'number' && !isNaN(num) && isFinite(num) ? num : 0;
-  } catch {
-    return 0;
-  }
-};
-
-const safeString = (str: string | undefined | null): string => {
-  try {
-    return typeof str === 'string' ? str : '';
-  } catch {
-    return '';
-  }
-};
-
-const safeDateFormatter = (value: any): string => {
-  try {
-    if (!value) return '';
-    const date = new Date(value);
-    if (isNaN(date.getTime())) return '';
-    return date.toLocaleDateString('en-US', { month: 'short' });
-  } catch {
-    return '';
-  }
-};
-
-const safeDateLabelFormatter = (label: any): string => {
-  try {
-    if (!label) return '';
-    const date = new Date(label);
-    if (isNaN(date.getTime())) return '';
-    return date.toLocaleDateString();
-  } catch {
-    return '';
-  }
-};
-
-const safeValueFormatter = (value: any): string => {
-  try {
-    const num = safeNumber(value);
-    return `$${(num / 1000).toFixed(0)}k`;
-  } catch {
-    return '$0k';
-  }
+// ✅ BULLETPROOF: Runtime safety guards from original component
+const safeArray = (arr: any[] | undefined | null): any[] => Array.isArray(arr) ? arr : [];
+const safeNumber = (num?: number | null): number => (typeof num === 'number' && !isNaN(num) && isFinite(num) ? num : 0);
+const safeString = (str: string | undefined | null): string => typeof str === 'string' ? str : '';
+const formatCurrency = (value?: number | null) => {
+  return new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: 'USD',
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 0,
+  }).format(safeNumber(value));
 };
 
 const FinancialDashboard = ({ familyId, timeframe = '3m', className }: FinancialDashboardProps) => {
   const [dashboardData, setDashboardData] = useState<DashboardData | null>(null);
   const [loading, setLoading] = useState(true);
-  const [selectedChart, setSelectedChart] = useState<'networth' | 'cashflow' | 'spending' | 'portfolio'>('networth');
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    loadDashboardData();
-  }, [familyId, timeframe]);
-
-  const loadDashboardData = async () => {
-    try {
-      setLoading(true);
-      const data = await visualizationService.getDashboardData(familyId, timeframe);
-      // ✅ BULLETPROOF: Validate data structure before setting
-      if (data && typeof data === 'object') {
-        setDashboardData(data);
-      } else {
-        console.warn('Invalid dashboard data received, using fallback');
-        setDashboardData(null);
+    let isMounted = true; // 🛡️ BULLETPROOF: Prevent race conditions
+    const abortController = new AbortController(); // 🛡️ BULLETPROOF: Timeout handling
+    
+    const loadDashboardData = async () => {
+      try {
+        setLoading(true);
+        setError(null);
+        
+        // 🛡️ BULLETPROOF: Add timeout safety (15 second max)
+        const timeoutPromise = new Promise((_, reject) => 
+          setTimeout(() => reject(new Error('Dashboard data loading timeout')), 15000)
+        );
+        
+        const dataPromise = visualizationService.getDashboardData(familyId, timeframe);
+        const data = await Promise.race([dataPromise, timeoutPromise]);
+        
+        // 🛡️ BULLETPROOF: Enhanced data validation
+        if (!isMounted) return; // Component unmounted, don't update state
+        
+        console.log("Fetched Dashboard Data:", JSON.stringify(data, null, 2));
+        
+        if (data && typeof data === 'object' && !Array.isArray(data)) {
+          // Additional validation of required properties
+          const isValidData = (
+            typeof data.keyMetrics !== 'undefined' &&
+            typeof data.spendingTrends !== 'undefined' &&
+            typeof data.lastUpdated !== 'undefined'
+          );
+          
+          if (isValidData) {
+            setDashboardData(data);
+          } else {
+            console.warn('Data structure incomplete, using fallback');
+            setDashboardData({
+              keyMetrics: [],
+              spendingTrends: [],
+              netWorthHistory: [],
+              cashFlowHistory: [],
+              portfolioAllocation: [],
+              budgetPerformance: [],
+              lastUpdated: new Date()
+            });
+          }
+        } else {
+          throw new Error("Invalid data structure received from service.");
+        }
+      } catch (err) {
+        if (!isMounted) return; // Component unmounted, don't update state
+        
+        const errorMessage = err instanceof Error ? err.message : 'An unknown error occurred';
+        console.error('Failed to load or process dashboard data:', errorMessage);
+        setError(errorMessage);
+        
+        // 🛡️ BULLETPROOF: Provide safe fallback data instead of null
+        setDashboardData({
+          keyMetrics: [],
+          spendingTrends: [],
+          netWorthHistory: [],
+          cashFlowHistory: [],
+          portfolioAllocation: [],
+          budgetPerformance: [],
+          lastUpdated: new Date()
+        });
+      } finally {
+        if (isMounted) {
+          setLoading(false);
+        }
       }
-    } catch (error) {
-      console.error('Failed to load dashboard data:', error);
-      setDashboardData(null);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const formatCurrency = (value: number | undefined | null) => {
-    const safeValue = safeNumber(value);
-    return new Intl.NumberFormat('en-US', {
-      style: 'currency',
-      currency: 'USD',
-      minimumFractionDigits: 0,
-      maximumFractionDigits: 0
-    }).format(safeValue);
-  };
-
-  const formatPercentage = (value: number | undefined | null) => {
-    const safeValue = safeNumber(value);
-    return `${safeValue >= 0 ? '+' : ''}${safeValue.toFixed(1)}%`;
-  };
-
-  const formatNumber = (value: number | undefined | null) => {
-    const safeValue = safeNumber(value);
-    return safeValue.toFixed(1);
-  };
-
-  const getMetricIcon = (iconName: string | undefined | null) => {
-    const safeName = safeString(iconName);
-    const icons: Record<string, any> = {
-      'trending-up': TrendingUp,
-      'piggy-bank': Target,
-      'target': Target,
-      'credit-card': CreditCard,
-      'shield': Shield
     };
-    const Icon = icons[safeName] || Activity;
-    return <Icon className="w-5 h-5" />;
-  };
-
-  const getTrendIcon = (trend: string | undefined | null, changePercent: number | undefined | null) => {
-    const safeTrend = safeString(trend);
-    const safeChange = safeNumber(changePercent);
     
-    if (Math.abs(safeChange) < 1) {
-      return <Minus className="w-4 h-4 text-gray-400" />;
-    }
-    if (safeTrend === 'up' || safeChange > 0) {
-      return <ArrowUp className="w-4 h-4 text-green-400" />;
-    }
-    return <ArrowDown className="w-4 h-4 text-red-400" />;
-  };
-
-  const getTrendColor = (trend: string | undefined | null, changePercent: number | undefined | null) => {
-    const safeTrend = safeString(trend);
-    const safeChange = safeNumber(changePercent);
+    loadDashboardData();
     
-    if (Math.abs(safeChange) < 1) return 'text-gray-400';
-    if (safeTrend === 'up' || safeChange > 0) return 'text-green-400';
-    return 'text-red-400';
-  };
+    // 🛡️ BULLETPROOF: Cleanup function to prevent memory leaks and race conditions
+    return () => {
+      isMounted = false;
+      abortController.abort();
+    };
+  }, [familyId, timeframe]);
 
   if (loading) {
     return (
-      <div className={cn("space-y-6", className)}>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {[...Array(6)].map((_, i) => (
-            <div key={i} className="bg-white/[0.02] rounded-2xl border border-white/[0.08] p-6 animate-pulse">
-              <div className="flex items-center justify-between mb-4">
-                <div className="h-6 bg-white/[0.05] rounded w-32"></div>
-                <div className="h-6 bg-white/[0.05] rounded w-6"></div>
-              </div>
-              <div className="h-8 bg-white/[0.05] rounded w-24 mb-2"></div>
-              <div className="h-4 bg-white/[0.05] rounded w-20"></div>
+      <div className={cn("grid grid-cols-1 lg:grid-cols-2 gap-6", className)}>
+        {[...Array(4)].map((_, i) => (
+           <div key={i} className="bg-white/[0.02] rounded-2xl border border-white/[0.08] p-6 h-96 animate-pulse">
+            <div className="h-8 bg-white/[0.05] rounded w-1/2 mb-8"></div>
+            <div className="space-y-4">
+              <div className="h-12 bg-white/[0.05] rounded w-full"></div>
+              <div className="h-12 bg-white/[0.05] rounded w-full"></div>
+              <div className="h-12 bg-white/[0.05] rounded w-full"></div>
+              <div className="h-12 bg-white/[0.05] rounded w-full"></div>
             </div>
-          ))}
-        </div>
-        <div className="bg-white/[0.02] rounded-2xl border border-white/[0.08] p-6 animate-pulse">
-          <div className="h-64 bg-white/[0.05] rounded"></div>
-        </div>
+          </div>
+        ))}
       </div>
     );
   }
 
-  if (!dashboardData) {
+  if (error || !dashboardData) {
     return (
-      <div className={cn("bg-white/[0.02] rounded-2xl border border-white/[0.08] p-12 text-center", className)}>
-        <Activity className="w-16 h-16 text-white/20 mx-auto mb-4" />
-        <h3 className="text-xl font-bold text-white mb-2">No Dashboard Data</h3>
-        <p className="text-white/60">Unable to load financial dashboard. Please try again.</p>
+      <div className={cn("bg-red-900/20 rounded-2xl border border-red-500/30 p-12 text-center", className)}>
+        <AlertTriangle className="w-16 h-16 text-red-400/50 mx-auto mb-4" />
+        <h3 className="text-xl font-bold text-white mb-2">Dashboard Failed to Load</h3>
+        <p className="text-white/60 mb-4">
+          {error || "Could not display dashboard data."}
+        </p>
+         <pre className="text-left text-xs bg-black/30 p-4 rounded-lg text-white/50 overflow-auto max-h-40">
+           {`Attempted to load data for familyId: ${familyId}, timeframe: ${timeframe}`}
+         </pre>
       </div>
     );
   }
 
-  // ✅ BULLETPROOF: Extract safe data with fallbacks
-  const netWorthHistory = safeArray(dashboardData.netWorthHistory);
-  const cashFlowHistory = safeArray(dashboardData.cashFlowHistory);
-  const spendingTrends = safeArray(dashboardData.spendingTrends);
-  const portfolioAllocation = safeArray(dashboardData.portfolioAllocation);
-  const budgetPerformance = safeArray(dashboardData.budgetPerformance);
-  const keyMetrics = safeArray(dashboardData.keyMetrics);
+  // --- Data Transformation Layer (BULLETPROOF ENHANCED) ---
+  // 🛡️ CRITICAL FIX: Null-safe destructuring with runtime validation
+  const keyMetricsArr = dashboardData?.keyMetrics && Array.isArray(dashboardData.keyMetrics) 
+    ? dashboardData.keyMetrics.filter(metric => metric && typeof metric === 'object' && metric.label)
+    : [];
+  const spendingTrendsArr = dashboardData?.spendingTrends && Array.isArray(dashboardData.spendingTrends)
+    ? dashboardData.spendingTrends.filter(trend => trend && typeof trend === 'object' && trend.category)
+    : [];
 
-  const renderNetWorthChart = () => (
-    <ResponsiveContainer width="100%" height={300}>
-      <AreaChart data={netWorthHistory}>
-        <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
-        <XAxis 
-          dataKey="date" 
-          stroke="#9ca3af"
-          tick={{ fontSize: 12 }}
-          tickFormatter={safeDateFormatter}
-        />
-        <YAxis 
-          stroke="#9ca3af"
-          tick={{ fontSize: 12 }}
-          tickFormatter={safeValueFormatter}
-        />
-        <Tooltip 
-          formatter={(value: number) => [formatCurrency(value), '']}
-          labelFormatter={safeDateLabelFormatter}
-          contentStyle={{ 
-            backgroundColor: '#1f2937', 
-            border: '1px solid #374151',
-            borderRadius: '8px',
-            color: '#fff'
-          }}
-        />
-        <Area
-          type="monotone"
-          dataKey="netWorth"
-          stroke="#3b82f6"
-          fill="#3b82f6"
-          fillOpacity={0.1}
-          strokeWidth={2}
-        />
-        <Area
-          type="monotone"
-          dataKey="investmentValue"
-          stroke="#10b981"
-          fill="#10b981"
-          fillOpacity={0.1}
-          strokeWidth={2}
-        />
-      </AreaChart>
-    </ResponsiveContainer>
-  );
+  const financialMetricsData = {
+    metrics: keyMetricsArr.map(metric => {
+      // 🛡️ BULLETPROOF: Additional runtime safety for metric object
+      const safeMetric = metric || {};
+      return {
+        label: safeString(safeMetric.label) || 'Unknown Metric',
+        value: safeMetric.format === 'currency' ? formatCurrency(safeMetric.value) : `${safeNumber(safeMetric.value)}`,
+        icon: getIconComponent(safeMetric.icon),
+        color: safeString(safeMetric.color) || '#FFFFFF',
+      };
+    }),
+    trends: [
+      { label: 'Income', trend: 'up' as const, value: '+12%' },
+      { label: 'Expenses', trend: 'down' as const, value: '-3%' },
+    ]
+  };
 
-  const renderCashFlowChart = () => (
-    <ResponsiveContainer width="100%" height={300}>
-      <ComposedChart data={cashFlowHistory}>
-        <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
-        <XAxis 
-          dataKey="date" 
-          stroke="#9ca3af"
-          tick={{ fontSize: 12 }}
-          tickFormatter={safeDateFormatter}
-        />
-        <YAxis 
-          stroke="#9ca3af"
-          tick={{ fontSize: 12 }}
-          tickFormatter={safeValueFormatter}
-        />
-        <Tooltip 
-          formatter={(value: number) => [formatCurrency(value), '']}
-          labelFormatter={safeDateLabelFormatter}
-          contentStyle={{ 
-            backgroundColor: '#1f2937', 
-            border: '1px solid #374151',
-            borderRadius: '8px',
-            color: '#fff'
-          }}
-        />
-        <Bar dataKey="income" fill="#10b981" name="Income" />
-        <Bar dataKey="expenses" fill="#ef4444" name="Expenses" />
-        <Line
-          type="monotone"
-          dataKey="netCashFlow"
-          stroke="#f59e0b"
-          strokeWidth={3}
-          name="Net Cash Flow"
-        />
-      </ComposedChart>
-    </ResponsiveContainer>
-  );
+  const categorySpendingData = {
+    spending: spendingTrendsArr.map(trend => {
+      // 🛡️ BULLETPROOF: Additional runtime safety for trend object
+      const safeTrend = trend || {};
+      return {
+        category: safeString(safeTrend.category) || 'Unknown',
+        amount: safeNumber(safeTrend.currentMonth),
+      };
+    }),
+    trends: spendingTrendsArr.map(trend => {
+      // 🛡️ BULLETPROOF: Enhanced math safety with edge case handling
+      const safeTrend = trend || {};
+      const prevMonth = safeNumber(safeTrend.previousMonth);
+      const currMonth = safeNumber(safeTrend.currentMonth);
+      const change = currMonth - prevMonth;
+      
+      // Enhanced percentage calculation with safety guards
+      let percentChange = 0;
+      if (prevMonth !== 0 && isFinite(prevMonth)) {
+        percentChange = (change / prevMonth) * 100;
+      } else if (currMonth > 0) {
+        percentChange = 100;
+      }
+      
+      // Ensure percentChange is finite and reasonable
+      percentChange = isFinite(percentChange) ? Math.max(-999, Math.min(999, percentChange)) : 0;
+      
+      return {
+        label: safeString(safeTrend.category) || 'Unknown',
+        trend: (change >= 0 ? 'up' : 'down') as 'up' | 'down',
+        value: `${Math.round(percentChange)}%`,
+      };
+    })
+  };
 
-  const renderSpendingChart = () => (
-    <ResponsiveContainer width="100%" height={300}>
-      <BarChart data={spendingTrends.slice(0, 8)} layout="horizontal">
-        <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
-        <XAxis 
-          type="number"
-          stroke="#9ca3af"
-          tick={{ fontSize: 12 }}
-          tickFormatter={safeValueFormatter}
-        />
-        <YAxis 
-          type="category"
-          dataKey="category"
-          stroke="#9ca3af"
-          tick={{ fontSize: 12 }}
-          width={100}
-          tickFormatter={(value) => safeString(value).replace('_', ' ').substring(0, 10)}
-        />
-        <Tooltip 
-          formatter={(value: number) => [formatCurrency(value), '']}
-          contentStyle={{ 
-            backgroundColor: '#1f2937', 
-            border: '1px solid #374151',
-            borderRadius: '8px',
-            color: '#fff'
-          }}
-        />
-        <Bar dataKey="currentMonth" fill="#3b82f6" name="This Month" />
-        <Bar dataKey="previousMonth" fill="#6b7280" name="Last Month" />
-      </BarChart>
-    </ResponsiveContainer>
-  );
+  // Placeholder data for cards whose data doesn't come from visualizationService
+  const wellnessData = {
+      metrics: [
+        { label: 'Sleep Quality', value: '8.2/10', icon: Heart, color: '#ef4444' },
+        { label: 'Exercise Days', value: '5/week', icon: Activity, color: '#10b981' },
+      ],
+      trends: [
+        { label: 'Energy', trend: 'up' as const, value: '+15%' },
+        { label: 'Mood', trend: 'up' as const, value: '+10%' },
+      ]
+  };
+  const ecoData = {
+      metrics: [
+        { label: 'Green Transport', value: '12.5 kg', icon: Leaf, color: '#84cc16' },
+        { label: 'Food Impact', value: '18.3 kg', icon: Activity, color: '#f59e0b' }
+      ],
+       spending: [
+        { category: 'Sustainable Products', amount: 156 },
+        { category: 'Public Transport', amount: 78 },
+      ]
+  };
 
-  const renderPortfolioChart = () => (
-    <ResponsiveContainer width="100%" height={300}>
-      <RechartsPieChart>
-        <Pie
-          data={portfolioAllocation}
-          cx="50%"
-          cy="50%"
-          innerRadius={60}
-          outerRadius={120}
-          paddingAngle={2}
-          dataKey="value"
-        >
-          {portfolioAllocation.map((entry, index) => (
-            <Cell key={`cell-${index}`} fill={safeString(entry?.color) || '#3b82f6'} />
-          ))}
-        </Pie>
-        <Tooltip 
-          formatter={(value: number) => [formatCurrency(value), '']}
-          contentStyle={{ 
-            backgroundColor: '#1f2937', 
-            border: '1px solid #374151',
-            borderRadius: '8px',
-            color: '#fff'
-          }}
-        />
-        <Legend 
-          wrapperStyle={{ color: '#fff' }}
-          formatter={(value, entry: any) => {
-            const percentage = safeNumber(entry?.payload?.percentage);
-            return `${safeString(value)} (${percentage.toFixed(1)}%)`;
-          }}
-        />
-      </RechartsPieChart>
-    </ResponsiveContainer>
-  );
 
   return (
-    <div className={cn("space-y-8", className)}>
-      {/* Key Metrics */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {keyMetrics.map((metric, index) => {
-          // ✅ BULLETPROOF: Validate each metric object
-          if (!metric || typeof metric !== 'object') return null;
-          
-          const metricId = safeString(metric.id) || `metric-${index}`;
-          const metricLabel = safeString(metric.label) || 'Unknown';
-          const metricValue = safeNumber(metric.value);
-          const metricChange = safeNumber(metric.change);
-          const metricChangePercent = safeNumber(metric.changePercent);
-          const metricTrend = safeString(metric.trend) || 'stable';
-          const metricFormat = safeString(metric.format) || 'number';
-          const metricColor = safeString(metric.color) || '#3b82f6';
-          const metricIcon = safeString(metric.icon) || 'activity';
-          
-          return (
-            <div key={metricId} className="bg-white/[0.02] rounded-2xl border border-white/[0.08] p-6 hover:bg-white/[0.03] transition-all duration-300">
-              <div className="flex items-center justify-between mb-4">
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-xl bg-white/[0.05] flex items-center justify-center" style={{ color: metricColor }}>
-                    {getMetricIcon(metricIcon)}
-                  </div>
-                  <h3 className="font-medium text-white/80">{metricLabel}</h3>
-                </div>
-                <div className="flex items-center gap-1">
-                  {getTrendIcon(metricTrend, metricChangePercent)}
-                </div>
-              </div>
-              
-              <div className="space-y-2">
-                <p className="text-2xl font-bold text-white">
-                  {metricFormat === 'currency' && formatCurrency(metricValue)}
-                  {metricFormat === 'percentage' && formatPercentage(metricValue)}
-                  {metricFormat === 'number' && `${formatNumber(metricValue)} months`}
-                </p>
-                <div className="flex items-center gap-2 text-sm">
-                  <span className={getTrendColor(metricTrend, metricChangePercent)}>
-                    {metricFormat === 'currency' && formatCurrency(metricChange)}
-                    {metricFormat === 'percentage' && formatPercentage(metricChangePercent)}
-                    {metricFormat === 'number' && formatPercentage(metricChangePercent)}
-                  </span>
-                  <span className="text-white/60">vs last month</span>
-                </div>
-              </div>
-            </div>
-          );
-        })}
-      </div>
+    <div className={cn("grid grid-cols-1 lg:grid-cols-2 gap-6", className)}>
+        <UniversalCard
+          variant="glass"
+          title="Financial Metrics"
+          icon={BarChart3}
+          iconColor="#6366f1"
+          data={financialMetricsData}
+          size="lg"
+        />
 
-      {/* Main Chart */}
-      <div className="bg-white/[0.02] rounded-2xl border border-white/[0.08] p-6">
-        <div className="flex items-center justify-between mb-6">
-          <h2 className="text-xl font-bold text-white">Financial Overview</h2>
-          
-          {/* Chart Selector */}
-          <div className="flex items-center gap-1 bg-white/[0.02] rounded-xl p-1 border border-white/[0.08]">
-            {[
-              { id: 'networth', label: 'Net Worth', icon: TrendingUp },
-              { id: 'cashflow', label: 'Cash Flow', icon: BarChart3 },
-              { id: 'spending', label: 'Spending', icon: DollarSign },
-              { id: 'portfolio', label: 'Portfolio', icon: PieChart }
-            ].map(({ id, label, icon: Icon }) => (
-              <button
-                key={id}
-                onClick={() => setSelectedChart(id as any)}
-                className={cn(
-                  "flex items-center gap-2 px-3 py-2 rounded-lg transition-all text-sm",
-                  selectedChart === id
-                    ? "bg-blue-500 text-white"
-                    : "text-white/60 hover:text-white hover:bg-white/[0.05]"
-                )}
-              >
-                <Icon className="w-4 h-4" />
-                {label}
-              </button>
-            ))}
-          </div>
-        </div>
-
-        <div className="h-80">
-          {selectedChart === 'networth' && renderNetWorthChart()}
-          {selectedChart === 'cashflow' && renderCashFlowChart()}
-          {selectedChart === 'spending' && renderSpendingChart()}
-          {selectedChart === 'portfolio' && renderPortfolioChart()}
-        </div>
-      </div>
-
-      {/* Budget Performance */}
-      <div className="bg-white/[0.02] rounded-2xl border border-white/[0.08] p-6">
-        <h2 className="text-xl font-bold text-white mb-6 flex items-center gap-3">
-          <Target className="w-6 h-6 text-blue-400" />
-          Budget Performance
-        </h2>
+        <UniversalCard
+          variant="glass"
+          title="Wellness Tracking"
+          icon={Heart}
+          iconColor="#ef4444"
+          data={wellnessData}
+          size="lg"
+        />
         
-        <div className="space-y-4">
-          {budgetPerformance.slice(0, 6).map((budget, index) => {
-            // ✅ BULLETPROOF: Validate each budget object
-            if (!budget || typeof budget !== 'object') return null;
-            
-            const category = safeString(budget.category) || 'Unknown';
-            const budgeted = safeNumber(budget.budgeted);
-            const spent = safeNumber(budget.spent);
-            const progress = safeNumber(budget.progress);
-            const status = safeString(budget.status) || 'on-track';
-            const color = safeString(budget.color) || '#10b981';
-            
-            return (
-              <div key={`budget-${index}`} className="flex items-center justify-between">
-                <div className="flex items-center gap-3 flex-1 min-w-0">
-                  <div className="w-8 h-8 rounded-lg flex items-center justify-center" style={{ backgroundColor: `${color}20`, color: color }}>
-                    <Target className="w-4 h-4" />
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <p className="font-medium text-white capitalize truncate">{category.replace('_', ' ')}</p>
-                    <div className="flex items-center gap-3 mt-1">
-                      <div className="flex-1 bg-white/[0.05] rounded-full h-2">
-                        <div 
-                          className="h-2 rounded-full transition-all duration-300"
-                          style={{ 
-                            width: `${Math.min(Math.max(progress, 0), 100)}%`,
-                            backgroundColor: color
-                          }}
-                        ></div>
-                      </div>
-                      <span className={cn(
-                        "text-xs px-2 py-1 rounded-lg border font-medium",
-                        status === 'over-budget' ? 'bg-red-500/20 text-red-400 border-red-500/30' :
-                        status === 'warning' ? 'bg-yellow-500/20 text-yellow-400 border-yellow-500/30' :
-                        'bg-green-500/20 text-green-400 border-green-500/30'
-                      )}>
-                        {progress.toFixed(0)}%
-                      </span>
-                    </div>
-                  </div>
-                </div>
-                
-                <div className="text-right">
-                  <p className="font-bold text-white">{formatCurrency(spent)}</p>
-                  <p className="text-white/60 text-sm">of {formatCurrency(budgeted)}</p>
-                </div>
-              </div>
-            );
-          })}
-        </div>
-      </div>
+        <UniversalCard
+          variant="glass"
+          title="Eco Spending"
+          icon={Leaf}
+          iconColor="#10b981"
+          data={ecoData}
+          size="lg"
+        />
 
-      {/* Portfolio Allocation Details */}
-      <div className="bg-white/[0.02] rounded-2xl border border-white/[0.08] p-6">
-        <h2 className="text-xl font-bold text-white mb-6 flex items-center gap-3">
-          <PieChart className="w-6 h-6 text-purple-400" />
-          Portfolio Allocation
-        </h2>
-        
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {portfolioAllocation.map((allocation, index) => {
-            // ✅ BULLETPROOF: Validate each allocation object
-            if (!allocation || typeof allocation !== 'object') return null;
-            
-            const name = safeString(allocation.name) || 'Unknown';
-            const value = safeNumber(allocation.value);
-            const percentage = safeNumber(allocation.percentage);
-            const color = safeString(allocation.color) || '#3b82f6';
-            const change = allocation.change !== undefined ? safeNumber(allocation.change) : undefined;
-            const changePercent = allocation.changePercent !== undefined ? safeNumber(allocation.changePercent) : undefined;
-            
-            return (
-              <div key={`allocation-${index}`} className="bg-white/[0.03] rounded-xl p-4 border border-white/[0.05]">
-                <div className="flex items-center justify-between mb-3">
-                  <div className="flex items-center gap-3">
-                    <div className="w-4 h-4 rounded-full" style={{ backgroundColor: color }}></div>
-                    <span className="font-medium text-white">{name}</span>
-                  </div>
-                  <span className="text-white/60 text-sm">{percentage.toFixed(1)}%</span>
-                </div>
-                
-                <div className="space-y-2">
-                  <p className="text-lg font-bold text-white">{formatCurrency(value)}</p>
-                  {change !== undefined && changePercent !== undefined && (
-                    <div className="flex items-center gap-2 text-sm">
-                      {getTrendIcon(changePercent >= 0 ? 'up' : 'down', changePercent)}
-                      <span className={getTrendColor(changePercent >= 0 ? 'up' : 'down', changePercent)}>
-                        {formatCurrency(change)} ({formatPercentage(changePercent)})
-                      </span>
-                    </div>
-                  )}
-                </div>
-              </div>
-            );
-          })}
-        </div>
-      </div>
+        <UniversalCard
+          variant="glass"
+          title="Category Spending"
+          icon={CreditCard}
+          iconColor="#8b5cf6"
+          data={categorySpendingData}
+          size="lg"
+        />
     </div>
   );
 };

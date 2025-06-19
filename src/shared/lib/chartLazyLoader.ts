@@ -14,7 +14,7 @@ export const ChartComponents = {
   StackedBarChart: lazy(() => import('@/components/charts/StackedBarChart')),
   
   // Budget Charts (verified to exist)
-  SpendingBreakdownChart: lazy(() => import('@/components/budget/SpendingBreakdownChart')),
+  SpendingBreakdownChart: lazy(() => import('@/features/budget/components/SpendingBreakdownChart')),
   
   // Base Chart Components (verified to exist)
   GraphBase: lazy(() => import('@/components/charts/GraphBase')),

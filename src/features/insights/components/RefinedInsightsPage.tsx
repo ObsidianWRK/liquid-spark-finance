@@ -7,7 +7,7 @@ import RefinedMetricCard from './components/RefinedMetricCard';
 import RefinedTrendCard from './components/RefinedTrendCard';
 import ComprehensiveWellnessCard from './components/ComprehensiveWellnessCard';
 import ComprehensiveEcoCard from './components/ComprehensiveEcoCard';
-import { mockHealthEcoService } from '@/services/mockHealthEcoService';
+import { mockHealthEcoService } from '@/features/mockHealthEcoService';
 import { formatPercentage, formatScore, getScoreColor } from '@/utils/formatters';
 
 // Enhanced TypeScript interfaces

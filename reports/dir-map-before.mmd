@@ -1,0 +1,125 @@
+graph TD
+    subgraph Source Code
+        A(src)
+    end
+
+    subgraph App
+        A --> App.tsx
+        A --> App.css
+        A --> main.tsx
+        A --> index.css
+    end
+
+    subgraph Components
+        A --> B(components)
+        B --> B1(accounts)
+        B --> B2(budget)
+        B --> B3(calculators)
+        B --> B4(charts)
+        B --> B5(credit)
+        B --> B6(dashboard)
+        B --> B7(insights)
+        B --> B8(investments)
+        B --> B9(layout)
+        B --> B10(performance)
+        B --> B11(planning)
+        B --> B12(reports)
+        B --> B13(savings)
+        B --> B14(shared)
+        B --> B15(transactions)
+        B --> B16(ui)
+    end
+
+    subgraph Domains
+        A --> C(domains)
+        C --> C1(accounts)
+        C --> C2(budgets)
+        C --> C3(dashboard)
+        C --> C4(investments)
+        C --> C5(reports)
+        C --> C6(transactions)
+    end
+
+    subgraph Features
+        A --> D(features)
+        D --> D1(advisor-chat)
+        D --> D2(age-of-money)
+        D --> D3(bank-linking)
+        D --> D4(bill-negotiation)
+        D --> D5(biometric-intervention)
+        D --> D6(privacy-hide-amounts)
+        D --> D7(safe-to-spend)
+        D --> D8(savings)
+        D --> D9(shared-budgets)
+        D --> D10(smart-savings)
+        D --> D11(subscriptions)
+        D --> D12(widgets)
+    end
+
+    subgraph Shared
+        A --> E(shared)
+        E --> E1(components)
+        E --> E2(hooks)
+        E --> E3(types)
+        E --> E4(utils)
+    end
+
+    subgraph Services
+        A --> F(services)
+    end
+
+    subgraph Hooks
+        A --> G(hooks)
+    end
+
+    subgraph Lib
+        A --> H(lib)
+    end
+
+    subgraph Pages
+        A --> I(pages)
+    end
+
+    subgraph Config
+        A --> J(config)
+    end
+
+    subgraph Context
+        A --> K(context)
+    end
+
+    subgraph Providers
+        A --> L(providers)
+    end
+
+    subgraph Schemas
+        A --> M(schemas)
+    end
+
+    subgraph Selectors
+        A --> N(selectors)
+    end
+
+    subgraph Styles
+        A --> O(styles)
+    end
+
+    subgraph Test
+        A --> P(test)
+    end
+
+    subgraph Theme
+        A --> Q(theme)
+    end
+
+    subgraph Types
+        A --> R(types)
+    end
+
+    subgraph Utils
+        A --> S(utils)
+    end
+
+    subgraph Mocks
+        A --> T(mocks)
+    end 

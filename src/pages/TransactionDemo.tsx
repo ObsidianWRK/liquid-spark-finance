@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { VueniUnifiedTransactionList } from '@/components/shared';
 import MobileTransactionScreen from '@/screens/MobileTransactionScreen';
-import EnterpriseTransactionView from '@/components/transactions/EnterpriseTransactionView';
+import EnterpriseTransactionView from '@/features/transactions/components/EnterpriseTransactionView';
 import { Smartphone, Tablet, Monitor } from 'lucide-react';
 import { cn } from '@/lib/utils';
 

@@ -2,14 +2,20 @@ import React, { useState } from 'react';
 import LiquidGlassTopMenuBar from '@/components/LiquidGlassTopMenuBar';
 import {
   Menubar,
+  MenubarCheckboxItem,
   MenubarContent,
   MenubarItem,
   MenubarMenu,
+  MenubarRadioGroup,
+  MenubarRadioItem,
   MenubarSeparator,
-  MenubarTrigger,
   MenubarShortcut,
-} from "@/components/ui/menubar";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+  MenubarSub,
+  MenubarSubContent,
+  MenubarSubTrigger,
+  MenubarTrigger,
+} from "@/shared/ui/menubar";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/shared/ui/card";
 
 const MenuBarDemo = () => {
   const [selectedAction, setSelectedAction] = useState<string>('');

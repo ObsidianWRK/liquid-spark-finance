@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { Calendar, TrendingUp, Plus, Target, Clock } from 'lucide-react';
 import { SavingsGoal } from '@/types/savingsGoals';
-import { savingsGoalsService } from '@/services/savingsGoalsService';
-import { UnifiedCard } from '@/components/ui/UnifiedCard';
+import { savingsGoalsService } from '@/features/savingsGoalsService';
+import { UnifiedCard } from '@/shared/ui/UnifiedCard';
 import { formatCurrency } from '@/utils/formatters';
 
 interface GoalCardProps {

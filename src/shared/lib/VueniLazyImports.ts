@@ -78,7 +78,7 @@ export const VueniLazyComponents = {
   ),
 
   VueniReportsEngine: lazy(() => 
-    import('@/components/reports/ReportsEngine').then(module => ({ default: module.ReportsEngine || module.default }))
+    import('@/features/reports/components/ReportsEngine').then(module => ({ default: module.ReportsEngine || module.default }))
   ),
 };
 

@@ -1,7 +1,7 @@
 import React, { useState, useCallback, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { UserPreferences } from '@/types/shared';
-import { UniversalCard } from '@/components/ui/UniversalCard';
+import { UniversalCard } from '@/shared/ui/UniversalCard';
 import { shouldComponentUpdate } from '@/utils/optimizedHelpers';
 import { 
   User, 

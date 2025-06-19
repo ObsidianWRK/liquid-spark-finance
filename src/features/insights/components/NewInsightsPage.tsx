@@ -4,11 +4,11 @@ import { SharedScoreCircle } from '@/components/shared/SharedScoreCircle';
 import { Transaction, Account } from '@/types/shared';
 import { formatScore, formatPercentage } from '@/utils/formatters';
 import { useNavigate } from 'react-router-dom';
-import { generateScoreSummary } from '@/services/scoringModel';
-import { mockHealthEcoService } from '@/services/mockHealthEcoService';
-import { mockHistoricalService } from '@/services/mockHistoricalData';
+import { generateScoreSummary } from '@/features/scoringModel';
+import { mockHealthEcoService } from '@/features/mockHealthEcoService';
+import { mockHistoricalService } from '@/features/mockHistoricalData';
 import { cn } from '@/lib/utils';
-import { UnifiedCard } from '@/components/ui/UnifiedCard';
+import { UnifiedCard } from '@/shared/ui/UnifiedCard';
 
 // Lazy load heavy components for performance
 const FinancialCard = lazy(() => import('./FinancialCard'));

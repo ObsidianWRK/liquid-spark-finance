@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { ArrowLeft, TrendingUp, TrendingDown, Info, CheckCircle, AlertCircle, CreditCard, Calendar, Percent } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
-import { creditScoreService } from '@/services/creditScoreService';
+import { creditScoreService } from '@/features/creditScoreService';
 import { CreditScore, CreditTip } from '@/types/creditScore';
 import { cn } from '@/lib/utils';
 

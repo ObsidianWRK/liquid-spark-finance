@@ -1,6 +1,6 @@
 import React, { useState, useMemo, useCallback } from 'react';
 import { Eye, EyeOff, TrendingUp } from 'lucide-react';
-import { UniversalCard } from '@/components/ui/UniversalCard';
+import { UniversalCard } from '@/shared/ui/UniversalCard';
 
 interface BalanceCardProps {
   accountType: string;

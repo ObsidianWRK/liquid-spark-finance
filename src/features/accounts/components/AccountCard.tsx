@@ -3,7 +3,7 @@ import { AccountCardDTO } from '@/types/accounts';
 import { cn } from '@/lib/utils';
 import { formatCurrency, formatPercent, safeRatio } from '@/utils/formatters';
 import { Send, Download, ArrowUpRight, ArrowDownRight, TrendingUp, CreditCard, DollarSign, PiggyBank } from 'lucide-react';
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/shared/ui/tooltip';
 
 interface Props {
   acct: AccountCardDTO;

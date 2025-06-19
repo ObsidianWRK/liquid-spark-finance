@@ -5,11 +5,11 @@
 
 import React, { useMemo, useCallback, useState } from 'react';
 import { StackedBarChart, StackedBarDataPoint } from '@/components/charts/StackedBarChart';
-import { investmentService } from '@/services/investmentService';
+import { investmentService } from '@/features/investmentService';
 import { Portfolio } from '@/types/investments';
 import { TrendingUp, PieChart, Target, BarChart3, Rebalance, Settings, AlertTriangle } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/shared/ui/button';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/shared/ui/card';
 
 interface PortfolioAllocationChartProps {
   familyId?: string;

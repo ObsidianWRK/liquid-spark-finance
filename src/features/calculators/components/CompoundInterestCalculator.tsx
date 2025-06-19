@@ -3,7 +3,7 @@ import { calculateCompoundInterest } from '@/utils/calculators';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import { LineChart } from '@/components/charts';
 import { SecureCalculatorWrapper, useSecureCalculator } from './SecureCalculatorWrapper';
-import { Alert, AlertDescription } from '@/components/ui/alert';
+import { Alert, AlertDescription } from '@/shared/ui/alert';
 import { AlertTriangle } from 'lucide-react';
 
 interface CompoundData {

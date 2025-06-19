@@ -1,10 +1,10 @@
 
 import React, { useState, useEffect, useRef } from 'react';
-import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
-import { Button } from '@/components/ui/button';
+import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/shared/ui/sheet';
+import { Button } from '@/shared/ui/button';
 import GlassCard from '@/components/GlassCard';
 import { MessageCircle, Send, Sparkles, X } from 'lucide-react';
-import { mockAiService, ChatMessage } from '@/services/mockAiService';
+import { mockAiService, ChatMessage } from '@/features/mockAiService';
 
 interface ChatDrawerProps {
   userContext?: Record<string, unknown>;

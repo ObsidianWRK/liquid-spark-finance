@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { budgetService } from '@/services/budgetService';
+import { budgetService } from '@/features/budgetService';
 import { Budget, SavingsGoal } from '@/types/budgets';
 import BudgetTracker from './BudgetTracker';
 import {

@@ -1,6 +1,6 @@
 import React from 'react';
 import { LineChart } from '@/components/charts';
-import { HistoricalScore } from '@/services/mockHistoricalData';
+import { HistoricalScore } from '@/features/mockHistoricalData';
 
 interface TimeSeriesChartProps {
   data: HistoricalScore[];

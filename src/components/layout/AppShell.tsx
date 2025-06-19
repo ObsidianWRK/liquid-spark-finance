@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import SimpleGlassCard from '@/components/ui/SimpleGlassCard';
+import SimpleGlassCard from '@/shared/ui/SimpleGlassCard';
 import { colors } from '@/theme/colors';
 import { 
   Home,

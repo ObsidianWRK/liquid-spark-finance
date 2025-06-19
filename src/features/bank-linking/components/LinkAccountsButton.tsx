@@ -1,4 +1,4 @@
-import { Button } from "@/components/ui/button";
+import { Button } from "@/shared/ui/button";
 import { useToast } from "@/hooks/use-toast";
 import { useBankLinkingStore } from "../store";
 import { Banknote } from "lucide-react";

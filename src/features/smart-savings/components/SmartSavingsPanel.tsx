@@ -1,5 +1,5 @@
 import React from "react";
-import { UniversalCard } from "@/components/ui/UniversalCard";
+import { UniversalCard } from "@/shared/ui/UniversalCard";
 import { CreatePlanForm } from "./CreatePlanForm";
 import { AutosavePlansList } from "./AutosavePlansList";
 import { PiggyBank } from "lucide-react";

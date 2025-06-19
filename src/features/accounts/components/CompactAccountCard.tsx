@@ -1,7 +1,7 @@
 import React from 'react';
-import { UnifiedCard } from '@/components/ui/UnifiedCard';
-import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
+import { UnifiedCard } from '@/shared/ui/UnifiedCard';
+import { Badge } from '@/shared/ui/badge';
+import { Button } from '@/shared/ui/button';
 import { AccountCardDTO } from '@/types/accounts';
 import { formatCurrency } from '@/utils/formatters';
 import { 

@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useBankLinkingStore } from "../store";
-import { Card, CardContent, CardHeader, CardTitle, CardFooter } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle, CardFooter } from "@/shared/ui/card";
+import { Button } from "@/shared/ui/button";
 import { Banknote, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 

@@ -1,33 +1,33 @@
 import React, { useState, useEffect, useCallback, lazy, Suspense } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import Navigation from '@/components/Navigation';
-import AccountCard from '@/components/accounts/AccountCard';
-import { Grid } from '@/components/accounts/Grid';
-import { QuickAccessRail } from '@/components/accounts/QuickAccessRail';
-import { OptimizedTransactionList } from '@/components/transactions/OptimizedTransactionList';
+import AccountCard from '@/features/accounts/components/AccountCard';
+import { Grid } from '@/features/accounts/components/Grid';
+import { QuickAccessRail } from '@/features/accounts/components/QuickAccessRail';
+import { OptimizedTransactionList } from '@/features/transactions/components/OptimizedTransactionList';
 import LiquidGlassTopMenuBar from '@/components/LiquidGlassTopMenuBar';
-import ConsolidatedInsightsPage from '@/components/insights/ConsolidatedInsightsPage';
-import BudgetReportsPage from '@/components/reports/BudgetReportsPage';
-import SavingsGoals from '@/components/savings/SavingsGoals';
-import CalculatorList from '@/components/calculators/CalculatorList';
+import ConsolidatedInsightsPage from '@/features/insights/components/ConsolidatedInsightsPage';
+import BudgetReportsPage from '@/features/reports/components/BudgetReportsPage';
+import SavingsGoals from '@/features/savings/components/SavingsGoals';
+import CalculatorList from '@/features/calculators/components/CalculatorList';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { PerformanceMonitor } from '@/components/performance/PerformanceMonitor';
-import { mockData, getCompactAccountCards } from '@/services/mockData';
+import { mockData, getCompactAccountCards } from '@/features/mockData';
 import { Transaction } from '@/types/shared';
 // CC: New Feature Cloud and Smart Accounts Deck imports
 import FeatureCloud from '@/components/FeatureCloud';
 import { VirtualizedDeck } from '@/components/AccountDeck/VirtualizedDeck';
 import { isFeatureEnabled, trackFeatureUsage } from '@/utils/featureFlags';
 import { transformToAccountRowData } from '@/utils/accountTransformers';
-import CleanCreditScoreCard from '@/components/financial/CleanCreditScoreCard';
+import CleanCreditScoreCard from '@/features/financial/components/CleanCreditScoreCard';
 import { BiometricMonitor, InterventionNudge, useBiometricInterventionStore } from '@/features/biometric-intervention';
 
 // Lazy load components properly without webpack comments
-const InvestmentTrackerPage = lazy(() => import('@/components/investments/InvestmentTrackerPage'));
-const BudgetPlannerPage = lazy(() => import('@/components/budget/BudgetPlannerPage'));
-const DashboardPage = lazy(() => import('@/components/dashboard/DashboardPage'));
-const FinancialPlanningPage = lazy(() => import('@/components/planning/FinancialPlanningPage'));
-const CreditScorePage = lazy(() => import('@/components/credit/CreditScorePage'));
+const InvestmentTrackerPage = lazy(() => import('@/features/investments/components/InvestmentTrackerPage'));
+const BudgetPlannerPage = lazy(() => import('@/features/budget/components/BudgetPlannerPage'));
+const DashboardPage = lazy(() => import('@/features/dashboard/components/DashboardPage'));
+const FinancialPlanningPage = lazy(() => import('@/features/planning/components/FinancialPlanningPage'));
+const CreditScorePage = lazy(() => import('@/features/credit/components/CreditScorePage'));
 
 // Error Boundary Component
 class ErrorBoundary extends React.Component<

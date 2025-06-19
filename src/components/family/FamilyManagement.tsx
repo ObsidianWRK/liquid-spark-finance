@@ -12,8 +12,8 @@ import {
   Edit3
 } from 'lucide-react';
 import { Family, FamilyMember, FamilyInvitation } from '@/types/family';
-import { familyService } from '@/services/familyService';
-import { Switch } from '@/components/ui/switch';
+import { familyService } from '@/features/familyService';
+import { Switch } from '@/shared/ui/switch';
 import { cn } from '@/lib/utils';
 
 interface FamilyManagementProps {

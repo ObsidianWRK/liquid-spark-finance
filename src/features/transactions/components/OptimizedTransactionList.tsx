@@ -5,7 +5,7 @@ import {
   TransactionClickHandler,
   CategoryFilterHandler 
 } from '@/types/shared';
-import { UnifiedCard } from '@/components/ui/UnifiedCard';
+import { UnifiedCard } from '@/shared/ui/UnifiedCard';
 import { Search, Filter, ChevronDown, TrendingUp, TrendingDown } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { carrierUrl, prettyShipStatus } from '@/utils/shipping';

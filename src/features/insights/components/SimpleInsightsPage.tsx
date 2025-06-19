@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { Heart, Leaf, DollarSign, TrendingUp } from 'lucide-react';
 import { SharedScoreCircle } from '@/components/shared';
-import { UnifiedCard } from '@/components/ui/UnifiedCard';
+import { UnifiedCard } from '@/shared/ui/UnifiedCard';
 
 interface Transaction {
   id: string;

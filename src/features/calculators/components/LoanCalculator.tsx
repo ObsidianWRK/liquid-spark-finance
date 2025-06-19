@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { calculateLoanPayment } from '@/utils/calculators';
-import GlassSlider from '@/components/ui/GlassSlider';
+import GlassSlider from '@/shared/ui/GlassSlider';
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell, BarChart, Bar } from 'recharts';
 
 interface AmortizationData {

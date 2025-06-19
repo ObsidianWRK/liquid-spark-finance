@@ -1,7 +1,7 @@
 import React, { memo, forwardRef } from 'react';
 import { cn } from '@/lib/utils';
-import { Card } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
+import { Card } from '@/shared/ui/card';
+import { Button } from '@/shared/ui/button';
 
 // Enhanced Glass Card Component
 export interface VueniGlassCardProps extends React.HTMLAttributes<HTMLDivElement> {

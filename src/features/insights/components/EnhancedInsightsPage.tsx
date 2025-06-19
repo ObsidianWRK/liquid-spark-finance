@@ -6,7 +6,7 @@ import EnhancedScoreCard from './components/EnhancedScoreCard';
 import EnhancedMetricCard from './components/EnhancedMetricCard';
 import ComprehensiveWellnessCard from './ComprehensiveWellnessCard';
 import ComprehensiveEcoCard from './ComprehensiveEcoCard';
-import { generateScoreSummary } from '@/services/scoringModel';
+import { generateScoreSummary } from '@/features/scoringModel';
 import { formatPercentage, getScoreColor } from '@/utils/formatters';
 import { 
   usePerformanceOptimization, 

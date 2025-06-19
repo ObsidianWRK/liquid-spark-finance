@@ -1,12 +1,12 @@
 import React, { useState, useEffect, useMemo, Suspense, lazy } from 'react';
 import { Heart, Leaf, DollarSign, TrendingUp, Calendar, BarChart3 } from 'lucide-react';
 import { SharedScoreCircle } from '@/components/shared/SharedScoreCircle';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/shared/ui/tabs';
 import { Transaction, Account } from '@/types/shared';
 import { formatScore, formatPercentage } from '@/utils/formatters';
-import { generateScoreSummary } from '@/services/scoringModel';
-import { mockHealthEcoService } from '@/services/mockHealthEcoService';
-import { UnifiedCard } from '@/components/ui/UnifiedCard';
+import { generateScoreSummary } from '@/features/scoringModel';
+import { mockHealthEcoService } from '@/features/mockHealthEcoService';
+import { UnifiedCard } from '@/shared/ui/UnifiedCard';
 
 // Lazy load heavy components for performance
 const FinancialCard = lazy(() => import('./FinancialCard'));

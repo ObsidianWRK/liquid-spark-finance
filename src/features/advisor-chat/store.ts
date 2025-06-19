@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { advisorService } from "@/services/advisorService";
+import { advisorService } from "@/features/advisorService";
 import { AdvisorThread, AdvisorMessage } from "@/types";
 
 interface AdvisorChatState {

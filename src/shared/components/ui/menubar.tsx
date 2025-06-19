@@ -1,7 +1,7 @@
 import * as React from "react"
 import * as MenubarPrimitive from "@radix-ui/react-menubar"
 import { Check, ChevronRight, Circle } from "lucide-react"
-import LiquidGlassSVGFilters from '@/components/ui/LiquidGlassSVGFilters'
+import LiquidGlassSVGFilters from '@/shared/ui/LiquidGlassSVGFilters'
 
 import { cn } from "@/lib/utils"
 

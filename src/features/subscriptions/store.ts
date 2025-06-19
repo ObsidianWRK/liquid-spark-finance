@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { subscriptionService } from "@/services/subscriptionService";
+import { subscriptionService } from "@/features/subscriptionService";
 import { RecurringCharge } from "@/types";
 
 interface SubscriptionsState {

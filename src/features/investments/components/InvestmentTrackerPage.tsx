@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { investmentService } from '@/services/investmentService';
+import { investmentService } from '@/features/investmentService';
 import { Portfolio } from '@/types/investments';
 import InvestmentPortfolio from './InvestmentPortfolio';
 import {

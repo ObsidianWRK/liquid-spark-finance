@@ -13,7 +13,7 @@ import {
   Shield,
   Activity
 } from 'lucide-react';
-import { investmentService } from '@/services/investmentService';
+import { investmentService } from '@/features/investmentService';
 import { Portfolio, Holding } from '@/types/investments';
 import { cn } from '@/lib/utils';
 

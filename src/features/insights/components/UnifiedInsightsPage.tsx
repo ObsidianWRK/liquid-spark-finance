@@ -6,10 +6,10 @@ import {
   InsightMetric,
   ScoreCardData 
 } from '@/types/shared';
-import { UniversalCard } from '@/components/ui/UniversalCard';
-import { OptimizedScoreCard } from '@/components/insights/components/OptimizedScoreCard';
-import { TrendChart } from '@/components/insights/components/TrendChart';
-import { CategoryBreakdown } from '@/components/insights/components/CategoryBreakdown';
+import { UniversalCard } from '@/shared/ui/UniversalCard';
+import { OptimizedScoreCard } from '@/features/insights/components/components/OptimizedScoreCard';
+import { TrendChart } from '@/features/insights/components/components/TrendChart';
+import { CategoryBreakdown } from '@/features/insights/components/components/CategoryBreakdown';
 
 interface UnifiedInsightsPageProps {
   config: UnifiedInsightsConfig;

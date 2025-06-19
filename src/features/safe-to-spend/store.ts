@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { safeToSpendService } from "@/services/safeToSpendService";
+import { safeToSpendService } from "@/features/safeToSpendService";
 import { SpendableCash } from "@/types";
 
 interface SafeToSpendState {

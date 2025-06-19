@@ -16,21 +16,21 @@ import {
   ChevronDown,
   Check
 } from 'lucide-react';
-import BackHeader from '@/components/ui/BackHeader';
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger, DropdownMenuSeparator, DropdownMenuLabel } from '@/components/ui/dropdown-menu';
+import BackHeader from '@/shared/ui/BackHeader';
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger, DropdownMenuSeparator, DropdownMenuLabel } from '@/shared/ui/dropdown-menu';
 
 // Import calculator components
-import FinancialFreedomCalculator from '@/components/calculators/FinancialFreedomCalculator';
-import ROICalculator from '@/components/calculators/ROICalculator';
-import LoanCalculator from '@/components/calculators/LoanCalculator';
-import InflationCalculator from '@/components/calculators/InflationCalculator';
-import CompoundInterestCalculator from '@/components/calculators/CompoundInterestCalculator';
-import Retirement401kCalculator from '@/components/calculators/Retirement401kCalculator';
-import ThreeFundPortfolioCalculator from '@/components/calculators/ThreeFundPortfolioCalculator';
-import HomeAffordabilityCalculator from '@/components/calculators/HomeAffordabilityCalculator';
-import MortgagePayoffCalculator from '@/components/calculators/MortgagePayoffCalculator';
-import StockBacktestCalculator from '@/components/calculators/StockBacktestCalculator';
-import ExchangeRateCalculator from '@/components/calculators/ExchangeRateCalculator';
+import FinancialFreedomCalculator from '@/features/calculators/components/FinancialFreedomCalculator';
+import ROICalculator from '@/features/calculators/components/ROICalculator';
+import LoanCalculator from '@/features/calculators/components/LoanCalculator';
+import InflationCalculator from '@/features/calculators/components/InflationCalculator';
+import CompoundInterestCalculator from '@/features/calculators/components/CompoundInterestCalculator';
+import Retirement401kCalculator from '@/features/calculators/components/Retirement401kCalculator';
+import ThreeFundPortfolioCalculator from '@/features/calculators/components/ThreeFundPortfolioCalculator';
+import HomeAffordabilityCalculator from '@/features/calculators/components/HomeAffordabilityCalculator';
+import MortgagePayoffCalculator from '@/features/calculators/components/MortgagePayoffCalculator';
+import StockBacktestCalculator from '@/features/calculators/components/StockBacktestCalculator';
+import ExchangeRateCalculator from '@/features/calculators/components/ExchangeRateCalculator';
 
 interface CalculatorItem {
   id: string;
