@@ -847,6 +847,8 @@ export const AnalyticsPage: React.FC<AnalyticsPageProps> = ({
             </div>
           </div>
         </UniversalCard>
+
+        <BloodPressureZones />
       </div>
 
       {/* Financial Health Correlation */}
@@ -1140,3 +1142,4 @@ export const AnalyticsPage: React.FC<AnalyticsPageProps> = ({
 };
 
 export default AnalyticsPage; 
+import BloodPressureZones from './health/BloodPressureZones';
