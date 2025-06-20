@@ -121,7 +121,7 @@ function App() {
   useEffect(() => {
     try {
       // initializeForReactApp(); // Disabled to prevent viewport crashes
-      console.log('Viewport Guardian initialization skipped for debugging');
+      // Viewport Guardian initialization skipped for debugging
     } catch (error) {
       console.warn('App initialization error:', error);
     }

@@ -36,7 +36,6 @@ const NavBarDemo: React.FC = () => {
       label: 'Home',
       icon: Home,
       action: () => {
-        console.log('Navigate to Home');
         setActiveTabId('home');
       },
       isActive: activeTabId === 'home',
@@ -47,7 +46,6 @@ const NavBarDemo: React.FC = () => {
       label: 'Accounts',
       icon: CreditCard,
       action: () => {
-        console.log('Navigate to Accounts');
         setActiveTabId('accounts');
       },
       isActive: activeTabId === 'accounts',
@@ -57,7 +55,6 @@ const NavBarDemo: React.FC = () => {
       label: 'Transactions',
       icon: Receipt,
       action: () => {
-        console.log('Navigate to Transactions');
         setActiveTabId('transactions');
       },
       isActive: activeTabId === 'transactions',
