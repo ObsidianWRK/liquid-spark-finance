@@ -18,7 +18,7 @@ const InsightsPage = React.lazy(() => import('./pages/InsightsPage'));
 
 // Loading component
 const LoadingSpinner = () => (
-  <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 flex items-center justify-center">
+  <div className="min-h-screen bg-gray-950 flex items-center justify-center">
     <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-blue-400"></div>
   </div>
 );
@@ -44,7 +44,7 @@ class ErrorBoundary extends React.Component<
   render() {
     if (this.state.hasError) {
       return (
-        <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 flex items-center justify-center">
+        <div className="min-h-screen bg-gray-950 flex items-center justify-center">
           <div className="text-center">
             <h1 className="text-2xl font-bold text-white mb-4">Something went wrong.</h1>
             <button
@@ -65,7 +65,7 @@ class ErrorBoundary extends React.Component<
 function App() {
   return (
     <Router>
-      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 relative overflow-hidden">
+      <div className="min-h-screen bg-gray-950 relative overflow-hidden">
         {/* Global SVG Filters */}
         <LiquidGlassSVGFilters />
 

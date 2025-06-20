@@ -48,9 +48,8 @@ const TopBar: React.FC = () => {
       
       {/* Desktop Top Bar - Dark Mode Only */}
       <header 
-        className="hidden lg:flex fixed top-0 right-0 z-50 items-center"
+        className="hidden lg:flex fixed top-0 left-0 right-0 z-50 items-center"
         style={{
-          left: '18rem', // Account for 72rem (288px) sidebar width
           height: `${MENU_BAR_HEIGHT.landscape}px`,
         }}
         role="banner"
