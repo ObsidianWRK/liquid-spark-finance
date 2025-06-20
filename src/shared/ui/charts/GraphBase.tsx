@@ -626,7 +626,7 @@ export const GraphBase = forwardRef<ChartRef, GraphBaseProps>(
             strokeDasharray={grid.strokeDasharray || '3 3'}
             horizontal={grid.horizontal}
             vertical={grid.vertical}
-            stroke={appleGraphTokens.colors.separator[currentTheme]}
+            stroke={appleGraphTokens.colors.neutral}
             strokeWidth={grid.strokeWidth || 1}
             opacity={grid.opacity || 0.5}
           />
@@ -644,7 +644,7 @@ export const GraphBase = forwardRef<ChartRef, GraphBaseProps>(
                 'secondary',
                 currentTheme
               ),
-              border: `1px solid ${appleGraphTokens.colors.separator[currentTheme]}`,
+              border: `1px solid ${appleGraphTokens.colors.neutral}`,
               borderRadius: appleGraphTokens.borderRadius.tooltip,
               fontSize: appleGraphTokens.typography.fontSize.tooltip,
               color: getTextColor('primary', currentTheme),
