@@ -153,7 +153,7 @@ const CreditScorePage = () => {
               Credit Score Unavailable
             </h2>
             <p className="text-gray-400 text-sm sm:text-base">
-              We're working to get your credit score. Check back soon!
+              We&apos;re working to get your credit score. Check back soon!
             </p>
           </div>
         </div>
@@ -356,9 +356,9 @@ const CreditScorePage = () => {
         <div className="space-y-4 sm:space-y-6">
           {activeTab === 'overview' && (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
-              <div className="bg-white/[0.02] rounded-2xl sm:rounded-3xl border border-white/[0.08] p-4 sm:p-6">
+              <div className="bg-white/[0.02] rounded-2xl sm:rounded-3xl border border-white/[0.08] p-4 sm:p-6 transition-all duration-300 hover:bg-white/[0.05] hover:border-white/[0.15] hover:transform hover:scale-[1.02] cursor-pointer">
                 <div className="flex items-center space-x-3 mb-4">
-                  <div className="w-10 h-10 sm:w-12 sm:h-12 bg-blue-500/20 rounded-lg flex items-center justify-center">
+                  <div className="w-10 h-10 sm:w-12 sm:h-12 bg-blue-500/20 rounded-lg flex items-center justify-center transition-all duration-300 group-hover:bg-blue-500/30">
                     <CreditCard className="w-5 h-5 sm:w-6 sm:h-6 text-blue-400" />
                   </div>
                   <div className="min-w-0 flex-1">
@@ -378,9 +378,9 @@ const CreditScorePage = () => {
                 </div>
               </div>
 
-              <div className="bg-white/[0.02] rounded-2xl sm:rounded-3xl border border-white/[0.08] p-4 sm:p-6">
+              <div className="bg-white/[0.02] rounded-2xl sm:rounded-3xl border border-white/[0.08] p-4 sm:p-6 transition-all duration-300 hover:bg-white/[0.05] hover:border-white/[0.15] hover:transform hover:scale-[1.02] cursor-pointer">
                 <div className="flex items-center space-x-3 mb-4">
-                  <div className="w-10 h-10 sm:w-12 sm:h-12 bg-green-500/20 rounded-lg flex items-center justify-center">
+                  <div className="w-10 h-10 sm:w-12 sm:h-12 bg-green-500/20 rounded-lg flex items-center justify-center transition-all duration-300 group-hover:bg-green-500/30">
                     <Calendar className="w-5 h-5 sm:w-6 sm:h-6 text-green-400" />
                   </div>
                   <div className="min-w-0 flex-1">
@@ -400,9 +400,9 @@ const CreditScorePage = () => {
                 </div>
               </div>
 
-              <div className="bg-white/[0.02] rounded-2xl sm:rounded-3xl border border-white/[0.08] p-4 sm:p-6 sm:col-span-2 lg:col-span-1">
+              <div className="bg-white/[0.02] rounded-2xl sm:rounded-3xl border border-white/[0.08] p-4 sm:p-6 sm:col-span-2 lg:col-span-1 transition-all duration-300 hover:bg-white/[0.05] hover:border-white/[0.15] hover:transform hover:scale-[1.02] cursor-pointer">
                 <div className="flex items-center space-x-3 mb-4">
-                  <div className="w-10 h-10 sm:w-12 sm:h-12 bg-purple-500/20 rounded-lg flex items-center justify-center">
+                  <div className="w-10 h-10 sm:w-12 sm:h-12 bg-purple-500/20 rounded-lg flex items-center justify-center transition-all duration-300 group-hover:bg-purple-500/30">
                     <TrendingUp className="w-5 h-5 sm:w-6 sm:h-6 text-purple-400" />
                   </div>
                   <div className="min-w-0 flex-1">
