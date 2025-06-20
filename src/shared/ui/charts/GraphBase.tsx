@@ -19,6 +19,7 @@ import {
   LineChart,
   AreaChart,
   BarChart,
+  ScatterChart,
   XAxis,
   YAxis,
   CartesianGrid,
@@ -27,6 +28,7 @@ import {
   Line,
   Area,
   Bar,
+  Scatter,
   Cell
 } from 'recharts';
 import { cn } from '@/shared/lib/utils';
@@ -542,7 +544,7 @@ export const GraphBase = forwardRef<ChartRef, GraphBaseProps>(({
       <>
         {xAxis.show && (
           <XAxis
-            dataKey="date"
+            dataKey={xAxis.dataKey || 'date'}
             axisLine={false}
             tickLine={false}
             tick={{ 
@@ -555,9 +557,10 @@ export const GraphBase = forwardRef<ChartRef, GraphBaseProps>(({
             scale={xAxis.scale}
           />
         )}
-        {yAxis.show && (
-          <YAxis
-            axisLine={false}
+          {yAxis.show && (
+            <YAxis
+              dataKey={yAxis.dataKey}
+              axisLine={false}
             tickLine={false}
             tick={{ 
               fontSize: appleGraphTokens.typography.fontSize.axisLabel,
@@ -698,6 +701,23 @@ export const GraphBase = forwardRef<ChartRef, GraphBaseProps>(({
               />
             ))}
           </BarChart>
+        );
+
+      case 'scatter':
+        return (
+          <ScatterChart {...commonProps}>
+            {renderGrid()}
+            {renderAxis()}
+            {renderTooltip()}
+            {renderLegend()}
+            {computedSeries.map((serie) => (
+              <Scatter
+                key={serie.dataKey}
+                dataKey={serie.dataKey}
+                fill={serie.color}
+              />
+            ))}
+          </ScatterChart>
         );
 
       default:
