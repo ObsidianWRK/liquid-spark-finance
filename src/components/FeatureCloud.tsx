@@ -17,16 +17,26 @@ interface FeatureCloudProps {
 
 // CC: Default feature keywords with financial focus and their routes
 const defaultKeywords = [
-  { text: 'Smart Banking', emoji: '🏦', size: 'lg' as const, route: 'accounts' },
+  {
+    text: 'Smart Banking',
+    emoji: '🏦',
+    size: 'lg' as const,
+    route: 'accounts',
+  },
   { text: 'AI Insights', emoji: '🤖', size: 'md' as const, route: 'insights' },
-  { text: 'Investment', emoji: '📈', size: 'md' as const, route: 'investments' },
+  {
+    text: 'Investment',
+    emoji: '📈',
+    size: 'md' as const,
+    route: 'investments',
+  },
   { text: 'Budgeting', emoji: '💰', size: 'sm' as const, route: 'budget' },
   { text: 'Goals', emoji: '🎯', size: 'sm' as const, route: 'savings' },
   { text: 'Analytics', emoji: '📊', size: 'md' as const, route: 'analytics' },
   { text: 'Security', emoji: '🔒', size: 'sm' as const, route: 'dashboard' },
   { text: 'Planning', emoji: '📋', size: 'lg' as const, route: 'planning' },
   { text: 'Savings', emoji: '🐷', size: 'md' as const, route: 'savings' },
-  { text: 'Credit', emoji: '💳', size: 'sm' as const, route: 'credit' }
+  { text: 'Credit', emoji: '💳', size: 'sm' as const, route: 'credit' },
 ];
 
 // CC: Framer Motion stagger animation variants
@@ -34,32 +44,32 @@ const containerVariants = {
   hidden: { opacity: 0 },
   visible: {
     opacity: 1,
-    transition: { when: "beforeChildren", duration: 0.4 }
-  }
+    transition: { when: 'beforeChildren', duration: 0.4 },
+  },
 };
 
 const itemVariants = {
-  hidden: { 
-    opacity: 0, 
+  hidden: {
+    opacity: 0,
     y: 20,
-    scale: 0.8
+    scale: 0.8,
   },
-  visible: { 
-    opacity: 1, 
+  visible: {
+    opacity: 1,
     y: 0,
     scale: 1,
     transition: {
-      type: "spring" as const,
+      type: 'spring' as const,
       stiffness: 100,
-      damping: 10
-    }
-  }
+      damping: 10,
+    },
+  },
 };
 
-const FeatureCloud: React.FC<FeatureCloudProps> = ({ 
+const FeatureCloud: React.FC<FeatureCloudProps> = ({
   className,
   keywords = defaultKeywords,
-  onKeywordClick
+  onKeywordClick,
 }) => {
   const navigate = useNavigate();
 
@@ -68,7 +78,7 @@ const FeatureCloud: React.FC<FeatureCloudProps> = ({
     if (onKeywordClick) {
       onKeywordClick(keyword.text, keyword.route);
     }
-    
+
     if (keyword.route) {
       // Navigate to the route
       navigate(`/?tab=${keyword.route}`);
@@ -90,16 +100,16 @@ const FeatureCloud: React.FC<FeatureCloudProps> = ({
   };
 
   return (
-    <div className={cn("relative overflow-hidden", className)}>
+    <div className={cn('relative overflow-hidden', className)}>
       {/* CC: Main hero headline with responsive typography */}
       <motion.div
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8, ease: "easeOut" }}
+        transition={{ duration: 0.8, ease: 'easeOut' }}
         className="text-center mb-8 sm:mb-12"
       >
         <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl text-white leading-tight">
-          <span className="font-bold">Intelligence you can{' '}</span>
+          <span className="font-bold">Intelligence you can </span>
           <span className="font-light italic bg-gradient-to-r from-blue-400 via-purple-400 to-green-400 bg-clip-text text-transparent">
             bank
           </span>{' '}
@@ -122,30 +132,30 @@ const FeatureCloud: React.FC<FeatureCloudProps> = ({
             key={`${keyword.text}-${index}`}
             variants={itemVariants}
             // Appear simultaneously with parent animation
-            whileHover={{ 
+            whileHover={{
               scale: 1.05,
-              boxShadow: "0 10px 30px rgba(59, 130, 246, 0.3)"
+              boxShadow: '0 10px 30px rgba(59, 130, 246, 0.3)',
             }}
             whileTap={{ scale: 0.95 }}
             onClick={() => handleKeywordClick(keyword)}
             className={cn(
               // CC: Liquid glass theme with 12px radius and surface.borderLight
-              "rounded-xl border border-white/[0.08] bg-white/[0.02] backdrop-blur-md",
-              "flex items-center gap-2 cursor-pointer transition-all duration-300",
-              "card-hover",
-              "active:scale-95 select-none",
-              "focus:outline-none focus:ring-2 focus:ring-blue-400/50 focus:ring-offset-2 focus:ring-offset-black/50",
+              'rounded-xl border border-white/[0.08] bg-white/[0.02] backdrop-blur-md',
+              'flex items-center gap-2 cursor-pointer transition-all duration-300',
+              'card-hover',
+              'active:scale-95 select-none',
+              'focus:outline-none focus:ring-2 focus:ring-blue-400/50 focus:ring-offset-2 focus:ring-offset-black/50',
               getSizeClasses(keyword.size || 'md')
             )}
             style={{
               // CC: Ensure no text overflow on 320-1440px viewports
               minWidth: 'fit-content',
-              maxWidth: '200px'
+              maxWidth: '200px',
             }}
             type="button"
             aria-label={`Navigate to ${keyword.text}`}
           >
-            <span 
+            <span
               className="text-white font-medium truncate"
               title={keyword.text}
             >

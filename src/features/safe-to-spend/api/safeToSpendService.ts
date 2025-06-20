@@ -1,4 +1,4 @@
-import { SpendableCash } from "../types";
+import { SpendableCash } from '../types';
 
 export interface SafeToSpendService {
   calculate: () => Promise<SpendableCash>;
@@ -19,4 +19,5 @@ class MockSafeToSpendService implements SafeToSpendService {
   }
 }
 
-export const safeToSpendService: SafeToSpendService = new MockSafeToSpendService(); 
+export const safeToSpendService: SafeToSpendService =
+  new MockSafeToSpendService();

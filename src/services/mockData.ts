@@ -12,8 +12,8 @@ export const mockAccountsEnhanced = [
     accountType: 'depository' as const,
     accountSubtype: 'checking' as const,
     institutionName: 'Chase Bank',
-    balance: 12450.00,
-    availableBalance: 11200.00,
+    balance: 12450.0,
+    availableBalance: 11200.0,
     currency: 'USD',
     isActive: true,
     isManual: false,
@@ -22,10 +22,10 @@ export const mockAccountsEnhanced = [
       accountNumber: '****1234',
       apy: 0.01,
       fees: [],
-      sparklineData: [12200, 12300, 12100, 12400, 12450]
+      sparklineData: [12200, 12300, 12100, 12400, 12450],
     },
     createdAt: new Date(),
-    updatedAt: new Date()
+    updatedAt: new Date(),
   },
   {
     id: 'acc_002',
@@ -34,8 +34,8 @@ export const mockAccountsEnhanced = [
     accountType: 'depository' as const,
     accountSubtype: 'savings' as const,
     institutionName: 'Bank of America',
-    balance: 25780.50,
-    availableBalance: 25780.50,
+    balance: 25780.5,
+    availableBalance: 25780.5,
     currency: 'USD',
     isActive: true,
     isManual: false,
@@ -44,10 +44,10 @@ export const mockAccountsEnhanced = [
       accountNumber: '****5678',
       apy: 2.15,
       fees: [],
-      sparklineData: [25200, 25400, 25600, 25700, 25780]
+      sparklineData: [25200, 25400, 25600, 25700, 25780],
     },
     createdAt: new Date(),
-    updatedAt: new Date()
+    updatedAt: new Date(),
   },
   {
     id: 'acc_003',
@@ -56,8 +56,8 @@ export const mockAccountsEnhanced = [
     accountType: 'credit' as const,
     accountSubtype: 'credit_card' as const,
     institutionName: 'Wells Fargo',
-    balance: -1245.30,
-    availableBalance: 8754.70,
+    balance: -1245.3,
+    availableBalance: 8754.7,
     currency: 'USD',
     isActive: true,
     isManual: false,
@@ -66,10 +66,10 @@ export const mockAccountsEnhanced = [
       accountNumber: '****9012',
       creditLimit: 10000,
       fees: [],
-      sparklineData: [-1100, -1200, -1300, -1200, -1245]
+      sparklineData: [-1100, -1200, -1300, -1200, -1245],
     },
     createdAt: new Date(),
-    updatedAt: new Date()
+    updatedAt: new Date(),
   },
   {
     id: 'acc_004',
@@ -87,10 +87,10 @@ export const mockAccountsEnhanced = [
     metadata: {
       accountNumber: '****3456',
       fees: [],
-      sparklineData: [44800, 45200, 45100, 45400, 45600]
+      sparklineData: [44800, 45200, 45100, 45400, 45600],
     },
     createdAt: new Date(),
-    updatedAt: new Date()
+    updatedAt: new Date(),
   },
   // CC: Additional 20 accounts for Smart Accounts Deck virtual scrolling
   {
@@ -110,10 +110,10 @@ export const mockAccountsEnhanced = [
       accountNumber: '****7890',
       apy: 0.05,
       fees: [],
-      sparklineData: [8800, 8850, 8900, 8880, 8920]
+      sparklineData: [8800, 8850, 8900, 8880, 8920],
     },
     createdAt: new Date(),
-    updatedAt: new Date()
+    updatedAt: new Date(),
   },
   {
     id: 'acc_006',
@@ -131,10 +131,10 @@ export const mockAccountsEnhanced = [
     metadata: {
       accountNumber: '****4567',
       fees: [],
-      sparklineData: [172000, 173000, 173500, 174000, 174250]
+      sparklineData: [172000, 173000, 173500, 174000, 174250],
     },
     createdAt: new Date(),
-    updatedAt: new Date()
+    updatedAt: new Date(),
   },
   {
     id: 'acc_007',
@@ -152,10 +152,10 @@ export const mockAccountsEnhanced = [
     metadata: {
       accountNumber: '****8901',
       fees: [],
-      sparklineData: [61800, 62000, 62100, 62200, 62340]
+      sparklineData: [61800, 62000, 62100, 62200, 62340],
     },
     createdAt: new Date(),
-    updatedAt: new Date()
+    updatedAt: new Date(),
   },
   {
     id: 'acc_008',
@@ -174,10 +174,10 @@ export const mockAccountsEnhanced = [
       accountNumber: '****2345',
       apy: 1.75,
       fees: [],
-      sparklineData: [12200, 12300, 12350, 12400, 12450]
+      sparklineData: [12200, 12300, 12350, 12400, 12450],
     },
     createdAt: new Date(),
-    updatedAt: new Date()
+    updatedAt: new Date(),
   },
   {
     id: 'acc_009',
@@ -195,10 +195,10 @@ export const mockAccountsEnhanced = [
     metadata: {
       accountNumber: '****6789',
       fees: [],
-      sparklineData: [17800, 18000, 18100, 18150, 18230]
+      sparklineData: [17800, 18000, 18100, 18150, 18230],
     },
     createdAt: new Date(),
-    updatedAt: new Date()
+    updatedAt: new Date(),
   },
   {
     id: 'acc_010',
@@ -207,8 +207,8 @@ export const mockAccountsEnhanced = [
     accountType: 'depository' as const,
     accountSubtype: 'savings' as const,
     institutionName: 'Ally Bank',
-    balance: 8500.00,
-    availableBalance: 8500.00,
+    balance: 8500.0,
+    availableBalance: 8500.0,
     currency: 'USD',
     isActive: true,
     isManual: false,
@@ -217,10 +217,10 @@ export const mockAccountsEnhanced = [
       accountNumber: '****0123',
       apy: 4.25,
       fees: [],
-      sparklineData: [8200, 8300, 8400, 8450, 8500]
+      sparklineData: [8200, 8300, 8400, 8450, 8500],
     },
     createdAt: new Date(),
-    updatedAt: new Date()
+    updatedAt: new Date(),
   },
   {
     id: 'acc_011',
@@ -239,10 +239,10 @@ export const mockAccountsEnhanced = [
       accountNumber: '****4567',
       creditLimit: 10000,
       fees: [],
-      sparklineData: [-2500, -2700, -2800, -2850, -2890]
+      sparklineData: [-2500, -2700, -2800, -2850, -2890],
     },
     createdAt: new Date(),
-    updatedAt: new Date()
+    updatedAt: new Date(),
   },
   {
     id: 'acc_012',
@@ -259,12 +259,12 @@ export const mockAccountsEnhanced = [
     syncStatus: 'active' as const,
     metadata: {
       accountNumber: '****8901',
-      apy: 3.50,
+      apy: 3.5,
       fees: [],
-      sparklineData: [34000, 34200, 34400, 34500, 34567]
+      sparklineData: [34000, 34200, 34400, 34500, 34567],
     },
     createdAt: new Date(),
-    updatedAt: new Date()
+    updatedAt: new Date(),
   },
   {
     id: 'acc_013',
@@ -282,10 +282,10 @@ export const mockAccountsEnhanced = [
     metadata: {
       accountNumber: '****2345',
       fees: [],
-      sparklineData: [56200, 56400, 56600, 56700, 56789]
+      sparklineData: [56200, 56400, 56600, 56700, 56789],
     },
     createdAt: new Date(),
-    updatedAt: new Date()
+    updatedAt: new Date(),
   },
   {
     id: 'acc_014',
@@ -294,8 +294,8 @@ export const mockAccountsEnhanced = [
     accountType: 'depository' as const,
     accountSubtype: 'checking' as const,
     institutionName: 'Goldman Sachs',
-    balance: 15678.90,
-    availableBalance: 15678.90,
+    balance: 15678.9,
+    availableBalance: 15678.9,
     currency: 'USD',
     isActive: true,
     isManual: false,
@@ -304,10 +304,10 @@ export const mockAccountsEnhanced = [
       accountNumber: '****6789',
       apy: 2.75,
       fees: [],
-      sparklineData: [15400, 15500, 15600, 15650, 15678]
+      sparklineData: [15400, 15500, 15600, 15650, 15678],
     },
     createdAt: new Date(),
-    updatedAt: new Date()
+    updatedAt: new Date(),
   },
   {
     id: 'acc_015',
@@ -326,10 +326,10 @@ export const mockAccountsEnhanced = [
       accountNumber: '****0123',
       creditLimit: 10000,
       fees: [],
-      sparklineData: [-400, -500, -550, -560, -567]
+      sparklineData: [-400, -500, -550, -560, -567],
     },
     createdAt: new Date(),
-    updatedAt: new Date()
+    updatedAt: new Date(),
   },
   {
     id: 'acc_016',
@@ -346,12 +346,12 @@ export const mockAccountsEnhanced = [
     syncStatus: 'active' as const,
     metadata: {
       accountNumber: '****4567',
-      apy: 4.10,
+      apy: 4.1,
       fees: [],
-      sparklineData: [67200, 67500, 67700, 67800, 67890]
+      sparklineData: [67200, 67500, 67700, 67800, 67890],
     },
     createdAt: new Date(),
-    updatedAt: new Date()
+    updatedAt: new Date(),
   },
   {
     id: 'acc_017',
@@ -369,10 +369,10 @@ export const mockAccountsEnhanced = [
     metadata: {
       accountNumber: '****8901',
       fees: [],
-      sparklineData: [11000, 11500, 12000, 12200, 12345]
+      sparklineData: [11000, 11500, 12000, 12200, 12345],
     },
     createdAt: new Date(),
-    updatedAt: new Date()
+    updatedAt: new Date(),
   },
   {
     id: 'acc_018',
@@ -390,10 +390,10 @@ export const mockAccountsEnhanced = [
     metadata: {
       accountNumber: '****2345',
       fees: [],
-      sparklineData: [-24000, -23800, -23600, -23500, -23456]
+      sparklineData: [-24000, -23800, -23600, -23500, -23456],
     },
     createdAt: new Date(),
-    updatedAt: new Date()
+    updatedAt: new Date(),
   },
   {
     id: 'acc_019',
@@ -411,10 +411,10 @@ export const mockAccountsEnhanced = [
     metadata: {
       accountNumber: '****6789',
       fees: [],
-      sparklineData: [-19500, -19200, -19000, -18800, -18765]
+      sparklineData: [-19500, -19200, -19000, -18800, -18765],
     },
     createdAt: new Date(),
-    updatedAt: new Date()
+    updatedAt: new Date(),
   },
   {
     id: 'acc_020',
@@ -423,8 +423,8 @@ export const mockAccountsEnhanced = [
     accountType: 'credit' as const,
     accountSubtype: 'line_of_credit' as const,
     institutionName: 'Wells Fargo',
-    balance: -5432.10,
-    availableBalance: 44567.90,
+    balance: -5432.1,
+    availableBalance: 44567.9,
     currency: 'USD',
     isActive: true,
     isManual: false,
@@ -433,10 +433,10 @@ export const mockAccountsEnhanced = [
       accountNumber: '****0123',
       creditLimit: 50000,
       fees: [],
-      sparklineData: [-5000, -5200, -5300, -5400, -5432]
+      sparklineData: [-5000, -5200, -5300, -5400, -5432],
     },
     createdAt: new Date(),
-    updatedAt: new Date()
+    updatedAt: new Date(),
   },
   {
     id: 'acc_021',
@@ -445,7 +445,7 @@ export const mockAccountsEnhanced = [
     accountType: 'depository' as const,
     accountSubtype: 'cd' as const,
     institutionName: 'Navy Federal',
-    balance: 25000.00,
+    balance: 25000.0,
     availableBalance: 0,
     currency: 'USD',
     isActive: true,
@@ -455,10 +455,10 @@ export const mockAccountsEnhanced = [
       accountNumber: '****4567',
       apy: 4.75,
       fees: [],
-      sparklineData: [24800, 24900, 24950, 24975, 25000]
+      sparklineData: [24800, 24900, 24950, 24975, 25000],
     },
     createdAt: new Date(),
-    updatedAt: new Date()
+    updatedAt: new Date(),
   },
   {
     id: 'acc_022',
@@ -476,10 +476,10 @@ export const mockAccountsEnhanced = [
     metadata: {
       accountNumber: '****8901',
       fees: [],
-      sparklineData: [87000, 88000, 88500, 88800, 89012]
+      sparklineData: [87000, 88000, 88500, 88800, 89012],
     },
     createdAt: new Date(),
-    updatedAt: new Date()
+    updatedAt: new Date(),
   },
   {
     id: 'acc_023',
@@ -498,10 +498,10 @@ export const mockAccountsEnhanced = [
       accountNumber: '****2345',
       apy: 3.25,
       fees: [],
-      sparklineData: [42800, 43000, 43100, 43150, 43210]
+      sparklineData: [42800, 43000, 43100, 43150, 43210],
     },
     createdAt: new Date(),
-    updatedAt: new Date()
+    updatedAt: new Date(),
   },
   {
     id: 'acc_024',
@@ -520,41 +520,141 @@ export const mockAccountsEnhanced = [
       accountNumber: '****6789',
       creditLimit: 25000,
       fees: [],
-      sparklineData: [-4200, -4300, -4400, -4500, -4567]
+      sparklineData: [-4200, -4300, -4400, -4500, -4567],
     },
     createdAt: new Date(),
-    updatedAt: new Date()
-  }
+    updatedAt: new Date(),
+  },
 ];
 
 // CC: Enhanced institution data with logos and branding for Smart Accounts Deck
 export const mockInstitutions = {
-  'Chase Bank': { name: 'Chase Bank', color: '#117A65', logo: '/institution-logos/chase.png' },
-  'Bank of America': { name: 'Bank of America', color: '#E51B23', logo: '/institution-logos/boa.png' },
-  'Wells Fargo': { name: 'Wells Fargo', color: '#D71E2B', logo: '/institution-logos/wells-fargo.png' },
-  'Schwab': { name: 'Charles Schwab', color: '#00A0DF', logo: '/institution-logos/schwab.png' },
-  'JPMorgan Chase': { name: 'JPMorgan Chase', color: '#117A65', logo: '/institution-logos/chase.png' },
-  'Fidelity': { name: 'Fidelity', color: '#00653A', logo: '/institution-logos/fidelity.png' },
-  'Vanguard': { name: 'Vanguard', color: '#B41E3B', logo: '/institution-logos/vanguard.png' },
-  'HSA Bank': { name: 'HSA Bank', color: '#4A90E2', logo: '/institution-logos/hsa-bank.png' },
-  'T. Rowe Price': { name: 'T. Rowe Price', color: '#003DA5', logo: '/institution-logos/trowe.png' },
-  'Ally Bank': { name: 'Ally Bank', color: '#8B4C9A', logo: '/institution-logos/ally.png' },
-  'American Express': { name: 'American Express', color: '#006FCF', logo: '/institution-logos/amex.png' },
-  'Capital One': { name: 'Capital One', color: '#004879', logo: '/institution-logos/capital-one.png' },
-  'E*TRADE': { name: 'E*TRADE', color: '#6633CC', logo: '/institution-logos/etrade.png' },
-  'Goldman Sachs': { name: 'Goldman Sachs', color: '#1E3A8A', logo: '/institution-logos/goldman.png' },
-  'Discover': { name: 'Discover', color: '#FF6000', logo: '/institution-logos/discover.png' },
-  'Marcus by Goldman Sachs': { name: 'Marcus', color: '#1E3A8A', logo: '/institution-logos/marcus.png' },
-  'Coinbase': { name: 'Coinbase', color: '#0052FF', logo: '/institution-logos/coinbase.png' },
-  'Navient': { name: 'Navient', color: '#0066CC', logo: '/institution-logos/navient.png' },
-  'Chase Auto Finance': { name: 'Chase Auto', color: '#117A65', logo: '/institution-logos/chase.png' },
-  'Navy Federal': { name: 'Navy Federal', color: '#003F7F', logo: '/institution-logos/navy-federal.png' },
-  'TD Ameritrade': { name: 'TD Ameritrade', color: '#00A651', logo: '/institution-logos/td-ameritrade.png' },
-  'USAA': { name: 'USAA', color: '#003F7F', logo: '/institution-logos/usaa.png' },
-  'Chase Sapphire': { name: 'Chase Sapphire', color: '#117A65', logo: '/institution-logos/chase-sapphire.png' },
-  'Robinhood': { name: 'Robinhood', color: '#00C805', logo: '/institution-logos/robinhood.png' },
-  'WeBull': { name: 'WeBull', color: '#2962FF', logo: '/institution-logos/webull.png' },
-  'Chime': { name: 'Chime', color: '#0BBF6D', logo: '/institution-logos/chime.png' }
+  'Chase Bank': {
+    name: 'Chase Bank',
+    color: '#117A65',
+    logo: '/institution-logos/chase.png',
+  },
+  'Bank of America': {
+    name: 'Bank of America',
+    color: '#E51B23',
+    logo: '/institution-logos/boa.png',
+  },
+  'Wells Fargo': {
+    name: 'Wells Fargo',
+    color: '#D71E2B',
+    logo: '/institution-logos/wells-fargo.png',
+  },
+  Schwab: {
+    name: 'Charles Schwab',
+    color: '#00A0DF',
+    logo: '/institution-logos/schwab.png',
+  },
+  'JPMorgan Chase': {
+    name: 'JPMorgan Chase',
+    color: '#117A65',
+    logo: '/institution-logos/chase.png',
+  },
+  Fidelity: {
+    name: 'Fidelity',
+    color: '#00653A',
+    logo: '/institution-logos/fidelity.png',
+  },
+  Vanguard: {
+    name: 'Vanguard',
+    color: '#B41E3B',
+    logo: '/institution-logos/vanguard.png',
+  },
+  'HSA Bank': {
+    name: 'HSA Bank',
+    color: '#4A90E2',
+    logo: '/institution-logos/hsa-bank.png',
+  },
+  'T. Rowe Price': {
+    name: 'T. Rowe Price',
+    color: '#003DA5',
+    logo: '/institution-logos/trowe.png',
+  },
+  'Ally Bank': {
+    name: 'Ally Bank',
+    color: '#8B4C9A',
+    logo: '/institution-logos/ally.png',
+  },
+  'American Express': {
+    name: 'American Express',
+    color: '#006FCF',
+    logo: '/institution-logos/amex.png',
+  },
+  'Capital One': {
+    name: 'Capital One',
+    color: '#004879',
+    logo: '/institution-logos/capital-one.png',
+  },
+  'E*TRADE': {
+    name: 'E*TRADE',
+    color: '#6633CC',
+    logo: '/institution-logos/etrade.png',
+  },
+  'Goldman Sachs': {
+    name: 'Goldman Sachs',
+    color: '#1E3A8A',
+    logo: '/institution-logos/goldman.png',
+  },
+  Discover: {
+    name: 'Discover',
+    color: '#FF6000',
+    logo: '/institution-logos/discover.png',
+  },
+  'Marcus by Goldman Sachs': {
+    name: 'Marcus',
+    color: '#1E3A8A',
+    logo: '/institution-logos/marcus.png',
+  },
+  Coinbase: {
+    name: 'Coinbase',
+    color: '#0052FF',
+    logo: '/institution-logos/coinbase.png',
+  },
+  Navient: {
+    name: 'Navient',
+    color: '#0066CC',
+    logo: '/institution-logos/navient.png',
+  },
+  'Chase Auto Finance': {
+    name: 'Chase Auto',
+    color: '#117A65',
+    logo: '/institution-logos/chase.png',
+  },
+  'Navy Federal': {
+    name: 'Navy Federal',
+    color: '#003F7F',
+    logo: '/institution-logos/navy-federal.png',
+  },
+  'TD Ameritrade': {
+    name: 'TD Ameritrade',
+    color: '#00A651',
+    logo: '/institution-logos/td-ameritrade.png',
+  },
+  USAA: { name: 'USAA', color: '#003F7F', logo: '/institution-logos/usaa.png' },
+  'Chase Sapphire': {
+    name: 'Chase Sapphire',
+    color: '#117A65',
+    logo: '/institution-logos/chase-sapphire.png',
+  },
+  Robinhood: {
+    name: 'Robinhood',
+    color: '#00C805',
+    logo: '/institution-logos/robinhood.png',
+  },
+  WeBull: {
+    name: 'WeBull',
+    color: '#2962FF',
+    logo: '/institution-logos/webull.png',
+  },
+  Chime: {
+    name: 'Chime',
+    color: '#0BBF6D',
+    logo: '/institution-logos/chime.png',
+  },
 };
 
 export const mockData = {
@@ -563,25 +663,25 @@ export const mockData = {
       id: 'acc_001',
       type: 'Checking',
       nickname: 'Main Account',
-      balance: 12450.00,
-      availableBalance: 11200.00,
-      currency: 'USD'
+      balance: 12450.0,
+      availableBalance: 11200.0,
+      currency: 'USD',
     },
     {
       id: 'acc_002',
       type: 'Savings',
       nickname: 'Emergency Fund',
-      balance: 25780.50,
-      availableBalance: 25780.50,
-      currency: 'USD'
+      balance: 25780.5,
+      availableBalance: 25780.5,
+      currency: 'USD',
     },
     {
       id: 'acc_003',
       type: 'Credit Card',
       nickname: 'Rewards Card',
-      balance: -1245.30,
-      availableBalance: 8754.70,
-      currency: 'USD'
+      balance: -1245.3,
+      availableBalance: 8754.7,
+      currency: 'USD',
     },
     {
       id: 'acc_004',
@@ -589,7 +689,7 @@ export const mockData = {
       nickname: 'Portfolio',
       balance: 45600.25,
       availableBalance: 45600.25,
-      currency: 'USD'
+      currency: 'USD',
     },
     {
       id: 'acc_005',
@@ -597,7 +697,7 @@ export const mockData = {
       nickname: 'Chase Banking',
       balance: 8920.14,
       availableBalance: 8920.14,
-      currency: 'USD'
+      currency: 'USD',
     },
     {
       id: 'acc_006',
@@ -605,7 +705,7 @@ export const mockData = {
       nickname: '401(k)',
       balance: 174250.67,
       availableBalance: 174250.67,
-      currency: 'USD'
+      currency: 'USD',
     },
     {
       id: 'acc_007',
@@ -613,7 +713,7 @@ export const mockData = {
       nickname: 'Traditional IRA',
       balance: 62340.22,
       availableBalance: 62340.22,
-      currency: 'USD'
+      currency: 'USD',
     },
     {
       id: 'acc_008',
@@ -621,7 +721,7 @@ export const mockData = {
       nickname: '502A Health Savings',
       balance: 12450.11,
       availableBalance: 12450.11,
-      currency: 'USD'
+      currency: 'USD',
     },
     {
       id: 'acc_009',
@@ -629,16 +729,16 @@ export const mockData = {
       nickname: 'College Savings 529',
       balance: 18230.89,
       availableBalance: 18230.89,
-      currency: 'USD'
+      currency: 'USD',
     },
     {
       id: 'acc_010',
       type: 'Savings',
       nickname: 'Disaster Savings',
-      balance: 8500.00,
-      availableBalance: 8500.00,
-      currency: 'USD'
-    }
+      balance: 8500.0,
+      availableBalance: 8500.0,
+      currency: 'USD',
+    },
   ] as Account[],
 
   transactions: [
@@ -648,18 +748,18 @@ export const mockData = {
       category: { name: 'Groceries', color: '#34C759' },
       amount: -127.43,
       date: '2025-06-14T10:30:00Z',
-      status: 'completed' as const
+      status: 'completed' as const,
     },
     {
       id: 'txn_002',
       merchant: 'Apple Store',
       category: { name: 'Electronics', color: '#007AFF' },
-      amount: -899.00,
+      amount: -899.0,
       date: '2025-06-14T08:15:00Z',
       status: 'completed' as const,
       trackingNumber: '1Z999AA1234567890',
       shippingProvider: 'UPS' as const,
-      deliveryStatus: 'In Transit' as const
+      deliveryStatus: 'In Transit' as const,
     },
     {
       id: 'txn_003',
@@ -670,15 +770,15 @@ export const mockData = {
       status: 'completed' as const,
       trackingNumber: '771234567890',
       shippingProvider: 'FedEx' as const,
-      deliveryStatus: 'Delivered' as const
+      deliveryStatus: 'Delivered' as const,
     },
     {
       id: 'txn_004',
       merchant: 'Salary Deposit',
       category: { name: 'Income', color: '#34C759' },
-      amount: 3250.00,
+      amount: 3250.0,
       date: '2025-06-13T09:00:00Z',
-      status: 'completed' as const
+      status: 'completed' as const,
     },
     {
       id: 'txn_005',
@@ -689,7 +789,7 @@ export const mockData = {
       status: 'completed' as const,
       trackingNumber: '9400110200793123456789',
       shippingProvider: 'USPS' as const,
-      deliveryStatus: 'Out for Delivery' as const
+      deliveryStatus: 'Out for Delivery' as const,
     },
     {
       id: 'txn_006',
@@ -697,7 +797,7 @@ export const mockData = {
       category: { name: 'Coffee', color: '#FF9500' },
       amount: -6.85,
       date: '2025-06-13T07:45:00Z',
-      status: 'completed' as const
+      status: 'completed' as const,
     },
     {
       id: 'txn_007',
@@ -708,15 +808,15 @@ export const mockData = {
       status: 'completed' as const,
       trackingNumber: '1Z12345E0123456789',
       shippingProvider: 'UPS' as const,
-      deliveryStatus: 'Delivered' as const
+      deliveryStatus: 'Delivered' as const,
     },
     {
       id: 'txn_008',
       merchant: 'Gas Station',
       category: { name: 'Transportation', color: '#FF3B30' },
-      amount: -45.20,
+      amount: -45.2,
       date: '2025-06-12T18:30:00Z',
-      status: 'pending' as const
+      status: 'pending' as const,
     },
     {
       id: 'txn_009',
@@ -724,7 +824,7 @@ export const mockData = {
       category: { name: 'Entertainment', color: '#E50914' },
       amount: -15.99,
       date: '2025-06-11T09:00:00Z',
-      status: 'completed' as const
+      status: 'completed' as const,
     },
     {
       id: 'txn_010',
@@ -732,7 +832,7 @@ export const mockData = {
       category: { name: 'Transportation', color: '#000000' },
       amount: -23.45,
       date: '2025-06-11T18:30:00Z',
-      status: 'completed' as const
+      status: 'completed' as const,
     },
     {
       id: 'txn_011',
@@ -743,7 +843,7 @@ export const mockData = {
       status: 'completed' as const,
       trackingNumber: '1ZHD123456789',
       shippingProvider: 'UPS' as const,
-      deliveryStatus: 'Delivered' as const
+      deliveryStatus: 'Delivered' as const,
     },
     {
       id: 'txn_012',
@@ -751,7 +851,7 @@ export const mockData = {
       category: { name: 'Entertainment', color: '#1DB954' },
       amount: -9.99,
       date: '2025-06-10T05:30:00Z',
-      status: 'completed' as const
+      status: 'completed' as const,
     },
     {
       id: 'txn_013',
@@ -762,15 +862,15 @@ export const mockData = {
       status: 'completed' as const,
       trackingNumber: 'WM123456789US',
       shippingProvider: 'USPS' as const,
-      deliveryStatus: 'In Transit' as const
+      deliveryStatus: 'In Transit' as const,
     },
     {
       id: 'txn_014',
-      merchant: 'Lowe\'s',
+      merchant: "Lowe's",
       category: { name: 'Home Improvement', color: '#007AFF' },
-      amount: -240.00,
+      amount: -240.0,
       date: '2025-06-09T13:00:00Z',
-      status: 'completed' as const
+      status: 'completed' as const,
     },
     {
       id: 'txn_015',
@@ -781,7 +881,7 @@ export const mockData = {
       status: 'completed' as const,
       trackingNumber: 'DD123456',
       shippingProvider: 'FedEx' as const,
-      deliveryStatus: 'Delivered' as const
+      deliveryStatus: 'Delivered' as const,
     },
     {
       id: 'txn_016',
@@ -789,7 +889,7 @@ export const mockData = {
       category: { name: 'Health', color: '#8E44AD' },
       amount: -12.89,
       date: '2025-06-08T18:40:00Z',
-      status: 'completed' as const
+      status: 'completed' as const,
     },
     {
       id: 'txn_017',
@@ -797,18 +897,18 @@ export const mockData = {
       category: { name: 'Transportation', color: '#FF00BF' },
       amount: -18.75,
       date: '2025-06-07T21:10:00Z',
-      status: 'completed' as const
+      status: 'completed' as const,
     },
     {
       id: 'txn_018',
       merchant: 'eBay',
       category: { name: 'Shopping', color: '#FF9500' },
-      amount: -65.00,
+      amount: -65.0,
       date: '2025-06-07T09:22:00Z',
       status: 'completed' as const,
       trackingNumber: 'EBAY987654321',
       shippingProvider: 'UPS' as const,
-      deliveryStatus: 'Out for Delivery' as const
+      deliveryStatus: 'Out for Delivery' as const,
     },
     {
       id: 'txn_019',
@@ -816,26 +916,26 @@ export const mockData = {
       category: { name: 'Dining', color: '#FF3B30' },
       amount: -11.25,
       date: '2025-06-06T13:37:00Z',
-      status: 'completed' as const
+      status: 'completed' as const,
     },
     {
       id: 'txn_020',
       merchant: 'Nike.com',
       category: { name: 'Shopping', color: '#FF9500' },
-      amount: -120.00,
+      amount: -120.0,
       date: '2025-06-06T16:05:00Z',
       status: 'completed' as const,
       trackingNumber: '1ZNIKE123456',
       shippingProvider: 'UPS' as const,
-      deliveryStatus: 'In Transit' as const
+      deliveryStatus: 'In Transit' as const,
     },
     {
       id: 'txn_021',
       merchant: 'Paycheck',
       category: { name: 'Income', color: '#34C759' },
-      amount: 3250.00,
+      amount: 3250.0,
       date: '2025-06-05T00:00:00Z',
-      status: 'completed' as const
+      status: 'completed' as const,
     },
     {
       id: 'txn_022',
@@ -843,7 +943,7 @@ export const mockData = {
       category: { name: 'Groceries', color: '#34C759' },
       amount: -210.45,
       date: '2025-06-05T19:40:00Z',
-      status: 'completed' as const
+      status: 'completed' as const,
     },
     {
       id: 'txn_023',
@@ -851,7 +951,7 @@ export const mockData = {
       category: { name: 'Entertainment', color: '#E50914' },
       amount: -10.99,
       date: '2025-06-04T04:20:00Z',
-      status: 'completed' as const
+      status: 'completed' as const,
     },
     {
       id: 'txn_024',
@@ -862,15 +962,15 @@ export const mockData = {
       status: 'completed' as const,
       trackingNumber: 'BB987654321',
       shippingProvider: 'FedEx' as const,
-      deliveryStatus: 'Delivered' as const
+      deliveryStatus: 'Delivered' as const,
     },
     {
       id: 'txn_025',
       merchant: 'Grocery Store',
       category: { name: 'Groceries', color: '#34C759' },
-      amount: -92.10,
+      amount: -92.1,
       date: '2025-06-03T11:30:00Z',
-      status: 'completed' as const
+      status: 'completed' as const,
     },
     {
       id: 'txn_026',
@@ -881,34 +981,34 @@ export const mockData = {
       status: 'completed' as const,
       trackingNumber: 'AMZ123987456',
       shippingProvider: 'UPS' as const,
-      deliveryStatus: 'In Transit' as const
+      deliveryStatus: 'In Transit' as const,
     },
     {
       id: 'txn_027',
       merchant: 'Subway',
       category: { name: 'Dining', color: '#FF3B30' },
-      amount: -8.90,
+      amount: -8.9,
       date: '2025-06-02T12:00:00Z',
-      status: 'completed' as const
+      status: 'completed' as const,
     },
     {
       id: 'txn_028',
       merchant: 'Apple.com',
       category: { name: 'Electronics', color: '#007AFF' },
-      amount: -299.00,
+      amount: -299.0,
       date: '2025-06-02T07:30:00Z',
       status: 'completed' as const,
       trackingNumber: 'APL123456789',
       shippingProvider: 'UPS' as const,
-      deliveryStatus: 'Out for Delivery' as const
+      deliveryStatus: 'Out for Delivery' as const,
     },
     {
       id: 'txn_029',
       merchant: 'Gym Membership',
       category: { name: 'Health', color: '#8E44AD' },
-      amount: -55.00,
+      amount: -55.0,
       date: '2025-06-01T02:30:00Z',
-      status: 'completed' as const
+      status: 'completed' as const,
     },
     {
       id: 'txn_030',
@@ -919,18 +1019,18 @@ export const mockData = {
       status: 'completed' as const,
       trackingNumber: 'WF123456',
       shippingProvider: 'USPS' as const,
-      deliveryStatus: 'Delivered' as const
-    }
-  ] as Transaction[]
+      deliveryStatus: 'Delivered' as const,
+    },
+  ] as Transaction[],
 };
 
 // Helper function to generate AccountCardDTO from mock data
 export const getCompactAccountCards = (): AccountCardDTO[] => {
-  return mockAccountsEnhanced.map(account => 
+  return mockAccountsEnhanced.map((account) =>
     accountToCardDTO(
-      account, 
-      mockData.transactions.filter(t => Math.random() > 0.7), // Random subset of transactions
+      account,
+      mockData.transactions.filter((t) => Math.random() > 0.7), // Random subset of transactions
       mockInstitutions[account.institutionName || 'Chase Bank']
     )
   );
-}; 
+};

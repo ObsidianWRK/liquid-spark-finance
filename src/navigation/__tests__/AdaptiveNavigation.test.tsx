@@ -6,7 +6,9 @@ import { useBreakpoint } from '@/shared/hooks/useBreakpoint';
 
 // Mock the useBreakpoint hook
 jest.mock('@/shared/hooks/useBreakpoint');
-const mockUseBreakpoint = useBreakpoint as jest.MockedFunction<typeof useBreakpoint>;
+const mockUseBreakpoint = useBreakpoint as jest.MockedFunction<
+  typeof useBreakpoint
+>;
 
 // Mock the navigation components
 jest.mock('../components/BottomNav', () => {
@@ -121,7 +123,11 @@ describe('AdaptiveNavigation', () => {
       isDesktop: false,
       isLargeDesktop: false,
     });
-    rerender(<BrowserRouter><AdaptiveNavigation /></BrowserRouter>);
+    rerender(
+      <BrowserRouter>
+        <AdaptiveNavigation />
+      </BrowserRouter>
+    );
     expect(screen.getByTestId('bottom-nav')).toBeInTheDocument();
 
     // Switch to tablet
@@ -132,7 +138,11 @@ describe('AdaptiveNavigation', () => {
       isDesktop: false,
       isLargeDesktop: false,
     });
-    rerender(<BrowserRouter><AdaptiveNavigation /></BrowserRouter>);
+    rerender(
+      <BrowserRouter>
+        <AdaptiveNavigation />
+      </BrowserRouter>
+    );
     expect(screen.getByTestId('nav-rail')).toBeInTheDocument();
     expect(screen.queryByTestId('bottom-nav')).not.toBeInTheDocument();
 
@@ -144,9 +154,13 @@ describe('AdaptiveNavigation', () => {
       isDesktop: true,
       isLargeDesktop: false,
     });
-    rerender(<BrowserRouter><AdaptiveNavigation /></BrowserRouter>);
+    rerender(
+      <BrowserRouter>
+        <AdaptiveNavigation />
+      </BrowserRouter>
+    );
     expect(screen.getByTestId('sidebar')).toBeInTheDocument();
     expect(screen.getByTestId('top-bar')).toBeInTheDocument();
     expect(screen.queryByTestId('nav-rail')).not.toBeInTheDocument();
   });
-}); 
+});

@@ -27,7 +27,9 @@ async function captureErrors(page: Page) {
 
 test.describe('🧭 UI Interaction Map', () => {
   for (const item of manifest) {
-    test(`${item.type}: ${item.selector} (from ${item.originPage})`, async ({ page }, testInfo) => {
+    test(`${item.type}: ${item.selector} (from ${item.originPage})`, async ({
+      page,
+    }, testInfo) => {
       const errors = await captureErrors(page);
       await page.goto(item.originPage);
 
@@ -61,4 +63,4 @@ test.describe('🧭 UI Interaction Map', () => {
       }
     });
   }
-}); 
+});

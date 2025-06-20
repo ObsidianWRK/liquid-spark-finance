@@ -1,6 +1,6 @@
 /**
  * Viewport Guardian - Main Export
- * 
+ *
  * Complete viewport management system with cross-browser compatibility:
  * - Safe area insets with polyfills
  * - Visual viewport API utilities
@@ -18,12 +18,8 @@ import {
   getSafeAreaInsets,
   SafeAreaInsets,
 } from './viewport-polyfills';
-import {
-  getVisualViewportState,
-} from './visual-viewport-utils';
-import {
-  getCurrentOrientation,
-} from './orientation-utils';
+import { getVisualViewportState } from './visual-viewport-utils';
+import { getCurrentOrientation } from './orientation-utils';
 import {
   runFeatureDetection,
   getBrowserInfo,
@@ -99,11 +95,13 @@ export const initializeViewportGuardian = (): void => {
 
   // Initialize polyfills
   initializeViewportPolyfills();
-  
+
   // Run feature detection
   runFeatureDetection();
-  
-  console.log('🛡️ Viewport Guardian initialized with cross-browser safe area support');
+
+  console.log(
+    '🛡️ Viewport Guardian initialized with cross-browser safe area support'
+  );
 };
 
 /**
@@ -126,7 +124,7 @@ export const getViewportDebugInfo = () => {
 
   return {
     timestamp: new Date().toISOString(),
-    
+
     // Browser and platform
     browser: {
       name: browser.name,
@@ -135,15 +133,19 @@ export const getViewportDebugInfo = () => {
       platform: browser.platform,
       supportsModernCSS: browser.supportsModernCSS,
     },
-    
+
     // Device classification
     device: {
-      type: browser.isMobile ? 'mobile' : browser.isTablet ? 'tablet' : 'desktop',
+      type: browser.isMobile
+        ? 'mobile'
+        : browser.isTablet
+          ? 'tablet'
+          : 'desktop',
       isMobile: browser.isMobile,
       isTablet: browser.isTablet,
       isDesktop: browser.isDesktop,
     },
-    
+
     // Viewport dimensions
     viewport: {
       window: {
@@ -164,22 +166,22 @@ export const getViewportDebugInfo = () => {
         availHeight: window.screen.availHeight,
       },
     },
-    
+
     // Safe areas
     safeArea,
-    
+
     // Orientation
     orientation,
-    
+
     // Virtual keyboard
     virtualKeyboard: {
       isOpen: visualViewport.isVirtualKeyboardOpen,
       height: visualViewport.keyboardHeight,
     },
-    
+
     // Capabilities
     capabilities,
-    
+
     // Feature support
     features: {
       cssEnv: features.cssEnvSupport,
@@ -191,12 +193,13 @@ export const getViewportDebugInfo = () => {
       modernViewportUnits: features.cssViewportUnits.dvh,
       touchSupport: features.touchSupport,
     },
-    
+
     // Recommendations
     recommendations: {
       usePolyfills: !capabilities.hasSafeAreaSupport,
       useModernCSS: browser.supportsModernCSS,
-      useBackdropFilter: features.backdropFilterSupport || features.webkitBackdropFilter,
+      useBackdropFilter:
+        features.backdropFilterSupport || features.webkitBackdropFilter,
       optimizeForTouch: features.touchSupport,
     },
   };
@@ -208,16 +211,16 @@ export const getViewportDebugInfo = () => {
 export interface ViewportGuardianConfig {
   // Enable debug logging
   debug?: boolean;
-  
+
   // Auto-initialize on import
   autoInit?: boolean;
-  
+
   // Custom safe area fallbacks
   safeAreaFallbacks?: Partial<SafeAreaInsets>;
-  
+
   // Virtual keyboard detection sensitivity
   keyboardThreshold?: number;
-  
+
   // Orientation change debounce delay
   orientationDebounce?: number;
 }
@@ -232,9 +235,11 @@ let guardianConfig: ViewportGuardianConfig = {
 /**
  * Configure Viewport Guardian
  */
-export const configureViewportGuardian = (config: ViewportGuardianConfig): void => {
+export const configureViewportGuardian = (
+  config: ViewportGuardianConfig
+): void => {
   guardianConfig = { ...guardianConfig, ...config };
-  
+
   if (config.debug) {
     console.log('🛡️ Viewport Guardian Debug Info:', getViewportDebugInfo());
   }
@@ -326,7 +331,7 @@ export class ViewportGuardian {
     const dimensions = this.getViewportDimensions();
     const safeAreaInsets = this.getSafeAreaInsets();
     const orientation = this.getOrientation();
-    
+
     return {
       dimensions,
       safeAreaInsets,
@@ -349,8 +354,14 @@ export class ViewportGuardian {
 
     // Visual viewport events
     if (this.visualViewport) {
-      this.visualViewport.addEventListener('resize', this.handleVisualViewportChange);
-      this.visualViewport.addEventListener('scroll', this.handleVisualViewportChange);
+      this.visualViewport.addEventListener(
+        'resize',
+        this.handleVisualViewportChange
+      );
+      this.visualViewport.addEventListener(
+        'scroll',
+        this.handleVisualViewportChange
+      );
     }
 
     // Check for safe area changes periodically (for dynamic islands, notches, etc.)
@@ -364,11 +375,20 @@ export class ViewportGuardian {
     if (typeof window === 'undefined') return;
 
     window.removeEventListener('resize', this.handleResize);
-    window.removeEventListener('orientationchange', this.handleOrientationChange);
+    window.removeEventListener(
+      'orientationchange',
+      this.handleOrientationChange
+    );
 
     if (this.visualViewport) {
-      this.visualViewport.removeEventListener('resize', this.handleVisualViewportChange);
-      this.visualViewport.removeEventListener('scroll', this.handleVisualViewportChange);
+      this.visualViewport.removeEventListener(
+        'resize',
+        this.handleVisualViewportChange
+      );
+      this.visualViewport.removeEventListener(
+        'scroll',
+        this.handleVisualViewportChange
+      );
     }
 
     this.stopSafeAreaMonitoring();
@@ -435,7 +455,7 @@ export class ViewportGuardian {
     }
 
     const computedStyle = getComputedStyle(document.documentElement);
-    
+
     // Try to get safe area values from CSS
     const getInsetValue = (property: string, fallback: number): number => {
       const value = computedStyle.getPropertyValue(property);
@@ -447,8 +467,14 @@ export class ViewportGuardian {
 
     return {
       top: getInsetValue('--safe-area-inset-top', SAFE_AREA_FALLBACKS.top),
-      right: getInsetValue('--safe-area-inset-right', SAFE_AREA_FALLBACKS.right),
-      bottom: getInsetValue('--safe-area-inset-bottom', SAFE_AREA_FALLBACKS.bottom),
+      right: getInsetValue(
+        '--safe-area-inset-right',
+        SAFE_AREA_FALLBACKS.right
+      ),
+      bottom: getInsetValue(
+        '--safe-area-inset-bottom',
+        SAFE_AREA_FALLBACKS.bottom
+      ),
       left: getInsetValue('--safe-area-inset-left', SAFE_AREA_FALLBACKS.left),
     };
   }
@@ -458,7 +484,7 @@ export class ViewportGuardian {
    */
   private getOrientation(): 'portrait' | 'landscape' {
     if (typeof window === 'undefined') return 'portrait';
-    
+
     return getCurrentOrientation();
   }
 
@@ -544,7 +570,7 @@ export class ViewportGuardian {
    */
   private notifyListeners(): void {
     const state = this.getState();
-    this.listeners.forEach(listener => listener(state));
+    this.listeners.forEach((listener) => listener(state));
   }
 
   /**
@@ -555,8 +581,9 @@ export class ViewportGuardian {
     const checkSafeAreas = () => {
       const currentInsets = this.getSafeAreaInsets();
       const hasChanged = Object.keys(currentInsets).some(
-        key => currentInsets[key as keyof SafeAreaInsets] !== 
-               this.state.safeAreaInsets[key as keyof SafeAreaInsets]
+        (key) =>
+          currentInsets[key as keyof SafeAreaInsets] !==
+          this.state.safeAreaInsets[key as keyof SafeAreaInsets]
       );
 
       if (hasChanged) {
@@ -583,7 +610,8 @@ export class ViewportGuardian {
    * Apply safe area CSS variables polyfill
    */
   public static applySafeAreaPolyfill(): void {
-    if (typeof window === 'undefined' || typeof document === 'undefined') return;
+    if (typeof window === 'undefined' || typeof document === 'undefined')
+      return;
 
     // Check if safe areas are already supported
     const testEl = document.createElement('div');
@@ -648,7 +676,9 @@ export const isIOSDevice = (): boolean => {
 };
 
 export const isStandaloneMode = (): boolean => {
-  return window.matchMedia('(display-mode: standalone)').matches ||
-         (window.navigator as any).standalone ||
-         document.referrer.includes('android-app://');
+  return (
+    window.matchMedia('(display-mode: standalone)').matches ||
+    (window.navigator as any).standalone ||
+    document.referrer.includes('android-app://')
+  );
 };

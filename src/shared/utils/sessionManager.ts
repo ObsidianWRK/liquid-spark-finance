@@ -35,15 +35,15 @@ export class SessionManager {
    */
   static getSession(): SessionData | null {
     const sessionData = secureStorage.getItem(this.SESSION_KEY);
-    
+
     if (!sessionData) return null;
-    
+
     // Check if session has expired
     if (Date.now() > sessionData.expiresAt) {
       this.endSession();
       return null;
     }
-    
+
     return sessionData;
   }
 
@@ -55,14 +55,14 @@ export class SessionManager {
     if (!session) return;
 
     const now = Date.now();
-    
+
     if (securityConfig.session.extendOnActivity) {
       session.expiresAt = now + securityConfig.session.timeout;
     }
-    
+
     session.lastActivity = now;
     secureStorage.setItem(this.SESSION_KEY, session);
-    
+
     // Reset timers
     this.setupSessionTimers();
   }
@@ -73,7 +73,7 @@ export class SessionManager {
   static endSession(): void {
     secureStorage.removeItem(this.SESSION_KEY);
     this.clearTimers();
-    
+
     // Redirect to login
     if (window.location.pathname !== '/login') {
       window.location.href = '/login';
@@ -85,13 +85,14 @@ export class SessionManager {
    */
   private static setupSessionTimers(): void {
     this.clearTimers();
-    
+
     const session = this.getSession();
     if (!session) return;
 
     const now = Date.now();
     const timeUntilExpiry = session.expiresAt - now;
-    const timeUntilWarning = timeUntilExpiry - securityConfig.session.warningTime;
+    const timeUntilWarning =
+      timeUntilExpiry - securityConfig.session.warningTime;
 
     // Set warning timer
     if (timeUntilWarning > 0) {
@@ -127,14 +128,18 @@ export class SessionManager {
    */
   private static showSessionWarning(): void {
     // In a real app, this would show a modal or notification
-    console.warn('Your session will expire in 5 minutes. Please save your work.');
-    
+    console.warn(
+      'Your session will expire in 5 minutes. Please save your work.'
+    );
+
     // Dispatch custom event for UI components to handle
-    window.dispatchEvent(new CustomEvent('sessionWarning', {
-      detail: {
-        expiresIn: securityConfig.session.warningTime,
-      },
-    }));
+    window.dispatchEvent(
+      new CustomEvent('sessionWarning', {
+        detail: {
+          expiresIn: securityConfig.session.warningTime,
+        },
+      })
+    );
   }
 
   /**
@@ -150,8 +155,8 @@ export class SessionManager {
   static getTimeUntilExpiry(): number {
     const session = this.getSession();
     if (!session) return 0;
-    
+
     const remaining = session.expiresAt - Date.now();
     return Math.max(0, remaining);
   }
-} 
+}

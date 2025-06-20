@@ -15,6 +15,8 @@ test('shows shipping + payment in transactions', async ({ page }) => {
 
   // Confirm at least one shipping status link visible (Delivered/In Transit etc.)
   await expect(
-    page.getByRole('link', { name: /Delivered|Out for Delivery|In Transit|Pending/ })
+    page.getByRole('link', {
+      name: /Delivered|Out for Delivery|In Transit|Pending/,
+    })
   ).toBeVisible();
-}); 
+});

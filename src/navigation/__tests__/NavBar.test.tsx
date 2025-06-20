@@ -84,7 +84,7 @@ describe('NavBar', () => {
     // Mock window methods
     Object.defineProperty(window, 'matchMedia', {
       writable: true,
-      value: vi.fn().mockImplementation(query => ({
+      value: vi.fn().mockImplementation((query) => ({
         matches: false,
         media: query,
         onchange: null,
@@ -112,7 +112,9 @@ describe('NavBar', () => {
       expect(screen.getByRole('navigation')).toBeInTheDocument();
       expect(screen.getByLabelText('Navigate to Home')).toBeInTheDocument();
       expect(screen.getByLabelText('Navigate to Accounts')).toBeInTheDocument();
-      expect(screen.getByLabelText('Navigate to Transactions')).toBeInTheDocument();
+      expect(
+        screen.getByLabelText('Navigate to Transactions')
+      ).toBeInTheDocument();
     });
 
     it('applies correct aria-label based on position', () => {
@@ -267,7 +269,9 @@ describe('NavBar', () => {
       );
 
       // Insights tab should be hidden on mobile
-      expect(screen.queryByLabelText('Navigate to Insights')).not.toBeInTheDocument();
+      expect(
+        screen.queryByLabelText('Navigate to Insights')
+      ).not.toBeInTheDocument();
     });
 
     it('respects maxTabs limit', () => {
@@ -288,7 +292,9 @@ describe('NavBar', () => {
       expect(screen.getByLabelText('Navigate to Tab 0')).toBeInTheDocument();
       expect(screen.getByLabelText('Navigate to Tab 1')).toBeInTheDocument();
       expect(screen.getByLabelText('Navigate to Tab 2')).toBeInTheDocument();
-      expect(screen.queryByLabelText('Navigate to Tab 3')).not.toBeInTheDocument();
+      expect(
+        screen.queryByLabelText('Navigate to Tab 3')
+      ).not.toBeInTheDocument();
     });
   });
 
@@ -380,7 +386,9 @@ describe('NavBar', () => {
       );
 
       // Component should adapt to landscape orientation
-      expect(window.matchMedia).toHaveBeenCalledWith('(orientation: landscape)');
+      expect(window.matchMedia).toHaveBeenCalledWith(
+        '(orientation: landscape)'
+      );
     });
   });
 

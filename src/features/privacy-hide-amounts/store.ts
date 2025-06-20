@@ -1,6 +1,6 @@
-import { create } from "zustand";
-import { persist } from "zustand/middleware";
-import { PrivacySetting } from "@/shared/types/shared";
+import { create } from 'zustand';
+import { persist } from 'zustand/middleware';
+import { PrivacySetting } from '@/shared/types/shared';
 
 interface PrivacyState {
   setting: PrivacySetting;
@@ -25,7 +25,7 @@ export const usePrivacyStore = create<PrivacyState>(
       },
     }),
     {
-      name: "privacy-setting",
+      name: 'privacy-setting',
     }
   )
-); 
+);

@@ -25,7 +25,7 @@ const EMISSION_FACTORS: Record<string, number> = {
   Food: 0.5,
   Shopping: 0.4,
   Utilities: 0.3,
-  Default: 0.25
+  Default: 0.25,
 };
 
 const SUSTAINABLE_MERCHANTS = [
@@ -34,19 +34,19 @@ const SUSTAINABLE_MERCHANTS = [
   'Patagonia',
   'Tesla Supercharger',
   'Amtrak',
-  'REI'
+  'REI',
 ];
 
 /**
  * Calculates environmental impact score based on transaction data.
- * 
+ *
  * Analyzes spending patterns to estimate carbon footprint using emission factors
  * per dollar spent in different categories. Considers sustainable merchant preferences
  * to provide a comprehensive eco-score from 0-100 (higher is better).
- * 
+ *
  * @param transactions - Array of financial transactions to analyze
  * @returns EcoBreakdown object with CO2 emissions, sustainable spending ratio, and overall score
- * 
+ *
  * @example
  * ```typescript
  * const transactions = [
@@ -57,7 +57,9 @@ const SUSTAINABLE_MERCHANTS = [
  * console.log(ecoData.score); // Environmental score 0-100
  * ```
  */
-export const calculateEcoScore = (transactions: Transaction[]): EcoBreakdown => {
+export const calculateEcoScore = (
+  transactions: Transaction[]
+): EcoBreakdown => {
   let transportKg = 0;
   let foodKg = 0;
   let shoppingKg = 0;
@@ -65,7 +67,7 @@ export const calculateEcoScore = (transactions: Transaction[]): EcoBreakdown => 
   let sustainableSpend = 0;
   let totalSpend = 0;
 
-  transactions.forEach(t => {
+  transactions.forEach((t) => {
     if (t.amount >= 0) return; // only consider spend
     const spendAbs = Math.abs(t.amount);
     totalSpend += spendAbs;
@@ -89,19 +91,20 @@ export const calculateEcoScore = (transactions: Transaction[]): EcoBreakdown => 
         shoppingKg += kg;
     }
 
-    if (SUSTAINABLE_MERCHANTS.some(m => t.merchant?.includes(m))) {
+    if (SUSTAINABLE_MERCHANTS.some((m) => t.merchant?.includes(m))) {
       sustainableSpend += spendAbs;
     }
   });
 
   const totalKgCO2e = transportKg + foodKg + shoppingKg + utilitiesKg;
-  const sustainableSpendRatio = totalSpend > 0 ? (sustainableSpend / totalSpend) * 100 : 0;
+  const sustainableSpendRatio =
+    totalSpend > 0 ? (sustainableSpend / totalSpend) * 100 : 0;
 
   // Convert kgCO2e to score where lower emissions & higher sustainable spend is better
   const emissionScore = 100 - Math.min(100, (totalKgCO2e / 500) * 100); // 500kg threshold
   const sustainableScore = sustainableSpendRatio; // direct percentage
 
-  const score = Math.round((emissionScore * 0.7) + (sustainableScore * 0.3));
+  const score = Math.round(emissionScore * 0.7 + sustainableScore * 0.3);
 
   return {
     totalKgCO2e,
@@ -110,6 +113,6 @@ export const calculateEcoScore = (transactions: Transaction[]): EcoBreakdown => 
     shoppingKg,
     utilitiesKg,
     sustainableSpendRatio: Math.round(sustainableSpendRatio),
-    score
+    score,
   };
-}; 
+};

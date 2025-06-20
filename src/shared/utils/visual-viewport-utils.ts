@@ -1,6 +1,6 @@
 /**
  * Visual Viewport Utilities
- * 
+ *
  * Provides advanced viewport management including:
  * - Visual Viewport API integration
  * - Virtual keyboard detection and handling
@@ -45,7 +45,7 @@ class VisualViewportManager {
 
   constructor() {
     this.currentState = this.getInitialState();
-    
+
     if (typeof window !== 'undefined') {
       this.initialize();
     }
@@ -99,8 +99,14 @@ class VisualViewportManager {
 
     // Use Visual Viewport API if available
     if (capabilities.hasVisualViewport && window.visualViewport) {
-      window.visualViewport.addEventListener('resize', this.handleViewportChange);
-      window.visualViewport.addEventListener('scroll', this.handleViewportScroll);
+      window.visualViewport.addEventListener(
+        'resize',
+        this.handleViewportChange
+      );
+      window.visualViewport.addEventListener(
+        'scroll',
+        this.handleViewportScroll
+      );
     }
 
     // Fallback to window events
@@ -143,7 +149,7 @@ class VisualViewportManager {
   private updateState(type: 'resize' | 'scroll' | 'keyboard'): void {
     this.previousState = { ...this.currentState };
     const newState = this._computeCurrentState();
-    
+
     // Detect virtual keyboard
     this.detectVirtualKeyboard(newState, this.previousState);
 
@@ -156,7 +162,7 @@ class VisualViewportManager {
       type,
     };
 
-    this.listeners.forEach(listener => {
+    this.listeners.forEach((listener) => {
       try {
         listener(event);
       } catch (error) {
@@ -201,7 +207,10 @@ class VisualViewportManager {
     };
   }
 
-  private detectVirtualKeyboard(newState: VisualViewportState, previousState: VisualViewportState | null): void {
+  private detectVirtualKeyboard(
+    newState: VisualViewportState,
+    previousState: VisualViewportState | null
+  ): void {
     if (!previousState) return;
 
     const heightDifference = previousState.height - newState.height;
@@ -224,15 +233,19 @@ class VisualViewportManager {
     if (heightDifference > KEYBOARD_DETECTION_THRESHOLD) {
       newState.isVirtualKeyboardOpen = true;
       newState.keyboardHeight = heightDifference;
-      
+
       // Schedule keyboard event
       this.scheduleKeyboardEvent();
     }
     // Detect keyboard closing
-    else if (previousState.isVirtualKeyboardOpen && Math.abs(heightDifference) < KEYBOARD_DETECTION_THRESHOLD) {
+    else if (
+      previousState.isVirtualKeyboardOpen &&
+      Math.abs(heightDifference) < KEYBOARD_DETECTION_THRESHOLD
+    ) {
       // Use timeout to prevent false positives during animations
       this.keyboardDetectionTimeout = setTimeout(() => {
-        if (this.currentState.height >= previousState.height - 50) { // Small tolerance
+        if (this.currentState.height >= previousState.height - 50) {
+          // Small tolerance
           this.currentState.isVirtualKeyboardOpen = false;
           this.currentState.keyboardHeight = 0;
           this.scheduleKeyboardEvent();
@@ -250,7 +263,7 @@ class VisualViewportManager {
 
   public addListener(listener: ViewportChangeListener): () => void {
     this.listeners.add(listener);
-    
+
     // Immediately call with current state
     listener({
       state: this.currentState,
@@ -290,12 +303,21 @@ class VisualViewportManager {
     const capabilities = getViewportCapabilities();
 
     if (capabilities.hasVisualViewport && window.visualViewport) {
-      window.visualViewport.removeEventListener('resize', this.handleViewportChange);
-      window.visualViewport.removeEventListener('scroll', this.handleViewportScroll);
+      window.visualViewport.removeEventListener(
+        'resize',
+        this.handleViewportChange
+      );
+      window.visualViewport.removeEventListener(
+        'scroll',
+        this.handleViewportScroll
+      );
     }
 
     window.removeEventListener('resize', this.handleWindowResize);
-    window.removeEventListener('orientationchange', this.handleOrientationChange);
+    window.removeEventListener(
+      'orientationchange',
+      this.handleOrientationChange
+    );
 
     this.listeners.clear();
     this.isInitialized = false;
@@ -318,14 +340,18 @@ export const getVisualViewportManager = (): VisualViewportManager => {
 /**
  * Add a viewport change listener
  */
-export const addViewportChangeListener = (listener: ViewportChangeListener): (() => void) => {
+export const addViewportChangeListener = (
+  listener: ViewportChangeListener
+): (() => void) => {
   return getVisualViewportManager().addListener(listener);
 };
 
 /**
  * Remove a viewport change listener
  */
-export const removeViewportChangeListener = (listener: ViewportChangeListener): void => {
+export const removeViewportChangeListener = (
+  listener: ViewportChangeListener
+): void => {
   getVisualViewportManager().removeListener(listener);
 };
 
@@ -358,9 +384,10 @@ export const getViewportAwarePadding = () => {
   const capabilities = getViewportCapabilities();
 
   return {
-    paddingBottom: state.isVirtualKeyboardOpen && capabilities.isMobile 
-      ? `${state.keyboardHeight}px` 
-      : '0px',
+    paddingBottom:
+      state.isVirtualKeyboardOpen && capabilities.isMobile
+        ? `${state.keyboardHeight}px`
+        : '0px',
     paddingTop: `${state.offsetTop}px`,
     paddingLeft: `${state.offsetLeft}px`,
   };

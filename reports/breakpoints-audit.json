@@ -1,11 +1,11 @@
 {
-  "agent": "BreakpointAuditor", 
+  "agent": "BreakpointAuditor",
   "timestamp": "2024-12-19T00:00:00Z",
   "audit_results": {
     "breakpoint_analysis": {
       "tailwind_breakpoints": {
         "sm": "640px",
-        "md": "768px", 
+        "md": "768px",
         "lg": "1024px",
         "xl": "1280px",
         "2xl": "1536px"
@@ -29,7 +29,10 @@
         },
         {
           "type": "Duplicate navigation height rules",
-          "files": ["src/app/styles/responsive-enhancements.css", "src/theme/index.ts"],
+          "files": [
+            "src/app/styles/responsive-enhancements.css",
+            "src/theme/index.ts"
+          ],
           "recommendation": "Use single source from theme system"
         }
       ]
@@ -38,14 +41,26 @@
       "file": "src/theme/breakpoints.ts",
       "config": {
         "mobile": { "max": "767px", "description": "Mobile devices" },
-        "tablet": { "min": "768px", "max": "1023px", "description": "Tablet devices" },
-        "desktop": { "min": "1024px", "max": "1439px", "description": "Desktop screens" },
-        "large": { "min": "1440px", "max": "1919px", "description": "Large desktop" },
+        "tablet": {
+          "min": "768px",
+          "max": "1023px",
+          "description": "Tablet devices"
+        },
+        "desktop": {
+          "min": "1024px",
+          "max": "1439px",
+          "description": "Desktop screens"
+        },
+        "large": {
+          "min": "1440px",
+          "max": "1919px",
+          "description": "Large desktop"
+        },
         "ultrawide": { "min": "1920px", "description": "Ultra-wide screens" }
       },
       "css_custom_properties": {
         "--mobile-max": "767px",
-        "--tablet-min": "768px", 
+        "--tablet-min": "768px",
         "--tablet-max": "1023px",
         "--desktop-min": "1024px",
         "--desktop-max": "1439px",
@@ -61,4 +76,4 @@
       "phase_4": "Implement container queries where appropriate"
     }
   }
-} 
+}

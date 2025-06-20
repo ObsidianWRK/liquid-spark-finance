@@ -11,7 +11,7 @@ import {
   Download,
   Settings,
   Calendar,
-  Filter
+  Filter,
 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import FinancialDashboard from './FinancialDashboard';
@@ -36,7 +36,9 @@ const DashboardPage = () => {
   const navigate = useNavigate();
   const [lastUpdated, setLastUpdated] = useState<Date | null>(null);
   const [isRefreshing, setIsRefreshing] = useState(false);
-  const [selectedTimeframe, setSelectedTimeframe] = useState<'1m' | '3m' | '6m' | '1y'>('3m');
+  const [selectedTimeframe, setSelectedTimeframe] = useState<
+    '1m' | '3m' | '6m' | '1y'
+  >('3m');
 
   useEffect(() => {
     loadDashboard();
@@ -46,7 +48,7 @@ const DashboardPage = () => {
     try {
       setIsRefreshing(true);
       // Load dashboard data
-      await new Promise(resolve => setTimeout(resolve, 1000)); // Simulate loading
+      await new Promise((resolve) => setTimeout(resolve, 1000)); // Simulate loading
       setLastUpdated(new Date());
     } catch (error) {
       console.error('Failed to load dashboard:', error);
@@ -69,13 +71,12 @@ const DashboardPage = () => {
       day: 'numeric',
       hour: 'numeric',
       minute: '2-digit',
-      hour12: true
+      hour12: true,
     });
   };
 
   return (
     <div className="p-6 space-y-8">
-
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
@@ -100,16 +101,16 @@ const DashboardPage = () => {
               { id: '1m', label: '1M' },
               { id: '3m', label: '3M' },
               { id: '6m', label: '6M' },
-              { id: '1y', label: '1Y' }
+              { id: '1y', label: '1Y' },
             ].map(({ id, label }) => (
               <button
                 key={id}
                 onClick={() => setSelectedTimeframe(id as any)}
                 className={cn(
-                  "px-3 py-1 rounded-lg transition-all text-sm",
+                  'px-3 py-1 rounded-lg transition-all text-sm',
                   selectedTimeframe === id
-                    ? "bg-blue-500 text-white"
-                    : "text-white/60 hover:text-white hover:bg-white/[0.05]"
+                    ? 'bg-blue-500 text-white'
+                    : 'text-white/60 hover:text-white hover:bg-white/[0.05]'
                 )}
               >
                 {label}
@@ -122,7 +123,9 @@ const DashboardPage = () => {
             disabled={isRefreshing}
             className="bg-white/[0.05] hover:bg-white/[0.08] text-white/80 hover:text-white px-4 py-2 rounded-xl transition-colors flex items-center gap-2 border border-white/[0.08]"
           >
-            <RefreshCw className={cn("w-4 h-4", isRefreshing && "animate-spin")} />
+            <RefreshCw
+              className={cn('w-4 h-4', isRefreshing && 'animate-spin')}
+            />
             Refresh
           </button>
 
@@ -152,7 +155,8 @@ const DashboardPage = () => {
             <div>
               <h3 className="font-semibold text-white">AI Insights Ready</h3>
               <p className="text-white/70 text-sm">
-                Your personalized financial insights have been updated with the latest data
+                Your personalized financial insights have been updated with the
+                latest data
               </p>
             </div>
           </div>
@@ -214,7 +218,10 @@ const DashboardPage = () => {
 
       {/* Main Dashboard - 🛡️ BULLETPROOF: Wrapped with Error Boundary */}
       <FinancialDashboardErrorBoundary>
-        <FinancialDashboard familyId="demo_family" timeframe={selectedTimeframe} />
+        <FinancialDashboard
+          familyId="demo_family"
+          timeframe={selectedTimeframe}
+        />
       </FinancialDashboardErrorBoundary>
 
       {/* Additional Analytics Sections */}
@@ -225,7 +232,7 @@ const DashboardPage = () => {
             <BarChart3 className="w-6 h-6 text-orange-400" />
             Spending Insights
           </h2>
-          
+
           <div className="space-y-4">
             <div className="flex items-center justify-between p-4 bg-white/[0.03] rounded-xl border border-white/[0.05]">
               <div className="flex items-center gap-3">
@@ -233,8 +240,12 @@ const DashboardPage = () => {
                   <TrendingUp className="w-4 h-4 text-orange-400" />
                 </div>
                 <div>
-                  <p className="font-medium text-white">Food spending increased</p>
-                  <p className="text-white/60 text-sm">Up 23% from last month</p>
+                  <p className="font-medium text-white">
+                    Food spending increased
+                  </p>
+                  <p className="text-white/60 text-sm">
+                    Up 23% from last month
+                  </p>
                 </div>
               </div>
               <span className="text-orange-400 font-bold">$1,250</span>
@@ -246,8 +257,12 @@ const DashboardPage = () => {
                   <TrendingUp className="w-4 h-4 text-green-400" />
                 </div>
                 <div>
-                  <p className="font-medium text-white">Transportation savings</p>
-                  <p className="text-white/60 text-sm">Down 15% from last month</p>
+                  <p className="font-medium text-white">
+                    Transportation savings
+                  </p>
+                  <p className="text-white/60 text-sm">
+                    Down 15% from last month
+                  </p>
                 </div>
               </div>
               <span className="text-green-400 font-bold">-$320</span>
@@ -260,7 +275,9 @@ const DashboardPage = () => {
                 </div>
                 <div>
                   <p className="font-medium text-white">On track with budget</p>
-                  <p className="text-white/60 text-sm">Entertainment category</p>
+                  <p className="text-white/60 text-sm">
+                    Entertainment category
+                  </p>
                 </div>
               </div>
               <span className="text-blue-400 font-bold">85%</span>
@@ -274,7 +291,7 @@ const DashboardPage = () => {
             <PieChart className="w-6 h-6 text-purple-400" />
             Investment Performance
           </h2>
-          
+
           <div className="space-y-4">
             <div className="flex items-center justify-between p-4 bg-white/[0.03] rounded-xl border border-white/[0.05]">
               <div className="flex items-center gap-3">
@@ -295,7 +312,9 @@ const DashboardPage = () => {
                   <Target className="w-4 h-4 text-blue-400" />
                 </div>
                 <div>
-                  <p className="font-medium text-white">Diversification score</p>
+                  <p className="font-medium text-white">
+                    Diversification score
+                  </p>
                   <p className="text-white/60 text-sm">Well balanced</p>
                 </div>
               </div>

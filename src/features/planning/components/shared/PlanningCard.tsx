@@ -21,20 +21,21 @@ const PlanningCard: React.FC<PlanningCardProps> = ({
   children,
   className,
   variant = 'default',
-  onClick
+  onClick,
 }) => {
-  const baseClasses = "rounded-2xl border transition-all duration-200";
-  
+  const baseClasses = 'rounded-2xl border transition-all duration-200';
+
   const variantClasses = {
-    default: "bg-white/[0.02] border-white/[0.08] hover:bg-white/[0.03]",
-    gradient: "bg-gradient-to-r from-blue-500/10 to-purple-500/10 border-blue-500/20",
-    highlight: "bg-white/[0.05] border-white/[0.12] hover:bg-white/[0.07]"
+    default: 'bg-white/[0.02] border-white/[0.08] hover:bg-white/[0.03]',
+    gradient:
+      'bg-gradient-to-r from-blue-500/10 to-purple-500/10 border-blue-500/20',
+    highlight: 'bg-white/[0.05] border-white/[0.12] hover:bg-white/[0.07]',
   };
 
   const cardClasses = cn(
     baseClasses,
     variantClasses[variant],
-            onClick && "card-hover-subtle",
+    onClick && 'card-hover-subtle',
     className
   );
 
@@ -45,7 +46,7 @@ const PlanningCard: React.FC<PlanningCardProps> = ({
         <div className="flex items-start gap-3 mb-4">
           {Icon && (
             <div className="flex-shrink-0">
-              <Icon className={cn("w-6 h-6", iconColor)} />
+              <Icon className={cn('w-6 h-6', iconColor)} />
             </div>
           )}
           <div className="flex-1 min-w-0">
@@ -57,14 +58,10 @@ const PlanningCard: React.FC<PlanningCardProps> = ({
         </div>
 
         {/* Content */}
-        {children && (
-          <div className="mt-4">
-            {children}
-          </div>
-        )}
+        {children && <div className="mt-4">{children}</div>}
       </div>
     </div>
   );
 };
 
-export default PlanningCard; 
+export default PlanningCard;

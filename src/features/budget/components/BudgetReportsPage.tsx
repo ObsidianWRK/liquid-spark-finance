@@ -1,6 +1,13 @@
 import React, { useState } from 'react';
 import GlassCard from '@/components/GlassCard';
-import { Calendar, Download, TrendingDown, TrendingUp, AlertCircle, ArrowLeft } from 'lucide-react';
+import {
+  Calendar,
+  Download,
+  TrendingDown,
+  TrendingUp,
+  AlertCircle,
+  ArrowLeft,
+} from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { mockReportService, BudgetReport } from '@/services/mockReportService';
 import {
@@ -8,7 +15,7 @@ import {
   SelectTrigger,
   SelectValue,
   SelectContent,
-  SelectItem
+  SelectItem,
 } from '@/shared/components/ui/select';
 import { BackButton } from '@/shared/components/ui/BackButton';
 
@@ -16,18 +23,28 @@ const BudgetReportsPage = () => {
   const navigate = useNavigate();
   const [selectedMonth, setSelectedMonth] = useState('May');
   const [selectedYear, setSelectedYear] = useState(2024);
-  
+
   const report = mockReportService.getBudgetReport(selectedMonth, selectedYear);
-  
+
   const months = [
-    'January', 'February', 'March', 'April', 'May', 'June',
-    'July', 'August', 'September', 'October', 'November', 'December'
+    'January',
+    'February',
+    'March',
+    'April',
+    'May',
+    'June',
+    'July',
+    'August',
+    'September',
+    'October',
+    'November',
+    'December',
   ];
 
   const formatCurrency = (amount: number) => {
     return new Intl.NumberFormat('en-US', {
       style: 'currency',
-      currency: 'USD'
+      currency: 'USD',
     }).format(amount);
   };
 
@@ -52,7 +69,7 @@ const BudgetReportsPage = () => {
   return (
     <div className="space-y-6">
       {/* Back Button */}
-      <BackButton 
+      <BackButton
         fallbackPath="/"
         variant="default"
         label="Back to Dashboard"
@@ -63,9 +80,11 @@ const BudgetReportsPage = () => {
       <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between">
         <div>
           <h1 className="text-2xl font-bold text-white mb-2">Budget Reports</h1>
-          <p className="text-white/70">Track your spending against your budget goals</p>
+          <p className="text-white/70">
+            Track your spending against your budget goals
+          </p>
         </div>
-        
+
         <div className="flex gap-3">
           {/* Month Selector */}
           <Select value={selectedMonth} onValueChange={setSelectedMonth}>
@@ -73,8 +92,12 @@ const BudgetReportsPage = () => {
               <SelectValue placeholder="Month" />
             </SelectTrigger>
             <SelectContent className="bg-black/90 border-white/20 text-white">
-              {months.map(month => (
-                <SelectItem key={month} value={month} className="focus:bg-white/10">
+              {months.map((month) => (
+                <SelectItem
+                  key={month}
+                  value={month}
+                  className="focus:bg-white/10"
+                >
                   {month}
                 </SelectItem>
               ))}
@@ -82,13 +105,20 @@ const BudgetReportsPage = () => {
           </Select>
 
           {/* Year Selector */}
-          <Select value={String(selectedYear)} onValueChange={(val) => setSelectedYear(Number(val))}>
+          <Select
+            value={String(selectedYear)}
+            onValueChange={(val) => setSelectedYear(Number(val))}
+          >
             <SelectTrigger className="w-[100px] bg-white/10 border-white/20 text-white rounded-lg focus:border-blue-400">
               <SelectValue placeholder="Year" />
             </SelectTrigger>
             <SelectContent className="bg-black/90 border-white/20 text-white">
-              {[2024, 2023, 2022, 2021].map(year => (
-                <SelectItem key={year} value={String(year)} className="focus:bg-white/10">
+              {[2024, 2023, 2022, 2021].map((year) => (
+                <SelectItem
+                  key={year}
+                  value={String(year)}
+                  className="focus:bg-white/10"
+                >
                   {year}
                 </SelectItem>
               ))}
@@ -103,7 +133,9 @@ const BudgetReportsPage = () => {
           <div className="flex items-center justify-between">
             <div>
               <p className="text-white/70 text-sm">Total Spent</p>
-              <p className="text-xl font-bold text-white">{formatCurrency(report.totalSpent)}</p>
+              <p className="text-xl font-bold text-white">
+                {formatCurrency(report.totalSpent)}
+              </p>
             </div>
             <TrendingUp className="w-8 h-8 text-blue-400" />
           </div>
@@ -113,7 +145,9 @@ const BudgetReportsPage = () => {
           <div className="flex items-center justify-between">
             <div>
               <p className="text-white/70 text-sm">Budget</p>
-              <p className="text-xl font-bold text-white">{formatCurrency(report.totalBudget)}</p>
+              <p className="text-xl font-bold text-white">
+                {formatCurrency(report.totalBudget)}
+              </p>
             </div>
             <Calendar className="w-8 h-8 text-green-400" />
           </div>
@@ -123,9 +157,13 @@ const BudgetReportsPage = () => {
           <div className="flex items-center justify-between">
             <div>
               <p className="text-white/70 text-sm">Remaining</p>
-              <p className={`text-xl font-bold ${
-                report.totalBudget - report.totalSpent > 0 ? 'text-green-400' : 'text-red-400'
-              }`}>
+              <p
+                className={`text-xl font-bold ${
+                  report.totalBudget - report.totalSpent > 0
+                    ? 'text-green-400'
+                    : 'text-red-400'
+                }`}
+              >
                 {formatCurrency(report.totalBudget - report.totalSpent)}
               </p>
             </div>
@@ -155,17 +193,23 @@ const BudgetReportsPage = () => {
                   </span>
                 </div>
                 <div className="text-right">
-                  <p className={`font-bold ${getVarianceColor(category.spent, category.budget)}`}>
+                  <p
+                    className={`font-bold ${getVarianceColor(category.spent, category.budget)}`}
+                  >
                     {formatCurrency(category.spent)}
                   </p>
-                  <p className="text-white/50 text-sm">of {formatCurrency(category.budget)}</p>
+                  <p className="text-white/50 text-sm">
+                    of {formatCurrency(category.budget)}
+                  </p>
                 </div>
               </div>
-              
+
               <div className="glass-progress h-2">
-                <div 
+                <div
                   className={`glass-progress-fill ${getProgressColor(category.spent, category.budget)} transition-all duration-700`}
-                  style={{ width: `${getProgressWidth(category.spent, category.budget)}%` }}
+                  style={{
+                    width: `${getProgressWidth(category.spent, category.budget)}%`,
+                  }}
                 />
               </div>
             </div>
@@ -179,10 +223,13 @@ const BudgetReportsPage = () => {
           <AlertCircle className="w-5 h-5 text-blue-400" />
           <h2 className="text-xl font-bold text-white">Monthly Insights</h2>
         </div>
-        
+
         <div className="space-y-3">
           {report.insights.map((insight, index) => (
-            <div key={index} className="flex items-start gap-3 p-3 bg-white/5 rounded-lg">
+            <div
+              key={index}
+              className="flex items-start gap-3 p-3 bg-white/5 rounded-lg"
+            >
               <div className="w-2 h-2 bg-blue-400 rounded-full mt-2 flex-shrink-0" />
               <p className="text-white/90">{insight}</p>
             </div>

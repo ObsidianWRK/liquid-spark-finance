@@ -13,6 +13,7 @@ This document provides comprehensive API documentation for the Vueni application
 Calculates future value with compound interest, supporting different compounding frequencies.
 
 **Parameters:**
+
 - `principal` (number): Initial investment amount in dollars
 - `annualRate` (number): Annual interest rate as percentage (e.g., 5.5 for 5.5%)
 - `years` (number): Investment period in years
@@ -23,6 +24,7 @@ Calculates future value with compound interest, supporting different compounding
 **Throws:** `Error` - When parameters are invalid
 
 **Example:**
+
 ```typescript
 // $10,000 at 6% annually for 5 years, compounded monthly
 const futureValue = calculateCompoundInterest(10000, 6, 5, 12);
@@ -30,6 +32,7 @@ console.log(futureValue); // 13488.50
 ```
 
 **Formula:**
+
 ```
 FV = P(1 + r/n)^(nt)
 Where:
@@ -49,6 +52,7 @@ Where:
 Calculates monthly payment for an amortizing loan using the standard amortization formula.
 
 **Parameters:**
+
 - `principal` (number): Loan amount in dollars
 - `annualRate` (number): Annual interest rate as percentage
 - `years` (number): Loan term in years
@@ -56,6 +60,7 @@ Calculates monthly payment for an amortizing loan using the standard amortizatio
 **Returns:** `number` - Monthly payment amount (rounded to 2 decimal places)
 
 **Example:**
+
 ```typescript
 // $300,000 loan at 4.5% for 30 years
 const payment = calculateLoanPayment(300000, 4.5, 30);
@@ -63,6 +68,7 @@ console.log(payment); // 1520.06
 ```
 
 **Formula:**
+
 ```
 M = P [ r(1+r)^n ] / [ (1+r)^n – 1 ]
 Where:
@@ -81,6 +87,7 @@ Where:
 Calculates Return on Investment as a percentage.
 
 **Parameters:**
+
 - `initialInvestment` (number): Original investment amount (cannot be 0)
 - `currentValue` (number): Current value of the investment
 
@@ -89,6 +96,7 @@ Calculates Return on Investment as a percentage.
 **Throws:** `Error` - When initialInvestment is 0
 
 **Example:**
+
 ```typescript
 // Invested $1000, now worth $1200
 const roi = calculateROI(1000, 1200);
@@ -96,6 +104,7 @@ console.log(roi); // 20.00 (20% return)
 ```
 
 **Formula:**
+
 ```
 ROI = ((Current Value - Initial Investment) / Initial Investment) × 100
 ```
@@ -109,6 +118,7 @@ ROI = ((Current Value - Initial Investment) / Initial Investment) × 100
 Calculates how many years savings will last given monthly expenses and growth rate.
 
 **Parameters:**
+
 - `initialSavings` (number): Starting savings balance in dollars
 - `monthlyExpenses` (number): Monthly living expenses (must be > 0)
 - `annualGrowthRate` (number, optional): Expected annual return rate as decimal (default: 0.04)
@@ -118,6 +128,7 @@ Calculates how many years savings will last given monthly expenses and growth ra
 **Throws:** `Error` - When monthlyExpenses is 0 or negative
 
 **Example:**
+
 ```typescript
 // $500,000 savings, $4,000/month expenses, 4% annual growth
 const years = calculateFinancialFreedomYears(500000, 4000, 0.04);
@@ -133,6 +144,7 @@ console.log(years); // ~25.67 years
 Projects future 401k balance with contributions and employer matching.
 
 **Parameters:**
+
 - `currentBalance` (number): Current 401k balance in dollars
 - `annualContribution` (number): Annual employee contribution in dollars
 - `employerMatchRate` (number): Employer match rate as decimal (e.g., 0.5 for 50%)
@@ -142,6 +154,7 @@ Projects future 401k balance with contributions and employer matching.
 **Returns:** `number` - Projected 401k balance (rounded to 2 decimal places)
 
 **Example:**
+
 ```typescript
 // $50,000 current, $6,000 annual, 50% match, 7% return, 25 years
 const balance = calculate401kBalance(50000, 6000, 0.5, 7, 25);
@@ -157,6 +170,7 @@ console.log(balance); // ~1,091,234.56
 Calculates interest savings from extra mortgage payments.
 
 **Parameters:**
+
 - `principal` (number): Original loan amount in dollars
 - `annualRate` (number): Annual interest rate as percentage
 - `years` (number): Original loan term in years
@@ -165,10 +179,11 @@ Calculates interest savings from extra mortgage payments.
 **Returns:** `object` - Contains originalYears, newYears, and interestSaved
 
 **Example:**
+
 ```typescript
 // $300,000 mortgage at 4.5% for 30 years with $200 extra monthly
 const savings = calculateMortgagePayoffSavings(300000, 4.5, 30, 200);
-console.log(savings); 
+console.log(savings);
 // { originalYears: 30, newYears: 24.1, interestSaved: 48532.21 }
 ```
 
@@ -181,6 +196,7 @@ console.log(savings);
 Calculates maximum affordable home price using the 28/36 rule.
 
 **Parameters:**
+
 - `annualIncome` (number): Gross annual income in dollars
 - `monthlyDebts` (number): Existing monthly debt payments in dollars
 - `annualInterestRate` (number): Mortgage interest rate as percentage
@@ -191,6 +207,7 @@ Calculates maximum affordable home price using the 28/36 rule.
 **Returns:** `number` - Maximum affordable home price (rounded to nearest dollar)
 
 **Example:**
+
 ```typescript
 // $80,000 income, $500 debts, 4.5% rate, 30 years, $20,000 down
 const maxPrice = calculateMaximumHomePrice(80000, 500, 4.5, 30, 20000);
@@ -206,6 +223,7 @@ console.log(maxPrice); // ~245,000
 Calculates total return for a three-fund portfolio over time using the Bogleheads strategy.
 
 **Parameters:**
+
 - `usStockReturn` (number): Expected annual return for US stocks as percentage
 - `internationalStockReturn` (number): Expected annual return for international stocks as percentage
 - `bondReturn` (number): Expected annual return for bonds as percentage
@@ -215,6 +233,7 @@ Calculates total return for a three-fund portfolio over time using the Boglehead
 **Returns:** `number` - Total portfolio growth as percentage (rounded to 2 decimal places)
 
 **Example:**
+
 ```typescript
 // 7% US, 6% intl, 3% bonds over 10 years with default allocation
 const totalReturn = calculateThreeFundPortfolioReturn(7, 6, 3, 10);
@@ -230,6 +249,7 @@ console.log(totalReturn); // ~69.74% total growth
 Calculates future value adjusted for inflation.
 
 **Parameters:**
+
 - `currentPrice` (number): Current price or value in dollars
 - `annualInflationRate` (number): Expected annual inflation rate as percentage
 - `years` (number): Number of years in the future
@@ -237,6 +257,7 @@ Calculates future value adjusted for inflation.
 **Returns:** `number` - Future value adjusted for inflation (rounded to 2 decimal places)
 
 **Example:**
+
 ```typescript
 // $100 item with 3% inflation over 10 years
 const futurePrice = calculateInflationAdjustedValue(100, 3, 10);
@@ -252,12 +273,14 @@ console.log(futurePrice); // 134.39
 Performs a hypothetical portfolio backtest with historical returns.
 
 **Parameters:**
+
 - `initialInvestment` (number): Starting investment amount in dollars
 - `annualReturns` (number[]): Array of annual return percentages
 
 **Returns:** `number` - Final portfolio value (rounded to 2 decimal places)
 
 **Example:**
+
 ```typescript
 // $10,000 with returns of 10%, -5%, 15%, 8%
 const finalValue = calculatePortfolioBacktest(10000, [10, -5, 15, 8]);
@@ -273,12 +296,14 @@ console.log(finalValue); // ~13,234.60
 Converts currency using a given exchange rate.
 
 **Parameters:**
+
 - `amount` (number): Amount to convert in base currency
 - `rate` (number): Exchange rate (target currency per unit of base currency)
 
 **Returns:** `number` - Converted amount in target currency (rounded to 2 decimal places)
 
 **Example:**
+
 ```typescript
 // Convert $100 USD to EUR with rate 0.85
 const euros = convertCurrency(100, 0.85);
@@ -294,28 +319,41 @@ console.log(euros); // 85.00
 Calculates environmental impact score based on transaction data.
 
 **Parameters:**
+
 - `transactions` (Transaction[]): Array of financial transactions to analyze
 
 **Returns:** `EcoBreakdown` - Object with CO2 emissions, sustainable spending ratio, and overall score
 
 **EcoBreakdown Interface:**
+
 ```typescript
 interface EcoBreakdown {
-  totalKgCO2e: number;           // Total carbon footprint in kg CO2 equivalent
-  transportKg: number;           // Transportation emissions
-  foodKg: number;                // Food-related emissions
-  shoppingKg: number;            // Shopping emissions
-  utilitiesKg: number;           // Utilities emissions
+  totalKgCO2e: number; // Total carbon footprint in kg CO2 equivalent
+  transportKg: number; // Transportation emissions
+  foodKg: number; // Food-related emissions
+  shoppingKg: number; // Shopping emissions
+  utilitiesKg: number; // Utilities emissions
   sustainableSpendRatio: number; // Percentage of sustainable spending
-  score: number;                 // Overall eco score 0-100 (higher is better)
+  score: number; // Overall eco score 0-100 (higher is better)
 }
 ```
 
 **Example:**
+
 ```typescript
 const transactions = [
-  { id: '1', merchant: 'Gas Station', category: { name: 'Transportation' }, amount: -50 },
-  { id: '2', merchant: 'Whole Foods', category: { name: 'Food' }, amount: -120 }
+  {
+    id: '1',
+    merchant: 'Gas Station',
+    category: { name: 'Transportation' },
+    amount: -50,
+  },
+  {
+    id: '2',
+    merchant: 'Whole Foods',
+    category: { name: 'Food' },
+    amount: -120,
+  },
 ];
 const ecoData = calculateEcoScore(transactions);
 console.log(ecoData.score); // Environmental score 0-100
@@ -330,6 +368,7 @@ console.log(ecoData.score); // Environmental score 0-100
 Simulates credit score calculation based on financial data.
 
 **Parameters:**
+
 - `transactions` (Transaction[]): Transaction history
 - `accounts` (Account[]): Account information
 - `paymentHistory` (PaymentRecord[]): Payment history records
@@ -337,6 +376,7 @@ Simulates credit score calculation based on financial data.
 **Returns:** `CreditScoreData` - Credit score and contributing factors
 
 **Example:**
+
 ```typescript
 const creditData = calculateCreditScore(transactions, accounts, paymentHistory);
 console.log(creditData.score); // Credit score 300-850
@@ -351,12 +391,14 @@ console.log(creditData.score); // Credit score 300-850
 Analyzes spending against budget allocations.
 
 **Parameters:**
+
 - `transactions` (Transaction[]): Recent transactions
 - `budgets` (BudgetCategory[]): Budget category limits
 
 **Returns:** `BudgetAnalysis` - Spending analysis and recommendations
 
 **Example:**
+
 ```typescript
 const analysis = calculateBudgetAnalysis(transactions, budgets);
 console.log(analysis.overBudgetCategories); // Categories exceeding budget
@@ -371,12 +413,14 @@ console.log(analysis.overBudgetCategories); // Categories exceeding budget
 Calculates investment portfolio performance metrics.
 
 **Parameters:**
+
 - `holdings` (Holding[]): Current investment holdings
 - `marketData` (MarketData[]): Current market prices
 
 **Returns:** `PortfolioMetrics` - Performance metrics and analysis
 
 **Example:**
+
 ```typescript
 const metrics = calculatePortfolioPerformance(holdings, marketData);
 console.log(metrics.totalReturn); // Overall portfolio return percentage
@@ -391,12 +435,14 @@ console.log(metrics.totalReturn); // Overall portfolio return percentage
 Formats numeric values as currency strings.
 
 **Parameters:**
+
 - `amount` (number): Amount to format
 - `currency` (string, optional): Currency code (default: 'USD')
 
 **Returns:** `string` - Formatted currency string
 
 **Example:**
+
 ```typescript
 const formatted = formatCurrency(1234.56);
 console.log(formatted); // "$1,234.56"
@@ -409,12 +455,14 @@ console.log(formatted); // "$1,234.56"
 Formats numeric values as percentage strings.
 
 **Parameters:**
+
 - `value` (number): Value to format (as decimal, e.g., 0.1234 for 12.34%)
 - `decimals` (number, optional): Number of decimal places (default: 2)
 
 **Returns:** `string` - Formatted percentage string
 
 **Example:**
+
 ```typescript
 const formatted = formatPercentage(0.1234);
 console.log(formatted); // "12.34%"
@@ -429,12 +477,14 @@ console.log(formatted); // "12.34%"
 Memoizes expensive calculation functions for performance.
 
 **Parameters:**
+
 - `fn` (Function): Function to memoize
 - `keyGenerator` (Function, optional): Custom key generation function
 
 **Returns:** `Function` - Memoized version of the function
 
 **Example:**
+
 ```typescript
 const memoizedCompoundInterest = memoizeCalculation(calculateCompoundInterest);
 const result = memoizedCompoundInterest(10000, 5, 10); // Cached after first call
@@ -447,14 +497,19 @@ const result = memoizedCompoundInterest(10000, 5, 10); // Cached after first cal
 Debounces calculation functions to prevent excessive calls.
 
 **Parameters:**
+
 - `fn` (Function): Function to debounce
 - `delay` (number): Delay in milliseconds
 
 **Returns:** `Function` - Debounced version of the function
 
 **Example:**
+
 ```typescript
-const debouncedCalculation = debounceCalculation(calculateCompoundInterest, 300);
+const debouncedCalculation = debounceCalculation(
+  calculateCompoundInterest,
+  300
+);
 // Will only execute after 300ms of no new calls
 ```
 
@@ -463,6 +518,7 @@ const debouncedCalculation = debounceCalculation(calculateCompoundInterest, 300)
 ### Common Error Types
 
 #### `ValidationError`
+
 Thrown when input validation fails.
 
 ```typescript
@@ -475,6 +531,7 @@ interface ValidationError extends Error {
 ```
 
 #### `CalculationError`
+
 Thrown when mathematical calculations fail or produce invalid results.
 
 ```typescript
@@ -486,6 +543,7 @@ interface CalculationError extends Error {
 ```
 
 #### `SecurityError`
+
 Thrown when security violations are detected.
 
 ```typescript
@@ -592,11 +650,11 @@ interface CalculatorResult {
 ### Complete Calculator Implementation
 
 ```typescript
-import { 
-  calculateCompoundInterest, 
+import {
+  calculateCompoundInterest,
   calculateLoanPayment,
   formatCurrency,
-  memoizeCalculation 
+  memoizeCalculation
 } from '@/utils/calculators';
 
 // Create a memoized calculator for better performance
@@ -642,16 +700,16 @@ import { calculateEcoScore } from '@/services/ecoScoreService';
 import { calculateBudgetAnalysis } from '@/services/budgetService';
 
 // Comprehensive financial analysis
-const FinancialAnalysis: React.FC<{ transactions: Transaction[] }> = ({ 
-  transactions 
+const FinancialAnalysis: React.FC<{ transactions: Transaction[] }> = ({
+  transactions
 }) => {
-  const ecoData = useMemo(() => 
-    calculateEcoScore(transactions), 
+  const ecoData = useMemo(() =>
+    calculateEcoScore(transactions),
     [transactions]
   );
 
-  const budgetData = useMemo(() => 
-    calculateBudgetAnalysis(transactions, budgets), 
+  const budgetData = useMemo(() =>
+    calculateBudgetAnalysis(transactions, budgets),
     [transactions, budgets]
   );
 
@@ -695,7 +753,7 @@ describe('EcoScore Service Integration', () => {
   test('should calculate realistic eco scores', () => {
     const transactions = generateMockTransactions();
     const result = calculateEcoScore(transactions);
-    
+
     expect(result.score).toBeGreaterThanOrEqual(0);
     expect(result.score).toBeLessThanOrEqual(100);
     expect(result.totalKgCO2e).toBeGreaterThan(0);
@@ -725,11 +783,12 @@ const performanceWrapper = <T extends (...args: any[]) => any>(
     const start = performance.now();
     const result = fn(...args);
     const end = performance.now();
-    
-    if (end - start > 100) { // Log slow calculations
+
+    if (end - start > 100) {
+      // Log slow calculations
       console.warn(`Slow calculation detected: ${name} took ${end - start}ms`);
     }
-    
+
     return result;
   }) as T;
 };

@@ -168,7 +168,7 @@
 ### Primary Components
 
 1. **AnalyticsDashboard** (Main Container)
-2. **ScoreSummaryGrid** 
+2. **ScoreSummaryGrid**
 3. **CorrelationInsights**
 4. **TrendCharts**
 5. **SmartInsights**
@@ -179,9 +179,9 @@
 ```typescript
 export const ANALYTICS_BREAKPOINTS = {
   mobile: '320px',
-  tablet: '768px', 
+  tablet: '768px',
   desktop: '1024px',
-  ultrawide: '1440px'
+  ultrawide: '1440px',
 } as const;
 ```
 
@@ -192,39 +192,42 @@ export const ANALYTICS_THEME = {
   health: {
     primary: '#10b981', // green-500
     secondary: '#065f46', // green-800
-    gradient: 'from-green-400 to-emerald-600'
+    gradient: 'from-green-400 to-emerald-600',
   },
   wealth: {
     primary: '#3b82f6', // blue-500
-    secondary: '#1e40af', // blue-800  
-    gradient: 'from-blue-400 to-indigo-600'
+    secondary: '#1e40af', // blue-800
+    gradient: 'from-blue-400 to-indigo-600',
   },
   correlation: {
     primary: '#8b5cf6', // violet-500
     secondary: '#5b21b6', // violet-800
-    gradient: 'from-violet-400 to-purple-600'
+    gradient: 'from-violet-400 to-purple-600',
   },
   strength: {
     weak: '#6b7280', // gray-500
     moderate: '#f59e0b', // amber-500
-    strong: '#ef4444' // red-500
-  }
+    strong: '#ef4444', // red-500
+  },
 } as const;
 ```
 
 ### Interaction Patterns
 
 1. **Drill-Down Navigation**
+
    - Score cards → Detailed metric views
    - Correlation cards → Historical correlation analysis
    - Chart elements → Transaction details
 
 2. **Time Range Selection**
+
    - Global time selector (1D, 7D, 30D, 90D, 1Y, All)
    - Chart-specific zoom and pan
    - Real-time vs historical mode toggle
 
 3. **Export & Sharing**
+
    - PDF report generation
    - Data export (CSV, JSON)
    - Shareable correlation insights
@@ -234,4 +237,4 @@ export const ANALYTICS_THEME = {
    - Correlation sensitivity settings
    - Privacy and retention controls
 
-This architecture provides a comprehensive yet performant analytics experience that scales from mobile to ultrawide displays while maintaining the unified health-wealth-transaction insight focus. 
+This architecture provides a comprehensive yet performant analytics experience that scales from mobile to ultrawide displays while maintaining the unified health-wealth-transaction insight focus.

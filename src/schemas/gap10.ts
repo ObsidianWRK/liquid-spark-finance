@@ -1,4 +1,4 @@
-import { z } from "zod";
+import { z } from 'zod';
 
 export const LinkedAccountSchema = z.object({
   id: z.string(),
@@ -6,7 +6,7 @@ export const LinkedAccountSchema = z.object({
   displayName: z.string(),
   institutionName: z.string(),
   lastFour: z.string().length(4),
-  type: z.enum(["checking", "savings", "credit", "loan", "investment"]),
+  type: z.enum(['checking', 'savings', 'credit', 'loan', 'investment']),
   createdAt: z.string(),
   updatedAt: z.string(),
 });
@@ -16,15 +16,15 @@ export const RecurringChargeSchema = z.object({
   accountId: z.string(),
   merchantName: z.string(),
   amount: z.number(),
-  frequency: z.enum(["weekly", "biweekly", "monthly", "quarterly", "yearly"]),
+  frequency: z.enum(['weekly', 'biweekly', 'monthly', 'quarterly', 'yearly']),
   nextDueDate: z.string(),
-  status: z.enum(["active", "canceled", "pending_cancel"]),
+  status: z.enum(['active', 'canceled', 'pending_cancel']),
 });
 
 export const NegotiationCaseSchema = z.object({
   id: z.string(),
   chargeId: z.string(),
-  status: z.enum(["queued", "in_progress", "completed", "failed"]),
+  status: z.enum(['queued', 'in_progress', 'completed', 'failed']),
   savingsAmount: z.number().optional(),
   submittedAt: z.string(),
   completedAt: z.string().optional(),
@@ -34,14 +34,14 @@ export const AutosavePlanSchema = z.object({
   id: z.string(),
   accountId: z.string(),
   targetAmount: z.number(),
-  cadence: z.enum(["daily", "weekly", "monthly"]),
+  cadence: z.enum(['daily', 'weekly', 'monthly']),
   nextTransferDate: z.string(),
   isActive: z.boolean(),
 });
 
 export const HouseholdMemberSchema = z.object({
   userId: z.string(),
-  role: z.enum(["owner", "admin", "member"]),
+  role: z.enum(['owner', 'admin', 'member']),
 });
 
 export const HouseholdSchema = z.object({
@@ -63,7 +63,7 @@ export const PrivacySettingSchema = z.object({
 
 export const AdvisorMessageSchema = z.object({
   id: z.string(),
-  sender: z.enum(["user", "advisor", "system"]),
+  sender: z.enum(['user', 'advisor', 'system']),
   content: z.string(),
   createdAt: z.string(),
 });
@@ -83,7 +83,7 @@ export const SpendableCashSchema = z.object({
 
 export const HomeWidgetSchema = z.object({
   id: z.string(),
-  type: z.enum(["balance", "safe_to_spend"]),
+  type: z.enum(['balance', 'safe_to_spend']),
   position: z.number(),
   config: z.record(z.unknown()),
-}); 
+});

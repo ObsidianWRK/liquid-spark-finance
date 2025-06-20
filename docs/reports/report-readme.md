@@ -29,12 +29,14 @@ A comprehensive personal finance management application built with React, TypeSc
 ### Installation
 
 1. **Clone the repository**
+
    ```bash
    git clone https://github.com/yourusername/vueni.git
    cd vueni
    ```
 
 2. **Install dependencies**
+
    ```bash
    npm install
    # or
@@ -42,6 +44,7 @@ A comprehensive personal finance management application built with React, TypeSc
    ```
 
 3. **Start development server**
+
    ```bash
    npm run dev
    # or
@@ -63,16 +66,16 @@ A comprehensive personal finance management application built with React, TypeSc
 
 ### Tech Stack
 
-| Technology | Version | Purpose |
-|------------|---------|---------|
-| React | 18.3.1 | Frontend framework |
-| TypeScript | 5.5.3 | Type safety and developer experience |
-| Vite | 5.4.1 | Build tool and development server |
-| TailwindCSS | 3.4.11 | Utility-first CSS framework |
-| Radix UI | Various | Accessible UI primitives |
-| React Query | 5.56.2 | Server state management |
-| React Router | 6.26.2 | Client-side routing |
-| Recharts | 2.15.3 | Data visualization |
+| Technology   | Version | Purpose                              |
+| ------------ | ------- | ------------------------------------ |
+| React        | 18.3.1  | Frontend framework                   |
+| TypeScript   | 5.5.3   | Type safety and developer experience |
+| Vite         | 5.4.1   | Build tool and development server    |
+| TailwindCSS  | 3.4.11  | Utility-first CSS framework          |
+| Radix UI     | Various | Accessible UI primitives             |
+| React Query  | 5.56.2  | Server state management              |
+| React Router | 6.26.2  | Client-side routing                  |
+| Recharts     | 2.15.3  | Data visualization                   |
 
 ### Project Structure
 

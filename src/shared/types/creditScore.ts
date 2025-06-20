@@ -28,4 +28,4 @@ export interface CreditTip {
   impact: 'High' | 'Medium' | 'Low';
   timeframe: string;
   category: 'Payment' | 'Utilization' | 'Length' | 'Mix' | 'Inquiries';
-} 
+}

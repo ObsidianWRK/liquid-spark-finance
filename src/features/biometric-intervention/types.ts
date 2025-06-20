@@ -46,7 +46,11 @@ export interface InterventionEvent {
   stressLevel: StressLevel;
   policy: InterventionPolicy;
   action: string;
-  outcome: 'prevented_purchase' | 'delayed_purchase' | 'proceeded_anyway' | 'dismissed';
+  outcome:
+    | 'prevented_purchase'
+    | 'delayed_purchase'
+    | 'proceeded_anyway'
+    | 'dismissed';
   timestamp: string;
   metadata?: Record<string, any>;
 }
@@ -78,4 +82,4 @@ export interface InterventionState {
   preferences: BiometricPreferences;
   loading: boolean;
   error?: string;
-} 
+}

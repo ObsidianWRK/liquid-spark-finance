@@ -1,2 +1,2 @@
-export { useAgeOfMoneyStore } from "./store";
-export { AgeOfMoneyCard } from "./components/AgeOfMoneyCard"; 
+export { useAgeOfMoneyStore } from './store';
+export { AgeOfMoneyCard } from './components/AgeOfMoneyCard';

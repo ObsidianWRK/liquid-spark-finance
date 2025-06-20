@@ -31,24 +31,29 @@ class PerformanceMonitor {
   }
 
   private detectCapabilities(): PerformanceMetrics {
-    const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
-      navigator.userAgent
-    );
-    
-    const isLowEndDevice = navigator.hardwareConcurrency 
-      ? navigator.hardwareConcurrency < 4 
+    const isMobile =
+      /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+        navigator.userAgent
+      );
+
+    const isLowEndDevice = navigator.hardwareConcurrency
+      ? navigator.hardwareConcurrency < 4
       : isMobile;
 
     const supportsWebGL = (() => {
       try {
         const canvas = document.createElement('canvas');
-        return !!(canvas.getContext('webgl') || canvas.getContext('experimental-webgl'));
+        return !!(
+          canvas.getContext('webgl') || canvas.getContext('experimental-webgl')
+        );
       } catch {
         return false;
       }
     })();
 
-    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const prefersReducedMotion = window.matchMedia(
+      '(prefers-reduced-motion: reduce)'
+    ).matches;
 
     return {
       fps: 60,
@@ -56,7 +61,7 @@ class PerformanceMonitor {
       isLowEndDevice,
       isMobile,
       supportsWebGL,
-      prefersReducedMotion
+      prefersReducedMotion,
     };
   }
 
@@ -64,19 +69,22 @@ class PerformanceMonitor {
     const monitor = () => {
       this.frameCount++;
       const currentTime = performance.now();
-      
+
       if (currentTime - this.lastTime >= 1000) {
-        this.metrics.fps = Math.round((this.frameCount * 1000) / (currentTime - this.lastTime));
+        this.metrics.fps = Math.round(
+          (this.frameCount * 1000) / (currentTime - this.lastTime)
+        );
         this.frameCount = 0;
         this.lastTime = currentTime;
 
         // Update memory usage if available
         if ('memory' in performance) {
-          this.metrics.memoryUsage = (performance as any).memory.usedJSHeapSize / 1048576; // MB
+          this.metrics.memoryUsage =
+            (performance as any).memory.usedJSHeapSize / 1048576; // MB
         }
 
         // Notify callbacks
-        this.callbacks.forEach(callback => callback(this.metrics));
+        this.callbacks.forEach((callback) => callback(this.metrics));
       }
 
       this.animationId = requestAnimationFrame(monitor);
@@ -92,7 +100,7 @@ class PerformanceMonitor {
   subscribe(callback: (metrics: PerformanceMetrics) => void) {
     this.callbacks.push(callback);
     return () => {
-      this.callbacks = this.callbacks.filter(cb => cb !== callback);
+      this.callbacks = this.callbacks.filter((cb) => cb !== callback);
     };
   }
 
@@ -113,18 +121,18 @@ export const getOptimizedSettings = (metrics: PerformanceMetrics) => {
       intensity: 0.6,
       distortion: 0.4,
       animated: true,
-      interactive: true
+      interactive: true,
     },
     animations: {
       enabled: true,
       duration: 300,
-      stagger: 100
+      stagger: 100,
     },
     rendering: {
       lazyLoad: false,
       virtualization: false,
-      batchUpdates: false
-    }
+      batchUpdates: false,
+    },
   };
 
   // Performance-based optimizations
@@ -167,10 +175,10 @@ export const createLazyComponent = (
 ) => {
   return React.lazy(() => {
     const metrics = PerformanceMonitor.getInstance().getMetrics();
-    
+
     if (metrics.isLowEndDevice) {
       // Delay loading on low-end devices
-      return new Promise(resolve => {
+      return new Promise((resolve) => {
         setTimeout(() => resolve(importFn()), 100);
       });
     } else {
@@ -186,15 +194,15 @@ export const useDebouncedState = <T>(
 ): [T, (value: T) => void] => {
   const [state, setState] = React.useState(initialValue);
   const [debouncedState, setDebouncedState] = React.useState(initialValue);
-  
+
   React.useEffect(() => {
     const timer = setTimeout(() => {
       setDebouncedState(state);
     }, delay);
-    
+
     return () => clearTimeout(timer);
   }, [state, delay]);
-  
+
   return [debouncedState, setState];
 };
 
@@ -206,7 +214,7 @@ export const usePerformanceAwareEffect = (
 ) => {
   React.useEffect(() => {
     const metrics = PerformanceMonitor.getInstance().getMetrics();
-    
+
     if (!highPriority && metrics.fps < 30) {
       // Defer non-critical effects when performance is poor
       const timer = setTimeout(effect, 100);
@@ -220,24 +228,24 @@ export const usePerformanceAwareEffect = (
 // Batch state updates for better performance
 export const useBatchedUpdates = () => {
   const [updates, setUpdates] = React.useState<Array<() => void>>([]);
-  
+
   const batchUpdate = React.useCallback((updateFn: () => void) => {
-    setUpdates(prev => [...prev, updateFn]);
+    setUpdates((prev) => [...prev, updateFn]);
   }, []);
-  
+
   React.useEffect(() => {
     if (updates.length > 0) {
       const timer = setTimeout(() => {
         React.startTransition(() => {
-          updates.forEach(update => update());
+          updates.forEach((update) => update());
           setUpdates([]);
         });
       }, 16); // Next frame
-      
+
       return () => clearTimeout(timer);
     }
   }, [updates]);
-  
+
   return batchUpdate;
 };
 
@@ -246,14 +254,14 @@ export const usePerformanceMonitor = () => {
   const [metrics, setMetrics] = React.useState<PerformanceMetrics>(
     PerformanceMonitor.getInstance().getMetrics()
   );
-  
+
   React.useEffect(() => {
     const monitor = PerformanceMonitor.getInstance();
     const unsubscribe = monitor.subscribe(setMetrics);
-    
+
     return unsubscribe;
   }, []);
-  
+
   return metrics;
 };
 
@@ -263,11 +271,15 @@ export const useOptimizedMemo = <T>(
   deps: React.DependencyList,
   expiry: number = 5000 // 5 seconds
 ) => {
-  const memoRef = React.useRef<{ value: T; timestamp: number; deps: React.DependencyList } | null>(null);
-  
+  const memoRef = React.useRef<{
+    value: T;
+    timestamp: number;
+    deps: React.DependencyList;
+  } | null>(null);
+
   return React.useMemo(() => {
     const now = Date.now();
-    
+
     if (
       !memoRef.current ||
       now - memoRef.current.timestamp > expiry ||
@@ -276,12 +288,12 @@ export const useOptimizedMemo = <T>(
       memoRef.current = {
         value: factory(),
         timestamp: now,
-        deps: [...deps] // Create a copy to avoid mutations
+        deps: [...deps], // Create a copy to avoid mutations
       };
     }
-    
+
     return memoRef.current.value;
   }, [factory, expiry, ...deps]); // Add all missing dependencies
 };
 
-export default PerformanceMonitor; 
+export default PerformanceMonitor;

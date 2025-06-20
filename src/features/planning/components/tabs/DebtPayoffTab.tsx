@@ -8,7 +8,7 @@ import {
   AlertCircle,
   CheckCircle,
   ArrowRight,
-  CreditCard
+  CreditCard,
 } from 'lucide-react';
 import { DebtPayoffPlan } from '@/shared/types/financialPlanning';
 import { MockFinancialPlanningAPI } from '@/mocks/financialPlanningMocks';
@@ -30,7 +30,8 @@ const DebtPayoffTab: React.FC<DebtPayoffTabProps> = ({ familyId }) => {
   const loadDebtPlan = async () => {
     setLoading(true);
     try {
-      const debtPlan = await MockFinancialPlanningAPI.getDebtPayoffPlan(familyId);
+      const debtPlan =
+        await MockFinancialPlanningAPI.getDebtPayoffPlan(familyId);
       setPlan(debtPlan);
     } catch (error) {
       console.error('Failed to load debt plan:', error);
@@ -44,7 +45,7 @@ const DebtPayoffTab: React.FC<DebtPayoffTabProps> = ({ familyId }) => {
       style: 'currency',
       currency: 'USD',
       minimumFractionDigits: 0,
-      maximumFractionDigits: 0
+      maximumFractionDigits: 0,
     }).format(amount);
   };
 
@@ -53,8 +54,8 @@ const DebtPayoffTab: React.FC<DebtPayoffTabProps> = ({ familyId }) => {
   };
 
   const getDebtColor = (interestRate: number) => {
-    if (interestRate >= 0.20) return 'text-red-400';
-    if (interestRate >= 0.10) return 'text-orange-400';
+    if (interestRate >= 0.2) return 'text-red-400';
+    if (interestRate >= 0.1) return 'text-orange-400';
     return 'text-yellow-400';
   };
 
@@ -62,7 +63,10 @@ const DebtPayoffTab: React.FC<DebtPayoffTabProps> = ({ familyId }) => {
     return (
       <div className="space-y-6">
         {[...Array(3)].map((_, i) => (
-          <div key={i} className="bg-white/[0.02] rounded-2xl border border-white/[0.08] p-6 animate-pulse">
+          <div
+            key={i}
+            className="bg-white/[0.02] rounded-2xl border border-white/[0.08] p-6 animate-pulse"
+          >
             <div className="flex items-center gap-4 mb-4">
               <div className="w-8 h-8 bg-white/[0.05] rounded"></div>
               <div className="h-6 bg-white/[0.05] rounded w-48"></div>
@@ -81,8 +85,12 @@ const DebtPayoffTab: React.FC<DebtPayoffTabProps> = ({ familyId }) => {
     return (
       <div className="text-center py-12">
         <AlertCircle className="w-12 h-12 text-orange-400 mx-auto mb-4" />
-        <h3 className="text-xl font-semibold text-white mb-2">No Debt Plan Found</h3>
-        <p className="text-white/60">Create a debt payoff strategy to get started.</p>
+        <h3 className="text-xl font-semibold text-white mb-2">
+          No Debt Plan Found
+        </h3>
+        <p className="text-white/60">
+          Create a debt payoff strategy to get started.
+        </p>
       </div>
     );
   }
@@ -97,8 +105,10 @@ const DebtPayoffTab: React.FC<DebtPayoffTabProps> = ({ familyId }) => {
             Debt Payoff Strategy
           </h2>
           <p className="text-white/60 mt-1">
-            {plan.strategy === 'avalanche' ? 'Avalanche Method' : 'Snowball Method'} • 
-            {plan.projections.monthsToPayoff} months to debt-free
+            {plan.strategy === 'avalanche'
+              ? 'Avalanche Method'
+              : 'Snowball Method'}{' '}
+            •{plan.projections.monthsToPayoff} months to debt-free
           </p>
         </div>
       </div>
@@ -126,9 +136,7 @@ const DebtPayoffTab: React.FC<DebtPayoffTabProps> = ({ familyId }) => {
           <div className="text-2xl font-bold text-white">
             {formatCurrency(plan.extraPayment)}
           </div>
-          <div className="text-white/60 text-sm mt-1">
-            Per month
-          </div>
+          <div className="text-white/60 text-sm mt-1">Per month</div>
         </PlanningCard>
 
         <PlanningCard
@@ -150,9 +158,9 @@ const DebtPayoffTab: React.FC<DebtPayoffTabProps> = ({ familyId }) => {
           iconColor="text-green-400"
         >
           <div className="text-lg font-bold text-white">
-            {plan.projections.payoffDate.toLocaleDateString('en-US', { 
-              month: 'short', 
-              year: 'numeric' 
+            {plan.projections.payoffDate.toLocaleDateString('en-US', {
+              month: 'short',
+              year: 'numeric',
             })}
           </div>
           <div className="text-white/60 text-sm mt-1">
@@ -168,7 +176,7 @@ const DebtPayoffTab: React.FC<DebtPayoffTabProps> = ({ familyId }) => {
         iconColor="text-blue-400"
         title={`${plan.strategy === 'avalanche' ? 'Avalanche' : 'Snowball'} Strategy Active`}
         description={
-          plan.strategy === 'avalanche' 
+          plan.strategy === 'avalanche'
             ? 'Paying minimums on all debts, extra payments go to highest interest rate first.'
             : 'Paying minimums on all debts, extra payments go to smallest balance first.'
         }
@@ -191,7 +199,10 @@ const DebtPayoffTab: React.FC<DebtPayoffTabProps> = ({ familyId }) => {
       >
         <div className="space-y-4">
           {plan.payoffSchedule.map((debt, index) => (
-            <div key={index} className="p-4 bg-white/[0.03] rounded-xl border border-white/[0.05]">
+            <div
+              key={index}
+              className="p-4 bg-white/[0.03] rounded-xl border border-white/[0.05]"
+            >
               <div className="flex items-center justify-between mb-3">
                 <div className="flex-1">
                   <h4 className="font-semibold text-white">{debt.name}</h4>
@@ -199,9 +210,17 @@ const DebtPayoffTab: React.FC<DebtPayoffTabProps> = ({ familyId }) => {
                     <span className="text-white/60 text-sm">
                       {formatPercentage(debt.interestRate)} APR
                     </span>
-                    <span className={cn("text-sm font-medium", getDebtColor(debt.interestRate))}>
-                      {debt.interestRate >= 0.20 ? 'High Interest' : 
-                       debt.interestRate >= 0.10 ? 'Medium Interest' : 'Low Interest'}
+                    <span
+                      className={cn(
+                        'text-sm font-medium',
+                        getDebtColor(debt.interestRate)
+                      )}
+                    >
+                      {debt.interestRate >= 0.2
+                        ? 'High Interest'
+                        : debt.interestRate >= 0.1
+                          ? 'Medium Interest'
+                          : 'Low Interest'}
                     </span>
                   </div>
                 </div>
@@ -226,13 +245,18 @@ const DebtPayoffTab: React.FC<DebtPayoffTabProps> = ({ familyId }) => {
                   </span>
                 </div>
                 <div className="w-full bg-white/[0.05] rounded-full h-2">
-                  <div 
+                  <div
                     className={cn(
-                      "h-2 rounded-full",
-                      debt.interestRate >= 0.20 ? "bg-red-400" :
-                      debt.interestRate >= 0.10 ? "bg-orange-400" : "bg-yellow-400"
+                      'h-2 rounded-full',
+                      debt.interestRate >= 0.2
+                        ? 'bg-red-400'
+                        : debt.interestRate >= 0.1
+                          ? 'bg-orange-400'
+                          : 'bg-yellow-400'
                     )}
-                    style={{ width: `${Math.min((debt.totalPaid / (debt.balance + debt.totalInterest)) * 100, 100)}%` }}
+                    style={{
+                      width: `${Math.min((debt.totalPaid / (debt.balance + debt.totalInterest)) * 100, 100)}%`,
+                    }}
                   />
                 </div>
               </div>
@@ -258,19 +282,28 @@ const DebtPayoffTab: React.FC<DebtPayoffTabProps> = ({ familyId }) => {
       >
         <div className="space-y-4">
           {plan.recommendations.map((rec, index) => (
-            <div key={index} className="p-4 bg-white/[0.03] rounded-xl border border-white/[0.05]">
+            <div
+              key={index}
+              className="p-4 bg-white/[0.03] rounded-xl border border-white/[0.05]"
+            >
               <div className="flex items-start justify-between">
                 <div className="flex-1">
                   <h4 className="font-semibold text-white mb-2">{rec.title}</h4>
-                  <p className="text-white/70 text-sm mb-3">{rec.description}</p>
-                  
+                  <p className="text-white/70 text-sm mb-3">
+                    {rec.description}
+                  </p>
+
                   <div className="flex items-center gap-4">
-                    <span className={cn(
-                      "text-xs px-2 py-1 rounded-lg font-medium",
-                      rec.impact === 'high' ? "bg-red-500/20 text-red-400" :
-                      rec.impact === 'medium' ? "bg-yellow-500/20 text-yellow-400" :
-                      "bg-green-500/20 text-green-400"
-                    )}>
+                    <span
+                      className={cn(
+                        'text-xs px-2 py-1 rounded-lg font-medium',
+                        rec.impact === 'high'
+                          ? 'bg-red-500/20 text-red-400'
+                          : rec.impact === 'medium'
+                            ? 'bg-yellow-500/20 text-yellow-400'
+                            : 'bg-green-500/20 text-green-400'
+                      )}
+                    >
                       {rec.impact} impact
                     </span>
                     <span className="text-xs text-green-400">
@@ -280,10 +313,15 @@ const DebtPayoffTab: React.FC<DebtPayoffTabProps> = ({ familyId }) => {
 
                   {/* Action Items */}
                   <div className="mt-3">
-                    <div className="text-xs text-white/60 mb-2">Recommended Actions:</div>
+                    <div className="text-xs text-white/60 mb-2">
+                      Recommended Actions:
+                    </div>
                     <div className="space-y-1">
                       {rec.actionItems.map((action, actionIndex) => (
-                        <div key={actionIndex} className="flex items-center gap-2 text-xs text-white/70">
+                        <div
+                          key={actionIndex}
+                          className="flex items-center gap-2 text-xs text-white/70"
+                        >
                           <CheckCircle className="w-3 h-3 text-green-400" />
                           {action}
                         </div>
@@ -291,7 +329,7 @@ const DebtPayoffTab: React.FC<DebtPayoffTabProps> = ({ familyId }) => {
                     </div>
                   </div>
                 </div>
-                
+
                 <ArrowRight className="w-4 h-4 text-white/60" />
               </div>
             </div>
@@ -302,4 +340,4 @@ const DebtPayoffTab: React.FC<DebtPayoffTabProps> = ({ familyId }) => {
   );
 };
 
-export default DebtPayoffTab; 
+export default DebtPayoffTab;

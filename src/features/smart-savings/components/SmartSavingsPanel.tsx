@@ -1,8 +1,8 @@
-import React from "react";
-import { UniversalCard } from "@/shared/ui/UniversalCard";
-import { CreatePlanForm } from "./CreatePlanForm";
-import { AutosavePlansList } from "./AutosavePlansList";
-import { PiggyBank } from "lucide-react";
+import React from 'react';
+import { UniversalCard } from '@/shared/ui/UniversalCard';
+import { CreatePlanForm } from './CreatePlanForm';
+import { AutosavePlansList } from './AutosavePlansList';
+import { PiggyBank } from 'lucide-react';
 
 export const SmartSavingsPanel: React.FC = () => {
   return (
@@ -19,4 +19,4 @@ export const SmartSavingsPanel: React.FC = () => {
       </div>
     </UniversalCard>
   );
-}; 
+};

@@ -10,15 +10,44 @@
     },
     "hard_coded_dimensions": {
       "width_px": [
-        { "file": "src/app/styles/responsive-enhancements.css", "line": 121, "value": "1px" },
-        { "file": "src/app/styles/responsive-enhancements.css", "line": 122, "value": "1px" },
-        { "file": "src/app/styles/accessibility.css", "line": 241, "value": "48px" },
-        { "file": "src/app/styles/accessibility.css", "line": 242, "value": "48px" }
+        {
+          "file": "src/app/styles/responsive-enhancements.css",
+          "line": 121,
+          "value": "1px"
+        },
+        {
+          "file": "src/app/styles/responsive-enhancements.css",
+          "line": 122,
+          "value": "1px"
+        },
+        {
+          "file": "src/app/styles/accessibility.css",
+          "line": 241,
+          "value": "48px"
+        },
+        {
+          "file": "src/app/styles/accessibility.css",
+          "line": 242,
+          "value": "48px"
+        }
       ],
       "min_height_px": [
-        { "file": "src/index.css", "line": 606, "value": "44px", "context": "iOS touch targets" },
-        { "file": "src/app/styles/responsive-enhancements.css", "line": 188, "value": "44px" },
-        { "file": "src/app/styles/responsive-enhancements.css", "line": 775, "value": "48px" }
+        {
+          "file": "src/index.css",
+          "line": 606,
+          "value": "44px",
+          "context": "iOS touch targets"
+        },
+        {
+          "file": "src/app/styles/responsive-enhancements.css",
+          "line": 188,
+          "value": "44px"
+        },
+        {
+          "file": "src/app/styles/responsive-enhancements.css",
+          "line": 775,
+          "value": "48px"
+        }
       ]
     },
     "responsive_patterns": {
@@ -35,13 +64,13 @@
         "issues": ["fixed width containers on small viewports"]
       },
       "profile": {
-        "file": "src/pages/OptimizedProfile.tsx", 
+        "file": "src/pages/OptimizedProfile.tsx",
         "responsive_grid": "grid-cols-1 lg:grid-cols-4",
         "issues": ["large gap between mobile and desktop breakpoints"]
       },
       "transaction_demo": {
         "file": "src/pages/TransactionDemo.tsx",
-        "responsive_grid": "grid-cols-1 md:grid-cols-3", 
+        "responsive_grid": "grid-cols-1 md:grid-cols-3",
         "issues": ["missing tablet breakpoint handling"]
       }
     },
@@ -68,4 +97,4 @@
       "breakpoint_inconsistencies": 12
     }
   }
-} 
+}

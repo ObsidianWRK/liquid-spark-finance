@@ -1,4 +1,4 @@
-import { Household } from "../types";
+import { Household } from '../types';
 
 export interface HouseholdService {
   createHousehold: (name: string) => Promise<Household>;
@@ -12,7 +12,7 @@ class MockHouseholdService implements HouseholdService {
 
   async createHousehold(name: string): Promise<Household> {
     const household: Household = {
-      id: "house-" + Math.random().toString(36).substring(2),
+      id: 'house-' + Math.random().toString(36).substring(2),
       name,
       members: [],
       createdAt: new Date().toISOString(),
@@ -34,4 +34,4 @@ class MockHouseholdService implements HouseholdService {
   }
 }
 
-export const householdService: HouseholdService = new MockHouseholdService(); 
+export const householdService: HouseholdService = new MockHouseholdService();

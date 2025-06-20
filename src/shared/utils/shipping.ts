@@ -1,4 +1,7 @@
-export const carrierUrl = (carrier: string | undefined, track: string): string => {
+export const carrierUrl = (
+  carrier: string | undefined,
+  track: string
+): string => {
   if (!track) return '#';
   switch (carrier) {
     case 'UPS':
@@ -27,4 +30,4 @@ export const prettyShipStatus = (status?: string): string => {
     default:
       return '–';
   }
-}; 
+};

@@ -8,7 +8,7 @@ import {
   Tooltip,
   ResponsiveContainer,
   Area,
-  AreaChart
+  AreaChart,
 } from 'recharts';
 import { cn } from '@/shared/lib/utils';
 
@@ -34,19 +34,19 @@ const ProjectionChart: React.FC<ProjectionChartProps> = ({
   height = 300,
   color = '#3b82f6',
   formatValue,
-  className
+  className,
 }) => {
   const formatDate = (dateStr: string | Date) => {
     const date = typeof dateStr === 'string' ? new Date(dateStr) : dateStr;
-    return date.toLocaleDateString('en-US', { 
-      month: 'short', 
-      year: '2-digit' 
+    return date.toLocaleDateString('en-US', {
+      month: 'short',
+      year: '2-digit',
     });
   };
 
   const formatCurrency = (value: number) => {
     if (formatValue) return formatValue(value);
-    
+
     if (value >= 1000000) {
       return `$${(value / 1000000).toFixed(1)}M`;
     } else if (value >= 1000) {
@@ -55,10 +55,10 @@ const ProjectionChart: React.FC<ProjectionChartProps> = ({
     return `$${value.toLocaleString()}`;
   };
 
-  const chartData = data.map(item => ({
+  const chartData = data.map((item) => ({
     ...item,
     dateFormatted: formatDate(item.date),
-    displayValue: item.value
+    displayValue: item.value,
   }));
 
   const CustomTooltip = ({ active, payload, label }: any) => {
@@ -78,20 +78,25 @@ const ProjectionChart: React.FC<ProjectionChartProps> = ({
   const ChartComponent = type === 'area' ? AreaChart : LineChart;
 
   return (
-    <div className={cn("bg-white/[0.02] rounded-2xl border border-white/[0.08] p-6", className)}>
+    <div
+      className={cn(
+        'bg-white/[0.02] rounded-2xl border border-white/[0.08] p-6',
+        className
+      )}
+    >
       <h3 className="text-lg font-semibold text-white mb-4">{title}</h3>
-      
+
       <ResponsiveContainer width="100%" height={height}>
         <ChartComponent data={chartData}>
           <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.1)" />
-          <XAxis 
+          <XAxis
             dataKey="dateFormatted"
             stroke="rgba(255,255,255,0.6)"
             fontSize={12}
             tickLine={false}
             axisLine={false}
           />
-          <YAxis 
+          <YAxis
             stroke="rgba(255,255,255,0.6)"
             fontSize={12}
             tickLine={false}
@@ -99,7 +104,7 @@ const ProjectionChart: React.FC<ProjectionChartProps> = ({
             tickFormatter={formatCurrency}
           />
           <Tooltip content={<CustomTooltip />} />
-          
+
           {type === 'area' ? (
             <Area
               type="monotone"
@@ -125,4 +130,4 @@ const ProjectionChart: React.FC<ProjectionChartProps> = ({
   );
 };
 
-export default ProjectionChart; 
+export default ProjectionChart;

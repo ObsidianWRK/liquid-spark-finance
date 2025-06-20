@@ -1,8 +1,8 @@
-import React from "react";
-import { UniversalCard } from "@/shared/ui/UniversalCard";
-import { AdvisorChatButton } from "./AdvisorChatButton";
-import { ChatDialog } from "./ChatDialog";
-import { MessageCircle } from "lucide-react";
+import React from 'react';
+import { UniversalCard } from '@/shared/ui/UniversalCard';
+import { AdvisorChatButton } from './AdvisorChatButton';
+import { ChatDialog } from './ChatDialog';
+import { MessageCircle } from 'lucide-react';
 
 export const AdvisorChatPanel: React.FC = () => {
   return (
@@ -19,4 +19,4 @@ export const AdvisorChatPanel: React.FC = () => {
       <ChatDialog />
     </>
   );
-}; 
+};

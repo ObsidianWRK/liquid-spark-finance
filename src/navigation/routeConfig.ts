@@ -80,4 +80,4 @@ export const secondaryRoutes: Route[] = [
   },
 ];
 
-export const allRoutes: Route[] = [...mainRoutes, ...secondaryRoutes]; 
+export const allRoutes: Route[] = [...mainRoutes, ...secondaryRoutes];

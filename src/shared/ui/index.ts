@@ -10,4 +10,4 @@ export {
 
 // Brand Components
 export { VueniLogo, VueniTextLogo } from './VueniLogo';
-export { BrandDownloadMenu } from './BrandDownloadMenu'; 
+export { BrandDownloadMenu } from './BrandDownloadMenu';

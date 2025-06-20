@@ -18,7 +18,7 @@ const LiquidGlass = ({
   distortion = 0.4,
   animated = true,
   interactive = true,
-  fallbackToCSS = true
+  fallbackToCSS = true,
 }: LiquidGlassProps) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -95,7 +95,8 @@ const LiquidGlass = ({
   const checkWebGLSupport = useCallback(() => {
     try {
       const canvas = document.createElement('canvas');
-      const gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
+      const gl =
+        canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
       setWebGLSupported(!!gl);
       return !!gl;
     } catch (e) {
@@ -105,86 +106,98 @@ const LiquidGlass = ({
   }, []);
 
   // Create shader
-  const createShader = (gl: WebGLRenderingContext, type: number, source: string) => {
+  const createShader = (
+    gl: WebGLRenderingContext,
+    type: number,
+    source: string
+  ) => {
     const shader = gl.createShader(type);
     if (!shader) return null;
-    
+
     gl.shaderSource(shader, source);
     gl.compileShader(shader);
-    
+
     if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
       console.error('Shader compilation error:', gl.getShaderInfoLog(shader));
       gl.deleteShader(shader);
       return null;
     }
-    
+
     return shader;
   };
 
   // Create shader program
   const createProgram = (gl: WebGLRenderingContext) => {
     const vertexShader = createShader(gl, gl.VERTEX_SHADER, vertexShaderSource);
-    const fragmentShader = createShader(gl, gl.FRAGMENT_SHADER, fragmentShaderSource);
-    
+    const fragmentShader = createShader(
+      gl,
+      gl.FRAGMENT_SHADER,
+      fragmentShaderSource
+    );
+
     if (!vertexShader || !fragmentShader) return null;
-    
+
     const program = gl.createProgram();
     if (!program) return null;
-    
+
     gl.attachShader(program, vertexShader);
     gl.attachShader(program, fragmentShader);
     gl.linkProgram(program);
-    
+
     if (!gl.getProgramParameter(program, gl.LINK_STATUS)) {
       console.error('Program linking error:', gl.getProgramInfoLog(program));
       gl.deleteProgram(program);
       return null;
     }
-    
+
     return program;
   };
 
   // Initialize WebGL
   const initWebGL = useCallback(() => {
     if (!canvasRef.current || !webGLSupported) return;
-    
-    const gl = canvasRef.current.getContext('webgl') || canvasRef.current.getContext('experimental-webgl');
+
+    const gl =
+      canvasRef.current.getContext('webgl') ||
+      canvasRef.current.getContext('experimental-webgl');
     if (!gl) return;
-    
+
     glRef.current = gl;
     programRef.current = createProgram(gl);
-    
+
     if (!programRef.current) return;
-    
+
     // Set up geometry (full screen quad)
     const positions = new Float32Array([
-      -1, -1,  1, -1,  -1, 1,
-      -1, 1,   1, -1,   1, 1,
+      -1, -1, 1, -1, -1, 1, -1, 1, 1, -1, 1, 1,
     ]);
-    
-    const texCoords = new Float32Array([
-      0, 0,  1, 0,  0, 1,
-      0, 1,  1, 0,  1, 1,
-    ]);
-    
+
+    const texCoords = new Float32Array([0, 0, 1, 0, 0, 1, 0, 1, 1, 0, 1, 1]);
+
     // Position buffer
     const positionBuffer = gl.createBuffer();
     gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
     gl.bufferData(gl.ARRAY_BUFFER, positions, gl.STATIC_DRAW);
-    
+
     // Texture coordinate buffer
     const texCoordBuffer = gl.createBuffer();
     gl.bindBuffer(gl.ARRAY_BUFFER, texCoordBuffer);
     gl.bufferData(gl.ARRAY_BUFFER, texCoords, gl.STATIC_DRAW);
-    
+
     // Set up attributes
-    const positionLocation = gl.getAttribLocation(programRef.current, 'a_position');
-    const texCoordLocation = gl.getAttribLocation(programRef.current, 'a_texCoord');
-    
+    const positionLocation = gl.getAttribLocation(
+      programRef.current,
+      'a_position'
+    );
+    const texCoordLocation = gl.getAttribLocation(
+      programRef.current,
+      'a_texCoord'
+    );
+
     gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
     gl.enableVertexAttribArray(positionLocation);
     gl.vertexAttribPointer(positionLocation, 2, gl.FLOAT, false, 0, 0);
-    
+
     gl.bindBuffer(gl.ARRAY_BUFFER, texCoordBuffer);
     gl.enableVertexAttribArray(texCoordLocation);
     gl.vertexAttribPointer(texCoordLocation, 2, gl.FLOAT, false, 0, 0);
@@ -193,47 +206,59 @@ const LiquidGlass = ({
   // Animation loop
   const animate = useCallback(() => {
     if (!glRef.current || !programRef.current || !canvasRef.current) return;
-    
+
     const gl = glRef.current;
     const program = programRef.current;
-    
+
     // Set viewport
     gl.viewport(0, 0, canvasRef.current.width, canvasRef.current.height);
-    
+
     // Use shader program
     gl.useProgram(program);
-    
+
     // Set uniforms
     const timeLocation = gl.getUniformLocation(program, 'u_time');
     const mouseLocation = gl.getUniformLocation(program, 'u_mouse');
     const intensityLocation = gl.getUniformLocation(program, 'u_intensity');
     const distortionLocation = gl.getUniformLocation(program, 'u_distortion');
     const resolutionLocation = gl.getUniformLocation(program, 'u_resolution');
-    
-    if (timeLocation) gl.uniform1f(timeLocation, animated ? Date.now() - startTimeRef.current : 0);
+
+    if (timeLocation)
+      gl.uniform1f(
+        timeLocation,
+        animated ? Date.now() - startTimeRef.current : 0
+      );
     if (mouseLocation) gl.uniform2f(mouseLocation, mousePos.x, mousePos.y);
     if (intensityLocation) gl.uniform1f(intensityLocation, intensity);
     if (distortionLocation) gl.uniform1f(distortionLocation, distortion);
-    if (resolutionLocation) gl.uniform2f(resolutionLocation, canvasRef.current.width, canvasRef.current.height);
-    
+    if (resolutionLocation)
+      gl.uniform2f(
+        resolutionLocation,
+        canvasRef.current.width,
+        canvasRef.current.height
+      );
+
     // Draw
     gl.drawArrays(gl.TRIANGLES, 0, 6);
-    
+
     if (animated) {
       animationRef.current = requestAnimationFrame(animate);
     }
   }, [mousePos, intensity, distortion, animated]);
 
   // Handle mouse movement
-  const handleMouseMove = useCallback((event: React.MouseEvent) => {
-    if (!interactive || !containerRef.current) return;
-    
-    const rect = containerRef.current.getBoundingClientRect();
-    const x = (event.clientX - rect.left) / rect.width;
-    const y = 1 - (event.clientY - rect.top) / rect.height; // Flip Y coordinate
-    
-    setMousePos({ x, y });
-  }, [interactive]);
+  const handleMouseMove = useCallback(
+    (event: React.MouseEvent) => {
+      if (!interactive || !containerRef.current) return;
+
+      const rect = containerRef.current.getBoundingClientRect();
+      const x = (event.clientX - rect.left) / rect.width;
+      const y = 1 - (event.clientY - rect.top) / rect.height; // Flip Y coordinate
+
+      setMousePos({ x, y });
+    },
+    [interactive]
+  );
 
   // Debounced mouse move for performance
   const debouncedMouseMove = useCallback(
@@ -250,10 +275,10 @@ const LiquidGlass = ({
   // Resize canvas
   const resizeCanvas = useCallback(() => {
     if (!canvasRef.current || !containerRef.current) return;
-    
+
     const container = containerRef.current;
     const canvas = canvasRef.current;
-    
+
     canvas.width = container.offsetWidth;
     canvas.height = container.offsetHeight;
   }, []);
@@ -267,14 +292,14 @@ const LiquidGlass = ({
     if (webGLSupported) {
       initWebGL();
       resizeCanvas();
-      
+
       if (animated) {
         animationRef.current = requestAnimationFrame(animate);
       } else {
         animate();
       }
     }
-    
+
     return () => {
       if (animationRef.current) {
         cancelAnimationFrame(animationRef.current);
@@ -290,17 +315,20 @@ const LiquidGlass = ({
   }, [resizeCanvas]);
 
   // CSS fallback styles
-  const fallbackStyles = !webGLSupported && fallbackToCSS ? {
-    background: 'rgba(255, 255, 255, 0.08)',
-    backdropFilter: `blur(${20 + intensity * 10}px) saturate(${150 + intensity * 30}%)`,
-    WebkitBackdropFilter: `blur(${20 + intensity * 10}px) saturate(${150 + intensity * 30}%)`,
-    border: '1px solid rgba(255, 255, 255, 0.12)',
-    boxShadow: `
+  const fallbackStyles =
+    !webGLSupported && fallbackToCSS
+      ? {
+          background: 'rgba(255, 255, 255, 0.08)',
+          backdropFilter: `blur(${20 + intensity * 10}px) saturate(${150 + intensity * 30}%)`,
+          WebkitBackdropFilter: `blur(${20 + intensity * 10}px) saturate(${150 + intensity * 30}%)`,
+          border: '1px solid rgba(255, 255, 255, 0.12)',
+          boxShadow: `
       0 8px 32px rgba(0, 0, 0, 0.12),
       inset 0 1px 0 rgba(255, 255, 255, 0.15)
     `,
-    transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
-  } : {};
+          transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+        }
+      : {};
 
   return (
     <div
@@ -320,12 +348,10 @@ const LiquidGlass = ({
           style={{ mixBlendMode: 'overlay' }}
         />
       )}
-      
-      <div className="relative z-10">
-        {children}
-      </div>
+
+      <div className="relative z-10">{children}</div>
     </div>
   );
 };
 
-export default LiquidGlass; 
+export default LiquidGlass;

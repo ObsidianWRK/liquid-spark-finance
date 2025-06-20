@@ -1,9 +1,9 @@
-import React, { useEffect } from "react";
-import { UniversalCard } from "@/shared/ui/UniversalCard";
-import { useWidgetsStore } from "../store";
-import { WidgetPreview } from "./WidgetPreview";
-import { AddWidgetButtons } from "./AddWidgetButtons";
-import { Grid } from "lucide-react";
+import React, { useEffect } from 'react';
+import { UniversalCard } from '@/shared/ui/UniversalCard';
+import { useWidgetsStore } from '../store';
+import { WidgetPreview } from './WidgetPreview';
+import { AddWidgetButtons } from './AddWidgetButtons';
+import { Grid } from 'lucide-react';
 
 export const WidgetsPanel: React.FC = () => {
   const { widgets, loading, refresh } = useWidgetsStore((s) => ({
@@ -40,4 +40,4 @@ export const WidgetsPanel: React.FC = () => {
       </div>
     </UniversalCard>
   );
-}; 
+};

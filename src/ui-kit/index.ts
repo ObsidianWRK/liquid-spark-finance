@@ -6,7 +6,7 @@ export { UniversalCard } from '../shared/ui/UniversalCard';
 export { Button } from '../shared/ui/button';
 export { Input } from '../shared/ui/input';
 
-// Specialized Components  
+// Specialized Components
 export { UniversalMetricCard } from '../features/insights/components/UniversalMetricCard';
 export { UniversalScoreCard } from '../features/insights/components/UniversalScoreCard';
 export { SharedScoreCircle } from '../components/shared/SharedScoreCircle';
@@ -21,4 +21,4 @@ export { default as UnifiedTransactionList } from '../features/transactions/comp
 export { default as BaseInsightsPage } from '../features/insights/components/BaseInsightsPage';
 
 // Theme
-export { vueniTheme } from '../theme/unified'; 
+export { vueniTheme } from '../theme/unified';

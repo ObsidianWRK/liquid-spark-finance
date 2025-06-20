@@ -21,19 +21,19 @@ function formatSize(bytes) {
   const units = ['B', 'KB', 'MB', 'GB'];
   let size = bytes;
   let unitIndex = 0;
-  
+
   while (size >= 1024 && unitIndex < units.length - 1) {
     size /= 1024;
     unitIndex++;
   }
-  
+
   return `${size.toFixed(1)}${units[unitIndex]}`;
 }
 
 // Function to enhance HTML with preload hints
 function enhanceHTMLWithPreloadHints() {
   console.log('\n⚡ Adding performance preload hints...');
-  
+
   const htmlPath = path.join(distDir, 'index.html');
   if (!fs.existsSync(htmlPath)) {
     console.error('❌ index.html not found');
@@ -41,11 +41,12 @@ function enhanceHTMLWithPreloadHints() {
   }
 
   let html = fs.readFileSync(htmlPath, 'utf8');
-  
+
   // Extract largest JS chunks for preloading
-  const jsFiles = fs.readdirSync(assetsDir)
-    .filter(file => file.endsWith('.js') && !file.includes('legacy'))
-    .map(file => {
+  const jsFiles = fs
+    .readdirSync(assetsDir)
+    .filter((file) => file.endsWith('.js') && !file.includes('legacy'))
+    .map((file) => {
       const stats = fs.statSync(path.join(assetsDir, file));
       return { name: file, size: stats.size };
     })
@@ -63,9 +64,12 @@ function enhanceHTMLWithPreloadHints() {
     <link rel="preload" href="https://fonts.gstatic.com/s/inter/v13/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuLyfAZ9hiA.woff2" as="font" type="font/woff2" crossorigin>
     
     <!-- Largest JS chunks preload for faster TTI -->
-    ${jsFiles.map(file => 
-      `<link rel="preload" href="/assets/${file.name}" as="script" crossorigin>`
-    ).join('\n    ')}
+    ${jsFiles
+      .map(
+        (file) =>
+          `<link rel="preload" href="/assets/${file.name}" as="script" crossorigin>`
+      )
+      .join('\n    ')}
     
     <!-- Early hints for above-the-fold content -->
     <link rel="prefetch" href="/assets/DashboardPage-PRpjDtR3.js">
@@ -73,10 +77,7 @@ function enhanceHTMLWithPreloadHints() {
   `;
 
   // Insert preload hints after the existing style tag
-  html = html.replace(
-    /(<\/style>\s*)/,
-    `$1${preloadHints}\n    `
-  );
+  html = html.replace(/(<\/style>\s*)/, `$1${preloadHints}\n    `);
 
   // Add performance optimization meta tags
   const performanceMetaTags = `
@@ -104,7 +105,7 @@ function enhanceHTMLWithPreloadHints() {
 // Function to analyze bundle sizes
 function analyzeBundleSizes() {
   console.log('\n📊 Analyzing bundle sizes...');
-  
+
   if (!fs.existsSync(assetsDir)) {
     console.error('❌ Assets directory not found');
     return;
@@ -114,17 +115,17 @@ function analyzeBundleSizes() {
   let totalSize = 0;
   let jsSize = 0;
   let cssSize = 0;
-  
+
   const jsFiles = [];
   const cssFiles = [];
-  
-  files.forEach(file => {
+
+  files.forEach((file) => {
     const filePath = path.join(assetsDir, file);
     const stats = fs.statSync(filePath);
     const sizeKB = (stats.size / 1024).toFixed(1);
-    
+
     totalSize += stats.size;
-    
+
     if (file.endsWith('.js')) {
       jsSize += stats.size;
       jsFiles.push({ name: file, size: stats.size, sizeKB });
@@ -134,19 +135,21 @@ function analyzeBundleSizes() {
     }
   });
 
-  console.log(`📦 Total bundle size: ${(totalSize / 1024 / 1024).toFixed(1)}MB`);
-  
+  console.log(
+    `📦 Total bundle size: ${(totalSize / 1024 / 1024).toFixed(1)}MB`
+  );
+
   // Sort and display JS files
   console.log('\n🟨 JavaScript files:');
   jsFiles
     .sort((a, b) => b.size - a.size)
-    .forEach(file => {
+    .forEach((file) => {
       const icon = file.size > 100 * 1024 ? '⚠️' : '✅';
       console.log(`  ${icon} ${file.name}: ${file.sizeKB}KB`);
     });
 
   console.log(`  📊 Total JS: ${(jsSize / 1024 / 1024).toFixed(1)}MB`);
-  
+
   if (jsSize > 2.2 * 1024 * 1024) {
     console.log('  ⚠️  Consider code splitting to reduce bundle size');
   }
@@ -155,7 +158,7 @@ function analyzeBundleSizes() {
   console.log('\n🟦 CSS files:');
   cssFiles
     .sort((a, b) => b.size - a.size)
-    .forEach(file => {
+    .forEach((file) => {
       const icon = file.size > 300 * 1024 ? '⚠️' : '✅';
       console.log(`  ${icon} ${file.name}: ${file.sizeKB}KB`);
     });
@@ -166,7 +169,7 @@ function analyzeBundleSizes() {
 // Function to validate production build
 function validateProductionBuild() {
   console.log('\n🔍 Validating production build...');
-  
+
   const indexPath = path.join(distDir, 'index.html');
   if (!fs.existsSync(indexPath)) {
     console.error('❌ index.html not found in build');
@@ -174,37 +177,40 @@ function validateProductionBuild() {
   }
 
   const indexContent = fs.readFileSync(indexPath, 'utf8');
-  
+
   // Check for common issues
   const checks = [
     {
       name: 'Contains CSS assets',
       test: () => indexContent.includes('.css'),
-      required: true
+      required: true,
     },
     {
       name: 'Contains JS assets',
       test: () => indexContent.includes('.js'),
-      required: true
+      required: true,
     },
     {
       name: 'No development references',
-      test: () => !indexContent.includes('localhost:') && !indexContent.includes('127.0.0.1'),
-      required: true
+      test: () =>
+        !indexContent.includes('localhost:') &&
+        !indexContent.includes('127.0.0.1'),
+      required: true,
     },
     {
       name: 'Contains Vueni references',
-      test: () => indexContent.includes('Vueni') || indexContent.includes('vueni'),
-      required: false
-    }
+      test: () =>
+        indexContent.includes('Vueni') || indexContent.includes('vueni'),
+      required: false,
+    },
   ];
 
   let allRequired = true;
-  checks.forEach(check => {
+  checks.forEach((check) => {
     const passed = check.test();
-    const status = passed ? '✅' : (check.required ? '❌' : '⚠️');
+    const status = passed ? '✅' : check.required ? '❌' : '⚠️';
     console.log(`  ${status} ${check.name}`);
-    
+
     if (check.required && !passed) {
       allRequired = false;
     }
@@ -216,7 +222,7 @@ function validateProductionBuild() {
 // Function to generate deployment manifest
 function generateDeploymentManifest() {
   console.log('\n📝 Generating deployment manifest...');
-  
+
   const manifest = {
     name: 'vueni-financial-platform',
     version: '1.0.0',
@@ -227,20 +233,20 @@ function generateDeploymentManifest() {
       sessionManagement: true,
       performanceMonitoring: true,
       componentConsolidation: true,
-      csrfProtection: true
+      csrfProtection: true,
     },
     optimizations: {
       codeSplitting: true,
       lazyLoading: true,
       caching: true,
-      compression: true
+      compression: true,
     },
     security: {
       encryption: true,
       auditLogging: true,
       sessionTimeout: 1800,
-      csrfTokens: true
-    }
+      csrfTokens: true,
+    },
   };
 
   const manifestPath = path.join(distDir, 'vueni-manifest.json');
@@ -269,7 +275,7 @@ Sitemap: https://vueni.vercel.app/sitemap.xml
 // Function to optimize service worker
 function optimizeServiceWorker() {
   const swPath = path.join(distDir, 'sw.js');
-  
+
   // Create a basic service worker for Vueni
   const swContent = `
 // Vueni Service Worker for Performance Optimization
@@ -306,15 +312,15 @@ self.addEventListener('fetch', (event) => {
 // Function to check for security best practices
 function checkSecurityPractices() {
   console.log('\n🔒 Checking security practices...');
-  
+
   const checks = [
     {
       name: 'Vercel configuration exists',
-      test: () => fs.existsSync(path.join(process.cwd(), 'vercel.json'))
+      test: () => fs.existsSync(path.join(process.cwd(), 'vercel.json')),
     },
     {
       name: 'Environment variables configured',
-      test: () => fs.existsSync(path.join(process.cwd(), '.env.example'))
+      test: () => fs.existsSync(path.join(process.cwd(), '.env.example')),
     },
     {
       name: 'Security headers configured',
@@ -322,14 +328,17 @@ function checkSecurityPractices() {
         const vercelPath = path.join(process.cwd(), 'vercel.json');
         if (!fs.existsSync(vercelPath)) return false;
         const config = JSON.parse(fs.readFileSync(vercelPath, 'utf8'));
-        return config.headers && config.headers.some(h => 
-          h.headers.some(header => header.key === 'Content-Security-Policy')
+        return (
+          config.headers &&
+          config.headers.some((h) =>
+            h.headers.some((header) => header.key === 'Content-Security-Policy')
+          )
         );
-      }
-    }
+      },
+    },
   ];
 
-  checks.forEach(check => {
+  checks.forEach((check) => {
     const passed = check.test();
     const status = passed ? '✅' : '⚠️';
     console.log(`  ${status} ${check.name}`);
@@ -340,7 +349,7 @@ function checkSecurityPractices() {
 try {
   enhanceHTMLWithPreloadHints();
   analyzeBundleSizes();
-  
+
   const buildValid = validateProductionBuild();
   if (!buildValid) {
     console.error('❌ Production build validation failed');
@@ -360,10 +369,9 @@ try {
   console.log('  ✅ SEO files created');
   console.log('  ✅ Service worker optimized');
   console.log('  ✅ Security practices checked');
-  
+
   console.log('\n🚀 Ready for Vercel deployment!');
   console.log('   Run: npm run deploy:vercel');
-
 } catch (error) {
   console.error('❌ Post-build script failed:', error.message);
   process.exit(1);

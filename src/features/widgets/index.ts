@@ -1,2 +1,2 @@
-export { useWidgetsStore } from "./store";
-export { WidgetsPanel } from "./components/WidgetsPanel"; 
+export { useWidgetsStore } from './store';
+export { WidgetsPanel } from './components/WidgetsPanel';

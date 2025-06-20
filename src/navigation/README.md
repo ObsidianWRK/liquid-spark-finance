@@ -5,15 +5,17 @@ This directory contains a comprehensive scroll controller system for managing na
 ## Features
 
 ✅ **Core Requirements Met:**
+
 - Throttled requestAnimationFrame listener for optimal performance
 - Hide navigation on 48px downward scroll with velocity > 0
-- Reveal navigation on upward scroll  
+- Reveal navigation on upward scroll
 - Virtual keyboard awareness using visualViewport API
 - Safe area padding synchronization
 - Performance optimized (no scroll jank)
 - Clean API for NavBar component integration
 
 ✅ **Additional Features:**
+
 - Respects reduced motion preferences
 - Cross-browser compatible
 - TypeScript definitions included
@@ -53,8 +55,8 @@ const MyNavBar = () => {
   });
 
   return (
-    <nav 
-      className={shouldAnimate ? "transition-transform duration-300" : ""}
+    <nav
+      className={shouldAnimate ? 'transition-transform duration-300' : ''}
       style={{ transform }}
     >
       {/* Navigation content */}
@@ -89,12 +91,8 @@ import { useNavigationState, useScrollActions } from '@/navigation';
 const NavBar = () => {
   const { isVisible, transform } = useNavigationState();
   const { showNavigation, hideNavigation } = useScrollActions();
-  
-  return (
-    <nav style={{ transform }}>
-      {/* Navigation content */}
-    </nav>
-  );
+
+  return <nav style={{ transform }}>{/* Navigation content */}</nav>;
 };
 ```
 
@@ -104,15 +102,18 @@ const NavBar = () => {
 import { createScrollController } from '@/navigation';
 
 // Create controller instance
-const controller = createScrollController({
-  hideThreshold: 48,
-  showThreshold: 4,
-  velocityThreshold: 0.1,
-}, {
-  onVisibilityChange: (isVisible) => {
-    console.log('Navigation visibility:', isVisible);
+const controller = createScrollController(
+  {
+    hideThreshold: 48,
+    showThreshold: 4,
+    velocityThreshold: 0.1,
   },
-});
+  {
+    onVisibilityChange: (isVisible) => {
+      console.log('Navigation visibility:', isVisible);
+    },
+  }
+);
 
 // Use controller methods
 controller.setVisibility(false, true); // Force hide
@@ -124,15 +125,15 @@ controller.destroy();
 
 ## Configuration Options
 
-| Option | Type | Default | Description |
-|--------|------|---------|-------------|
-| `hideThreshold` | number | 48 | Scroll distance (px) before hiding navigation |
-| `showThreshold` | number | 4 | Distance from top (px) to always show navigation |
-| `velocityThreshold` | number | 0.1 | Minimum scroll velocity (px/ms) to trigger hide |
-| `debounceMs` | number | 150 | Debounce time for scroll state updates |
-| `respectReducedMotion` | boolean | true | Disable animations if user prefers reduced motion |
-| `enableVirtualKeyboardDetection` | boolean | true | Detect and handle virtual keyboards |
-| `enableSafeAreaDetection` | boolean | true | Handle safe area insets (iOS) |
+| Option                           | Type    | Default | Description                                       |
+| -------------------------------- | ------- | ------- | ------------------------------------------------- |
+| `hideThreshold`                  | number  | 48      | Scroll distance (px) before hiding navigation     |
+| `showThreshold`                  | number  | 4       | Distance from top (px) to always show navigation  |
+| `velocityThreshold`              | number  | 0.1     | Minimum scroll velocity (px/ms) to trigger hide   |
+| `debounceMs`                     | number  | 150     | Debounce time for scroll state updates            |
+| `respectReducedMotion`           | boolean | true    | Disable animations if user prefers reduced motion |
+| `enableVirtualKeyboardDetection` | boolean | true    | Detect and handle virtual keyboards               |
+| `enableSafeAreaDetection`        | boolean | true    | Handle safe area insets (iOS)                     |
 
 ## Performance Characteristics
 
@@ -152,8 +153,9 @@ controller.destroy();
 - ✅ Android Chrome 60+
 
 ### Visual Viewport API Support
+
 - ✅ Chrome 61+
-- ✅ Firefox 91+  
+- ✅ Firefox 91+
 - ✅ Safari 13+
 - 🔄 Fallback implementation for older browsers
 
@@ -169,12 +171,12 @@ import { useNavigationState } from '../context/ScrollControllerContext';
 
 const TopBar = () => {
   const navigationState = useNavigationState();
-  
+
   return (
-    <header 
+    <header
       className={cn(
-        "fixed top-0 left-0 right-0 z-50",
-        navigationState.shouldAnimate && "transition-transform duration-300"
+        'fixed top-0 left-0 right-0 z-50',
+        navigationState.shouldAnimate && 'transition-transform duration-300'
       )}
       style={{
         transform: navigationState.transform,
@@ -195,11 +197,13 @@ import { useVirtualKeyboard } from '@/navigation';
 
 const MyComponent = () => {
   const { isVisible, height } = useVirtualKeyboard();
-  
+
   return (
-    <div style={{ 
-      paddingBottom: isVisible ? `${height}px` : '0px' 
-    }}>
+    <div
+      style={{
+        paddingBottom: isVisible ? `${height}px` : '0px',
+      }}
+    >
       {/* Content that adjusts for virtual keyboard */}
     </div>
   );
@@ -213,7 +217,7 @@ import { useScrollPerformance } from '@/navigation';
 
 const PerformanceMonitor = () => {
   const { fps, isSmooth, isOptimal } = useScrollPerformance();
-  
+
   return (
     <div>
       <div>FPS: {fps}</div>
@@ -232,10 +236,10 @@ Enable the debug overlay in development:
 import { ScrollControllerDebugger } from '@/navigation';
 
 // Add to your app during development
-<ScrollControllerDebugger 
+<ScrollControllerDebugger
   enabled={process.env.NODE_ENV === 'development'}
-  position="top-right" 
-/>
+  position="top-right"
+/>;
 ```
 
 ## Testing
@@ -246,7 +250,7 @@ The scroll controller includes comprehensive test coverage:
 # Run scroll controller tests
 npm test -- src/navigation/__tests__/scroll-controller.test.ts
 
-# Run performance tests  
+# Run performance tests
 npm test -- src/navigation/__tests__/scroll-performance.test.ts
 ```
 
@@ -263,7 +267,7 @@ npm test -- src/navigation/__tests__/scroll-performance.test.ts
 
 - `useScrollController()` - Full scroll controller integration
 - `useNavigationVisibility()` - Simple navigation visibility
-- `useVirtualKeyboard()` - Virtual keyboard detection  
+- `useVirtualKeyboard()` - Virtual keyboard detection
 - `useScrollPerformance()` - Performance monitoring
 
 ### Context Providers
@@ -288,7 +292,7 @@ If migrating from the existing `useMenuBarReveal` hook:
 import { useMenuBarReveal } from '@/hooks/useMenuBarReveal';
 const { visible, translateY } = useMenuBarReveal();
 
-// New approach  
+// New approach
 import { useNavigationVisibility } from '@/navigation';
 const { isVisible, transform } = useNavigationVisibility();
 ```

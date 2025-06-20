@@ -10,6 +10,7 @@ export { default as GraphBase } from './GraphBase';
 export { default as LineChart } from './LineChart';
 export { default as AreaChart } from './AreaChart';
 export { default as StackedBarChart } from './StackedBarChart';
+export { default as ScatterPlot } from './ScatterPlot';
 
 // Time range components
 export { default as TimeRangeToggle } from './TimeRangeToggle';
@@ -39,70 +40,64 @@ export type {
   ThemeColors,
   ChartThemeContext,
   ChartComponent,
-  ChartRef
+  ChartRef,
 } from './types';
 
 // LineChart-specific types
-export type {
-  LineChartProps,
-  LineChartConfig
-} from './LineChart';
+export type { LineChartProps, LineChartConfig } from './LineChart';
 
 // AreaChart-specific types
-export type {
-  AreaChartProps,
-  AreaChartConfig
-} from './AreaChart';
+export type { AreaChartProps, AreaChartConfig } from './AreaChart';
 
 // StackedBarChart-specific types
 export type {
   StackedBarChartProps,
   StackedBarConfig,
-  StackedBarDataPoint
+  StackedBarDataPoint,
 } from './StackedBarChart';
 
 // TimeRangeToggle-specific types
 export type {
   TimeRangeToggleProps,
-  TimeRangeToggleRef
+  TimeRangeToggleRef,
 } from './TimeRangeToggle';
 
 export type {
   TimeRangeToggleRadixProps,
-  TimeRangeToggleRadixRef
+  TimeRangeToggleRadixRef,
 } from './TimeRangeToggleRadix';
 
 // Re-export commonly used types for convenience
 export type { ChartConfig } from '@/shared/ui/chart';
 
 // Utility constants
-export const CHART_TYPES = ['line', 'area', 'bar', 'stackedBar'] as const;
+export const CHART_TYPES = ['line', 'area', 'bar', 'stackedBar', 'scatter'] as const;
 export const TIME_RANGES = ['1W', '1M', '3M', '6M', '1Y', 'ALL'] as const;
 
 // Default configurations
 export const DEFAULT_CHART_CONFIG = {
   dimensions: {
     height: 300,
-    responsive: true
+    responsive: true,
   },
   animation: {
     enable: true,
-    duration: 800
+    duration: 800,
   },
   accessibility: {
-    keyboardNavigation: true
+    keyboardNavigation: true,
   },
   grid: {
     show: true,
     horizontal: true,
-    vertical: false
+    vertical: false,
   },
   tooltip: {
-    show: true
+    show: true,
   },
   legend: {
-    show: false
-  }
+    show: false,
+  },
 } as const;
 
 // Default time control configuration
@@ -110,12 +105,12 @@ export const DEFAULT_TIME_CONTROLS = {
   show: true,
   options: ['1W', '1M', '3M', '6M', '1Y', 'ALL'] as TimeRangeOption[],
   defaultRange: '1M' as TimeRangeOption,
-  position: 'top' as const
+  position: 'top' as const,
 };
 
 // Performance thresholds
 export const PERFORMANCE_THRESHOLDS = {
   dataPoints: 1000,
   animationReduction: 500,
-  virtualizationThreshold: 2000
+  virtualizationThreshold: 2000,
 } as const;

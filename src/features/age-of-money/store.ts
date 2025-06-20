@@ -1,6 +1,6 @@
-import { create } from "zustand";
-import { ageMetricService } from "@/features/age-of-money/api/ageMetricService";
-import { AgeMetric } from "@/shared/types/shared";
+import { create } from 'zustand';
+import { ageMetricService } from '@/features/age-of-money/api/ageMetricService';
+import { AgeMetric } from '@/shared/types/shared';
 
 interface AgeOfMoneyState {
   metric?: AgeMetric;
@@ -19,7 +19,7 @@ export const useAgeOfMoneyStore = create<AgeOfMoneyState>((set) => ({
       const metric = await ageMetricService.calculate();
       set({ metric, loading: false });
     } catch (err: any) {
-      set({ error: err.message ?? "Unknown", loading: false });
+      set({ error: err.message ?? 'Unknown', loading: false });
     }
   },
-})); 
+}));

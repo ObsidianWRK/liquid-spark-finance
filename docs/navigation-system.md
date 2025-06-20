@@ -5,7 +5,7 @@
 The Vueni Adaptive Navigation System provides a seamless, responsive navigation experience that automatically adapts to different viewport sizes:
 
 - **Mobile** (<640px): Bottom navigation bar with glass-blur backdrop
-- **Tablet** (640px-1024px): Collapsible navigation rail 
+- **Tablet** (640px-1024px): Collapsible navigation rail
 - **Desktop** (≥1024px): Sidebar + top bar combination
 
 ## Architecture
@@ -34,9 +34,7 @@ function App() {
   return (
     <div className="app">
       <AdaptiveNavigation />
-      <main>
-        {/* Your app content */}
-      </main>
+      <main>{/* Your app content */}</main>
     </div>
   );
 }
@@ -45,7 +43,13 @@ function App() {
 ### Using Individual Components
 
 ```tsx
-import { BottomNav, NavRail, Sidebar, TopBar, useBreakpoint } from '@/navigation';
+import {
+  BottomNav,
+  NavRail,
+  Sidebar,
+  TopBar,
+  useBreakpoint,
+} from '@/navigation';
 
 function CustomNavigation() {
   const { isMobile, isTablet, isDesktop } = useBreakpoint();
@@ -79,7 +83,7 @@ export const mainRoutes: Route[] = [
   },
   {
     id: 'transactions',
-    label: 'Transactions', 
+    label: 'Transactions',
     path: '/transactions',
     icon: Receipt,
     badgeKey: 'unread_transactions', // Optional badge
@@ -96,14 +100,14 @@ export const mainRoutes: Route[] = [
 
 ### Route Properties
 
-| Property | Type | Description |
-|----------|------|-------------|
-| `id` | `string` | Unique identifier |
-| `label` | `string` | Display label |
-| `path` | `string` | React Router path |
-| `icon` | `LucideIcon` | Lucide React icon component |
-| `badgeKey?` | `string` | Optional badge identifier |
-| `hideInBottomNav?` | `boolean` | Hide from mobile navigation |
+| Property           | Type         | Description                 |
+| ------------------ | ------------ | --------------------------- |
+| `id`               | `string`     | Unique identifier           |
+| `label`            | `string`     | Display label               |
+| `path`             | `string`     | React Router path           |
+| `icon`             | `LucideIcon` | Lucide React icon component |
+| `badgeKey?`        | `string`     | Optional badge identifier   |
+| `hideInBottomNav?` | `boolean`    | Hide from mobile navigation |
 
 ## Breakpoint System
 
@@ -111,11 +115,11 @@ The navigation uses the unified breakpoint system from `@/theme/breakpoints`:
 
 ```typescript
 const breakpoints = {
-  mobile: { max: 767 },      // Phones
-  tablet: { min: 768, max: 1023 },   // Tablets  
+  mobile: { max: 767 }, // Phones
+  tablet: { min: 768, max: 1023 }, // Tablets
   desktop: { min: 1024, max: 1439 }, // Desktop
-  large: { min: 1440, max: 1919 },   // Large desktop
-  ultrawide: { min: 1920 }           // Ultra-wide
+  large: { min: 1440, max: 1919 }, // Large desktop
+  ultrawide: { min: 1920 }, // Ultra-wide
 };
 ```
 
@@ -126,7 +130,7 @@ import { useBreakpoint } from '@/navigation';
 
 function MyComponent() {
   const { breakpoint, isMobile, isTablet, isDesktop } = useBreakpoint();
-  
+
   return (
     <div>
       Current breakpoint: {breakpoint}
@@ -143,6 +147,7 @@ function MyComponent() {
 ### Mobile Navigation (BottomNav)
 
 **Features:**
+
 - Fixed bottom positioning with safe-area insets
 - Glass-blur backdrop effect
 - Maximum 5 navigation items
@@ -150,17 +155,19 @@ function MyComponent() {
 - Icon + label layout
 
 **CSS Classes:**
+
 ```css
 .liquid-glass-nav {
   backdrop-filter: blur(12px);
-  background: rgba(0,0,0,0.42);
-  border-top: 1px solid rgba(255,255,255,0.2);
+  background: rgba(0, 0, 0, 0.42);
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
 }
 ```
 
 ### Tablet Navigation (NavRail)
 
 **Features:**
+
 - Left-edge navigation rail
 - Collapses to 80px (icons only)
 - Expands to 256px on hover/long-press
@@ -168,6 +175,7 @@ function MyComponent() {
 - Badge support
 
 **Interaction:**
+
 - **Hover**: Expands rail to show labels
 - **Long Press** (touch): 500ms hold to expand
 - **Focus**: Keyboard accessible
@@ -175,6 +183,7 @@ function MyComponent() {
 ### Desktop Navigation (Sidebar + TopBar)
 
 **Features:**
+
 - **Sidebar**: 288px wide, permanently visible
 - **TopBar**: Search bar, quick actions, profile
 - Grouped navigation sections
@@ -182,6 +191,7 @@ function MyComponent() {
 - Professional layout
 
 **Layout:**
+
 ```css
 .sidebar {
   width: 18rem; /* 288px */
@@ -210,11 +220,12 @@ const variants = {
   bottom: { y: [100, 0], opacity: [0, 1] },
   rail: { x: [-80, 0], opacity: [0, 1] },
   sidebar: { x: [-288, 0], opacity: [0, 1] },
-  topbar: { y: [-48, 0], opacity: [0, 1] }
+  topbar: { y: [-48, 0], opacity: [0, 1] },
 };
 ```
 
 **Motion Preferences:**
+
 - Respects `prefers-reduced-motion`
 - Spring physics for natural feel
 - Optimized for 60fps performance
@@ -222,27 +233,24 @@ const variants = {
 ## Accessibility
 
 ### ARIA Labels
+
 ```tsx
-<nav
-  role="navigation"
-  aria-label="Bottom navigation"
->
-  <button
-    aria-label="Navigate to Dashboard"
-    aria-current="page"
-  >
+<nav role="navigation" aria-label="Bottom navigation">
+  <button aria-label="Navigate to Dashboard" aria-current="page">
     Dashboard
   </button>
 </nav>
 ```
 
 ### Keyboard Navigation
+
 - Tab order follows logical sequence
 - Enter/Space activates navigation items
 - Escape closes expanded states
 - Focus indicators clearly visible
 
 ### Touch Targets
+
 - Minimum 44x44px (WCAG 2.5.5)
 - Comfortable 56px on mobile
 - Touch-manipulation CSS for responsiveness
@@ -250,16 +258,19 @@ const variants = {
 ## Testing
 
 ### Unit Tests
+
 ```bash
 npm test -- navigation
 ```
 
 ### E2E Tests
+
 ```bash
 npm run test:e2e -- adaptive-navigation.spec.ts
 ```
 
 **Test Coverage:**
+
 - ✅ Breakpoint detection
 - ✅ Component rendering
 - ✅ Navigation interactions
@@ -272,26 +283,29 @@ npm run test:e2e -- adaptive-navigation.spec.ts
 ### From LiquidGlassTopMenuBar
 
 **Before:**
+
 ```tsx
 import LiquidGlassTopMenuBar from '@/components/LiquidGlassTopMenuBar';
 
-<LiquidGlassTopMenuBar onMenuItemClick={handleClick} />
+<LiquidGlassTopMenuBar onMenuItemClick={handleClick} />;
 ```
 
 **After:**
+
 ```tsx
 import { AdaptiveNavigation } from '@/navigation';
 
-<AdaptiveNavigation />
+<AdaptiveNavigation />;
 ```
 
 ### From Navigation.tsx
 
 **Before:**
+
 ```tsx
 import Navigation from '@/components/Navigation';
 
-<Navigation activeTab={tab} onTabChange={setTab} />
+<Navigation activeTab={tab} onTabChange={setTab} />;
 ```
 
 **After:**
@@ -310,18 +324,20 @@ export const mainRoutes: Route[] = [
     label: 'New Feature',
     path: '/new-feature',
     icon: NewFeatureIcon,
-  }
+  },
 ];
 ```
 
 ## Performance
 
 ### Bundle Impact
+
 - **Core navigation**: ~15KB gzipped
 - **Framer Motion**: ~35KB gzipped (shared)
 - **Total overhead**: ~50KB gzipped
 
 ### Optimization
+
 - Tree-shaking for unused components
 - Lazy loading for motion library
 - Memoized calculations
@@ -330,15 +346,17 @@ export const mainRoutes: Route[] = [
 ## Design Tokens
 
 ### Glass Effect
+
 ```css
 :root {
-  --glass-bg: rgba(0,0,0,0.42);
-  --glass-border: rgba(255,255,255,0.2);
+  --glass-bg: rgba(0, 0, 0, 0.42);
+  --glass-border: rgba(255, 255, 255, 0.2);
   --glass-backdrop: blur(12px) saturate(180%);
 }
 ```
 
 ### Spacing
+
 ```css
 :root {
   --nav-mobile-height: 4rem;
@@ -359,16 +377,19 @@ export const mainRoutes: Route[] = [
 ## Troubleshooting
 
 ### Navigation not showing
+
 1. Check viewport size matches expected breakpoint
 2. Verify CSS classes are applied correctly
 3. Ensure React Router is properly configured
 
 ### Animations not working
+
 1. Check `prefers-reduced-motion` setting
 2. Verify Framer Motion is installed
 3. Test without animation wrappers
 
 ### Touch targets too small
+
 1. Verify CSS `touch-manipulation` is applied
 2. Check minimum size calculations
 3. Test on actual devices
@@ -387,4 +408,4 @@ export const mainRoutes: Route[] = [
 - [ ] Gesture-based navigation
 - [ ] Context-aware routing
 - [ ] Advanced animation presets
-- [ ] Theme customization API 
+- [ ] Theme customization API

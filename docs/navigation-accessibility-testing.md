@@ -43,6 +43,7 @@ npm run test:a11y
 ### 1. Screen Reader Testing
 
 #### VoiceOver (macOS)
+
 ```bash
 # Enable VoiceOver
 System Preferences → Accessibility → VoiceOver → Enable
@@ -55,7 +56,8 @@ System Preferences → Accessibility → VoiceOver → Enable
 ```
 
 **Test Checklist:**
-- [ ] Navigation is announced as "Main navigation" 
+
+- [ ] Navigation is announced as "Main navigation"
 - [ ] Each tab is announced with role and state
 - [ ] Active tab is announced as "selected"
 - [ ] Badge notifications are properly announced
@@ -63,6 +65,7 @@ System Preferences → Accessibility → VoiceOver → Enable
 - [ ] Live region announcements work correctly
 
 #### NVDA (Windows)
+
 ```bash
 # Key Commands:
 # Arrow Keys: Navigate items
@@ -72,12 +75,14 @@ System Preferences → Accessibility → VoiceOver → Enable
 ```
 
 **Test Checklist:**
+
 - [ ] Navigation landmarks are identified
 - [ ] Tab role and selected state are announced
 - [ ] Keyboard shortcuts are properly announced
 - [ ] All interactive elements are accessible
 
 #### JAWS (Windows)
+
 ```bash
 # Key Commands:
 # Virtual cursor mode for navigation
@@ -89,12 +94,15 @@ System Preferences → Accessibility → VoiceOver → Enable
 ### 2. Keyboard Navigation Testing
 
 #### Tab Order Test
+
 ```javascript
 // Test tab order programmatically
 const getFocusableElements = () => {
-  return Array.from(document.querySelectorAll(
-    'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
-  ));
+  return Array.from(
+    document.querySelectorAll(
+      'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+    )
+  );
 };
 
 // Expected tab order:
@@ -104,6 +112,7 @@ const getFocusableElements = () => {
 ```
 
 **Test Checklist:**
+
 - [ ] Tab order is logical and predictable
 - [ ] Skip link appears on focus
 - [ ] All interactive elements are keyboard accessible
@@ -111,23 +120,25 @@ const getFocusableElements = () => {
 - [ ] Roving tabindex works correctly in navigation
 
 #### Arrow Key Navigation Test
+
 ```javascript
 // Test arrow key navigation
 const testArrowNavigation = () => {
   // Focus first nav item
   const firstNavItem = document.querySelector('[role="tab"]');
   firstNavItem.focus();
-  
+
   // Simulate arrow key presses
   const rightArrow = new KeyboardEvent('keydown', { key: 'ArrowRight' });
   firstNavItem.dispatchEvent(rightArrow);
-  
+
   // Verify focus moved to next item
   expect(document.activeElement).toBe(secondNavItem);
 };
 ```
 
 **Test Checklist:**
+
 - [ ] Arrow keys navigate between tabs
 - [ ] Home/End keys work correctly
 - [ ] Enter/Space activate selected tab
@@ -137,6 +148,7 @@ const testArrowNavigation = () => {
 ### 3. Assistive Technology Testing
 
 #### Voice Control (macOS)
+
 ```bash
 # Enable Voice Control
 System Preferences → Accessibility → Voice Control → Enable
@@ -148,12 +160,14 @@ System Preferences → Accessibility → Voice Control → Enable
 ```
 
 **Test Checklist:**
+
 - [ ] All navigation items have voice control numbers
 - [ ] Voice commands successfully activate navigation
 - [ ] Labels are clearly spoken
 - [ ] Interactive elements are properly identified
 
 #### Switch Control (iOS/macOS)
+
 ```bash
 # Enable Switch Control
 Settings → Accessibility → Switch Control → Enable
@@ -162,6 +176,7 @@ Settings → Accessibility → Switch Control → Enable
 ```
 
 **Test Checklist:**
+
 - [ ] Switch navigation works with all nav items
 - [ ] Proper highlighting of focusable elements
 - [ ] Activation works correctly
@@ -170,6 +185,7 @@ Settings → Accessibility → Switch Control → Enable
 ### 4. Visual Accessibility Testing
 
 #### High Contrast Mode
+
 ```css
 /* Test high contrast mode */
 @media (prefers-contrast: high) {
@@ -178,6 +194,7 @@ Settings → Accessibility → Switch Control → Enable
 ```
 
 **Test Checklist:**
+
 - [ ] Text contrast ratio ≥ 4.5:1 (AA) or ≥ 7:1 (AAA)
 - [ ] Focus indicators are clearly visible
 - [ ] Interactive elements have enhanced borders
@@ -185,6 +202,7 @@ Settings → Accessibility → Switch Control → Enable
 - [ ] Background/foreground separation is clear
 
 #### Reduced Motion
+
 ```css
 /* Test reduced motion preferences */
 @media (prefers-reduced-motion: reduce) {
@@ -193,12 +211,14 @@ Settings → Accessibility → Switch Control → Enable
 ```
 
 **Test Checklist:**
+
 - [ ] All transitions are disabled or minimal
 - [ ] Animations respect user preferences
 - [ ] Essential motion (focus indicators) still works
 - [ ] Loading states are accessible without animation
 
 #### Reduced Transparency
+
 ```css
 /* Test reduced transparency preferences */
 @media (prefers-reduced-transparency: reduce) {
@@ -207,6 +227,7 @@ Settings → Accessibility → Switch Control → Enable
 ```
 
 **Test Checklist:**
+
 - [ ] Glass/blur effects are replaced with solid backgrounds
 - [ ] Transparency is reduced to minimum
 - [ ] Readability is maintained
@@ -215,11 +236,12 @@ Settings → Accessibility → Switch Control → Enable
 ### 5. Mobile Accessibility Testing
 
 #### Touch Target Testing
+
 ```javascript
 // Verify minimum touch target sizes
 const testTouchTargets = () => {
   const navButtons = document.querySelectorAll('.bottom-nav button');
-  navButtons.forEach(button => {
+  navButtons.forEach((button) => {
     const rect = button.getBoundingClientRect();
     expect(rect.width).toBeGreaterThanOrEqual(44);
     expect(rect.height).toBeGreaterThanOrEqual(44);
@@ -228,16 +250,19 @@ const testTouchTargets = () => {
 ```
 
 **Test Checklist:**
+
 - [ ] All touch targets are ≥ 44x44px
 - [ ] Adequate spacing between touch targets
 - [ ] Touch feedback is provided
 - [ ] Gestures work with assistive touch
 
 #### Screen Reader Testing (Mobile)
+
 - **iOS VoiceOver**: Test with iPhone/iPad
 - **Android TalkBack**: Test with Android device
 
 **Test Checklist:**
+
 - [ ] Swipe navigation works correctly
 - [ ] Tap to activate functions properly
 - [ ] Rotor navigation includes all elements
@@ -261,7 +286,7 @@ test.describe('Navigation Accessibility', () => {
   test('should not have any accessibility violations', async ({ page }) => {
     await checkA11y(page, '.bottom-nav', {
       detailedReport: true,
-      detailedReportOptions: { html: true }
+      detailedReportOptions: { html: true },
     });
   });
 
@@ -270,10 +295,10 @@ test.describe('Navigation Accessibility', () => {
     await page.keyboard.press('Tab');
     await page.keyboard.press('Tab'); // Skip link
     await page.keyboard.press('Tab'); // First nav item
-    
+
     const focusedElement = await page.locator(':focus');
     await expect(focusedElement).toHaveAttribute('role', 'tab');
-    
+
     // Test arrow key navigation
     await page.keyboard.press('ArrowRight');
     const nextFocused = await page.locator(':focus');
@@ -283,7 +308,7 @@ test.describe('Navigation Accessibility', () => {
   test('should announce navigation changes', async ({ page }) => {
     // Simulate screen reader interaction
     await page.click('[role="tab"][aria-selected="false"]');
-    
+
     const liveRegion = await page.locator('[aria-live="polite"]');
     await expect(liveRegion).toHaveText(/Navigated to/);
   });
@@ -311,12 +336,12 @@ describe('BottomNav Accessibility', () => {
   test('should support keyboard navigation', async () => {
     const user = userEvent.setup();
     render(<BottomNav />);
-    
+
     const firstTab = screen.getByRole('tab', { name: /dashboard/i });
     await user.tab();
-    
+
     expect(firstTab).toHaveFocus();
-    
+
     await user.keyboard('{ArrowRight}');
     const secondTab = screen.getByRole('tab', { name: /accounts/i });
     expect(secondTab).toHaveFocus();
@@ -327,6 +352,7 @@ describe('BottomNav Accessibility', () => {
 ## Performance Impact Testing
 
 ### 1. Bundle Size Analysis
+
 ```bash
 # Analyze bundle size impact of accessibility features
 npm run build:analyze
@@ -335,16 +361,17 @@ npm run build:analyze
 ```
 
 ### 2. Runtime Performance
+
 ```javascript
 // Measure performance impact
 const measureA11yPerformance = () => {
   performance.mark('a11y-start');
-  
+
   // Render navigation with accessibility features
-  
+
   performance.mark('a11y-end');
   performance.measure('a11y-duration', 'a11y-start', 'a11y-end');
-  
+
   const measure = performance.getEntriesByName('a11y-duration')[0];
   console.log('A11y overhead:', measure.duration, 'ms');
 };
@@ -353,6 +380,7 @@ const measureA11yPerformance = () => {
 ## Regression Testing
 
 ### Continuous Integration
+
 ```yaml
 # .github/workflows/accessibility.yml
 name: Accessibility Tests
@@ -376,6 +404,7 @@ jobs:
 ```
 
 ### Pre-commit Hooks
+
 ```bash
 # Install pre-commit accessibility checks
 npx husky add .husky/pre-commit "npm run test:a11y"
@@ -384,6 +413,7 @@ npx husky add .husky/pre-commit "npm run test:a11y"
 ## Documentation and Training
 
 ### Developer Guidelines
+
 1. **Always test with screen readers** during development
 2. **Use semantic HTML** and ARIA attributes correctly
 3. **Test keyboard navigation** before code review
@@ -391,6 +421,7 @@ npx husky add .husky/pre-commit "npm run test:a11y"
 5. **Consider reduced motion** preferences
 
 ### User Testing
+
 1. **Recruit users with disabilities** for testing
 2. **Test with actual assistive technologies** in use
 3. **Gather feedback** on usability and accessibility
@@ -399,6 +430,7 @@ npx husky add .husky/pre-commit "npm run test:a11y"
 ## Compliance Checklist
 
 ### WCAG 2.1 AA Requirements
+
 - [ ] **1.1.1** Non-text Content: Alt text for images
 - [ ] **1.3.1** Info and Relationships: Proper markup
 - [ ] **1.4.3** Contrast: 4.5:1 minimum ratio
@@ -411,6 +443,7 @@ npx husky add .husky/pre-commit "npm run test:a11y"
 - [ ] **4.1.2** Name, Role, Value: Proper ARIA implementation
 
 ### Apple Accessibility Guidelines
+
 - [ ] **VoiceOver** support with proper announcements
 - [ ] **Voice Control** compatibility
 - [ ] **Switch Control** support
@@ -419,6 +452,7 @@ npx husky add .husky/pre-commit "npm run test:a11y"
 - [ ] **44pt minimum** touch targets
 
 ### Platform-Specific Testing
+
 - [ ] **iOS**: VoiceOver, Voice Control, Switch Control
 - [ ] **Android**: TalkBack, Select to Speak, Switch Access
 - [ ] **Windows**: NVDA, JAWS, Narrator
@@ -428,12 +462,14 @@ npx husky add .husky/pre-commit "npm run test:a11y"
 ## Reporting and Monitoring
 
 ### Accessibility Metrics
+
 1. **Lighthouse Accessibility Score**: Target 100/100
 2. **axe-core Violations**: Target 0 violations
 3. **Manual Test Pass Rate**: Target 100%
 4. **User Feedback**: Collect and address issues
 
 ### Issue Tracking
+
 1. **Label accessibility issues** appropriately
 2. **Prioritize based on severity** and user impact
 3. **Track remediation efforts** and timeline

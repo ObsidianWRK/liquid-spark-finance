@@ -1,9 +1,12 @@
-import { AdvisorMessage, AdvisorThread } from "../types";
+import { AdvisorMessage, AdvisorThread } from '../types';
 
 export interface AdvisorService {
   openThread: () => Promise<AdvisorThread>;
   sendMessage: (threadId: string, content: string) => Promise<AdvisorMessage>;
-  subscribeToThread: (threadId: string, onMessage: (msg: AdvisorMessage) => void) => () => void; // returns unsubscribe
+  subscribeToThread: (
+    threadId: string,
+    onMessage: (msg: AdvisorMessage) => void
+  ) => () => void; // returns unsubscribe
 }
 
 class MockAdvisorService implements AdvisorService {
@@ -11,8 +14,8 @@ class MockAdvisorService implements AdvisorService {
 
   async openThread(): Promise<AdvisorThread> {
     const thread: AdvisorThread = {
-      id: "thread-" + Math.random().toString(36).substring(2),
-      userId: "user-mock",
+      id: 'thread-' + Math.random().toString(36).substring(2),
+      userId: 'user-mock',
       messages: [],
       isEscalated: false,
     };
@@ -20,12 +23,15 @@ class MockAdvisorService implements AdvisorService {
     return thread;
   }
 
-  async sendMessage(threadId: string, content: string): Promise<AdvisorMessage> {
+  async sendMessage(
+    threadId: string,
+    content: string
+  ): Promise<AdvisorMessage> {
     const thread = this.threads.find((t) => t.id === threadId);
-    if (!thread) throw new Error("Thread not found");
+    if (!thread) throw new Error('Thread not found');
     const msg: AdvisorMessage = {
-      id: "msg-" + Math.random().toString(36).substring(2),
-      sender: "user",
+      id: 'msg-' + Math.random().toString(36).substring(2),
+      sender: 'user',
       content,
       createdAt: new Date().toISOString(),
     };
@@ -33,10 +39,13 @@ class MockAdvisorService implements AdvisorService {
     return msg;
   }
 
-  subscribeToThread(_threadId: string, _onMessage: (msg: AdvisorMessage) => void): () => void {
+  subscribeToThread(
+    _threadId: string,
+    _onMessage: (msg: AdvisorMessage) => void
+  ): () => void {
     // mock – returns noop unsubscribe
     return () => {};
   }
 }
 
-export const advisorService: AdvisorService = new MockAdvisorService(); 
+export const advisorService: AdvisorService = new MockAdvisorService();

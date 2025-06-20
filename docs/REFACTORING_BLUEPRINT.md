@@ -5,6 +5,7 @@
 This document outlines a comprehensive refactoring strategy for the Vueni application, addressing critical technical debt, security vulnerabilities, and performance bottlenecks identified in the codebase analysis.
 
 ### Key Metrics
+
 - **Current Codebase**: 38,903 lines across 144 TSX files
 - **Duplicate Code**: 2,266 lines (23% duplication rate)
 - **Test Coverage**: 0% (target: 80%)
@@ -16,6 +17,7 @@ This document outlines a comprehensive refactoring strategy for the Vueni applic
 ### 1.1 Testing Infrastructure Setup
 
 #### Objectives
+
 - Establish comprehensive testing framework
 - Achieve baseline test coverage for critical functions
 - Enable test-driven development workflow
@@ -23,16 +25,18 @@ This document outlines a comprehensive refactoring strategy for the Vueni applic
 #### Implementation Plan
 
 **Install Testing Dependencies**
+
 ```bash
 npm install -D vitest @vitest/ui @testing-library/react @testing-library/jest-dom
 npm install -D @playwright/test @types/jest
 ```
 
 **Configure Vitest**
+
 ```typescript
 // vitest.config.ts
-import { defineConfig } from 'vitest/config'
-import react from '@vitejs/plugin-react-swc'
+import { defineConfig } from 'vitest/config';
+import react from '@vitejs/plugin-react-swc';
 
 export default defineConfig({
   plugins: [react()],
@@ -43,13 +47,14 @@ export default defineConfig({
     coverage: {
       provider: 'v8',
       reporter: ['text', 'json', 'html'],
-      exclude: ['node_modules/', 'src/test/', '**/*.d.ts']
-    }
-  }
-})
+      exclude: ['node_modules/', 'src/test/', '**/*.d.ts'],
+    },
+  },
+});
 ```
 
 **Priority Test Targets**
+
 1. Financial calculators (`utils/calculators.ts`) - 100% coverage required
 2. Scoring algorithms (`services/scoringModel.ts`)
 3. Core business logic (`services/budgetService.ts`, `services/ecoScoreService.ts`)
@@ -60,6 +65,7 @@ export default defineConfig({
 #### Critical Vulnerabilities to Address
 
 **1. Unencrypted Data Storage**
+
 ```typescript
 // Current (Vulnerable)
 localStorage.setItem('budgetData', JSON.stringify(budgetData));
@@ -70,6 +76,7 @@ localStorage.setItem('budgetData', encryptData(JSON.stringify(budgetData)));
 ```
 
 **2. XSS Protection Implementation**
+
 ```typescript
 // Install DOMPurify
 npm install dompurify @types/dompurify
@@ -83,18 +90,22 @@ const sanitizeInput = (input: string): string => {
 ```
 
 **3. Content Security Policy**
+
 ```html
 <!-- Add to index.html -->
-<meta http-equiv="Content-Security-Policy" 
-      content="default-src 'self'; 
+<meta
+  http-equiv="Content-Security-Policy"
+  content="default-src 'self'; 
                script-src 'self' 'unsafe-inline'; 
                style-src 'self' 'unsafe-inline';
-               img-src 'self' data: https:;">
+               img-src 'self' data: https:;"
+/>
 ```
 
 ### 1.3 TypeScript Strict Mode
 
 #### Current Issues
+
 ```json
 // tsconfig.json - Current (Permissive)
 {
@@ -107,6 +118,7 @@ const sanitizeInput = (input: string): string => {
 ```
 
 #### Target Configuration
+
 ```json
 // tsconfig.json - Target (Strict)
 {
@@ -122,6 +134,7 @@ const sanitizeInput = (input: string): string => {
 ```
 
 **Migration Strategy**
+
 1. Enable one strict flag at a time
 2. Fix type errors incrementally by module
 3. Add explicit type annotations where needed
@@ -132,6 +145,7 @@ const sanitizeInput = (input: string): string => {
 ### 2.1 TransactionList Unification
 
 #### Current State: 6 Duplicate Implementations
+
 - `TransactionList.tsx` (Base)
 - `transactions/TransactionList.tsx` (Enhanced)
 - `AppleTransactionList.tsx` (Apple UI)
@@ -188,6 +202,7 @@ const TransactionList: React.FC<TransactionListProps> = ({
 ```
 
 **Migration Steps**
+
 1. Create base TransactionList component with variant system
 2. Extract common logic into custom hooks
 3. Implement variant-specific rendering
@@ -198,6 +213,7 @@ const TransactionList: React.FC<TransactionListProps> = ({
 ### 2.2 InsightsPage Consolidation
 
 #### Current State: 7 Variations
+
 - `InsightsPage.tsx` (Original)
 - `NewInsightsPage.tsx` (Refactored)
 - `EnhancedInsightsPage.tsx` (Performance)
@@ -228,7 +244,7 @@ interface InsightsConfig {
 const InsightsPage: React.FC<{ config: InsightsConfig }> = ({ config }) => {
   const insights = useInsightsData(config);
   const layout = useInsightsLayout(config.layout);
-  
+
   return (
     <InsightsContainer layout={layout}>
       {config.features.ecoScore && <EcoScoreCard data={insights.eco} />}
@@ -243,6 +259,7 @@ const InsightsPage: React.FC<{ config: InsightsConfig }> = ({ config }) => {
 ### 2.3 ScoreCircle Component Unification
 
 #### Current State: 4 Implementations
+
 - `insights/ScoreCircle.tsx`
 - `transactions/ScoreCircle.tsx`
 - `components/ScoreCircle.tsx` (unused)
@@ -269,11 +286,11 @@ const ScoreCircle: React.FC<ScoreCircleProps> = ({
   color = 'auto',
   ...props
 }) => {
-  const { radius, strokeWidth, fontSize } = useMemo(() => 
+  const { radius, strokeWidth, fontSize } = useMemo(() =>
     getScoreCircleDimensions(size), [size]);
-  
-  const strokeColor = useMemo(() => 
-    color === 'auto' ? getScoreColor(score, maxScore) : color, 
+
+  const strokeColor = useMemo(() =>
+    color === 'auto' ? getScoreColor(score, maxScore) : color,
     [color, score, maxScore]);
 
   return (
@@ -309,6 +326,7 @@ const ScoreCircle: React.FC<ScoreCircleProps> = ({
 ### 3.1 Bundle Size Optimization
 
 #### Current Issues
+
 - Bundle Size: 2.3MB (target: 1.2MB)
 - All calculators loaded upfront
 - Full Radix UI library imported
@@ -317,6 +335,7 @@ const ScoreCircle: React.FC<ScoreCircleProps> = ({
 #### Optimization Strategy
 
 **1. Dynamic Imports for Calculators**
+
 ```typescript
 // Before: All calculators imported upfront
 import CompoundInterestCalculator from './CompoundInterestCalculator';
@@ -333,7 +352,7 @@ const calculatorComponents = {
 
 const CalculatorRoute: React.FC<{ type: string }> = ({ type }) => {
   const Component = calculatorComponents[type];
-  
+
   return (
     <Suspense fallback={<CalculatorSkeleton />}>
       <Component />
@@ -343,47 +362,50 @@ const CalculatorRoute: React.FC<{ type: string }> = ({ type }) => {
 ```
 
 **2. Tree Shaking Optimization**
+
 ```typescript
 // Before: Full library imports
 import * as RadixUI from '@radix-ui/react-dropdown-menu';
 
 // After: Specific imports only
-import { 
-  DropdownMenu, 
-  DropdownMenuContent, 
-  DropdownMenuItem 
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
 } from '@radix-ui/react-dropdown-menu';
 ```
 
 ### 3.2 Rendering Performance
 
 #### Memoization Strategy
+
 ```typescript
 // Expensive calculation memoization
 const TransactionInsights = memo(({ transactions }: { transactions: Transaction[] }) => {
-  const insights = useMemo(() => 
-    calculateTransactionInsights(transactions), 
+  const insights = useMemo(() =>
+    calculateTransactionInsights(transactions),
     [transactions]
   );
 
-  const trends = useMemo(() => 
-    calculateTrends(insights), 
+  const trends = useMemo(() =>
+    calculateTrends(insights),
     [insights]
   );
 
   return <InsightsDisplay insights={insights} trends={trends} />;
-}, (prevProps, nextProps) => 
+}, (prevProps, nextProps) =>
   prevProps.transactions.length === nextProps.transactions.length &&
   prevProps.transactions.every((t, i) => t.id === nextProps.transactions[i]?.id)
 );
 ```
 
 #### Virtual Scrolling Implementation
+
 ```typescript
 import { FixedSizeList as List } from 'react-window';
 
-const VirtualizedTransactionList: React.FC<{ transactions: Transaction[] }> = ({ 
-  transactions 
+const VirtualizedTransactionList: React.FC<{ transactions: Transaction[] }> = ({
+  transactions
 }) => {
   const Row = useCallback(({ index, style }: { index: number; style: CSSProperties }) => (
     <div style={style}>
@@ -407,6 +429,7 @@ const VirtualizedTransactionList: React.FC<{ transactions: Transaction[] }> = ({
 ### 3.3 Caching Strategy
 
 #### Service Layer Caching
+
 ```typescript
 // Implement caching for expensive operations
 class CachedInsightsService {
@@ -416,14 +439,14 @@ class CachedInsightsService {
   async getInsights(transactions: Transaction[]): Promise<InsightsData> {
     const cacheKey = this.getCacheKey(transactions);
     const cached = this.cache.get(cacheKey);
-    
+
     if (cached && Date.now() - cached.timestamp < this.CACHE_TTL) {
       return cached.data;
     }
 
     const insights = await this.calculateInsights(transactions);
     this.cache.set(cacheKey, { data: insights, timestamp: Date.now() });
-    
+
     return insights;
   }
 
@@ -438,6 +461,7 @@ class CachedInsightsService {
 ### 4.1 Unit Testing Strategy
 
 #### Calculator Testing (Critical Priority)
+
 ```typescript
 // Test all 12 financial calculators
 describe('Financial Calculators', () => {
@@ -464,16 +488,27 @@ describe('Financial Calculators', () => {
 ```
 
 #### Service Layer Testing
+
 ```typescript
 describe('EcoScoreService', () => {
   it('should calculate eco score from transactions', () => {
     const transactions = [
-      { id: '1', merchant: 'Gas Station', category: { name: 'Transportation' }, amount: -50 },
-      { id: '2', merchant: 'Whole Foods', category: { name: 'Food' }, amount: -100 }
+      {
+        id: '1',
+        merchant: 'Gas Station',
+        category: { name: 'Transportation' },
+        amount: -50,
+      },
+      {
+        id: '2',
+        merchant: 'Whole Foods',
+        category: { name: 'Food' },
+        amount: -100,
+      },
     ];
 
     const result = calculateEcoScore(transactions);
-    
+
     expect(result.score).toBeGreaterThan(0);
     expect(result.score).toBeLessThanOrEqual(100);
     expect(result.totalKgCO2e).toBeGreaterThan(0);
@@ -484,6 +519,7 @@ describe('EcoScoreService', () => {
 ### 4.2 Integration Testing
 
 #### Component Integration Tests
+
 ```typescript
 describe('TransactionList Integration', () => {
   it('should render transactions and handle user interactions', async () => {
@@ -491,7 +527,7 @@ describe('TransactionList Integration', () => {
     const onTransactionClick = vi.fn();
 
     render(
-      <TransactionList 
+      <TransactionList
         transactions={mockTransactions}
         variant="default"
         onTransactionClick={onTransactionClick}
@@ -499,10 +535,10 @@ describe('TransactionList Integration', () => {
     );
 
     expect(screen.getByTestId('transaction-list')).toBeInTheDocument();
-    
+
     const firstTransaction = screen.getByTestId('transaction-0');
     await user.click(firstTransaction);
-    
+
     expect(onTransactionClick).toHaveBeenCalledWith(mockTransactions[0]);
   });
 });
@@ -511,24 +547,27 @@ describe('TransactionList Integration', () => {
 ### 4.3 End-to-End Testing
 
 #### Critical User Flows
+
 ```typescript
 // playwright/tests/calculator-flow.spec.ts
 test('Calculator flow - compound interest', async ({ page }) => {
   await page.goto('/calculators');
-  
+
   // Navigate to compound interest calculator
   await page.click('[data-testid="compound-interest-card"]');
-  
+
   // Fill in form
   await page.fill('[data-testid="principal-input"]', '10000');
   await page.fill('[data-testid="rate-input"]', '5');
   await page.fill('[data-testid="years-input"]', '10');
-  
+
   // Calculate
   await page.click('[data-testid="calculate-button"]');
-  
+
   // Verify result
-  await expect(page.locator('[data-testid="result"]')).toContainText('$16,470.09');
+  await expect(page.locator('[data-testid="result"]')).toContainText(
+    '$16,470.09'
+  );
 });
 ```
 
@@ -537,6 +576,7 @@ test('Calculator flow - compound interest', async ({ page }) => {
 ### 5.1 API Documentation
 
 #### TypeDoc Configuration
+
 ```typescript
 // Generate comprehensive API docs
 {
@@ -553,6 +593,7 @@ test('Calculator flow - compound interest', async ({ page }) => {
 ### 5.2 Component Documentation
 
 #### Storybook Setup
+
 ```typescript
 // .storybook/main.ts
 export default {
@@ -560,8 +601,8 @@ export default {
   addons: [
     '@storybook/addon-essentials',
     '@storybook/addon-a11y',
-    '@storybook/addon-design-tokens'
-  ]
+    '@storybook/addon-design-tokens',
+  ],
 };
 
 // Component story example
@@ -571,22 +612,23 @@ export default {
   argTypes: {
     variant: {
       control: { type: 'select' },
-      options: ['default', 'apple', 'clean', 'polished', 'enterprise']
-    }
-  }
+      options: ['default', 'apple', 'clean', 'polished', 'enterprise'],
+    },
+  },
 };
 
 export const Default = {
   args: {
     transactions: mockTransactions,
-    variant: 'default'
-  }
+    variant: 'default',
+  },
 };
 ```
 
 ## Success Metrics & KPIs
 
 ### Technical Metrics
+
 - **Code Duplication**: Reduce from 23% to <5%
 - **Test Coverage**: Achieve 80% minimum
 - **Bundle Size**: Reduce from 2.3MB to 1.2MB
@@ -594,17 +636,20 @@ export const Default = {
 - **Type Safety**: 95% strict TypeScript compliance
 
 ### Performance Metrics
+
 - **Lighthouse Score**: Improve from 72 to 90+
 - **First Contentful Paint**: <1.5s
 - **Time to Interactive**: <3s
 - **Cumulative Layout Shift**: <0.1
 
 ### Security Metrics
+
 - **Vulnerability Count**: 0 high/critical vulnerabilities
 - **Data Encryption**: 100% sensitive data encrypted
 - **Input Validation**: 100% user inputs validated
 
 ### Maintainability Metrics
+
 - **Cyclomatic Complexity**: Average <10 per function
 - **Documentation Coverage**: 90% of public APIs documented
 - **Dependency Updates**: Automated with 95% success rate
@@ -612,11 +657,14 @@ export const Default = {
 ## Risk Assessment & Mitigation
 
 ### High-Risk Areas
+
 1. **Calculator Accuracy**: Financial calculations must be 100% accurate
+
    - **Mitigation**: Comprehensive test coverage with known expected values
    - **Testing**: Cross-verify with external financial calculators
 
 2. **Data Migration**: Existing user data must be preserved
+
    - **Mitigation**: Implement backward-compatible data format
    - **Testing**: Migration scripts with rollback capability
 
@@ -625,7 +673,9 @@ export const Default = {
    - **Testing**: Before/after performance benchmarks
 
 ### Medium-Risk Areas
+
 1. **Component Consolidation**: Risk of breaking existing UI flows
+
    - **Mitigation**: Gradual migration with feature flags
    - **Testing**: Visual regression testing with Chromatic
 
@@ -636,36 +686,42 @@ export const Default = {
 ## Implementation Timeline
 
 ### Week 1-2: Foundation
+
 - [ ] Testing framework setup
 - [ ] Security vulnerability fixes
 - [ ] TypeScript strict mode migration
 - [ ] Basic test coverage for calculators
 
 ### Week 3-4: Consolidation
+
 - [ ] TransactionList component unification
 - [ ] InsightsPage consolidation
 - [ ] ScoreCircle component merger
 - [ ] Remove duplicate code
 
 ### Week 5-6: Optimization
+
 - [ ] Bundle size optimization
 - [ ] Performance improvements
 - [ ] Virtual scrolling implementation
 - [ ] Caching layer implementation
 
 ### Week 7-8: Testing
+
 - [ ] Comprehensive unit test suite
 - [ ] Integration testing
 - [ ] End-to-end test scenarios
 - [ ] Performance testing
 
 ### Week 9: Documentation
+
 - [ ] API documentation generation
 - [ ] Component library documentation
 - [ ] User guides and tutorials
 - [ ] Developer onboarding materials
 
 ### Week 10: Deployment
+
 - [ ] Staging environment deployment
 - [ ] Performance monitoring setup
 - [ ] Production deployment
@@ -676,6 +732,7 @@ export const Default = {
 This refactoring blueprint provides a systematic approach to modernizing the Vueni codebase while maintaining functionality and improving security, performance, and maintainability. The phased approach minimizes risk while delivering measurable improvements at each stage.
 
 The success of this refactoring effort will result in:
+
 - **Reduced Technical Debt**: From high to low maintainability burden
 - **Improved Security**: Zero critical vulnerabilities
 - **Enhanced Performance**: 40% faster load times

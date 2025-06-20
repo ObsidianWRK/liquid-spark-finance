@@ -9,34 +9,34 @@
   --glass-bg-desktop: rgba(15, 23, 42, 0.6);
   --glass-border-mobile: rgba(255, 255, 255, 0.1);
   --glass-border-desktop: rgba(255, 255, 255, 0.15);
-  
+
   /* Theme tokens for consistent design */
   --nav-height-mobile: 4rem;
   --nav-height-tablet: 5rem;
   --nav-height-desktop: 6rem;
   --nav-height-large: 7rem;
-  
+
   --nav-icon-size-mobile: 1.25rem;
   --nav-icon-size-desktop: 1.75rem;
-  
+
   --nav-font-size-mobile: 0.75rem;
   --nav-font-size-desktop: 0.875rem;
-  
+
   --nav-border-radius: 9999px;
   --card-border-radius: 1.5rem;
-  
+
   /* Glass effect tokens */
   --glass-bg: rgba(255, 255, 255, 0.03);
   --glass-bg-hover: rgba(255, 255, 255, 0.05);
   --glass-bg-active: rgba(99, 102, 241, 0.15);
   --glass-border: rgba(255, 255, 255, 0.06);
   --glass-blur: blur(24px);
-  
+
   /* Animation durations */
   --duration-fast: 150ms;
   --duration-normal: 250ms;
   --duration-slow: 500ms;
-  
+
   /* Responsive spacing scale */
   --spacing-xs: 0.5rem; /* 8px */
   --spacing-sm: 0.75rem; /* 12px */
@@ -45,7 +45,7 @@
   --spacing-xl: 2rem; /* 32px */
   --spacing-2xl: 3rem; /* 48px */
   --bottom-nav-height: 4rem; /* Mobile default */
-  
+
   /* WCAG Accessibility Colors for Light Mode */
   --light-text-primary: rgb(15, 23, 42); /* slate-900 - 15.84:1 ratio */
   --light-text-secondary: rgb(51, 65, 85); /* slate-700 - 9.32:1 ratio */
@@ -77,9 +77,9 @@ a:focus-visible,
 input:focus-visible,
 select:focus-visible,
 textarea:focus-visible,
-[role="button"]:focus-visible,
-[role="tab"]:focus-visible,
-[role="menuitem"]:focus-visible {
+[role='button']:focus-visible,
+[role='tab']:focus-visible,
+[role='menuitem']:focus-visible {
   outline: 2px solid var(--focus-ring);
   outline-offset: 2px;
   transition: outline 0.2s ease-in-out;
@@ -137,12 +137,13 @@ textarea:focus-visible,
     --glass-border-mobile: rgba(255, 255, 255, 0.3);
     --glass-border-desktop: rgba(255, 255, 255, 0.4);
   }
-  
+
   .liquid-glass-card {
     border-width: 2px;
   }
-  
-  button, .liquid-glass-menu-item {
+
+  button,
+  .liquid-glass-menu-item {
     border-width: 2px;
   }
 }
@@ -166,11 +167,11 @@ textarea:focus-visible,
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
-  
+
   .liquid-glass-card:hover {
     transform: none !important;
   }
-  
+
   .ios26-nav-item:hover {
     transform: none !important;
   }
@@ -183,13 +184,13 @@ textarea:focus-visible,
   input,
   select,
   textarea,
-  [role="button"],
-  [role="tab"],
-  [role="menuitem"] {
+  [role='button'],
+  [role='tab'],
+  [role='menuitem'] {
     min-height: 44px;
     min-width: 44px;
   }
-  
+
   .ios26-nav-item {
     min-height: 56px;
     min-width: 56px;
@@ -203,7 +204,7 @@ html:not(.dark) {
 }
 
 html:not(.dark) .text-muted,
-html:not(.dark) [class*="text-muted"] {
+html:not(.dark) [class*='text-muted'] {
   color: var(--light-text-secondary) !important;
 }
 
@@ -217,7 +218,7 @@ html:not(.dark) [class*="text-muted"] {
   margin: 0;
   padding-left: 1rem;
   padding-right: 1rem;
-  
+
   /* Mobile: Single column with edge-to-edge layout */
   display: grid;
   grid-template-columns: 1fr;
@@ -350,7 +351,7 @@ html:not(.dark) [class*="text-muted"] {
   gap: 1rem;
   width: 100%;
   margin: 0;
-  
+
   /* Mobile: Stack vertically, full width */
   grid-template-columns: 1fr;
 }
@@ -537,10 +538,11 @@ html:not(.dark) [class*="text-muted"] {
   position: fixed;
   inset: 0;
   z-index: -1;
-  background: linear-gradient(to bottom right, 
-    rgb(17, 24, 39),     /* gray-900 */
-    rgb(0, 0, 0),        /* black */
-    rgb(17, 24, 39)      /* gray-900 */
+  background: linear-gradient(
+    to bottom right,
+    rgb(17, 24, 39),
+    /* gray-900 */ rgb(0, 0, 0),
+    /* black */ rgb(17, 24, 39) /* gray-900 */
   );
   pointer-events: none;
   will-change: transform;
@@ -549,13 +551,14 @@ html:not(.dark) [class*="text-muted"] {
 /* Dark mode gradient variation */
 @media (prefers-color-scheme: dark) {
   .global-gradient-background {
-    background: linear-gradient(to bottom right,
+    background: linear-gradient(
+      to bottom right,
       rgba(17, 24, 39, 0.95),
       rgba(0, 0, 0, 0.98),
       rgba(17, 24, 39, 0.95)
     );
   }
-  
+
   /* Dark mode theme tokens */
   :root {
     --glass-bg: rgba(255, 255, 255, 0.02);
@@ -573,16 +576,21 @@ html:not(.dark) [class*="text-muted"] {
     inset: 0;
     background: radial-gradient(
       circle at 30% 50%,
-      rgba(99, 102, 241, 0.05),  /* blue accent */
-      transparent 70%
+      rgba(99, 102, 241, 0.05),
+      /* blue accent */ transparent 70%
     );
     animation: gradientShift 30s ease-in-out infinite;
   }
 }
 
 @keyframes gradientShift {
-  0%, 100% { transform: translate(0, 0); }
-  50% { transform: translate(-10%, 10%); }
+  0%,
+  100% {
+    transform: translate(0, 0);
+  }
+  50% {
+    transform: translate(-10%, 10%);
+  }
 }
 
 /* ==============================================
@@ -624,7 +632,9 @@ html:not(.dark) [class*="text-muted"] {
 /* Individual nav item base style */
 .ios26-nav-item {
   position: relative;
-  transition: background var(--duration-normal) ease, transform var(--duration-normal) ease;
+  transition:
+    background var(--duration-normal) ease,
+    transform var(--duration-normal) ease;
   flex: 1;
   min-width: 0; /* Prevent items from growing too wide */
   display: flex;
@@ -702,11 +712,11 @@ html:not(.dark) [class*="text-muted"] {
 }
 
 /* Active state */
-.ios26-toggle[data-state="checked"] {
+.ios26-toggle[data-state='checked'] {
   background-color: #2563eb; /* blue-600 */
 }
 
-.dark .ios26-toggle[data-state="checked"] {
+.dark .ios26-toggle[data-state='checked'] {
   background-color: #3b82f6; /* blue-500 */
 }
 
@@ -730,7 +740,7 @@ html:not(.dark) [class*="text-muted"] {
 }
 
 /* Active thumb position */
-.ios26-toggle[data-state="checked"] .ios26-toggle-thumb {
+.ios26-toggle[data-state='checked'] .ios26-toggle-thumb {
   transform: translateX(20px);
 }
 
@@ -758,12 +768,12 @@ html:not(.dark) [class*="text-muted"] {
     min-width: 44px;
     padding: 0.75rem;
   }
-  
+
   .nav-icon-mobile {
     width: 20px;
     height: 20px;
   }
-  
+
   /* Reduce spacing for compact mobile layout */
   .nav-container-mobile {
     gap: 0.25rem;
@@ -777,7 +787,7 @@ html:not(.dark) [class*="text-muted"] {
     min-width: 48px;
     padding: 0.875rem;
   }
-  
+
   .nav-icon-tablet {
     width: 22px;
     height: 22px;
@@ -791,7 +801,7 @@ html:not(.dark) [class*="text-muted"] {
     min-width: 44px;
     padding: 0.75rem;
   }
-  
+
   .nav-icon-desktop {
     width: 20px;
     height: 20px;
@@ -979,7 +989,9 @@ body {
 }
 
 /* Ensure main content areas don't create their own scroll contexts */
-main, .main-content, [role="main"] {
+main,
+.main-content,
+[role='main'] {
   /* WHY: These should NOT have their own overflow - let body handle it */
   overflow: visible !important;
 }
@@ -991,7 +1003,7 @@ main, .main-content, [role="main"] {
   * {
     scroll-behavior: smooth;
   }
-  
+
   .liquid-glass-card {
     border-radius: 16px;
     padding: 1rem;
@@ -1077,13 +1089,23 @@ main, .main-content, [role="main"] {
 }
 
 @keyframes shimmer {
-  0%, 100% { transform: translateX(-100%); }
-  50% { transform: translateX(100%); }
+  0%,
+  100% {
+    transform: translateX(-100%);
+  }
+  50% {
+    transform: translateX(100%);
+  }
 }
 
 @keyframes trendPulse {
-  0%, 100% { opacity: 0.4; }
-  50% { opacity: 0.8; }
+  0%,
+  100% {
+    opacity: 0.4;
+  }
+  50% {
+    opacity: 0.8;
+  }
 }
 
 .animate-slideInScale {
@@ -1112,7 +1134,9 @@ main, .main-content, [role="main"] {
 /* Individual nav item base style */
 .ios26-nav-item {
   position: relative;
-  transition: background 0.25s ease, transform 0.25s ease;
+  transition:
+    background 0.25s ease,
+    transform 0.25s ease;
 }
 
 /* Active state */
@@ -1191,7 +1215,7 @@ main, .main-content, [role="main"] {
     display: block;
     width: 100%;
   }
-  
+
   .transaction-list {
     gap: 0.5rem;
   }
@@ -1210,7 +1234,7 @@ main, .main-content, [role="main"] {
   .max-w-7xl {
     max-width: none !important;
   }
-  
+
   .container {
     max-width: none !important;
     width: 100% !important;
@@ -1222,14 +1246,14 @@ main, .main-content, [role="main"] {
   .page-header-desktop {
     padding: 2rem 0 1.5rem 0;
   }
-  
+
   .page-header-desktop h1 {
     font-size: 2.5rem;
     line-height: 1.2;
   }
-  
+
   .page-header-desktop p {
     font-size: 1.125rem;
     margin-top: 0.5rem;
   }
-} 
+}

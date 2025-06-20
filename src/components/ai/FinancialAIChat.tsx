@@ -1,16 +1,16 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
-import { 
-  Send, 
-  Bot, 
-  User, 
-  Lightbulb, 
-  TrendingUp, 
-  Target, 
+import {
+  Send,
+  Bot,
+  User,
+  Lightbulb,
+  TrendingUp,
+  Target,
   AlertCircle,
   Sparkles,
   MessageCircle,
   Trash2,
-  RotateCcw
+  RotateCcw,
 } from 'lucide-react';
 import { aiFinancialService } from '@/features/advisor-chat/api/aiFinancialService';
 import { familyService } from '@/features/shared-budgets/api/familyService';
@@ -46,11 +46,16 @@ interface FinancialContext {
   }>;
 }
 
-const FinancialAIChat = ({ familyId, className, compact = false }: FinancialAIChatProps) => {
+const FinancialAIChat = ({
+  familyId,
+  className,
+  compact = false,
+}: FinancialAIChatProps) => {
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [currentInput, setCurrentInput] = useState<string>('');
   const [isLoading, setIsLoading] = useState(false);
-  const [financialContext, setFinancialContext] = useState<FinancialContext | null>(null);
+  const [financialContext, setFinancialContext] =
+    useState<FinancialContext | null>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
 
@@ -69,7 +74,7 @@ const FinancialAIChat = ({ familyId, className, compact = false }: FinancialAICh
         familyService.getFamilyData(familyId),
         accountService.getAccountSummary(familyId),
         budgetService.getBudgetSummary(familyId),
-        savingsGoalsService.getUserGoals(familyId)
+        savingsGoalsService.getUserGoals(familyId),
       ]);
 
       setFinancialContext({
@@ -78,7 +83,7 @@ const FinancialAIChat = ({ familyId, className, compact = false }: FinancialAICh
         savingsGoals: goals.length,
         creditScore: 750, // This would come from credit service
         investments: accounts.totalInvestments || 0,
-        recentTransactions: accounts.recentTransactions || []
+        recentTransactions: accounts.recentTransactions || [],
       });
     } catch (error) {
       console.error('Failed to load financial context:', error);
@@ -101,10 +106,10 @@ const FinancialAIChat = ({ familyId, className, compact = false }: FinancialAICh
       id: `msg_${Date.now()}_user`,
       type: 'user',
       content: currentInput.trim(),
-      timestamp: new Date()
+      timestamp: new Date(),
     };
 
-    setMessages(prev => [...prev, userMessage]);
+    setMessages((prev) => [...prev, userMessage]);
     setCurrentInput('');
     setIsLoading(true);
 
@@ -120,18 +125,19 @@ const FinancialAIChat = ({ familyId, className, compact = false }: FinancialAICh
         type: 'assistant',
         content: response.content,
         timestamp: new Date(),
-        suggestions: response.recommendations
+        suggestions: response.recommendations,
       };
 
-      setMessages(prev => [...prev, assistantMessage]);
+      setMessages((prev) => [...prev, assistantMessage]);
     } catch (error) {
       const errorMessage: ChatMessage = {
         id: `msg_${Date.now()}_error`,
         type: 'assistant',
-        content: 'I apologize, but I encountered an error processing your request. Please try again.',
-        timestamp: new Date()
+        content:
+          'I apologize, but I encountered an error processing your request. Please try again.',
+        timestamp: new Date(),
       };
-      setMessages(prev => [...prev, errorMessage]);
+      setMessages((prev) => [...prev, errorMessage]);
     } finally {
       setIsLoading(false);
     }
@@ -157,7 +163,7 @@ const FinancialAIChat = ({ familyId, className, compact = false }: FinancialAICh
     return timestamp.toLocaleTimeString('en-US', {
       hour: 'numeric',
       minute: '2-digit',
-      hour12: true
+      hour12: true,
     });
   };
 
@@ -190,16 +196,16 @@ const FinancialAIChat = ({ familyId, className, compact = false }: FinancialAICh
   };
 
   const suggestedQuestions = [
-    "How can I improve my savings rate?",
-    "What should I focus on in my budget?",
-    "Is my spending healthy this month?",
-    "Should I invest more or pay down debt?",
-    "How's my emergency fund looking?"
+    'How can I improve my savings rate?',
+    'What should I focus on in my budget?',
+    'Is my spending healthy this month?',
+    'Should I invest more or pay down debt?',
+    "How's my emergency fund looking?",
   ];
 
   if (!financialContext) {
     return (
-      <div className={cn("flex items-center justify-center p-8", className)}>
+      <div className={cn('flex items-center justify-center p-8', className)}>
         <div className="text-center">
           <Bot className="w-12 h-12 text-blue-400 mx-auto mb-4 animate-pulse" />
           <p className="text-white/60">Loading your financial context...</p>
@@ -209,7 +215,12 @@ const FinancialAIChat = ({ familyId, className, compact = false }: FinancialAICh
   }
 
   return (
-    <div className={cn("flex flex-col h-full bg-white/[0.02] rounded-2xl border border-white/[0.08]", className)}>
+    <div
+      className={cn(
+        'flex flex-col h-full bg-white/[0.02] rounded-2xl border border-white/[0.08]',
+        className
+      )}
+    >
       {/* Header */}
       <div className="flex items-center justify-between p-4 border-b border-white/[0.08]">
         <div className="flex items-center gap-3">
@@ -219,7 +230,9 @@ const FinancialAIChat = ({ familyId, className, compact = false }: FinancialAICh
           <div>
             <h3 className="font-semibold text-white">AI Financial Advisor</h3>
             <p className="text-white/60 text-sm">
-              {compact ? 'Ask me anything' : 'Personalized advice based on your financial data'}
+              {compact
+                ? 'Ask me anything'
+                : 'Personalized advice based on your financial data'}
             </p>
           </div>
         </div>
@@ -238,41 +251,64 @@ const FinancialAIChat = ({ familyId, className, compact = false }: FinancialAICh
       </div>
 
       {/* Messages */}
-      <div className={cn("flex-1 overflow-y-auto p-4 space-y-4", compact ? "max-h-96" : "min-h-[400px]")}>
+      <div
+        className={cn(
+          'flex-1 overflow-y-auto p-4 space-y-4',
+          compact ? 'max-h-96' : 'min-h-[400px]'
+        )}
+      >
         {messages.length === 0 ? (
           <div className="text-center py-8">
             <Bot className="w-16 h-16 text-blue-400/50 mx-auto mb-4" />
-            <h4 className="text-white font-medium mb-2">Hi there! I'm your AI financial advisor.</h4>
+            <h4 className="text-white font-medium mb-2">
+              Hi there! I'm your AI financial advisor.
+            </h4>
             <p className="text-white/60 text-sm mb-6">
-              I have access to your complete financial picture and can provide personalized advice.
+              I have access to your complete financial picture and can provide
+              personalized advice.
             </p>
-            
+
             <div className="space-y-2">
               <p className="text-white/80 text-sm font-medium">Try asking:</p>
               <div className="space-y-2">
-                {suggestedQuestions.slice(0, compact ? 3 : 5).map((question, index) => (
-                  <button
-                    key={index}
-                    onClick={() => setCurrentInput(question)}
-                    className="block w-full text-left p-3 bg-white/[0.03] hover:bg-white/[0.05] border border-white/[0.05] rounded-lg text-white/80 hover:text-white text-sm transition-all"
-                  >
-                    "{question}"
-                  </button>
-                ))}
+                {suggestedQuestions
+                  .slice(0, compact ? 3 : 5)
+                  .map((question, index) => (
+                    <button
+                      key={index}
+                      onClick={() => setCurrentInput(question)}
+                      className="block w-full text-left p-3 bg-white/[0.03] hover:bg-white/[0.05] border border-white/[0.05] rounded-lg text-white/80 hover:text-white text-sm transition-all"
+                    >
+                      "{question}"
+                    </button>
+                  ))}
               </div>
             </div>
           </div>
         ) : (
           messages.map((message) => (
-            <div key={message.id} className={cn("flex gap-3", message.type === 'user' ? 'justify-end' : 'justify-start')}>
-              <div className={cn("flex gap-3 max-w-[80%]", message.type === 'user' ? 'flex-row-reverse' : 'flex-row')}>
+            <div
+              key={message.id}
+              className={cn(
+                'flex gap-3',
+                message.type === 'user' ? 'justify-end' : 'justify-start'
+              )}
+            >
+              <div
+                className={cn(
+                  'flex gap-3 max-w-[80%]',
+                  message.type === 'user' ? 'flex-row-reverse' : 'flex-row'
+                )}
+              >
                 {/* Avatar */}
-                <div className={cn(
-                  "w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0",
-                  message.type === 'user' 
-                    ? "bg-green-500/20" 
-                    : "bg-blue-500/20"
-                )}>
+                <div
+                  className={cn(
+                    'w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0',
+                    message.type === 'user'
+                      ? 'bg-green-500/20'
+                      : 'bg-blue-500/20'
+                  )}
+                >
                   {message.type === 'user' ? (
                     <User className="w-4 h-4 text-green-400" />
                   ) : (
@@ -281,17 +317,23 @@ const FinancialAIChat = ({ familyId, className, compact = false }: FinancialAICh
                 </div>
 
                 {/* Message Content */}
-                <div className={cn(
-                  "flex flex-col gap-2",
-                  message.type === 'user' ? 'items-end' : 'items-start'
-                )}>
-                  <div className={cn(
-                    "rounded-2xl px-4 py-3 max-w-full",
-                    message.type === 'user'
-                      ? "bg-blue-500 text-white"
-                      : "bg-white/[0.05] border border-white/[0.08] text-white"
-                  )}>
-                    <p className="text-sm leading-relaxed whitespace-pre-wrap">{message.content}</p>
+                <div
+                  className={cn(
+                    'flex flex-col gap-2',
+                    message.type === 'user' ? 'items-end' : 'items-start'
+                  )}
+                >
+                  <div
+                    className={cn(
+                      'rounded-2xl px-4 py-3 max-w-full',
+                      message.type === 'user'
+                        ? 'bg-blue-500 text-white'
+                        : 'bg-white/[0.05] border border-white/[0.08] text-white'
+                    )}
+                  >
+                    <p className="text-sm leading-relaxed whitespace-pre-wrap">
+                      {message.content}
+                    </p>
                   </div>
 
                   {/* Suggestions */}
@@ -304,14 +346,18 @@ const FinancialAIChat = ({ familyId, className, compact = false }: FinancialAICh
                         >
                           <div className="flex items-center gap-2 mb-2">
                             <Target className="w-4 h-4 text-purple-400" />
-                            <span className="font-medium text-purple-400">{suggestion}</span>
+                            <span className="font-medium text-purple-400">
+                              {suggestion}
+                            </span>
                           </div>
                         </div>
                       ))}
                     </div>
                   )}
 
-                  <span className="text-xs text-white/40">{formatTimestamp(message.timestamp)}</span>
+                  <span className="text-xs text-white/40">
+                    {formatTimestamp(message.timestamp)}
+                  </span>
                 </div>
               </div>
             </div>
@@ -326,8 +372,14 @@ const FinancialAIChat = ({ familyId, className, compact = false }: FinancialAICh
             <div className="bg-white/[0.05] border border-white/[0.08] rounded-2xl px-4 py-3">
               <div className="flex items-center gap-2">
                 <div className="w-2 h-2 bg-blue-400 rounded-full animate-bounce" />
-                <div className="w-2 h-2 bg-blue-400 rounded-full animate-bounce" style={{ animationDelay: '0.1s' }} />
-                <div className="w-2 h-2 bg-blue-400 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }} />
+                <div
+                  className="w-2 h-2 bg-blue-400 rounded-full animate-bounce"
+                  style={{ animationDelay: '0.1s' }}
+                />
+                <div
+                  className="w-2 h-2 bg-blue-400 rounded-full animate-bounce"
+                  style={{ animationDelay: '0.2s' }}
+                />
               </div>
             </div>
           </div>
@@ -353,10 +405,10 @@ const FinancialAIChat = ({ familyId, className, compact = false }: FinancialAICh
             onClick={handleSendMessage}
             disabled={!currentInput.trim() || isLoading}
             className={cn(
-              "p-3 rounded-xl transition-all",
+              'p-3 rounded-xl transition-all',
               currentInput.trim() && !isLoading
-                ? "bg-blue-500 hover:bg-blue-600 text-white"
-                : "bg-white/[0.05] text-white/40 cursor-not-allowed"
+                ? 'bg-blue-500 hover:bg-blue-600 text-white'
+                : 'bg-white/[0.05] text-white/40 cursor-not-allowed'
             )}
           >
             <Send className="w-5 h-5" />

@@ -27,7 +27,7 @@ export const NavPill: React.FC<NavPillProps> = ({
   active = false,
   disabled = false,
   onSelect,
-  className
+  className,
 }) => {
   return (
     <button
@@ -58,4 +58,4 @@ export const NavPill: React.FC<NavPillProps> = ({
 
 NavPill.displayName = 'NavPill';
 
-export default NavPill; 
+export default NavPill;

@@ -1,23 +1,26 @@
 import React, { useState } from 'react';
 import { BrowserRouter, Routes, Route, useNavigate } from 'react-router-dom';
 import iOS26NavBar from '../components/iOS26NavBar';
-import { 
-  Home, 
-  Search, 
-  CreditCard, 
-  TrendingUp, 
+import {
+  Home,
+  Search,
+  CreditCard,
+  TrendingUp,
   User,
   Plus,
   Bell,
   Settings,
-  Shield
+  Shield,
 } from 'lucide-react';
 
 /**
  * Demo page component
  */
-const DemoPage: React.FC<{ title: string; color: string }> = ({ title, color }) => (
-  <div 
+const DemoPage: React.FC<{ title: string; color: string }> = ({
+  title,
+  color,
+}) => (
+  <div
     className="min-h-screen flex items-center justify-center p-8"
     style={{ backgroundColor: color }}
   >
@@ -141,12 +144,30 @@ const NavigationDemo: React.FC = () => {
       <main id="main-content" tabIndex={-1}>
         <Routes>
           <Route path="/" element={<DemoPage title="Home" color="#1a1a2e" />} />
-          <Route path="/search" element={<DemoPage title="Search" color="#16213e" />} />
-          <Route path="/accounts" element={<DemoPage title="Accounts" color="#0f3460" />} />
-          <Route path="/insights" element={<DemoPage title="Insights" color="#533483" />} />
-          <Route path="/profile" element={<DemoPage title="Profile" color="#c1f1c" />} />
-          <Route path="/security" element={<DemoPage title="Security" color="#1b262c" />} />
-          <Route path="/settings" element={<DemoPage title="Settings" color="#2d3436" />} />
+          <Route
+            path="/search"
+            element={<DemoPage title="Search" color="#16213e" />}
+          />
+          <Route
+            path="/accounts"
+            element={<DemoPage title="Accounts" color="#0f3460" />}
+          />
+          <Route
+            path="/insights"
+            element={<DemoPage title="Insights" color="#533483" />}
+          />
+          <Route
+            path="/profile"
+            element={<DemoPage title="Profile" color="#c1f1c" />}
+          />
+          <Route
+            path="/security"
+            element={<DemoPage title="Security" color="#1b262c" />}
+          />
+          <Route
+            path="/settings"
+            element={<DemoPage title="Settings" color="#2d3436" />}
+          />
         </Routes>
       </main>
     </>
@@ -161,10 +182,8 @@ const iOS26NavBarDemo: React.FC = () => {
     <BrowserRouter>
       <div className="min-h-screen bg-black">
         {/* Import navigation styles */}
-        <style>
-          {`@import url('/src/app/styles/nav-styles.css');`}
-        </style>
-        
+        <style>{`@import url('/src/app/styles/nav-styles.css');`}</style>
+
         <NavigationDemo />
       </div>
     </BrowserRouter>
@@ -188,9 +207,7 @@ export const iOS26NavBarExamples = {
   // With FAB
   withFab: () => (
     <iOS26NavBar
-      tabs={[
-        { id: 'home', label: 'Home', icon: Home, action: () => {} },
-      ]}
+      tabs={[{ id: 'home', label: 'Home', icon: Home, action: () => {} }]}
       fab={{
         icon: Plus,
         action: () => console.log('FAB clicked'),
@@ -202,9 +219,7 @@ export const iOS26NavBarExamples = {
   // No labels
   noLabels: () => (
     <iOS26NavBar
-      tabs={[
-        { id: 'home', label: 'Home', icon: Home, action: () => {} },
-      ]}
+      tabs={[{ id: 'home', label: 'Home', icon: Home, action: () => {} }]}
       showLabels={false}
     />
   ),
@@ -212,9 +227,7 @@ export const iOS26NavBarExamples = {
   // Top position
   topPosition: () => (
     <iOS26NavBar
-      tabs={[
-        { id: 'home', label: 'Home', icon: Home, action: () => {} },
-      ]}
+      tabs={[{ id: 'home', label: 'Home', icon: Home, action: () => {} }]}
       position="top"
     />
   ),
@@ -222,12 +235,10 @@ export const iOS26NavBarExamples = {
   // Disabled scroll hide
   noScrollHide: () => (
     <iOS26NavBar
-      tabs={[
-        { id: 'home', label: 'Home', icon: Home, action: () => {} },
-      ]}
+      tabs={[{ id: 'home', label: 'Home', icon: Home, action: () => {} }]}
       enableScrollHide={false}
     />
   ),
 };
 
-export default iOS26NavBarDemo; 
+export default iOS26NavBarDemo;

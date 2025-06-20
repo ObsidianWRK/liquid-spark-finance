@@ -26,24 +26,24 @@ export interface UnifiedHealthMetrics {
   heartRateVariability: AnalyticsDataPoint[];
   stressIndex: AnalyticsDataPoint[];
   sleepQuality: AnalyticsDataPoint[];
-  
+
   // Activity metrics
   steps: AnalyticsDataPoint[];
   activeMinutes: AnalyticsDataPoint[];
   caloriesBurned: AnalyticsDataPoint[];
-  
+
   // Composite scores
   wellnessScore: AnalyticsDataPoint[];
   activityScore: AnalyticsDataPoint[];
   recoveryScore: AnalyticsDataPoint[];
-  
+
   // Trends and patterns
   weeklyTrends: {
     stress: 'rising' | 'falling' | 'stable';
     activity: 'improving' | 'declining' | 'stable';
     sleep: 'improving' | 'declining' | 'stable';
   };
-  
+
   // Data quality
   dataCompleteness: number; // 0-100%
   lastSyncTime: string;
@@ -55,25 +55,25 @@ export interface UnifiedWealthMetrics {
   netWorth: AnalyticsDataPoint[];
   assets: AnalyticsDataPoint[];
   liabilities: AnalyticsDataPoint[];
-  
+
   // Investment performance
   portfolioValue: AnalyticsDataPoint[];
   portfolioReturns: AnalyticsDataPoint[];
-  
+
   // Cash flow
   income: AnalyticsDataPoint[];
   expenses: AnalyticsDataPoint[];
   savings: AnalyticsDataPoint[];
-  
+
   // Financial health ratios
   debtToIncomeRatio: AnalyticsDataPoint[];
   savingsRate: AnalyticsDataPoint[];
   emergencyFundRatio: AnalyticsDataPoint[];
-  
+
   // Performance metrics
   performanceMetrics: PerformanceMetrics;
   riskMetrics: RiskMetrics;
-  
+
   // Trends
   monthlyTrends: {
     netWorth: 'growing' | 'declining' | 'stable';
@@ -88,24 +88,24 @@ export interface UnifiedTransactionMetrics {
   dailySpending: AnalyticsDataPoint[];
   categorySpending: Record<string, AnalyticsDataPoint[]>;
   merchantSpending: Record<string, AnalyticsDataPoint[]>;
-  
+
   // Transaction scores
   healthImpactScores: AnalyticsDataPoint[];
   ecoImpactScores: AnalyticsDataPoint[];
   necessityScores: AnalyticsDataPoint[];
-  
+
   // Behavioral patterns
   spendingVelocity: AnalyticsDataPoint[];
   impulsePurchases: AnalyticsDataPoint[];
   planedPurchases: AnalyticsDataPoint[];
-  
+
   // Insights and trends
   spendingTrends: {
     health: 'increasing' | 'decreasing' | 'stable';
     eco: 'improving' | 'declining' | 'stable';
     overall: 'conscious' | 'unconscious' | 'balanced';
   };
-  
+
   // Correlation hints
   correlationStrength: number; // 0-1
   primaryDrivers: string[];
@@ -114,13 +114,17 @@ export interface UnifiedTransactionMetrics {
 // Cross-Domain Correlation Schema
 export interface HealthWealthCorrelation {
   id: string;
-  type: 'stress-spending' | 'sleep-decisions' | 'activity-performance' | 'health-investment';
-  
+  type:
+    | 'stress-spending'
+    | 'sleep-decisions'
+    | 'activity-performance'
+    | 'health-investment';
+
   // Statistical measures
   correlationCoefficient: number; // -1 to 1
   significance: number; // p-value
   confidence: number; // 0-100%
-  
+
   // Data points
   dataPoints: Array<{
     timestamp: string;
@@ -128,16 +132,16 @@ export interface HealthWealthCorrelation {
     wealthValue: number;
     transactionCount?: number;
   }>;
-  
+
   // Insights
   pattern: 'positive' | 'negative' | 'nonlinear' | 'threshold';
   strength: 'weak' | 'moderate' | 'strong';
   actionable: boolean;
-  
+
   // Recommendations
   insights: string[];
   recommendations: string[];
-  
+
   // Metadata
   timeframe: AnalyticsTimeframe;
   lastCalculated: string;
@@ -149,10 +153,10 @@ export interface AnalyticsDashboardData {
   health: UnifiedHealthMetrics;
   wealth: UnifiedWealthMetrics;
   transactions: UnifiedTransactionMetrics;
-  
+
   // Cross-domain correlations
   correlations: HealthWealthCorrelation[];
-  
+
   // Summary scores
   overallScores: {
     health: number;
@@ -160,7 +164,7 @@ export interface AnalyticsDashboardData {
     sustainability: number;
     financial_wellness: number;
   };
-  
+
   // Key insights
   insights: Array<{
     id: string;
@@ -172,7 +176,7 @@ export interface AnalyticsDashboardData {
     recommendation?: string;
     confidence: number;
   }>;
-  
+
   // Metadata
   timeframe: AnalyticsTimeframe;
   lastUpdated: string;
@@ -187,27 +191,31 @@ export interface AnalyticsDashboardData {
 // Real-time Analytics Stream Schema
 export const AnalyticsStreamSchema = z.object({
   timestamp: z.string(),
-  
+
   // Real-time health metrics
   currentStress: z.number().min(0).max(100).optional(),
   currentHR: z.number().min(30).max(220).optional(),
   currentHRV: z.number().min(0).max(100).optional(),
-  
+
   // Recent financial activity
-  recentTransactions: z.array(z.object({
-    amount: z.number(),
-    category: z.string(),
-    timestamp: z.string(),
-    healthScore: z.number().optional(),
-  })),
-  
+  recentTransactions: z.array(
+    z.object({
+      amount: z.number(),
+      category: z.string(),
+      timestamp: z.string(),
+      healthScore: z.number().optional(),
+    })
+  ),
+
   // Live correlations
-  liveCorrelations: z.array(z.object({
-    type: z.string(),
-    strength: z.number().min(-1).max(1),
-    confidence: z.number().min(0).max(1),
-  })),
-  
+  liveCorrelations: z.array(
+    z.object({
+      type: z.string(),
+      strength: z.number().min(-1).max(1),
+      confidence: z.number().min(0).max(1),
+    })
+  ),
+
   // Intervention triggers
   shouldIntervene: z.boolean(),
   interventionReason: z.string().optional(),
@@ -224,7 +232,7 @@ export interface AnalyticsConfig {
     investmentData: boolean;
     biometricDevices: boolean;
   };
-  
+
   // Correlation settings
   correlationSettings: {
     minDataPoints: number;
@@ -232,14 +240,14 @@ export interface AnalyticsConfig {
     updateFrequency: 'realtime' | 'hourly' | 'daily';
     enabledCorrelations: string[];
   };
-  
+
   // Privacy and retention
   privacy: {
     shareCorrelations: boolean;
     anonymizeData: boolean;
     retentionPeriod: number; // days
   };
-  
+
   // Notifications
   notifications: {
     strongCorrelations: boolean;
@@ -265,4 +273,4 @@ export interface AnalyticsAPIResponse<T = any> {
 export type HealthMetricKey = keyof UnifiedHealthMetrics;
 export type WealthMetricKey = keyof UnifiedWealthMetrics;
 export type TransactionMetricKey = keyof UnifiedTransactionMetrics;
-export type CorrelationType = HealthWealthCorrelation['type']; 
+export type CorrelationType = HealthWealthCorrelation['type'];

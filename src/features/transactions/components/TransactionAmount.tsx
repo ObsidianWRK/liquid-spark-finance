@@ -1,4 +1,3 @@
-
 import React from 'react';
 
 interface TransactionAmountProps {
@@ -7,15 +6,19 @@ interface TransactionAmountProps {
   currency: string;
 }
 
-const TransactionAmount = ({ amount, date, currency }: TransactionAmountProps) => {
+const TransactionAmount = ({
+  amount,
+  date,
+  currency,
+}: TransactionAmountProps) => {
   const formatCurrency = (amount: number) => {
     const absAmount = Math.abs(amount);
     const formatted = new Intl.NumberFormat('en-US', {
       style: 'currency',
       currency: currency,
-      minimumFractionDigits: 2
+      minimumFractionDigits: 2,
     }).format(absAmount);
-    
+
     return amount < 0 ? `-${formatted}` : `+${formatted}`;
   };
 
@@ -23,7 +26,7 @@ const TransactionAmount = ({ amount, date, currency }: TransactionAmountProps) =
     const date = new Date(dateString);
     return date.toLocaleDateString('en-US', {
       month: 'short',
-      day: 'numeric'
+      day: 'numeric',
     });
   };
 

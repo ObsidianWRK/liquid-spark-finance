@@ -1,5 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import { Building2, CreditCard, PiggyBank, TrendingUp, Plus, RefreshCw, Banknote, CheckCircle } from 'lucide-react';
+import {
+  Building2,
+  CreditCard,
+  PiggyBank,
+  TrendingUp,
+  Plus,
+  RefreshCw,
+  Banknote,
+  CheckCircle,
+} from 'lucide-react';
 import { CardSkeleton } from './health/CardSkeleton';
 import { formatCurrency } from '@/shared/utils/formatters';
 import { cn } from '@/shared/lib/utils';
@@ -38,112 +47,112 @@ interface LinkedAccountsCardProps {
 // Mock data directly in component to avoid fetch issues
 const MOCK_ACCOUNTS: MockAccount[] = [
   {
-    id: "acc_chase_checking_001",
+    id: 'acc_chase_checking_001',
     institution: {
-      name: "Chase Bank",
-      id: "ins_chase",
-      color: "#004879"
+      name: 'Chase Bank',
+      id: 'ins_chase',
+      color: '#004879',
     },
-    type: "checking",
-    name: "Chase Total Checking",
-    mask: "4521",
+    type: 'checking',
+    name: 'Chase Total Checking',
+    mask: '4521',
     balance: 4250.75,
     availableBalance: 4250.75,
-    currency: "USD",
+    currency: 'USD',
     isActive: true,
     lastTransaction: {
-      merchant: "Starbucks",
+      merchant: 'Starbucks',
       amount: -5.67,
-      date: "2024-01-15T09:30:00Z",
-      pending: false
-    }
+      date: '2024-01-15T09:30:00Z',
+      pending: false,
+    },
   },
   {
-    id: "acc_bofa_savings_001",
+    id: 'acc_bofa_savings_001',
     institution: {
-      name: "Bank of America",
-      id: "ins_bofa",
-      color: "#E31837"
+      name: 'Bank of America',
+      id: 'ins_bofa',
+      color: '#E31837',
     },
-    type: "savings",
-    name: "Advantage Savings",
-    mask: "8932",
+    type: 'savings',
+    name: 'Advantage Savings',
+    mask: '8932',
     balance: 15750.42,
     availableBalance: 15750.42,
-    currency: "USD",
+    currency: 'USD',
     isActive: true,
     lastTransaction: {
-      merchant: "Interest Payment",
+      merchant: 'Interest Payment',
       amount: 18.25,
-      date: "2024-01-01T00:00:00Z",
-      pending: false
-    }
+      date: '2024-01-01T00:00:00Z',
+      pending: false,
+    },
   },
   {
-    id: "acc_wells_credit_001", 
+    id: 'acc_wells_credit_001',
     institution: {
-      name: "Wells Fargo",
-      id: "ins_wells",
-      color: "#D50032"
+      name: 'Wells Fargo',
+      id: 'ins_wells',
+      color: '#D50032',
     },
-    type: "credit",
-    name: "Cash Wise Visa",
-    mask: "1847",
+    type: 'credit',
+    name: 'Cash Wise Visa',
+    mask: '1847',
     balance: -1285.63,
     availableBalance: 3714.37,
-    currency: "USD",
+    currency: 'USD',
     isActive: true,
-    creditLimit: 5000.00,
+    creditLimit: 5000.0,
     lastTransaction: {
-      merchant: "Amazon",
+      merchant: 'Amazon',
       amount: -89.99,
-      date: "2024-01-14T14:22:00Z",
-      pending: true
-    }
+      date: '2024-01-14T14:22:00Z',
+      pending: true,
+    },
   },
   {
-    id: "acc_schwab_investment_001",
+    id: 'acc_schwab_investment_001',
     institution: {
-      name: "Charles Schwab",
-      id: "ins_schwab",
-      color: "#00A0DF"
+      name: 'Charles Schwab',
+      id: 'ins_schwab',
+      color: '#00A0DF',
     },
-    type: "investment",
-    name: "Brokerage Account",
-    mask: "7409",
+    type: 'investment',
+    name: 'Brokerage Account',
+    mask: '7409',
     balance: 42850.19,
-    availableBalance: 1250.00,
-    currency: "USD",
+    availableBalance: 1250.0,
+    currency: 'USD',
     isActive: true,
     lastTransaction: {
-      merchant: "VTSAX Purchase",
-      amount: -1000.00,
-      date: "2024-01-12T16:00:00Z",
-      pending: false
-    }
+      merchant: 'VTSAX Purchase',
+      amount: -1000.0,
+      date: '2024-01-12T16:00:00Z',
+      pending: false,
+    },
   },
   {
-    id: "acc_citi_credit_001",
+    id: 'acc_citi_credit_001',
     institution: {
-      name: "Citibank",
-      id: "ins_citi",
-      color: "#DC143C"
+      name: 'Citibank',
+      id: 'ins_citi',
+      color: '#DC143C',
     },
-    type: "credit",
-    name: "Double Cash Card",
-    mask: "2156",
+    type: 'credit',
+    name: 'Double Cash Card',
+    mask: '2156',
     balance: -567.23,
     availableBalance: 2432.77,
-    currency: "USD", 
+    currency: 'USD',
     isActive: true,
-    creditLimit: 3000.00,
+    creditLimit: 3000.0,
     lastTransaction: {
-      merchant: "Whole Foods",
+      merchant: 'Whole Foods',
       amount: -127.45,
-      date: "2024-01-13T18:45:00Z",
-      pending: false
-    }
-  }
+      date: '2024-01-13T18:45:00Z',
+      pending: false,
+    },
+  },
 ];
 
 export const LinkedAccountsCard: React.FC<LinkedAccountsCardProps> = ({
@@ -158,11 +167,11 @@ export const LinkedAccountsCard: React.FC<LinkedAccountsCardProps> = ({
 
   // Check if we should use mock data
   useEffect(() => {
-    const shouldUseMocks = 
-      import.meta.env.VITE_USE_MOCKS === 'true' || 
+    const shouldUseMocks =
+      import.meta.env.VITE_USE_MOCKS === 'true' ||
       process.env.NEXT_PUBLIC_USE_MOCKS === 'true' ||
       window.location.search.includes('mock=true');
-    
+
     setUseMocks(shouldUseMocks);
   }, []);
 
@@ -177,10 +186,10 @@ export const LinkedAccountsCard: React.FC<LinkedAccountsCardProps> = ({
       try {
         setLoading(true);
         setError(null);
-        
+
         // Simulate network delay
-        await new Promise(resolve => setTimeout(resolve, 500));
-        
+        await new Promise((resolve) => setTimeout(resolve, 500));
+
         setAccounts(MOCK_ACCOUNTS);
       } catch (err) {
         console.error('Failed to load mock accounts:', err);
@@ -244,7 +253,7 @@ export const LinkedAccountsCard: React.FC<LinkedAccountsCardProps> = ({
   // Show loading skeleton
   if (loading) {
     return (
-      <CardSkeleton 
+      <CardSkeleton
         variant={compact ? 'compact' : 'default'}
         className={className}
         loading
@@ -255,7 +264,7 @@ export const LinkedAccountsCard: React.FC<LinkedAccountsCardProps> = ({
   // Show empty state if not using mocks
   if (!useMocks) {
     return (
-      <CardSkeleton 
+      <CardSkeleton
         variant={compact ? 'compact' : 'default'}
         className={className}
       >
@@ -278,7 +287,7 @@ export const LinkedAccountsCard: React.FC<LinkedAccountsCardProps> = ({
   // Show error state
   if (error) {
     return (
-      <CardSkeleton 
+      <CardSkeleton
         variant={compact ? 'compact' : 'default'}
         className={className}
       >
@@ -289,9 +298,7 @@ export const LinkedAccountsCard: React.FC<LinkedAccountsCardProps> = ({
           <h3 className="text-lg font-semibold text-red-400 mb-2">
             Failed to Load Accounts
           </h3>
-          <p className="text-sm text-white/60">
-            {error}
-          </p>
+          <p className="text-sm text-white/60">{error}</p>
         </div>
       </CardSkeleton>
     );
@@ -300,32 +307,33 @@ export const LinkedAccountsCard: React.FC<LinkedAccountsCardProps> = ({
   // Compact view
   if (compact) {
     return (
-      <CardSkeleton 
-        variant="compact"
-        className={className}
-      >
+      <CardSkeleton variant="compact" className={className}>
         <div className="flex items-center justify-between mb-3">
           <div className="flex items-center space-x-2">
             <Building2 className="w-5 h-5 text-blue-400" />
             <span className="font-semibold text-white">Linked Accounts</span>
           </div>
-          <span className="text-sm text-white/60">{accounts.length} accounts</span>
+          <span className="text-sm text-white/60">
+            {accounts.length} accounts
+          </span>
         </div>
-        
+
         <div className="space-y-2">
           <div className="flex justify-between items-center">
             <span className="text-sm text-white/70">Net Worth</span>
-            <span className={cn(
-              'text-sm font-semibold',
-              calculateNetWorth() >= 0 ? 'text-green-400' : 'text-red-400'
-            )}>
+            <span
+              className={cn(
+                'text-sm font-semibold',
+                calculateNetWorth() >= 0 ? 'text-green-400' : 'text-red-400'
+              )}
+            >
               {formatCurrency(calculateNetWorth())}
             </span>
           </div>
-          
+
           <div className="grid grid-cols-2 gap-2">
             {accounts.slice(0, 4).map((account) => (
-              <div 
+              <div
                 key={account.id}
                 className="flex items-center space-x-2 p-2 bg-white/[0.03] rounded-lg"
               >
@@ -334,14 +342,12 @@ export const LinkedAccountsCard: React.FC<LinkedAccountsCardProps> = ({
                   <p className="text-xs text-white/80 truncate">
                     {account.institution.name}
                   </p>
-                  <p className="text-xs text-white/60">
-                    •••• {account.mask}
-                  </p>
+                  <p className="text-xs text-white/60">•••• {account.mask}</p>
                 </div>
               </div>
             ))}
           </div>
-          
+
           {accounts.length > 4 && (
             <p className="text-xs text-white/60 text-center">
               +{accounts.length - 4} more accounts
@@ -354,7 +360,12 @@ export const LinkedAccountsCard: React.FC<LinkedAccountsCardProps> = ({
 
   // Full view
   return (
-    <div className={cn("bg-white/[0.02] rounded-2xl border border-white/[0.08] p-6 card-hover-subtle", className)}>
+    <div
+      className={cn(
+        'bg-white/[0.02] rounded-2xl border border-white/[0.08] p-6 card-hover-subtle',
+        className
+      )}
+    >
       <div className="flex items-center justify-between mb-6">
         <div className="flex items-center gap-3">
           <div className="w-10 h-10 rounded-xl bg-white/[0.05] flex items-center justify-center">
@@ -362,12 +373,17 @@ export const LinkedAccountsCard: React.FC<LinkedAccountsCardProps> = ({
           </div>
           <h3 className="font-medium text-white/80">Mock Linked Accounts</h3>
         </div>
-        <span className="text-white/60 text-sm">{accounts.length} accounts</span>
+        <span className="text-white/60 text-sm">
+          {accounts.length} accounts
+        </span>
       </div>
-      
+
       <div className="space-y-4">
         {accounts.map((account, index) => (
-          <div key={index} className="flex items-center justify-between p-4 bg-white/[0.03] rounded-xl border border-white/[0.05] hover:bg-white/[0.05] transition-all">
+          <div
+            key={index}
+            className="flex items-center justify-between p-4 bg-white/[0.03] rounded-xl border border-white/[0.05] hover:bg-white/[0.05] transition-all"
+          >
             <div className="flex items-center gap-3">
               <div className="w-8 h-8 rounded-lg bg-white/[0.05] flex items-center justify-center">
                 {getAccountIcon(account.type)}
@@ -383,7 +399,7 @@ export const LinkedAccountsCard: React.FC<LinkedAccountsCardProps> = ({
               </div>
             </div>
             <div className="text-right">
-              <p className={cn("font-bold", getBalanceColor(account))}>
+              <p className={cn('font-bold', getBalanceColor(account))}>
                 {formatCurrency(account.balance)}
               </p>
               {account.type === 'credit' && account.creditLimit && (
@@ -394,14 +410,16 @@ export const LinkedAccountsCard: React.FC<LinkedAccountsCardProps> = ({
             </div>
           </div>
         ))}
-        
+
         <div className="mt-6 pt-4 border-t border-white/[0.08]">
           <div className="flex items-center justify-between">
             <span className="font-medium text-white/80">Total Net Worth</span>
-            <span className={cn(
-              'text-lg font-bold',
-              calculateNetWorth() >= 0 ? 'text-green-400' : 'text-red-400'
-            )}>
+            <span
+              className={cn(
+                'text-lg font-bold',
+                calculateNetWorth() >= 0 ? 'text-green-400' : 'text-red-400'
+              )}
+            >
               {formatCurrency(calculateNetWorth())}
             </span>
           </div>
@@ -409,4 +427,4 @@ export const LinkedAccountsCard: React.FC<LinkedAccountsCardProps> = ({
       </div>
     </div>
   );
-}; 
+};

@@ -1,6 +1,6 @@
 /**
  * Orientation Change Utilities
- * 
+ *
  * Provides resilient orientation change detection and handling:
  * - Multiple orientation detection methods with fallbacks
  * - Debounced orientation change events
@@ -49,7 +49,7 @@ class OrientationManager {
 
   constructor() {
     this.currentState = this.getInitialOrientationState();
-    
+
     if (typeof window !== 'undefined') {
       this.initialize();
     }
@@ -79,27 +79,32 @@ class OrientationManager {
       const orientation = window.screen.orientation;
       angle = this.normalizeAngle(orientation.angle);
       type = orientation.type.includes('portrait') ? 'portrait' : 'landscape';
-      
+
       // Detect orientation lock (experimental)
       try {
-        isLocked = orientation.type.includes('primary') || orientation.type.includes('secondary');
+        isLocked =
+          orientation.type.includes('primary') ||
+          orientation.type.includes('secondary');
       } catch {
         isLocked = false;
       }
     }
-    
+
     // Method 2: Legacy window.orientation (iOS Safari, older browsers)
-    else if ('orientation' in window && typeof window.orientation === 'number') {
+    else if (
+      'orientation' in window &&
+      typeof window.orientation === 'number'
+    ) {
       angle = this.normalizeAngle(window.orientation);
       type = Math.abs(angle) === 90 ? 'landscape' : 'portrait';
     }
-    
+
     // Method 3: Fallback to window dimensions
     else {
       const width = window.innerWidth;
       const height = window.innerHeight;
       type = width > height ? 'landscape' : 'portrait';
-      
+
       // Estimate angle based on dimensions (rough heuristic)
       if (type === 'landscape') {
         angle = width > screen.width ? 90 : 270; // Guess based on typical rotation
@@ -120,30 +125,34 @@ class OrientationManager {
   private normalizeAngle(angle: number): OrientationAngle {
     // Normalize angle to 0, 90, 180, 270
     const normalized = ((angle % 360) + 360) % 360;
-    
+
     if (normalized <= 45 || normalized > 315) return 0;
     if (normalized > 45 && normalized <= 135) return 90;
     if (normalized > 135 && normalized <= 225) return 180;
     return 270;
   }
 
-  private isPrimaryOrientation(type: OrientationType, angle: OrientationAngle): boolean {
+  private isPrimaryOrientation(
+    type: OrientationType,
+    angle: OrientationAngle
+  ): boolean {
     // Most mobile devices have portrait as primary
     // Most tablets have landscape as primary
     const capabilities = getViewportCapabilities();
-    
+
     if (capabilities.isIOS || capabilities.isAndroid) {
       // For phones, portrait is usually primary
       // For tablets, it varies but we'll assume landscape for wide screens
-      const isTabletSize = window.screen.width >= 768 || window.screen.height >= 768;
-      
+      const isTabletSize =
+        window.screen.width >= 768 || window.screen.height >= 768;
+
       if (isTabletSize) {
         return type === 'landscape' && (angle === 0 || angle === 180);
       } else {
         return type === 'portrait' && (angle === 0 || angle === 180);
       }
     }
-    
+
     // Desktop: assume landscape primary
     return type === 'landscape' && angle === 0;
   }
@@ -155,7 +164,10 @@ class OrientationManager {
 
     // Modern Screen Orientation API
     if (capabilities.hasScreenOrientation && window.screen.orientation) {
-      window.screen.orientation.addEventListener('change', this.handleOrientationChange);
+      window.screen.orientation.addEventListener(
+        'change',
+        this.handleOrientationChange
+      );
     }
 
     // Legacy orientationchange event
@@ -177,7 +189,7 @@ class OrientationManager {
   private handleResize = (): void => {
     // Only use resize as orientation trigger if other methods aren't available
     const capabilities = getViewportCapabilities();
-    
+
     if (!capabilities.hasScreenOrientation && !('orientation' in window)) {
       this.debounceOrientationUpdate();
     }
@@ -210,25 +222,28 @@ class OrientationManager {
 
   private performOrientationCheck(): void {
     const newState = this.detectOrientationState();
-    
+
     // Check if orientation actually changed
     if (this.hasOrientationChanged(newState, this.currentState)) {
       this.updateOrientation(newState);
     } else if (this.orientationCheckCount < MAX_ORIENTATION_CHECKS) {
       // Sometimes orientation change is delayed, retry
       this.orientationCheckCount++;
-      
+
       if (this.checkTimeout) {
         clearTimeout(this.checkTimeout);
       }
-      
+
       this.checkTimeout = setTimeout(() => {
         this.performOrientationCheck();
       }, DIMENSION_CHECK_DELAY_MS);
     }
   }
 
-  private hasOrientationChanged(newState: OrientationState, currentState: OrientationState): boolean {
+  private hasOrientationChanged(
+    newState: OrientationState,
+    currentState: OrientationState
+  ): boolean {
     return (
       newState.type !== currentState.type ||
       newState.angle !== currentState.angle ||
@@ -247,7 +262,7 @@ class OrientationManager {
     };
 
     // Notify all listeners
-    this.listeners.forEach(listener => {
+    this.listeners.forEach((listener) => {
       try {
         listener(event);
       } catch (error) {
@@ -258,7 +273,7 @@ class OrientationManager {
 
   public addListener(listener: OrientationChangeListener): () => void {
     this.listeners.add(listener);
-    
+
     // Immediately call with current state
     listener({
       current: this.currentState,
@@ -282,18 +297,17 @@ class OrientationManager {
 
   public async lockOrientation(orientation: OrientationType): Promise<boolean> {
     const capabilities = getViewportCapabilities();
-    
+
     if (!capabilities.hasScreenOrientation || !window.screen.orientation) {
       return false;
     }
 
     try {
-      const lockType = orientation === 'portrait' 
-        ? 'portrait-primary' 
-        : 'landscape-primary';
-        
+      const lockType =
+        orientation === 'portrait' ? 'portrait-primary' : 'landscape-primary';
+
       await window.screen.orientation.lock(lockType as OrientationLockType);
-      
+
       // Update state to reflect lock
       this.currentState.isLocked = true;
       return true;
@@ -305,14 +319,14 @@ class OrientationManager {
 
   public async unlockOrientation(): Promise<boolean> {
     const capabilities = getViewportCapabilities();
-    
+
     if (!capabilities.hasScreenOrientation || !window.screen.orientation) {
       return false;
     }
 
     try {
       window.screen.orientation.unlock();
-      
+
       // Update state to reflect unlock
       this.currentState.isLocked = false;
       return true;
@@ -336,12 +350,21 @@ class OrientationManager {
     const capabilities = getViewportCapabilities();
 
     if (capabilities.hasScreenOrientation && window.screen.orientation) {
-      window.screen.orientation.removeEventListener('change', this.handleOrientationChange);
+      window.screen.orientation.removeEventListener(
+        'change',
+        this.handleOrientationChange
+      );
     }
 
-    window.removeEventListener('orientationchange', this.handleOrientationChange);
+    window.removeEventListener(
+      'orientationchange',
+      this.handleOrientationChange
+    );
     window.removeEventListener('resize', this.handleResize);
-    document.removeEventListener('visibilitychange', this.handleVisibilityChange);
+    document.removeEventListener(
+      'visibilitychange',
+      this.handleVisibilityChange
+    );
 
     this.listeners.clear();
     this.isInitialized = false;
@@ -364,14 +387,18 @@ export const getOrientationManager = (): OrientationManager => {
 /**
  * Add an orientation change listener
  */
-export const addOrientationChangeListener = (listener: OrientationChangeListener): (() => void) => {
+export const addOrientationChangeListener = (
+  listener: OrientationChangeListener
+): (() => void) => {
   return getOrientationManager().addListener(listener);
 };
 
 /**
  * Remove an orientation change listener
  */
-export const removeOrientationChangeListener = (listener: OrientationChangeListener): void => {
+export const removeOrientationChangeListener = (
+  listener: OrientationChangeListener
+): void => {
   getOrientationManager().removeListener(listener);
 };
 
@@ -406,7 +433,9 @@ export const isOrientationLocked = (): boolean => {
 /**
  * Lock orientation to portrait or landscape
  */
-export const lockOrientation = async (orientation: OrientationType): Promise<boolean> => {
+export const lockOrientation = async (
+  orientation: OrientationType
+): Promise<boolean> => {
   return getOrientationManager().lockOrientation(orientation);
 };
 

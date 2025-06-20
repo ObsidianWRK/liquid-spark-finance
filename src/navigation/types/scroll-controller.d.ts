@@ -1,6 +1,6 @@
 /**
  * TypeScript Definitions for Scroll Controller
- * 
+ *
  * Comprehensive type definitions for all scroll controller functionality
  * including core classes, hooks, context, and utility functions.
  */
@@ -51,7 +51,7 @@ declare module '@/navigation/utils/scroll-controller' {
       options?: Partial<ScrollControllerOptions>,
       callbacks?: ScrollControllerCallbacks
     );
-    
+
     getScrollState(): ScrollState;
     getVisibilityState(): NavigationVisibilityState;
     setVisibility(isVisible: boolean, force?: boolean): void;
@@ -185,7 +185,8 @@ declare module '@/navigation/context/ScrollControllerContext' {
   } from '@/navigation/hooks/useScrollController';
 
   // Context value interface
-  export interface ScrollControllerContextValue extends UseScrollControllerReturn {
+  export interface ScrollControllerContextValue
+    extends UseScrollControllerReturn {
     isInitialized: boolean;
   }
 

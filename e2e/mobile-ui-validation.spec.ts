@@ -7,13 +7,15 @@ test.describe('Mobile UI Validation - iOS26 Design Compliance', () => {
   });
 
   test.describe('Mobile Navigation Bar Responsiveness', () => {
-    test('top navigation should not overlap on mobile screens', async ({ page }) => {
+    test('top navigation should not overlap on mobile screens', async ({
+      page,
+    }) => {
       // Test on various mobile viewport sizes
       const mobileViewports = [
         { width: 375, height: 667, name: 'iPhone SE' },
         { width: 390, height: 844, name: 'iPhone 12' },
         { width: 414, height: 896, name: 'iPhone 11 Pro Max' },
-        { width: 320, height: 568, name: 'iPhone 5' }
+        { width: 320, height: 568, name: 'iPhone 5' },
       ];
 
       for (const viewport of mobileViewports) {
@@ -29,15 +31,22 @@ test.describe('Mobile UI Validation - iOS26 Design Compliance', () => {
 
         // Verify no horizontal scroll
         const hasHorizontalScroll = await page.evaluate(() => {
-          return document.documentElement.scrollWidth > document.documentElement.clientWidth;
+          return (
+            document.documentElement.scrollWidth >
+            document.documentElement.clientWidth
+          );
         });
         expect(hasHorizontalScroll).toBeFalsy();
 
-        console.log(`✓ ${viewport.name} (${viewport.width}x${viewport.height}) - Navigation fits properly`);
+        console.log(
+          `✓ ${viewport.name} (${viewport.width}x${viewport.height}) - Navigation fits properly`
+        );
       }
     });
 
-    test('navigation elements should be touch-friendly on mobile', async ({ page }) => {
+    test('navigation elements should be touch-friendly on mobile', async ({
+      page,
+    }) => {
       await page.setViewportSize({ width: 375, height: 667 });
 
       // Find all interactive navigation elements
@@ -47,7 +56,7 @@ test.describe('Mobile UI Validation - iOS26 Design Compliance', () => {
       for (let i = 0; i < buttonCount; i++) {
         const button = navButtons.nth(i);
         const boundingBox = await button.boundingBox();
-        
+
         if (boundingBox) {
           // WCAG AA: Touch targets should be at least 44px
           expect(boundingBox.width).toBeGreaterThanOrEqual(44);
@@ -61,17 +70,17 @@ test.describe('Mobile UI Validation - iOS26 Design Compliance', () => {
 
       // Find and click mobile menu button (should be visible on mobile)
       const mobileMenuButton = page.locator('button[aria-label="Open menu"]');
-      
+
       // Should be visible on mobile
       await expect(mobileMenuButton).toBeVisible();
-      
+
       // Click to open menu
       await mobileMenuButton.click();
-      
+
       // Menu sheet should appear
       const menuSheet = page.locator('[class*="sheet-content"]');
       await expect(menuSheet).toBeVisible();
-      
+
       // Should contain menu sections
       await expect(page.locator('text=File')).toBeVisible();
       await expect(page.locator('text=View')).toBeVisible();
@@ -83,7 +92,7 @@ test.describe('Mobile UI Validation - iOS26 Design Compliance', () => {
 
       // Desktop menubar should be hidden on mobile
       const desktopMenubar = page.locator('[class*="menubar"]');
-      
+
       // Should either not exist or be hidden
       const isVisible = await desktopMenubar.isVisible().catch(() => false);
       expect(isVisible).toBeFalsy();
@@ -117,7 +126,9 @@ test.describe('Mobile UI Validation - iOS26 Design Compliance', () => {
       expect(isVisible).toBeFalsy();
 
       // Quick navigation pills should be visible on large screens
-      const quickNavButtons = page.locator('button[aria-label="Dashboard"], button[aria-label="Insights"], button[aria-label="Transactions"], button[aria-label="Reports"]');
+      const quickNavButtons = page.locator(
+        'button[aria-label="Dashboard"], button[aria-label="Insights"], button[aria-label="Transactions"], button[aria-label="Reports"]'
+      );
       const quickNavCount = await quickNavButtons.count();
       expect(quickNavCount).toBeGreaterThan(0);
     });
@@ -127,13 +138,15 @@ test.describe('Mobile UI Validation - iOS26 Design Compliance', () => {
     test('navigation should be keyboard accessible', async ({ page }) => {
       // Test keyboard navigation
       await page.keyboard.press('Tab');
-      
+
       // Should be able to navigate through elements
       const focusedElement = page.locator(':focus');
       await expect(focusedElement).toBeVisible();
     });
 
-    test('navigation buttons should have proper ARIA labels', async ({ page }) => {
+    test('navigation buttons should have proper ARIA labels', async ({
+      page,
+    }) => {
       await page.setViewportSize({ width: 1280, height: 800 });
 
       const navButtons = page.locator('button[aria-label]');
@@ -149,4 +162,4 @@ test.describe('Mobile UI Validation - iOS26 Design Compliance', () => {
   });
 
   // Removed Visual Regression Prevention tests as theme toggle and associated visual checks are deprecated.
-}); 
+});

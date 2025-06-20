@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { UniversalCard } from '@/shared/ui/UniversalCard';
 import { vueniTheme } from '@/theme/unified';
-import { 
-  TrendingUp, 
-  TrendingDown, 
+import {
+  TrendingUp,
+  TrendingDown,
   DollarSign,
   PieChart,
   Target,
@@ -15,9 +15,14 @@ import {
   Building,
   PiggyBank,
   Eye,
-  EyeOff
+  EyeOff,
 } from 'lucide-react';
-import { PieChart as RechartsPieChart, Cell, ResponsiveContainer, Pie } from 'recharts';
+import {
+  PieChart as RechartsPieChart,
+  Cell,
+  ResponsiveContainer,
+  Pie,
+} from 'recharts';
 import { AreaChart } from '@/shared/ui/charts';
 
 interface Account {
@@ -44,7 +49,7 @@ const NetWorthSummary = ({ accounts, className }: NetWorthSummaryProps) => {
     const checkMobile = () => {
       setIsMobile(window.innerWidth < 640);
     };
-    
+
     checkMobile();
     window.addEventListener('resize', checkMobile);
     return () => window.removeEventListener('resize', checkMobile);
@@ -53,30 +58,32 @@ const NetWorthSummary = ({ accounts, className }: NetWorthSummaryProps) => {
   // Calculate net worth metrics
   const calculations = React.useMemo(() => {
     const assets = accounts
-      .filter(acc => !acc.type.toLowerCase().includes('credit'))
+      .filter((acc) => !acc.type.toLowerCase().includes('credit'))
       .reduce((sum, acc) => sum + acc.balance, 0);
-    
-    const liabilities = Math.abs(accounts
-      .filter(acc => acc.type.toLowerCase().includes('credit'))
-      .reduce((sum, acc) => sum + Math.min(0, acc.balance), 0));
-    
+
+    const liabilities = Math.abs(
+      accounts
+        .filter((acc) => acc.type.toLowerCase().includes('credit'))
+        .reduce((sum, acc) => sum + Math.min(0, acc.balance), 0)
+    );
+
     const netWorth = assets - liabilities;
-    
+
     // Calculate allocation
     const checking = accounts
-      .filter(acc => acc.type.toLowerCase().includes('checking'))
+      .filter((acc) => acc.type.toLowerCase().includes('checking'))
       .reduce((sum, acc) => sum + acc.balance, 0);
-    
+
     const savings = accounts
-      .filter(acc => acc.type.toLowerCase().includes('savings'))
+      .filter((acc) => acc.type.toLowerCase().includes('savings'))
       .reduce((sum, acc) => sum + acc.balance, 0);
-    
+
     const investments = accounts
-      .filter(acc => acc.type.toLowerCase().includes('investment'))
+      .filter((acc) => acc.type.toLowerCase().includes('investment'))
       .reduce((sum, acc) => sum + acc.balance, 0);
-    
+
     const retirement = accounts
-      .filter(acc => acc.type.toLowerCase().includes('retirement'))
+      .filter((acc) => acc.type.toLowerCase().includes('retirement'))
       .reduce((sum, acc) => sum + acc.balance, 0);
 
     return {
@@ -88,8 +95,8 @@ const NetWorthSummary = ({ accounts, className }: NetWorthSummaryProps) => {
       investments,
       retirement,
       monthlyChange: 2847.23, // Mock data - would come from historical data
-      yearlyChange: 18420.50, // Mock data
-      changePercentage: 8.2 // Mock data
+      yearlyChange: 18420.5, // Mock data
+      changePercentage: 8.2, // Mock data
     };
   }, [accounts]);
 
@@ -101,16 +108,32 @@ const NetWorthSummary = ({ accounts, className }: NetWorthSummaryProps) => {
     { month: 'Apr', value: calculations.netWorth - 9420 },
     { month: 'May', value: calculations.netWorth - 5830 },
     { month: 'Jun', value: calculations.netWorth - 2847 },
-    { month: 'Jul', value: calculations.netWorth }
+    { month: 'Jul', value: calculations.netWorth },
   ];
 
   // Allocation data for pie chart
   const allocationData = [
-    { name: 'Checking', value: calculations.checking, color: colors.accent.blue },
-    { name: 'Savings', value: calculations.savings, color: colors.accent.green },
-    { name: 'Investments', value: calculations.investments, color: colors.accent.purple },
-    { name: 'Retirement', value: calculations.retirement, color: colors.accent.orange }
-  ].filter(item => item.value > 0);
+    {
+      name: 'Checking',
+      value: calculations.checking,
+      color: colors.accent.blue,
+    },
+    {
+      name: 'Savings',
+      value: calculations.savings,
+      color: colors.accent.green,
+    },
+    {
+      name: 'Investments',
+      value: calculations.investments,
+      color: colors.accent.purple,
+    },
+    {
+      name: 'Retirement',
+      value: calculations.retirement,
+      color: colors.accent.orange,
+    },
+  ].filter((item) => item.value > 0);
 
   const formatCurrency = (amount: number) => {
     return new Intl.NumberFormat('en-US', {
@@ -131,8 +154,12 @@ const NetWorthSummary = ({ accounts, className }: NetWorthSummaryProps) => {
       <SimpleGlassCard className="p-4 sm:p-6">
         <div className="flex items-start justify-between mb-4 sm:mb-6">
           <div>
-            <h2 className="text-lg sm:text-xl font-bold text-white mb-1 sm:mb-2">Net Worth</h2>
-            <p className="text-white/60 text-xs sm:text-sm">Your total financial position</p>
+            <h2 className="text-lg sm:text-xl font-bold text-white mb-1 sm:mb-2">
+              Net Worth
+            </h2>
+            <p className="text-white/60 text-xs sm:text-sm">
+              Your total financial position
+            </p>
           </div>
           <div className="flex items-center gap-2">
             <button
@@ -148,7 +175,9 @@ const NetWorthSummary = ({ accounts, className }: NetWorthSummaryProps) => {
           </div>
         </div>
 
-        <div className={`transition-all duration-300 ${isVisible ? '' : 'blur-sm'}`}>
+        <div
+          className={`transition-all duration-300 ${isVisible ? '' : 'blur-sm'}`}
+        >
           {/* Net Worth Value */}
           <div className="mb-4 sm:mb-6">
             <div className="text-2xl sm:text-4xl font-bold text-white mb-2">
@@ -160,13 +189,19 @@ const NetWorthSummary = ({ accounts, className }: NetWorthSummaryProps) => {
               ) : (
                 <ArrowDownLeft className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-red-400" />
               )}
-              <span className={`text-xs sm:text-sm font-medium ${
-                calculations.changePercentage >= 0 ? 'text-green-400' : 'text-red-400'
-              }`}>
-                {calculations.changePercentage >= 0 ? '+' : ''}{calculations.changePercentage}% this year
+              <span
+                className={`text-xs sm:text-sm font-medium ${
+                  calculations.changePercentage >= 0
+                    ? 'text-green-400'
+                    : 'text-red-400'
+                }`}
+              >
+                {calculations.changePercentage >= 0 ? '+' : ''}
+                {calculations.changePercentage}% this year
               </span>
               <span className="text-white/60 text-xs sm:text-sm">
-                ({calculations.changePercentage >= 0 ? '+' : ''}{formatCurrency(calculations.yearlyChange)})
+                ({calculations.changePercentage >= 0 ? '+' : ''}
+                {formatCurrency(calculations.yearlyChange)})
               </span>
             </div>
           </div>
@@ -176,17 +211,21 @@ const NetWorthSummary = ({ accounts, className }: NetWorthSummaryProps) => {
             <div className="p-3 sm:p-4 rounded-xl bg-green-500/10 border border-green-500/20">
               <div className="flex items-center gap-1.5 sm:gap-2 mb-2">
                 <TrendingUp className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-green-400" />
-                <span className="text-green-400 text-xs sm:text-sm font-medium">Assets</span>
+                <span className="text-green-400 text-xs sm:text-sm font-medium">
+                  Assets
+                </span>
               </div>
               <div className="text-lg sm:text-xl font-bold text-white">
                 {formatCurrency(calculations.assets)}
               </div>
             </div>
-            
+
             <div className="p-3 sm:p-4 rounded-xl bg-red-500/10 border border-red-500/20">
               <div className="flex items-center gap-1.5 sm:gap-2 mb-2">
                 <TrendingDown className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-red-400" />
-                <span className="text-red-400 text-xs sm:text-sm font-medium">Liabilities</span>
+                <span className="text-red-400 text-xs sm:text-sm font-medium">
+                  Liabilities
+                </span>
               </div>
               <div className="text-lg sm:text-xl font-bold text-white">
                 {formatCurrency(calculations.liabilities)}
@@ -201,7 +240,9 @@ const NetWorthSummary = ({ accounts, className }: NetWorthSummaryProps) => {
         {/* Net Worth Trend */}
         <SimpleGlassCard className="p-4 sm:p-6">
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-4 sm:mb-6 gap-3 sm:gap-0">
-            <h3 className="text-base sm:text-lg font-semibold text-white">Net Worth Trend</h3>
+            <h3 className="text-base sm:text-lg font-semibold text-white">
+              Net Worth Trend
+            </h3>
             <div className="flex gap-1 flex-wrap">
               {['3M', '6M', '1Y', '2Y'].map((period) => (
                 <button
@@ -218,16 +259,19 @@ const NetWorthSummary = ({ accounts, className }: NetWorthSummaryProps) => {
               ))}
             </div>
           </div>
-          
+
           <div className="h-40 sm:h-48">
             <AreaChart
-              data={trendData.map(item => ({ date: item.month, netWorth: item.value }))}
+              data={trendData.map((item) => ({
+                date: item.month,
+                netWorth: item.value,
+              }))}
               series={[
                 {
                   dataKey: 'netWorth',
                   label: 'Net Worth',
                   color: colors.accent.blue,
-                }
+                },
               ]}
               financialType="currency"
               areaConfig={{
@@ -258,8 +302,10 @@ const NetWorthSummary = ({ accounts, className }: NetWorthSummaryProps) => {
 
         {/* Asset Allocation */}
         <SimpleGlassCard className="p-4 sm:p-6">
-          <h3 className="text-base sm:text-lg font-semibold text-white mb-4 sm:mb-6">Asset Allocation</h3>
-          
+          <h3 className="text-base sm:text-lg font-semibold text-white mb-4 sm:mb-6">
+            Asset Allocation
+          </h3>
+
           <div className="h-40 sm:h-48 mb-4 sm:mb-6">
             <ResponsiveContainer width="100%" height="100%">
               <RechartsPieChart>
@@ -276,14 +322,14 @@ const NetWorthSummary = ({ accounts, className }: NetWorthSummaryProps) => {
                     <Cell key={`cell-${index}`} fill={entry.color} />
                   ))}
                 </Pie>
-                <Tooltip 
+                <Tooltip
                   formatter={(value: number) => [formatCurrency(value), '']}
                   contentStyle={{
                     backgroundColor: 'rgba(0,0,0,0.8)',
                     border: '1px solid rgba(255,255,255,0.2)',
                     borderRadius: '12px',
                     color: '#fff',
-                    fontSize: '12px'
+                    fontSize: '12px',
                   }}
                 />
               </RechartsPieChart>
@@ -294,11 +340,13 @@ const NetWorthSummary = ({ accounts, className }: NetWorthSummaryProps) => {
             {allocationData.map((item, index) => (
               <div key={index} className="flex items-center justify-between">
                 <div className="flex items-center gap-2 sm:gap-3">
-                  <div 
+                  <div
                     className="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full flex-shrink-0"
                     style={{ backgroundColor: item.color }}
                   />
-                  <span className="text-white/80 text-xs sm:text-sm truncate">{item.name}</span>
+                  <span className="text-white/80 text-xs sm:text-sm truncate">
+                    {item.name}
+                  </span>
                 </div>
                 <div className="text-right flex-shrink-0">
                   <div className="text-white text-xs sm:text-sm font-medium">
@@ -334,7 +382,9 @@ const NetWorthSummary = ({ accounts, className }: NetWorthSummaryProps) => {
             <div className="p-1.5 sm:p-2 rounded-xl bg-purple-500/10 flex-shrink-0">
               <Target className="w-3 h-3 sm:w-4 sm:h-4 text-purple-400" />
             </div>
-            <span className="text-white/70 text-xs sm:text-sm">Goal Progress</span>
+            <span className="text-white/70 text-xs sm:text-sm">
+              Goal Progress
+            </span>
           </div>
           <div className="text-lg sm:text-xl font-bold text-white">73%</div>
           <div className="text-purple-400 text-xs">On track</div>
@@ -345,7 +395,9 @@ const NetWorthSummary = ({ accounts, className }: NetWorthSummaryProps) => {
             <div className="p-1.5 sm:p-2 rounded-xl bg-green-500/10 flex-shrink-0">
               <PiggyBank className="w-3 h-3 sm:w-4 sm:h-4 text-green-400" />
             </div>
-            <span className="text-white/70 text-xs sm:text-sm">Savings Rate</span>
+            <span className="text-white/70 text-xs sm:text-sm">
+              Savings Rate
+            </span>
           </div>
           <div className="text-lg sm:text-xl font-bold text-white">23.5%</div>
           <div className="text-green-400 text-xs">Above average</div>
@@ -356,7 +408,9 @@ const NetWorthSummary = ({ accounts, className }: NetWorthSummaryProps) => {
             <div className="p-1.5 sm:p-2 rounded-xl bg-orange-500/10 flex-shrink-0">
               <Building className="w-3 h-3 sm:w-4 sm:h-4 text-orange-400" />
             </div>
-            <span className="text-white/70 text-xs sm:text-sm">Credit Score</span>
+            <span className="text-white/70 text-xs sm:text-sm">
+              Credit Score
+            </span>
           </div>
           <div className="text-lg sm:text-xl font-bold text-white">785</div>
           <div className="text-green-400 text-xs">Excellent</div>
@@ -366,4 +420,4 @@ const NetWorthSummary = ({ accounts, className }: NetWorthSummaryProps) => {
   );
 };
 
-export default NetWorthSummary; 
+export default NetWorthSummary;

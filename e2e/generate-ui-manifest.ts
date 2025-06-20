@@ -36,10 +36,12 @@ export default async function globalSetup(_: FullConfig) {
     visited.add(currentPath);
 
     try {
-      await page.goto(`${baseURL}${currentPath}`, { waitUntil: 'domcontentloaded' });
+      await page.goto(`${baseURL}${currentPath}`, {
+        waitUntil: 'domcontentloaded',
+      });
     } catch (err) {
       // If navigation fails, skip this route and continue.
-       
+
       console.warn(`[playwright-audit] Failed to load ${currentPath}:`, err);
       continue;
     }
@@ -55,7 +57,9 @@ export default async function globalSetup(_: FullConfig) {
         return null;
       }
 
-      const elements = Array.from(document.querySelectorAll('a, button, [role="tab"], [onclick]'));
+      const elements = Array.from(
+        document.querySelectorAll('a, button, [role="tab"], [onclick]')
+      );
       return elements
         .map((el) => {
           const tag = el.tagName.toLowerCase();
@@ -67,9 +71,17 @@ export default async function globalSetup(_: FullConfig) {
           if (el.hasAttribute('onclick')) type = 'onclick';
 
           const hrefAttr = (el as HTMLAnchorElement).getAttribute?.('href');
-          const expectUrlChange = !!hrefAttr && hrefAttr !== '#' && !hrefAttr?.startsWith('javascript:');
+          const expectUrlChange =
+            !!hrefAttr &&
+            hrefAttr !== '#' &&
+            !hrefAttr?.startsWith('javascript:');
 
-          return { selector, type, originPage: window.location.pathname, expectUrlChange } as ManifestEntry;
+          return {
+            selector,
+            type,
+            originPage: window.location.pathname,
+            expectUrlChange,
+          } as ManifestEntry;
         })
         .filter(Boolean) as ManifestEntry[];
     });
@@ -79,8 +91,14 @@ export default async function globalSetup(_: FullConfig) {
       manifest.push(entry);
 
       // If the element is a link to same-origin path, queue it for crawling.
-      const href = (await page.locator(entry.selector).getAttribute('href')) || undefined;
-      if (href && href.startsWith('/') && !visited.has(href) && !queue.includes(href)) {
+      const href =
+        (await page.locator(entry.selector).getAttribute('href')) || undefined;
+      if (
+        href &&
+        href.startsWith('/') &&
+        !visited.has(href) &&
+        !queue.includes(href)
+      ) {
         queue.push(href);
       }
     }
@@ -91,5 +109,7 @@ export default async function globalSetup(_: FullConfig) {
   // Persist manifest to the repository root so the spec file can import it.
   const outPath = path.resolve(process.cwd(), 'ui-map.json');
   fs.writeFileSync(outPath, JSON.stringify(manifest, null, 2));
-  console.log(`🗺️  UI interaction map generated with ${manifest.length} entries -> ${outPath}`);
-} 
+  console.log(
+    `🗺️  UI interaction map generated with ${manifest.length} entries -> ${outPath}`
+  );
+}

@@ -12,4 +12,4 @@ export interface BudgetPeriodSummary {
   categories: BudgetCategory[];
   totalBudget: number;
   totalSpent: number;
-} 
+}

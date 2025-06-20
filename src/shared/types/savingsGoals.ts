@@ -21,7 +21,7 @@ export interface Contribution {
   description?: string;
 }
 
-export type GoalCategory = 
+export type GoalCategory =
   | 'Emergency Fund'
   | 'Vacation'
   | 'Home Down Payment'
@@ -37,4 +37,4 @@ export interface SavingsInsight {
   description: string;
   actionable: boolean;
   action?: string;
-} 
+}

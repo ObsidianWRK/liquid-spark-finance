@@ -53,7 +53,9 @@ const SkeletonRow = () => (
 
 const buildRowItems = (transactions: Transaction[]): RowItem[] => {
   // Sort transactions by date desc
-  const sorted = [...transactions].sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+  const sorted = [...transactions].sort(
+    (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
+  );
   const items: RowItem[] = [];
   let lastDateKey = '';
   sorted.forEach((tx) => {
@@ -73,7 +75,11 @@ interface RowRendererData {
   onTransactionClick?: (tx: Transaction) => void;
 }
 
-const RowRenderer: React.FC<ListChildComponentProps<RowRendererData>> = ({ index, style, data }) => {
+const RowRenderer: React.FC<ListChildComponentProps<RowRendererData>> = ({
+  index,
+  style,
+  data,
+}) => {
   const item = data.items[index];
   if (!item) return null;
   if (item.type === 'separator') {
@@ -90,64 +96,79 @@ const RowRenderer: React.FC<ListChildComponentProps<RowRendererData>> = ({ index
   );
 };
 
-export const TransactionList: React.FC<TransactionListProps> = memo(({ transactions, isLoading = false, onTransactionClick, className }) => {
-  const items = useMemo(() => buildRowItems(transactions), [transactions]);
+export const TransactionList: React.FC<TransactionListProps> = memo(
+  ({ transactions, isLoading = false, onTransactionClick, className }) => {
+    const items = useMemo(() => buildRowItems(transactions), [transactions]);
 
-  // Loading state skeletons
-  if (isLoading) {
+    // Loading state skeletons
+    if (isLoading) {
+      return (
+        <div
+          className={cn('space-y-2', className)}
+          data-testid="transaction-list-loading"
+        >
+          {Array.from({ length: 8 }).map((_, i) => (
+            <SkeletonRow key={`sk-${i}`} />
+          ))}
+        </div>
+      );
+    }
+
+    // Empty state
+    if (transactions.length === 0) {
+      return (
+        <div
+          className="text-center py-12 text-white/60"
+          data-testid="transaction-list-empty"
+        >
+          No transactions to display.
+        </div>
+      );
+    }
+
+    // Decide whether to virtualize
+    const shouldVirtualize = transactions.length > VIRTUALIZE_THRESHOLD;
+
+    if (shouldVirtualize) {
+      const height = Math.min(window.innerHeight * 0.7, ROW_HEIGHT * 12);
+      return (
+        <List
+          height={height}
+          itemCount={items.length}
+          itemSize={ROW_HEIGHT}
+          itemData={{ items, onTransactionClick }}
+          width="100%"
+          overscanCount={8}
+          className={cn('transaction-scroll-container', className)}
+          data-testid="transaction-virtualized-list"
+        >
+          {RowRenderer}
+        </List>
+      );
+    }
+
+    // Non-virtualized list
     return (
-      <div className={cn('space-y-2', className)} data-testid="transaction-list-loading">
-        {Array.from({ length: 8 }).map((_, i) => (
-          <SkeletonRow key={`sk-${i}`} />
-        ))}
-      </div>
-    );
-  }
-
-  // Empty state
-  if (transactions.length === 0) {
-    return (
-      <div className="text-center py-12 text-white/60" data-testid="transaction-list-empty">
-        No transactions to display.
-      </div>
-    );
-  }
-
-  // Decide whether to virtualize
-  const shouldVirtualize = transactions.length > VIRTUALIZE_THRESHOLD;
-
-  if (shouldVirtualize) {
-    const height = Math.min(window.innerHeight * 0.7, ROW_HEIGHT * 12);
-    return (
-      <List
-        height={height}
-        itemCount={items.length}
-        itemSize={ROW_HEIGHT}
-        itemData={{ items, onTransactionClick }}
-        width="100%"
-        overscanCount={8}
-        className={cn('transaction-scroll-container', className)}
-        data-testid="transaction-virtualized-list"
+      <div
+        className={cn('space-y-1 transaction-scroll-container', className)}
+        data-testid="transaction-list"
       >
-        {RowRenderer}
-      </List>
+        {items.map((item, idx) =>
+          item.type === 'separator' ? (
+            <DateSeparator key={item.dateKey} date={item.date} />
+          ) : (
+            <TransactionRow
+              key={item.tx.id || idx}
+              tx={item.tx}
+              onClick={onTransactionClick}
+            />
+          )
+        )}
+      </div>
     );
   }
-
-  // Non-virtualized list
-  return (
-    <div className={cn('space-y-1 transaction-scroll-container', className)} data-testid="transaction-list">
-      {items.map((item, idx) => (
-        item.type === 'separator' ? (
-          <DateSeparator key={item.dateKey} date={item.date} />
-        ) : (
-          <TransactionRow key={item.tx.id || idx} tx={item.tx} onClick={onTransactionClick} />
-        )
-      ))}
-    </div>
-  );
-});
+);
 
 TransactionList.displayName = 'TransactionList';
 
-export default TransactionList; 
+export default TransactionList;

@@ -17,7 +17,7 @@
   --slate-300: #cbd5e1;
   --slate-200: #e2e8f0;
   --slate-100: #f1f5f9;
-  
+
   /* Indigo accents for subtle highlights */
   --indigo-950: #1e1b4b;
   --indigo-900: #312e81;
@@ -27,7 +27,7 @@
   --indigo-500: #6366f1;
   --indigo-400: #818cf8;
   --indigo-300: #a5b4fc;
-  
+
   /* Violet accents for depth */
   --violet-900: #4c1d95;
   --violet-800: #5b21b6;
@@ -39,11 +39,12 @@
 
 /* Refined gradient background classes */
 .liquid-bg-primary {
-  background: linear-gradient(135deg, 
-    var(--slate-900) 0%, 
-    var(--slate-800) 25%, 
-    var(--slate-700) 50%, 
-    var(--slate-800) 75%, 
+  background: linear-gradient(
+    135deg,
+    var(--slate-900) 0%,
+    var(--slate-800) 25%,
+    var(--slate-700) 50%,
+    var(--slate-800) 75%,
     var(--slate-900) 100%
   );
   background-size: 300% 300%;
@@ -51,7 +52,8 @@
 }
 
 .liquid-bg-secondary {
-  background: linear-gradient(135deg,
+  background: linear-gradient(
+    135deg,
     var(--slate-800) 0%,
     var(--indigo-900) 25%,
     var(--slate-700) 50%,
@@ -63,7 +65,8 @@
 }
 
 .liquid-bg-purple-depths {
-  background: linear-gradient(135deg,
+  background: linear-gradient(
+    135deg,
     var(--indigo-950) 0%,
     var(--violet-900) 20%,
     var(--indigo-900) 40%,
@@ -76,7 +79,8 @@
 }
 
 .liquid-bg-ocean {
-  background: linear-gradient(135deg,
+  background: linear-gradient(
+    135deg,
     var(--slate-900) 0%,
     var(--indigo-900) 30%,
     var(--slate-800) 60%,
@@ -88,7 +92,8 @@
 }
 
 .liquid-bg-aurora {
-  background: linear-gradient(135deg,
+  background: linear-gradient(
+    135deg,
     var(--slate-900) 0%,
     var(--slate-800) 20%,
     var(--slate-700) 40%,
@@ -101,7 +106,8 @@
 }
 
 .liquid-bg-insights {
-  background: linear-gradient(135deg,
+  background: linear-gradient(
+    135deg,
     var(--indigo-950) 0%,
     var(--violet-900) 25%,
     var(--indigo-800) 50%,
@@ -113,7 +119,8 @@
 }
 
 .liquid-bg-minimal {
-  background: linear-gradient(135deg,
+  background: linear-gradient(
+    135deg,
     var(--slate-100) 0%,
     var(--slate-200) 50%,
     var(--slate-100) 100%
@@ -123,7 +130,8 @@
 }
 
 .liquid-bg-monochrome {
-  background: linear-gradient(135deg,
+  background: linear-gradient(
+    135deg,
     var(--slate-950) 0%,
     var(--slate-900) 30%,
     var(--slate-800) 70%,
@@ -135,7 +143,8 @@
 
 /* Refined animated gradient keyframes */
 @keyframes refinedLiquidFlow {
-  0%, 100% {
+  0%,
+  100% {
     background-position: 0% 50%;
   }
   25% {
@@ -150,7 +159,8 @@
 }
 
 @keyframes refinedDepthFlow {
-  0%, 100% {
+  0%,
+  100% {
     background-position: 0% 0%;
   }
   20% {
@@ -168,7 +178,8 @@
 }
 
 @keyframes refinedOcean {
-  0%, 100% {
+  0%,
+  100% {
     background-position: 0% 50%;
   }
   33% {
@@ -180,7 +191,8 @@
 }
 
 @keyframes refinedAurora {
-  0%, 100% {
+  0%,
+  100% {
     background-position: 0% 50%;
   }
   16.66% {
@@ -201,7 +213,8 @@
 }
 
 @keyframes refinedInsights {
-  0%, 100% {
+  0%,
+  100% {
     background-position: 0% 50%;
   }
   25% {
@@ -216,7 +229,8 @@
 }
 
 @keyframes refinedMinimal {
-  0%, 100% {
+  0%,
+  100% {
     background-position: 0% 50%;
   }
   50% {
@@ -225,7 +239,8 @@
 }
 
 @keyframes refinedMonochrome {
-  0%, 100% {
+  0%,
+  100% {
     background-position: 0% 50%;
   }
   33% {
@@ -277,7 +292,8 @@
 }
 
 @keyframes refinedOverlayDrift {
-  0%, 100% {
+  0%,
+  100% {
     transform: translate(0%, 0%) rotate(0deg);
     opacity: 0.6;
   }
@@ -296,7 +312,8 @@
 }
 
 @keyframes refinedOverlayGlow {
-  0%, 100% {
+  0%,
+  100% {
     transform: scale(1) translate(0%, 0%);
     opacity: 0.5;
   }
@@ -367,7 +384,8 @@
 }
 
 @keyframes refinedLiquidFloat {
-  0%, 100% {
+  0%,
+  100% {
     transform: translate(0px, 0px) scale(1);
     opacity: 0.6;
   }
@@ -524,7 +542,8 @@
 /* Dark theme optimizations */
 @media (prefers-color-scheme: dark) {
   .liquid-bg-aurora {
-    background: linear-gradient(135deg,
+    background: linear-gradient(
+      135deg,
       var(--slate-950) 0%,
       var(--slate-900) 25%,
       var(--slate-800) 50%,
@@ -534,7 +553,8 @@
   }
 
   .liquid-bg-insights {
-    background: linear-gradient(135deg,
+    background: linear-gradient(
+      135deg,
       var(--indigo-950) 0%,
       var(--violet-900) 30%,
       var(--indigo-900) 70%,
@@ -559,7 +579,8 @@
 }
 
 @keyframes refinedInsightsGradientShift {
-  0%, 100% {
+  0%,
+  100% {
     opacity: 0.6;
     transform: rotate(0deg);
   }
@@ -575,4 +596,4 @@
     opacity: 0.7;
     transform: rotate(270deg);
   }
-} 
+}

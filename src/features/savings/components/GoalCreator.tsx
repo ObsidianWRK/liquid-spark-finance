@@ -14,32 +14,54 @@ const GoalCreator = ({ onGoalCreated, onClose }: GoalCreatorProps) => {
     description: '',
     targetAmount: '',
     targetDate: '',
-    category: 'General' as GoalCategory
+    category: 'General' as GoalCategory,
   });
   const [isCreating, setIsCreating] = useState(false);
 
-  const goalCategories: { value: GoalCategory; label: string; icon: string; color: string }[] = [
-    { value: 'Emergency Fund', label: 'Emergency Fund', icon: '🛡️', color: '#ef4444' },
+  const goalCategories: {
+    value: GoalCategory;
+    label: string;
+    icon: string;
+    color: string;
+  }[] = [
+    {
+      value: 'Emergency Fund',
+      label: 'Emergency Fund',
+      icon: '🛡️',
+      color: '#ef4444',
+    },
     { value: 'Vacation', label: 'Vacation', icon: '✈️', color: '#10b981' },
-    { value: 'Home Down Payment', label: 'Home Down Payment', icon: '🏠', color: '#3b82f6' },
+    {
+      value: 'Home Down Payment',
+      label: 'Home Down Payment',
+      icon: '🏠',
+      color: '#3b82f6',
+    },
     { value: 'Car', label: 'Car', icon: '🚗', color: '#8b5cf6' },
     { value: 'Education', label: 'Education', icon: '🎓', color: '#f59e0b' },
     { value: 'Wedding', label: 'Wedding', icon: '💍', color: '#ec4899' },
     { value: 'Retirement', label: 'Retirement', icon: '🏖️', color: '#06b6d4' },
-    { value: 'General', label: 'General Savings', icon: '💰', color: '#64748b' }
+    {
+      value: 'General',
+      label: 'General Savings',
+      icon: '💰',
+      color: '#64748b',
+    },
   ];
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (!formData.name || !formData.targetAmount || !formData.targetDate) {
       return;
     }
 
     setIsCreating(true);
     try {
-      const selectedCategory = goalCategories.find(cat => cat.value === formData.category);
-      
+      const selectedCategory = goalCategories.find(
+        (cat) => cat.value === formData.category
+      );
+
       const newGoal = await savingsGoalsService.createGoal({
         name: formData.name,
         description: formData.description || undefined,
@@ -48,7 +70,7 @@ const GoalCreator = ({ onGoalCreated, onClose }: GoalCreatorProps) => {
         targetDate: formData.targetDate,
         category: formData.category,
         color: selectedCategory?.color || '#64748b',
-        icon: selectedCategory?.icon || '💰'
+        icon: selectedCategory?.icon || '💰',
       });
 
       onGoalCreated(newGoal);
@@ -60,7 +82,7 @@ const GoalCreator = ({ onGoalCreated, onClose }: GoalCreatorProps) => {
   };
 
   const handleInputChange = (field: string, value: string) => {
-    setFormData(prev => ({ ...prev, [field]: value }));
+    setFormData((prev) => ({ ...prev, [field]: value }));
   };
 
   // Calculate minimum date (today)
@@ -73,7 +95,9 @@ const GoalCreator = ({ onGoalCreated, onClose }: GoalCreatorProps) => {
         <div className="flex items-center justify-between p-6 border-b border-white/10">
           <div className="flex items-center space-x-3">
             <Target className="w-6 h-6 text-green-400" />
-            <h2 className="text-xl font-bold text-white">Create Savings Goal</h2>
+            <h2 className="text-xl font-bold text-white">
+              Create Savings Goal
+            </h2>
           </div>
           <button
             onClick={onClose}
@@ -87,7 +111,9 @@ const GoalCreator = ({ onGoalCreated, onClose }: GoalCreatorProps) => {
         <form onSubmit={handleSubmit} className="p-6 space-y-6">
           {/* Goal Category */}
           <div>
-            <label className="text-white font-medium mb-3 block">Goal Category</label>
+            <label className="text-white font-medium mb-3 block">
+              Goal Category
+            </label>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
               {goalCategories.map((category) => (
                 <button
@@ -101,7 +127,9 @@ const GoalCreator = ({ onGoalCreated, onClose }: GoalCreatorProps) => {
                   }`}
                 >
                   <div className="text-2xl mb-1">{category.icon}</div>
-                  <div className="text-white text-xs text-center">{category.label}</div>
+                  <div className="text-white text-xs text-center">
+                    {category.label}
+                  </div>
                 </button>
               ))}
             </div>
@@ -109,7 +137,9 @@ const GoalCreator = ({ onGoalCreated, onClose }: GoalCreatorProps) => {
 
           {/* Goal Name */}
           <div>
-            <label className="text-white font-medium mb-2 block">Goal Name</label>
+            <label className="text-white font-medium mb-2 block">
+              Goal Name
+            </label>
             <input
               type="text"
               value={formData.name}
@@ -122,7 +152,9 @@ const GoalCreator = ({ onGoalCreated, onClose }: GoalCreatorProps) => {
 
           {/* Description */}
           <div>
-            <label className="text-white font-medium mb-2 block">Description (Optional)</label>
+            <label className="text-white font-medium mb-2 block">
+              Description (Optional)
+            </label>
             <textarea
               value={formData.description}
               onChange={(e) => handleInputChange('description', e.target.value)}
@@ -134,13 +166,17 @@ const GoalCreator = ({ onGoalCreated, onClose }: GoalCreatorProps) => {
 
           {/* Target Amount */}
           <div>
-            <label className="text-white font-medium mb-2 block">Target Amount</label>
+            <label className="text-white font-medium mb-2 block">
+              Target Amount
+            </label>
             <div className="relative">
               <DollarSign className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-slate-400" />
               <input
                 type="number"
                 value={formData.targetAmount}
-                onChange={(e) => handleInputChange('targetAmount', e.target.value)}
+                onChange={(e) =>
+                  handleInputChange('targetAmount', e.target.value)
+                }
                 placeholder="5000"
                 min="1"
                 step="0.01"
@@ -152,13 +188,17 @@ const GoalCreator = ({ onGoalCreated, onClose }: GoalCreatorProps) => {
 
           {/* Target Date */}
           <div>
-            <label className="text-white font-medium mb-2 block">Target Date</label>
+            <label className="text-white font-medium mb-2 block">
+              Target Date
+            </label>
             <div className="relative">
               <Calendar className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-slate-400" />
               <input
                 type="date"
                 value={formData.targetDate}
-                onChange={(e) => handleInputChange('targetDate', e.target.value)}
+                onChange={(e) =>
+                  handleInputChange('targetDate', e.target.value)
+                }
                 min={minDate}
                 className="w-full bg-slate-800/50 border border-slate-700 rounded-lg pl-12 pr-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-indigo-500"
                 required
@@ -177,7 +217,9 @@ const GoalCreator = ({ onGoalCreated, onClose }: GoalCreatorProps) => {
                 </div>
                 <div className="flex justify-between">
                   <span className="text-slate-400">Target Amount:</span>
-                  <span className="text-white">${parseFloat(formData.targetAmount || '0').toLocaleString()}</span>
+                  <span className="text-white">
+                    ${parseFloat(formData.targetAmount || '0').toLocaleString()}
+                  </span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-slate-400">Target Date:</span>
@@ -185,14 +227,18 @@ const GoalCreator = ({ onGoalCreated, onClose }: GoalCreatorProps) => {
                     {new Date(formData.targetDate).toLocaleDateString('en-US', {
                       year: 'numeric',
                       month: 'long',
-                      day: 'numeric'
+                      day: 'numeric',
                     })}
                   </span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-slate-400">Days to Goal:</span>
                   <span className="text-white">
-                    {Math.ceil((new Date(formData.targetDate).getTime() - Date.now()) / (1000 * 60 * 60 * 24))} days
+                    {Math.ceil(
+                      (new Date(formData.targetDate).getTime() - Date.now()) /
+                        (1000 * 60 * 60 * 24)
+                    )}{' '}
+                    days
                   </span>
                 </div>
               </div>
@@ -211,7 +257,12 @@ const GoalCreator = ({ onGoalCreated, onClose }: GoalCreatorProps) => {
             </button>
             <button
               type="submit"
-              disabled={!formData.name || !formData.targetAmount || !formData.targetDate || isCreating}
+              disabled={
+                !formData.name ||
+                !formData.targetAmount ||
+                !formData.targetDate ||
+                isCreating
+              }
               className="flex-1 bg-gradient-to-r from-green-500 to-emerald-500 text-white py-3 px-4 rounded-lg font-medium hover:from-green-600 hover:to-emerald-600 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {isCreating ? 'Creating...' : 'Create Goal'}
@@ -223,4 +274,4 @@ const GoalCreator = ({ onGoalCreated, onClose }: GoalCreatorProps) => {
   );
 };
 
-export default GoalCreator; 
+export default GoalCreator;

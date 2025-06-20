@@ -1,6 +1,18 @@
 import React, { useState } from 'react';
 import { calculate401kBalance } from '@/shared/utils/calculators';
-import { PieChart, Pie, Cell, BarChart, Bar, ResponsiveContainer, Tooltip, Legend, CartesianGrid, XAxis, YAxis } from 'recharts';
+import {
+  PieChart,
+  Pie,
+  Cell,
+  BarChart,
+  Bar,
+  ResponsiveContainer,
+  Tooltip,
+  Legend,
+  CartesianGrid,
+  XAxis,
+  YAxis,
+} from 'recharts';
 import { AreaChart } from '@/shared/ui/charts';
 import { getFinancialChartColor } from '@/shared/utils/theme-color-mapper';
 import { vueniTheme } from '@/theme/unified';
@@ -31,11 +43,11 @@ const Retirement401kCalculator = () => {
     const annualContribution = salary * (contributionPercent / 100);
     const annualMatch = Math.min(annualContribution * matchRate, salary * 0.06); // Typical 6% match cap
     const annualGrowthRate = returnRate / 100;
-    
+
     let currentBalance = balance;
     let totalEmployeeContributions = 0;
     let totalEmployerMatch = 0;
-    
+
     // Add initial data point
     data.push({
       year: 0,
@@ -43,36 +55,46 @@ const Retirement401kCalculator = () => {
       employeeContribution: 0,
       employerMatch: 0,
       investmentGrowth: 0,
-      totalBalance: balance
+      totalBalance: balance,
     });
 
     for (let year = 1; year <= years; year++) {
       // Apply investment growth
       const growthThisYear = currentBalance * annualGrowthRate;
       currentBalance += growthThisYear;
-      
+
       // Add contributions
       currentBalance += annualContribution + annualMatch;
       totalEmployeeContributions += annualContribution;
       totalEmployerMatch += annualMatch;
-      
+
       data.push({
         year,
         age: currentAge + year,
         employeeContribution: totalEmployeeContributions,
         employerMatch: totalEmployerMatch,
-        investmentGrowth: currentBalance - balance - totalEmployeeContributions - totalEmployerMatch,
-        totalBalance: currentBalance
+        investmentGrowth:
+          currentBalance -
+          balance -
+          totalEmployeeContributions -
+          totalEmployerMatch,
+        totalBalance: currentBalance,
       });
     }
-    
+
     return data;
   };
 
   const handleCalculate = () => {
     const years = retirementAge - currentAge;
     const annualContribution = salary * (contributionPercent / 100);
-    const result = calculate401kBalance(balance, annualContribution, matchRate, returnRate, years);
+    const result = calculate401kBalance(
+      balance,
+      annualContribution,
+      matchRate,
+      returnRate,
+      years
+    );
     const projection = generateRetirementProjection();
     setFutureBalance(result);
     setProjectionData(projection);
@@ -92,30 +114,62 @@ const Retirement401kCalculator = () => {
   const years = retirementAge - currentAge;
 
   const finalProjection = projectionData[projectionData.length - 1];
-  const contributionBreakdown = finalProjection ? [
-    { name: 'Initial Balance', value: balance, color: getFinancialChartColor('investments') },
-    { name: 'Employee Contributions', value: finalProjection.employeeContribution, color: getFinancialChartColor('savings') },
-    { name: 'Employer Match', value: finalProjection.employerMatch, color: getFinancialChartColor('income') },
-    { name: 'Investment Growth', value: finalProjection.investmentGrowth, color: getFinancialChartColor('debt') }
-  ] : [];
+  const contributionBreakdown = finalProjection
+    ? [
+        {
+          name: 'Initial Balance',
+          value: balance,
+          color: getFinancialChartColor('investments'),
+        },
+        {
+          name: 'Employee Contributions',
+          value: finalProjection.employeeContribution,
+          color: getFinancialChartColor('savings'),
+        },
+        {
+          name: 'Employer Match',
+          value: finalProjection.employerMatch,
+          color: getFinancialChartColor('income'),
+        },
+        {
+          name: 'Investment Growth',
+          value: finalProjection.investmentGrowth,
+          color: getFinancialChartColor('debt'),
+        },
+      ]
+    : [];
 
   // Calculate monthly income in retirement (using 4% rule)
-  const monthlyRetirementIncome = futureBalance ? (futureBalance * 0.04) / 12 : 0;
+  const monthlyRetirementIncome = futureBalance
+    ? (futureBalance * 0.04) / 12
+    : 0;
 
   const contributionLimits = [
-    { category: 'Current Contribution', amount: annualContribution, limit: 23000 },
+    {
+      category: 'Current Contribution',
+      amount: annualContribution,
+      limit: 23000,
+    },
     { category: 'Employer Match', amount: annualMatch, limit: 69000 },
-    { category: 'Total Annual', amount: annualContribution + annualMatch, limit: 69000 }
+    {
+      category: 'Total Annual',
+      amount: annualContribution + annualMatch,
+      limit: 69000,
+    },
   ];
 
   return (
     <div className="max-w-6xl mx-auto p-6 space-y-8">
-      <h1 className="text-3xl font-bold text-white mb-8">401(k) Retirement Calculator</h1>
-      
+      <h1 className="text-3xl font-bold text-white mb-8">
+        401(k) Retirement Calculator
+      </h1>
+
       <div className="grid lg:grid-cols-2 gap-8">
         {/* Input Section */}
         <div className="bg-white/5 backdrop-blur-xl rounded-3xl p-6 border border-white/10">
-          <h2 className="text-xl font-semibold text-white mb-6">Retirement Planning</h2>
+          <h2 className="text-xl font-semibold text-white mb-6">
+            Retirement Planning
+          </h2>
           <div className="space-y-6">
             <div className="grid grid-cols-2 gap-4">
               <div>
@@ -149,7 +203,9 @@ const Retirement401kCalculator = () => {
                 Current 401(k) Balance
               </label>
               <div className="relative">
-                <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-white/60">$</span>
+                <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-white/60">
+                  $
+                </span>
                 <input
                   type="number"
                   value={balance}
@@ -159,13 +215,15 @@ const Retirement401kCalculator = () => {
                 />
               </div>
             </div>
-            
+
             <div>
               <label className="block text-sm font-medium text-white/80 mb-2">
                 Annual Salary
               </label>
               <div className="relative">
-                <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-white/60">$</span>
+                <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-white/60">
+                  $
+                </span>
                 <input
                   type="number"
                   value={salary}
@@ -175,7 +233,7 @@ const Retirement401kCalculator = () => {
                 />
               </div>
             </div>
-            
+
             <div>
               <label className="block text-sm font-medium text-white/80 mb-2">
                 Contribution Percentage
@@ -189,7 +247,9 @@ const Retirement401kCalculator = () => {
                   placeholder="10"
                   step="0.5"
                 />
-                <span className="absolute right-3 top-1/2 transform -translate-y-1/2 text-white/60">%</span>
+                <span className="absolute right-3 top-1/2 transform -translate-y-1/2 text-white/60">
+                  %
+                </span>
               </div>
               <div className="text-xs text-white/60 mt-1">
                 Annual: {formatCurrency(annualContribution)}
@@ -209,13 +269,15 @@ const Retirement401kCalculator = () => {
                   placeholder="0.5"
                   step="0.25"
                 />
-                <span className="absolute right-3 top-1/2 transform -translate-y-1/2 text-white/60">×</span>
+                <span className="absolute right-3 top-1/2 transform -translate-y-1/2 text-white/60">
+                  ×
+                </span>
               </div>
               <div className="text-xs text-white/60 mt-1">
                 Annual Match: {formatCurrency(annualMatch)}
               </div>
             </div>
-            
+
             <div>
               <label className="block text-sm font-medium text-white/80 mb-2">
                 Expected Annual Return
@@ -229,10 +291,12 @@ const Retirement401kCalculator = () => {
                   placeholder="7"
                   step="0.1"
                 />
-                <span className="absolute right-3 top-1/2 transform -translate-y-1/2 text-white/60">%</span>
+                <span className="absolute right-3 top-1/2 transform -translate-y-1/2 text-white/60">
+                  %
+                </span>
               </div>
             </div>
-            
+
             <button
               onClick={handleCalculate}
               className="w-full py-3 px-6 rounded-xl bg-white/10 border border-white/20 text-white font-semibold button-hover"
@@ -245,20 +309,32 @@ const Retirement401kCalculator = () => {
         {/* Results Section */}
         {futureBalance !== null && (
           <div className="bg-white/5 backdrop-blur-xl rounded-3xl p-6 border border-white/10">
-            <h2 className="text-xl font-semibold text-white mb-6">Retirement Projection</h2>
+            <h2 className="text-xl font-semibold text-white mb-6">
+              Retirement Projection
+            </h2>
             <div className="space-y-4">
               <div className="text-center p-6 bg-gradient-to-r from-green-500/20 to-blue-500/20 rounded-2xl border border-green-400/20">
-                <div className="text-3xl font-bold text-white mb-2">{formatCurrency(futureBalance)}</div>
-                <div className="text-white/80">401(k) Balance at Retirement</div>
+                <div className="text-3xl font-bold text-white mb-2">
+                  {formatCurrency(futureBalance)}
+                </div>
+                <div className="text-white/80">
+                  401(k) Balance at Retirement
+                </div>
               </div>
-              
+
               <div className="grid grid-cols-2 gap-4">
                 <div className="text-center p-4 bg-white/5 rounded-xl">
-                  <div className="text-xl font-semibold text-white">{formatCurrency(monthlyRetirementIncome)}</div>
-                  <div className="text-sm text-white/60">Monthly Income (4% Rule)</div>
+                  <div className="text-xl font-semibold text-white">
+                    {formatCurrency(monthlyRetirementIncome)}
+                  </div>
+                  <div className="text-sm text-white/60">
+                    Monthly Income (4% Rule)
+                  </div>
                 </div>
                 <div className="text-center p-4 bg-white/5 rounded-xl">
-                  <div className="text-xl font-semibold text-white">{years}</div>
+                  <div className="text-xl font-semibold text-white">
+                    {years}
+                  </div>
                   <div className="text-sm text-white/60">Years to Save</div>
                 </div>
               </div>
@@ -279,10 +355,12 @@ const Retirement401kCalculator = () => {
         <div className="grid lg:grid-cols-2 gap-8">
           {/* Growth Projection Chart */}
           <div className="bg-white/5 backdrop-blur-xl rounded-3xl p-6 border border-white/10">
-            <h2 className="text-xl font-semibold text-white mb-6">401(k) Growth Over Time</h2>
+            <h2 className="text-xl font-semibold text-white mb-6">
+              401(k) Growth Over Time
+            </h2>
             <div className="h-64">
               <AreaChart
-                data={projectionData.map(item => ({
+                data={projectionData.map((item) => ({
                   date: `Age ${item.age}`,
                   employeeContribution: item.employeeContribution,
                   employerMatch: item.employerMatch,
@@ -296,7 +374,7 @@ const Retirement401kCalculator = () => {
                   },
                   {
                     dataKey: 'employerMatch',
-                    label: 'Employer Match', 
+                    label: 'Employer Match',
                     color: getFinancialChartColor('income'),
                   },
                   {
@@ -331,7 +409,7 @@ const Retirement401kCalculator = () => {
                   show: true,
                   horizontal: true,
                   vertical: false,
-                  strokeDasharray: "3 3",
+                  strokeDasharray: '3 3',
                   opacity: 0.1,
                 }}
                 legend={{
@@ -346,7 +424,9 @@ const Retirement401kCalculator = () => {
 
           {/* Contribution Breakdown */}
           <div className="bg-white/5 backdrop-blur-xl rounded-3xl p-6 border border-white/10">
-            <h2 className="text-xl font-semibold text-white mb-6">Final Balance Breakdown</h2>
+            <h2 className="text-xl font-semibold text-white mb-6">
+              Final Balance Breakdown
+            </h2>
             <div className="h-64">
               <ResponsiveContainer width="100%" height="100%">
                 <PieChart>
@@ -363,13 +443,16 @@ const Retirement401kCalculator = () => {
                       <Cell key={`cell-${index}`} fill={entry.color} />
                     ))}
                   </Pie>
-                  <Tooltip 
-                    formatter={(value: number) => [formatCurrency(value), 'Amount']}
+                  <Tooltip
+                    formatter={(value: number) => [
+                      formatCurrency(value),
+                      'Amount',
+                    ]}
                     contentStyle={{
                       backgroundColor: vueniTheme.colors.surface.overlay,
                       border: `1px solid ${vueniTheme.colors.surface.glass.border}`,
                       borderRadius: '12px',
-                      color: vueniTheme.colors.text.primary
+                      color: vueniTheme.colors.text.primary,
                     }}
                   />
                 </PieChart>
@@ -378,7 +461,10 @@ const Retirement401kCalculator = () => {
             <div className="grid grid-cols-2 gap-2 mt-4 text-xs">
               {contributionBreakdown.map((entry, index) => (
                 <div key={entry.name} className="flex items-center space-x-2">
-                  <div className="w-3 h-3 rounded" style={{ backgroundColor: entry.color }}></div>
+                  <div
+                    className="w-3 h-3 rounded"
+                    style={{ backgroundColor: entry.color }}
+                  ></div>
                   <span className="text-white/80">{entry.name}</span>
                 </div>
               ))}
@@ -390,32 +476,48 @@ const Retirement401kCalculator = () => {
       {/* Contribution Limits */}
       {futureBalance !== null && (
         <div className="bg-white/5 backdrop-blur-xl rounded-3xl p-6 border border-white/10">
-          <h2 className="text-xl font-semibold text-white mb-6">2024 Contribution Limits</h2>
+          <h2 className="text-xl font-semibold text-white mb-6">
+            2024 Contribution Limits
+          </h2>
           <div className="h-64">
             <ResponsiveContainer width="100%" height="100%">
               <BarChart data={contributionLimits}>
-                <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.1)" />
-                <XAxis 
-                  dataKey="category" 
-                  stroke={vueniTheme.colors.text.primary} 
+                <CartesianGrid
+                  strokeDasharray="3 3"
+                  stroke="rgba(255,255,255,0.1)"
+                />
+                <XAxis
+                  dataKey="category"
+                  stroke={vueniTheme.colors.text.primary}
                   fontSize={12}
                 />
-                <YAxis 
+                <YAxis
                   stroke={vueniTheme.colors.text.primary}
                   fontSize={12}
                   tickFormatter={(value) => formatCurrency(value)}
                 />
-                <Tooltip 
-                  formatter={(value: number, name: string) => [formatCurrency(value), name === 'amount' ? 'Current' : 'Limit']}
+                <Tooltip
+                  formatter={(value: number, name: string) => [
+                    formatCurrency(value),
+                    name === 'amount' ? 'Current' : 'Limit',
+                  ]}
                   contentStyle={{
                     backgroundColor: vueniTheme.colors.surface.overlay,
                     border: `1px solid ${vueniTheme.colors.surface.glass.border}`,
                     borderRadius: '12px',
-                    color: vueniTheme.colors.text.primary
+                    color: vueniTheme.colors.text.primary,
                   }}
                 />
-                <Bar dataKey="amount" fill={getFinancialChartColor('savings')} radius={[4, 4, 0, 0]} />
-                <Bar dataKey="limit" fill={vueniTheme.colors.palette.neutral} radius={[4, 4, 0, 0]} />
+                <Bar
+                  dataKey="amount"
+                  fill={getFinancialChartColor('savings')}
+                  radius={[4, 4, 0, 0]}
+                />
+                <Bar
+                  dataKey="limit"
+                  fill={vueniTheme.colors.palette.neutral}
+                  radius={[4, 4, 0, 0]}
+                />
               </BarChart>
             </ResponsiveContainer>
           </div>
@@ -425,4 +527,4 @@ const Retirement401kCalculator = () => {
   );
 };
 
-export default Retirement401kCalculator; 
+export default Retirement401kCalculator;

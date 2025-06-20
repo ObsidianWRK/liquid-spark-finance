@@ -9,7 +9,7 @@ export interface FeatureFlags {
 const defaultFlags: FeatureFlags = {
   FEATURE_CLOUD: true, // Enable by default for demo
   SMART_ACCOUNTS_DECK: true, // Enable by default for demo
-  ENHANCED_ANIMATIONS: true
+  ENHANCED_ANIMATIONS: true,
 };
 
 // CC: Get feature flags from environment or use defaults
@@ -19,9 +19,14 @@ export const getFeatureFlags = (): FeatureFlags => {
   }
 
   return {
-    FEATURE_CLOUD: process.env.VITE_FEATURE_CLOUD === 'true' || defaultFlags.FEATURE_CLOUD,
-    SMART_ACCOUNTS_DECK: process.env.VITE_SMART_ACCOUNTS_DECK === 'true' || defaultFlags.SMART_ACCOUNTS_DECK,
-    ENHANCED_ANIMATIONS: process.env.VITE_ENHANCED_ANIMATIONS === 'true' || defaultFlags.ENHANCED_ANIMATIONS
+    FEATURE_CLOUD:
+      process.env.VITE_FEATURE_CLOUD === 'true' || defaultFlags.FEATURE_CLOUD,
+    SMART_ACCOUNTS_DECK:
+      process.env.VITE_SMART_ACCOUNTS_DECK === 'true' ||
+      defaultFlags.SMART_ACCOUNTS_DECK,
+    ENHANCED_ANIMATIONS:
+      process.env.VITE_ENHANCED_ANIMATIONS === 'true' ||
+      defaultFlags.ENHANCED_ANIMATIONS,
   };
 };
 
@@ -37,7 +42,7 @@ export const trackFeatureUsage = (feature: string, action: string) => {
     (window as any).gtag('event', 'feature_usage', {
       event_category: 'feature_flags',
       event_label: feature,
-      custom_parameter_1: action
+      custom_parameter_1: action,
     });
   }
-}; 
+};

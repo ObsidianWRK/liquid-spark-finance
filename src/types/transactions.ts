@@ -1,1 +1,1 @@
-export * from '../shared/types/transactions'; 
+export * from '../shared/types/transactions';

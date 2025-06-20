@@ -1,6 +1,6 @@
-import { create } from "zustand";
-import { advisorService } from "@/features/advisor-chat/api/advisorService";
-import { AdvisorThread, AdvisorMessage } from "@/shared/types/shared";
+import { create } from 'zustand';
+import { advisorService } from '@/features/advisor-chat/api/advisorService';
+import { AdvisorThread, AdvisorMessage } from '@/shared/types/shared';
 
 interface AdvisorChatState {
   thread?: AdvisorThread;
@@ -21,13 +21,13 @@ export const useAdvisorChatStore = create<AdvisorChatState>((set, get) => ({
       const thread = await advisorService.openThread();
       set({ thread, loading: false });
     } catch (err: any) {
-      set({ error: err.message ?? "Unknown", loading: false });
+      set({ error: err.message ?? 'Unknown', loading: false });
     }
   },
   sendMessage: async (content: string) => {
     const { thread } = get();
     if (!thread) return;
-    
+
     try {
       const msg = await advisorService.sendMessage(thread.id, content);
       // optimistic update
@@ -37,19 +37,23 @@ export const useAdvisorChatStore = create<AdvisorChatState>((set, get) => ({
       // simulate AI response after delay
       setTimeout(async () => {
         const aiMsg: AdvisorMessage = {
-          id: "ai-" + Date.now(),
-          sender: "advisor",
-          content: "Thanks for your question. I'm here to help with your financial planning needs.",
+          id: 'ai-' + Date.now(),
+          sender: 'advisor',
+          content:
+            "Thanks for your question. I'm here to help with your financial planning needs.",
           createdAt: new Date().toISOString(),
         };
-        const final = { ...get().thread!, messages: [...get().thread!.messages, aiMsg] };
+        const final = {
+          ...get().thread!,
+          messages: [...get().thread!.messages, aiMsg],
+        };
         set({ thread: final });
       }, 1500);
     } catch (err: any) {
-      set({ error: err.message ?? "Failed to send" });
+      set({ error: err.message ?? 'Failed to send' });
     }
   },
   closeChat: () => {
     set({ thread: undefined });
   },
-})); 
+}));

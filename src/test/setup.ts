@@ -24,7 +24,7 @@ global.IntersectionObserver = vi.fn().mockImplementation(() => ({
 // Mock matchMedia
 Object.defineProperty(window, 'matchMedia', {
   writable: true,
-  value: vi.fn().mockImplementation(query => ({
+  value: vi.fn().mockImplementation((query) => ({
     matches: false,
     media: query,
     onchange: null,
@@ -57,7 +57,8 @@ global.console = {
 Object.defineProperty(global, 'crypto', {
   value: {
     randomUUID: () => 'test-uuid',
-    getRandomValues: (arr: any) => arr.map(() => Math.floor(Math.random() * 256)),
+    getRandomValues: (arr: any) =>
+      arr.map(() => Math.floor(Math.random() * 256)),
   },
 });
 
@@ -99,7 +100,7 @@ global.testUtils = {
   // Mock financial data for consistent testing
   mockTransaction: {
     id: '1',
-    amount: 100.50,
+    amount: 100.5,
     merchant: 'Test Merchant',
     date: '2024-01-01',
     category: 'Food & Dining',
@@ -107,12 +108,12 @@ global.testUtils = {
     ecoScore: 70,
     financialScore: 90,
   },
-  
+
   mockAccount: {
     id: '1',
     name: 'Test Checking',
     type: 'checking',
-    balance: 5000.00,
+    balance: 5000.0,
     currency: 'USD',
   },
 
@@ -123,7 +124,12 @@ global.testUtils = {
       amount: Math.random() * 1000,
       merchant: `Test Merchant ${i}`,
       date: new Date(2024, 0, i + 1).toISOString().split('T')[0],
-      category: ['Food & Dining', 'Gas & Transport', 'Shopping', 'Bills & Utilities'][i % 4],
+      category: [
+        'Food & Dining',
+        'Gas & Transport',
+        'Shopping',
+        'Bills & Utilities',
+      ][i % 4],
       healthScore: Math.floor(Math.random() * 100),
       ecoScore: Math.floor(Math.random() * 100),
       financialScore: Math.floor(Math.random() * 100),

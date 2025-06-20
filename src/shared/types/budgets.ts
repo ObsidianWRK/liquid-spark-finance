@@ -20,19 +20,28 @@ export interface Budget {
   updatedAt: Date;
 }
 
-export type BudgetType = 
-  | 'zero_based'     // Income - Expenses = 0
-  | 'envelope'       // Fixed amounts per category
-  | 'percentage'     // Percentage of income per category
-  | 'priority'       // Priority-based allocation
-  | 'goal_based'     // Budget aligned with financial goals
-  | 'flexible';      // Adaptive budgeting
+export type BudgetType =
+  | 'zero_based' // Income - Expenses = 0
+  | 'envelope' // Fixed amounts per category
+  | 'percentage' // Percentage of income per category
+  | 'priority' // Priority-based allocation
+  | 'goal_based' // Budget aligned with financial goals
+  | 'flexible'; // Adaptive budgeting
 
-export type BudgetPeriod = 
-  | 'weekly' | 'biweekly' | 'monthly' | 'quarterly' | 'annually' | 'custom';
+export type BudgetPeriod =
+  | 'weekly'
+  | 'biweekly'
+  | 'monthly'
+  | 'quarterly'
+  | 'annually'
+  | 'custom';
 
-export type BudgetStatus = 
-  | 'draft' | 'active' | 'paused' | 'completed' | 'archived';
+export type BudgetStatus =
+  | 'draft'
+  | 'active'
+  | 'paused'
+  | 'completed'
+  | 'archived';
 
 export interface BudgetCategory {
   id: string;
@@ -139,10 +148,16 @@ export interface BudgetRecommendation {
   expiresAt?: Date;
 }
 
-export type RecommendationType = 
-  | 'reduce_spending' | 'increase_budget' | 'reallocate_funds' 
-  | 'create_category' | 'merge_categories' | 'adjust_goals' 
-  | 'emergency_fund' | 'debt_payment' | 'investment_opportunity';
+export type RecommendationType =
+  | 'reduce_spending'
+  | 'increase_budget'
+  | 'reallocate_funds'
+  | 'create_category'
+  | 'merge_categories'
+  | 'adjust_goals'
+  | 'emergency_fund'
+  | 'debt_payment'
+  | 'investment_opportunity';
 
 export interface BudgetAnalytics {
   period: BudgetPeriod;
@@ -193,7 +208,12 @@ export interface BudgetTrend {
 }
 
 export interface BudgetInsight {
-  type: 'overspending' | 'underspending' | 'seasonal_pattern' | 'recurring_charge' | 'opportunity';
+  type:
+    | 'overspending'
+    | 'underspending'
+    | 'seasonal_pattern'
+    | 'recurring_charge'
+    | 'opportunity';
   category?: string;
   title: string;
   description: string;
@@ -205,7 +225,11 @@ export interface BudgetInsight {
 }
 
 export interface BudgetComparison {
-  type: 'previous_period' | 'similar_families' | 'national_average' | 'recommended_budget';
+  type:
+    | 'previous_period'
+    | 'similar_families'
+    | 'national_average'
+    | 'recommended_budget';
   category: string;
   yourAmount: number;
   comparisonAmount: number;
@@ -246,13 +270,29 @@ export interface SavingsGoal {
   updatedAt: Date;
 }
 
-export type GoalType = 
-  | 'emergency_fund' | 'house_down_payment' | 'vacation' | 'car_purchase' 
-  | 'wedding' | 'education' | 'retirement' | 'debt_payoff' | 'general_savings' 
-  | 'home_improvement' | 'business_investment' | 'child_education' | 'healthcare';
+export type GoalType =
+  | 'emergency_fund'
+  | 'house_down_payment'
+  | 'vacation'
+  | 'car_purchase'
+  | 'wedding'
+  | 'education'
+  | 'retirement'
+  | 'debt_payoff'
+  | 'general_savings'
+  | 'home_improvement'
+  | 'business_investment'
+  | 'child_education'
+  | 'healthcare';
 
-export type GoalStatus = 
-  | 'not_started' | 'in_progress' | 'on_track' | 'behind' | 'ahead' | 'completed' | 'paused';
+export type GoalStatus =
+  | 'not_started'
+  | 'in_progress'
+  | 'on_track'
+  | 'behind'
+  | 'ahead'
+  | 'completed'
+  | 'paused';
 
 export interface ContributionRule {
   id: string;
@@ -302,7 +342,11 @@ export interface ContributionHistory {
 }
 
 export interface GoalRecommendation {
-  type: 'increase_contribution' | 'adjust_timeline' | 'reallocate_funds' | 'automate_savings';
+  type:
+    | 'increase_contribution'
+    | 'adjust_timeline'
+    | 'reallocate_funds'
+    | 'automate_savings';
   title: string;
   description: string;
   impact: string;

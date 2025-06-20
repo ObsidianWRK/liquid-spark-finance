@@ -11,7 +11,7 @@ const THRESHOLDS = {
   LCP: { good: 2500, poor: 4000 },
   CLS: { good: 0.1, poor: 0.25 },
   FCP: { good: 1800, poor: 3000 },
-  TTFB: { good: 800, poor: 1800 }
+  TTFB: { good: 800, poor: 1800 },
 };
 
 // Simple vital data interface
@@ -48,7 +48,7 @@ class VitalsCollector {
         deviceType: this.getDeviceType(),
         connectionType: this.getConnectionType(),
         userAgent: navigator.userAgent,
-        viewportSize: `${window.innerWidth}x${window.innerHeight}`
+        viewportSize: `${window.innerWidth}x${window.innerHeight}`,
       };
 
       this.metrics.push(vitalData);
@@ -92,12 +92,12 @@ class VitalsCollector {
   private logMetric(vital: VitalData): void {
     const { name, value } = vital;
     const threshold = THRESHOLDS[name as keyof typeof THRESHOLDS];
-    
+
     if (!threshold) return;
 
     let status = '✅ Good';
     let color = '#00ff00';
-    
+
     if (value > threshold.poor) {
       status = '❌ Poor';
       color = '#ff0000';
@@ -107,19 +107,21 @@ class VitalsCollector {
     }
 
     const message = `%c[${name}] ${value.toFixed(2)}${name === 'CLS' ? '' : 'ms'} - ${status}`;
-    
+
     if (this.isDev) {
       console.log(message, `color: ${color}; font-weight: bold;`, {
         metric: vital,
         deviceType: vital.deviceType,
         viewport: vital.viewportSize,
-        connection: vital.connectionType
+        connection: vital.connectionType,
       });
     }
 
     // Alert for poor performance
     if (value > threshold.poor && this.isDev) {
-      console.warn(`🚨 Performance Alert: ${name} is ${value.toFixed(2)}${name === 'CLS' ? '' : 'ms'}, exceeding the ${threshold.poor}${name === 'CLS' ? '' : 'ms'} threshold`);
+      console.warn(
+        `🚨 Performance Alert: ${name} is ${value.toFixed(2)}${name === 'CLS' ? '' : 'ms'}, exceeding the ${threshold.poor}${name === 'CLS' ? '' : 'ms'} threshold`
+      );
     }
   }
 
@@ -134,7 +136,7 @@ class VitalsCollector {
           this.endpoint,
           JSON.stringify(vital)
         );
-        
+
         if (!success) {
           // Fallback to fetch
           await this.fallbackSend(vital);
@@ -155,7 +157,7 @@ class VitalsCollector {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(vital),
-        keepalive: true
+        keepalive: true,
       });
     } catch (error) {
       // Silent fail in production
@@ -170,13 +172,14 @@ class VitalsCollector {
     const customMetric: VitalData = {
       name,
       value,
-      rating: value > 1000 ? 'poor' : value > 500 ? 'needs-improvement' : 'good',
+      rating:
+        value > 1000 ? 'poor' : value > 500 ? 'needs-improvement' : 'good',
       url: window.location.href,
       timestamp: Date.now(),
       deviceType: this.getDeviceType(),
       connectionType: this.getConnectionType(),
       userAgent: navigator.userAgent,
-      viewportSize: `${window.innerWidth}x${window.innerHeight}`
+      viewportSize: `${window.innerWidth}x${window.innerHeight}`,
     };
 
     this.metrics.push(customMetric);
@@ -187,9 +190,9 @@ class VitalsCollector {
   // Get current performance summary
   public getPerformanceSummary(): Record<string, any> {
     const summary: Record<string, any> = {};
-    
-    Object.keys(THRESHOLDS).forEach(metricName => {
-      const metric = this.metrics.find(m => m.name === metricName);
+
+    Object.keys(THRESHOLDS).forEach((metricName) => {
+      const metric = this.metrics.find((m) => m.name === metricName);
       if (metric) {
         const threshold = THRESHOLDS[metricName as keyof typeof THRESHOLDS];
         summary[metricName] = {
@@ -197,7 +200,7 @@ class VitalsCollector {
           rating: metric.rating,
           timestamp: metric.timestamp,
           isGood: metric.value <= threshold.good,
-          isPoor: metric.value > threshold.poor
+          isPoor: metric.value > threshold.poor,
         };
       }
     });
@@ -234,7 +237,7 @@ if (import.meta.env.DEV) {
     summary: getPerformanceSummary,
     export: exportVitalsData,
     track: trackCustomMetric,
-    thresholds: THRESHOLDS
+    thresholds: THRESHOLDS,
   };
 
   console.log('💡 Performance debugging available: window.__vitals');
@@ -243,7 +246,7 @@ if (import.meta.env.DEV) {
 // Chart loading performance tracker
 export const trackChartPerformance = (chartType: string) => {
   const startTime = performance.now();
-  
+
   return () => {
     const loadTime = performance.now() - startTime;
     trackCustomMetric(`chart-load-${chartType}`, loadTime);
@@ -253,11 +256,11 @@ export const trackChartPerformance = (chartType: string) => {
 // Route change performance tracker
 export const trackRouteChange = (routeName: string) => {
   const startTime = performance.now();
-  
+
   return () => {
     const navigationTime = performance.now() - startTime;
     trackCustomMetric(`route-change-${routeName}`, navigationTime);
   };
 };
 
-export default vitalsCollector; 
+export default vitalsCollector;

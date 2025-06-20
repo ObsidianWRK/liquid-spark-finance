@@ -10,7 +10,7 @@ import {
   BarChart3,
   ArrowLeft,
   Settings,
-  AlertCircle
+  AlertCircle,
 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { cn } from '@/shared/lib/utils';
@@ -21,7 +21,9 @@ const BudgetPlannerPage = () => {
   const [budget, setBudget] = useState<Budget | null>(null);
   const [goals, setGoals] = useState<SavingsGoal[]>([]);
   const [loading, setLoading] = useState(true);
-  const [activeTab, setActiveTab] = useState<'budget' | 'goals' | 'analytics'>('budget');
+  const [activeTab, setActiveTab] = useState<'budget' | 'goals' | 'analytics'>(
+    'budget'
+  );
 
   useEffect(() => {
     loadData();
@@ -33,9 +35,9 @@ const BudgetPlannerPage = () => {
       const familyId = 'demo_family';
       const [activeBudget, familyGoals] = await Promise.all([
         budgetService.getActiveBudget(familyId),
-        budgetService.getFamilySavingsGoals(familyId)
+        budgetService.getFamilySavingsGoals(familyId),
       ]);
-      
+
       setBudget(activeBudget);
       setGoals(familyGoals);
     } catch (error) {
@@ -46,7 +48,11 @@ const BudgetPlannerPage = () => {
   };
 
   const formatCurrency = (amt: number) =>
-    new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', minimumFractionDigits: 0 }).format(amt);
+    new Intl.NumberFormat('en-US', {
+      style: 'currency',
+      currency: 'USD',
+      minimumFractionDigits: 0,
+    }).format(amt);
 
   if (loading) {
     return (
@@ -55,7 +61,10 @@ const BudgetPlannerPage = () => {
           <div className="h-8 bg-white/[0.05] rounded w-64 mb-4"></div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {[...Array(3)].map((_, i) => (
-              <div key={i} className="bg-white/[0.02] rounded-2xl border border-white/[0.08] p-6">
+              <div
+                key={i}
+                className="bg-white/[0.02] rounded-2xl border border-white/[0.08] p-6"
+              >
                 <div className="h-6 bg-white/[0.05] rounded w-32 mb-2"></div>
                 <div className="h-8 bg-white/[0.05] rounded w-24"></div>
               </div>
@@ -69,7 +78,7 @@ const BudgetPlannerPage = () => {
   return (
     <div className="p-4 sm:p-6 space-y-6 sm:space-y-8">
       {/* Back Button */}
-      <BackButton 
+      <BackButton
         fallbackPath="/"
         variant="default"
         label="Back to Dashboard"
@@ -83,7 +92,9 @@ const BudgetPlannerPage = () => {
             <BarChart3 className="w-6 h-6 sm:w-8 sm:h-8 text-blue-400" />
             <span className="truncate">Budget & Goals Manager</span>
           </h1>
-          <p className="text-white/60 mt-2">Track spending, manage budgets, and achieve your financial goals</p>
+          <p className="text-white/60 mt-2">
+            Track spending, manage budgets, and achieve your financial goals
+          </p>
         </div>
         <div className="flex items-center gap-3 flex-wrap">
           <button className="bg-green-500 hover:bg-green-600 text-white px-3 sm:px-4 py-2 rounded-xl transition-colors flex items-center gap-2 text-sm sm:text-base whitespace-nowrap">
@@ -105,31 +116,41 @@ const BudgetPlannerPage = () => {
               <BarChart3 className="w-5 h-5 text-blue-400" />
               <p className="text-white/60 text-sm">Monthly Budget</p>
             </div>
-            <p className="text-2xl font-bold text-white">{formatCurrency(budget.totalBudgeted)}</p>
+            <p className="text-2xl font-bold text-white">
+              {formatCurrency(budget.totalBudgeted)}
+            </p>
           </div>
-          
+
           <div className="bg-white/[0.02] rounded-2xl border border-white/[0.08] p-4 sm:p-6 card-hover">
             <div className="flex items-center gap-3 mb-2">
               <TrendingUp className="w-5 h-5 text-red-400" />
               <p className="text-white/60 text-sm">Total Spent</p>
             </div>
-            <p className="text-2xl font-bold text-red-400">{formatCurrency(budget.totalSpent)}</p>
+            <p className="text-2xl font-bold text-red-400">
+              {formatCurrency(budget.totalSpent)}
+            </p>
             <p className="text-sm text-white/60 mt-1">
-              {((budget.totalSpent / budget.totalBudgeted) * 100).toFixed(1)}% of budget
+              {((budget.totalSpent / budget.totalBudgeted) * 100).toFixed(1)}%
+              of budget
             </p>
           </div>
-          
+
           <div className="bg-white/[0.02] rounded-2xl border border-white/[0.08] p-4 sm:p-6 card-hover">
             <div className="flex items-center gap-3 mb-2">
               <Target className="w-5 h-5 text-green-400" />
               <p className="text-white/60 text-sm">Remaining</p>
             </div>
-            <p className="text-2xl font-bold text-green-400">{formatCurrency(budget.totalRemaining)}</p>
+            <p className="text-2xl font-bold text-green-400">
+              {formatCurrency(budget.totalRemaining)}
+            </p>
             <p className="text-sm text-white/60 mt-1">
-              {((budget.totalRemaining / budget.totalBudgeted) * 100).toFixed(1)}% available
+              {((budget.totalRemaining / budget.totalBudgeted) * 100).toFixed(
+                1
+              )}
+              % available
             </p>
           </div>
-          
+
           <div className="bg-white/[0.02] rounded-2xl border border-white/[0.08] p-4 sm:p-6 card-hover">
             <div className="flex items-center gap-3 mb-2">
               <AlertCircle className="w-5 h-5 text-yellow-400" />
@@ -137,7 +158,12 @@ const BudgetPlannerPage = () => {
             </div>
             <p className="text-2xl font-bold text-white">{goals.length}</p>
             <p className="text-sm text-white/60 mt-1">
-              {goals.filter(g => g.status === 'on_track' || g.status === 'ahead').length} on track
+              {
+                goals.filter(
+                  (g) => g.status === 'on_track' || g.status === 'ahead'
+                ).length
+              }{' '}
+              on track
             </p>
           </div>
         </div>
@@ -150,8 +176,9 @@ const BudgetPlannerPage = () => {
           <div>
             <p className="text-red-400 font-medium">Budget Exceeded</p>
             <p className="text-red-300 text-sm">
-              You've spent {formatCurrency(budget.totalSpent - budget.totalBudgeted)} over your monthly budget. 
-              Consider reviewing your spending categories.
+              You've spent{' '}
+              {formatCurrency(budget.totalSpent - budget.totalBudgeted)} over
+              your monthly budget. Consider reviewing your spending categories.
             </p>
           </div>
         </div>
@@ -163,4 +190,4 @@ const BudgetPlannerPage = () => {
   );
 };
 
-export default BudgetPlannerPage; 
+export default BudgetPlannerPage;

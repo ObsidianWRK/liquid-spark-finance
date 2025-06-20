@@ -10,7 +10,7 @@ import {
   Plus,
   Target,
   Zap,
-  AlertCircle
+  AlertCircle,
 } from 'lucide-react';
 import { LifeEventPlanning } from '@/shared/types/financialPlanning';
 import { MockFinancialPlanningAPI } from '@/mocks/financialPlanningMocks';
@@ -32,7 +32,8 @@ const LifePlanningTab: React.FC<LifePlanningTabProps> = ({ familyId }) => {
   const loadLifeEventPlans = async () => {
     setLoading(true);
     try {
-      const lifeEventPlans = await MockFinancialPlanningAPI.getLifeEventPlans(familyId);
+      const lifeEventPlans =
+        await MockFinancialPlanningAPI.getLifeEventPlans(familyId);
       setPlans(lifeEventPlans);
     } catch (error) {
       console.error('Failed to load life event plans:', error);
@@ -46,7 +47,7 @@ const LifePlanningTab: React.FC<LifePlanningTabProps> = ({ familyId }) => {
       style: 'currency',
       currency: 'USD',
       minimumFractionDigits: 0,
-      maximumFractionDigits: 0
+      maximumFractionDigits: 0,
     }).format(amount);
   };
 
@@ -58,7 +59,7 @@ const LifePlanningTab: React.FC<LifePlanningTabProps> = ({ familyId }) => {
       education: GraduationCap,
       car_purchase: Car,
       job_change: Briefcase,
-      retirement: Calendar
+      retirement: Calendar,
     };
     return icons[eventType as keyof typeof icons] || Calendar;
   };
@@ -71,7 +72,7 @@ const LifePlanningTab: React.FC<LifePlanningTabProps> = ({ familyId }) => {
       education: 'text-blue-400',
       car_purchase: 'text-indigo-400',
       job_change: 'text-orange-400',
-      retirement: 'text-purple-400'
+      retirement: 'text-purple-400',
     };
     return colors[eventType as keyof typeof colors] || 'text-blue-400';
   };
@@ -84,7 +85,7 @@ const LifePlanningTab: React.FC<LifePlanningTabProps> = ({ familyId }) => {
       education: 'Education',
       car_purchase: 'Vehicle',
       job_change: 'Career Change',
-      retirement: 'Retirement'
+      retirement: 'Retirement',
     };
     return labels[eventType as keyof typeof labels] || eventType;
   };
@@ -104,7 +105,10 @@ const LifePlanningTab: React.FC<LifePlanningTabProps> = ({ familyId }) => {
     return (
       <div className="space-y-6">
         {[...Array(3)].map((_, i) => (
-          <div key={i} className="bg-white/[0.02] rounded-2xl border border-white/[0.08] p-6 animate-pulse">
+          <div
+            key={i}
+            className="bg-white/[0.02] rounded-2xl border border-white/[0.08] p-6 animate-pulse"
+          >
             <div className="flex items-center gap-4 mb-4">
               <div className="w-8 h-8 bg-white/[0.05] rounded"></div>
               <div className="h-6 bg-white/[0.05] rounded w-48"></div>
@@ -145,12 +149,8 @@ const LifePlanningTab: React.FC<LifePlanningTabProps> = ({ familyId }) => {
           icon={Target}
           iconColor="text-blue-400"
         >
-          <div className="text-2xl font-bold text-white">
-            {plans.length}
-          </div>
-          <div className="text-white/60 text-sm mt-1">
-            Life events tracked
-          </div>
+          <div className="text-2xl font-bold text-white">{plans.length}</div>
+          <div className="text-white/60 text-sm mt-1">Life events tracked</div>
         </PlanningCard>
 
         <PlanningCard
@@ -159,11 +159,11 @@ const LifePlanningTab: React.FC<LifePlanningTabProps> = ({ familyId }) => {
           iconColor="text-orange-400"
         >
           <div className="text-2xl font-bold text-white">
-            {formatCurrency(plans.reduce((sum, plan) => sum + plan.estimatedCost, 0))}
+            {formatCurrency(
+              plans.reduce((sum, plan) => sum + plan.estimatedCost, 0)
+            )}
           </div>
-          <div className="text-white/60 text-sm mt-1">
-            Across all events
-          </div>
+          <div className="text-white/60 text-sm mt-1">Across all events</div>
         </PlanningCard>
 
         <PlanningCard
@@ -172,10 +172,16 @@ const LifePlanningTab: React.FC<LifePlanningTabProps> = ({ familyId }) => {
           iconColor="text-green-400"
         >
           <div className="text-2xl font-bold text-white">
-            {formatCurrency(plans.reduce((sum, plan) => sum + plan.currentSavings, 0))}
+            {formatCurrency(
+              plans.reduce((sum, plan) => sum + plan.currentSavings, 0)
+            )}
           </div>
           <div className="text-white/60 text-sm mt-1">
-            {Math.round(plans.reduce((sum, plan) => sum + calculateProgress(plan), 0) / plans.length || 0)}% complete
+            {Math.round(
+              plans.reduce((sum, plan) => sum + calculateProgress(plan), 0) /
+                plans.length || 0
+            )}
+            % complete
           </div>
         </PlanningCard>
       </div>
@@ -187,8 +193,10 @@ const LifePlanningTab: React.FC<LifePlanningTabProps> = ({ familyId }) => {
           const iconColor = getEventColor(plan.eventType);
           const progress = calculateProgress(plan);
           const monthsRemaining = calculateMonthsRemaining(plan.plannedDate);
-          const monthlyNeeded = monthsRemaining > 0 ? 
-            (plan.estimatedCost - plan.currentSavings) / monthsRemaining : 0;
+          const monthlyNeeded =
+            monthsRemaining > 0
+              ? (plan.estimatedCost - plan.currentSavings) / monthsRemaining
+              : 0;
 
           return (
             <PlanningCard
@@ -204,14 +212,22 @@ const LifePlanningTab: React.FC<LifePlanningTabProps> = ({ familyId }) => {
                   {/* Financial Progress */}
                   <div>
                     <div className="flex items-center justify-between mb-2">
-                      <span className="text-white/80 text-sm">Financial Progress</span>
-                      <span className="text-white/60 text-sm">{Math.round(progress)}%</span>
+                      <span className="text-white/80 text-sm">
+                        Financial Progress
+                      </span>
+                      <span className="text-white/60 text-sm">
+                        {Math.round(progress)}%
+                      </span>
                     </div>
                     <div className="w-full bg-white/[0.05] rounded-full h-3">
-                      <div 
-                        className={cn("h-3 rounded-full transition-all duration-500", 
-                          progress >= 100 ? "bg-green-400" :
-                          progress >= 50 ? "bg-blue-400" : "bg-orange-400"
+                      <div
+                        className={cn(
+                          'h-3 rounded-full transition-all duration-500',
+                          progress >= 100
+                            ? 'bg-green-400'
+                            : progress >= 50
+                              ? 'bg-blue-400'
+                              : 'bg-orange-400'
                         )}
                         style={{ width: `${Math.min(progress, 100)}%` }}
                       />
@@ -226,21 +242,21 @@ const LifePlanningTab: React.FC<LifePlanningTabProps> = ({ familyId }) => {
                       </div>
                       <div className="text-white/60 text-xs">Target Cost</div>
                     </div>
-                    
+
                     <div className="text-center p-3 bg-white/[0.03] rounded-xl">
                       <div className="text-lg font-bold text-white">
                         {formatCurrency(plan.currentSavings)}
                       </div>
                       <div className="text-white/60 text-xs">Saved</div>
                     </div>
-                    
+
                     <div className="text-center p-3 bg-white/[0.03] rounded-xl">
                       <div className="text-lg font-bold text-white">
                         {formatCurrency(plan.monthlyContribution)}
                       </div>
                       <div className="text-white/60 text-xs">Monthly</div>
                     </div>
-                    
+
                     <div className="text-center p-3 bg-white/[0.03] rounded-xl">
                       <div className="text-lg font-bold text-white">
                         {monthsRemaining}
@@ -253,19 +269,23 @@ const LifePlanningTab: React.FC<LifePlanningTabProps> = ({ familyId }) => {
                   <div className="p-4 bg-white/[0.03] rounded-xl">
                     <div className="flex items-center justify-between">
                       <div>
-                        <div className="text-white font-semibold">Target Date</div>
+                        <div className="text-white font-semibold">
+                          Target Date
+                        </div>
                         <div className="text-white/60 text-sm">
-                          {plan.plannedDate.toLocaleDateString('en-US', { 
+                          {plan.plannedDate.toLocaleDateString('en-US', {
                             weekday: 'long',
-                            year: 'numeric', 
-                            month: 'long', 
-                            day: 'numeric' 
+                            year: 'numeric',
+                            month: 'long',
+                            day: 'numeric',
                           })}
                         </div>
                       </div>
                       <div className="text-right">
                         <div className="text-white font-semibold">
-                          {monthlyNeeded > plan.monthlyContribution ? 'Behind Schedule' : 'On Track'}
+                          {monthlyNeeded > plan.monthlyContribution
+                            ? 'Behind Schedule'
+                            : 'On Track'}
                         </div>
                         {monthlyNeeded > plan.monthlyContribution && (
                           <div className="text-orange-400 text-sm">
@@ -283,19 +303,30 @@ const LifePlanningTab: React.FC<LifePlanningTabProps> = ({ familyId }) => {
                     <Zap className="w-4 h-4 text-yellow-400" />
                     Recommendations
                   </h4>
-                  
+
                   {plan.recommendations.map((rec, recIndex) => (
-                    <div key={recIndex} className="p-3 bg-white/[0.03] rounded-xl border border-white/[0.05]">
-                      <h5 className="font-semibold text-white text-sm mb-1">{rec.title}</h5>
-                      <p className="text-white/70 text-xs mb-2">{rec.description}</p>
-                      
+                    <div
+                      key={recIndex}
+                      className="p-3 bg-white/[0.03] rounded-xl border border-white/[0.05]"
+                    >
+                      <h5 className="font-semibold text-white text-sm mb-1">
+                        {rec.title}
+                      </h5>
+                      <p className="text-white/70 text-xs mb-2">
+                        {rec.description}
+                      </p>
+
                       <div className="flex items-center gap-2 mb-2">
-                        <span className={cn(
-                          "text-xs px-2 py-1 rounded-lg font-medium",
-                          rec.impact === 'high' ? "bg-red-500/20 text-red-400" :
-                          rec.impact === 'medium' ? "bg-yellow-500/20 text-yellow-400" :
-                          "bg-green-500/20 text-green-400"
-                        )}>
+                        <span
+                          className={cn(
+                            'text-xs px-2 py-1 rounded-lg font-medium',
+                            rec.impact === 'high'
+                              ? 'bg-red-500/20 text-red-400'
+                              : rec.impact === 'medium'
+                                ? 'bg-yellow-500/20 text-yellow-400'
+                                : 'bg-green-500/20 text-green-400'
+                          )}
+                        >
                           {rec.impact} impact
                         </span>
                         <span className="text-xs text-green-400">
@@ -305,7 +336,10 @@ const LifePlanningTab: React.FC<LifePlanningTabProps> = ({ familyId }) => {
 
                       <div className="space-y-1">
                         {rec.actionItems.map((action, actionIndex) => (
-                          <div key={actionIndex} className="flex items-center gap-2 text-xs text-white/70">
+                          <div
+                            key={actionIndex}
+                            className="flex items-center gap-2 text-xs text-white/70"
+                          >
                             <div className="w-1 h-1 bg-white/40 rounded-full" />
                             {action}
                           </div>
@@ -331,7 +365,8 @@ const LifePlanningTab: React.FC<LifePlanningTabProps> = ({ familyId }) => {
           <div className="text-center py-8">
             <Calendar className="w-16 h-16 text-white/20 mx-auto mb-4" />
             <p className="text-white/60 mb-4">
-              Start planning for major life events like buying a home, having a baby, or pursuing education.
+              Start planning for major life events like buying a home, having a
+              baby, or pursuing education.
             </p>
             <button className="bg-purple-500 hover:bg-purple-600 text-white px-6 py-3 rounded-xl transition-colors flex items-center gap-2 mx-auto">
               <Plus className="w-4 h-4" />
@@ -344,4 +379,4 @@ const LifePlanningTab: React.FC<LifePlanningTabProps> = ({ familyId }) => {
   );
 };
 
-export default LifePlanningTab; 
+export default LifePlanningTab;

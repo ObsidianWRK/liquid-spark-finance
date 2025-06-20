@@ -115,4 +115,4 @@ export interface InterventionAlert {
   message: string;
   createdAt: string;
   dismissed?: boolean;
-} 
+}

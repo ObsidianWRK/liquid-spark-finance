@@ -1,8 +1,8 @@
-import React from "react";
-import { LinkAccountsButton } from "./LinkAccountsButton";
-import { LinkedAccountsList } from "./LinkedAccountsList";
-import { UniversalCard } from "@/shared/ui/UniversalCard";
-import { Banknote } from "lucide-react";
+import React from 'react';
+import { LinkAccountsButton } from './LinkAccountsButton';
+import { LinkedAccountsList } from './LinkedAccountsList';
+import { UniversalCard } from '@/shared/ui/UniversalCard';
+import { Banknote } from 'lucide-react';
 
 export const BankLinkingPanel: React.FC = () => {
   return (
@@ -19,4 +19,4 @@ export const BankLinkingPanel: React.FC = () => {
       </div>
     </UniversalCard>
   );
-}; 
+};

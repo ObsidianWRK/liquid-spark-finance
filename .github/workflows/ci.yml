@@ -2,9 +2,9 @@ name: 🚀 Vueni CI - Tech Debt Validation
 
 on:
   push:
-    branches: [ main, develop ]
+    branches: [main, develop]
   pull_request:
-    branches: [ main ]
+    branches: [main]
 
 jobs:
   # ==================== STAGE 1: CODE QUALITY ====================
@@ -17,16 +17,16 @@ jobs:
         with:
           node-version: '18'
           cache: 'npm'
-      
+
       - name: Install dependencies
         run: npm ci
-      
+
       - name: ESLint Check (STRICT)
         run: npm run lint
-        
+
       - name: Prettier Check
         run: npx prettier --check "src/**/*.{ts,tsx,js,jsx}"
-      
+
       - name: TypeScript Check (STRICT)
         run: npx tsc --noEmit
 
@@ -40,13 +40,13 @@ jobs:
         with:
           node-version: '18'
           cache: 'npm'
-      
+
       - name: Install dependencies
         run: npm ci
-      
+
       - name: Knip Analysis (Zero Unused Code)
         run: npx knip --production
-        
+
       - name: Dependency Check
         run: npx depcheck
 
@@ -60,13 +60,13 @@ jobs:
         with:
           node-version: '18'
           cache: 'npm'
-      
+
       - name: Install dependencies
         run: npm ci
-      
+
       - name: Unit Tests with Coverage
         run: npm run test:coverage
-        
+
       - name: Coverage Threshold Check
         run: |
           COVERAGE=$(npm run test:coverage -- --reporter=json | jq '.coverage.total.lines.pct')
@@ -86,16 +86,16 @@ jobs:
         with:
           node-version: '18'
           cache: 'npm'
-      
+
       - name: Install dependencies
         run: npm ci
-      
+
       - name: Install Playwright
         run: npx playwright install --with-deps
-      
+
       - name: Build application
         run: npm run build
-        
+
       - name: E2E Tests
         run: npm run test:e2e
 
@@ -109,13 +109,13 @@ jobs:
         with:
           node-version: '18'
           cache: 'npm'
-      
+
       - name: Install dependencies
         run: npm ci
-      
+
       - name: Production Build
         run: npm run build
-        
+
       - name: Bundle Size Check (≤2MB)
         run: |
           BUNDLE_SIZE=$(du -sk dist | cut -f1)
@@ -125,7 +125,7 @@ jobs:
             exit 1
           fi
           echo "✅ Bundle size ${BUNDLE_SIZE}KB is within limits"
-      
+
       - name: Bundle Analysis
         run: npm run build:analyze || true
 
@@ -140,10 +140,10 @@ jobs:
         with:
           node-version: '18'
           cache: 'npm'
-      
+
       - name: Install dependencies
         run: npm ci
-      
+
       - name: Duplicate Component Check
         run: |
           echo "Checking for duplicate components..."
@@ -154,7 +154,7 @@ jobs:
             exit 1
           fi
           echo "✅ No duplicate InsightsPage components found"
-      
+
       - name: Import Consistency Check
         run: |
           echo "Checking for consistent imports..."
@@ -169,7 +169,15 @@ jobs:
   tech-debt-eliminated:
     name: ✅ TECH DEBT ELIMINATED
     runs-on: ubuntu-latest
-    needs: [lint-and-format, dead-code-analysis, test-coverage, e2e-tests, build-analysis, tech-debt-check]
+    needs:
+      [
+        lint-and-format,
+        dead-code-analysis,
+        test-coverage,
+        e2e-tests,
+        build-analysis,
+        tech-debt-check,
+      ]
     if: success()
     steps:
       - name: Success Banner
@@ -183,4 +191,4 @@ jobs:
           echo "✅ E2E: PASSING"
           echo "✅ Bundle: ≤2MB"
           echo "✅ Duplicates: ELIMINATED"
-          echo "🎉 ==================================" 
+          echo "🎉 =================================="

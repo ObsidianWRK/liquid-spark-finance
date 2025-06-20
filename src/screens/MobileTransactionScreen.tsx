@@ -1,5 +1,13 @@
 import React, { useState } from 'react';
-import { Search, ArrowLeft, MoreHorizontal, ChevronRight, Truck, Package, CheckCircle } from 'lucide-react';
+import {
+  Search,
+  ArrowLeft,
+  MoreHorizontal,
+  ChevronRight,
+  Truck,
+  Package,
+  CheckCircle,
+} from 'lucide-react';
 import { cn } from '@/shared/lib/utils';
 
 const MobileTransactionScreen: React.FC = () => {
@@ -15,18 +23,21 @@ const MobileTransactionScreen: React.FC = () => {
       date: '2025-06-14',
       time: '2:34 PM',
       status: 'completed' as const,
-      icon: '🛒'
+      icon: '🛒',
     },
     {
       id: '2',
       merchant: 'Apple Store',
       category: 'Electronics',
-      amount: -899.00,
+      amount: -899.0,
       date: '2025-06-14',
       time: '11:15 AM',
       status: 'completed' as const,
       icon: '🍎',
-      shipping: { status: 'In Transit' as const, estimatedDelivery: '2025-06-17' }
+      shipping: {
+        status: 'In Transit' as const,
+        estimatedDelivery: '2025-06-17',
+      },
     },
     {
       id: '3',
@@ -37,17 +48,17 @@ const MobileTransactionScreen: React.FC = () => {
       time: '9:42 AM',
       status: 'completed' as const,
       icon: '📦',
-      shipping: { status: 'Delivered' as const }
+      shipping: { status: 'Delivered' as const },
     },
     {
       id: '4',
       merchant: 'Salary',
       category: 'Income',
-      amount: 3250.00,
+      amount: 3250.0,
       date: '2025-06-13',
       time: '12:00 AM',
       status: 'completed' as const,
-      icon: '💰'
+      icon: '💰',
     },
     {
       id: '5',
@@ -57,7 +68,7 @@ const MobileTransactionScreen: React.FC = () => {
       date: '2025-06-13',
       time: '8:15 AM',
       status: 'completed' as const,
-      icon: '☕'
+      icon: '☕',
     },
     {
       id: '6',
@@ -67,15 +78,15 @@ const MobileTransactionScreen: React.FC = () => {
       date: '2025-06-12',
       time: '6:30 PM',
       status: 'pending' as const,
-      icon: '🚗'
-    }
+      icon: '🚗',
+    },
   ];
 
   const formatAmount = (amount: number) => {
     const formatted = Math.abs(amount).toLocaleString('en-US', {
       style: 'currency',
       currency: 'USD',
-      minimumFractionDigits: 2
+      minimumFractionDigits: 2,
     });
     return amount < 0 ? `-${formatted}` : `+${formatted}`;
   };
@@ -104,24 +115,32 @@ const MobileTransactionScreen: React.FC = () => {
     } else if (date.toDateString() === yesterday.toDateString()) {
       return 'Yesterday';
     } else {
-      return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+      return date.toLocaleDateString('en-US', {
+        month: 'short',
+        day: 'numeric',
+      });
     }
   };
 
-  const groupedTransactions = transactions.reduce((groups, transaction) => {
-    const dateKey = formatDate(transaction.date);
-    if (!groups[dateKey]) {
-      groups[dateKey] = [];
-    }
-    groups[dateKey].push(transaction);
-    return groups;
-  }, {} as Record<string, typeof transactions>);
+  const groupedTransactions = transactions.reduce(
+    (groups, transaction) => {
+      const dateKey = formatDate(transaction.date);
+      if (!groups[dateKey]) {
+        groups[dateKey] = [];
+      }
+      groups[dateKey].push(transaction);
+      return groups;
+    },
+    {} as Record<string, typeof transactions>
+  );
 
   return (
     <div className="h-full bg-black text-white overflow-hidden">
       {/* Status Bar */}
       <div className="h-11 bg-black relative">
-        <div className="absolute top-2 left-6 text-white text-sm font-medium">9:41</div>
+        <div className="absolute top-2 left-6 text-white text-sm font-medium">
+          9:41
+        </div>
         <div className="absolute top-2 right-6 flex items-center gap-1">
           <div className="w-6 h-3 border border-white rounded-sm">
             <div className="w-4 h-1 bg-white rounded-sm m-0.5"></div>
@@ -183,23 +202,33 @@ const MobileTransactionScreen: React.FC = () => {
                         <h4 className="font-medium text-white text-sm truncate">
                           {transaction.merchant}
                         </h4>
-                        <span className={cn(
-                          'font-semibold text-sm',
-                          transaction.amount > 0 ? 'text-green-400' : 'text-white'
-                        )}>
+                        <span
+                          className={cn(
+                            'font-semibold text-sm',
+                            transaction.amount > 0
+                              ? 'text-green-400'
+                              : 'text-white'
+                          )}
+                        >
                           {formatAmount(transaction.amount)}
                         </span>
                       </div>
-                      
+
                       <div className="flex items-center justify-between">
                         <div className="flex items-center gap-2">
-                          <span className="text-xs text-gray-400">{transaction.category}</span>
+                          <span className="text-xs text-gray-400">
+                            {transaction.category}
+                          </span>
                           <span className="text-xs text-gray-500">•</span>
-                          <span className="text-xs text-gray-400">{transaction.time}</span>
+                          <span className="text-xs text-gray-400">
+                            {transaction.time}
+                          </span>
                           {transaction.status === 'pending' && (
                             <>
                               <span className="text-xs text-gray-500">•</span>
-                              <span className="text-xs text-yellow-500">Pending</span>
+                              <span className="text-xs text-yellow-500">
+                                Pending
+                              </span>
                             </>
                           )}
                         </div>
@@ -213,14 +242,18 @@ const MobileTransactionScreen: React.FC = () => {
                           <span className="text-xs text-gray-300">
                             {transaction.shipping.status}
                           </span>
-                          {transaction.shipping.estimatedDelivery && transaction.shipping.status !== 'Delivered' && (
-                            <>
-                              <span className="text-xs text-gray-500">•</span>
-                              <span className="text-xs text-gray-500">
-                                ETA {new Date(transaction.shipping.estimatedDelivery).toLocaleDateString()}
-                              </span>
-                            </>
-                          )}
+                          {transaction.shipping.estimatedDelivery &&
+                            transaction.shipping.status !== 'Delivered' && (
+                              <>
+                                <span className="text-xs text-gray-500">•</span>
+                                <span className="text-xs text-gray-500">
+                                  ETA{' '}
+                                  {new Date(
+                                    transaction.shipping.estimatedDelivery
+                                  ).toLocaleDateString()}
+                                </span>
+                              </>
+                            )}
                         </div>
                       )}
                     </div>

@@ -13,7 +13,9 @@ export class SecureRandom {
       crypto.getRandomValues(array);
       return array;
     } else {
-      console.warn('SECURITY WARNING: crypto.getRandomValues not available, using fallback');
+      console.warn(
+        'SECURITY WARNING: crypto.getRandomValues not available, using fallback'
+      );
       // Less secure fallback
       const array = new Uint8Array(length);
       for (let i = 0; i < length; i++) {
@@ -28,16 +30,19 @@ export class SecureRandom {
    */
   static getRandomHex(length: number): string {
     const bytes = this.getRandomBytes(length);
-    return Array.from(bytes, byte => byte.toString(16).padStart(2, '0')).join('');
+    return Array.from(bytes, (byte) => byte.toString(16).padStart(2, '0')).join(
+      ''
+    );
   }
 
   /**
    * Generates a secure random alphanumeric string
    */
   static getRandomAlphaNumeric(length: number): string {
-    const chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+    const chars =
+      '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
     const bytes = this.getRandomBytes(length);
-    return Array.from(bytes, byte => chars[byte % chars.length]).join('');
+    return Array.from(bytes, (byte) => chars[byte % chars.length]).join('');
   }
 
   /**
@@ -83,8 +88,12 @@ export class SecureRandom {
 }
 
 // Export individual functions for convenience
-export const generateSecureSessionId = (prefix?: string) => SecureRandom.generateSessionId(prefix);
+export const generateSecureSessionId = (prefix?: string) =>
+  SecureRandom.generateSessionId(prefix);
 export const generateSecureCSRFToken = () => SecureRandom.generateCSRFToken();
-export const generateSecureToken = (length?: number) => SecureRandom.generateSecureToken(length);
-export const generateSecureId = (prefix: string) => SecureRandom.generateSecureId(prefix);
-export const isSecureRandomAvailable = () => SecureRandom.isSecureRandomAvailable();
+export const generateSecureToken = (length?: number) =>
+  SecureRandom.generateSecureToken(length);
+export const generateSecureId = (prefix: string) =>
+  SecureRandom.generateSecureId(prefix);
+export const isSecureRandomAvailable = () =>
+  SecureRandom.isSecureRandomAvailable();

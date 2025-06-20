@@ -1,24 +1,31 @@
 /**
  * Brand Download Context Menu
- * 
+ *
  * Specific context menu for Vueni logo with download options for brand assets.
  * Includes icons for each download type and proper file handling.
  */
 
 import React from 'react';
-import { 
-  ContextMenu, 
-  ContextMenuTrigger, 
-  ContextMenuContent, 
-  ContextMenuItem, 
+import {
+  ContextMenu,
+  ContextMenuTrigger,
+  ContextMenuContent,
+  ContextMenuItem,
   ContextMenuSeparator,
-  ContextMenuLabel 
+  ContextMenuLabel,
 } from './ContextMenu';
 import { useDownload } from '@/shared/hooks/useDownload';
 
 // Download icons
 const DownloadIcon = () => (
-  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+  <svg
+    width="16"
+    height="16"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+  >
     <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
     <polyline points="7,10 12,15 17,10" />
     <line x1="12" y1="15" x2="12" y2="3" />
@@ -26,13 +33,27 @@ const DownloadIcon = () => (
 );
 
 const FileIcon = () => (
-  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+  <svg
+    width="16"
+    height="16"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+  >
     <path d="M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2M18,20H6V4H13V9H18V20Z" />
   </svg>
 );
 
 const ImageIcon = () => (
-  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+  <svg
+    width="16"
+    height="16"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+  >
     <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
     <circle cx="8.5" cy="8.5" r="1.5" />
     <polyline points="21,15 16,10 5,21" />
@@ -40,14 +61,28 @@ const ImageIcon = () => (
 );
 
 const BookIcon = () => (
-  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+  <svg
+    width="16"
+    height="16"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+  >
     <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" />
     <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" />
   </svg>
 );
 
 const CodeIcon = () => (
-  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+  <svg
+    width="16"
+    height="16"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+  >
     <polyline points="16,18 22,12 16,6" />
     <polyline points="8,6 2,12 8,18" />
   </svg>
@@ -58,9 +93,9 @@ interface BrandDownloadMenuProps {
   onDownloadComplete?: (filename: string) => void;
 }
 
-export const BrandDownloadMenu: React.FC<BrandDownloadMenuProps> = ({ 
-  children, 
-  onDownloadComplete 
+export const BrandDownloadMenu: React.FC<BrandDownloadMenuProps> = ({
+  children,
+  onDownloadComplete,
 }) => {
   const { downloadFile, isDownloading } = useDownload();
 
@@ -75,31 +110,36 @@ export const BrandDownloadMenu: React.FC<BrandDownloadMenuProps> = ({
 
   return (
     <ContextMenu>
-      <ContextMenuTrigger asChild>
-        {children}
-      </ContextMenuTrigger>
-      
+      <ContextMenuTrigger asChild>{children}</ContextMenuTrigger>
+
       <ContextMenuContent>
         <ContextMenuLabel>Brand Assets</ContextMenuLabel>
-        
+
         <ContextMenuItem
-          onClick={() => handleDownload('vueni-logo.svg', '/branding/vueni-logo.svg')}
+          onClick={() =>
+            handleDownload('vueni-logo.svg', '/branding/vueni-logo.svg')
+          }
           disabled={isDownloading}
           icon={<ImageIcon />}
         >
           Download SVG Logo
           <span className="text-xs text-white/40 ml-auto">4KB</span>
         </ContextMenuItem>
-        
+
         <ContextMenuItem
-          onClick={() => handleDownload('brand-guidelines.pdf', '/branding/brand-guidelines.pdf')}
+          onClick={() =>
+            handleDownload(
+              'brand-guidelines.pdf',
+              '/branding/brand-guidelines.pdf'
+            )
+          }
           disabled={isDownloading}
           icon={<BookIcon />}
         >
           Brand Guidelines
           <span className="text-xs text-white/40 ml-auto">PDF</span>
         </ContextMenuItem>
-        
+
         <ContextMenuItem
           onClick={() => handleDownload('LLM.txt', '/branding/LLM.txt')}
           disabled={isDownloading}
@@ -108,9 +148,9 @@ export const BrandDownloadMenu: React.FC<BrandDownloadMenuProps> = ({
           LLM Instructions
           <span className="text-xs text-white/40 ml-auto">TXT</span>
         </ContextMenuItem>
-        
+
         <ContextMenuSeparator />
-        
+
         <ContextMenuItem
           onClick={() => window.open('https://vueni.com/brand', '_blank')}
           icon={<FileIcon />}
@@ -123,4 +163,4 @@ export const BrandDownloadMenu: React.FC<BrandDownloadMenuProps> = ({
   );
 };
 
-export default BrandDownloadMenu; 
+export default BrandDownloadMenu;

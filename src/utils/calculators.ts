@@ -33,7 +33,7 @@ export function calculateFinancialFreedomYears(
 
   const annualExpenses = monthlyExpenses * 12;
   const targetAmount = annualExpenses / withdrawalRate;
-  
+
   if (currentSavings >= targetAmount) {
     return 0;
   }
@@ -41,7 +41,7 @@ export function calculateFinancialFreedomYears(
   // Simple calculation assuming no additional savings
   // In reality, this would need additional parameters for savings rate
   const yearsNeeded = (targetAmount - currentSavings) / (annualExpenses * 0.1); // Assume 10% savings rate
-  
+
   return Math.min(yearsNeeded, 50); // Cap at 50 years
 }
 
@@ -51,7 +51,10 @@ export function calculateFinancialFreedomYears(
  * @param finalValue - Final value of investment
  * @returns ROI as a percentage
  */
-export function calculateROI(initialInvestment: number, finalValue: number): number {
+export function calculateROI(
+  initialInvestment: number,
+  finalValue: number
+): number {
   if (initialInvestment === 0) {
     throw new Error('Initial investment cannot be 0');
   }
@@ -67,17 +70,22 @@ export function calculateROI(initialInvestment: number, finalValue: number): num
  * @param years - Loan term in years
  * @returns Monthly payment amount
  */
-export function calculateLoanPayment(principal: number, annualRate: number, years: number): number {
+export function calculateLoanPayment(
+  principal: number,
+  annualRate: number,
+  years: number
+): number {
   if (annualRate === 0) {
     return principal / (years * 12);
   }
 
   const monthlyRate = annualRate / 100 / 12;
   const numPayments = years * 12;
-  
-  const payment = principal * (monthlyRate * Math.pow(1 + monthlyRate, numPayments)) / 
-                  (Math.pow(1 + monthlyRate, numPayments) - 1);
-  
+
+  const payment =
+    (principal * (monthlyRate * Math.pow(1 + monthlyRate, numPayments))) /
+    (Math.pow(1 + monthlyRate, numPayments) - 1);
+
   return Math.round(payment * 100) / 100;
 }
 
@@ -94,7 +102,7 @@ export function calculateInflationAdjustedValue(
   years: number
 ): number {
   if (years === 0) return currentValue;
-  
+
   const adjustedValue = currentValue * Math.pow(1 + inflationRate / 100, years);
   return Math.round(adjustedValue * 100) / 100;
 }
@@ -114,10 +122,12 @@ export function calculateCompoundInterest(
   compoundingFrequency: number = 1
 ): number {
   if (annualRate === 0) return principal;
-  
+
   const rate = annualRate / 100;
-  const amount = principal * Math.pow(1 + rate / compoundingFrequency, compoundingFrequency * years);
-  
+  const amount =
+    principal *
+    Math.pow(1 + rate / compoundingFrequency, compoundingFrequency * years);
+
   return Math.round(amount * 100) / 100;
 }
 
@@ -139,14 +149,14 @@ export function calculate401kBalance(
 ): number {
   const rate = annualReturn / 100;
   const totalAnnualContribution = annualContribution * (1 + employerMatchRate);
-  
+
   // Future value of current balance
   const futureCurrentBalance = currentBalance * Math.pow(1 + rate, years);
-  
+
   // Future value of annuity (contributions)
-  const futureContributions = totalAnnualContribution * 
-    ((Math.pow(1 + rate, years) - 1) / rate);
-  
+  const futureContributions =
+    totalAnnualContribution * ((Math.pow(1 + rate, years) - 1) / rate);
+
   return Math.round((futureCurrentBalance + futureContributions) * 100) / 100;
 }
 
@@ -166,12 +176,14 @@ export function calculateThreeFundPortfolioReturn(
   years: number,
   allocation: ThreeFundAllocation = { us: 0.6, intl: 0.2, bonds: 0.2 }
 ): number {
-  const weightedReturn = (usReturn * allocation.us + 
-                         intlReturn * allocation.intl + 
-                         bondReturn * allocation.bonds) / 100;
-  
+  const weightedReturn =
+    (usReturn * allocation.us +
+      intlReturn * allocation.intl +
+      bondReturn * allocation.bonds) /
+    100;
+
   const totalReturn = (Math.pow(1 + weightedReturn, years) - 1) * 100;
-  
+
   return Math.round(totalReturn * 100) / 100;
 }
 
@@ -196,18 +208,20 @@ export function calculateMaximumHomePrice(
   const monthlyIncome = annualIncome / 12;
   const maxHousingPayment = monthlyIncome * 0.28; // 28% rule
   const availableForPrincipalAndInterest = maxHousingPayment - monthlyDebts;
-  
+
   // Estimate property taxes and insurance (typically 0.3-0.5% monthly)
   const estimatedTaxesInsurance = 0.004; // 0.4% monthly
-  const availableForPI = availableForPrincipalAndInterest * (1 - estimatedTaxesInsurance);
-  
+  const availableForPI =
+    availableForPrincipalAndInterest * (1 - estimatedTaxesInsurance);
+
   // Calculate maximum loan amount
   const monthlyRate = interestRate / 100 / 12;
   const numPayments = years * 12;
-  
-  const maxLoanAmount = availableForPI * (Math.pow(1 + monthlyRate, numPayments) - 1) / 
-                        (monthlyRate * Math.pow(1 + monthlyRate, numPayments));
-  
+
+  const maxLoanAmount =
+    (availableForPI * (Math.pow(1 + monthlyRate, numPayments) - 1)) /
+    (monthlyRate * Math.pow(1 + monthlyRate, numPayments));
+
   return Math.round(maxLoanAmount + downPayment);
 }
 
@@ -229,27 +243,29 @@ export function calculateMortgagePayoffSavings(
     return {
       originalYears: years,
       newYears: years,
-      interestSaved: 0
+      interestSaved: 0,
     };
   }
 
   const monthlyRate = interestRate / 100 / 12;
   const originalPayment = calculateLoanPayment(principal, interestRate, years);
   const newPayment = originalPayment + extraPayment;
-  
+
   // Calculate new payoff time
-  const newMonths = -Math.log(1 - (principal * monthlyRate) / newPayment) / Math.log(1 + monthlyRate);
+  const newMonths =
+    -Math.log(1 - (principal * monthlyRate) / newPayment) /
+    Math.log(1 + monthlyRate);
   const newYears = newMonths / 12;
-  
+
   // Calculate interest saved
-  const originalTotalInterest = (originalPayment * years * 12) - principal;
-  const newTotalInterest = (newPayment * newMonths) - principal;
+  const originalTotalInterest = originalPayment * years * 12 - principal;
+  const newTotalInterest = newPayment * newMonths - principal;
   const interestSaved = originalTotalInterest - newTotalInterest;
-  
+
   return {
     originalYears: years,
     newYears: Math.round(newYears * 10) / 10,
-    interestSaved: Math.round(interestSaved * 100) / 100
+    interestSaved: Math.round(interestSaved * 100) / 100,
   };
 }
 
@@ -259,14 +275,17 @@ export function calculateMortgagePayoffSavings(
  * @param returns - Array of annual return percentages
  * @returns Final portfolio value
  */
-export function calculatePortfolioBacktest(initialValue: number, returns: number[]): number {
+export function calculatePortfolioBacktest(
+  initialValue: number,
+  returns: number[]
+): number {
   if (returns.length === 0) return initialValue;
-  
+
   let value = initialValue;
   for (const returnPct of returns) {
     value = value * (1 + returnPct / 100);
   }
-  
+
   return Math.round(value * 100) / 100;
 }
 
@@ -279,4 +298,4 @@ export function calculatePortfolioBacktest(initialValue: number, returns: number
 export function convertCurrency(amount: number, exchangeRate: number): number {
   const converted = amount * exchangeRate;
   return Math.round(converted * 100) / 100;
-} 
+}

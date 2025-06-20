@@ -25,11 +25,14 @@ const DateSeparator: React.FC<DateSeparatorProps> = ({ date, className }) => {
       )}
       style={{ minHeight: '40px' }}
     >
-      <div className="col-span-full text-sm font-medium text-white/80" data-testid="date-separator">
+      <div
+        className="col-span-full text-sm font-medium text-white/80"
+        data-testid="date-separator"
+      >
         {label}
       </div>
     </div>
   );
 };
 
-export default DateSeparator; 
+export default DateSeparator;

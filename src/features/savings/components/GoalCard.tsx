@@ -16,10 +16,12 @@ const GoalCard = React.memo<GoalCardProps>(({ goal, onGoalUpdate }) => {
   const [isAddingContribution, setIsAddingContribution] = useState(false);
 
   const progress = (goal.currentAmount / goal.targetAmount) * 100;
-  const daysLeft = Math.ceil((new Date(goal.targetDate).getTime() - Date.now()) / (1000 * 60 * 60 * 24));
+  const daysLeft = Math.ceil(
+    (new Date(goal.targetDate).getTime() - Date.now()) / (1000 * 60 * 60 * 24)
+  );
   const monthlyNeeded = savingsGoalsService.calculateMonthlyContribution(
-    goal.targetAmount, 
-    goal.currentAmount, 
+    goal.targetAmount,
+    goal.currentAmount,
     goal.targetDate
   );
 
@@ -32,7 +34,7 @@ const GoalCard = React.memo<GoalCardProps>(({ goal, onGoalUpdate }) => {
           amount,
           date: new Date().toISOString(),
           type: 'manual',
-          description: 'Manual contribution'
+          description: 'Manual contribution',
         });
         setContributionAmount('');
         setShowContribution(false);
@@ -61,25 +63,33 @@ const GoalCard = React.memo<GoalCardProps>(({ goal, onGoalUpdate }) => {
       delta={{
         value: goal.targetAmount - goal.currentAmount,
         format: 'currency',
-        label: 'remaining'
+        label: 'remaining',
       }}
       icon={goal.icon}
       progress={{
         value: goal.currentAmount,
         max: goal.targetAmount,
         color: getProgressColor(),
-        showLabel: true
+        showLabel: true,
       }}
-      badge={goal.isCompleted ? {
-        text: 'Complete',
-        variant: 'success'
-      } : daysLeft <= 0 ? {
-        text: 'Overdue',
-        variant: 'error'
-      } : daysLeft <= 30 ? {
-        text: `${daysLeft} days left`,
-        variant: 'warning'
-      } : undefined}
+      badge={
+        goal.isCompleted
+          ? {
+              text: 'Complete',
+              variant: 'success',
+            }
+          : daysLeft <= 0
+            ? {
+                text: 'Overdue',
+                variant: 'error',
+              }
+            : daysLeft <= 30
+              ? {
+                  text: `${daysLeft} days left`,
+                  variant: 'warning',
+                }
+              : undefined
+      }
       variant="default"
       size="lg"
       interactive={true}
@@ -100,9 +110,9 @@ const GoalCard = React.memo<GoalCardProps>(({ goal, onGoalUpdate }) => {
           <div className="flex items-center justify-center space-x-1 mb-1">
             <Calendar className="w-3 h-3 text-white/60" />
             <div className="text-white font-semibold text-sm">
-              {new Date(goal.targetDate).toLocaleDateString('en-US', { 
-                month: 'short', 
-                year: 'numeric' 
+              {new Date(goal.targetDate).toLocaleDateString('en-US', {
+                month: 'short',
+                year: 'numeric',
               })}
             </div>
           </div>
@@ -116,7 +126,10 @@ const GoalCard = React.memo<GoalCardProps>(({ goal, onGoalUpdate }) => {
           <div className="text-white/60 text-xs mb-2">Recent Activity</div>
           <div className="space-y-1">
             {goal.contributions.slice(-2).map((contribution) => (
-              <div key={contribution.id} className="flex justify-between text-xs">
+              <div
+                key={contribution.id}
+                className="flex justify-between text-xs"
+              >
                 <span className="text-white/80">
                   {new Date(contribution.date).toLocaleDateString()}
                 </span>
@@ -157,7 +170,11 @@ const GoalCard = React.memo<GoalCardProps>(({ goal, onGoalUpdate }) => {
                   />
                   <button
                     onClick={handleAddContribution}
-                    disabled={!contributionAmount || parseFloat(contributionAmount) <= 0 || isAddingContribution}
+                    disabled={
+                      !contributionAmount ||
+                      parseFloat(contributionAmount) <= 0 ||
+                      isAddingContribution
+                    }
                     className="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg text-sm font-medium disabled:opacity-50 disabled:cursor-not-allowed transition-all"
                   >
                     {isAddingContribution ? '...' : 'Add'}
@@ -180,4 +197,4 @@ const GoalCard = React.memo<GoalCardProps>(({ goal, onGoalUpdate }) => {
 
 GoalCard.displayName = 'GoalCard';
 
-export default GoalCard; 
+export default GoalCard;

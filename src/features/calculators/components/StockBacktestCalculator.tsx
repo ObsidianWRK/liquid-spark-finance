@@ -18,7 +18,10 @@ const StockBacktestCalculator = () => {
   return (
     <div className="max-w-xl mx-auto p-4 space-y-4">
       <h1 className="text-xl font-bold text-white">Stock Portfolio Backtest</h1>
-      <p className="text-white/70 text-sm">Enter comma-separated annual returns (%) starting from the earliest year.</p>
+      <p className="text-white/70 text-sm">
+        Enter comma-separated annual returns (%) starting from the earliest
+        year.
+      </p>
       <div className="space-y-2">
         <label className="block text-sm text-white/80">
           Initial Investment ($)
@@ -39,7 +42,10 @@ const StockBacktestCalculator = () => {
           />
         </label>
       </div>
-              <button onClick={handleCalculate} className="w-full py-3 px-6 rounded-xl bg-white/10 border border-white/20 text-white font-semibold button-hover">
+      <button
+        onClick={handleCalculate}
+        className="w-full py-3 px-6 rounded-xl bg-white/10 border border-white/20 text-white font-semibold button-hover"
+      >
         Calculate
       </button>
       {finalValue !== null && (
@@ -51,4 +57,4 @@ const StockBacktestCalculator = () => {
   );
 };
 
-export default StockBacktestCalculator; 
+export default StockBacktestCalculator;

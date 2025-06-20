@@ -1,7 +1,7 @@
-import React from "react";
-import { Button } from "@/shared/ui/button";
-import { useWidgetsStore } from "../store";
-import { Plus, DollarSign, Banknote } from "lucide-react";
+import React from 'react';
+import { Button } from '@/shared/ui/button';
+import { useWidgetsStore } from '../store';
+import { Plus, DollarSign, Banknote } from 'lucide-react';
 
 export const AddWidgetButtons: React.FC = () => {
   const create = useWidgetsStore((s) => s.create);
@@ -10,7 +10,7 @@ export const AddWidgetButtons: React.FC = () => {
   return (
     <div className="flex gap-2">
       <Button
-        onClick={() => create("balance")}
+        onClick={() => create('balance')}
         disabled={loading}
         variant="outline"
         size="sm"
@@ -20,7 +20,7 @@ export const AddWidgetButtons: React.FC = () => {
         Balance Widget
       </Button>
       <Button
-        onClick={() => create("safe_to_spend")}
+        onClick={() => create('safe_to_spend')}
         disabled={loading}
         variant="outline"
         size="sm"
@@ -31,4 +31,4 @@ export const AddWidgetButtons: React.FC = () => {
       </Button>
     </div>
   );
-}; 
+};

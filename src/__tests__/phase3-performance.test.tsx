@@ -61,7 +61,7 @@ describe('Phase 3 Performance Optimizations', () => {
         availableBalance: 4800,
         currency: 'USD',
         trend: 'up' as const,
-        trendPercentage: 12.5
+        trendPercentage: 12.5,
       };
 
       renderWithProviders(<BalanceCard {...props} />);
@@ -73,9 +73,9 @@ describe('Phase 3 Performance Optimizations', () => {
         id: '1',
         merchant: 'Test Store',
         category: { name: 'Shopping', color: '#ff0000' },
-        amount: -50.00,
+        amount: -50.0,
         date: '2024-01-01',
-        status: 'completed' as const
+        status: 'completed' as const,
       };
 
       renderWithProviders(
@@ -88,28 +88,28 @@ describe('Phase 3 Performance Optimizations', () => {
   describe('useMemo and useCallback Optimizations', () => {
     it('should efficiently render large transaction lists', async () => {
       const startTime = performance.now();
-      
-      const transformedTransactions = mockData.transactions.map(t => ({
+
+      const transformedTransactions = mockData.transactions.map((t) => ({
         id: t.id,
         date: t.date,
         description: t.merchant,
         amount: Math.abs(t.amount),
         category: {
           name: t.category.name.toLowerCase(),
-          color: t.category.color || '#6366f1'
+          color: t.category.color || '#6366f1',
         },
-        type: t.amount < 0 ? 'expense' : 'income' as const,
+        type: t.amount < 0 ? 'expense' : ('income' as const),
         merchant: t.merchant,
         status: 'completed' as const,
         scores: {
           health: 85,
           eco: 75,
           financial: 90,
-        }
+        },
       }));
 
       renderWithProviders(
-        <OptimizedTransactionList 
+        <OptimizedTransactionList
           transactions={transformedTransactions}
           variant="apple"
           currency="USD"
@@ -119,7 +119,7 @@ describe('Phase 3 Performance Optimizations', () => {
             searchable: true,
             filterable: true,
             groupByDate: true,
-            sortable: true
+            sortable: true,
           }}
         />
       );
@@ -129,7 +129,7 @@ describe('Phase 3 Performance Optimizations', () => {
       });
 
       const renderTime = performance.now() - startTime;
-      
+
       // Should render in less than 200ms (optimized target)
       expect(renderTime).toBeLessThan(200);
     });
@@ -144,28 +144,31 @@ describe('Phase 3 Performance Optimizations', () => {
           showTrends: true,
           showCategories: true,
           enableInteractions: true,
-          showComparisons: true
+          showComparisons: true,
         },
         layout: {
           columns: 3,
           spacing: 'normal' as const,
-          responsive: true
+          responsive: true,
         },
         dataSource: {
           transactions: mockData.transactions.slice(0, 10), // Limit for testing
           accounts: mockData.accounts,
-          timeframe: '30d' as const
-        }
+          timeframe: '30d' as const,
+        },
       };
 
       renderWithProviders(<UnifiedInsightsPage config={config} />);
 
-      await waitFor(() => {
-        expect(screen.getByRole('main')).toBeInTheDocument();
-      }, { timeout: 3000 });
+      await waitFor(
+        () => {
+          expect(screen.getByRole('main')).toBeInTheDocument();
+        },
+        { timeout: 3000 }
+      );
 
       const renderTime = performance.now() - startTime;
-      
+
       // Should render insights page efficiently
       expect(renderTime).toBeLessThan(500);
     });
@@ -176,7 +179,7 @@ describe('Phase 3 Performance Optimizations', () => {
       // This test verifies our vite.config.ts manual chunks are properly configured
       const manualChunks = [
         'vendor',
-        'ui', 
+        'ui',
         'charts',
         'crypto',
         'routing',
@@ -184,7 +187,7 @@ describe('Phase 3 Performance Optimizations', () => {
         'calculators',
         'universal-card',
         'performance',
-        'optimized-transactions'
+        'optimized-transactions',
       ];
 
       expect(manualChunks).toHaveLength(10);
@@ -201,9 +204,10 @@ describe('Phase 3 Performance Optimizations', () => {
           usedJSHeapSize: number;
         };
       }
-      
-      const initialMemory = (performance as PerformanceMemory).memory?.usedJSHeapSize || 0;
-      
+
+      const initialMemory =
+        (performance as PerformanceMemory).memory?.usedJSHeapSize || 0;
+
       // Render and unmount components multiple times
       for (let i = 0; i < 10; i++) {
         const { unmount } = renderWithProviders(
@@ -212,9 +216,10 @@ describe('Phase 3 Performance Optimizations', () => {
         unmount();
       }
 
-      const finalMemory = (performance as PerformanceMemory).memory?.usedJSHeapSize || 0;
+      const finalMemory =
+        (performance as PerformanceMemory).memory?.usedJSHeapSize || 0;
       const memoryIncrease = finalMemory - initialMemory;
-      
+
       // Memory increase should be minimal (less than 5MB)
       expect(memoryIncrease).toBeLessThan(5 * 1024 * 1024);
     });
@@ -232,7 +237,7 @@ describe('Phase 3 Performance Optimizations', () => {
     it('should handle lazy loaded components efficiently', async () => {
       // Test is implicit - if lazy loading works, the components render
       // This is tested through our App.tsx lazy loading setup
-      
+
       const config = {
         variant: 'simple' as const,
         features: { showScores: true },
@@ -240,16 +245,16 @@ describe('Phase 3 Performance Optimizations', () => {
         dataSource: {
           transactions: mockData.transactions.slice(0, 5),
           accounts: mockData.accounts.slice(0, 2),
-          timeframe: '7d' as const
-        }
+          timeframe: '7d' as const,
+        },
       };
 
       renderWithProviders(<UnifiedInsightsPage config={config} />);
-      
+
       await waitFor(() => {
         expect(screen.getByRole('main')).toBeInTheDocument();
       });
-      
+
       // If we get here, lazy loading worked correctly
       expect(true).toBe(true);
     });
@@ -266,7 +271,7 @@ export const measureComponentPerformance = async (
 
   for (let i = 0; i < iterations; i++) {
     const startTime = performance.now();
-    
+
     const { unmount } = render(
       <BrowserRouter>
         <QueryClientProvider client={queryClient}>
@@ -274,10 +279,10 @@ export const measureComponentPerformance = async (
         </QueryClientProvider>
       </BrowserRouter>
     );
-    
+
     const endTime = performance.now();
     times.push(endTime - startTime);
-    
+
     unmount();
   }
 
@@ -285,7 +290,7 @@ export const measureComponentPerformance = async (
     avg: times.reduce((sum, time) => sum + time, 0) / times.length,
     min: Math.min(...times),
     max: Math.max(...times),
-    p95: times.sort((a, b) => a - b)[Math.floor(times.length * 0.95)]
+    p95: times.sort((a, b) => a - b)[Math.floor(times.length * 0.95)],
   };
 };
 
@@ -295,7 +300,8 @@ interface PerformanceMemory extends Performance {
   };
 }
 
-const memoryBefore = (performance as PerformanceMemory).memory?.usedJSHeapSize || 0;
+const memoryBefore =
+  (performance as PerformanceMemory).memory?.usedJSHeapSize || 0;
 
 // Simulate component mounting/unmounting cycles
 for (let i = 0; i < 100; i++) {
@@ -303,4 +309,5 @@ for (let i = 0; i < 100; i++) {
   unmount();
 }
 
-const memoryAfter = (performance as PerformanceMemory).memory?.usedJSHeapSize || 0;
+const memoryAfter =
+  (performance as PerformanceMemory).memory?.usedJSHeapSize || 0;

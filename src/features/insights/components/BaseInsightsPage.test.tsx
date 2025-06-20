@@ -9,8 +9,8 @@ vi.mock('@/features/scoringModel', () => ({
   generateScoreSummary: vi.fn().mockResolvedValue({
     financial: 85,
     health: 72,
-    eco: 91
-  })
+    eco: 91,
+  }),
 }));
 
 vi.mock('@/hooks/usePerformanceOptimization', () => ({
@@ -18,7 +18,7 @@ vi.mock('@/hooks/usePerformanceOptimization', () => ({
   useResponsiveBreakpoint: () => 'desktop',
   useAnimationDelay: () => 0,
   useLayoutDebug: () => {},
-  usePerformanceTracking: () => {}
+  usePerformanceTracking: () => {},
 }));
 
 const mockTransactions = mockData.transactions || [];
@@ -28,7 +28,7 @@ describe('BaseInsightsPage', () => {
   const defaultProps = {
     transactions: mockTransactions,
     accounts: mockAccounts,
-    className: ''
+    className: '',
   };
 
   it('should render without crashing', () => {
@@ -38,7 +38,7 @@ describe('BaseInsightsPage', () => {
 
   it('should display score circles', async () => {
     render(<BaseInsightsPage {...defaultProps} />);
-    
+
     await waitFor(() => {
       expect(screen.getByText(/Financial Health/i)).toBeInTheDocument();
       expect(screen.getByText(/Wellness Score/i)).toBeInTheDocument();
@@ -48,7 +48,7 @@ describe('BaseInsightsPage', () => {
 
   it('should calculate financial metrics correctly', async () => {
     render(<BaseInsightsPage {...defaultProps} />);
-    
+
     await waitFor(() => {
       // Should display spending metrics
       expect(screen.getByText(/Spending Ratio/i)).toBeInTheDocument();
@@ -68,22 +68,15 @@ describe('BaseInsightsPage', () => {
 
   it('should handle empty data gracefully', () => {
     render(
-      <BaseInsightsPage 
-        {...defaultProps} 
-        transactions={[]} 
-        accounts={[]} 
-      />
+      <BaseInsightsPage {...defaultProps} transactions={[]} accounts={[]} />
     );
     expect(screen.getByText(/Your Overall Scores/i)).toBeInTheDocument();
   });
 
   it('should calculate metrics with no income', () => {
-    const noIncomeTransactions = mockTransactions.filter(t => t.amount < 0);
+    const noIncomeTransactions = mockTransactions.filter((t) => t.amount < 0);
     render(
-      <BaseInsightsPage 
-        {...defaultProps} 
-        transactions={noIncomeTransactions}
-      />
+      <BaseInsightsPage {...defaultProps} transactions={noIncomeTransactions} />
     );
     expect(screen.getByText(/Your Overall Scores/i)).toBeInTheDocument();
   });
@@ -96,15 +89,10 @@ describe('BaseInsightsPage', () => {
         nickname: 'Test Credit',
         balance: -1000,
         availableBalance: 4000,
-        currency: 'USD'
-      }
+        currency: 'USD',
+      },
     ];
-    render(
-      <BaseInsightsPage 
-        {...defaultProps} 
-        accounts={creditAccounts}
-      />
-    );
+    render(<BaseInsightsPage {...defaultProps} accounts={creditAccounts} />);
     expect(screen.getByText(/Your Overall Scores/i)).toBeInTheDocument();
   });
-}); 
+});

@@ -1,7 +1,7 @@
-import React, { useEffect } from "react";
-import { useAgeOfMoneyStore } from "../store";
-import { UniversalCard } from "@/shared/ui/UniversalCard";
-import { Clock } from "lucide-react";
+import React, { useEffect } from 'react';
+import { useAgeOfMoneyStore } from '../store';
+import { UniversalCard } from '@/shared/ui/UniversalCard';
+import { Clock } from 'lucide-react';
 
 export const AgeOfMoneyCard: React.FC = () => {
   const { metric, loading, refresh } = useAgeOfMoneyStore((s) => ({
@@ -27,7 +27,7 @@ export const AgeOfMoneyCard: React.FC = () => {
       {!metric && (
         <div className="text-center">
           <p className="text-white/60 text-sm">
-            {loading ? "Calculating…" : "No data available"}
+            {loading ? 'Calculating…' : 'No data available'}
           </p>
         </div>
       )}
@@ -40,4 +40,4 @@ export const AgeOfMoneyCard: React.FC = () => {
       )}
     </UniversalCard>
   );
-}; 
+};

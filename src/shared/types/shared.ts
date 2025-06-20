@@ -177,7 +177,10 @@ export interface PaginationState {
 export type TransactionClickHandler = (transaction: Transaction) => void;
 export type AccountSelectHandler = (account: Account) => void;
 export type CategoryFilterHandler = (category: string) => void;
-export type SortChangeHandler = (field: string, direction: 'asc' | 'desc') => void;
+export type SortChangeHandler = (
+  field: string,
+  direction: 'asc' | 'desc'
+) => void;
 
 // Performance Optimization Types
 export interface MemoizedComponentProps<T = Record<string, unknown>> {

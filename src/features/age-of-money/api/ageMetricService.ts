@@ -1,4 +1,4 @@
-import { AgeMetric } from "../types";
+import { AgeMetric } from '../types';
 
 export interface AgeMetricService {
   calculate: () => Promise<AgeMetric>;
@@ -13,4 +13,4 @@ class MockAgeMetricService implements AgeMetricService {
   }
 }
 
-export const ageMetricService: AgeMetricService = new MockAgeMetricService(); 
+export const ageMetricService: AgeMetricService = new MockAgeMetricService();

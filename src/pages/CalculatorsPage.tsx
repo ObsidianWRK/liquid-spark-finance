@@ -25,7 +25,7 @@ const componentMap: Record<string, React.ReactNode> = {
   'home-affordability': <HomeAffordabilityCalculator />,
   'mortgage-payoff': <MortgagePayoffCalculator />,
   backtest: <StockBacktestCalculator />,
-  'exchange-rate': <ExchangeRateCalculator />
+  'exchange-rate': <ExchangeRateCalculator />,
 };
 
 const nameMap: Record<string, string> = {
@@ -39,7 +39,7 @@ const nameMap: Record<string, string> = {
   'home-affordability': 'Home Affordability Calculator',
   'mortgage-payoff': 'Early Mortgage Payoff Calculator',
   backtest: 'Stock Backtest Calculator',
-  'exchange-rate': 'Exchange Rate Calculator'
+  'exchange-rate': 'Exchange Rate Calculator',
 };
 
 const CalculatorsPage = () => {
@@ -57,19 +57,27 @@ const CalculatorsPage = () => {
   return (
     <div className="w-full text-white">
       <BackHeader title={nameMap[id] || 'Calculator'} />
-      <Suspense fallback={
-        <div className="w-full text-white flex items-center justify-center py-20">
-          <div className="liquid-glass-fallback rounded-2xl p-8">
-            <div className="flex items-center space-x-4">
-              <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-white"></div>
-              <span className="text-white text-lg">Loading calculator...</span>
+      <Suspense
+        fallback={
+          <div className="w-full text-white flex items-center justify-center py-20">
+            <div className="liquid-glass-fallback rounded-2xl p-8">
+              <div className="flex items-center space-x-4">
+                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-white"></div>
+                <span className="text-white text-lg">
+                  Loading calculator...
+                </span>
+              </div>
             </div>
           </div>
-        </div>
-      }>
+        }
+      >
         <div className="w-full px-4 py-6 max-w-6xl mx-auto">
           <div className="liquid-glass-fallback rounded-2xl p-6">
-            {Component || <div className="text-white p-4 text-center">Calculator not found.</div>}
+            {Component || (
+              <div className="text-white p-4 text-center">
+                Calculator not found.
+              </div>
+            )}
           </div>
         </div>
       </Suspense>
@@ -77,4 +85,4 @@ const CalculatorsPage = () => {
   );
 };
 
-export default CalculatorsPage; 
+export default CalculatorsPage;

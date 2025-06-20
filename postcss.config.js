@@ -21,18 +21,21 @@ export default {
         'Chrome >= 80',
         'Firefox >= 75',
         'Edge >= 80',
-        'Samsung >= 10'
+        'Samsung >= 10',
       ],
     },
     // Optimize CSS for production
     ...(process.env.NODE_ENV === 'production' && {
       cssnano: {
-        preset: ['default', {
-          discardComments: {
-            removeAll: true,
+        preset: [
+          'default',
+          {
+            discardComments: {
+              removeAll: true,
+            },
           },
-        }]
-      }
-    })
-  }
+        ],
+      },
+    }),
+  },
 };

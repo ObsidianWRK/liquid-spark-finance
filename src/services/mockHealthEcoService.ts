@@ -28,15 +28,19 @@ export const mockHealthEcoService = {
   getHealthScore: (transactions: Transaction[]): HealthData => {
     // Mock calculation based on spending patterns
     const fitnessSpending = transactions
-      .filter(t => t.category?.name === 'Fitness' || t.merchant?.includes('Gym'))
+      .filter(
+        (t) => t.category?.name === 'Fitness' || t.merchant?.includes('Gym')
+      )
       .reduce((sum, t) => sum + Math.abs(t.amount), 0);
 
     const fastFoodSpending = transactions
-      .filter(t => t.merchant?.includes('McDonald') || t.merchant?.includes('Fast'))
+      .filter(
+        (t) => t.merchant?.includes('McDonald') || t.merchant?.includes('Fast')
+      )
       .reduce((sum, t) => sum + Math.abs(t.amount), 0);
 
     const healthcareSpending = transactions
-      .filter(t => t.category?.name === 'Healthcare')
+      .filter((t) => t.category?.name === 'Healthcare')
       .reduce((sum, t) => sum + Math.abs(t.amount), 0);
 
     let baseScore = 65;
@@ -49,22 +53,29 @@ export const mockHealthEcoService = {
     return {
       score: Math.round(finalHealthScore),
       trends: {
-        exercise: Math.round(Math.min(100, (fitnessSpending / 10) + 40)),
-        nutrition: Math.round(Math.max(0, 80 - (fastFoodSpending / 5))),
+        exercise: Math.round(Math.min(100, fitnessSpending / 10 + 40)),
+        nutrition: Math.round(Math.max(0, 80 - fastFoodSpending / 5)),
         sleep: 75,
-        stress: 65
-      }
+        stress: 65,
+      },
     };
   },
 
   getEcoScore: (transactions: Transaction[]): EcoData => {
-    const sustainableMerchants = ['Whole Foods', 'Trader Joe', 'REI', 'Patagonia'];
+    const sustainableMerchants = [
+      'Whole Foods',
+      'Trader Joe',
+      'REI',
+      'Patagonia',
+    ];
     const transportSpending = transactions
-      .filter(t => t.category?.name === 'Transportation')
+      .filter((t) => t.category?.name === 'Transportation')
       .reduce((sum, t) => sum + Math.abs(t.amount), 0);
 
     const sustainableSpending = transactions
-      .filter(t => sustainableMerchants.some(merchant => t.merchant?.includes(merchant)))
+      .filter((t) =>
+        sustainableMerchants.some((merchant) => t.merchant?.includes(merchant))
+      )
       .reduce((sum, t) => sum + Math.abs(t.amount), 0);
 
     let baseScore = 72;
@@ -79,14 +90,16 @@ export const mockHealthEcoService = {
       score: Math.round(finalScore),
       metrics: {
         carbonFootprint: Math.round(Math.max(0, 100 - finalScore)),
-        sustainableSpending: Math.round(Math.min(100, (sustainableSpending / 500) * 100)),
-        greenTransport: Math.round(Math.max(0, 100 - (transportSpending / 2))),
-        renewableEnergy: 85
+        sustainableSpending: Math.round(
+          Math.min(100, (sustainableSpending / 500) * 100)
+        ),
+        greenTransport: Math.round(Math.max(0, 100 - transportSpending / 2)),
+        renewableEnergy: 85,
       },
       monthlyImpact: {
         co2Saved: Math.max(0, co2Saved),
-        treesEquivalent: Math.max(0, treesEquivalent)
-      }
+        treesEquivalent: Math.max(0, treesEquivalent),
+      },
     };
-  }
+  },
 };

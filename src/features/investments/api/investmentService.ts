@@ -1,4 +1,12 @@
-import { Investment, InvestmentAccount, Portfolio, Holding, PerformanceMetrics, AssetAllocation, RiskMetrics } from '@/types/investments';
+import {
+  Investment,
+  InvestmentAccount,
+  Portfolio,
+  Holding,
+  PerformanceMetrics,
+  AssetAllocation,
+  RiskMetrics,
+} from '@/types/investments';
 import { secureStorage } from '@/shared/utils/crypto';
 
 /**
@@ -18,38 +26,41 @@ class InvestmentService {
     getCurrentPrice: async (symbol: string): Promise<number> => {
       // Mock price data - in production would fetch from Yahoo Finance, Alpha Vantage, etc.
       const mockPrices: Record<string, number> = {
-        'AAPL': 185.50,
-        'GOOGL': 142.20,
-        'MSFT': 375.80,
-        'TSLA': 195.30,
-        'AMZN': 158.90,
-        'SPY': 485.60,
-        'QQQ': 392.40,
-        'VTI': 252.30,
-        'NVDA': 875.40,
-        'BRK.B': 425.60
+        AAPL: 185.5,
+        GOOGL: 142.2,
+        MSFT: 375.8,
+        TSLA: 195.3,
+        AMZN: 158.9,
+        SPY: 485.6,
+        QQQ: 392.4,
+        VTI: 252.3,
+        NVDA: 875.4,
+        'BRK.B': 425.6,
       };
-      return mockPrices[symbol] || 100 + (Math.random() * 100);
+      return mockPrices[symbol] || 100 + Math.random() * 100;
     },
-    
-    getHistoricalPrices: async (symbol: string, days: number): Promise<Array<{ date: Date; price: number }>> => {
+
+    getHistoricalPrices: async (
+      symbol: string,
+      days: number
+    ): Promise<Array<{ date: Date; price: number }>> => {
       const currentPrice = await this.marketDataService.getCurrentPrice(symbol);
       const prices: Array<{ date: Date; price: number }> = [];
-      
+
       for (let i = days; i >= 0; i--) {
         const date = new Date();
         date.setDate(date.getDate() - i);
-        
+
         // Simulate price volatility
-        const volatility = 0.02 + (Math.random() * 0.03);
+        const volatility = 0.02 + Math.random() * 0.03;
         const change = (Math.random() - 0.5) * volatility;
         const price = currentPrice * (1 + change * (i / days));
-        
+
         prices.push({ date, price });
       }
-      
+
       return prices;
-    }
+    },
   };
 
   private constructor() {
@@ -74,7 +85,12 @@ class InvestmentService {
         if (portfolioData.holdings) {
           portfolioData.holdings.forEach((holding: unknown) => {
             // Type check and cast holding to ensure it has required properties
-            if (holding && typeof holding === 'object' && 'id' in holding && 'symbol' in holding) {
+            if (
+              holding &&
+              typeof holding === 'object' &&
+              'id' in holding &&
+              'symbol' in holding
+            ) {
               const typedHolding = holding as Holding;
               this.holdings.set(typedHolding.id, typedHolding);
             }
@@ -98,7 +114,7 @@ class InvestmentService {
       balance: 0,
       isActive: true,
       createdAt: new Date(),
-      updatedAt: new Date()
+      updatedAt: new Date(),
     };
     this.accounts.set(demoAccount.id, demoAccount);
 
@@ -113,7 +129,7 @@ class InvestmentService {
       balance: 15000,
       isActive: true,
       createdAt: new Date(),
-      updatedAt: new Date()
+      updatedAt: new Date(),
     };
     this.accounts.set(demoCashAccount.id, demoCashAccount);
 
@@ -129,10 +145,10 @@ class InvestmentService {
         purchasePrice: 140,
         costBasis: 25 * 140,
         assetType: 'stock' as const,
-        sector: 'Technology'
+        sector: 'Technology',
       },
       {
-        symbol: 'MSFT', 
+        symbol: 'MSFT',
         name: 'Microsoft Corp.',
         quantity: 15,
         shares: 15,
@@ -140,7 +156,7 @@ class InvestmentService {
         purchasePrice: 230,
         costBasis: 15 * 230,
         assetType: 'stock' as const,
-        sector: 'Technology'
+        sector: 'Technology',
       },
       {
         symbol: 'VTI',
@@ -151,7 +167,7 @@ class InvestmentService {
         purchasePrice: 180,
         costBasis: 35 * 180,
         assetType: 'etf' as const,
-        sector: 'Diversified'
+        sector: 'Diversified',
       },
       {
         symbol: 'GOOGL',
@@ -162,7 +178,7 @@ class InvestmentService {
         purchasePrice: 142,
         costBasis: 8 * 142,
         assetType: 'stock' as const,
-        sector: 'Technology'
+        sector: 'Technology',
       },
       // Bond Holdings (20% of portfolio)
       {
@@ -174,7 +190,7 @@ class InvestmentService {
         purchasePrice: 75,
         costBasis: 280 * 75,
         assetType: 'bond' as const,
-        sector: 'Fixed Income'
+        sector: 'Fixed Income',
       },
       {
         symbol: 'TIP',
@@ -185,7 +201,7 @@ class InvestmentService {
         purchasePrice: 115,
         costBasis: 90 * 115,
         assetType: 'bond' as const,
-        sector: 'Fixed Income'
+        sector: 'Fixed Income',
       },
       // REIT Holdings (5% of portfolio)
       {
@@ -197,7 +213,7 @@ class InvestmentService {
         purchasePrice: 95,
         costBasis: 60 * 95,
         assetType: 'reit' as const,
-        sector: 'Real Estate'
+        sector: 'Real Estate',
       },
       // Crypto Holdings (3% of portfolio)
       {
@@ -209,13 +225,17 @@ class InvestmentService {
         purchasePrice: 45000,
         costBasis: 0.15 * 45000,
         assetType: 'crypto' as const,
-        sector: 'Cryptocurrency'
+        sector: 'Cryptocurrency',
       },
       // Cash position (7% of portfolio) - will be handled separately
     ];
 
     for (const holdingData of demoHoldings) {
-      if (!Array.from(this.holdings.values()).some(h => h.symbol === holdingData.symbol)) {
+      if (
+        !Array.from(this.holdings.values()).some(
+          (h) => h.symbol === holdingData.symbol
+        )
+      ) {
         await this.addHolding(demoAccount.id, holdingData);
       }
     }
@@ -230,10 +250,10 @@ class InvestmentService {
       purchasePrice: 12500,
       costBasis: 12500,
       assetType: 'cash' as const,
-      sector: 'Cash'
+      sector: 'Cash',
     };
 
-    if (!Array.from(this.holdings.values()).some(h => h.symbol === 'CASH')) {
+    if (!Array.from(this.holdings.values()).some((h) => h.symbol === 'CASH')) {
       await this.addHolding(demoCashAccount.id, cashHolding);
     }
   }
@@ -242,7 +262,7 @@ class InvestmentService {
     if (typeof window === 'undefined') return;
     const data = {
       holdings: Array.from(this.holdings.values()),
-      accounts: Array.from(this.accounts.values())
+      accounts: Array.from(this.accounts.values()),
     };
     secureStorage.setItem(this.storageKey, data);
   }
@@ -250,12 +270,14 @@ class InvestmentService {
   /**
    * Create investment account
    */
-  async createInvestmentAccount(data: Omit<InvestmentAccount, 'id' | 'createdAt' | 'updatedAt'>): Promise<InvestmentAccount> {
+  async createInvestmentAccount(
+    data: Omit<InvestmentAccount, 'id' | 'createdAt' | 'updatedAt'>
+  ): Promise<InvestmentAccount> {
     const account: InvestmentAccount = {
       id: this.generateAccountId(),
       ...data,
       createdAt: new Date(),
-      updatedAt: new Date()
+      updatedAt: new Date(),
     };
 
     this.accounts.set(account.id, account);
@@ -266,7 +288,20 @@ class InvestmentService {
   /**
    * Add investment holding
    */
-  async addHolding(accountId: string, data: Omit<Holding, 'id' | 'accountId' | 'currentPrice' | 'marketValue' | 'unrealizedGainLoss' | 'unrealizedGainLossPercent' | 'createdAt' | 'updatedAt'>): Promise<Holding> {
+  async addHolding(
+    accountId: string,
+    data: Omit<
+      Holding,
+      | 'id'
+      | 'accountId'
+      | 'currentPrice'
+      | 'marketValue'
+      | 'unrealizedGainLoss'
+      | 'unrealizedGainLossPercent'
+      | 'createdAt'
+      | 'updatedAt'
+    >
+  ): Promise<Holding> {
     const holding: Holding = {
       id: this.generateHoldingId(),
       accountId,
@@ -284,14 +319,18 @@ class InvestmentService {
       unrealizedGainLoss: 0,
       unrealizedGainLossPercent: 0,
       createdAt: new Date(),
-      updatedAt: new Date()
+      updatedAt: new Date(),
     };
 
     // Get current market price
-    holding.currentPrice = await this.marketDataService.getCurrentPrice(holding.symbol);
+    holding.currentPrice = await this.marketDataService.getCurrentPrice(
+      holding.symbol
+    );
     holding.marketValue = holding.currentPrice * holding.quantity;
     holding.unrealizedGainLoss = holding.marketValue - holding.costBasis;
-    holding.unrealizedGainLossPercent = holding.costBasis ? (holding.unrealizedGainLoss / holding.costBasis) * 100 : 0;
+    holding.unrealizedGainLossPercent = holding.costBasis
+      ? (holding.unrealizedGainLoss / holding.costBasis) * 100
+      : 0;
 
     this.holdings.set(holding.id, holding);
     this.persist();
@@ -302,24 +341,37 @@ class InvestmentService {
    * Get family's investment portfolio
    */
   async getFamilyPortfolio(familyId: string): Promise<Portfolio> {
-    const accounts = Array.from(this.accounts.values())
-      .filter(account => account.familyId === familyId);
+    const accounts = Array.from(this.accounts.values()).filter(
+      (account) => account.familyId === familyId
+    );
 
-    const holdings = Array.from(this.holdings.values())
-      .filter(holding => accounts.some(account => account.id === holding.accountId));
+    const holdings = Array.from(this.holdings.values()).filter((holding) =>
+      accounts.some((account) => account.id === holding.accountId)
+    );
 
     // Update current prices
     for (const holding of holdings) {
-      holding.currentPrice = await this.marketDataService.getCurrentPrice(holding.symbol);
+      holding.currentPrice = await this.marketDataService.getCurrentPrice(
+        holding.symbol
+      );
       holding.marketValue = holding.currentPrice * holding.quantity;
       holding.unrealizedGainLoss = holding.marketValue - holding.costBasis;
-      holding.unrealizedGainLossPercent = holding.costBasis ? (holding.unrealizedGainLoss / holding.costBasis) * 100 : 0;
+      holding.unrealizedGainLossPercent = holding.costBasis
+        ? (holding.unrealizedGainLoss / holding.costBasis) * 100
+        : 0;
     }
 
-    const totalValue = holdings.reduce((sum, holding) => sum + holding.marketValue, 0);
-    const totalCostBasis = holdings.reduce((sum, holding) => sum + holding.costBasis, 0);
+    const totalValue = holdings.reduce(
+      (sum, holding) => sum + holding.marketValue,
+      0
+    );
+    const totalCostBasis = holdings.reduce(
+      (sum, holding) => sum + holding.costBasis,
+      0
+    );
     const totalGainLoss = totalValue - totalCostBasis;
-    const totalGainLossPercent = totalCostBasis > 0 ? (totalGainLoss / totalCostBasis) * 100 : 0;
+    const totalGainLossPercent =
+      totalCostBasis > 0 ? (totalGainLoss / totalCostBasis) * 100 : 0;
 
     const portfolio: Portfolio = {
       id: `portfolio_${familyId}`,
@@ -333,7 +385,7 @@ class InvestmentService {
       performance: await this.calculatePerformanceMetrics(familyId),
       allocation: await this.calculateAssetAllocation(holdings),
       riskMetrics: await this.calculateRiskMetrics(holdings),
-      lastUpdated: new Date()
+      lastUpdated: new Date(),
     };
 
     this.portfolios.set(portfolio.id, portfolio);
@@ -343,27 +395,37 @@ class InvestmentService {
   /**
    * Legacy method for compatibility
    */
-  async getPortfolio(): Promise<{ holdings: Holding[]; snapshots: Array<{ date: string; value: number }> }> {
+  async getPortfolio(): Promise<{
+    holdings: Holding[];
+    snapshots: Array<{ date: string; value: number }>;
+  }> {
     const portfolio = await this.getFamilyPortfolio('demo_family');
-    
+
     // Generate snapshots for demo
     const snapshots = Array.from({ length: 12 }).map((_, i) => {
       const date = new Date();
       date.setMonth(date.getMonth() - (11 - i));
-      const value = portfolio.totalValue * (0.8 + (i / 11) * 0.2) + (Math.random() - 0.5) * 1000;
-      return { date: date.toISOString().split('T')[0], value: Number(value.toFixed(2)) };
+      const value =
+        portfolio.totalValue * (0.8 + (i / 11) * 0.2) +
+        (Math.random() - 0.5) * 1000;
+      return {
+        date: date.toISOString().split('T')[0],
+        value: Number(value.toFixed(2)),
+      };
     });
 
     return {
       holdings: portfolio.holdings,
-      snapshots
+      snapshots,
     };
   }
 
   /**
    * Calculate portfolio performance metrics
    */
-  async calculatePerformanceMetrics(familyId: string): Promise<PerformanceMetrics> {
+  async calculatePerformanceMetrics(
+    familyId: string
+  ): Promise<PerformanceMetrics> {
     const portfolio = this.portfolios.get(`portfolio_${familyId}`);
     if (!portfolio) {
       // Return default metrics if portfolio not found
@@ -376,7 +438,7 @@ class InvestmentService {
         maxDrawdown: 0,
         alpha: 0,
         beta: 1,
-        rSquared: 0
+        rSquared: 0,
       };
     }
 
@@ -404,16 +466,21 @@ class InvestmentService {
       maxDrawdown,
       alpha: yearReturn - 8, // Assuming 8% market return
       beta: 1.0 + (Math.random() - 0.5) * 0.4, // Random beta around 1.0
-      rSquared: 0.85 + Math.random() * 0.1 // Random R-squared between 0.85-0.95
+      rSquared: 0.85 + Math.random() * 0.1, // Random R-squared between 0.85-0.95
     };
   }
 
   /**
    * Calculate asset allocation
    */
-  async calculateAssetAllocation(holdings: Holding[]): Promise<AssetAllocation> {
-    const totalValue = holdings.reduce((sum, holding) => sum + holding.marketValue, 0);
-    
+  async calculateAssetAllocation(
+    holdings: Holding[]
+  ): Promise<AssetAllocation> {
+    const totalValue = holdings.reduce(
+      (sum, holding) => sum + holding.marketValue,
+      0
+    );
+
     if (totalValue === 0) {
       return {
         stocks: 0,
@@ -427,13 +494,17 @@ class InvestmentService {
         regions: {
           US: 0,
           International: 0,
-          Emerging: 0
-        }
+          Emerging: 0,
+        },
       };
     }
 
-    let stocks = 0, bonds = 0, crypto = 0, other = 0;
-    const cash = 0, commodities = 0;
+    let stocks = 0,
+      bonds = 0,
+      crypto = 0,
+      other = 0;
+    const cash = 0,
+      commodities = 0;
     let reitsPercentage = 0;
     const sectors: Record<string, number> = {};
 
@@ -452,7 +523,10 @@ class InvestmentService {
         reitsPercentage += percentage;
       } else if (holding.assetType === 'crypto') {
         crypto += percentage;
-      } else if (holding.assetType === 'etf' || holding.assetType === 'mutual_fund') {
+      } else if (
+        holding.assetType === 'etf' ||
+        holding.assetType === 'mutual_fund'
+      ) {
         // Classify ETFs/mutual funds based on their underlying assets
         if (holding.symbol.includes('BOND')) {
           bonds += percentage;
@@ -478,8 +552,8 @@ class InvestmentService {
       regions: {
         US: stocks * 0.7, // Assume 70% US allocation
         International: stocks * 0.25, // 25% International
-        Emerging: stocks * 0.05 // 5% Emerging markets
-      }
+        Emerging: stocks * 0.05, // 5% Emerging markets
+      },
     };
   }
 
@@ -487,8 +561,11 @@ class InvestmentService {
    * Calculate risk metrics
    */
   async calculateRiskMetrics(holdings: Holding[]): Promise<RiskMetrics> {
-    const totalValue = holdings.reduce((sum, holding) => sum + holding.marketValue, 0);
-    
+    const totalValue = holdings.reduce(
+      (sum, holding) => sum + holding.marketValue,
+      0
+    );
+
     if (totalValue === 0) {
       return {
         concentrationRisk: 0,
@@ -498,14 +575,15 @@ class InvestmentService {
         correlation: 0,
         var95: 0,
         var99: 0,
-        expectedShortfall: 0
+        expectedShortfall: 0,
       };
     }
 
     // Calculate concentration risk
-    const concentrationRisk = holdings.length > 0 
-      ? Math.max(...holdings.map(h => (h.marketValue / totalValue) * 100))
-      : 0;
+    const concentrationRisk =
+      holdings.length > 0
+        ? Math.max(...holdings.map((h) => (h.marketValue / totalValue) * 100))
+        : 0;
 
     // Calculate sector concentration
     const sectors: Record<string, number> = {};
@@ -515,7 +593,10 @@ class InvestmentService {
       const sector = holding.sector || 'Other';
       const percentage = (holding.marketValue / totalValue) * 100;
       sectors[sector] = (sectors[sector] || 0) + percentage;
-      maxSectorConcentration = Math.max(maxSectorConcentration, sectors[sector]);
+      maxSectorConcentration = Math.max(
+        maxSectorConcentration,
+        sectors[sector]
+      );
     }
 
     // Calculate portfolio correlation (simplified)
@@ -529,21 +610,23 @@ class InvestmentService {
       correlation,
       var95: totalValue * 0.05, // 5% Value at Risk
       var99: totalValue * 0.08, // 8% Value at Risk
-      expectedShortfall: totalValue * 0.12 // 12% Expected Shortfall
+      expectedShortfall: totalValue * 0.12, // 12% Expected Shortfall
     };
   }
 
   /**
    * Get investment recommendations
    */
-  async getInvestmentRecommendations(familyId: string): Promise<Array<{
-    type: 'rebalance' | 'diversify' | 'tax_optimize' | 'reduce_risk';
-    title: string;
-    description: string;
-    actionItems: string[];
-    priority: 'high' | 'medium' | 'low';
-    potentialBenefit: string;
-  }>> {
+  async getInvestmentRecommendations(familyId: string): Promise<
+    Array<{
+      type: 'rebalance' | 'diversify' | 'tax_optimize' | 'reduce_risk';
+      title: string;
+      description: string;
+      actionItems: string[];
+      priority: 'high' | 'medium' | 'low';
+      potentialBenefit: string;
+    }>
+  > {
     const portfolio = await this.getFamilyPortfolio(familyId);
     const recommendations: Array<{
       type: 'rebalance' | 'diversify' | 'tax_optimize' | 'reduce_risk';
@@ -563,10 +646,10 @@ class InvestmentService {
         actionItems: [
           'Add bond ETFs or CDs for stability',
           'Consider target-date funds for automatic rebalancing',
-          'Review your risk tolerance and investment timeline'
+          'Review your risk tolerance and investment timeline',
         ],
         priority: 'medium',
-        potentialBenefit: 'Reduced portfolio volatility and risk'
+        potentialBenefit: 'Reduced portfolio volatility and risk',
       });
     }
 
@@ -579,10 +662,11 @@ class InvestmentService {
         actionItems: [
           'Consider selling some of your largest position',
           'Invest in broad market index funds',
-          'Add international diversification'
+          'Add international diversification',
         ],
         priority: 'high',
-        potentialBenefit: 'Better risk-adjusted returns through diversification'
+        potentialBenefit:
+          'Better risk-adjusted returns through diversification',
       });
     }
 
@@ -591,14 +675,15 @@ class InvestmentService {
       recommendations.push({
         type: 'tax_optimize',
         title: 'Tax-Loss Harvesting Opportunity',
-        description: 'You have unrealized losses that could offset gains for tax benefits.',
+        description:
+          'You have unrealized losses that could offset gains for tax benefits.',
         actionItems: [
           'Harvest losses before year-end',
           'Avoid wash sale rules',
-          'Reinvest in similar but not identical assets'
+          'Reinvest in similar but not identical assets',
         ],
         priority: 'medium',
-        potentialBenefit: 'Potential tax savings of $500-2,000'
+        potentialBenefit: 'Potential tax savings of $500-2,000',
       });
     }
 
@@ -643,4 +728,4 @@ class InvestmentService {
   }
 }
 
-export const investmentService = InvestmentService.getInstance(); 
+export const investmentService = InvestmentService.getInstance();

@@ -15,13 +15,10 @@ export {
   useTimeRange,
   useTimeRangeFilter,
   useTimeRangeValidator,
-  useOptimizedTimeRange
+  useOptimizedTimeRange,
 } from './useTimeRange';
 
-export type {
-  UseTimeRangeOptions,
-  UseTimeRangeReturn
-} from './useTimeRange';
+export type { UseTimeRangeOptions, UseTimeRangeReturn } from './useTimeRange';
 
 // Download Hook
 export { useDownload } from './useDownload';
@@ -38,6 +35,4 @@ export {
   useDeviceType,
 } from './useViewport';
 
-export type {
-  ViewportState,
-} from './useViewport';
+export type { ViewportState } from './useViewport';

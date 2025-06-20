@@ -6,7 +6,7 @@
 import { ComponentProps } from 'react';
 
 // Core chart types supported by GraphBase
-export type ChartType = 'line' | 'area' | 'bar' | 'stackedBar';
+export type ChartType = 'line' | 'area' | 'bar' | 'stackedBar' | 'scatter';
 
 // Time range options for financial charts
 export type TimeRangeOption = '1W' | '1M' | '3M' | '6M' | '1Y' | 'ALL';
@@ -118,6 +118,8 @@ export interface GridConfig {
 // Axis configuration
 export interface AxisConfig {
   show?: boolean;
+  dataKey?: string;
+  type?: 'category' | 'number';
   tickCount?: number;
   tickSize?: number;
   tickFormatter?: (value: any) => string;
@@ -132,23 +134,23 @@ export interface GraphBaseProps {
   data: ChartDataPoint[];
   type: ChartType;
   series?: ChartSeries[];
-  
+
   // Header configuration
   title?: string;
   subtitle?: string;
   headerActions?: React.ReactNode;
-  
+
   // Time controls
   timeRange?: TimeRangeOption;
   timeControls?: TimeControlConfig;
   onTimeRangeChange?: (range: TimeRangeOption) => void;
   useGlobalTimeRange?: boolean; // Use TimeRangeContext for global state
-  
+
   // Dimensions and styling
   dimensions?: ChartDimensions;
   className?: string;
   style?: React.CSSProperties;
-  
+
   // Chart-specific configurations
   xAxis?: AxisConfig;
   yAxis?: AxisConfig;
@@ -156,26 +158,26 @@ export interface GraphBaseProps {
   legend?: LegendConfig;
   tooltip?: TooltipConfig;
   animation?: AnimationConfig;
-  
+
   // State management
   loading?: boolean;
   loadingState?: LoadingState;
   error?: string | Error;
   errorConfig?: ErrorConfig;
-  
+
   // Accessibility
   accessibility?: AccessibilityConfig;
-  
+
   // Performance
   virtualization?: boolean;
   dataThreshold?: number;
-  
+
   // Event handlers
   onDataPointClick?: (data: ChartDataPoint, index: number) => void;
   onDataPointHover?: (data: ChartDataPoint | null, index: number) => void;
   onChartReady?: () => void;
   onChartError?: (error: Error) => void;
-  
+
   // Advanced configuration
   customTooltip?: React.ComponentType<any>;
   customLegend?: React.ComponentType<any>;

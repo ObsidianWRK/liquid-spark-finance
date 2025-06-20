@@ -1,6 +1,6 @@
-import { create } from "zustand";
-import { safeToSpendService } from "@/features/safe-to-spend/api/safeToSpendService";
-import { SpendableCash } from "@/shared/types/shared";
+import { create } from 'zustand';
+import { safeToSpendService } from '@/features/safe-to-spend/api/safeToSpendService';
+import { SpendableCash } from '@/shared/types/shared';
 
 interface SafeToSpendState {
   cash?: SpendableCash;
@@ -19,7 +19,7 @@ export const useSafeToSpendStore = create<SafeToSpendState>((set) => ({
       const cash = await safeToSpendService.calculate();
       set({ cash, loading: false });
     } catch (err: any) {
-      set({ error: err.message ?? "Unknown", loading: false });
+      set({ error: err.message ?? 'Unknown', loading: false });
     }
   },
-})); 
+}));

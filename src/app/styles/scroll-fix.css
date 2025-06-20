@@ -20,7 +20,7 @@ body {
   height: auto !important; /* Override any height: 100% */
   overflow-x: hidden !important;
   overflow-y: visible !important; /* Let body scroll naturally */
-  
+
   /* Smooth scrolling */
   scroll-behavior: smooth;
   -webkit-overflow-scrolling: touch;
@@ -36,9 +36,9 @@ body {
 }
 
 /* All main content areas */
-main, 
+main,
 .main-content,
-[role="main"],
+[role='main'],
 .flex.flex-col,
 .min-h-screen {
   /* Override any height/overflow that creates scroll */
@@ -82,8 +82,8 @@ aside,
 .modal-content,
 .dropdown-content,
 .select-content,
-[role="dialog"],
-[role="listbox"] {
+[role='dialog'],
+[role='listbox'] {
   /* These can have their own scroll */
   max-height: initial !important;
   overflow-y: auto !important;
@@ -100,8 +100,11 @@ aside,
 
 /* 8. Print media - ensure content flows */
 @media print {
-  body, html, #root, main {
+  body,
+  html,
+  #root,
+  main {
     height: auto !important;
     overflow: visible !important;
   }
-} 
+}

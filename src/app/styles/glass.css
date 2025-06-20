@@ -27,7 +27,7 @@
   backdrop-filter: blur(var(--glass-blur-medium));
   -webkit-backdrop-filter: blur(var(--glass-blur-medium));
   border: var(--glass-border-medium) solid rgba(255, 255, 255, 0.2);
-  box-shadow: 
+  box-shadow:
     var(--glass-shadow-medium),
     inset 0 1px 0 0 rgba(255, 255, 255, 0.2);
 }
@@ -52,7 +52,7 @@
   -webkit-backdrop-filter: blur(20px) saturate(180%);
   border: 1px solid rgba(255, 255, 255, 0.12);
   border-radius: 20px;
-  box-shadow: 
+  box-shadow:
     0 8px 32px rgba(0, 0, 0, 0.12),
     inset 0 1px 0 rgba(255, 255, 255, 0.15);
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -61,7 +61,7 @@
 .glass-card:hover {
   background: rgba(255, 255, 255, 0.1);
   border-color: rgba(255, 255, 255, 0.2);
-  box-shadow: 
+  box-shadow:
     0 12px 40px rgba(0, 0, 0, 0.15),
     inset 0 1px 0 rgba(255, 255, 255, 0.25);
   transform: translateY(-1px);
@@ -74,7 +74,7 @@
   -webkit-backdrop-filter: blur(20px);
   border: 1px solid rgba(255, 255, 255, 0.15);
   border-radius: 16px;
-  box-shadow: 
+  box-shadow:
     0 4px 16px rgba(0, 0, 0, 0.08),
     inset 0 1px 0 rgba(255, 255, 255, 0.2);
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -83,7 +83,7 @@
 .glass-button:hover {
   background: rgba(255, 255, 255, 0.12);
   border-color: rgba(255, 255, 255, 0.25);
-  box-shadow: 
+  box-shadow:
     0 8px 24px rgba(0, 0, 0, 0.12),
     inset 0 1px 0 rgba(255, 255, 255, 0.3);
   transform: translateY(-1px);
@@ -93,7 +93,7 @@
 .transaction-layout {
   display: grid;
   grid-template-columns: 12px 24px 1fr 100px 72px;
-  grid-template-areas: "status icon content amount scores";
+  grid-template-areas: 'status icon content amount scores';
   gap: 0 12px;
   align-items: center;
   min-height: 56px;
@@ -107,11 +107,11 @@
     gap: 0 16px;
     min-height: 60px;
   }
-  
+
   .transaction-merchant {
     font-size: 15px;
   }
-  
+
   .transaction-amount-text {
     font-size: 15px;
   }
@@ -124,56 +124,56 @@
     gap: 0 20px;
     min-height: 64px;
   }
-  
+
   .transaction-merchant {
     font-size: 16px;
   }
-  
+
   .transaction-amount-text {
     font-size: 16px;
   }
-  
+
   .transaction-category {
     font-size: 13px;
   }
-  
+
   .transaction-date-text {
     font-size: 13px;
   }
 }
 
-.transaction-status { 
-  grid-area: status; 
+.transaction-status {
+  grid-area: status;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-.transaction-icon { 
-  grid-area: icon; 
+.transaction-icon {
+  grid-area: icon;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-.transaction-content { 
-  grid-area: content; 
+.transaction-content {
+  grid-area: content;
   min-width: 0;
   display: flex;
   flex-direction: column;
   justify-content: center;
 }
 
-.transaction-amount { 
-  grid-area: amount; 
+.transaction-amount {
+  grid-area: amount;
   text-align: right;
   display: flex;
   flex-direction: column;
   justify-content: center;
 }
 
-.transaction-scores { 
-  grid-area: scores; 
+.transaction-scores {
+  grid-area: scores;
   position: relative;
   display: flex;
   align-items: center;
@@ -237,7 +237,7 @@
 .glass-interactive:hover {
   background: rgba(255, 255, 255, 0.1);
   border-color: rgba(255, 255, 255, 0.2);
-  box-shadow: 
+  box-shadow:
     0 12px 40px rgba(0, 0, 0, 0.15),
     inset 0 1px 0 0 rgba(255, 255, 255, 0.25);
 }
@@ -262,12 +262,24 @@
   animation: stagger-in 0.6s ease-out forwards;
 }
 
-.stagger-item:nth-child(1) { animation-delay: 0ms; }
-.stagger-item:nth-child(2) { animation-delay: 80ms; }
-.stagger-item:nth-child(3) { animation-delay: 160ms; }
-.stagger-item:nth-child(4) { animation-delay: 240ms; }
-.stagger-item:nth-child(5) { animation-delay: 320ms; }
-.stagger-item:nth-child(6) { animation-delay: 400ms; }
+.stagger-item:nth-child(1) {
+  animation-delay: 0ms;
+}
+.stagger-item:nth-child(2) {
+  animation-delay: 80ms;
+}
+.stagger-item:nth-child(3) {
+  animation-delay: 160ms;
+}
+.stagger-item:nth-child(4) {
+  animation-delay: 240ms;
+}
+.stagger-item:nth-child(5) {
+  animation-delay: 320ms;
+}
+.stagger-item:nth-child(6) {
+  animation-delay: 400ms;
+}
 
 @keyframes stagger-in {
   to {
@@ -308,11 +320,11 @@
     grid-template-columns: 10px 20px 1fr 90px 60px;
     gap: 0 10px;
   }
-  
+
   .transaction-amount {
     min-width: 90px;
   }
-  
+
   .transaction-scores {
     min-width: 60px;
   }
@@ -329,21 +341,41 @@
 
 /* CardShell Gradient Overlays */
 .gradient-green {
-  background: radial-gradient(circle at top right, rgba(34, 197, 94, 0.1), transparent);
+  background: radial-gradient(
+    circle at top right,
+    rgba(34, 197, 94, 0.1),
+    transparent
+  );
 }
 
 .gradient-yellow {
-  background: radial-gradient(circle at top right, rgba(250, 204, 21, 0.1), transparent);
+  background: radial-gradient(
+    circle at top right,
+    rgba(250, 204, 21, 0.1),
+    transparent
+  );
 }
 
 .gradient-blue {
-  background: radial-gradient(circle at top right, rgba(59, 130, 246, 0.1), transparent);
+  background: radial-gradient(
+    circle at top right,
+    rgba(59, 130, 246, 0.1),
+    transparent
+  );
 }
 
 .gradient-red {
-  background: radial-gradient(circle at top right, rgba(239, 68, 68, 0.1), transparent);
+  background: radial-gradient(
+    circle at top right,
+    rgba(239, 68, 68, 0.1),
+    transparent
+  );
 }
 
 .gradient-purple {
-  background: radial-gradient(circle at top right, rgba(139, 92, 246, 0.1), transparent);
+  background: radial-gradient(
+    circle at top right,
+    rgba(139, 92, 246, 0.1),
+    transparent
+  );
 }

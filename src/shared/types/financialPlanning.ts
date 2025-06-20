@@ -1,4 +1,4 @@
-export type GoalCategory = 
+export type GoalCategory =
   | 'emergency_fund'
   | 'retirement'
   | 'house_down_payment'
@@ -148,7 +148,13 @@ export interface FinancialMilestone {
 }
 
 export interface PlanningRecommendation {
-  type: 'increase_contributions' | 'debt_payoff' | 'emergency_fund' | 'investment' | 'insurance' | 'tax_strategy';
+  type:
+    | 'increase_contributions'
+    | 'debt_payoff'
+    | 'emergency_fund'
+    | 'investment'
+    | 'insurance'
+    | 'tax_strategy';
   title: string;
   description: string;
   impact: 'low' | 'medium' | 'high';
@@ -206,7 +212,13 @@ export interface FinancialSnapshot {
 }
 
 export interface LifeEventPlanning {
-  eventType: 'marriage' | 'baby' | 'house_purchase' | 'job_change' | 'retirement' | 'education';
+  eventType:
+    | 'marriage'
+    | 'baby'
+    | 'house_purchase'
+    | 'job_change'
+    | 'retirement'
+    | 'education';
   plannedDate: Date;
   estimatedCost: number;
   currentSavings: number;

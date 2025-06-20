@@ -24,8 +24,8 @@
       "accountNumber": "****4521",
       "routingNumber": "021000021",
       "openedDate": "2020-03-15T00:00:00Z",
-      "monthlyFee": 12.00,
-      "minimumBalance": 1500.00
+      "monthlyFee": 12.0,
+      "minimumBalance": 1500.0
     }
   },
   {
@@ -33,7 +33,7 @@
     "institution": {
       "name": "Bank of America",
       "id": "ins_bofa",
-      "logo": "https://logos.clearbit.com/bankofamerica.com", 
+      "logo": "https://logos.clearbit.com/bankofamerica.com",
       "color": "#E31837"
     },
     "type": "savings",
@@ -56,7 +56,7 @@
     }
   },
   {
-    "id": "acc_wells_credit_001", 
+    "id": "acc_wells_credit_001",
     "institution": {
       "name": "Wells Fargo",
       "id": "ins_wells",
@@ -70,7 +70,7 @@
     "availableBalance": 3714.37,
     "currency": "USD",
     "isActive": true,
-    "creditLimit": 5000.00,
+    "creditLimit": 5000.0,
     "lastTransaction": {
       "merchant": "Amazon",
       "amount": -89.99,
@@ -80,7 +80,7 @@
     "metadata": {
       "accountNumber": "****1847",
       "apr": 0.1899,
-      "minimumPayment": 35.00,
+      "minimumPayment": 35.0,
       "paymentDueDate": "2024-02-05T00:00:00Z"
     }
   },
@@ -88,7 +88,7 @@
     "id": "acc_schwab_investment_001",
     "institution": {
       "name": "Charles Schwab",
-      "id": "ins_schwab", 
+      "id": "ins_schwab",
       "logo": "https://logos.clearbit.com/schwab.com",
       "color": "#00A0DF"
     },
@@ -96,12 +96,12 @@
     "name": "Brokerage Account",
     "mask": "7409",
     "balance": 42850.19,
-    "availableBalance": 1250.00,
+    "availableBalance": 1250.0,
     "currency": "USD",
     "isActive": true,
     "lastTransaction": {
       "merchant": "VTSAX Purchase",
-      "amount": -1000.00,
+      "amount": -1000.0,
       "date": "2024-01-12T16:00:00Z",
       "pending": false
     },
@@ -124,9 +124,9 @@
     "mask": "2156",
     "balance": -567.23,
     "availableBalance": 2432.77,
-    "currency": "USD", 
+    "currency": "USD",
     "isActive": true,
-    "creditLimit": 3000.00,
+    "creditLimit": 3000.0,
     "lastTransaction": {
       "merchant": "Whole Foods",
       "amount": -127.45,
@@ -140,4 +140,4 @@
       "cashbackEarned": 145.67
     }
   }
-] 
+]

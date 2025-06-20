@@ -48,6 +48,8 @@ describe('TransactionList', () => {
   it('uses virtualization for large lists', () => {
     const txs = Array.from({ length: 501 }, (_, i) => generateTx(i));
     render(<TransactionList transactions={txs} />);
-    expect(screen.getByTestId('transaction-virtualized-list')).toBeInTheDocument();
+    expect(
+      screen.getByTestId('transaction-virtualized-list')
+    ).toBeInTheDocument();
   });
-}); 
+});

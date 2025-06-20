@@ -14,13 +14,15 @@ A comprehensive personal finance management platform built with React, TypeScrip
 ## ✨ Features
 
 ### 🏦 **Core Financial Management**
+
 - **Multi-Account Dashboard** - Unified view of all financial accounts
-- **Smart Transaction Categorization** - AI-powered expense classification  
+- **Smart Transaction Categorization** - AI-powered expense classification
 - **Real-time Balance Tracking** - Live updates with secure bank integration
 - **Budget Planning & Monitoring** - Goal-based budgeting with variance analysis
 - **Savings Goals Management** - Visual progress tracking and milestone alerts
 
 ### 📊 **Advanced Analytics**
+
 - **Financial Health Scoring** - Comprehensive wellness metrics
 - **Spending Pattern Analysis** - Trend identification and forecasting
 - **Cash Flow Visualization** - Interactive charts and projections
@@ -28,6 +30,7 @@ A comprehensive personal finance management platform built with React, TypeScrip
 - **Tax Planning Tools** - Deduction optimization and reporting
 
 ### 🤖 **AI-Powered Insights**
+
 - **Personalized Recommendations** - Context-aware financial advice
 - **Anomaly Detection** - Unusual spending pattern alerts
 - **Predictive Analytics** - Future cash flow projections
@@ -35,6 +38,7 @@ A comprehensive personal finance management platform built with React, TypeScrip
 - **Risk Assessment** - Portfolio and spending risk analysis
 
 ### 🏥 **Wellness Integration**
+
 - **Biometric Monitoring** - Health data correlation with spending
 - **Stress-Based Interventions** - Spending blocks during high stress
 - **Eco-Impact Scoring** - Environmental impact of purchases
@@ -42,6 +46,7 @@ A comprehensive personal finance management platform built with React, TypeScrip
 - **Intervention Nudges** - Real-time behavioral guidance
 
 ### 🧮 **Financial Calculators**
+
 - **Compound Interest Calculator** - Investment growth projections
 - **Loan & Mortgage Calculators** - Payment and payoff planning
 - **Retirement Planning** - 401k and IRA optimization
@@ -51,6 +56,7 @@ A comprehensive personal finance management platform built with React, TypeScrip
 ## 🚀 Quick Start
 
 ### Prerequisites
+
 - **Node.js** 20.12.2 (LTS recommended - see `.nvmrc`)
 - **npm** or **pnpm** package manager
 - **Git** for version control
@@ -91,44 +97,44 @@ NODE_ENV=development
 
 ### Available Scripts
 
-| Command | Description |
-|---------|-------------|
-| `npm run dev` | Start development server with hot reload |
-| `npm run build` | Build for production |
-| `npm run preview` | Preview production build locally |
-| `npm run lint` | Run ESLint for code quality checks |
-| `npm run lint:fix` | Auto-fix ESLint issues |
-| `npm run test` | Run unit tests |
-| `npm run test:coverage` | Generate test coverage report |
-| `npm run test:e2e` | Run end-to-end tests |
+| Command                 | Description                              |
+| ----------------------- | ---------------------------------------- |
+| `npm run dev`           | Start development server with hot reload |
+| `npm run build`         | Build for production                     |
+| `npm run preview`       | Preview production build locally         |
+| `npm run lint`          | Run ESLint for code quality checks       |
+| `npm run lint:fix`      | Auto-fix ESLint issues                   |
+| `npm run test`          | Run unit tests                           |
+| `npm run test:coverage` | Generate test coverage report            |
+| `npm run test:e2e`      | Run end-to-end tests                     |
 
 ## 🏗️ Architecture
 
 ### **🎯 Tech Debt Elimination Achievements**
 
-| Metric | Before | After | Improvement |
-|--------|--------|--------|-------------|
-| **Duplicate Components** | 47 | 0 | ✅ 100% eliminated |
-| **Lines of Code** | 42,000+ | 37,500 | ✅ -11% reduction |
-| **Bundle Size** | 2.8MB | 1.9MB | ✅ -32% reduction |
-| **Test Coverage** | 0% | 85% | ✅ +85% increase |
-| **ESLint Errors** | 147 | 0 | ✅ 100% resolved |
-| **TypeScript Strict** | ❌ | ✅ | ✅ Enabled |
+| Metric                   | Before  | After  | Improvement        |
+| ------------------------ | ------- | ------ | ------------------ |
+| **Duplicate Components** | 47      | 0      | ✅ 100% eliminated |
+| **Lines of Code**        | 42,000+ | 37,500 | ✅ -11% reduction  |
+| **Bundle Size**          | 2.8MB   | 1.9MB  | ✅ -32% reduction  |
+| **Test Coverage**        | 0%      | 85%    | ✅ +85% increase   |
+| **ESLint Errors**        | 147     | 0      | ✅ 100% resolved   |
+| **TypeScript Strict**    | ❌      | ✅     | ✅ Enabled         |
 
 ### **Technology Stack**
 
-| Technology | Version | Purpose |
-|------------|---------|---------|
-| **React** | 18.3.1 | Frontend framework |
-| **TypeScript** | 5.5.3 | Type safety and developer experience |
-| **Vite** | 5.4.1 | Build tool and development server |
-| **TailwindCSS** | 3.4.11 | Utility-first CSS framework |
-| **Radix UI** | Latest | Accessible UI primitives |
-| **React Query** | 5.56.2 | Server state management |
-| **React Router** | 6.26.2 | Client-side routing |
-| **Recharts** | 2.15.3 | Data visualization |
-| **Vitest** | 3.2.4 | Unit testing framework |
-| **Playwright** | 1.53.0 | End-to-end testing |
+| Technology       | Version | Purpose                              |
+| ---------------- | ------- | ------------------------------------ |
+| **React**        | 18.3.1  | Frontend framework                   |
+| **TypeScript**   | 5.5.3   | Type safety and developer experience |
+| **Vite**         | 5.4.1   | Build tool and development server    |
+| **TailwindCSS**  | 3.4.11  | Utility-first CSS framework          |
+| **Radix UI**     | Latest  | Accessible UI primitives             |
+| **React Query**  | 5.56.2  | Server state management              |
+| **React Router** | 6.26.2  | Client-side routing                  |
+| **Recharts**     | 2.15.3  | Data visualization                   |
+| **Vitest**       | 3.2.4   | Unit testing framework               |
+| **Playwright**   | 1.53.0  | End-to-end testing                   |
 
 ### **Unified Component Architecture**
 
@@ -154,17 +160,20 @@ src/
 We maintain **85% test coverage** with comprehensive testing strategies:
 
 ### **Unit Tests**
+
 - **Component Testing** - React Testing Library + Vitest
 - **Hook Testing** - Custom hook validation
 - **Utility Testing** - Pure function coverage
 - **Type Testing** - TypeScript compilation validation
 
 ### **Integration Tests**
+
 - **API Integration** - Service layer testing
 - **Component Integration** - Multi-component workflows
 - **State Management** - Redux/Context testing
 
 ### **End-to-End Tests**
+
 - **User Workflows** - Complete feature testing
 - **Cross-browser Testing** - Chrome, Firefox, Safari
 - **Responsive Testing** - Mobile, tablet, desktop
@@ -184,21 +193,23 @@ npm run test:performance       # Performance tests
 ## 🎨 Design System
 
 ### **UniversalCard System**
+
 Our unified card system replaces 15+ duplicate implementations:
 
 ```tsx
 import { UniversalCard } from '@/ui-kit';
 
-<UniversalCard 
+<UniversalCard
   variant="metric"
   title="Total Balance"
   metric="$127,423.00"
   delta={{ value: 12.5, format: 'percentage' }}
   trend="up"
-/>
+/>;
 ```
 
 ### **Unified Transaction List**
+
 Single implementation replacing 6 duplicate components:
 
 ```tsx
@@ -210,34 +221,38 @@ import { UnifiedTransactionList } from '@/ui-kit';
   features={{
     showScores: true,
     searchable: true,
-    groupByDate: true
+    groupByDate: true,
   }}
-/>
+/>;
 ```
 
 ## 🚀 Performance
 
 ### **Core Web Vitals**
+
 - **LCP (Largest Contentful Paint)** - <2.0s ✅
-- **CLS (Cumulative Layout Shift)** - <0.05 ✅  
+- **CLS (Cumulative Layout Shift)** - <0.05 ✅
 - **FCP (First Contentful Paint)** - <1.2s ✅
 - **TTI (Time to Interactive)** - <3.0s ✅
 
 ### **Bundle Optimization**
+
 - **Code Splitting** - Route-based lazy loading
-- **Tree Shaking** - Unused code elimination  
+- **Tree Shaking** - Unused code elimination
 - **Asset Optimization** - Compressed images and fonts
 - **Cache Strategy** - Aggressive caching with versioning
 
 ## 🔒 Security
 
 ### **Data Protection**
+
 - **End-to-End Encryption** - All sensitive data encrypted
 - **Secure Authentication** - Multi-factor authentication support
 - **API Security** - Rate limiting and input validation
 - **PCI Compliance** - Payment data handling standards
 
 ### **Privacy Features**
+
 - **Data Minimization** - Collect only necessary data
 - **User Control** - Granular privacy settings
 - **Anonymization** - Analytics data anonymization
@@ -246,6 +261,7 @@ import { UnifiedTransactionList } from '@/ui-kit';
 ## 📱 Mobile Support
 
 Fully responsive design supporting:
+
 - **iOS Safari** - Native app-like experience
 - **Android Chrome** - Progressive Web App features
 - **Tablet Optimization** - Adaptive layouts
@@ -253,18 +269,19 @@ Fully responsive design supporting:
 
 ## 🌍 Browser Support
 
-| Browser | Support |
-|---------|---------|
-| **Chrome** | ✅ Latest 2 versions |
+| Browser     | Support              |
+| ----------- | -------------------- |
+| **Chrome**  | ✅ Latest 2 versions |
 | **Firefox** | ✅ Latest 2 versions |
-| **Safari** | ✅ Latest 2 versions |
-| **Edge** | ✅ Latest 2 versions |
+| **Safari**  | ✅ Latest 2 versions |
+| **Edge**    | ✅ Latest 2 versions |
 
 ## 🤝 Contributing
 
 We welcome contributions! Please see our [Contributing Guide](./CONTRIBUTING.md) for details.
 
 ### **Development Setup**
+
 1. Fork the repository
 2. Create a feature branch
 3. Make your changes
@@ -273,6 +290,7 @@ We welcome contributions! Please see our [Contributing Guide](./CONTRIBUTING.md)
 6. Submit a pull request
 
 ### **Code Standards**
+
 - **TypeScript Strict Mode** - All code must be strictly typed
 - **ESLint** - Zero linting errors allowed
 - **Test Coverage** - Maintain 85% coverage minimum
@@ -309,13 +327,16 @@ See **docs/README.md** for an entry-point and full index.
 The Vueni logo now includes an intelligent right-click context menu system that provides instant access to official brand assets:
 
 ### 🎯 Quick Start
+
 Right-click the Vueni logo in the navigation bar to access:
+
 - **SVG Logo** - Scalable vector format (4KB)
-- **Brand Guidelines** - Complete visual standards (PDF, 2MB)  
+- **Brand Guidelines** - Complete visual standards (PDF, 2MB)
 - **LLM Instructions** - AI branding guidelines (TXT, 1KB)
 - **Brand Portal** - Extended resources and templates
 
 ### 📱 Cross-Platform Support
+
 - **Desktop**: Right-click context menu
 - **Mobile**: Long-press interaction
 - **Keyboard**: Tab + Enter navigation
@@ -326,12 +347,12 @@ Right-click the Vueni logo in the navigation bar to access:
 ```tsx
 import { VueniLogo } from '@/shared/ui/VueniLogo';
 
-<VueniLogo 
-  size="lg" 
+<VueniLogo
+  size="lg"
   variant="text-only"
   onClick={() => navigate('/')}
   onDownloadComplete={(filename) => console.log(`Downloaded: ${filename}`)}
-/>
+/>;
 ```
 
 For complete documentation, see [docs/branding.md](./docs/branding.md).
@@ -345,10 +366,11 @@ For complete documentation, see [docs/branding.md](./docs/branding.md).
 ## 🧪 Testing
 
 ### Brand Asset Downloads
+
 ```bash
 # E2E tests for logo functionality
 npx playwright test logo-download.spec.ts
 
 # Unit tests for logo component
 npm test -- VueniLogo.test.tsx
-``` 
+```

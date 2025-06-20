@@ -33,15 +33,17 @@ export class FinancialDashboardErrorBoundary extends Component<Props, State> {
       error: error.message,
       stack: error.stack,
       componentStack: errorInfo.componentStack,
-      timestamp: new Date().toISOString()
+      timestamp: new Date().toISOString(),
     });
 
     this.setState({ error, errorInfo });
 
     // Track destructuring-specific errors
-    if (error.message.includes('destructur') || 
-        error.message.includes('Cannot read property') ||
-        error.message.includes('is not iterable')) {
+    if (
+      error.message.includes('destructur') ||
+      error.message.includes('Cannot read property') ||
+      error.message.includes('is not iterable')
+    ) {
       console.error('💥 DESTRUCTURING ERROR DETECTED:', error.message);
     }
   }
@@ -65,7 +67,7 @@ export class FinancialDashboardErrorBoundary extends Component<Props, State> {
           <p className="text-white/60 mb-4">
             The financial dashboard encountered an error while loading data.
           </p>
-          
+
           {/* Technical details for debugging */}
           {this.state.error && (
             <details className="mb-4 text-left">
@@ -93,7 +95,7 @@ export class FinancialDashboardErrorBoundary extends Component<Props, State> {
               <RefreshCw className="w-4 h-4" />
               Retry Dashboard
             </button>
-            
+
             <button
               onClick={() => window.location.reload()}
               className="bg-white/10 hover:bg-white/20 text-white/80 hover:text-white px-6 py-2 rounded-xl transition-colors"
@@ -105,12 +107,24 @@ export class FinancialDashboardErrorBoundary extends Component<Props, State> {
           {/* Safe fallback content */}
           <div className="mt-8 grid grid-cols-1 lg:grid-cols-2 gap-4">
             {[
-              { title: 'Financial Metrics', description: 'Data temporarily unavailable' },
-              { title: 'Spending Analysis', description: 'Data temporarily unavailable' },
-              { title: 'Investment Overview', description: 'Data temporarily unavailable' },
-              { title: 'Budget Summary', description: 'Data temporarily unavailable' }
+              {
+                title: 'Financial Metrics',
+                description: 'Data temporarily unavailable',
+              },
+              {
+                title: 'Spending Analysis',
+                description: 'Data temporarily unavailable',
+              },
+              {
+                title: 'Investment Overview',
+                description: 'Data temporarily unavailable',
+              },
+              {
+                title: 'Budget Summary',
+                description: 'Data temporarily unavailable',
+              },
             ].map((item, index) => (
-              <div 
+              <div
                 key={index}
                 className="bg-white/[0.02] rounded-xl border border-white/[0.08] p-4"
               >
@@ -125,4 +139,4 @@ export class FinancialDashboardErrorBoundary extends Component<Props, State> {
 
     return this.props.children;
   }
-} 
+}

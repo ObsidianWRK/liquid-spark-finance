@@ -24,4 +24,4 @@ export default function MetricCard(props: LegacyMetricCardProps) {
       animationsEnabled={false}
     />
   );
-} 
+}

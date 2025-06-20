@@ -1,13 +1,13 @@
-import React from "react";
-import { Switch } from "@/shared/ui/switch";
-import { usePrivacyStore } from "../store";
-import { UniversalCard } from "@/shared/ui/UniversalCard";
-import { EyeOff } from "lucide-react";
+import React from 'react';
+import { Switch } from '@/shared/ui/switch';
+import { usePrivacyStore } from '../store';
+import { UniversalCard } from '@/shared/ui/UniversalCard';
+import { EyeOff } from 'lucide-react';
 
 export const PrivacyToggle: React.FC = () => {
   const hide = usePrivacyStore((s) => s.setting.hideAmounts);
   const toggle = usePrivacyStore((s) => s.toggle);
-  
+
   return (
     <UniversalCard
       variant="glass"
@@ -22,4 +22,4 @@ export const PrivacyToggle: React.FC = () => {
       </div>
     </UniversalCard>
   );
-}; 
+};

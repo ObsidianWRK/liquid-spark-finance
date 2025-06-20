@@ -83,9 +83,7 @@ const mockFab = {
 
 // Wrapper component
 const TestWrapper: React.FC<{ children: React.ReactNode }> = ({ children }) => (
-  <BrowserRouter>
-    {children}
-  </BrowserRouter>
+  <BrowserRouter>{children}</BrowserRouter>
 );
 
 describe('iOS26NavBar', () => {
@@ -209,7 +207,7 @@ describe('iOS26NavBar', () => {
       );
 
       await user.keyboard('{Alt>}n{/Alt}');
-      
+
       // First tab should be focused
       const firstTab = screen.getAllByRole('tab')[0];
       expect(firstTab).toHaveFocus();
@@ -248,13 +246,10 @@ describe('iOS26NavBar', () => {
     it('triggers onActiveTabChange callback', async () => {
       const onActiveTabChange = jest.fn();
       const user = userEvent.setup();
-      
+
       render(
         <TestWrapper>
-          <iOS26NavBar 
-            tabs={mockTabs} 
-            onActiveTabChange={onActiveTabChange}
-          />
+          <iOS26NavBar tabs={mockTabs} onActiveTabChange={onActiveTabChange} />
         </TestWrapper>
       );
 
@@ -333,11 +328,11 @@ describe('iOS26NavBar', () => {
     it('applies active state to current tab', () => {
       render(
         <TestWrapper>
-          <iOS26NavBar 
+          <iOS26NavBar
             tabs={mockTabs.map((tab, i) => ({
               ...tab,
               isActive: i === 0,
-            }))} 
+            }))}
           />
         </TestWrapper>
       );
@@ -351,7 +346,10 @@ describe('iOS26NavBar', () => {
     it('applies correct FAB variant styles', () => {
       const { rerender } = render(
         <TestWrapper>
-          <iOS26NavBar tabs={mockTabs} fab={{ ...mockFab, variant: 'primary' }} />
+          <iOS26NavBar
+            tabs={mockTabs}
+            fab={{ ...mockFab, variant: 'primary' }}
+          />
         </TestWrapper>
       );
 
@@ -360,7 +358,10 @@ describe('iOS26NavBar', () => {
 
       rerender(
         <TestWrapper>
-          <iOS26NavBar tabs={mockTabs} fab={{ ...mockFab, variant: 'secondary' }} />
+          <iOS26NavBar
+            tabs={mockTabs}
+            fab={{ ...mockFab, variant: 'secondary' }}
+          />
         </TestWrapper>
       );
 
@@ -385,7 +386,11 @@ describe('iOS26NavBar', () => {
 
     it('shows navigation when virtual keyboard is open', () => {
       // Mock viewport state with keyboard open
-      jest.spyOn(require('@/shared/utils/viewport-guardian'), 'useViewportGuardian')
+      jest
+        .spyOn(
+          require('@/shared/utils/viewport-guardian'),
+          'useViewportGuardian'
+        )
         .mockReturnValue({
           dimensions: { width: 375, height: 500 },
           safeAreaInsets: { top: 44, right: 0, bottom: 34, left: 0 },
@@ -405,4 +410,4 @@ describe('iOS26NavBar', () => {
       expect(nav).not.toHaveClass('ios26-nav--hidden');
     });
   });
-}); 
+});

@@ -15,8 +15,9 @@ export class InputSanitizer {
    * Escape HTML entities to prevent XSS
    */
   static escapeHtml(input: string): string {
-    return String(input).replace(/[&<>"'/]/g, (match) => 
-      this.htmlEntities[match] || match
+    return String(input).replace(
+      /[&<>"'/]/g,
+      (match) => this.htmlEntities[match] || match
     );
   }
 
@@ -25,13 +26,16 @@ export class InputSanitizer {
    */
   static sanitizeText(input: string): string {
     if (!input) return '';
-    
+
     // Remove any script tags
-    let sanitized = input.replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, '');
-    
+    let sanitized = input.replace(
+      /<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi,
+      ''
+    );
+
     // Remove any event handlers
     sanitized = sanitized.replace(/\bon\w+\s*=\s*["'][^"']*["']/gi, '');
-    
+
     // Escape HTML entities
     return this.escapeHtml(sanitized);
   }
@@ -41,11 +45,11 @@ export class InputSanitizer {
    */
   static sanitizeAmount(input: string | number): number {
     const amount = typeof input === 'string' ? parseFloat(input) : input;
-    
+
     if (isNaN(amount) || !isFinite(amount)) {
       return 0;
     }
-    
+
     // Limit to 2 decimal places for financial amounts
     return Math.round(amount * 100) / 100;
   }
@@ -56,7 +60,7 @@ export class InputSanitizer {
   static sanitizeEmail(email: string): string {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     const sanitized = email.trim().toLowerCase();
-    
+
     return emailRegex.test(sanitized) ? sanitized : '';
   }
 
@@ -80,9 +84,7 @@ export class InputSanitizer {
    * Remove any potentially dangerous characters from filenames
    */
   static sanitizeFilename(filename: string): string {
-    return filename
-      .replace(/[^a-zA-Z0-9._-]/g, '_')
-      .replace(/\.{2,}/g, '_');
+    return filename.replace(/[^a-zA-Z0-9._-]/g, '_').replace(/\.{2,}/g, '_');
   }
 
   /**
@@ -90,12 +92,20 @@ export class InputSanitizer {
    */
   static sanitizeCategory(category: string): string {
     const validCategories = [
-      'groceries', 'dining', 'transportation', 'entertainment',
-      'shopping', 'utilities', 'healthcare', 'education',
-      'savings', 'investments', 'other'
+      'groceries',
+      'dining',
+      'transportation',
+      'entertainment',
+      'shopping',
+      'utilities',
+      'healthcare',
+      'education',
+      'savings',
+      'investments',
+      'other',
     ];
-    
+
     const sanitized = category.toLowerCase().trim();
     return validCategories.includes(sanitized) ? sanitized : 'other';
   }
-} 
+}

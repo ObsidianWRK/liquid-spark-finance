@@ -1,7 +1,7 @@
-import React from "react";
-import { UniversalCard } from "@/shared/ui/UniversalCard";
-import { RecurringChargesList } from "./RecurringChargesList";
-import { Repeat } from "lucide-react";
+import React from 'react';
+import { UniversalCard } from '@/shared/ui/UniversalCard';
+import { RecurringChargesList } from './RecurringChargesList';
+import { Repeat } from 'lucide-react';
 
 export const SubscriptionsPanel: React.FC = () => {
   return (
@@ -15,4 +15,4 @@ export const SubscriptionsPanel: React.FC = () => {
       <RecurringChargesList />
     </UniversalCard>
   );
-}; 
+};

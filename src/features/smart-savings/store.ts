@@ -1,13 +1,15 @@
-import { create } from "zustand";
-import { autoSaveEngine } from "@/features/smart-savings/api/autoSaveEngine";
-import { AutosavePlan } from "@/shared/types/shared";
+import { create } from 'zustand';
+import { autoSaveEngine } from '@/features/smart-savings/api/autoSaveEngine';
+import { AutosavePlan } from '@/shared/types/shared';
 
 interface SmartSavingsState {
   plans: AutosavePlan[];
   loading: boolean;
   error?: string;
   refresh: () => Promise<void>;
-  create: (input: Omit<AutosavePlan, "id" | "nextTransferDate">) => Promise<void>;
+  create: (
+    input: Omit<AutosavePlan, 'id' | 'nextTransferDate'>
+  ) => Promise<void>;
   pause: (id: string) => Promise<void>;
   resume: (id: string) => Promise<void>;
 }
@@ -22,7 +24,7 @@ export const useSmartSavingsStore = create<SmartSavingsState>((set, get) => ({
       const plans = await autoSaveEngine.listPlans();
       set({ plans, loading: false });
     } catch (err: any) {
-      set({ error: err.message ?? "Unknown", loading: false });
+      set({ error: err.message ?? 'Unknown', loading: false });
     }
   },
   create: async (input) => {
@@ -37,4 +39,4 @@ export const useSmartSavingsStore = create<SmartSavingsState>((set, get) => ({
     await autoSaveEngine.resumePlan(id);
     await get().refresh();
   },
-})); 
+}));

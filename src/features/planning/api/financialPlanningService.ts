@@ -1,7 +1,7 @@
-import { 
-  FinancialGoal, 
-  GoalCategory, 
-  GoalStatus, 
+import {
+  FinancialGoal,
+  GoalCategory,
+  GoalStatus,
   RetirementPlan,
   DebtPayoffPlan,
   EmergencyFundPlan,
@@ -10,7 +10,7 @@ import {
   PlanningRecommendation,
   CashFlowProjection,
   NetWorthProjection,
-  RiskProfile
+  RiskProfile,
 } from '@/types/financialPlanning';
 
 /**
@@ -42,7 +42,7 @@ export class FinancialPlanningService {
    * Create and track financial goals with intelligent recommendations
    */
   async createFinancialGoal(
-    familyId: string, 
+    familyId: string,
     goalData: Omit<FinancialGoal, 'id' | 'createdAt' | 'updatedAt' | 'progress'>
   ): Promise<FinancialGoal> {
     const goal: FinancialGoal = {
@@ -53,15 +53,15 @@ export class FinancialPlanningService {
         percentComplete: 0,
         monthlyContribution: 0,
         projectedCompletionDate: this.calculateProjectedCompletion(goalData),
-        onTrack: true
+        onTrack: true,
       },
       createdAt: new Date(),
-      updatedAt: new Date()
+      updatedAt: new Date(),
     };
 
     // Apply intelligent defaults and optimizations
     await this.optimizeGoal(goal);
-    
+
     this.goals.set(goal.id, goal);
     return goal;
   }
@@ -80,27 +80,29 @@ export class FinancialPlanningService {
   ): Promise<RetirementPlan> {
     const yearsToRetirement = retirementAge - currentAge;
     const expectedReturn = this.getExpectedReturn(riskProfile);
-    
+
     // Calculate future value of current savings
     const futureValueCurrent = this.calculateFutureValue(
-      currentSavings, 
-      expectedReturn, 
+      currentSavings,
+      expectedReturn,
       yearsToRetirement
     );
 
     // Calculate future value of monthly contributions
     const futureValueContributions = this.calculateAnnuityFutureValue(
-      monthlyContribution * 12, 
-      expectedReturn, 
+      monthlyContribution * 12,
+      expectedReturn,
       yearsToRetirement
     );
 
     const totalRetirementValue = futureValueCurrent + futureValueContributions;
-    
+
     // Apply inflation adjustment for income replacement
-    const inflationAdjustedIncome = currentIncome * Math.pow(1 + this.INFLATION_RATE, yearsToRetirement);
+    const inflationAdjustedIncome =
+      currentIncome * Math.pow(1 + this.INFLATION_RATE, yearsToRetirement);
     const targetRetirementNeeds = inflationAdjustedIncome * 0.8; // 80% income replacement
-    const targetRetirementSavings = targetRetirementNeeds / this.SAFE_WITHDRAWAL_RATE;
+    const targetRetirementSavings =
+      targetRetirementNeeds / this.SAFE_WITHDRAWAL_RATE;
 
     const plan: RetirementPlan = {
       id: this.generatePlanId(),
@@ -116,8 +118,9 @@ export class FinancialPlanningService {
         totalRetirementValue,
         targetRetirementSavings,
         shortfall: Math.max(0, targetRetirementSavings - totalRetirementValue),
-        monthlyIncomeAtRetirement: totalRetirementValue * this.SAFE_WITHDRAWAL_RATE / 12,
-        expectedReturn
+        monthlyIncomeAtRetirement:
+          (totalRetirementValue * this.SAFE_WITHDRAWAL_RATE) / 12,
+        expectedReturn,
       },
       recommendations: await this.generateRetirementRecommendations(
         totalRetirementValue,
@@ -131,7 +134,7 @@ export class FinancialPlanningService {
         targetRetirementSavings
       ),
       createdAt: new Date(),
-      updatedAt: new Date()
+      updatedAt: new Date(),
     };
 
     this.retirementPlans.set(plan.id, plan);
@@ -161,10 +164,19 @@ export class FinancialPlanningService {
       }
     });
 
-    const payoffSchedule = this.calculateDebtPayoffSchedule(sortedDebts, extraPayment);
-    const totalInterest = payoffSchedule.reduce((sum, debt) => sum + debt.totalInterest, 0);
+    const payoffSchedule = this.calculateDebtPayoffSchedule(
+      sortedDebts,
+      extraPayment
+    );
+    const totalInterest = payoffSchedule.reduce(
+      (sum, debt) => sum + debt.totalInterest,
+      0
+    );
     const payoffDate = new Date();
-    payoffDate.setMonth(payoffDate.getMonth() + Math.max(...payoffSchedule.map(d => d.monthsToPayoff)));
+    payoffDate.setMonth(
+      payoffDate.getMonth() +
+        Math.max(...payoffSchedule.map((d) => d.monthsToPayoff))
+    );
 
     const plan: DebtPayoffPlan = {
       id: this.generatePlanId(),
@@ -175,14 +187,22 @@ export class FinancialPlanningService {
       projections: {
         totalDebt: debts.reduce((sum, debt) => sum + debt.balance, 0),
         totalInterest,
-        monthsToPayoff: Math.max(...payoffSchedule.map(d => d.monthsToPayoff)),
+        monthsToPayoff: Math.max(
+          ...payoffSchedule.map((d) => d.monthsToPayoff)
+        ),
         payoffDate,
-        monthlySavingsAfterPayoff: debts.reduce((sum, debt) => sum + debt.minimumPayment, 0) + extraPayment
+        monthlySavingsAfterPayoff:
+          debts.reduce((sum, debt) => sum + debt.minimumPayment, 0) +
+          extraPayment,
       },
       payoffSchedule,
-      recommendations: await this.generateDebtRecommendations(debts, extraPayment, totalInterest),
+      recommendations: await this.generateDebtRecommendations(
+        debts,
+        extraPayment,
+        totalInterest
+      ),
       createdAt: new Date(),
-      updatedAt: new Date()
+      updatedAt: new Date(),
     };
 
     this.debtPlans.set(plan.id, plan);
@@ -201,7 +221,10 @@ export class FinancialPlanningService {
   ): Promise<EmergencyFundPlan> {
     const targetAmount = monthlyExpenses * targetMonths;
     const shortfall = Math.max(0, targetAmount - currentEmergencyFund);
-    const monthsToTarget = monthlyContribution > 0 ? Math.ceil(shortfall / monthlyContribution) : Infinity;
+    const monthsToTarget =
+      monthlyContribution > 0
+        ? Math.ceil(shortfall / monthlyContribution)
+        : Infinity;
 
     const plan: EmergencyFundPlan = {
       id: this.generatePlanId(),
@@ -214,9 +237,10 @@ export class FinancialPlanningService {
       projections: {
         shortfall,
         monthsToTarget,
-        completionDate: monthlyContribution > 0 ? 
-          new Date(Date.now() + monthsToTarget * 30 * 24 * 60 * 60 * 1000) : 
-          null
+        completionDate:
+          monthlyContribution > 0
+            ? new Date(Date.now() + monthsToTarget * 30 * 24 * 60 * 60 * 1000)
+            : null,
       },
       recommendations: await this.generateEmergencyFundRecommendations(
         monthlyExpenses,
@@ -225,7 +249,7 @@ export class FinancialPlanningService {
         targetAmount
       ),
       createdAt: new Date(),
-      updatedAt: new Date()
+      updatedAt: new Date(),
     };
 
     this.emergencyPlans.set(plan.id, plan);
@@ -241,9 +265,15 @@ export class FinancialPlanningService {
   ): Promise<{
     netWorthProjection: NetWorthProjection[];
     cashFlowProjection: CashFlowProjection[];
-    goalProjections: Array<{ goalId: string; projectedCompletion: Date; probability: number }>;
+    goalProjections: Array<{
+      goalId: string;
+      projectedCompletion: Date;
+      probability: number;
+    }>;
   }> {
-    const goals = Array.from(this.goals.values()).filter(g => g.familyId === familyId);
+    const goals = Array.from(this.goals.values()).filter(
+      (g) => g.familyId === familyId
+    );
     const netWorthProjection: NetWorthProjection[] = [];
     const cashFlowProjection: CashFlowProjection[] = [];
 
@@ -257,7 +287,9 @@ export class FinancialPlanningService {
         date,
         totalAssets: 100000 * Math.pow(1.07, month / 12), // 7% annual growth
         totalLiabilities: 50000 * Math.pow(0.95, month / 12), // 5% annual reduction
-        netWorth: (100000 * Math.pow(1.07, month / 12)) - (50000 * Math.pow(0.95, month / 12))
+        netWorth:
+          100000 * Math.pow(1.07, month / 12) -
+          50000 * Math.pow(0.95, month / 12),
       });
 
       // Cash flow projection
@@ -266,21 +298,21 @@ export class FinancialPlanningService {
         income: 8000, // Monthly income
         expenses: 6000, // Monthly expenses
         netCashFlow: 2000,
-        savingsRate: 0.25
+        savingsRate: 0.25,
       });
     }
 
     // Goal completion projections
-    const goalProjections = goals.map(goal => ({
+    const goalProjections = goals.map((goal) => ({
       goalId: goal.id,
       projectedCompletion: goal.progress.projectedCompletionDate,
-      probability: this.calculateGoalProbability(goal)
+      probability: this.calculateGoalProbability(goal),
     }));
 
     return {
       netWorthProjection,
       cashFlowProjection,
-      goalProjections
+      goalProjections,
     };
   }
 
@@ -304,24 +336,27 @@ export class FinancialPlanningService {
       debt: await this.calculateDebtScore(familyId),
       savings: await this.calculateSavingsScore(familyId),
       investment: await this.calculateInvestmentScore(familyId),
-      retirement: await this.calculateRetirementScore(familyId)
+      retirement: await this.calculateRetirementScore(familyId),
     };
 
-    const overallScore = Object.values(categoryScores).reduce((sum, score) => sum + score, 0) / 5;
+    const overallScore =
+      Object.values(categoryScores).reduce((sum, score) => sum + score, 0) / 5;
 
-    const recommendations = await this.generateHealthRecommendations(categoryScores);
+    const recommendations =
+      await this.generateHealthRecommendations(categoryScores);
 
     return {
       overallScore,
       categoryScores,
-      recommendations
+      recommendations,
     };
   }
 
   // Private helper methods
   private calculateProjectedCompletion(goalData: any): Date {
     // Simplified calculation - would use more sophisticated modeling
-    const monthsToComplete = goalData.targetAmount / (goalData.monthlyContribution || 100);
+    const monthsToComplete =
+      goalData.targetAmount / (goalData.monthlyContribution || 100);
     const completionDate = new Date();
     completionDate.setMonth(completionDate.getMonth() + monthsToComplete);
     return completionDate;
@@ -338,17 +373,25 @@ export class FinancialPlanningService {
     const returns = {
       conservative: 0.04,
       moderate: 0.07,
-      aggressive: 0.10
+      aggressive: 0.1,
     };
     return returns[riskProfile];
   }
 
-  private calculateFutureValue(principal: number, rate: number, years: number): number {
+  private calculateFutureValue(
+    principal: number,
+    rate: number,
+    years: number
+  ): number {
     return principal * Math.pow(1 + rate, years);
   }
 
-  private calculateAnnuityFutureValue(payment: number, rate: number, years: number): number {
-    return payment * (Math.pow(1 + rate, years) - 1) / rate;
+  private calculateAnnuityFutureValue(
+    payment: number,
+    rate: number,
+    years: number
+  ): number {
+    return (payment * (Math.pow(1 + rate, years) - 1)) / rate;
   }
 
   private async generateRetirementRecommendations(
@@ -362,7 +405,7 @@ export class FinancialPlanningService {
     if (currentProjection < target) {
       const shortfall = target - currentProjection;
       const additionalMonthlyNeeded = shortfall / (yearsToRetirement * 12);
-      
+
       recommendations.push({
         type: 'increase_contributions',
         title: 'Increase Monthly Retirement Contributions',
@@ -373,8 +416,8 @@ export class FinancialPlanningService {
         actionItems: [
           'Review your budget for additional savings opportunities',
           'Consider increasing 401(k) contributions to maximize employer match',
-          'Explore IRA contribution limits'
-        ]
+          'Explore IRA contribution limits',
+        ],
       });
     }
 
@@ -388,20 +431,22 @@ export class FinancialPlanningService {
   ): FinancialMilestone[] {
     const milestones: FinancialMilestone[] = [];
     const yearsToRetirement = retirementAge - currentAge;
-    
+
     // Create milestones every 5 years
     for (let age = currentAge + 5; age < retirementAge; age += 5) {
       const yearsFromNow = age - currentAge;
       const targetAmount = targetSavings * (yearsFromNow / yearsToRetirement);
-      
+
       milestones.push({
         id: `retirement_${age}`,
         title: `Age ${age} Retirement Checkpoint`,
         description: `Target savings by age ${age}`,
         targetAmount,
-        targetDate: new Date(Date.now() + yearsFromNow * 365 * 24 * 60 * 60 * 1000),
+        targetDate: new Date(
+          Date.now() + yearsFromNow * 365 * 24 * 60 * 60 * 1000
+        ),
         category: 'retirement',
-        completed: false
+        completed: false,
       });
     }
 
@@ -417,14 +462,15 @@ export class FinancialPlanningService {
     }>,
     extraPayment: number
   ) {
-    return debts.map(debt => {
+    return debts.map((debt) => {
       const monthlyRate = debt.interestRate / 12;
-      const payment = debt.minimumPayment + (extraPayment / debts.length);
-      
+      const payment = debt.minimumPayment + extraPayment / debts.length;
+
       const monthsToPayoff = Math.ceil(
-        Math.log(1 + (debt.balance * monthlyRate) / payment) / Math.log(1 + monthlyRate)
+        Math.log(1 + (debt.balance * monthlyRate) / payment) /
+          Math.log(1 + monthlyRate)
       );
-      
+
       const totalPaid = payment * monthsToPayoff;
       const totalInterest = totalPaid - debt.balance;
 
@@ -432,7 +478,7 @@ export class FinancialPlanningService {
         ...debt,
         monthsToPayoff: isNaN(monthsToPayoff) ? 0 : monthsToPayoff,
         totalInterest: isNaN(totalInterest) ? 0 : totalInterest,
-        totalPaid: isNaN(totalPaid) ? debt.balance : totalPaid
+        totalPaid: isNaN(totalPaid) ? debt.balance : totalPaid,
       };
     });
   }
@@ -448,15 +494,16 @@ export class FinancialPlanningService {
       recommendations.push({
         type: 'debt_payoff',
         title: 'Add Extra Debt Payments',
-        description: 'Even an extra $50/month can significantly reduce interest paid and payoff time.',
+        description:
+          'Even an extra $50/month can significantly reduce interest paid and payoff time.',
         impact: 'high',
         priority: 1,
         estimatedBenefit: totalInterest * 0.3, // 30% interest savings estimate
         actionItems: [
           'Review budget for additional payment opportunities',
           'Apply windfalls (tax refunds, bonuses) to debt',
-          'Consider debt consolidation for lower rates'
-        ]
+          'Consider debt consolidation for lower rates',
+        ],
       });
     }
 
@@ -482,8 +529,8 @@ export class FinancialPlanningService {
         actionItems: [
           'Open a high-yield savings account',
           'Automate monthly transfers',
-          'Start with a $1,000 starter emergency fund'
-        ]
+          'Start with a $1,000 starter emergency fund',
+        ],
       });
     }
 
@@ -494,17 +541,17 @@ export class FinancialPlanningService {
     // Simplified probability calculation based on current progress and timeline
     const timeRemaining = goal.targetDate.getTime() - Date.now();
     const monthsRemaining = timeRemaining / (30 * 24 * 60 * 60 * 1000);
-    
+
     if (monthsRemaining <= 0) return 0;
-    
-    const requiredMonthlyContribution = 
+
+    const requiredMonthlyContribution =
       (goal.targetAmount - goal.progress.currentAmount) / monthsRemaining;
-    
+
     const currentContribution = goal.monthlyContribution || 0;
-    
+
     if (currentContribution >= requiredMonthlyContribution) return 0.95;
     if (currentContribution >= requiredMonthlyContribution * 0.8) return 0.75;
-    if (currentContribution >= requiredMonthlyContribution * 0.5) return 0.50;
+    if (currentContribution >= requiredMonthlyContribution * 0.5) return 0.5;
     return 0.25;
   }
 
@@ -535,7 +582,9 @@ export class FinancialPlanningService {
     const recommendations: PlanningRecommendation[] = [];
 
     // Generate recommendations based on lowest scores
-    const sortedScores = Object.entries(scores).sort(([,a], [,b]) => (a as number) - (b as number));
+    const sortedScores = Object.entries(scores).sort(
+      ([, a], [, b]) => (a as number) - (b as number)
+    );
 
     for (const [category, score] of sortedScores.slice(0, 3)) {
       if ((score as number) < 80) {
@@ -546,7 +595,7 @@ export class FinancialPlanningService {
           impact: 'medium',
           priority: recommendations.length + 1,
           estimatedBenefit: 0,
-          actionItems: [`Focus on ${category} improvements`]
+          actionItems: [`Focus on ${category} improvements`],
         });
       }
     }

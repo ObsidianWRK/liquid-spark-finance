@@ -13,8 +13,8 @@
   .bottom-nav,
   .nav-rail,
   .top-bar,
-  [class*="nav-"],
-  [class*="navigation-"] {
+  [class*='nav-'],
+  [class*='navigation-'] {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
@@ -26,7 +26,10 @@
   .nav-item:focus-visible,
   .bottom-nav button:focus,
   .bottom-nav button:focus-visible {
-    transition: outline 0.01ms, background-color 0.01ms, border-color 0.01ms !important;
+    transition:
+      outline 0.01ms,
+      background-color 0.01ms,
+      border-color 0.01ms !important;
   }
 
   /* Disable glass effect animations */
@@ -62,7 +65,7 @@
   }
 
   .nav-item:hover,
-  .nav-item[aria-selected="true"] {
+  .nav-item[aria-selected='true'] {
     background: rgba(255, 255, 255, 0.2) !important;
   }
 
@@ -127,7 +130,7 @@
 .nav-item:focus-visible,
 .bottom-nav button:focus,
 .bottom-nav button:focus-visible {
-  outline: 3px solid #007AFF;
+  outline: 3px solid #007aff;
   outline-offset: 2px;
   background: rgba(0, 122, 255, 0.15) !important;
   border: 2px solid rgba(0, 122, 255, 0.4) !important;
@@ -142,7 +145,7 @@
 
 /* Focus ring for keyboard navigation */
 .nav-item[data-focus-visible] {
-  outline: 3px solid #007AFF;
+  outline: 3px solid #007aff;
   outline-offset: 2px;
 }
 
@@ -191,13 +194,13 @@
 }
 
 .navigation-keyboard-active::before {
-  content: "Use arrow keys to navigate, Enter to select";
+  content: 'Use arrow keys to navigate, Enter to select';
   position: absolute;
   top: -35px;
   left: 50%;
   transform: translateX(-50%);
   background: rgba(0, 0, 0, 0.9);
-  color: #FFFFFF;
+  color: #ffffff;
   padding: 6px 12px;
   border-radius: 6px;
   font-size: 12px;
@@ -209,16 +212,22 @@
 }
 
 @keyframes fadeInOut {
-  0%, 100% { opacity: 0; }
-  20%, 80% { opacity: 1; }
+  0%,
+  100% {
+    opacity: 0;
+  }
+  20%,
+  80% {
+    opacity: 1;
+  }
 }
 
 /* Roving tabindex pattern support */
-.nav-item[tabindex="0"] {
+.nav-item[tabindex='0'] {
   /* Currently focusable item in tablist */
 }
 
-.nav-item[tabindex="-1"] {
+.nav-item[tabindex='-1'] {
   /* Non-focusable items in tablist */
 }
 
@@ -254,14 +263,14 @@
   top: -40px;
   left: 6px;
   background: #000000;
-  color: #FFFFFF;
+  color: #ffffff;
   padding: 8px 16px;
   text-decoration: none;
   border-radius: 4px;
   z-index: 2000;
   font-size: 14px;
   font-weight: 500;
-  border: 2px solid #007AFF;
+  border: 2px solid #007aff;
   transition: top 0.2s ease;
 }
 
@@ -274,24 +283,24 @@
    ============================================================================= */
 
 /* Tab role implementation for bottom nav */
-.bottom-nav[role="tablist"] {
+.bottom-nav[role='tablist'] {
   /* Container styles already defined */
 }
 
-.bottom-nav button[role="tab"] {
+.bottom-nav button[role='tab'] {
   position: relative;
 }
 
 /* Selected state indicator */
-.bottom-nav button[role="tab"][aria-selected="true"]::after {
-  content: "";
+.bottom-nav button[role='tab'][aria-selected='true']::after {
+  content: '';
   position: absolute;
   top: -2px;
   left: 50%;
   transform: translateX(-50%);
   width: 24px;
   height: 3px;
-  background: #007AFF;
+  background: #007aff;
   border-radius: 2px;
 }
 
@@ -302,8 +311,8 @@
   right: -4px;
   min-width: 18px;
   height: 18px;
-  background: #FF453A;
-  color: #FFFFFF;
+  background: #ff453a;
+  color: #ffffff;
   border-radius: 50%;
   font-size: 11px;
   font-weight: 600;
@@ -333,8 +342,8 @@
   color: rgba(255, 255, 255, 0.8);
 }
 
-.nav-error-state [role="img"],
-.nav-loading-state [role="img"] {
+.nav-error-state [role='img'],
+.nav-loading-state [role='img'] {
   width: 24px;
   height: 24px;
   margin-bottom: 0.5rem;
@@ -347,29 +356,29 @@
 @media (prefers-color-scheme: dark) {
   .nav-item:focus,
   .nav-item:focus-visible {
-    outline-color: #0A84FF;
+    outline-color: #0a84ff;
     background: rgba(10, 132, 255, 0.15) !important;
     border-color: rgba(10, 132, 255, 0.4) !important;
   }
 
   .nav-skip-link {
-    background: #1C1C1E;
-    border-color: #0A84FF;
+    background: #1c1c1e;
+    border-color: #0a84ff;
   }
 }
 
 @media (prefers-color-scheme: light) {
   .nav-item:focus,
   .nav-item:focus-visible {
-    outline-color: #007AFF;
+    outline-color: #007aff;
     background: rgba(0, 122, 255, 0.1) !important;
     border-color: rgba(0, 122, 255, 0.3) !important;
   }
 
   .nav-skip-link {
-    background: #FFFFFF;
+    background: #ffffff;
     color: #000000;
-    border-color: #007AFF;
+    border-color: #007aff;
   }
 
   .bottom-nav,
@@ -391,7 +400,7 @@
   /* Focus management for nav rail on larger screens */
   .nav-rail button:focus,
   .nav-rail button:focus-visible {
-    outline: 3px solid #007AFF;
+    outline: 3px solid #007aff;
     outline-offset: 2px;
   }
 }

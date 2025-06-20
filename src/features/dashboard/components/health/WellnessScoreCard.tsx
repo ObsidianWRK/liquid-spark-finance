@@ -1,8 +1,19 @@
 import React, { useEffect, useState } from 'react';
-import { Heart, TrendingUp, TrendingDown, Minus, Shield, Activity } from 'lucide-react';
+import {
+  Heart,
+  TrendingUp,
+  TrendingDown,
+  Minus,
+  Shield,
+  Activity,
+} from 'lucide-react';
 import { CardSkeleton } from './CardSkeleton';
 import { WellnessMetric } from './MetricDisplay';
-import { useWellnessScore, useBiometricTrends, useBiometrics } from '@/providers/BiometricsProvider';
+import {
+  useWellnessScore,
+  useBiometricTrends,
+  useBiometrics,
+} from '@/providers/BiometricsProvider';
 import { cn } from '@/shared/lib/utils';
 
 interface WellnessScoreCardProps {
@@ -36,8 +47,10 @@ export const WellnessScoreCard: React.FC<WellnessScoreCardProps> = ({
   // Show loading skeleton if not initialized
   if (!isInitialized || !state) {
     return (
-      <CardSkeleton 
-        variant={size === 'sm' ? 'compact' : size === 'lg' ? 'expanded' : 'default'}
+      <CardSkeleton
+        variant={
+          size === 'sm' ? 'compact' : size === 'lg' ? 'expanded' : 'default'
+        }
         className={className}
         loading
       />
@@ -89,7 +102,8 @@ export const WellnessScoreCard: React.FC<WellnessScoreCardProps> = ({
 
   const { size: circleSize, radius, strokeWidth } = circleDimensions[size];
   const circumference = 2 * Math.PI * radius;
-  const strokeDashoffset = circumference - (animatedScore / 100) * circumference;
+  const strokeDashoffset =
+    circumference - (animatedScore / 100) * circumference;
 
   const textSizes = {
     sm: { score: 'text-lg', label: 'text-xs', subtitle: 'text-xs' },
@@ -98,7 +112,13 @@ export const WellnessScoreCard: React.FC<WellnessScoreCardProps> = ({
   };
 
   return (
-    <div className={cn("bg-white/[0.02] rounded-2xl border border-white/[0.08] p-6 hover:bg-white/[0.03] transition-all duration-300", className)} onClick={onClick}>
+    <div
+      className={cn(
+        'bg-white/[0.02] rounded-2xl border border-white/[0.08] p-6 hover:bg-white/[0.03] transition-all duration-300',
+        className
+      )}
+      onClick={onClick}
+    >
       <div className="flex items-center justify-between mb-4">
         <div className="flex items-center gap-3">
           <div className="w-10 h-10 rounded-xl bg-white/[0.05] flex items-center justify-center">
@@ -106,13 +126,13 @@ export const WellnessScoreCard: React.FC<WellnessScoreCardProps> = ({
           </div>
           <h3 className="font-medium text-white/80">Wellness Score</h3>
         </div>
-        <div className="flex items-center gap-1">
-          {getTrendIcon()}
-        </div>
+        <div className="flex items-center gap-1">{getTrendIcon()}</div>
       </div>
-      
+
       <div className="space-y-2">
-        <p className="text-2xl font-bold text-white">{Math.round(animatedScore)}</p>
+        <p className="text-2xl font-bold text-white">
+          {Math.round(animatedScore)}
+        </p>
         <div className="flex items-center gap-2 text-sm">
           <span className="text-pink-400">{getScoreLabel(animatedScore)}</span>
           <span className="text-white/60">wellness</span>
@@ -137,4 +157,4 @@ export const WellnessScoreCard: React.FC<WellnessScoreCardProps> = ({
       )}
     </div>
   );
-}; 
+};

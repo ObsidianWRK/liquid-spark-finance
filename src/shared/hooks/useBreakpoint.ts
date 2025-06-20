@@ -23,7 +23,7 @@ export const useBreakpoint = () => {
 
     // Add event listener
     window.addEventListener('resize', handleResize);
-    
+
     // Cleanup
     return () => window.removeEventListener('resize', handleResize);
   }, []);
@@ -31,7 +31,10 @@ export const useBreakpoint = () => {
   // Utility functions for convenience
   const isMobile = breakpoint === 'mobile';
   const isTablet = breakpoint === 'tablet';
-  const isDesktop = breakpoint === 'desktop' || breakpoint === 'large' || breakpoint === 'ultrawide';
+  const isDesktop =
+    breakpoint === 'desktop' ||
+    breakpoint === 'large' ||
+    breakpoint === 'ultrawide';
   const isLargeDesktop = breakpoint === 'large' || breakpoint === 'ultrawide';
 
   return {
@@ -41,4 +44,4 @@ export const useBreakpoint = () => {
     isDesktop,
     isLargeDesktop,
   };
-}; 
+};

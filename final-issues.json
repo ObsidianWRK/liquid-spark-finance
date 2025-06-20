@@ -10,7 +10,7 @@
   {
     "filePath": "src/lib/VueniSecureStorage.ts",
     "lineNumber": 3,
-    "severity": "blocker", 
+    "severity": "blocker",
     "issue": "Hardcoded fallback encryption key 'vueni-secure-key-2024' in source code",
     "fixRecommendation": "Remove hardcoded fallback key. Make environment variable mandatory for production use.",
     "agent": "A5"

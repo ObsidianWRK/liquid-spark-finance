@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { 
-  Building2, 
-  Search, 
-  Plus, 
-  Shield, 
-  Zap, 
+import {
+  Building2,
+  Search,
+  Plus,
+  Shield,
+  Zap,
   Check,
   AlertCircle,
   CreditCard,
@@ -12,7 +12,7 @@ import {
   TrendingUp,
   Home,
   Car,
-  GraduationCap
+  GraduationCap,
 } from 'lucide-react';
 import { Institution, Account } from '@/types/accounts';
 import { accountService } from '@/features/accounts/api/accountService';
@@ -24,10 +24,17 @@ interface AccountLinkingProps {
   onClose: () => void;
 }
 
-const AccountLinking = ({ familyId, onAccountsLinked, onClose }: AccountLinkingProps) => {
-  const [step, setStep] = useState<'search' | 'connect' | 'select' | 'success'>('search');
+const AccountLinking = ({
+  familyId,
+  onAccountsLinked,
+  onClose,
+}: AccountLinkingProps) => {
+  const [step, setStep] = useState<'search' | 'connect' | 'select' | 'success'>(
+    'search'
+  );
   const [institutions, setInstitutions] = useState<Institution[]>([]);
-  const [selectedInstitution, setSelectedInstitution] = useState<Institution | null>(null);
+  const [selectedInstitution, setSelectedInstitution] =
+    useState<Institution | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [linkedAccounts, setLinkedAccounts] = useState<Account[]>([]);
@@ -55,12 +62,15 @@ const AccountLinking = ({ familyId, onAccountsLinked, onClose }: AccountLinkingP
     setStep('connect');
   };
 
-  const handlePlaidSuccess = async (publicToken: string, accounts: Array<{
-    id: string;
-    name: string;
-    type: string;
-    subtype: string;
-  }>) => {
+  const handlePlaidSuccess = async (
+    publicToken: string,
+    accounts: Array<{
+      id: string;
+      name: string;
+      type: string;
+      subtype: string;
+    }>
+  ) => {
     if (!selectedInstitution) return;
 
     setLoading(true);
@@ -69,12 +79,12 @@ const AccountLinking = ({ familyId, onAccountsLinked, onClose }: AccountLinkingP
         familyId,
         publicToken,
         institutionId: selectedInstitution.id,
-        accounts: accounts.map(acc => ({
+        accounts: accounts.map((acc) => ({
           id: acc.id,
           name: acc.name,
           type: acc.type,
-          subtype: acc.subtype
-        }))
+          subtype: acc.subtype,
+        })),
       });
 
       setLinkedAccounts(linkedAccounts);
@@ -110,7 +120,9 @@ const AccountLinking = ({ familyId, onAccountsLinked, onClose }: AccountLinkingP
           <div className="p-6 border-b border-white/[0.08]">
             <div className="flex items-center justify-between">
               <div>
-                <h2 className="text-2xl font-bold text-white">Link Your Accounts</h2>
+                <h2 className="text-2xl font-bold text-white">
+                  Link Your Accounts
+                </h2>
                 <p className="text-white/60 mt-1">
                   Connect to 10,000+ financial institutions securely
                 </p>
@@ -144,7 +156,9 @@ const AccountLinking = ({ familyId, onAccountsLinked, onClose }: AccountLinkingP
               <div className="p-8 text-center">
                 <Building2 className="w-12 h-12 text-white/20 mx-auto mb-4" />
                 <p className="text-white/60">
-                  {searchQuery ? 'No institutions found matching your search' : 'Start typing to search for institutions'}
+                  {searchQuery
+                    ? 'No institutions found matching your search'
+                    : 'Start typing to search for institutions'}
                 </p>
               </div>
             ) : (
@@ -160,7 +174,7 @@ const AccountLinking = ({ familyId, onAccountsLinked, onClose }: AccountLinkingP
                         <div className="w-12 h-12 bg-white/[0.06] rounded-xl flex items-center justify-center">
                           <Building2 className="w-6 h-6 text-blue-400" />
                         </div>
-                        
+
                         <div>
                           <h3 className="font-semibold text-white group-hover:text-blue-400 transition-colors">
                             {institution.name}
@@ -168,12 +182,16 @@ const AccountLinking = ({ familyId, onAccountsLinked, onClose }: AccountLinkingP
                           <div className="flex items-center gap-4 mt-1">
                             <div className="flex items-center gap-1">
                               <Shield className="w-3 h-3 text-green-400" />
-                              <span className="text-xs text-green-400">Bank-level security</span>
+                              <span className="text-xs text-green-400">
+                                Bank-level security
+                              </span>
                             </div>
                             {institution.capabilities.realTimeUpdates && (
                               <div className="flex items-center gap-1">
                                 <Zap className="w-3 h-3 text-yellow-400" />
-                                <span className="text-xs text-yellow-400">Real-time updates</span>
+                                <span className="text-xs text-yellow-400">
+                                  Real-time updates
+                                </span>
                               </div>
                             )}
                           </div>
@@ -207,14 +225,16 @@ const AccountLinking = ({ familyId, onAccountsLinked, onClose }: AccountLinkingP
           {/* Manual Account Option */}
           <div className="p-4 border-t border-white/[0.08]">
             <button
-              onClick={() => {/* TODO: Open manual account creation */}}
+              onClick={() => {
+                /* TODO: Open manual account creation */
+              }}
               className="w-full p-4 bg-white/[0.03] hover:bg-white/[0.05] border border-white/[0.05] rounded-xl transition-all text-left group border-dashed"
             >
               <div className="flex items-center gap-4">
                 <div className="w-12 h-12 bg-white/[0.06] rounded-xl flex items-center justify-center">
                   <Plus className="w-6 h-6 text-blue-400" />
                 </div>
-                
+
                 <div>
                   <h3 className="font-semibold text-white group-hover:text-blue-400 transition-colors">
                     Add Account Manually
@@ -241,7 +261,9 @@ const AccountLinking = ({ familyId, onAccountsLinked, onClose }: AccountLinkingP
                 <div className="w-16 h-16 bg-blue-500/20 rounded-full flex items-center justify-center mx-auto mb-4">
                   <Shield className="w-8 h-8 text-blue-400 animate-pulse" />
                 </div>
-                <h2 className="text-xl font-bold text-white mb-2">Connecting to {selectedInstitution?.name}</h2>
+                <h2 className="text-xl font-bold text-white mb-2">
+                  Connecting to {selectedInstitution?.name}
+                </h2>
                 <p className="text-white/60">
                   Securely linking your accounts...
                 </p>
@@ -251,7 +273,9 @@ const AccountLinking = ({ familyId, onAccountsLinked, onClose }: AccountLinkingP
                 <div className="w-16 h-16 bg-red-500/20 rounded-full flex items-center justify-center mx-auto mb-4">
                   <AlertCircle className="w-8 h-8 text-red-400" />
                 </div>
-                <h2 className="text-xl font-bold text-white mb-2">Connection Failed</h2>
+                <h2 className="text-xl font-bold text-white mb-2">
+                  Connection Failed
+                </h2>
                 <p className="text-red-400 mb-4">{error}</p>
                 <div className="flex gap-3">
                   <button
@@ -273,11 +297,14 @@ const AccountLinking = ({ familyId, onAccountsLinked, onClose }: AccountLinkingP
                 <div className="w-16 h-16 bg-white/[0.06] rounded-full flex items-center justify-center mx-auto mb-4">
                   <Building2 className="w-8 h-8 text-blue-400" />
                 </div>
-                <h2 className="text-xl font-bold text-white mb-2">Connect to {selectedInstitution?.name}</h2>
+                <h2 className="text-xl font-bold text-white mb-2">
+                  Connect to {selectedInstitution?.name}
+                </h2>
                 <p className="text-white/60 mb-6">
-                  You'll be redirected to {selectedInstitution?.name} to securely authenticate your account.
+                  You'll be redirected to {selectedInstitution?.name} to
+                  securely authenticate your account.
                 </p>
-                
+
                 <div className="space-y-3 mb-6">
                   <div className="flex items-center gap-3 text-sm text-white/60">
                     <Shield className="w-4 h-4 text-green-400" />
@@ -306,8 +333,18 @@ const AccountLinking = ({ familyId, onAccountsLinked, onClose }: AccountLinkingP
                       // Mock successful connection for now
                       setTimeout(() => {
                         handlePlaidSuccess('mock_public_token', [
-                          { id: 'acc1', name: 'Checking Account', type: 'depository', subtype: 'checking' },
-                          { id: 'acc2', name: 'Savings Account', type: 'depository', subtype: 'savings' }
+                          {
+                            id: 'acc1',
+                            name: 'Checking Account',
+                            type: 'depository',
+                            subtype: 'checking',
+                          },
+                          {
+                            id: 'acc2',
+                            name: 'Savings Account',
+                            type: 'depository',
+                            subtype: 'savings',
+                          },
                         ]);
                       }, 2000);
                       setLoading(true);
@@ -333,10 +370,14 @@ const AccountLinking = ({ familyId, onAccountsLinked, onClose }: AccountLinkingP
             <div className="w-16 h-16 bg-green-500/20 rounded-full flex items-center justify-center mx-auto mb-4">
               <Check className="w-8 h-8 text-green-400" />
             </div>
-            
-            <h2 className="text-xl font-bold text-white mb-2">Accounts Connected!</h2>
+
+            <h2 className="text-xl font-bold text-white mb-2">
+              Accounts Connected!
+            </h2>
             <p className="text-white/60 mb-6">
-              Successfully linked {linkedAccounts.length} account{linkedAccounts.length !== 1 ? 's' : ''} from {selectedInstitution?.name}
+              Successfully linked {linkedAccounts.length} account
+              {linkedAccounts.length !== 1 ? 's' : ''} from{' '}
+              {selectedInstitution?.name}
             </p>
 
             <div className="space-y-3 mb-6">

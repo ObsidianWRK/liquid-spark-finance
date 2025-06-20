@@ -1,15 +1,15 @@
 import React from 'react';
-import { 
-  DropdownMenu, 
-  DropdownMenuContent, 
-  DropdownMenuItem, 
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
   DropdownMenuTrigger,
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuCheckboxItem,
   DropdownMenuRadioGroup,
   DropdownMenuRadioItem,
-  DropdownMenuShortcut
+  DropdownMenuShortcut,
 } from '@/shared/ui/dropdown-menu';
 import { Button } from '@/shared/ui/button';
 import { ChevronDown, User, Settings, LogOut, Check } from 'lucide-react';
@@ -23,21 +23,24 @@ const DropdownTestPage = () => {
   return (
     <div className="w-full min-h-screen">
       <BackHeader title="Dropdown Visibility Test" />
-      
+
       <div className="max-w-4xl mx-auto p-6 space-y-8">
         <div className="text-center mb-8">
           <h1 className="text-3xl font-bold text-white mb-4">
             Enhanced Dropdown Menu Visibility
           </h1>
           <p className="text-white/70 text-lg">
-            Testing improved contrast, readability, and accessibility across all dropdown variations
+            Testing improved contrast, readability, and accessibility across all
+            dropdown variations
           </p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {/* Basic Dropdown */}
           <div className="bg-white/[0.02] border border-white/[0.08] rounded-2xl p-6">
-            <h3 className="text-lg font-semibold text-white mb-4">Basic Dropdown</h3>
+            <h3 className="text-lg font-semibold text-white mb-4">
+              Basic Dropdown
+            </h3>
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button variant="outline" className="w-full justify-between">
@@ -68,7 +71,9 @@ const DropdownTestPage = () => {
 
           {/* Checkbox Dropdown */}
           <div className="bg-white/[0.02] border border-white/[0.08] rounded-2xl p-6">
-            <h3 className="text-lg font-semibold text-white mb-4">Checkbox Options</h3>
+            <h3 className="text-lg font-semibold text-white mb-4">
+              Checkbox Options
+            </h3>
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button variant="outline" className="w-full justify-between">
@@ -97,7 +102,9 @@ const DropdownTestPage = () => {
 
           {/* Radio Group Dropdown */}
           <div className="bg-white/[0.02] border border-white/[0.08] rounded-2xl p-6">
-            <h3 className="text-lg font-semibold text-white mb-4">Radio Selection</h3>
+            <h3 className="text-lg font-semibold text-white mb-4">
+              Radio Selection
+            </h3>
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button variant="outline" className="w-full justify-between">
@@ -108,10 +115,17 @@ const DropdownTestPage = () => {
               <DropdownMenuContent className="w-56">
                 <DropdownMenuLabel>Panel Position</DropdownMenuLabel>
                 <DropdownMenuSeparator />
-                <DropdownMenuRadioGroup value={position} onValueChange={setPosition}>
+                <DropdownMenuRadioGroup
+                  value={position}
+                  onValueChange={setPosition}
+                >
                   <DropdownMenuRadioItem value="top">Top</DropdownMenuRadioItem>
-                  <DropdownMenuRadioItem value="bottom">Bottom</DropdownMenuRadioItem>
-                  <DropdownMenuRadioItem value="right">Right</DropdownMenuRadioItem>
+                  <DropdownMenuRadioItem value="bottom">
+                    Bottom
+                  </DropdownMenuRadioItem>
+                  <DropdownMenuRadioItem value="right">
+                    Right
+                  </DropdownMenuRadioItem>
                 </DropdownMenuRadioGroup>
               </DropdownMenuContent>
             </DropdownMenu>
@@ -119,7 +133,9 @@ const DropdownTestPage = () => {
 
           {/* Complex Dropdown */}
           <div className="bg-white/[0.02] border border-white/[0.08] rounded-2xl p-6">
-            <h3 className="text-lg font-semibold text-white mb-4">Complex Menu</h3>
+            <h3 className="text-lg font-semibold text-white mb-4">
+              Complex Menu
+            </h3>
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button variant="outline" className="w-full justify-between">
@@ -153,7 +169,9 @@ const DropdownTestPage = () => {
 
           {/* Dark Background Test */}
           <div className="bg-black/30 border border-white/[0.15] rounded-2xl p-6">
-            <h3 className="text-lg font-semibold text-white mb-4">Dark Background</h3>
+            <h3 className="text-lg font-semibold text-white mb-4">
+              Dark Background
+            </h3>
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button variant="outline" className="w-full justify-between">
@@ -178,7 +196,9 @@ const DropdownTestPage = () => {
 
           {/* Light Background Test */}
           <div className="bg-white/[0.15] border border-white/[0.25] rounded-2xl p-6">
-            <h3 className="text-lg font-semibold text-white mb-4">Light Background</h3>
+            <h3 className="text-lg font-semibold text-white mb-4">
+              Light Background
+            </h3>
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button variant="outline" className="w-full justify-between">
@@ -203,10 +223,14 @@ const DropdownTestPage = () => {
         </div>
 
         <div className="bg-white/[0.02] border border-white/[0.08] rounded-2xl p-6">
-          <h3 className="text-xl font-semibold text-white mb-4">Visibility Improvements Summary</h3>
+          <h3 className="text-xl font-semibold text-white mb-4">
+            Visibility Improvements Summary
+          </h3>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-white/80">
             <div>
-              <h4 className="font-semibold text-white mb-2">Enhanced Features:</h4>
+              <h4 className="font-semibold text-white mb-2">
+                Enhanced Features:
+              </h4>
               <ul className="space-y-1 text-sm">
                 <li>• High contrast backgrounds (black/95 opacity)</li>
                 <li>• Strong white borders (20% opacity)</li>
@@ -232,4 +256,4 @@ const DropdownTestPage = () => {
   );
 };
 
-export default DropdownTestPage; 
+export default DropdownTestPage;

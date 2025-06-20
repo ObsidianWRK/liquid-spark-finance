@@ -31,5 +31,5 @@ export const useHydrationStore = create<HydrationState>((set, get) => ({
       set({ remind: true });
     }
   },
-  dismissReminder: () => set({ remind: false })
-})); 
+  dismissReminder: () => set({ remind: false }),
+}));

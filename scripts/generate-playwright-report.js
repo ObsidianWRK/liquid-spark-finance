@@ -24,7 +24,9 @@ function traverseSuite(suite) {
           failures.push({
             project: test.projectName,
             title: spec.title,
-            error: result.errors?.map((e) => e.message).join('\n') || 'Unknown error',
+            error:
+              result.errors?.map((e) => e.message).join('\n') ||
+              'Unknown error',
             screenshot: findScreenshot(result.attachments || []),
           });
         }
@@ -35,7 +37,9 @@ function traverseSuite(suite) {
 }
 
 function findScreenshot(attachments) {
-  const shot = attachments.find((a) => a.name === 'screenshot' || a.contentType === 'image/png');
+  const shot = attachments.find(
+    (a) => a.name === 'screenshot' || a.contentType === 'image/png'
+  );
   return shot?.path || '';
 }
 
@@ -50,7 +54,9 @@ if (failures.length === 0) {
   lines.push('|----------|------|-------|------------|');
   for (const f of failures) {
     const shot = f.screenshot ? `![](${f.screenshot})` : '—';
-    lines.push(`| ${f.project} | ${f.title} | ${escapePipe(f.error)} | ${shot} |`);
+    lines.push(
+      `| ${f.project} | ${f.title} | ${escapePipe(f.error)} | ${shot} |`
+    );
   }
 }
 lines.push('');
@@ -64,4 +70,4 @@ const markdown = lines.join('\n');
 const outPath = '/tmp/playwright-audit.md';
 fs.writeFileSync(outPath, markdown);
 console.log(`📄 Audit report written to ${outPath}`);
-console.log('\n' + markdown + '\n'); 
+console.log('\n' + markdown + '\n');

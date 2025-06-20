@@ -5,15 +5,19 @@ This guide shows how to use the new Apple-style TimeRange toggle component with 
 ## Components Overview
 
 ### 1. TimeRangeToggle
+
 Basic Apple-style segmented control with full accessibility features.
 
-### 2. TimeRangeToggleRadix  
+### 2. TimeRangeToggleRadix
+
 Enhanced version using Radix UI for superior accessibility and screen reader support.
 
 ### 3. TimeRangeContext
+
 Global state management with localStorage persistence and data filtering utilities.
 
 ### 4. useTimeRange Hook
+
 Optimized hook for consuming time range context with additional utilities.
 
 ## Quick Start
@@ -53,12 +57,12 @@ function FinancialChart({ data }) {
       timeControls={{
         show: true,
         options: ['1W', '1M', '3M', '6M', '1Y', 'ALL'],
-        defaultRange: '1M'
+        defaultRange: '1M',
       }}
       series={[
         { dataKey: 'income', label: 'Income', color: '#32D74B' },
         { dataKey: 'spending', label: 'Spending', color: '#FF453A' },
-        { dataKey: 'savings', label: 'Savings', color: '#0A84FF' }
+        { dataKey: 'savings', label: 'Savings', color: '#0A84FF' },
       ]}
     />
   );
@@ -98,13 +102,16 @@ function Dashboard({ data }) {
         type="line"
         title="Overview"
         useGlobalTimeRange={true}
-        timeControls={{ show: true, options: ['1W', '1M', '3M', '6M', '1Y', 'ALL'] }}
+        timeControls={{
+          show: true,
+          options: ['1W', '1M', '3M', '6M', '1Y', 'ALL'],
+        }}
         series={[
           { dataKey: 'income', label: 'Income', color: '#32D74B' },
-          { dataKey: 'spending', label: 'Spending', color: '#FF453A' }
+          { dataKey: 'spending', label: 'Spending', color: '#FF453A' },
         ]}
       />
-      
+
       {/* Secondary charts without controls - they automatically sync */}
       <div className="grid grid-cols-2 gap-4">
         <GraphBase
@@ -115,14 +122,16 @@ function Dashboard({ data }) {
           timeControls={{ show: false }} // No controls on secondary charts
           series={[{ dataKey: 'income', label: 'Income', color: '#32D74B' }]}
         />
-        
+
         <GraphBase
           data={data}
           type="bar"
           title="Spending Analysis"
           useGlobalTimeRange={true}
           timeControls={{ show: false }}
-          series={[{ dataKey: 'spending', label: 'Spending', color: '#FF453A' }]}
+          series={[
+            { dataKey: 'spending', label: 'Spending', color: '#FF453A' },
+          ]}
         />
       </div>
     </div>
@@ -137,29 +146,26 @@ import { useTimeRange, useTimeRangeFilter } from '@/hooks/useTimeRange';
 
 function AdvancedComponent({ rawData }) {
   // Get optimized context with caching and validation
-  const { 
-    selectedRange, 
-    setTimeRange, 
-    rangeLabel,
-    isInRange 
-  } = useTimeRange({
+  const { selectedRange, setTimeRange, rangeLabel, isInRange } = useTimeRange({
     stabilizeCallbacks: true,
     memoizeData: true,
     enableCache: true,
-    validateDates: true
+    validateDates: true,
   });
 
   // Filter data automatically with memoization
   const filteredData = useTimeRangeFilter(rawData, 'date', 'iso');
 
   // Manual filtering example
-  const customFilteredData = rawData.filter(item => 
+  const customFilteredData = rawData.filter((item) =>
     isInRange(item.timestamp)
   );
 
   return (
     <div>
-      <h2>Showing {rangeLabel}: {filteredData.length} items</h2>
+      <h2>
+        Showing {rangeLabel}: {filteredData.length} items
+      </h2>
       {/* Your component content */}
     </div>
   );
@@ -199,31 +205,34 @@ interface GraphBaseProps {
 
 ```tsx
 interface UseTimeRangeOptions {
-  stabilizeCallbacks?: boolean;   // Prevent unnecessary re-renders
-  memoizeData?: boolean;          // Cache filtered data
-  enableCache?: boolean;          // Enable filtering cache
-  validateDates?: boolean;        // Validate date inputs
+  stabilizeCallbacks?: boolean; // Prevent unnecessary re-renders
+  memoizeData?: boolean; // Cache filtered data
+  enableCache?: boolean; // Enable filtering cache
+  validateDates?: boolean; // Validate date inputs
   fallbackRange?: TimeRangeOption; // Fallback for invalid ranges
-  debounceMs?: number;            // Debounce range changes
-  skipInitialRender?: boolean;    // Skip first render
+  debounceMs?: number; // Debounce range changes
+  skipInitialRender?: boolean; // Skip first render
 }
 ```
 
 ## Accessibility Features
 
 ### Keyboard Navigation
+
 - **Arrow Keys**: Navigate between options
 - **Enter/Space**: Select option
 - **Home/End**: Jump to first/last option
 - **Tab**: Move to/from component
 
 ### Screen Reader Support
+
 - Full ARIA labeling
 - Live announcements for changes
 - Proper role and state attributes
 - Descriptive labels for each option
 
 ### Touch Support
+
 - 44px minimum touch targets (iOS guidelines)
 - Touch-friendly spacing
 - Active state feedback
@@ -231,17 +240,20 @@ interface UseTimeRangeOptions {
 ## Performance Optimizations
 
 ### Automatic Optimizations
+
 - React.memo on all components
 - Stable callback references
 - Memoized data filtering
 - Efficient re-render prevention
 
 ### Cache Management
+
 - 5-minute filter cache by default
 - Automatic cache cleanup
 - Manual cache clearing available
 
 ### Large Dataset Handling
+
 - Virtualization support for 1000+ data points
 - Progressive loading
 - Memory-efficient filtering
@@ -273,6 +285,7 @@ Easing: Apple-calibrated cubic-bezier curves
 ## Migration Guide
 
 ### From Local Time Controls
+
 ```tsx
 // Before: Local time control
 <GraphBase
@@ -291,11 +304,13 @@ Easing: Apple-calibrated cubic-bezier curves
 ```
 
 ### Backward Compatibility
+
 All existing GraphBase components work unchanged. The new features are opt-in via the `useGlobalTimeRange` prop.
 
 ## Common Patterns
 
 ### Dashboard with Multiple Charts
+
 ```tsx
 function FinancialDashboard() {
   return (
@@ -308,9 +323,9 @@ function FinancialDashboard() {
           timeControls={{ show: true }}
           data={portfolioData}
         />
-        
+
         {/* Synchronized child charts */}
-        {assetClasses.map(asset => (
+        {assetClasses.map((asset) => (
           <GraphBase
             key={asset.id}
             title={asset.name}
@@ -326,10 +341,11 @@ function FinancialDashboard() {
 ```
 
 ### Custom Time Range Controls
+
 ```tsx
 function CustomControls() {
   const { selectedRange, setTimeRange } = useTimeRange();
-  
+
   return (
     <div className="flex space-x-2">
       <TimeRangeToggleRadix
@@ -338,9 +354,7 @@ function CustomControls() {
         options={['1W', '1M', '3M']} // Custom options
         size="sm"
       />
-      <button onClick={() => setTimeRange('ALL')}>
-        Show All
-      </button>
+      <button onClick={() => setTimeRange('ALL')}>Show All</button>
     </div>
   );
 }
@@ -354,10 +368,11 @@ To see all features in action, check out the `TimeRangeDemo` component:
 import TimeRangeDemo from '@/components/charts/TimeRangeDemo';
 
 // Use in your app to see the full integration
-<TimeRangeDemo />
+<TimeRangeDemo />;
 ```
 
 This component demonstrates:
+
 - Standalone time range toggles
 - Global context integration
 - Multiple synchronized charts
@@ -367,6 +382,7 @@ This component demonstrates:
 ## Support
 
 For questions or issues:
+
 1. Check component TypeScript definitions
 2. Review demo component for examples
 3. Test with screen readers for accessibility

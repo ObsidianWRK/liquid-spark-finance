@@ -9,10 +9,10 @@ export {
   useTimeRangeContext,
   TimeRangeContext,
   TIME_RANGE_CONFIG,
-  DEFAULT_RANGE
+  DEFAULT_RANGE,
 } from './TimeRangeContext';
 
 export type {
   TimeRangeContextType,
-  TimeRangeProviderProps
+  TimeRangeProviderProps,
 } from './TimeRangeContext';

@@ -15,7 +15,10 @@
 }
 
 .safe-bottom {
-  padding-bottom: env(safe-area-inset-bottom, var(--safe-area-inset-bottom, 0px));
+  padding-bottom: env(
+    safe-area-inset-bottom,
+    var(--safe-area-inset-bottom, 0px)
+  );
 }
 
 .safe-left {
@@ -28,7 +31,10 @@
 
 .safe-all {
   padding-top: env(safe-area-inset-top, var(--safe-area-inset-top, 0px));
-  padding-bottom: env(safe-area-inset-bottom, var(--safe-area-inset-bottom, 0px));
+  padding-bottom: env(
+    safe-area-inset-bottom,
+    var(--safe-area-inset-bottom, 0px)
+  );
   padding-left: env(safe-area-inset-left, var(--safe-area-inset-left, 0px));
   padding-right: env(safe-area-inset-right, var(--safe-area-inset-right, 0px));
 }
@@ -39,7 +45,10 @@
 }
 
 .safe-m-bottom {
-  margin-bottom: env(safe-area-inset-bottom, var(--safe-area-inset-bottom, 0px));
+  margin-bottom: env(
+    safe-area-inset-bottom,
+    var(--safe-area-inset-bottom, 0px)
+  );
 }
 
 .safe-m-left {
@@ -58,19 +67,25 @@
 .h-screen-safe {
   height: 100vh; /* Fallback */
   height: 100dvh; /* Dynamic viewport height */
-  height: calc(100vh - env(safe-area-inset-top, 0px) - env(safe-area-inset-bottom, 0px));
+  height: calc(
+    100vh - env(safe-area-inset-top, 0px) - env(safe-area-inset-bottom, 0px)
+  );
 }
 
 .min-h-screen-safe {
   min-height: 100vh; /* Fallback */
   min-height: 100dvh; /* Dynamic viewport height */
-  min-height: calc(100vh - env(safe-area-inset-top, 0px) - env(safe-area-inset-bottom, 0px));
+  min-height: calc(
+    100vh - env(safe-area-inset-top, 0px) - env(safe-area-inset-bottom, 0px)
+  );
 }
 
 .max-h-screen-safe {
   max-height: 100vh; /* Fallback */
   max-height: 100dvh; /* Dynamic viewport height */
-  max-height: calc(100vh - env(safe-area-inset-top, 0px) - env(safe-area-inset-bottom, 0px));
+  max-height: calc(
+    100vh - env(safe-area-inset-top, 0px) - env(safe-area-inset-bottom, 0px)
+  );
 }
 
 /* Large viewport height (when virtual keyboard is hidden) */
@@ -106,7 +121,7 @@
   transition: opacity 0.3s ease-in-out;
 }
 
-.hide-on-keyboard[data-keyboard-open="true"] {
+.hide-on-keyboard[data-keyboard-open='true'] {
   opacity: 0;
   pointer-events: none;
 }
@@ -118,7 +133,7 @@
   transition: opacity 0.3s ease-in-out;
 }
 
-.show-on-keyboard[data-keyboard-open="true"] {
+.show-on-keyboard[data-keyboard-open='true'] {
   opacity: 1;
   pointer-events: auto;
 }
@@ -132,7 +147,7 @@
   .portrait-only {
     display: block;
   }
-  
+
   .landscape-only {
     display: none;
   }
@@ -143,7 +158,7 @@
   .portrait-only {
     display: none;
   }
-  
+
   .landscape-only {
     display: block;
   }
@@ -174,16 +189,17 @@
   background: rgba(255, 255, 255, 0.1);
   border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 16px;
-  
+
   /* Standard backdrop-filter */
   backdrop-filter: blur(20px) saturate(180%);
-  
+
   /* Webkit fallback */
   -webkit-backdrop-filter: blur(20px) saturate(180%);
 }
 
 /* Fallback for browsers without backdrop-filter support */
-@supports not (backdrop-filter: blur(20px)) and not (-webkit-backdrop-filter: blur(20px)) {
+@supports not (backdrop-filter: blur(20px)) and not
+  (-webkit-backdrop-filter: blur(20px)) {
   .glass-effect {
     background: rgba(255, 255, 255, 0.2);
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
@@ -228,7 +244,10 @@
   bottom: 0;
   left: 0;
   right: 0;
-  padding-bottom: env(safe-area-inset-bottom, var(--safe-area-inset-bottom, 0px));
+  padding-bottom: env(
+    safe-area-inset-bottom,
+    var(--safe-area-inset-bottom, 0px)
+  );
   z-index: 50;
 }
 
@@ -244,8 +263,14 @@
 
 /* Content area that accounts for fixed navigation */
 .content-with-nav {
-  padding-top: calc(var(--nav-height, 64px) + env(safe-area-inset-top, var(--safe-area-inset-top, 0px)));
-  padding-bottom: calc(var(--nav-height, 64px) + env(safe-area-inset-bottom, var(--safe-area-inset-bottom, 0px)));
+  padding-top: calc(
+    var(--nav-height, 64px) +
+      env(safe-area-inset-top, var(--safe-area-inset-top, 0px))
+  );
+  padding-bottom: calc(
+    var(--nav-height, 64px) +
+      env(safe-area-inset-bottom, var(--safe-area-inset-bottom, 0px))
+  );
 }
 
 /* ==============================================
@@ -266,7 +291,7 @@
   .mobile-only {
     display: none;
   }
-  
+
   .tablet-only {
     display: block;
   }
@@ -276,7 +301,7 @@
   .tablet-only {
     display: none;
   }
-  
+
   .desktop-only {
     display: block;
   }

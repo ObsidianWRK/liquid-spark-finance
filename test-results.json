@@ -12,11 +12,7 @@
     "maxFailures": 0,
     "metadata": {},
     "preserveOutput": "always",
-    "reporter": [
-      [
-        "json"
-      ]
-    ],
+    "reporter": [["json"]],
     "reportSlowTests": {
       "max": 5,
       "threshold": 300000
@@ -50,9 +46,7 @@
           "**/hook-*.spec.ts",
           "**/comprehensive-hook-validation.spec.ts"
         ],
-        "testMatch": [
-          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
-        ],
+        "testMatch": ["**/*.@(spec|test).?(c|m)[jt]s?(x)"],
         "timeout": 30000
       },
       {
@@ -67,9 +61,7 @@
           "**/hook-*.spec.ts",
           "**/comprehensive-hook-validation.spec.ts"
         ],
-        "testMatch": [
-          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
-        ],
+        "testMatch": ["**/*.@(spec|test).?(c|m)[jt]s?(x)"],
         "timeout": 30000
       },
       {
@@ -84,9 +76,7 @@
           "**/hook-*.spec.ts",
           "**/comprehensive-hook-validation.spec.ts"
         ],
-        "testMatch": [
-          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
-        ],
+        "testMatch": ["**/*.@(spec|test).?(c|m)[jt]s?(x)"],
         "timeout": 30000
       },
       {
@@ -116,9 +106,7 @@
           "**/hook-*.spec.ts",
           "**/comprehensive-hook-validation.spec.ts"
         ],
-        "testMatch": [
-          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
-        ],
+        "testMatch": ["**/*.@(spec|test).?(c|m)[jt]s?(x)"],
         "timeout": 30000
       },
       {
@@ -133,9 +121,7 @@
           "**/hook-*.spec.ts",
           "**/comprehensive-hook-validation.spec.ts"
         ],
-        "testMatch": [
-          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
-        ],
+        "testMatch": ["**/*.@(spec|test).?(c|m)[jt]s?(x)"],
         "timeout": 30000
       }
     ],

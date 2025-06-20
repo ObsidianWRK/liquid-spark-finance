@@ -1,13 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { 
-  Search,
-  Bell,
-  User,
-  Settings,
-  Menu,
-  Plus
-} from 'lucide-react';
+import { Search, Bell, User, Settings, Menu, Plus } from 'lucide-react';
 import { cn } from '@/shared/lib/utils';
 import LiquidGlassSVGFilters from '@/shared/ui/LiquidGlassSVGFilters';
 import { MENU_BAR_HEIGHT } from '@/shared/tokens/menuBar.tokens';
@@ -22,17 +15,19 @@ import { useNavigationState } from '@/navigation/context/ScrollControllerContext
 const TopBar: React.FC = () => {
   const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState('');
-  
+
   // Check for debug override from URL params
   const urlParams = new URLSearchParams(window.location.search);
   const isDebugMode = urlParams.get('navDebug') === '1';
-  
+
   // Get navigation state with fallback values
   const rawNavigationState = useNavigationState();
   const navigationState = {
     shouldAnimate: rawNavigationState?.shouldAnimate ?? false,
     safeAreaTop: rawNavigationState?.safeAreaTop ?? 0,
-    transform: isDebugMode ? 'translateY(0)' : (rawNavigationState?.transform ?? 'translateY(0)'),
+    transform: isDebugMode
+      ? 'translateY(0)'
+      : (rawNavigationState?.transform ?? 'translateY(0)'),
   };
 
   const handleSearch = (e: React.FormEvent) => {
@@ -59,13 +54,14 @@ const TopBar: React.FC = () => {
   return (
     <>
       <LiquidGlassSVGFilters />
-      
+
       {/* Desktop Top Bar - Dark Mode Only */}
-      <header 
+      <header
         className={cn(
-          "flex fixed top-0 left-0 right-0 z-60 items-center",
-          "hidden lg:flex",
-          navigationState.shouldAnimate && "transition-transform duration-300 ease-out"
+          'flex fixed top-0 left-0 right-0 z-60 items-center',
+          'hidden lg:flex',
+          navigationState.shouldAnimate &&
+            'transition-transform duration-300 ease-out'
         )}
         style={{
           height: `${MENU_BAR_HEIGHT.landscape}px`,
@@ -79,7 +75,6 @@ const TopBar: React.FC = () => {
       >
         <div className="liquid-glass-nav w-full backdrop-blur-md saturate-[180%] border-b border-white/20">
           <div className="flex items-center justify-between h-full px-6">
-            
             {/* Search Section */}
             <div className="flex-1 max-w-2xl">
               <form onSubmit={handleSearch} className="relative">
@@ -98,7 +93,6 @@ const TopBar: React.FC = () => {
 
             {/* Action Buttons */}
             <div className="flex items-center space-x-2 ml-6">
-              
               {/* Quick Add Button */}
               <button
                 onClick={handleQuickAdd}
@@ -148,4 +142,4 @@ const TopBar: React.FC = () => {
   );
 };
 
-export default TopBar; 
+export default TopBar;

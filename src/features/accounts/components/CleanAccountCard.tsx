@@ -1,15 +1,15 @@
 import React, { useState } from 'react';
 import SimpleGlassCard from '@/shared/ui/SimpleGlassCard';
 import { vueniTheme } from '@/theme/unified';
-import { 
-  Eye, 
-  EyeOff, 
-  TrendingUp, 
+import {
+  Eye,
+  EyeOff,
+  TrendingUp,
   TrendingDown,
   CreditCard,
   PiggyBank,
   Wallet,
-  Building
+  Building,
 } from 'lucide-react';
 import { cn } from '@/shared/lib/utils';
 import { formatFinancialScore } from '@/shared/utils/formatters';
@@ -34,14 +34,18 @@ interface CleanAccountCardProps {
   className?: string;
 }
 
-const CleanAccountCard = ({ account, onClick, className }: CleanAccountCardProps) => {
+const CleanAccountCard = ({
+  account,
+  onClick,
+  className,
+}: CleanAccountCardProps) => {
   const [isBalanceVisible, setIsBalanceVisible] = useState(true);
 
   const formatCurrency = (amount: number) => {
     return new Intl.NumberFormat('en-US', {
       style: 'currency',
       currency: 'USD',
-      minimumFractionDigits: 2
+      minimumFractionDigits: 2,
     }).format(Math.abs(amount));
   };
 
@@ -62,9 +66,13 @@ const CleanAccountCard = ({ account, onClick, className }: CleanAccountCardProps
 
   const getBalanceColor = (balance: number, type: string) => {
     if (type.toLowerCase() === 'credit card') {
-      return balance < 0 ? vueniTheme.colors.palette.danger : vueniTheme.colors.palette.success;
+      return balance < 0
+        ? vueniTheme.colors.palette.danger
+        : vueniTheme.colors.palette.success;
     }
-    return balance >= 0 ? vueniTheme.colors.text.primary : vueniTheme.colors.palette.danger;
+    return balance >= 0
+      ? vueniTheme.colors.text.primary
+      : vueniTheme.colors.palette.danger;
   };
 
   const toggleBalanceVisibility = () => {
@@ -72,7 +80,7 @@ const CleanAccountCard = ({ account, onClick, className }: CleanAccountCardProps
   };
 
   return (
-    <SimpleGlassCard 
+    <SimpleGlassCard
       className={`p-6 ${className || ''}`}
       interactive={!!onClick}
       onClick={onClick}
@@ -87,19 +95,17 @@ const CleanAccountCard = ({ account, onClick, className }: CleanAccountCardProps
             <h3 className="font-medium text-white text-sm">
               {account.accountType}
             </h3>
-            <p className="text-white/60 text-xs">
-              {account.accountName}
-            </p>
+            <p className="text-white/60 text-xs">{account.accountName}</p>
           </div>
         </div>
-        
+
         <button
           onClick={(e) => {
             e.stopPropagation();
             toggleBalanceVisibility();
           }}
           className="p-2 rounded-xl bg-white/[0.06] hover:bg-white/[0.08] transition-colors"
-          aria-label={isBalanceVisible ? "Hide balance" : "Show balance"}
+          aria-label={isBalanceVisible ? 'Hide balance' : 'Show balance'}
         >
           {isBalanceVisible ? (
             <EyeOff className="w-4 h-4 text-white/70" />
@@ -111,16 +117,21 @@ const CleanAccountCard = ({ account, onClick, className }: CleanAccountCardProps
 
       {/* Balance */}
       <div className="mb-4">
-        <div className={`transition-all duration-300 ${isBalanceVisible ? '' : 'blur-sm'}`}>
-          <div 
+        <div
+          className={`transition-all duration-300 ${isBalanceVisible ? '' : 'blur-sm'}`}
+        >
+          <div
             className="text-2xl font-bold mb-1"
-            style={{ color: getBalanceColor(account.balance, account.accountType) }}
+            style={{
+              color: getBalanceColor(account.balance, account.accountType),
+            }}
           >
             {isBalanceVisible ? formatCurrency(account.balance) : '••••••'}
           </div>
           {account.available !== undefined && (
             <p className="text-white/50 text-sm">
-              Available: {isBalanceVisible ? formatCurrency(account.available) : '••••••'}
+              Available:{' '}
+              {isBalanceVisible ? formatCurrency(account.available) : '••••••'}
             </p>
           )}
         </div>
@@ -129,10 +140,13 @@ const CleanAccountCard = ({ account, onClick, className }: CleanAccountCardProps
       {/* Change Indicator */}
       {account.change && (
         <div className="flex items-center gap-2">
-          <div 
+          <div
             className="flex items-center gap-1"
-            style={{ 
-              color: account.change.amount >= 0 ? vueniTheme.colors.palette.success : vueniTheme.colors.palette.danger 
+            style={{
+              color:
+                account.change.amount >= 0
+                  ? vueniTheme.colors.palette.success
+                  : vueniTheme.colors.palette.danger,
             }}
           >
             {account.change.amount >= 0 ? (
@@ -144,9 +158,7 @@ const CleanAccountCard = ({ account, onClick, className }: CleanAccountCardProps
               {account.change.percentage.toFixed(1)}%
             </span>
           </div>
-          <span className="text-white/50 text-sm">
-            {account.change.period}
-          </span>
+          <span className="text-white/50 text-sm">{account.change.period}</span>
         </div>
       )}
 
@@ -163,4 +175,4 @@ const CleanAccountCard = ({ account, onClick, className }: CleanAccountCardProps
   );
 };
 
-export default CleanAccountCard; 
+export default CleanAccountCard;

@@ -110,31 +110,34 @@ export const MetricDisplay: React.FC<MetricDisplayProps> = ({
       <div className="flex items-center justify-between mb-1">
         <div className="flex items-center space-x-1">
           {Icon && (
-            <Icon 
+            <Icon
               className={cn(
-                variant === 'compact' ? 'w-3 h-3' : 
-                variant === 'large' ? 'w-5 h-5' : 'w-4 h-4'
+                variant === 'compact'
+                  ? 'w-3 h-3'
+                  : variant === 'large'
+                    ? 'w-5 h-5'
+                    : 'w-4 h-4'
               )}
               style={{ color: iconColor }}
             />
           )}
-          <span className={cn(
-            'text-white/70 font-medium',
-            textSizeClasses.label[variant]
-          )}>
+          <span
+            className={cn(
+              'text-white/70 font-medium',
+              textSizeClasses.label[variant]
+            )}
+          >
             {label}
           </span>
         </div>
-        
+
         {trend && (
           <div className="flex items-center space-x-1">
             {getTrendIcon()}
             {trendValue !== undefined && (
-              <span className={cn(
-                'text-xs font-medium',
-                getTrendColor()
-              )}>
-                {trendValue > 0 ? '+' : ''}{trendValue}%
+              <span className={cn('text-xs font-medium', getTrendColor())}>
+                {trendValue > 0 ? '+' : ''}
+                {trendValue}%
               </span>
             )}
           </div>
@@ -143,18 +146,17 @@ export const MetricDisplay: React.FC<MetricDisplayProps> = ({
 
       {/* Value display */}
       <div className="flex items-baseline space-x-1">
-        <span className={cn(
-          'font-bold transition-colors duration-200',
-          getStatusColor(),
-          textSizeClasses.value[variant]
-        )}>
+        <span
+          className={cn(
+            'font-bold transition-colors duration-200',
+            getStatusColor(),
+            textSizeClasses.value[variant]
+          )}
+        >
           {formatValue(value)}
         </span>
         {unit && (
-          <span className={cn(
-            'text-white/60',
-            textSizeClasses.unit[variant]
-          )}>
+          <span className={cn('text-white/60', textSizeClasses.unit[variant])}>
             {unit}
           </span>
         )}
@@ -167,18 +169,22 @@ export const MetricDisplay: React.FC<MetricDisplayProps> = ({
             <span>Target</span>
             <span>{formatValue(target)}</span>
           </div>
-          
+
           {/* Progress bar for target */}
           <div className="w-full bg-white/10 rounded-full h-1 mt-1">
-            <div 
+            <div
               className={cn(
                 'h-1 rounded-full transition-all duration-300',
-                status === 'good' ? 'bg-green-400' :
-                status === 'warning' ? 'bg-yellow-400' :
-                status === 'danger' ? 'bg-red-400' : 'bg-blue-400'
+                status === 'good'
+                  ? 'bg-green-400'
+                  : status === 'warning'
+                    ? 'bg-yellow-400'
+                    : status === 'danger'
+                      ? 'bg-red-400'
+                      : 'bg-blue-400'
               )}
-              style={{ 
-                width: `${Math.min(100, Math.max(0, (Number(value) / target) * 100))}%` 
+              style={{
+                width: `${Math.min(100, Math.max(0, (Number(value) / target) * 100))}%`,
               }}
             />
           </div>
@@ -189,7 +195,9 @@ export const MetricDisplay: React.FC<MetricDisplayProps> = ({
 };
 
 // Specialized metric displays for different data types
-export const StressMetric: React.FC<Omit<MetricDisplayProps, 'status' | 'iconColor'>> = (props) => {
+export const StressMetric: React.FC<
+  Omit<MetricDisplayProps, 'status' | 'iconColor'>
+> = (props) => {
   const stressValue = Number(props.value);
   const getStressStatus = (value: number): 'good' | 'warning' | 'danger' => {
     if (value >= 70) return 'danger';
@@ -198,18 +206,23 @@ export const StressMetric: React.FC<Omit<MetricDisplayProps, 'status' | 'iconCol
   };
 
   return (
-    <MetricDisplay 
+    <MetricDisplay
       {...props}
       status={getStressStatus(stressValue)}
       iconColor={
-        stressValue >= 70 ? '#ef4444' :
-        stressValue >= 50 ? '#f59e0b' : '#10b981'
+        stressValue >= 70
+          ? '#ef4444'
+          : stressValue >= 50
+            ? '#f59e0b'
+            : '#10b981'
       }
     />
   );
 };
 
-export const WellnessMetric: React.FC<Omit<MetricDisplayProps, 'status' | 'iconColor'>> = (props) => {
+export const WellnessMetric: React.FC<
+  Omit<MetricDisplayProps, 'status' | 'iconColor'>
+> = (props) => {
   const wellnessValue = Number(props.value);
   const getWellnessStatus = (value: number): 'good' | 'warning' | 'danger' => {
     if (value >= 80) return 'good';
@@ -218,18 +231,23 @@ export const WellnessMetric: React.FC<Omit<MetricDisplayProps, 'status' | 'iconC
   };
 
   return (
-    <MetricDisplay 
+    <MetricDisplay
       {...props}
       status={getWellnessStatus(wellnessValue)}
       iconColor={
-        wellnessValue >= 80 ? '#10b981' :
-        wellnessValue >= 60 ? '#f59e0b' : '#ef4444'
+        wellnessValue >= 80
+          ? '#10b981'
+          : wellnessValue >= 60
+            ? '#f59e0b'
+            : '#ef4444'
       }
     />
   );
 };
 
-export const HeartRateMetric: React.FC<Omit<MetricDisplayProps, 'status' | 'iconColor'>> = (props) => {
+export const HeartRateMetric: React.FC<
+  Omit<MetricDisplayProps, 'status' | 'iconColor'>
+> = (props) => {
   const hrValue = Number(props.value);
   const getHRStatus = (value: number): 'good' | 'warning' | 'danger' => {
     if (value >= 60 && value <= 100) return 'good';
@@ -238,12 +256,15 @@ export const HeartRateMetric: React.FC<Omit<MetricDisplayProps, 'status' | 'icon
   };
 
   return (
-    <MetricDisplay 
+    <MetricDisplay
       {...props}
       status={getHRStatus(hrValue)}
       iconColor={
-        hrValue >= 60 && hrValue <= 100 ? '#10b981' :
-        hrValue >= 50 && hrValue <= 120 ? '#f59e0b' : '#ef4444'
+        hrValue >= 60 && hrValue <= 100
+          ? '#10b981'
+          : hrValue >= 50 && hrValue <= 120
+            ? '#f59e0b'
+            : '#ef4444'
       }
     />
   );
@@ -271,9 +292,5 @@ export const MetricGrid: React.FC<MetricGridProps> = ({
     className
   );
 
-  return (
-    <div className={gridClasses}>
-      {children}
-    </div>
-  );
-}; 
+  return <div className={gridClasses}>{children}</div>;
+};

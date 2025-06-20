@@ -1,6 +1,6 @@
-import { create } from "zustand";
-import { subscriptionService } from "@/features/subscriptions/api/subscriptionService";
-import { RecurringCharge } from "@/shared/types/shared";
+import { create } from 'zustand';
+import { subscriptionService } from '@/features/subscriptions/api/subscriptionService';
+import { RecurringCharge } from '@/shared/types/shared';
 
 interface SubscriptionsState {
   charges: RecurringCharge[];
@@ -20,12 +20,14 @@ export const useSubscriptionsStore = create<SubscriptionsState>((set, get) => ({
       const charges = await subscriptionService.detectSubscriptions([]);
       set({ charges, loading: false });
     } catch (err: any) {
-      set({ error: err.message ?? "Unknown", loading: false });
+      set({ error: err.message ?? 'Unknown', loading: false });
     }
   },
   cancel: async (id: string) => {
     await subscriptionService.cancelSubscription(id);
-    const updated = get().charges.map((c) => (c.id === id ? { ...c, status: "pending_cancel" } : c));
+    const updated = get().charges.map((c) =>
+      c.id === id ? { ...c, status: 'pending_cancel' } : c
+    );
     set({ charges: updated });
   },
-})); 
+}));

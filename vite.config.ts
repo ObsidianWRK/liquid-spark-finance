@@ -1,14 +1,14 @@
-import { defineConfig } from "vite";
-import react from "@vitejs/plugin-react-swc";
-import path from "path";
-import { componentTagger } from "lovable-tagger";
+import { defineConfig } from 'vite';
+import react from '@vitejs/plugin-react-swc';
+import path from 'path';
+import { componentTagger } from 'lovable-tagger';
 import compression from 'vite-plugin-compression';
 import tsconfigPaths from 'vite-tsconfig-paths';
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => ({
   server: {
-    host: "::",
+    host: '::',
     port: 5173,
     strictPort: false,
     open: false,
@@ -17,22 +17,24 @@ export default defineConfig(({ mode }) => ({
     react(),
     tsconfigPaths(),
     mode === 'development' && componentTagger(),
-    mode === 'production' && compression({
-      algorithm: 'gzip',
-      ext: '.gz',
-      threshold: 1024,
-      filter: /\.(js|css|html|svg)$/i,
-    }),
-    mode === 'production' && compression({
-      algorithm: 'brotliCompress',
-      ext: '.br',
-      threshold: 1024,
-      filter: /\.(js|css|html|svg)$/i,
-    }),
+    mode === 'production' &&
+      compression({
+        algorithm: 'gzip',
+        ext: '.gz',
+        threshold: 1024,
+        filter: /\.(js|css|html|svg)$/i,
+      }),
+    mode === 'production' &&
+      compression({
+        algorithm: 'brotliCompress',
+        ext: '.br',
+        threshold: 1024,
+        filter: /\.(js|css|html|svg)$/i,
+      }),
   ].filter(Boolean),
   resolve: {
     alias: {
-      "@": path.resolve(__dirname, "./src"),
+      '@': path.resolve(__dirname, './src'),
     },
   },
   build: {
@@ -46,7 +48,11 @@ export default defineConfig(({ mode }) => ({
         manualChunks: {
           'vendor-react': ['react', 'react-dom'],
           'vendor-router': ['react-router-dom'],
-          'vendor-ui': ['@radix-ui/react-accordion', '@radix-ui/react-alert-dialog', '@radix-ui/react-dropdown-menu'],
+          'vendor-ui': [
+            '@radix-ui/react-accordion',
+            '@radix-ui/react-alert-dialog',
+            '@radix-ui/react-dropdown-menu',
+          ],
           'vendor-charts': ['recharts'],
           'vendor-utils': ['date-fns', 'clsx', 'tailwind-merge'],
         },
@@ -79,7 +85,7 @@ export default defineConfig(({ mode }) => ({
     'process.browser': true,
     'process.version': JSON.stringify(''),
     'process.platform': JSON.stringify('browser'),
-    'global': 'globalThis',
+    global: 'globalThis',
   },
   esbuild: {
     // Skip TypeScript type checking for faster development
@@ -88,7 +94,7 @@ export default defineConfig(({ mode }) => ({
         skipLibCheck: true,
         strict: false,
         noEmit: true,
-      }
-    }
+      },
+    },
   },
 }));

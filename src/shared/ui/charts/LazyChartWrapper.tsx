@@ -4,13 +4,13 @@
  * Target: vendor-charts ≤ 300KB
  */
 
-import React, { 
-  useState, 
-  useEffect, 
-  useRef, 
-  lazy, 
-  Suspense, 
-  ReactNode 
+import React, {
+  useState,
+  useEffect,
+  useRef,
+  lazy,
+  Suspense,
+  ReactNode,
 } from 'react';
 import { cn } from '@/shared/lib/utils';
 
@@ -21,10 +21,10 @@ const ChartSkeleton: React.FC<{
   showTitle?: boolean;
   title?: string;
 }> = ({ height = 180, className, showTitle = false, title }) => (
-  <div 
+  <div
     className={cn(
-      "bg-white/[0.02] rounded-lg border border-white/[0.08] animate-pulse",
-      "flex flex-col justify-center items-center p-6",
+      'bg-white/[0.02] rounded-lg border border-white/[0.08] animate-pulse',
+      'flex flex-col justify-center items-center p-6',
       className
     )}
     style={{ height }}
@@ -35,14 +35,14 @@ const ChartSkeleton: React.FC<{
         <div className="h-3 bg-white/[0.03] rounded w-1/2"></div>
       </div>
     )}
-    
+
     <div className="flex-1 w-full flex items-center justify-center">
       <div className="flex items-center space-x-2 text-white/60">
         <div className="w-6 h-6 border-2 border-blue-500/30 border-t-blue-500 rounded-full animate-spin"></div>
         <span className="text-sm">Loading chart...</span>
       </div>
     </div>
-    
+
     {/* Chart-like skeleton elements */}
     <div className="w-full flex items-end justify-center space-x-1 mt-4">
       {[...Array(8)].map((_, i) => (
@@ -72,16 +72,19 @@ const useIntersectionObserver = (
     const element = ref.current;
     if (!element) return;
 
-    const observer = new IntersectionObserver(([entry]) => {
-      setIsIntersecting(entry.isIntersecting);
-      if (entry.isIntersecting && !hasIntersected) {
-        setHasIntersected(true);
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setIsIntersecting(entry.isIntersecting);
+        if (entry.isIntersecting && !hasIntersected) {
+          setHasIntersected(true);
+        }
+      },
+      {
+        rootMargin: '50px', // Start loading 50px before visible
+        threshold: 0.1,
+        ...options,
       }
-    }, {
-      rootMargin: '50px', // Start loading 50px before visible
-      threshold: 0.1,
-      ...options
-    });
+    );
 
     observer.observe(element);
 
@@ -109,23 +112,22 @@ export const LazyChartWrapper: React.FC<LazyChartWrapperProps> = ({
   title,
   className,
   preload = false,
-  threshold = 0.1
+  threshold = 0.1,
 }) => {
   const containerRef = useRef<HTMLDivElement>(null);
-  const { hasIntersected } = useIntersectionObserver(containerRef, { threshold });
-  
+  const { hasIntersected } = useIntersectionObserver(containerRef, {
+    threshold,
+  });
+
   const shouldLoad = preload || hasIntersected;
 
   return (
-    <div 
-      ref={containerRef}
-      className={cn("w-full", className)}
-    >
+    <div ref={containerRef} className={cn('w-full', className)}>
       {shouldLoad ? (
-        <Suspense 
+        <Suspense
           fallback={
-            <ChartSkeleton 
-              height={height} 
+            <ChartSkeleton
+              height={height}
               showTitle={!!title}
               title={title}
               className={className}
@@ -135,8 +137,8 @@ export const LazyChartWrapper: React.FC<LazyChartWrapperProps> = ({
           {children}
         </Suspense>
       ) : (
-        <ChartSkeleton 
-          height={height} 
+        <ChartSkeleton
+          height={height}
           showTitle={!!title}
           title={title}
           className={className}
@@ -167,24 +169,29 @@ export const chartPerformance = {
       if (memory <= 2) return 'defer';
       if (memory >= 8) return 'immediate';
     }
-    
+
     return 'intersection';
   },
 
   // Monitor chart loading performance
   trackChartLoad: (chartType: string, startTime: number): void => {
     const loadTime = performance.now() - startTime;
-    console.log(`[Chart Performance] ${chartType} loaded in ${loadTime.toFixed(2)}ms`);
-    
+    console.log(
+      `[Chart Performance] ${chartType} loaded in ${loadTime.toFixed(2)}ms`
+    );
+
     // Send to analytics in production
     if (import.meta.env.PROD && 'sendBeacon' in navigator) {
-      navigator.sendBeacon('/api/performance/chart', JSON.stringify({
-        chartType,
-        loadTime,
-        timestamp: Date.now()
-      }));
+      navigator.sendBeacon(
+        '/api/performance/chart',
+        JSON.stringify({
+          chartType,
+          loadTime,
+          timestamp: Date.now(),
+        })
+      );
     }
-  }
+  },
 };
 
-export default LazyChartWrapper; 
+export default LazyChartWrapper;

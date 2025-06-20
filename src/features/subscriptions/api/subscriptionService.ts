@@ -1,4 +1,4 @@
-import { RecurringCharge } from "../types";
+import { RecurringCharge } from '../types';
 
 export interface SubscriptionService {
   detectSubscriptions: (transactions: unknown[]) => Promise<RecurringCharge[]>;
@@ -13,22 +13,26 @@ class MockSubscriptionService implements SubscriptionService {
       // generate mock charges
       this.charges = [
         {
-          id: "sub-1",
-          accountId: "acc1",
-          merchantName: "Netflix",
+          id: 'sub-1',
+          accountId: 'acc1',
+          merchantName: 'Netflix',
           amount: 15.99,
-          frequency: "monthly",
-          nextDueDate: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString(),
-          status: "active",
+          frequency: 'monthly',
+          nextDueDate: new Date(
+            Date.now() + 7 * 24 * 60 * 60 * 1000
+          ).toISOString(),
+          status: 'active',
         },
         {
-          id: "sub-2",
-          accountId: "acc1",
-          merchantName: "Spotify",
+          id: 'sub-2',
+          accountId: 'acc1',
+          merchantName: 'Spotify',
           amount: 9.99,
-          frequency: "monthly",
-          nextDueDate: new Date(Date.now() + 15 * 24 * 60 * 60 * 1000).toISOString(),
-          status: "active",
+          frequency: 'monthly',
+          nextDueDate: new Date(
+            Date.now() + 15 * 24 * 60 * 60 * 1000
+          ).toISOString(),
+          status: 'active',
         },
       ];
     }
@@ -38,11 +42,12 @@ class MockSubscriptionService implements SubscriptionService {
   async cancelSubscription(chargeId: string): Promise<boolean> {
     const charge = this.charges.find((c) => c.id === chargeId);
     if (charge) {
-      charge.status = "pending_cancel";
+      charge.status = 'pending_cancel';
       return true;
     }
     return false;
   }
 }
 
-export const subscriptionService: SubscriptionService = new MockSubscriptionService(); 
+export const subscriptionService: SubscriptionService =
+  new MockSubscriptionService();

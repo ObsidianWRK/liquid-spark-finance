@@ -8,7 +8,7 @@ import TopBar from './TopBar';
  * AdaptiveNavigation Component
  * Automatically selects the appropriate navigation variant based on viewport size:
  * - Mobile (<640px): BottomNav
- * - Tablet (640-1024px): NavRail  
+ * - Tablet (640-1024px): NavRail
  * - Desktop (≥1024px): TopBar only (no sidebar)
  */
 const AdaptiveNavigation: React.FC = () => {
@@ -18,14 +18,14 @@ const AdaptiveNavigation: React.FC = () => {
     <div data-testid="adaptive-navigation">
       {/* Mobile Navigation */}
       {isMobile && <BottomNav />}
-      
+
       {/* Tablet Navigation */}
       {isTablet && <NavRail />}
-      
+
       {/* Desktop Navigation - TopBar only */}
       {isDesktop && <TopBar />}
     </div>
   );
 };
 
-export default AdaptiveNavigation; 
+export default AdaptiveNavigation;

@@ -22,18 +22,18 @@ interface BackButtonProps {
 
 /**
  * BackButton Component
- * 
+ *
  * Implements proper back navigation that pops from browser history.
  * Falls back to a specified path when no history is available (e.g., deep links).
- * 
+ *
  * @example
  * ```tsx
  * // Basic usage with default fallback to dashboard
  * <BackButton />
- * 
+ *
  * // Custom fallback for account pages
  * <BackButton fallbackPath="/accounts" label="Back to Accounts" />
- * 
+ *
  * // Minimal styling for headers
  * <BackButton variant="minimal" size="sm" />
  * ```
@@ -66,9 +66,12 @@ export const BackButton: React.FC<BackButtonProps> = ({
 
   // Style variants
   const variants = {
-    default: 'flex items-center gap-2 px-3 py-2 rounded-xl text-white/80 hover:text-white hover:bg-white/[0.05] transition-colors',
-    ghost: 'flex items-center gap-2 px-3 py-2 rounded-xl text-white/80 hover:text-white hover:bg-white/[0.05] transition-colors border border-white/10',
-    minimal: 'flex items-center gap-2 text-white/80 hover:text-white transition-colors',
+    default:
+      'flex items-center gap-2 px-3 py-2 rounded-xl text-white/80 hover:text-white hover:bg-white/[0.05] transition-colors',
+    ghost:
+      'flex items-center gap-2 px-3 py-2 rounded-xl text-white/80 hover:text-white hover:bg-white/[0.05] transition-colors border border-white/10',
+    minimal:
+      'flex items-center gap-2 text-white/80 hover:text-white transition-colors',
   };
 
   const sizes = {
@@ -98,12 +101,14 @@ export const BackButton: React.FC<BackButtonProps> = ({
 
 /**
  * IconBackButton Component
- * 
+ *
  * Simplified version with just the icon for compact layouts
  */
-export const IconBackButton: React.FC<Omit<BackButtonProps, 'label'> & { 
-  ariaLabel?: string;
-}> = ({
+export const IconBackButton: React.FC<
+  Omit<BackButtonProps, 'label'> & {
+    ariaLabel?: string;
+  }
+> = ({
   fallbackPath = '/',
   className,
   icon: IconComponent = ArrowLeft,
@@ -115,7 +120,7 @@ export const IconBackButton: React.FC<Omit<BackButtonProps, 'label'> & {
 
   const handleBack = () => {
     onClick?.();
-    
+
     if (window.history.length > 2) {
       navigate(-1);
     } else {
@@ -148,4 +153,4 @@ export const IconBackButton: React.FC<Omit<BackButtonProps, 'label'> & {
   );
 };
 
-export default BackButton; 
+export default BackButton;

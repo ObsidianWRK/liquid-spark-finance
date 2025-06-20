@@ -4,23 +4,30 @@ test.describe('Biometrics & Wellness Unification', () => {
   test.beforeEach(async ({ page }) => {
     // Enable mock mode for accounts
     await page.goto('/?mock=true');
-    
+
     // Wait for the page to load completely
     await page.waitForLoadState('networkidle');
   });
 
-  test('Dashboard renders synchronized stress and wellness metrics', async ({ page }) => {
+  test('Dashboard renders synchronized stress and wellness metrics', async ({
+    page,
+  }) => {
     // Wait for biometrics provider to initialize
     await page.waitForTimeout(2000);
 
     // Check that stress index is present and numeric
-    const stressElement = page.locator('[data-testid="stress-index"], .stress-metric, text=Stress').first();
+    const stressElement = page
+      .locator('[data-testid="stress-index"], .stress-metric, text=Stress')
+      .first();
     await expect(stressElement).toBeVisible();
-    
+
     // Extract stress value - should be numeric 0-100
-    const stressText = await page.locator('text=/Stress.*\\d+/').first().textContent();
+    const stressText = await page
+      .locator('text=/Stress.*\\d+/')
+      .first()
+      .textContent();
     expect(stressText).toMatch(/\d+/);
-    
+
     // Validate stress value is within range
     const stressMatch = stressText?.match(/(\d+)/);
     if (stressMatch) {
@@ -30,13 +37,20 @@ test.describe('Biometrics & Wellness Unification', () => {
     }
 
     // Check that wellness score is present and numeric
-    const wellnessElement = page.locator('[data-testid="wellness-score"], .wellness-metric, text=Wellness').first();
+    const wellnessElement = page
+      .locator(
+        '[data-testid="wellness-score"], .wellness-metric, text=Wellness'
+      )
+      .first();
     await expect(wellnessElement).toBeVisible();
-    
+
     // Extract wellness value - should be numeric 0-100
-    const wellnessText = await page.locator('text=/Wellness.*\\d+|\\d+.*wellness/i').first().textContent();
+    const wellnessText = await page
+      .locator('text=/Wellness.*\\d+|\\d+.*wellness/i')
+      .first()
+      .textContent();
     expect(wellnessText).toMatch(/\d+/);
-    
+
     // Validate wellness value is within range
     const wellnessMatch = wellnessText?.match(/(\d+)/);
     if (wellnessMatch) {
@@ -49,7 +63,7 @@ test.describe('Biometrics & Wellness Unification', () => {
     const timestamp1 = Date.now();
     await page.waitForTimeout(100);
     const timestamp2 = Date.now();
-    
+
     // Verify timing is within <50ms requirement for synchronization
     const timeDiff = timestamp2 - timestamp1;
     expect(timeDiff).toBeLessThan(150); // Allow some buffer for test execution
@@ -57,25 +71,29 @@ test.describe('Biometrics & Wellness Unification', () => {
 
   test('Mock accounts render correctly on dashboard', async ({ page }) => {
     // Look for the LinkedAccountsCard or any account display
-    const accountsSection = page.locator('text=Linked Bank Accounts, text=Mock Mode, text=accounts').first();
+    const accountsSection = page
+      .locator('text=Linked Bank Accounts, text=Mock Mode, text=accounts')
+      .first();
     await expect(accountsSection).toBeVisible({ timeout: 5000 });
 
     // Check that we have 5 mock accounts as specified in fixture
-    const accountElements = page.locator('.account-item, [data-testid="account-card"]');
-    
+    const accountElements = page.locator(
+      '.account-item, [data-testid="account-card"]'
+    );
+
     // Wait for accounts to load
     await page.waitForTimeout(1000);
-    
+
     // Should have exactly 5 mock accounts
     await expect(accountElements).toHaveCount(5);
 
     // Verify account institutions are present
     const institutionNames = [
       'Chase Bank',
-      'Bank of America', 
+      'Bank of America',
       'Wells Fargo',
       'Charles Schwab',
-      'Citibank'
+      'Citibank',
     ];
 
     for (const institution of institutionNames) {
@@ -97,7 +115,10 @@ test.describe('Biometrics & Wellness Unification', () => {
     await page.waitForTimeout(2000);
 
     // Find biometric monitor card
-    const biometricCard = page.locator('text=Biometric Monitor').locator('..').locator('..');
+    const biometricCard = page
+      .locator('text=Biometric Monitor')
+      .locator('..')
+      .locator('..');
     await expect(biometricCard).toBeVisible();
 
     // Check for heart rate display
@@ -113,7 +134,9 @@ test.describe('Biometrics & Wellness Unification', () => {
     await expect(activeIndicator).toBeVisible();
 
     // Verify stress level progress bar
-    const progressBar = page.locator('.w-full.bg-white\\/10.rounded-full, [role="progressbar"]');
+    const progressBar = page.locator(
+      '.w-full.bg-white\\/10.rounded-full, [role="progressbar"]'
+    );
     await expect(progressBar).toBeVisible();
   });
 
@@ -122,7 +145,10 @@ test.describe('Biometrics & Wellness Unification', () => {
     await page.waitForTimeout(2000);
 
     // Find wellness score card
-    const wellnessCard = page.locator('text=Wellness Score').locator('..').locator('..');
+    const wellnessCard = page
+      .locator('text=Wellness Score')
+      .locator('..')
+      .locator('..');
     await expect(wellnessCard).toBeVisible();
 
     // Check for circular progress indicator
@@ -130,13 +156,22 @@ test.describe('Biometrics & Wellness Unification', () => {
     await expect(circularProgress).toBeVisible();
 
     // Check for score breakdown components
-    const stressComponent = page.locator('text=Stress').locator('..').locator('text=/\\d+/');
+    const stressComponent = page
+      .locator('text=Stress')
+      .locator('..')
+      .locator('text=/\\d+/');
     await expect(stressComponent).toBeVisible();
 
-    const hrvComponent = page.locator('text=HRV').locator('..').locator('text=/\\d+/');
+    const hrvComponent = page
+      .locator('text=HRV')
+      .locator('..')
+      .locator('text=/\\d+/');
     await expect(hrvComponent).toBeVisible();
 
-    const heartComponent = page.locator('text=Heart').locator('..').locator('text=/\\d+/');
+    const heartComponent = page
+      .locator('text=Heart')
+      .locator('..')
+      .locator('text=/\\d+/');
     await expect(heartComponent).toBeVisible();
 
     // Check for trend indicators
@@ -150,7 +185,9 @@ test.describe('Biometrics & Wellness Unification', () => {
     await expect(body).toHaveClass(/bg-black|bg-gray-900/);
 
     // Check card styling matches Eco Impact pattern
-    const cards = page.locator('.bg-white\\/\\[0\\.02\\], .bg-white\\/\\[0\\.03\\]');
+    const cards = page.locator(
+      '.bg-white\\/\\[0\\.02\\], .bg-white\\/\\[0\\.03\\]'
+    );
     await expect(cards).toHaveCount.atLeast(3);
 
     // Verify border styling
@@ -162,24 +199,30 @@ test.describe('Biometrics & Wellness Unification', () => {
     await expect(roundedCards).toHaveCount.atLeast(5);
 
     // Verify no light mode styles are present
-    const lightElements = page.locator('.bg-white:not([class*="/"]), .border-gray-300, .text-gray-900');
+    const lightElements = page.locator(
+      '.bg-white:not([class*="/"]), .border-gray-300, .text-gray-900'
+    );
     await expect(lightElements).toHaveCount(0);
   });
 
-  test('Performance: synchronized metrics update within 50ms', async ({ page }) => {
+  test('Performance: synchronized metrics update within 50ms', async ({
+    page,
+  }) => {
     // Wait for initialization
     await page.waitForTimeout(2000);
 
     // Monitor console for sync timing warnings
     const consoleMessages: string[] = [];
-    page.on('console', msg => {
+    page.on('console', (msg) => {
       if (msg.type() === 'warn' && msg.text().includes('sync')) {
         consoleMessages.push(msg.text());
       }
     });
 
     // Trigger manual biometric check
-    const refreshButton = page.locator('button:has-text("Refresh"), button:has-text("Manual"), button:has-text("Check")');
+    const refreshButton = page.locator(
+      'button:has-text("Refresh"), button:has-text("Manual"), button:has-text("Check")'
+    );
     if (await refreshButton.isVisible()) {
       await refreshButton.click();
     }
@@ -188,20 +231,26 @@ test.describe('Biometrics & Wellness Unification', () => {
     await page.waitForTimeout(1000);
 
     // Check that no sync timing warnings were logged
-    expect(consoleMessages.filter(msg => msg.includes('50ms'))).toHaveLength(0);
+    expect(consoleMessages.filter((msg) => msg.includes('50ms'))).toHaveLength(
+      0
+    );
 
     // Verify both metrics are updated (timestamps should be close)
     const updatedElements = page.locator('text=/Updated.*\\d{1,2}:\\d{2}/');
     await expect(updatedElements).toHaveCount.atLeast(1);
   });
 
-  test('Mock accounts load with environment variable check', async ({ page }) => {
+  test('Mock accounts load with environment variable check', async ({
+    page,
+  }) => {
     // Test without mock mode first
     await page.goto('/');
     await page.waitForLoadState('networkidle');
 
     // Should show empty state or no mock accounts
-    const noMockMessage = page.locator('text=No Linked Accounts, text=Enable mock mode');
+    const noMockMessage = page.locator(
+      'text=No Linked Accounts, text=Enable mock mode'
+    );
     await expect(noMockMessage).toBeVisible();
 
     // Now test with mock=true parameter
@@ -221,7 +270,7 @@ test.describe('Biometrics & Wellness Unification', () => {
     const checkingAccount = page.locator('text=Checking');
     const savingsAccount = page.locator('text=Savings');
     const creditAccount = page.locator('text=Credit');
-    
+
     await expect(checkingAccount).toBeVisible();
     await expect(savingsAccount).toBeVisible();
     await expect(creditAccount).toBeVisible();
@@ -233,33 +282,45 @@ test.describe('Responsive Design - Mobile to Desktop', () => {
     { name: 'Mobile', width: 375, height: 667 },
     { name: 'Tablet', width: 768, height: 1024 },
     { name: 'Desktop', width: 1024, height: 768 },
-    { name: 'Large Desktop', width: 1440, height: 900 }
+    { name: 'Large Desktop', width: 1440, height: 900 },
   ];
 
   for (const viewport of viewports) {
-    test(`Biometric cards render correctly on ${viewport.name}`, async ({ page }) => {
-      await page.setViewportSize({ width: viewport.width, height: viewport.height });
+    test(`Biometric cards render correctly on ${viewport.name}`, async ({
+      page,
+    }) => {
+      await page.setViewportSize({
+        width: viewport.width,
+        height: viewport.height,
+      });
       await page.goto('/?mock=true');
       await page.waitForLoadState('networkidle');
       await page.waitForTimeout(2000);
 
       // Check that biometric components are visible
-      const biometricElement = page.locator('text=Biometric Monitor, text=Stress, text=Wellness Score').first();
+      const biometricElement = page
+        .locator('text=Biometric Monitor, text=Stress, text=Wellness Score')
+        .first();
       await expect(biometricElement).toBeVisible();
 
       // Verify cards don't overflow horizontally
       const cards = page.locator('.bg-white\\/\\[0\\.02\\]');
       const firstCard = cards.first();
-      
+
       if (await firstCard.isVisible()) {
         const cardBox = await firstCard.boundingBox();
         if (cardBox) {
-          expect(cardBox.x + cardBox.width).toBeLessThanOrEqual(viewport.width + 50); // Allow 50px buffer
+          expect(cardBox.x + cardBox.width).toBeLessThanOrEqual(
+            viewport.width + 50
+          ); // Allow 50px buffer
         }
       }
 
       // Check that text is readable (not too small)
-      const textElements = page.locator('text=/\\d+/', 'text=/Stress|Wellness/');
+      const textElements = page.locator(
+        'text=/\\d+/',
+        'text=/Stress|Wellness/'
+      );
       await expect(textElements.first()).toBeVisible();
     });
   }
@@ -268,11 +329,11 @@ test.describe('Responsive Design - Mobile to Desktop', () => {
 test.describe('Error Handling & Edge Cases', () => {
   test('Handles biometric service errors gracefully', async ({ page }) => {
     // Intercept and mock service errors
-    await page.route('**/api/biometrics/**', route => {
+    await page.route('**/api/biometrics/**', (route) => {
       route.fulfill({
         status: 500,
         contentType: 'application/json',
-        body: JSON.stringify({ error: 'Service unavailable' })
+        body: JSON.stringify({ error: 'Service unavailable' }),
       });
     });
 
@@ -286,7 +347,7 @@ test.describe('Error Handling & Edge Cases', () => {
 
     // Check for error handling (should not show console errors)
     const errorMessages: string[] = [];
-    page.on('console', msg => {
+    page.on('console', (msg) => {
       if (msg.type() === 'error') {
         errorMessages.push(msg.text());
       }
@@ -295,10 +356,11 @@ test.describe('Error Handling & Edge Cases', () => {
     await page.waitForTimeout(1000);
 
     // Should handle errors gracefully without crashing
-    const criticalErrors = errorMessages.filter(msg => 
-      !msg.includes('favicon') && 
-      !msg.includes('404') && 
-      msg.includes('Error')
+    const criticalErrors = errorMessages.filter(
+      (msg) =>
+        !msg.includes('favicon') &&
+        !msg.includes('404') &&
+        msg.includes('Error')
     );
     expect(criticalErrors).toHaveLength.lessThan(3); // Allow minor non-critical errors
   });
@@ -309,12 +371,14 @@ test.describe('Error Handling & Edge Cases', () => {
     await page.waitForTimeout(2000);
 
     // Should show "no devices" state or default values
-    const noDevicesMessage = page.locator('text=No devices connected, text=device');
-    
+    const noDevicesMessage = page.locator(
+      'text=No devices connected, text=device'
+    );
+
     // Either shows connected devices or no devices message
     const hasDevices = await page.locator('text=Apple Watch').isVisible();
     const hasNoDevicesMsg = await noDevicesMessage.isVisible();
-    
+
     expect(hasDevices || hasNoDevicesMsg).toBeTruthy();
   });
-}); 
+});

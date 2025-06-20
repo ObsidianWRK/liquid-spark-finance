@@ -1,10 +1,10 @@
-import { 
-  Account, 
-  AccountConnection, 
-  AccountBalance, 
+import {
+  Account,
+  AccountConnection,
+  AccountBalance,
   AccountPerformance,
   Institution,
-  SyncStatus
+  SyncStatus,
 } from '@/types/accounts';
 import { Transaction } from '@/types/transactions';
 
@@ -65,14 +65,18 @@ export class AccountService {
       institutionName: data.institutionName,
       metadata: {
         tags: [],
-        notes: 'Manually created account'
+        notes: 'Manually created account',
       },
       createdAt: new Date(),
-      updatedAt: new Date()
+      updatedAt: new Date(),
     };
 
     this.accounts.set(account.id, account);
-    await this.recordBalanceHistory(account.id, account.balance, account.currency);
+    await this.recordBalanceHistory(
+      account.id,
+      account.balance,
+      account.currency
+    );
 
     return account;
   }
@@ -94,27 +98,27 @@ export class AccountService {
     try {
       // Exchange public token for access token
       const accessToken = await this.exchangePlaidToken(data.publicToken);
-      
+
       // Create connection record
       const connection = await this.createAccountConnection({
         familyId: data.familyId,
         institutionId: data.institutionId,
         provider: 'plaid',
         accessToken,
-        accounts: data.accounts.map(a => a.id)
+        accounts: data.accounts.map((a) => a.id),
       });
 
       // Create account records
       const createdAccounts: Account[] = [];
-      
+
       for (const plaidAccount of data.accounts) {
         const account = await this.createAccountFromPlaid({
           familyId: data.familyId,
           connectionId: connection.id,
           plaidAccount,
-          institutionId: data.institutionId
+          institutionId: data.institutionId,
         });
-        
+
         createdAccounts.push(account);
       }
 
@@ -154,7 +158,7 @@ export class AccountService {
       connection.error = {
         code: 'SYNC_ERROR',
         message: error instanceof Error ? error.message : 'Unknown sync error',
-        timestamp: new Date()
+        timestamp: new Date(),
       };
       this.connections.set(connectionId, connection);
       throw error;
@@ -172,21 +176,28 @@ export class AccountService {
       institutionId?: string;
     }
   ): Promise<Account[]> {
-    const familyAccounts = Array.from(this.accounts.values())
-      .filter(account => account.familyId === familyId);
+    const familyAccounts = Array.from(this.accounts.values()).filter(
+      (account) => account.familyId === familyId
+    );
 
     if (!filters) {
       return familyAccounts;
     }
 
-    return familyAccounts.filter(account => {
+    return familyAccounts.filter((account) => {
       if (filters.accountType && account.accountType !== filters.accountType) {
         return false;
       }
-      if (filters.isActive !== undefined && account.isActive !== filters.isActive) {
+      if (
+        filters.isActive !== undefined &&
+        account.isActive !== filters.isActive
+      ) {
         return false;
       }
-      if (filters.institutionId && account.institutionId !== filters.institutionId) {
+      if (
+        filters.institutionId &&
+        account.institutionId !== filters.institutionId
+      ) {
         return false;
       }
       return true;
@@ -207,9 +218,9 @@ export class AccountService {
 
     const balanceHistory = this.balanceHistory.get(accountId) || [];
     const { startDate, endDate } = this.getPeriodDates(period);
-    
+
     const periodBalances = balanceHistory.filter(
-      balance => balance.asOfDate >= startDate && balance.asOfDate <= endDate
+      (balance) => balance.asOfDate >= startDate && balance.asOfDate <= endDate
     );
 
     if (periodBalances.length === 0) {
@@ -226,14 +237,15 @@ export class AccountService {
         interest: 0,
         dividends: 0,
         unrealizedGains: 0,
-        realizedGains: 0
+        realizedGains: 0,
       };
     }
 
     const startBalance = periodBalances[0].balance;
     const endBalance = periodBalances[periodBalances.length - 1].balance;
     const totalReturn = endBalance - startBalance;
-    const totalReturnPercentage = startBalance > 0 ? (totalReturn / startBalance) * 100 : 0;
+    const totalReturnPercentage =
+      startBalance > 0 ? (totalReturn / startBalance) * 100 : 0;
 
     // TODO: Calculate detailed metrics from transaction data
     return {
@@ -249,7 +261,7 @@ export class AccountService {
       interest: 0, // Calculate from interest transactions
       dividends: 0, // Calculate from dividend transactions
       unrealizedGains: 0, // For investment accounts
-      realizedGains: 0 // For investment accounts
+      realizedGains: 0, // For investment accounts
     };
   }
 
@@ -268,7 +280,7 @@ export class AccountService {
     const updatedAccount = {
       ...account,
       ...updates,
-      updatedAt: new Date()
+      updatedAt: new Date(),
     };
 
     this.accounts.set(accountId, updatedAccount);
@@ -284,8 +296,8 @@ export class AccountService {
   ): Promise<AccountBalance[]> {
     const history = this.balanceHistory.get(accountId) || [];
     const cutoffDate = new Date(Date.now() - days * 24 * 60 * 60 * 1000);
-    
-    return history.filter(balance => balance.asOfDate >= cutoffDate);
+
+    return history.filter((balance) => balance.asOfDate >= cutoffDate);
   }
 
   /**
@@ -306,17 +318,16 @@ export class AccountService {
    * Get supported institutions for account linking
    */
   async getSupportedInstitutions(search?: string): Promise<Institution[]> {
-    const institutions = Array.from(this.institutions.values())
-      .filter(inst => inst.isActive);
+    const institutions = Array.from(this.institutions.values()).filter(
+      (inst) => inst.isActive
+    );
 
     if (!search) {
       return institutions.slice(0, 50); // Limit for performance
     }
 
     return institutions
-      .filter(inst => 
-        inst.name.toLowerCase().includes(search.toLowerCase())
-      )
+      .filter((inst) => inst.name.toLowerCase().includes(search.toLowerCase()))
       .slice(0, 20);
   }
 
@@ -343,7 +354,7 @@ export class AccountService {
       accounts: data.accounts,
       status: 'active',
       createdAt: new Date(),
-      updatedAt: new Date()
+      updatedAt: new Date(),
     };
 
     this.connections.set(connection.id, connection);
@@ -367,7 +378,7 @@ export class AccountService {
     institutionId: string;
   }): Promise<Account> {
     const institution = this.institutions.get(data.institutionId);
-    
+
     const account: Account = {
       id: this.generateAccountId(),
       familyId: data.familyId,
@@ -385,37 +396,46 @@ export class AccountService {
       metadata: {
         plaidAccountId: data.plaidAccount.id,
         tags: [],
-        notes: 'Linked via Plaid'
+        notes: 'Linked via Plaid',
       },
       createdAt: new Date(),
-      updatedAt: new Date()
+      updatedAt: new Date(),
     };
 
     this.accounts.set(account.id, account);
     return account;
   }
 
-  private async syncPlaidAccounts(connection: AccountConnection): Promise<void> {
+  private async syncPlaidAccounts(
+    connection: AccountConnection
+  ): Promise<void> {
     // TODO: Implement actual Plaid API calls
     // This would fetch balances and transactions from Plaid
-    
+
     for (const accountId of connection.accounts) {
-      const account = Array.from(this.accounts.values())
-        .find(acc => acc.externalAccountId === accountId);
-      
+      const account = Array.from(this.accounts.values()).find(
+        (acc) => acc.externalAccountId === accountId
+      );
+
       if (account) {
         // Mock balance update
         account.balance = Math.random() * 10000;
         account.lastSyncAt = new Date();
         account.syncStatus = 'active';
         this.accounts.set(account.id, account);
-        
-        await this.recordBalanceHistory(account.id, account.balance, account.currency);
+
+        await this.recordBalanceHistory(
+          account.id,
+          account.balance,
+          account.currency
+        );
       }
     }
   }
 
-  private async syncTellerAccounts(connection: AccountConnection): Promise<void> {
+  private async syncTellerAccounts(
+    connection: AccountConnection
+  ): Promise<void> {
     // TODO: Implement Teller API integration
   }
 
@@ -425,21 +445,23 @@ export class AccountService {
     currency: string
   ): Promise<void> {
     const history = this.balanceHistory.get(accountId) || [];
-    
+
     const balanceRecord: AccountBalance = {
       accountId,
       balance,
       currency,
       asOfDate: new Date(),
-      balanceType: 'current'
+      balanceType: 'current',
     };
 
     history.push(balanceRecord);
-    
+
     // Keep only last 365 days of history
     const cutoffDate = new Date(Date.now() - 365 * 24 * 60 * 60 * 1000);
-    const filteredHistory = history.filter(record => record.asOfDate >= cutoffDate);
-    
+    const filteredHistory = history.filter(
+      (record) => record.asOfDate >= cutoffDate
+    );
+
     this.balanceHistory.set(accountId, filteredHistory);
   }
 
@@ -458,8 +480,8 @@ export class AccountService {
           liabilities: true,
           identity: true,
           auth: true,
-          realTimeUpdates: false
-        }
+          realTimeUpdates: false,
+        },
       },
       {
         id: 'bofa',
@@ -473,9 +495,9 @@ export class AccountService {
           liabilities: true,
           identity: true,
           auth: true,
-          realTimeUpdates: false
-        }
-      }
+          realTimeUpdates: false,
+        },
+      },
       // Add more institutions...
     ];
 
@@ -503,28 +525,33 @@ export class AccountService {
     }
   }
 
-  private mapPlaidAccountSubtype(plaidSubtype: string): Account['accountSubtype'] {
+  private mapPlaidAccountSubtype(
+    plaidSubtype: string
+  ): Account['accountSubtype'] {
     // Map Plaid subtypes to our internal subtypes
     const subtypeMap: Record<string, Account['accountSubtype']> = {
-      'checking': 'checking',
-      'savings': 'savings',
+      checking: 'checking',
+      savings: 'savings',
       'money market': 'money_market',
-      'cd': 'cd',
+      cd: 'cd',
       'credit card': 'credit_card',
-      'mortgage': 'mortgage',
-      'auto': 'auto_loan',
-      'student': 'student_loan',
-      'brokerage': 'brokerage',
-      'ira': 'ira',
-      'roth': 'roth_ira',
+      mortgage: 'mortgage',
+      auto: 'auto_loan',
+      student: 'student_loan',
+      brokerage: 'brokerage',
+      ira: 'ira',
+      roth: 'roth_ira',
       '401k': '401k',
-      '403b': '403b'
+      '403b': '403b',
     };
 
     return subtypeMap[plaidSubtype.toLowerCase()] || 'checking';
   }
 
-  private getPeriodDates(period: AccountPerformance['period']): { startDate: Date; endDate: Date } {
+  private getPeriodDates(period: AccountPerformance['period']): {
+    startDate: Date;
+    endDate: Date;
+  } {
     const endDate = new Date();
     const startDate = new Date();
 

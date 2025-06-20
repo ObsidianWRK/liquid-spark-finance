@@ -1,6 +1,6 @@
 /**
  * Viewport Management React Hooks
- * 
+ *
  * Provides React hooks for comprehensive viewport management:
  * - useViewportState: Complete viewport state management
  * - useSafeArea: Safe area insets with polyfills
@@ -10,12 +10,12 @@
  */
 
 import { useState, useEffect, useCallback, useRef } from 'react';
-import { 
-  getSafeAreaInsets, 
+import {
+  getSafeAreaInsets,
   initializeViewportPolyfills,
   getViewportCapabilities,
   type SafeAreaInsets,
-  type ViewportCapabilities 
+  type ViewportCapabilities,
 } from '../utils/viewport-polyfills';
 import {
   addViewportChangeListener,
@@ -25,7 +25,7 @@ import {
   getVirtualKeyboardHeight,
   type VisualViewportState,
   type ViewportChangeEvent,
-  type ViewportChangeListener
+  type ViewportChangeListener,
 } from '../utils/visual-viewport-utils';
 import {
   addOrientationChangeListener,
@@ -33,7 +33,7 @@ import {
   getCurrentOrientation,
   type OrientationState,
   type OrientationChangeEvent,
-  type OrientationChangeListener
+  type OrientationChangeListener,
 } from '../utils/orientation-utils';
 
 // Comprehensive viewport state
@@ -41,23 +41,23 @@ export interface ViewportState {
   // Dimensions
   width: number;
   height: number;
-  
+
   // Visual viewport
   visualViewport: VisualViewportState;
-  
+
   // Safe areas
   safeArea: SafeAreaInsets;
-  
+
   // Orientation
   orientation: OrientationState;
-  
+
   // Capabilities
   capabilities: ViewportCapabilities;
-  
+
   // Virtual keyboard
   isKeyboardOpen: boolean;
   keyboardHeight: number;
-  
+
   // Convenience flags
   isMobile: boolean;
   isTablet: boolean;
@@ -75,7 +75,7 @@ export const useViewport = (): ViewportState => {
     if (typeof window !== 'undefined') {
       initializeViewportPolyfills();
     }
-    
+
     return getInitialViewportState();
   });
 
@@ -99,8 +99,11 @@ export const useViewport = (): ViewportState => {
       updateStateRef.current?.();
     };
 
-    const removeViewportListener = addViewportChangeListener(handleViewportChange);
-    const removeOrientationListener = addOrientationChangeListener(handleOrientationChange);
+    const removeViewportListener =
+      addViewportChangeListener(handleViewportChange);
+    const removeOrientationListener = addOrientationChangeListener(
+      handleOrientationChange
+    );
 
     // Initial update
     updateState();
@@ -123,7 +126,7 @@ export const useSafeArea = (): SafeAreaInsets => {
   useEffect(() => {
     // Initialize polyfills
     initializeViewportPolyfills();
-    
+
     const handleViewportChange: ViewportChangeListener = () => {
       setSafeArea(getSafeAreaInsets());
     };
@@ -135,8 +138,11 @@ export const useSafeArea = (): SafeAreaInsets => {
       }, 100);
     };
 
-    const removeViewportListener = addViewportChangeListener(handleViewportChange);
-    const removeOrientationListener = addOrientationChangeListener(handleOrientationChange);
+    const removeViewportListener =
+      addViewportChangeListener(handleViewportChange);
+    const removeOrientationListener = addOrientationChangeListener(
+      handleOrientationChange
+    );
 
     return () => {
       removeViewportListener();
@@ -178,14 +184,18 @@ export const useVirtualKeyboard = () => {
  * Orientation change hook
  */
 export const useOrientation = () => {
-  const [orientation, setOrientation] = useState<OrientationState>(getCurrentOrientation);
+  const [orientation, setOrientation] = useState<OrientationState>(
+    getCurrentOrientation
+  );
 
   useEffect(() => {
     const handleOrientationChange: OrientationChangeListener = (event) => {
       setOrientation(event.current);
     };
 
-    const removeListener = addOrientationChangeListener(handleOrientationChange);
+    const removeListener = addOrientationChangeListener(
+      handleOrientationChange
+    );
 
     return removeListener;
   }, []);
@@ -205,7 +215,7 @@ export const useViewportDimensions = () => {
     if (typeof window === 'undefined') {
       return { width: 0, height: 0 };
     }
-    
+
     const vvState = getVisualViewportState();
     return {
       width: vvState.width,
@@ -359,7 +369,8 @@ function getCurrentViewportState(): ViewportState {
   const capabilities = getViewportCapabilities();
 
   const isMobile = capabilities.isMobile;
-  const isTablet = !isMobile && visualViewport.width >= 768 && visualViewport.width < 1024;
+  const isTablet =
+    !isMobile && visualViewport.width >= 768 && visualViewport.width < 1024;
   const isDesktop = !isMobile && visualViewport.width >= 1024;
 
   return {

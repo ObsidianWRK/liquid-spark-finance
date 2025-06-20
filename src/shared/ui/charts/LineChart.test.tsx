@@ -19,24 +19,14 @@ const mockData = [
 
 describe('LineChart', () => {
   it('renders without crashing', () => {
-    render(
-      <LineChart
-        data={mockData}
-        title="Test Chart"
-      />
-    );
-    
+    render(<LineChart data={mockData} title="Test Chart" />);
+
     expect(screen.getByText('Test Chart')).toBeInTheDocument();
   });
 
   it('handles empty data gracefully', () => {
-    render(
-      <LineChart
-        data={[]}
-        title="Empty Chart"
-      />
-    );
-    
+    render(<LineChart data={[]} title="Empty Chart" />);
+
     expect(screen.getByText('No data available')).toBeInTheDocument();
   });
 
@@ -50,12 +40,12 @@ describe('LineChart', () => {
           {
             dataKey: 'value',
             label: 'Value',
-            color: '#007AFF'
-          }
+            color: '#007AFF',
+          },
         ]}
       />
     );
-    
+
     // Should show a trend indicator (percentage change)
     expect(screen.getByText(/[+-]\d+\.\d%/)).toBeInTheDocument();
   });
@@ -70,18 +60,18 @@ describe('LineChart', () => {
           {
             dataKey: 'revenue',
             label: 'Revenue',
-            color: '#32D74B'
+            color: '#32D74B',
           },
           {
             dataKey: 'expenses',
             label: 'Expenses',
-            color: '#FF453A'
-          }
+            color: '#FF453A',
+          },
         ]}
         legend={{ show: true }}
       />
     );
-    
+
     expect(screen.getByText('Multi-Series Chart')).toBeInTheDocument();
   });
 
@@ -95,12 +85,12 @@ describe('LineChart', () => {
           {
             dataKey: 'value',
             label: 'Value',
-            color: '#007AFF'
-          }
+            color: '#007AFF',
+          },
         ]}
       />
     );
-    
+
     expect(screen.getByText('Currency Chart')).toBeInTheDocument();
   });
 
@@ -119,7 +109,7 @@ describe('LineChart', () => {
         }}
       />
     );
-    
+
     expect(screen.getByText('Apple Style Chart')).toBeInTheDocument();
   });
 });

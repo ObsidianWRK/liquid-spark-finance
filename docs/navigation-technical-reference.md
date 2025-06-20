@@ -20,6 +20,7 @@ import { AdaptiveNavigation } from '@/navigation';
 ```
 
 **Behavior:**
+
 - Automatically detects viewport size using `useBreakpoint`
 - Renders appropriate navigation variant
 - Handles viewport changes with smooth transitions
@@ -38,14 +39,14 @@ interface BottomNavProps {
 const BottomNav: React.FC = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  
+
   // Filters routes and limits to 5 items
   const navRoutes = mainRoutes
     .filter(route => !route.hideInBottomNav)
     .slice(0, 5);
-    
+
   return (
-    <nav 
+    <nav
       className="fixed bottom-0 left-0 right-0 z-50 sm:hidden"
       style={{ paddingBottom: 'env(safe-area-inset-bottom)' }}
     >
@@ -56,6 +57,7 @@ const BottomNav: React.FC = () => {
 ```
 
 **Features:**
+
 - Fixed bottom positioning with z-index 50
 - Safe area inset support for iOS devices
 - Glass morphism backdrop with SVG filters
@@ -75,19 +77,19 @@ interface NavRailState {
 
 const NavRail: React.FC = () => {
   const [isExpanded, setIsExpanded] = useState(false);
-  
+
   // Hover and touch interactions
   const handleMouseEnter = () => setIsExpanded(true);
   const handleMouseLeave = () => setIsExpanded(false);
-  
+
   // Long press for touch devices (500ms)
   const handleTouchStart = () => {
     const timer = setTimeout(() => setIsExpanded(true), 500);
     return () => clearTimeout(timer);
   };
-  
+
   return (
-    <nav 
+    <nav
       className="hidden sm:flex lg:hidden fixed left-0 top-0 bottom-0 z-40"
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
@@ -100,6 +102,7 @@ const NavRail: React.FC = () => {
 ```
 
 **Features:**
+
 - Collapsed width: 80px (w-20)
 - Expanded width: 256px (w-64)
 - Smooth expand/collapse animations
@@ -119,7 +122,7 @@ interface TopBarProps {
 const TopBar: React.FC = () => {
   const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState('');
-  
+
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
     if (searchQuery.trim()) {
@@ -127,9 +130,9 @@ const TopBar: React.FC = () => {
       console.log('Search:', searchQuery);
     }
   };
-  
+
   return (
-    <header 
+    <header
       className="hidden lg:flex fixed top-0 left-0 right-0 z-50"
       style={{ height: `${MENU_BAR_HEIGHT.landscape}px` }}
     >
@@ -140,6 +143,7 @@ const TopBar: React.FC = () => {
 ```
 
 **Features:**
+
 - Fixed top positioning for desktop only
 - Search functionality with form submission
 - Quick action buttons (Add, Notifications, Settings, Profile)
@@ -153,9 +157,9 @@ const TopBar: React.FC = () => {
 ```typescript
 interface UseBreakpointReturn {
   breakpoint: Breakpoint;
-  isMobile: boolean;      // <= 767px
-  isTablet: boolean;      // 768px - 1023px
-  isDesktop: boolean;     // >= 1024px
+  isMobile: boolean; // <= 767px
+  isTablet: boolean; // 768px - 1023px
+  isDesktop: boolean; // >= 1024px
   isLargeDesktop: boolean; // >= 1440px
 }
 
@@ -183,7 +187,10 @@ export const useBreakpoint = (): UseBreakpointReturn => {
     breakpoint,
     isMobile: breakpoint === 'mobile',
     isTablet: breakpoint === 'tablet',
-    isDesktop: breakpoint === 'desktop' || breakpoint === 'large' || breakpoint === 'ultrawide',
+    isDesktop:
+      breakpoint === 'desktop' ||
+      breakpoint === 'large' ||
+      breakpoint === 'ultrawide',
     isLargeDesktop: breakpoint === 'large' || breakpoint === 'ultrawide',
   };
 };
@@ -197,19 +204,19 @@ export const useBreakpoint = (): UseBreakpointReturn => {
 interface Route {
   /** Unique identifier for the route */
   id: string;
-  
+
   /** Human-readable label displayed in navigation */
   label: string;
-  
+
   /** React Router path pattern */
   path: string;
-  
+
   /** Lucide React icon component */
   icon: React.ComponentType<{ className?: string }>;
-  
+
   /** Optional badge key for notification counts */
   badgeKey?: string;
-  
+
   /** Whether to hide this route from bottom navigation */
   hideInBottomNav?: boolean;
 }
@@ -228,7 +235,7 @@ export const mainRoutes: Route[] = [
   },
   {
     id: 'accounts',
-    label: 'Accounts', 
+    label: 'Accounts',
     path: '/accounts',
     icon: CreditCard,
   },
@@ -282,21 +289,21 @@ export const allRoutes: Route[] = [...mainRoutes, ...secondaryRoutes];
 ```css
 :root {
   /* Navigation Heights */
-  --nav-mobile-height: 4rem;          /* 64px */
-  --nav-tablet-width: 5rem;           /* 80px collapsed */
-  --nav-tablet-expanded: 16rem;       /* 256px expanded */
-  --nav-desktop-width: 18rem;         /* 288px sidebar */
-  --nav-topbar-height: 3rem;          /* 48px */
-  
+  --nav-mobile-height: 4rem; /* 64px */
+  --nav-tablet-width: 5rem; /* 80px collapsed */
+  --nav-tablet-expanded: 16rem; /* 256px expanded */
+  --nav-desktop-width: 18rem; /* 288px sidebar */
+  --nav-topbar-height: 3rem; /* 48px */
+
   /* Glass Effect Variables */
   --glass-bg: rgba(0, 0, 0, 0.6);
   --glass-border: rgba(255, 255, 255, 0.1);
   --glass-backdrop: blur(20px) saturate(180%);
-  
+
   /* Touch Targets */
-  --touch-target-min: 44px;           /* WCAG minimum */
-  --touch-target-comfortable: 56px;    /* Recommended */
-  
+  --touch-target-min: 44px; /* WCAG minimum */
+  --touch-target-comfortable: 56px; /* Recommended */
+
   /* Z-Index Scale */
   --z-nav-mobile: 50;
   --z-nav-tablet: 40;
@@ -494,7 +501,7 @@ export const allRoutes: Route[] = [...mainRoutes, ...secondaryRoutes];
 
 /* Navigation component animations */
 .nav-component {
-  transition: 
+  transition:
     transform var(--nav-transition-duration) var(--nav-transition-easing),
     opacity var(--nav-transition-duration) var(--nav-transition-easing),
     background-color var(--nav-hover-duration) ease,
@@ -634,20 +641,20 @@ describe('NavigationComponent', () => {
     it('should navigate when route buttons are clicked', async () => {
       const user = userEvent.setup();
       render(<BottomNav />);
-      
+
       const transactionsBtn = screen.getByLabelText('Navigate to Transactions');
       await user.click(transactionsBtn);
-      
+
       expect(mockNavigate).toHaveBeenCalledWith('/transactions');
     });
 
     it('should expand navigation rail on hover', async () => {
       const user = userEvent.setup();
       render(<NavRail />);
-      
+
       const rail = screen.getByLabelText('Navigation rail');
       await user.hover(rail);
-      
+
       await waitFor(() => {
         expect(rail).toHaveClass('w-64'); // Expanded width
       });
@@ -657,10 +664,10 @@ describe('NavigationComponent', () => {
   describe('Accessibility', () => {
     it('should have proper ARIA labels', () => {
       render(<BottomNav />);
-      
+
       const navigation = screen.getByRole('navigation');
       expect(navigation).toHaveAttribute('aria-label', 'Bottom navigation');
-      
+
       const buttons = screen.getAllByRole('button');
       buttons.forEach(button => {
         expect(button).toHaveAttribute('aria-label');
@@ -671,17 +678,17 @@ describe('NavigationComponent', () => {
     it('should support keyboard navigation', async () => {
       const user = userEvent.setup();
       render(<BottomNav />);
-      
+
       const firstButton = screen.getAllByRole('button')[0];
       firstButton.focus();
-      
+
       await user.keyboard('{Enter}');
       expect(mockNavigate).toHaveBeenCalled();
     });
 
     it('should meet minimum touch target sizes', () => {
       render(<BottomNav />);
-      
+
       const buttons = screen.getAllByRole('button');
       buttons.forEach(button => {
         const rect = button.getBoundingClientRect();
@@ -695,7 +702,7 @@ describe('NavigationComponent', () => {
     it('should not re-render unnecessarily', () => {
       const spy = jest.spyOn(React, 'memo');
       render(<BottomNav />);
-      
+
       // Trigger state change that shouldn't affect nav
       // Verify memo prevented re-render
       expect(spy).toHaveBeenCalled();
@@ -704,14 +711,14 @@ describe('NavigationComponent', () => {
     it('should debounce resize events', () => {
       jest.useFakeTimers();
       render(<AdaptiveNavigation />);
-      
+
       // Simulate rapid resize events
       act(() => {
         window.dispatchEvent(new Event('resize'));
         window.dispatchEvent(new Event('resize'));
         window.dispatchEvent(new Event('resize'));
       });
-      
+
       // Should only trigger handler once after debounce
       jest.advanceTimersByTime(150);
       expect(mockHandleResize).toHaveBeenCalledTimes(1);
@@ -731,30 +738,34 @@ describe('Navigation E2E', () => {
     desktop: { width: 1440, height: 900 },
   };
 
-  test('should maintain navigation state across viewport changes', async ({ page }) => {
+  test('should maintain navigation state across viewport changes', async ({
+    page,
+  }) => {
     // Start on desktop
     await page.setViewportSize(viewports.desktop);
     await page.goto('/transactions');
-    
+
     // Switch to mobile
     await page.setViewportSize(viewports.mobile);
     await page.waitForTimeout(300);
-    
+
     // Verify active state maintained
     const bottomNav = page.locator('[aria-label="Bottom navigation"]');
-    const transactionsBtn = bottomNav.locator('button', { hasText: 'Transactions' });
+    const transactionsBtn = bottomNav.locator('button', {
+      hasText: 'Transactions',
+    });
     await expect(transactionsBtn).toHaveAttribute('aria-current', 'page');
   });
 
   test('should handle rapid viewport changes gracefully', async ({ page }) => {
     await page.goto('/');
-    
+
     // Rapid viewport switching
     for (const viewport of Object.values(viewports)) {
       await page.setViewportSize(viewport);
       await page.waitForTimeout(50);
     }
-    
+
     // Should still be functional
     const navigation = page.locator('[role="navigation"]:visible');
     await expect(navigation).toBeVisible();
@@ -762,20 +773,23 @@ describe('Navigation E2E', () => {
 
   test('should preserve performance during navigation', async ({ page }) => {
     await page.goto('/');
-    
+
     // Enable performance monitoring
     await page.coverage.startJSCoverage();
-    
+
     // Navigate through all routes
     const routes = ['/accounts', '/transactions', '/insights', '/'];
     for (const route of routes) {
       await page.goto(route);
       await page.waitForLoadState('networkidle');
     }
-    
+
     // Verify no memory leaks
     const coverage = await page.coverage.stopJSCoverage();
-    const totalBytes = coverage.reduce((acc, entry) => acc + entry.text.length, 0);
+    const totalBytes = coverage.reduce(
+      (acc, entry) => acc + entry.text.length,
+      0
+    );
     expect(totalBytes).toBeLessThan(5 * 1024 * 1024); // 5MB limit
   });
 });
@@ -792,25 +806,25 @@ export default defineConfig({
     rollupOptions: {
       output: {
         manualChunks: {
-          'navigation': [
+          navigation: [
             './src/navigation/components/AdaptiveNavigation',
             './src/navigation/components/BottomNav',
             './src/navigation/components/NavRail',
-            './src/navigation/components/TopBar'
+            './src/navigation/components/TopBar',
           ],
           'navigation-utils': [
             './src/navigation/routeConfig',
-            './src/shared/hooks/useBreakpoint'
-          ]
-        }
-      }
-    }
+            './src/shared/hooks/useBreakpoint',
+          ],
+        },
+      },
+    },
   },
   css: {
     modules: {
-      localsConvention: 'camelCase'
-    }
-  }
+      localsConvention: 'camelCase',
+    },
+  },
 });
 ```
 
@@ -823,28 +837,28 @@ const navigationMetrics = {
   componentRender: 'navigation.component.render',
   routeChange: 'navigation.route.change',
   viewportChange: 'navigation.viewport.change',
-  
+
   // Interaction latency
   tapToNavigation: 'navigation.interaction.tap',
   hoverExpand: 'navigation.interaction.hover',
-  
+
   // Memory usage
   componentMemory: 'navigation.memory.usage',
-  eventListeners: 'navigation.memory.listeners'
+  eventListeners: 'navigation.memory.listeners',
 };
 
 // Metric collection
 const trackNavigationMetric = (metric: string, value: number) => {
   performance.mark(`${metric}-start`);
-  
+
   return {
     end: () => {
       performance.mark(`${metric}-end`);
       performance.measure(metric, `${metric}-start`, `${metric}-end`);
-      
+
       // Send to analytics
       analytics.track(metric, { duration: value });
-    }
+    },
   };
 };
 ```

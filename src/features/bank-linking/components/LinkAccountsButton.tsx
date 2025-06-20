@@ -1,8 +1,8 @@
-import { Button } from "@/shared/ui/button";
-import { useToast } from "@/shared/hooks/use-toast";
-import { useBankLinkingStore } from "../store";
-import { Banknote } from "lucide-react";
-import React from "react";
+import { Button } from '@/shared/ui/button';
+import { useToast } from '@/shared/hooks/use-toast';
+import { useBankLinkingStore } from '../store';
+import { Banknote } from 'lucide-react';
+import React from 'react';
 
 export const LinkAccountsButton: React.FC = () => {
   const { toast } = useToast();
@@ -11,7 +11,10 @@ export const LinkAccountsButton: React.FC = () => {
 
   const handleClick = async () => {
     await linkMockAccount();
-    toast({ title: "Account linked", description: "A mock account was added." });
+    toast({
+      title: 'Account linked',
+      description: 'A mock account was added.',
+    });
   };
 
   return (
@@ -19,4 +22,4 @@ export const LinkAccountsButton: React.FC = () => {
       <Banknote className="mr-2" /> Link Bank Account
     </Button>
   );
-}; 
+};

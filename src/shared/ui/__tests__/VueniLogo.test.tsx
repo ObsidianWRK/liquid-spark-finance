@@ -47,17 +47,20 @@ describe('VueniLogo', () => {
   });
 
   describe('Size Variants', () => {
-    test.each(['sm', 'md', 'lg', 'xl'] as const)('renders with %s size', (size) => {
-      render(<VueniLogo size={size} />);
-      expect(screen.getByRole('button')).toBeInTheDocument();
-    });
+    test.each(['sm', 'md', 'lg', 'xl'] as const)(
+      'renders with %s size',
+      (size) => {
+        render(<VueniLogo size={size} />);
+        expect(screen.getByRole('button')).toBeInTheDocument();
+      }
+    );
   });
 
   describe('Click Handling', () => {
     test('calls onClick when clicked', () => {
       const handleClick = vi.fn();
       render(<VueniLogo onClick={handleClick} />);
-      
+
       fireEvent.click(screen.getByRole('button'));
       expect(handleClick).toHaveBeenCalledTimes(1);
     });
@@ -65,7 +68,7 @@ describe('VueniLogo', () => {
     test('calls onClick on Enter key press', () => {
       const handleClick = vi.fn();
       render(<VueniLogo onClick={handleClick} />);
-      
+
       const logo = screen.getByRole('button');
       fireEvent.keyDown(logo, { key: 'Enter' });
       expect(handleClick).toHaveBeenCalledTimes(1);
@@ -74,7 +77,7 @@ describe('VueniLogo', () => {
     test('calls onClick on Space key press', () => {
       const handleClick = vi.fn();
       render(<VueniLogo onClick={handleClick} />);
-      
+
       const logo = screen.getByRole('button');
       fireEvent.keyDown(logo, { key: ' ' });
       expect(handleClick).toHaveBeenCalledTimes(1);
@@ -89,13 +92,15 @@ describe('VueniLogo', () => {
 
     test('renders without context menu when disabled', () => {
       render(<VueniLogo showContextMenu={false} />);
-      expect(screen.queryByTestId('brand-download-menu')).not.toBeInTheDocument();
+      expect(
+        screen.queryByTestId('brand-download-menu')
+      ).not.toBeInTheDocument();
     });
 
     test('calls onDownloadComplete callback', () => {
       const handleDownloadComplete = vi.fn();
       render(<VueniLogo onDownloadComplete={handleDownloadComplete} />);
-      
+
       fireEvent.click(screen.getByText('Mock Download'));
       expect(handleDownloadComplete).toHaveBeenCalledWith('test.svg');
     });
@@ -104,7 +109,9 @@ describe('VueniLogo', () => {
   describe('Accessibility', () => {
     test('has proper aria-label', () => {
       render(<VueniLogo />);
-      expect(screen.getByLabelText(/vueni logo.*right-click.*download/i)).toBeInTheDocument();
+      expect(
+        screen.getByLabelText(/vueni logo.*right-click.*download/i)
+      ).toBeInTheDocument();
     });
 
     test('has proper role', () => {
@@ -121,7 +128,7 @@ describe('VueniLogo', () => {
     test('prevents default on Enter/Space key events', () => {
       const preventDefault = vi.fn();
       render(<VueniLogo onClick={vi.fn()} />);
-      
+
       const logo = screen.getByRole('button');
       fireEvent.keyDown(logo, { key: 'Enter', preventDefault });
       expect(preventDefault).toHaveBeenCalled();
@@ -152,13 +159,18 @@ describe('VueniTextLogo', () => {
   test('applies gradient text styling', () => {
     render(<VueniTextLogo />);
     const textElement = screen.getByText('Vueni');
-    expect(textElement).toHaveClass('bg-gradient-to-r', 'from-blue-400', 'to-purple-400', 'bg-clip-text');
+    expect(textElement).toHaveClass(
+      'bg-gradient-to-r',
+      'from-blue-400',
+      'to-purple-400',
+      'bg-clip-text'
+    );
   });
 
   test('calls onClick when clicked', () => {
     const handleClick = vi.fn();
     render(<VueniTextLogo onClick={handleClick} />);
-    
+
     fireEvent.click(screen.getByText('Vueni'));
     expect(handleClick).toHaveBeenCalledTimes(1);
   });
@@ -167,4 +179,4 @@ describe('VueniTextLogo', () => {
     render(<VueniTextLogo className="custom-text-class" />);
     expect(screen.getByText('Vueni')).toHaveClass('custom-text-class');
   });
-}); 
+});

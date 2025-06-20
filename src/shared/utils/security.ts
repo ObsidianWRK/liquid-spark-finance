@@ -12,7 +12,7 @@ const HTML_ENTITIES: Record<string, string> = {
   "'": '&#x27;',
   '/': '&#x2F;',
   '`': '&#x60;',
-  '=': '&#x3D;'
+  '=': '&#x3D;',
 };
 
 /**
@@ -27,7 +27,10 @@ export class VueniInputSanitizer {
       throw new Error('Input must be a string');
     }
 
-    return input.replace(/[&<>"'`='/]/g, (match) => HTML_ENTITIES[match] || match);
+    return input.replace(
+      /[&<>"'`='/]/g,
+      (match) => HTML_ENTITIES[match] || match
+    );
   }
 
   /**
@@ -47,14 +50,14 @@ export class VueniInputSanitizer {
 
     // Remove all non-numeric characters except decimal point and minus sign
     const sanitized = input.replace(/[^0-9.-]/g, '');
-    
+
     // Validate format
     if (!/^-?\d*\.?\d*$/.test(sanitized)) {
       throw new Error('Invalid financial amount format');
     }
 
     const amount = parseFloat(sanitized);
-    
+
     if (!Number.isFinite(amount)) {
       throw new Error('Invalid financial amount: not a finite number');
     }
@@ -89,7 +92,7 @@ export class VueniInputSanitizer {
    */
   static sanitizePercentage(input: string | number): number {
     const amount = this.sanitizeFinancialAmount(input);
-    
+
     // Reasonable percentage limits
     if (amount < 0 || amount > 100) {
       throw new Error('Percentage must be between 0 and 100');
@@ -103,7 +106,7 @@ export class VueniInputSanitizer {
    */
   static sanitizeInterestRate(input: string | number): number {
     const rate = this.sanitizeFinancialAmount(input);
-    
+
     // Reasonable interest rate limits (0% to 1000%)
     if (rate < 0 || rate > 1000) {
       throw new Error('Interest rate must be between 0% and 1000%');
@@ -117,13 +120,13 @@ export class VueniInputSanitizer {
    */
   static sanitizeYear(input: string | number): number {
     const year = typeof input === 'string' ? parseInt(input, 10) : input;
-    
+
     if (!Number.isInteger(year)) {
       throw new Error('Year must be an integer');
     }
 
     const currentYear = new Date().getFullYear();
-    
+
     // Reasonable year range (1900 to 100 years in the future)
     if (year < 1900 || year > currentYear + 100) {
       throw new Error(`Year must be between 1900 and ${currentYear + 100}`);
@@ -137,7 +140,7 @@ export class VueniInputSanitizer {
    */
   static sanitizeTimePeriod(input: string | number): number {
     const period = this.sanitizeFinancialAmount(input);
-    
+
     // Reasonable time period limits (0.1 to 100 years)
     if (period < 0.1 || period > 100) {
       throw new Error('Time period must be between 0.1 and 100 years');
@@ -155,10 +158,10 @@ export class VueniInputSanitizer {
     }
 
     const sanitized = input.trim().toLowerCase();
-    
+
     // Basic email validation regex
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    
+
     if (!emailRegex.test(sanitized)) {
       throw new Error('Invalid email format');
     }
@@ -180,7 +183,7 @@ export class VueniInputSanitizer {
 
     // Remove all non-numeric characters
     const digits = input.replace(/\D/g, '');
-    
+
     // Validate US phone number format (10 or 11 digits)
     if (digits.length === 10) {
       return `(${digits.slice(0, 3)}) ${digits.slice(3, 6)}-${digits.slice(6)}`;
@@ -204,13 +207,15 @@ export class VueniCSRFProtection {
    */
   static generateToken(): string {
     const token = crypto.getRandomValues(new Uint8Array(32));
-    const tokenString = Array.from(token, byte => byte.toString(16).padStart(2, '0')).join('');
-    
+    const tokenString = Array.from(token, (byte) =>
+      byte.toString(16).padStart(2, '0')
+    ).join('');
+
     // Store token and expiry (1 hour)
-    const expiry = Date.now() + (60 * 60 * 1000);
+    const expiry = Date.now() + 60 * 60 * 1000;
     sessionStorage.setItem(this.tokenKey, tokenString);
     sessionStorage.setItem(this.tokenExpiry, expiry.toString());
-    
+
     return tokenString;
   }
 
@@ -220,7 +225,7 @@ export class VueniCSRFProtection {
   static validateToken(token: string): boolean {
     const storedToken = sessionStorage.getItem(this.tokenKey);
     const expiry = sessionStorage.getItem(this.tokenExpiry);
-    
+
     if (!storedToken || !expiry) {
       return false;
     }
@@ -249,7 +254,7 @@ export class VueniCSRFProtection {
   static getToken(): string {
     const storedToken = sessionStorage.getItem(this.tokenKey);
     const expiry = sessionStorage.getItem(this.tokenExpiry);
-    
+
     if (storedToken && expiry && Date.now() < parseInt(expiry, 10)) {
       return storedToken;
     }
@@ -278,7 +283,10 @@ export class VueniCSRFProtection {
  * VueniRateLimit - Simple rate limiting for financial calculators
  */
 export class VueniRateLimit {
-  private static limits = new Map<string, { count: number; resetTime: number }>();
+  private static limits = new Map<
+    string,
+    { count: number; resetTime: number }
+  >();
   private static readonly MAX_REQUESTS = 100; // Max requests per hour
   private static readonly WINDOW_MS = 60 * 60 * 1000; // 1 hour
 
@@ -310,7 +318,7 @@ export class VueniRateLimit {
   static getRemainingRequests(operation: string): number {
     const key = `vueni:rate:${operation}`;
     const limit = this.limits.get(key);
-    
+
     if (!limit || Date.now() > limit.resetTime) {
       return this.MAX_REQUESTS;
     }
@@ -342,13 +350,18 @@ export class VueniSecurityMonitor {
   /**
    * Logs a security event
    */
-  static logEvent(type: string, description: string, metadata?: Record<string, unknown>): void {
+  static logEvent(
+    type: string,
+    description: string,
+    metadata?: Record<string, unknown>
+  ): void {
     const event = {
       type,
       description,
       timestamp: new Date().toISOString(),
-      userAgent: typeof window !== 'undefined' ? window.navigator.userAgent : undefined,
-      ...metadata
+      userAgent:
+        typeof window !== 'undefined' ? window.navigator.userAgent : undefined,
+      ...metadata,
     };
 
     this.events.push(event);
@@ -403,5 +416,5 @@ export const security = {
   sanitize: VueniInputSanitizer,
   csrf: VueniCSRFProtection,
   rateLimit: VueniRateLimit,
-  monitor: VueniSecurityMonitor
+  monitor: VueniSecurityMonitor,
 };

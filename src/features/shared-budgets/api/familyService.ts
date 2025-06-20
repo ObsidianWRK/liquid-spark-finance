@@ -1,4 +1,10 @@
-import { Family, FamilyMember, FamilyInvitation, FamilyStats, FamilySettings } from '@/types/family';
+import {
+  Family,
+  FamilyMember,
+  FamilyInvitation,
+  FamilyStats,
+  FamilySettings,
+} from '@/types/family';
 import { Account } from '@/types/accounts';
 import { Transaction } from '@/types/transactions';
 
@@ -45,18 +51,18 @@ export class FamilyService {
           goalMilestones: true,
           investmentUpdates: false,
           securityAlerts: true,
-          emailDigest: 'weekly'
+          emailDigest: 'weekly',
         },
         privacy: {
           dataSharing: false,
           analyticsOptOut: false,
           thirdPartyIntegrations: true,
-          marketingCommunications: false
+          marketingCommunications: false,
         },
-        ...data.settings
+        ...data.settings,
       },
       createdAt: new Date(),
-      updatedAt: new Date()
+      updatedAt: new Date(),
     };
 
     this.families.set(family.id, family);
@@ -71,8 +77,8 @@ export class FamilyService {
    * Add family member with role-based permissions
    */
   async addFamilyMember(
-    familyId: string, 
-    userId: string, 
+    familyId: string,
+    userId: string,
     role: 'owner' | 'admin' | 'member' | 'viewer'
   ): Promise<FamilyMember> {
     const member: FamilyMember = {
@@ -82,7 +88,7 @@ export class FamilyService {
       role,
       permissions: this.getDefaultPermissions(role),
       joinedAt: new Date(),
-      isActive: true
+      isActive: true,
     };
 
     const familyMembers = this.members.get(familyId) || [];
@@ -110,7 +116,7 @@ export class FamilyService {
       token: this.generateInvitationToken(),
       expiresAt: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000), // 7 days
       isAccepted: false,
-      createdAt: new Date()
+      createdAt: new Date(),
     };
 
     const familyInvitations = this.invitations.get(data.familyId) || [];
@@ -140,18 +146,36 @@ export class FamilyService {
 
     const monthlyIncome = this.calculateMonthlyIncome(transactions);
     const monthlyExpenses = this.calculateMonthlyExpenses(transactions);
-    const savingsRate = monthlyIncome > 0 ? ((monthlyIncome - monthlyExpenses) / monthlyIncome) * 100 : 0;
+    const savingsRate =
+      monthlyIncome > 0
+        ? ((monthlyIncome - monthlyExpenses) / monthlyIncome) * 100
+        : 0;
 
-    const debtAccounts = accounts.filter(a => a.accountType === 'credit' || a.accountType === 'loan');
-    const totalDebt = debtAccounts.reduce((sum, account) => sum + Math.abs(account.balance), 0);
-    const debtToIncomeRatio = monthlyIncome > 0 ? (totalDebt / (monthlyIncome * 12)) * 100 : 0;
+    const debtAccounts = accounts.filter(
+      (a) => a.accountType === 'credit' || a.accountType === 'loan'
+    );
+    const totalDebt = debtAccounts.reduce(
+      (sum, account) => sum + Math.abs(account.balance),
+      0
+    );
+    const debtToIncomeRatio =
+      monthlyIncome > 0 ? (totalDebt / (monthlyIncome * 12)) * 100 : 0;
 
-    const cashAccounts = accounts.filter(a => a.accountType === 'depository');
-    const totalCash = cashAccounts.reduce((sum, account) => sum + account.balance, 0);
-    const emergencyFundMonths = monthlyExpenses > 0 ? totalCash / monthlyExpenses : 0;
+    const cashAccounts = accounts.filter((a) => a.accountType === 'depository');
+    const totalCash = cashAccounts.reduce(
+      (sum, account) => sum + account.balance,
+      0
+    );
+    const emergencyFundMonths =
+      monthlyExpenses > 0 ? totalCash / monthlyExpenses : 0;
 
-    const investmentAccounts = accounts.filter(a => a.accountType === 'investment');
-    const totalInvestments = investmentAccounts.reduce((sum, account) => sum + account.balance, 0);
+    const investmentAccounts = accounts.filter(
+      (a) => a.accountType === 'investment'
+    );
+    const totalInvestments = investmentAccounts.reduce(
+      (sum, account) => sum + account.balance,
+      0
+    );
 
     return {
       totalNetWorth,
@@ -166,8 +190,8 @@ export class FamilyService {
         cash: 0.05 * totalInvestments,
         realEstate: 0.05 * totalInvestments,
         crypto: 0,
-        other: 0
-      }
+        other: 0,
+      },
     };
   }
 
@@ -175,7 +199,7 @@ export class FamilyService {
    * Update family settings with validation
    */
   async updateFamilySettings(
-    familyId: string, 
+    familyId: string,
     settings: Partial<FamilySettings>
   ): Promise<Family> {
     const family = this.families.get(familyId);
@@ -213,15 +237,15 @@ export class FamilyService {
     permissions: Partial<FamilyMember['permissions']>
   ): Promise<FamilyMember> {
     const familyMembers = this.members.get(familyId) || [];
-    const memberIndex = familyMembers.findIndex(m => m.id === memberId);
-    
+    const memberIndex = familyMembers.findIndex((m) => m.id === memberId);
+
     if (memberIndex === -1) {
       throw new Error('Member not found');
     }
 
     familyMembers[memberIndex].permissions = {
       ...familyMembers[memberIndex].permissions,
-      ...permissions
+      ...permissions,
     };
 
     this.members.set(familyId, familyMembers);
@@ -229,7 +253,9 @@ export class FamilyService {
   }
 
   // Private helper methods
-  private getDefaultPermissions(role: FamilyMember['role']): FamilyMember['permissions'] {
+  private getDefaultPermissions(
+    role: FamilyMember['role']
+  ): FamilyMember['permissions'] {
     switch (role) {
       case 'owner':
         return {
@@ -240,7 +266,7 @@ export class FamilyService {
           canManageInvestments: true,
           canAccessReports: true,
           canModifySettings: true,
-          canInviteMembers: true
+          canInviteMembers: true,
         };
       case 'admin':
         return {
@@ -251,7 +277,7 @@ export class FamilyService {
           canManageInvestments: true,
           canAccessReports: true,
           canModifySettings: false,
-          canInviteMembers: true
+          canInviteMembers: true,
         };
       case 'member':
         return {
@@ -262,7 +288,7 @@ export class FamilyService {
           canManageInvestments: false,
           canAccessReports: true,
           canModifySettings: false,
-          canInviteMembers: false
+          canInviteMembers: false,
         };
       case 'viewer':
         return {
@@ -273,7 +299,7 @@ export class FamilyService {
           canManageInvestments: false,
           canAccessReports: true,
           canModifySettings: false,
-          canInviteMembers: false
+          canInviteMembers: false,
         };
     }
   }
@@ -286,7 +312,9 @@ export class FamilyService {
     return Math.random().toString(36).substr(2, 32);
   }
 
-  private async sendInvitationEmail(invitation: FamilyInvitation): Promise<void> {
+  private async sendInvitationEmail(
+    invitation: FamilyInvitation
+  ): Promise<void> {
     // TODO: Implement email service integration
     console.log(`Sending invitation email to ${invitation.email}`);
   }
@@ -296,7 +324,9 @@ export class FamilyService {
     return [];
   }
 
-  private async getFamilyTransactions(familyId: string): Promise<Transaction[]> {
+  private async getFamilyTransactions(
+    familyId: string
+  ): Promise<Transaction[]> {
     // TODO: Integrate with TransactionService
     return [];
   }
@@ -304,18 +334,18 @@ export class FamilyService {
   private calculateMonthlyIncome(transactions: Transaction[]): number {
     const now = new Date();
     const monthStart = new Date(now.getFullYear(), now.getMonth(), 1);
-    
+
     return transactions
-      .filter(t => t.date >= monthStart && t.amount > 0)
+      .filter((t) => t.date >= monthStart && t.amount > 0)
       .reduce((sum, t) => sum + t.amount, 0);
   }
 
   private calculateMonthlyExpenses(transactions: Transaction[]): number {
     const now = new Date();
     const monthStart = new Date(now.getFullYear(), now.getMonth(), 1);
-    
+
     return transactions
-      .filter(t => t.date >= monthStart && t.amount < 0)
+      .filter((t) => t.date >= monthStart && t.amount < 0)
       .reduce((sum, t) => sum + Math.abs(t.amount), 0);
   }
 }

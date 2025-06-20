@@ -1,4 +1,4 @@
-import { LinkedAccount } from "../types";
+import { LinkedAccount } from '../types';
 
 // NOTE: In a production build this file will be swapped with a concrete implementation (Plaid, Teller, etc.)
 // For now we expose an interface and a simple in-memory mock provider so that feature development can proceed.
@@ -30,17 +30,17 @@ class InMemoryBankLinkProvider implements BankLinkProvider {
   private accounts: LinkedAccount[] = [];
 
   async createLinkToken(): Promise<string> {
-    return "mock-link-token-" + Math.random().toString(36).substring(2, 15);
+    return 'mock-link-token-' + Math.random().toString(36).substring(2, 15);
   }
 
   async exchangePublicToken(publicToken: string): Promise<LinkedAccount> {
     const newAccount: LinkedAccount = {
-      id: publicToken + "-acc",
-      provider: "mock",
-      displayName: "Mock Checking",
-      institutionName: "Mock Bank",
-      lastFour: "1234",
-      type: "checking",
+      id: publicToken + '-acc',
+      provider: 'mock',
+      displayName: 'Mock Checking',
+      institutionName: 'Mock Bank',
+      lastFour: '1234',
+      type: 'checking',
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),
     };
@@ -58,4 +58,5 @@ class InMemoryBankLinkProvider implements BankLinkProvider {
 }
 
 // Export a singleton mock provider for immediate use
-export const bankLinkProvider: BankLinkProvider = new InMemoryBankLinkProvider(); 
+export const bankLinkProvider: BankLinkProvider =
+  new InMemoryBankLinkProvider();

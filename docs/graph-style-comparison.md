@@ -1,11 +1,13 @@
 # 📊 Vueni Graph Style Comparison: Apple Wallet UX Analysis
 
 ## Executive Summary
+
 This document provides a comprehensive comparison between Apple Wallet graph patterns and Vueni's current implementation, serving as the foundation for our graph revamp mission.
 
 ## 🍎 Apple Wallet Graph Characteristics
 
 ### Visual Design Principles
+
 1. **Minimalism First**: Clean, uncluttered interfaces with maximum data-to-ink ratio
 2. **Dark Mode Native**: Designed for OLED screens with pure blacks (#000000)
 3. **Subtle Gradients**: Single-color gradients with opacity variations
@@ -13,6 +15,7 @@ This document provides a comprehensive comparison between Apple Wallet graph pat
 5. **Floating Elements**: Cards and controls appear to float above background
 
 ### Color Palette
+
 - **Primary**: System blue (#007AFF) for primary data
 - **Secondary**: System gray (#8E8E93) for supporting elements
 - **Success**: System green (#34C759) for positive trends
@@ -21,12 +24,14 @@ This document provides a comprehensive comparison between Apple Wallet graph pat
 - **Background**: Pure black (#000000) with translucent overlays
 
 ### Typography
+
 - **Headers**: SF Pro Display, 28-34pt, semibold
 - **Labels**: SF Pro Text, 13-15pt, regular
 - **Values**: SF Pro Rounded, 17-21pt, medium
 - **Captions**: SF Pro Text, 11-13pt, regular
 
 ### Animation Patterns
+
 - **Spring Physics**: Natural, bouncy animations (dampingRatio: 0.8)
 - **Stagger Effects**: Sequential element reveals (50ms delays)
 - **Morphing Transitions**: Smooth shape interpolations
@@ -35,7 +40,9 @@ This document provides a comprehensive comparison between Apple Wallet graph pat
 ## 📈 Chart Type Analysis
 
 ### Line Charts
+
 **Apple Wallet Style**:
+
 - Single smooth spline curve
 - No data points unless interactive
 - Gradient fill from line to baseline
@@ -44,6 +51,7 @@ This document provides a comprehensive comparison between Apple Wallet graph pat
 - 2-3px stroke width
 
 **Current Vueni Implementation**:
+
 - Multiple line support
 - Visible data points
 - No gradient fills
@@ -52,7 +60,9 @@ This document provides a comprehensive comparison between Apple Wallet graph pat
 - Variable stroke widths
 
 ### Area Charts
+
 **Apple Wallet Style**:
+
 - Soft gradient fills (opacity 0.1-0.3)
 - Stacked areas with subtle separation
 - No stroke lines
@@ -60,6 +70,7 @@ This document provides a comprehensive comparison between Apple Wallet graph pat
 - Smooth transitions between values
 
 **Current Vueni Implementation**:
+
 - Solid fills
 - Hard edges between areas
 - Visible strokes
@@ -67,7 +78,9 @@ This document provides a comprehensive comparison between Apple Wallet graph pat
 - Stepped transitions
 
 ### Bar Charts
+
 **Apple Wallet Style**:
+
 - Rounded corners (4-6px radius)
 - Consistent spacing (golden ratio)
 - No borders or strokes
@@ -75,6 +88,7 @@ This document provides a comprehensive comparison between Apple Wallet graph pat
 - Animated height transitions
 
 **Current Vueni Implementation**:
+
 - Square corners
 - Variable spacing
 - Visible borders
@@ -84,7 +98,9 @@ This document provides a comprehensive comparison between Apple Wallet graph pat
 ## 🎛️ Interactive Controls
 
 ### Time Range Selector
+
 **Apple Wallet Style**:
+
 - Segmented control design
 - Pills with active state
 - Smooth sliding indicator
@@ -92,6 +108,7 @@ This document provides a comprehensive comparison between Apple Wallet graph pat
 - Options: 1D, 1W, 1M, 3M, 1Y, MAX
 
 **Current Vueni Implementation**:
+
 - Dropdown or button group
 - Basic active states
 - No animation
@@ -99,7 +116,9 @@ This document provides a comprehensive comparison between Apple Wallet graph pat
 - Custom time ranges
 
 ### Touch Interactions
+
 **Apple Wallet Style**:
+
 - Long press to activate
 - Drag to explore
 - Pinch to zoom (optional)
@@ -107,6 +126,7 @@ This document provides a comprehensive comparison between Apple Wallet graph pat
 - Haptic feedback throughout
 
 **Current Vueni Implementation**:
+
 - Hover for desktop
 - Click for details
 - No gesture support
@@ -116,7 +136,9 @@ This document provides a comprehensive comparison between Apple Wallet graph pat
 ## 📐 Layout & Spacing
 
 ### Container Design
+
 **Apple Wallet Style**:
+
 - Edge-to-edge on mobile
 - 20px padding on tablet+
 - 16:9 aspect ratio preferred
@@ -124,6 +146,7 @@ This document provides a comprehensive comparison between Apple Wallet graph pat
 - Blurred background overlays
 
 **Current Vueni Implementation**:
+
 - Fixed padding all sizes
 - Variable aspect ratios
 - Fixed heights
@@ -131,7 +154,9 @@ This document provides a comprehensive comparison between Apple Wallet graph pat
 - No overlay effects
 
 ### Grid & Axes
+
 **Apple Wallet Style**:
+
 - Minimal grid lines (0.5px, 10% opacity)
 - No axis lines
 - Smart label positioning
@@ -139,6 +164,7 @@ This document provides a comprehensive comparison between Apple Wallet graph pat
 - Context-aware decimals
 
 **Current Vueni Implementation**:
+
 - Prominent grid lines
 - Visible axes
 - Fixed label positions
@@ -148,7 +174,9 @@ This document provides a comprehensive comparison between Apple Wallet graph pat
 ## 🚀 Performance Patterns
 
 ### Rendering Strategy
+
 **Apple Wallet Style**:
+
 - Canvas for complex charts
 - SVG for simple graphics
 - GPU acceleration
@@ -156,6 +184,7 @@ This document provides a comprehensive comparison between Apple Wallet graph pat
 - Progressive rendering
 
 **Current Vueni Implementation**:
+
 - SVG-only approach
 - CPU-bound animations
 - Variable frame rates
@@ -163,7 +192,9 @@ This document provides a comprehensive comparison between Apple Wallet graph pat
 - No optimization
 
 ### Data Loading
+
 **Apple Wallet Style**:
+
 - Skeleton states
 - Progressive data fill
 - Optimistic updates
@@ -171,6 +202,7 @@ This document provides a comprehensive comparison between Apple Wallet graph pat
 - Cached renders
 
 **Current Vueni Implementation**:
+
 - Loading spinners
 - Full data wait
 - Synchronous updates
@@ -180,6 +212,7 @@ This document provides a comprehensive comparison between Apple Wallet graph pat
 ## ♿ Accessibility Features
 
 ### Apple Wallet Approach
+
 - VoiceOver announces trends
 - Audio graphs for blind users
 - High contrast mode support
@@ -187,6 +220,7 @@ This document provides a comprehensive comparison between Apple Wallet graph pat
 - Focus indicators for keyboard
 
 ### Current Vueni Gaps
+
 - Limited screen reader support
 - No audio representations
 - Contrast issues in dark mode
@@ -196,24 +230,28 @@ This document provides a comprehensive comparison between Apple Wallet graph pat
 ## 🎯 Implementation Priorities
 
 ### Phase 1: Foundation (Week 1)
+
 1. Create graph-tokens.ts with Apple-inspired values
 2. Build GraphBase.tsx with shared behaviors
 3. Implement spring animations
 4. Add touch gesture support
 
 ### Phase 2: Chart Migration (Week 2)
+
 1. Refactor LineChart with spline curves
 2. Update AreaChart with gradient fills
 3. Modernize BarChart with rounded corners
 4. Add smooth transitions everywhere
 
 ### Phase 3: Controls & Polish (Week 3)
+
 1. Build TimeRangeToggle component
 2. Add haptic feedback hooks
 3. Implement skeleton states
 4. Create audio graph descriptions
 
 ### Phase 4: Testing & Optimization (Week 4)
+
 1. Performance profiling
 2. Accessibility audit
 3. Cross-device testing
@@ -222,18 +260,21 @@ This document provides a comprehensive comparison between Apple Wallet graph pat
 ## 📊 Success Metrics
 
 ### Visual Fidelity
+
 - [ ] Matches Apple Wallet aesthetic
 - [ ] Consistent dark mode palette
 - [ ] Smooth 60fps animations
 - [ ] Professional polish
 
 ### User Experience
+
 - [ ] Touch-first interactions
 - [ ] Instant feedback
 - [ ] Intuitive gestures
 - [ ] Accessible to all
 
 ### Technical Excellence
+
 - [ ] < 100ms initial render
 - [ ] < 16ms frame time
 - [ ] Zero runtime errors
@@ -242,29 +283,31 @@ This document provides a comprehensive comparison between Apple Wallet graph pat
 ## 🔗 Reference Materials
 
 ### Apple Resources
+
 - Human Interface Guidelines - Charts
 - WWDC 2022: Design app experiences with charts
 - SF Symbols 5.0 for chart icons
 - Wallet app decompiled assets
 
 ### Design Tokens
+
 ```typescript
 // Example structure
 export const graphTokens = {
   animation: {
     spring: { tension: 180, friction: 20 },
-    duration: { fast: 200, normal: 300, slow: 500 }
+    duration: { fast: 200, normal: 300, slow: 500 },
   },
   spacing: {
     chartPadding: { mobile: 16, tablet: 20, desktop: 24 },
-    barGap: 0.618 // Golden ratio
+    barGap: 0.618, // Golden ratio
   },
   radius: {
     bar: 6,
     card: 16,
-    button: 20
-  }
-}
+    button: 20,
+  },
+};
 ```
 
 ## 🎬 Next Steps

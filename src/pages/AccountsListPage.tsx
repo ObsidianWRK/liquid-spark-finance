@@ -9,7 +9,7 @@ import { BackButton } from '@/shared/components/ui/BackButton';
 
 /**
  * AccountsListPage Component
- * 
+ *
  * Displays a list of all user accounts. This serves as the parent page
  * for account detail navigation, allowing proper back navigation flow:
  * Dashboard → Accounts List → Account Detail
@@ -24,11 +24,16 @@ const AccountsListPage: React.FC = () => {
 
   const getAccountTypeColor = (category: string) => {
     switch (category) {
-      case 'CHECKING': return 'bg-blue-500/20 text-blue-400';
-      case 'SAVINGS': return 'bg-green-500/20 text-green-400';
-      case 'CREDIT': return 'bg-purple-500/20 text-purple-400';
-      case 'INVESTMENT': return 'bg-orange-500/20 text-orange-400';
-      default: return 'bg-gray-500/20 text-gray-400';
+      case 'CHECKING':
+        return 'bg-blue-500/20 text-blue-400';
+      case 'SAVINGS':
+        return 'bg-green-500/20 text-green-400';
+      case 'CREDIT':
+        return 'bg-purple-500/20 text-purple-400';
+      case 'INVESTMENT':
+        return 'bg-orange-500/20 text-orange-400';
+      default:
+        return 'bg-gray-500/20 text-gray-400';
     }
   };
 
@@ -37,18 +42,20 @@ const AccountsListPage: React.FC = () => {
       <div className="p-4 md:p-6 max-w-7xl mx-auto">
         {/* Header */}
         <div className="mb-8">
-          <BackButton 
+          <BackButton
             fallbackPath="/"
             variant="default"
             label="Back to Dashboard"
             className="mb-6"
           />
-          
+
           <div className="flex items-center gap-3 mb-2">
             <CreditCard className="w-8 h-8 text-blue-400" />
             <h1 className="text-3xl font-bold text-white">Your Accounts</h1>
           </div>
-          <p className="text-white/60">Manage and view details for all your financial accounts</p>
+          <p className="text-white/60">
+            Manage and view details for all your financial accounts
+          </p>
         </div>
 
         {/* Account Summary Stats */}
@@ -58,7 +65,9 @@ const AccountsListPage: React.FC = () => {
               <Building2 className="w-5 h-5 text-blue-400" />
               <span className="text-white/60 text-sm">Total Accounts</span>
             </div>
-            <div className="text-2xl font-bold text-white">{accounts.length}</div>
+            <div className="text-2xl font-bold text-white">
+              {accounts.length}
+            </div>
           </UniversalCard>
 
           <UniversalCard variant="glass" className="p-6">
@@ -68,7 +77,10 @@ const AccountsListPage: React.FC = () => {
             </div>
             <div className="text-2xl font-bold text-white">
               {formatCurrency(
-                accounts.reduce((sum, account) => sum + account.currentBalance, 0),
+                accounts.reduce(
+                  (sum, account) => sum + account.currentBalance,
+                  0
+                ),
                 { currency: 'USD' }
               )}
             </div>
@@ -80,70 +92,85 @@ const AccountsListPage: React.FC = () => {
               <span className="text-white/60 text-sm">Institutions</span>
             </div>
             <div className="text-2xl font-bold text-white">
-              {new Set(accounts.map(account => account.institution.name)).size}
+              {
+                new Set(accounts.map((account) => account.institution.name))
+                  .size
+              }
             </div>
           </UniversalCard>
         </div>
 
         {/* Accounts List */}
         <div className="space-y-4">
-          <h2 className="text-xl font-semibold text-white mb-4">All Accounts</h2>
-          
-                    {accounts.filter(account => account.id).map((account) => (
-            <UniversalCard
-              key={account.id}
-              variant="glass"
-              className="p-6 hover:bg-white/[0.03] transition-colors cursor-pointer"
-              onClick={() => handleAccountClick(account.id)}
-            >
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 rounded-xl bg-white/[0.05] flex items-center justify-center">
-                    <CreditCard className="w-6 h-6 text-blue-400" />
-                  </div>
-                  
-                  <div>
-                    <div className="flex items-center gap-3 mb-1">
-                      <h3 className="text-lg font-semibold text-white">
-                        {account.accountName}
-                      </h3>
-                      <Badge 
-                        className={`text-xs ${getAccountTypeColor(account.category)}`}
-                        variant="outline"
-                      >
-                        {account.category}
-                      </Badge>
-                    </div>
-                    <p className="text-white/60 text-sm">
-                      {account.institution.name} ••••{account.last4}
-                    </p>
-                  </div>
-                </div>
+          <h2 className="text-xl font-semibold text-white mb-4">
+            All Accounts
+          </h2>
 
-                <div className="flex items-center gap-4">
-                  <div className="text-right">
-                    <div className="text-xl font-bold text-white">
-                      {formatCurrency(account.currentBalance, { currency: account.currency })}
+          {accounts
+            .filter((account) => account.id)
+            .map((account) => (
+              <UniversalCard
+                key={account.id}
+                variant="glass"
+                className="p-6 hover:bg-white/[0.03] transition-colors cursor-pointer"
+                onClick={() => handleAccountClick(account.id)}
+              >
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-4">
+                    <div className="w-12 h-12 rounded-xl bg-white/[0.05] flex items-center justify-center">
+                      <CreditCard className="w-6 h-6 text-blue-400" />
                     </div>
-                    {account.availableBalance && account.availableBalance !== account.currentBalance && (
-                      <div className="text-white/60 text-sm">
-                        Available: {formatCurrency(account.availableBalance, { currency: account.currency })}
+
+                    <div>
+                      <div className="flex items-center gap-3 mb-1">
+                        <h3 className="text-lg font-semibold text-white">
+                          {account.accountName}
+                        </h3>
+                        <Badge
+                          className={`text-xs ${getAccountTypeColor(account.category)}`}
+                          variant="outline"
+                        >
+                          {account.category}
+                        </Badge>
                       </div>
-                    )}
+                      <p className="text-white/60 text-sm">
+                        {account.institution.name} ••••{account.last4}
+                      </p>
+                    </div>
                   </div>
-                  
-                  <ChevronRight className="w-5 h-5 text-white/40" />
+
+                  <div className="flex items-center gap-4">
+                    <div className="text-right">
+                      <div className="text-xl font-bold text-white">
+                        {formatCurrency(account.currentBalance, {
+                          currency: account.currency,
+                        })}
+                      </div>
+                      {account.availableBalance &&
+                        account.availableBalance !== account.currentBalance && (
+                          <div className="text-white/60 text-sm">
+                            Available:{' '}
+                            {formatCurrency(account.availableBalance, {
+                              currency: account.currency,
+                            })}
+                          </div>
+                        )}
+                    </div>
+
+                    <ChevronRight className="w-5 h-5 text-white/40" />
+                  </div>
                 </div>
-              </div>
-            </UniversalCard>
-          ))}
+              </UniversalCard>
+            ))}
         </div>
 
         {/* Empty State */}
         {accounts.length === 0 && (
           <UniversalCard variant="glass" className="p-12 text-center">
             <CreditCard className="w-12 h-12 text-white/40 mx-auto mb-4" />
-            <h3 className="text-lg font-semibold text-white mb-2">No Accounts Found</h3>
+            <h3 className="text-lg font-semibold text-white mb-2">
+              No Accounts Found
+            </h3>
             <p className="text-white/60 mb-6">
               Connect your bank accounts to start tracking your finances
             </p>
@@ -157,4 +184,4 @@ const AccountsListPage: React.FC = () => {
   );
 };
 
-export default AccountsListPage; 
+export default AccountsListPage;

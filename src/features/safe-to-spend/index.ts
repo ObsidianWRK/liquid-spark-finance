@@ -1,2 +1,2 @@
-export { useSafeToSpendStore } from "./store";
-export { SafeToSpendCard } from "./components/SafeToSpendCard"; 
+export { useSafeToSpendStore } from './store';
+export { SafeToSpendCard } from './components/SafeToSpendCard';

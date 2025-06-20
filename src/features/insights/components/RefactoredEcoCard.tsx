@@ -1,15 +1,15 @@
 import React from 'react';
 import { Leaf } from 'lucide-react';
 import { UniversalCard } from '@/shared/ui/UniversalCard';
-import { 
-  getMockEcoData, 
+import {
+  getMockEcoData,
   getEcoCategories,
   getEcoScoreLabel,
   getEcoScoreColor,
   type EcoMetrics,
   type EcoSpendingCategories,
   type EcoMonthlyImpact,
-  type EcoTrends
+  type EcoTrends,
 } from '@/services/ecoService';
 
 interface RefactoredEcoCardProps {
@@ -25,7 +25,7 @@ const RefactoredEcoCard: React.FC<RefactoredEcoCardProps> = ({
   ecoMetrics,
   spendingCategories,
   monthlyImpact,
-  trends
+  trends,
 }) => {
   // Use mock data if no props provided (for demonstration)
   const mockData = getMockEcoData();
@@ -38,21 +38,37 @@ const RefactoredEcoCard: React.FC<RefactoredEcoCardProps> = ({
   // Transform data for UniversalCard
   const cardData = {
     metrics: [
-      { label: 'CO₂ Saved', value: `${finalImpact.co2Saved}kg`, color: '#22c55e' },
-      { label: 'Trees Equivalent', value: finalImpact.treesEquivalent.toString(), color: '#22c55e' },
-      { label: 'Water Saved', value: `${finalImpact.waterSaved}L`, color: '#06b6d4' },
-      { label: 'Energy Saved', value: `${finalImpact.energySaved}kWh`, color: '#f59e0b' }
+      {
+        label: 'CO₂ Saved',
+        value: `${finalImpact.co2Saved}kg`,
+        color: '#22c55e',
+      },
+      {
+        label: 'Trees Equivalent',
+        value: finalImpact.treesEquivalent.toString(),
+        color: '#22c55e',
+      },
+      {
+        label: 'Water Saved',
+        value: `${finalImpact.waterSaved}L`,
+        color: '#06b6d4',
+      },
+      {
+        label: 'Energy Saved',
+        value: `${finalImpact.energySaved}kWh`,
+        color: '#f59e0b',
+      },
     ],
     trends: [
       { label: 'Carbon Footprint', trend: finalTrends.carbonFootprint },
       { label: 'Sustainability', trend: finalTrends.sustainability },
       { label: 'Renewable', trend: finalTrends.renewable },
-      { label: 'Waste', trend: finalTrends.waste }
+      { label: 'Waste', trend: finalTrends.waste },
     ],
     spending: Object.entries(finalSpending).map(([category, amount]) => ({
       category: category.replace(/([A-Z])/g, ' $1').toLowerCase(),
-      amount
-    }))
+      amount,
+    })),
   };
 
   return (
@@ -71,4 +87,4 @@ const RefactoredEcoCard: React.FC<RefactoredEcoCardProps> = ({
   );
 };
 
-export default RefactoredEcoCard; 
+export default RefactoredEcoCard;

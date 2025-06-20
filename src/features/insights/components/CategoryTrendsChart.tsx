@@ -9,13 +9,33 @@ interface CategoryTrendsChartProps {
   title: string;
 }
 
-const CategoryTrendsChart: React.FC<CategoryTrendsChartProps> = ({ data, type, title }) => {
-  const healthCategories = ['fitness', 'nutrition', 'healthcare', 'wellness', 'supplements', 'mentalHealth'];
-  const ecoCategories = ['sustainableFood', 'renewableEnergy', 'ecoTransport', 'greenProducts', 'carbonOffset', 'conservation'];
-  
+const CategoryTrendsChart: React.FC<CategoryTrendsChartProps> = ({
+  data,
+  type,
+  title,
+}) => {
+  const healthCategories = [
+    'fitness',
+    'nutrition',
+    'healthcare',
+    'wellness',
+    'supplements',
+    'mentalHealth',
+  ];
+  const ecoCategories = [
+    'sustainableFood',
+    'renewableEnergy',
+    'ecoTransport',
+    'greenProducts',
+    'carbonOffset',
+    'conservation',
+  ];
+
   const categories = type === 'health' ? healthCategories : ecoCategories;
-  const [visibleCategories, setVisibleCategories] = useState<Set<string>>(new Set(categories.slice(0, 4))); // Show first 4 by default
-  
+  const [visibleCategories, setVisibleCategories] = useState<Set<string>>(
+    new Set(categories.slice(0, 4))
+  ); // Show first 4 by default
+
   const categoryColors = {
     // Health categories
     fitness: '#10b981',
@@ -30,7 +50,7 @@ const CategoryTrendsChart: React.FC<CategoryTrendsChartProps> = ({ data, type, t
     ecoTransport: '#3b82f6',
     greenProducts: '#8b5cf6',
     carbonOffset: '#059669',
-    conservation: '#0d9488'
+    conservation: '#0d9488',
   };
 
   const categoryLabels = {
@@ -45,15 +65,15 @@ const CategoryTrendsChart: React.FC<CategoryTrendsChartProps> = ({ data, type, t
     ecoTransport: 'Eco Transport',
     greenProducts: 'Green Products',
     carbonOffset: 'Carbon Offset',
-    conservation: 'Conservation'
+    conservation: 'Conservation',
   };
 
   // Create lines configuration for visible categories
   const lines = useMemo(() => {
-    return Array.from(visibleCategories).map(category => ({
+    return Array.from(visibleCategories).map((category) => ({
       dataKey: category,
       stroke: categoryColors[category as keyof typeof categoryColors],
-      label: categoryLabels[category as keyof typeof categoryLabels]
+      label: categoryLabels[category as keyof typeof categoryLabels],
     }));
   }, [visibleCategories]);
 
@@ -70,10 +90,10 @@ const CategoryTrendsChart: React.FC<CategoryTrendsChartProps> = ({ data, type, t
   return (
     <div className="liquid-glass-fallback rounded-2xl p-6">
       <h3 className="text-lg sm:text-xl font-bold text-white mb-4">{title}</h3>
-      
+
       {/* Category Toggle Buttons */}
       <div className="flex flex-wrap gap-2 mb-6">
-        {categories.map(category => (
+        {categories.map((category) => (
           <button
             key={category}
             onClick={() => toggleCategory(category)}
@@ -82,10 +102,15 @@ const CategoryTrendsChart: React.FC<CategoryTrendsChartProps> = ({ data, type, t
                 ? 'bg-white/20 text-white border border-white/30'
                 : 'bg-white/5 text-white/60 border border-white/10 hover:bg-white/10'
             }`}
-            style={visibleCategories.has(category) ? {
-              borderColor: categoryColors[category as keyof typeof categoryColors],
-              boxShadow: `0 0 10px ${categoryColors[category as keyof typeof categoryColors]}20`
-            } : {}}
+            style={
+              visibleCategories.has(category)
+                ? {
+                    borderColor:
+                      categoryColors[category as keyof typeof categoryColors],
+                    boxShadow: `0 0 10px ${categoryColors[category as keyof typeof categoryColors]}20`,
+                  }
+                : {}
+            }
           >
             {categoryLabels[category as keyof typeof categoryLabels]}
           </button>
@@ -107,4 +132,4 @@ const CategoryTrendsChart: React.FC<CategoryTrendsChartProps> = ({ data, type, t
   );
 };
 
-export default CategoryTrendsChart; 
+export default CategoryTrendsChart;

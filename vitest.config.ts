@@ -5,10 +5,7 @@ import path from 'path';
 import tsconfigPaths from 'vite-tsconfig-paths';
 
 export default defineConfig({
-  plugins: [
-    react(),
-    tsconfigPaths(),
-  ],
+  plugins: [react(), tsconfigPaths()],
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src'),
@@ -35,4 +32,4 @@ export default defineConfig({
     'process.env': process.env,
     global: 'globalThis',
   },
-}); 
+});

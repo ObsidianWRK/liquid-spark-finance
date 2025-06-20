@@ -1,16 +1,16 @@
 import React, { useState, useMemo } from 'react';
-import { 
-  Search, 
-  Filter, 
-  Download, 
-  ChevronLeft, 
-  ChevronRight, 
-  Truck, 
-  Package, 
-  CheckCircle, 
+import {
+  Search,
+  Filter,
+  Download,
+  ChevronLeft,
+  ChevronRight,
+  Truck,
+  Package,
+  CheckCircle,
   Clock,
   ArrowUpDown,
-  MoreHorizontal
+  MoreHorizontal,
 } from 'lucide-react';
 import { cn } from '@/shared/lib/utils';
 
@@ -41,7 +41,7 @@ interface EnterpriseTransactionViewProps {
 const EnterpriseTransactionView: React.FC<EnterpriseTransactionViewProps> = ({
   transactions,
   onTransactionClick,
-  className
+  className,
 }) => {
   const [searchQuery, setSearchQuery] = useState('');
   const [sortField, setSortField] = useState<keyof Transaction>('date');
@@ -55,14 +55,15 @@ const EnterpriseTransactionView: React.FC<EnterpriseTransactionViewProps> = ({
     const formatted = Math.abs(amount).toLocaleString('en-US', {
       style: 'currency',
       currency: 'USD',
-      minimumFractionDigits: 2
+      minimumFractionDigits: 2,
     });
     return amount < 0 ? `-${formatted}` : `+${formatted}`;
   };
 
   // Get status badge styles
   const getStatusBadge = (status: string) => {
-    const baseClasses = 'inline-flex items-center px-2 py-1 rounded-full text-xs font-medium';
+    const baseClasses =
+      'inline-flex items-center px-2 py-1 rounded-full text-xs font-medium';
     switch (status) {
       case 'completed':
         return `${baseClasses} bg-green-100 text-green-800`;
@@ -101,9 +102,12 @@ const EnterpriseTransactionView: React.FC<EnterpriseTransactionViewProps> = ({
 
   // Filter and sort transactions
   const processedTransactions = useMemo(() => {
-    const filtered = transactions.filter(transaction =>
-      transaction.merchant.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      transaction.category.toLowerCase().includes(searchQuery.toLowerCase())
+    const filtered = transactions.filter(
+      (transaction) =>
+        transaction.merchant
+          .toLowerCase()
+          .includes(searchQuery.toLowerCase()) ||
+        transaction.category.toLowerCase().includes(searchQuery.toLowerCase())
     );
 
     // Sort
@@ -150,18 +154,18 @@ const EnterpriseTransactionView: React.FC<EnterpriseTransactionViewProps> = ({
     if (selectedIds.size === paginatedTransactions.length) {
       setSelectedIds(new Set());
     } else {
-      setSelectedIds(new Set(paginatedTransactions.map(t => t.id)));
+      setSelectedIds(new Set(paginatedTransactions.map((t) => t.id)));
     }
   };
 
-  const SortableHeader = ({ 
-    field, 
-    children 
-  }: { 
-    field: keyof Transaction; 
+  const SortableHeader = ({
+    field,
+    children,
+  }: {
+    field: keyof Transaction;
     children: React.ReactNode;
   }) => (
-    <th 
+    <th
       className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-50 transition-colors"
       onClick={() => handleSort(field)}
     >
@@ -178,12 +182,14 @@ const EnterpriseTransactionView: React.FC<EnterpriseTransactionViewProps> = ({
       <div className="p-6 border-b border-gray-200">
         <div className="flex items-center justify-between mb-4">
           <div>
-            <h2 className="text-xl font-semibold text-gray-900">Transactions</h2>
+            <h2 className="text-xl font-semibold text-gray-900">
+              Transactions
+            </h2>
             <p className="text-sm text-gray-500 mt-1">
               {processedTransactions.length} transactions found
             </p>
           </div>
-          
+
           <div className="flex items-center gap-3">
             <button className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors flex items-center gap-2">
               <Download className="w-4 h-4" />
@@ -216,7 +222,10 @@ const EnterpriseTransactionView: React.FC<EnterpriseTransactionViewProps> = ({
               <th className="px-6 py-3 w-12">
                 <input
                   type="checkbox"
-                  checked={selectedIds.size === paginatedTransactions.length && paginatedTransactions.length > 0}
+                  checked={
+                    selectedIds.size === paginatedTransactions.length &&
+                    paginatedTransactions.length > 0
+                  }
                   onChange={selectAll}
                   className="rounded border-gray-300 text-blue-600 focus:ring-blue-500"
                 />
@@ -237,10 +246,10 @@ const EnterpriseTransactionView: React.FC<EnterpriseTransactionViewProps> = ({
               </th>
             </tr>
           </thead>
-          
+
           <tbody className="bg-white divide-y divide-gray-200">
             {paginatedTransactions.map((transaction) => (
-              <tr 
+              <tr
                 key={transaction.id}
                 className="hover:bg-gray-50 transition-colors cursor-pointer"
                 onClick={() => onTransactionClick?.(transaction)}
@@ -256,41 +265,49 @@ const EnterpriseTransactionView: React.FC<EnterpriseTransactionViewProps> = ({
                     className="rounded border-gray-300 text-blue-600 focus:ring-blue-500"
                   />
                 </td>
-                
+
                 <td className="px-6 py-4 whitespace-nowrap">
-                  <div className="font-medium text-gray-900">{transaction.merchant}</div>
+                  <div className="font-medium text-gray-900">
+                    {transaction.merchant}
+                  </div>
                 </td>
-                
+
                 <td className="px-6 py-4 whitespace-nowrap">
                   <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-gray-100 text-gray-800">
                     {transaction.category}
                   </span>
                 </td>
-                
+
                 <td className="px-6 py-4 whitespace-nowrap">
-                  <span className={cn(
-                    'font-semibold',
-                    transaction.amount > 0 ? 'text-green-600' : 'text-gray-900'
-                  )}>
+                  <span
+                    className={cn(
+                      'font-semibold',
+                      transaction.amount > 0
+                        ? 'text-green-600'
+                        : 'text-gray-900'
+                    )}
+                  >
                     {formatAmount(transaction.amount)}
                   </span>
                 </td>
-                
+
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                   <div>{new Date(transaction.date).toLocaleDateString()}</div>
-                  <div className="text-xs text-gray-500">{transaction.time}</div>
+                  <div className="text-xs text-gray-500">
+                    {transaction.time}
+                  </div>
                 </td>
-                
+
                 <td className="px-6 py-4 whitespace-nowrap">
                   <span className={getStatusBadge(transaction.status)}>
                     {transaction.status}
                   </span>
                 </td>
-                
+
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                   {transaction.paymentMethod || '—'}
                 </td>
-                
+
                 <td className="px-6 py-4 whitespace-nowrap">
                   {transaction.shipping ? (
                     <div className="flex items-center gap-2">
@@ -303,7 +320,7 @@ const EnterpriseTransactionView: React.FC<EnterpriseTransactionViewProps> = ({
                     <span className="text-gray-400">—</span>
                   )}
                 </td>
-                
+
                 <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                   <button
                     onClick={(e) => {
@@ -325,16 +342,17 @@ const EnterpriseTransactionView: React.FC<EnterpriseTransactionViewProps> = ({
       <div className="px-6 py-4 border-t border-gray-200 flex items-center justify-between">
         <div className="text-sm text-gray-700">
           Showing{' '}
-          <span className="font-medium">{(currentPage - 1) * itemsPerPage + 1}</span>
-          {' '}to{' '}
+          <span className="font-medium">
+            {(currentPage - 1) * itemsPerPage + 1}
+          </span>{' '}
+          to{' '}
           <span className="font-medium">
             {Math.min(currentPage * itemsPerPage, processedTransactions.length)}
-          </span>
-          {' '}of{' '}
-          <span className="font-medium">{processedTransactions.length}</span>
-          {' '}results
+          </span>{' '}
+          of <span className="font-medium">{processedTransactions.length}</span>{' '}
+          results
         </div>
-        
+
         <div className="flex items-center gap-2">
           <button
             onClick={() => setCurrentPage(Math.max(1, currentPage - 1))}
@@ -343,13 +361,15 @@ const EnterpriseTransactionView: React.FC<EnterpriseTransactionViewProps> = ({
           >
             <ChevronLeft className="w-4 h-4" />
           </button>
-          
+
           <span className="px-3 py-1 text-sm">
             Page {currentPage} of {totalPages}
           </span>
-          
+
           <button
-            onClick={() => setCurrentPage(Math.min(totalPages, currentPage + 1))}
+            onClick={() =>
+              setCurrentPage(Math.min(totalPages, currentPage + 1))
+            }
             disabled={currentPage === totalPages}
             className="p-2 rounded-lg border border-gray-300 disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50 transition-colors"
           >
@@ -361,4 +381,4 @@ const EnterpriseTransactionView: React.FC<EnterpriseTransactionViewProps> = ({
   );
 };
 
-export default EnterpriseTransactionView; 
+export default EnterpriseTransactionView;

@@ -21,7 +21,7 @@ const GraphBaseTest: React.FC = () => {
         <h1 className="text-2xl font-bold text-white text-center">
           GraphBase Component Test
         </h1>
-        
+
         {/* Basic Line Chart */}
         <div className="bg-white/5 p-6 rounded-2xl border border-white/10">
           <GraphBase
@@ -30,12 +30,10 @@ const GraphBaseTest: React.FC = () => {
             title="Basic Line Chart"
             subtitle="Testing the GraphBase component"
             dimensions={{ height: 300 }}
-            series={[
-              { dataKey: 'value', label: 'Value', color: '#3b82f6' }
-            ]}
+            series={[{ dataKey: 'value', label: 'Value', color: '#3b82f6' }]}
           />
         </div>
-        
+
         {/* Multi-series Area Chart */}
         <div className="bg-white/5 p-6 rounded-2xl border border-white/10">
           <GraphBase
@@ -46,12 +44,12 @@ const GraphBaseTest: React.FC = () => {
             dimensions={{ height: 300 }}
             series={[
               { dataKey: 'income', label: 'Income', color: '#10b981' },
-              { dataKey: 'spending', label: 'Spending', color: '#ef4444' }
+              { dataKey: 'spending', label: 'Spending', color: '#ef4444' },
             ]}
             legend={{ show: true, position: 'bottom' }}
           />
         </div>
-        
+
         {/* Bar Chart */}
         <div className="bg-white/5 p-6 rounded-2xl border border-white/10">
           <GraphBase
@@ -60,11 +58,11 @@ const GraphBaseTest: React.FC = () => {
             title="Bar Chart Test"
             dimensions={{ height: 300 }}
             series={[
-              { dataKey: 'value', label: 'Daily Value', color: '#8b5cf6' }
+              { dataKey: 'value', label: 'Daily Value', color: '#8b5cf6' },
             ]}
           />
         </div>
-        
+
         {/* Loading State Test */}
         <div className="bg-white/5 p-6 rounded-2xl border border-white/10">
           <GraphBase
@@ -75,7 +73,7 @@ const GraphBaseTest: React.FC = () => {
             dimensions={{ height: 300 }}
           />
         </div>
-        
+
         {/* Error State Test */}
         <div className="bg-white/5 p-6 rounded-2xl border border-white/10">
           <GraphBase

@@ -22,7 +22,7 @@ export interface SecurityEvent {
   resolvedBy?: string;
 }
 
-export type SecurityEventType = 
+export type SecurityEventType =
   | 'AUTHENTICATION_FAILURE'
   | 'ENCRYPTION_ERROR'
   | 'DATA_INTEGRITY_VIOLATION'
@@ -71,8 +71,8 @@ export class VueniSecurityMonitoring {
   private static readonly MAX_EVENTS = 10000;
   private static readonly ALERT_THRESHOLD = {
     critical: 1, // Alert immediately for critical events
-    high: 5,     // Alert after 5 high severity events in 10 minutes
-    medium: 20   // Alert after 20 medium severity events in 1 hour
+    high: 5, // Alert after 5 high severity events in 10 minutes
+    medium: 20, // Alert after 20 medium severity events in 1 hour
   };
 
   private static events: SecurityEvent[] = [];
@@ -99,7 +99,11 @@ export class VueniSecurityMonitoring {
       }
 
       this.isInitialized = true;
-      this.logEvent('MONITORING_INITIALIZED', 'low', 'Security monitoring system initialized');
+      this.logEvent(
+        'MONITORING_INITIALIZED',
+        'low',
+        'Security monitoring system initialized'
+      );
     } catch (error) {
       console.error('Failed to initialize security monitoring:', error);
     }
@@ -127,9 +131,10 @@ export class VueniSecurityMonitoring {
       userId: this.getCurrentUserId(),
       sessionId: this.getCurrentSessionId(),
       ipAddress: this.getClientIP(),
-      userAgent: typeof window !== 'undefined' ? window.navigator.userAgent : undefined,
+      userAgent:
+        typeof window !== 'undefined' ? window.navigator.userAgent : undefined,
       metadata,
-      resolved: false
+      resolved: false,
     };
 
     this.events.push(event);
@@ -170,20 +175,26 @@ export class VueniSecurityMonitoring {
 
     if (filters) {
       if (filters.severity) {
-        filteredEvents = filteredEvents.filter(e => e.severity === filters.severity);
+        filteredEvents = filteredEvents.filter(
+          (e) => e.severity === filters.severity
+        );
       }
 
       if (filters.type) {
-        filteredEvents = filteredEvents.filter(e => e.type === filters.type);
+        filteredEvents = filteredEvents.filter((e) => e.type === filters.type);
       }
 
       if (filters.resolved !== undefined) {
-        filteredEvents = filteredEvents.filter(e => e.resolved === filters.resolved);
+        filteredEvents = filteredEvents.filter(
+          (e) => e.resolved === filters.resolved
+        );
       }
 
       if (filters.since) {
         const sinceDate = new Date(filters.since);
-        filteredEvents = filteredEvents.filter(e => new Date(e.timestamp) > sinceDate);
+        filteredEvents = filteredEvents.filter(
+          (e) => new Date(e.timestamp) > sinceDate
+        );
       }
 
       if (filters.limit) {
@@ -191,15 +202,18 @@ export class VueniSecurityMonitoring {
       }
     }
 
-    return filteredEvents.sort((a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime());
+    return filteredEvents.sort(
+      (a, b) =>
+        new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime()
+    );
   }
 
   /**
    * Resolves a security event
    */
   static resolveEvent(eventId: string, resolvedBy: string): boolean {
-    const event = this.events.find(e => e.id === eventId);
-    
+    const event = this.events.find((e) => e.id === eventId);
+
     if (!event) {
       return false;
     }
@@ -209,11 +223,16 @@ export class VueniSecurityMonitoring {
     event.resolvedBy = resolvedBy;
 
     this.persistEvents();
-    
-    this.logEvent('SECURITY_EVENT_RESOLVED', 'low', `Event ${eventId} resolved by ${resolvedBy}`, {
-      originalEventType: event.type,
-      originalSeverity: event.severity
-    });
+
+    this.logEvent(
+      'SECURITY_EVENT_RESOLVED',
+      'low',
+      `Event ${eventId} resolved by ${resolvedBy}`,
+      {
+        originalEventType: event.type,
+        originalSeverity: event.severity,
+      }
+    );
 
     return true;
   }
@@ -221,37 +240,48 @@ export class VueniSecurityMonitoring {
   /**
    * Gets security metrics
    */
-  static getMetrics(timeRange?: { start: string; end: string }): SecurityMetrics {
+  static getMetrics(timeRange?: {
+    start: string;
+    end: string;
+  }): SecurityMetrics {
     let events = this.events;
 
     if (timeRange) {
       const start = new Date(timeRange.start);
       const end = new Date(timeRange.end);
-      events = events.filter(e => {
+      events = events.filter((e) => {
         const eventTime = new Date(e.timestamp);
         return eventTime >= start && eventTime <= end;
       });
     }
 
     const totalEvents = events.length;
-    const criticalEvents = events.filter(e => e.severity === 'critical').length;
-    const highSeverityEvents = events.filter(e => e.severity === 'high').length;
-    const unresolvedEvents = events.filter(e => !e.resolved).length;
+    const criticalEvents = events.filter(
+      (e) => e.severity === 'critical'
+    ).length;
+    const highSeverityEvents = events.filter(
+      (e) => e.severity === 'high'
+    ).length;
+    const unresolvedEvents = events.filter((e) => !e.resolved).length;
 
     // Calculate average resolution time
-    const resolvedEvents = events.filter(e => e.resolved && e.resolvedAt);
-    const averageResolutionTime = resolvedEvents.length > 0 
-      ? resolvedEvents.reduce((sum, event) => {
-          const created = new Date(event.timestamp).getTime();
-          const resolved = new Date(event.resolvedAt!).getTime();
-          return sum + (resolved - created);
-        }, 0) / resolvedEvents.length
-      : 0;
+    const resolvedEvents = events.filter((e) => e.resolved && e.resolvedAt);
+    const averageResolutionTime =
+      resolvedEvents.length > 0
+        ? resolvedEvents.reduce((sum, event) => {
+            const created = new Date(event.timestamp).getTime();
+            const resolved = new Date(event.resolvedAt!).getTime();
+            return sum + (resolved - created);
+          }, 0) / resolvedEvents.length
+        : 0;
 
     // Get top event types
     const eventTypeCounts = new Map<SecurityEventType, number>();
-    events.forEach(event => {
-      eventTypeCounts.set(event.type, (eventTypeCounts.get(event.type) || 0) + 1);
+    events.forEach((event) => {
+      eventTypeCounts.set(
+        event.type,
+        (eventTypeCounts.get(event.type) || 0) + 1
+      );
     });
 
     const topEventTypes = Array.from(eventTypeCounts.entries())
@@ -267,9 +297,10 @@ export class VueniSecurityMonitoring {
       averageResolutionTime,
       topEventTypes,
       timeRange: timeRange || {
-        start: events.length > 0 ? events[0].timestamp : new Date().toISOString(),
-        end: new Date().toISOString()
-      }
+        start:
+          events.length > 0 ? events[0].timestamp : new Date().toISOString(),
+        end: new Date().toISOString(),
+      },
     };
   }
 
@@ -287,25 +318,33 @@ export class VueniSecurityMonitoring {
 
     // High severity events - check threshold
     if (event.severity === 'high') {
-      const recentHighEvents = this.events.filter(e => 
-        e.severity === 'high' && 
-        (now - new Date(e.timestamp).getTime()) < 600000 // 10 minutes
+      const recentHighEvents = this.events.filter(
+        (e) =>
+          e.severity === 'high' &&
+          now - new Date(e.timestamp).getTime() < 600000 // 10 minutes
       );
 
       if (recentHighEvents.length >= this.ALERT_THRESHOLD.high) {
-        this.triggerAlert(event, `${recentHighEvents.length} high severity events in 10 minutes`);
+        this.triggerAlert(
+          event,
+          `${recentHighEvents.length} high severity events in 10 minutes`
+        );
       }
     }
 
     // Medium severity events - check threshold
     if (event.severity === 'medium') {
-      const recentMediumEvents = this.events.filter(e => 
-        e.severity === 'medium' && 
-        (now - new Date(e.timestamp).getTime()) < 3600000 // 1 hour
+      const recentMediumEvents = this.events.filter(
+        (e) =>
+          e.severity === 'medium' &&
+          now - new Date(e.timestamp).getTime() < 3600000 // 1 hour
       );
 
       if (recentMediumEvents.length >= this.ALERT_THRESHOLD.medium) {
-        this.triggerAlert(event, `${recentMediumEvents.length} medium severity events in 1 hour`);
+        this.triggerAlert(
+          event,
+          `${recentMediumEvents.length} medium severity events in 1 hour`
+        );
       }
     }
   }
@@ -320,7 +359,7 @@ export class VueniSecurityMonitoring {
       type: 'webhook', // Default to webhook, can be configured
       recipient: 'security-team@vueni.com',
       message: `${message}: ${event.description}`,
-      sent: false
+      sent: false,
     };
 
     this.alerts.push(alert);
@@ -362,7 +401,9 @@ export class VueniSecurityMonitoring {
    */
   private static persistEvents(): void {
     try {
-      VueniSecureStorage.setItem(this.STORAGE_KEY, this.events, { sensitive: true });
+      VueniSecureStorage.setItem(this.STORAGE_KEY, this.events, {
+        sensitive: true,
+      });
     } catch (error) {
       console.error('Failed to persist security events:', error);
     }
@@ -373,7 +414,9 @@ export class VueniSecurityMonitoring {
    */
   private static persistAlerts(): void {
     try {
-      VueniSecureStorage.setItem(this.ALERTS_KEY, this.alerts, { sensitive: true });
+      VueniSecureStorage.setItem(this.ALERTS_KEY, this.alerts, {
+        sensitive: true,
+      });
     } catch (error) {
       console.error('Failed to persist security alerts:', error);
     }
@@ -438,15 +481,19 @@ export class VueniSecurityMonitoring {
     cutoffDate.setDate(cutoffDate.getDate() - olderThanDays);
 
     const initialCount = this.events.length;
-    this.events = this.events.filter(event => 
-      new Date(event.timestamp) > cutoffDate
+    this.events = this.events.filter(
+      (event) => new Date(event.timestamp) > cutoffDate
     );
 
     const removedCount = initialCount - this.events.length;
-    
+
     if (removedCount > 0) {
       this.persistEvents();
-      this.logEvent('EVENTS_CLEANUP', 'low', `Removed ${removedCount} old security events`);
+      this.logEvent(
+        'EVENTS_CLEANUP',
+        'low',
+        `Removed ${removedCount} old security events`
+      );
     }
 
     return removedCount;
@@ -459,18 +506,26 @@ export class VueniSecurityMonitoring {
     const events = this.getEvents();
 
     if (format === 'csv') {
-      const headers = ['ID', 'Type', 'Severity', 'Description', 'Timestamp', 'User ID', 'Resolved'];
-      const rows = events.map(event => [
+      const headers = [
+        'ID',
+        'Type',
+        'Severity',
+        'Description',
+        'Timestamp',
+        'User ID',
+        'Resolved',
+      ];
+      const rows = events.map((event) => [
         event.id,
         event.type,
         event.severity,
         event.description.replace(/,/g, ';'), // Escape commas
         event.timestamp,
         event.userId || '',
-        event.resolved ? 'Yes' : 'No'
+        event.resolved ? 'Yes' : 'No',
       ]);
 
-      return [headers, ...rows].map(row => row.join(',')).join('\n');
+      return [headers, ...rows].map((row) => row.join(',')).join('\n');
     }
 
     return JSON.stringify(events, null, 2);
@@ -491,7 +546,7 @@ export class VueniSecurityMonitoring {
     return {
       recentEvents,
       metrics,
-      alerts: recentAlerts
+      alerts: recentAlerts,
     };
   }
 }

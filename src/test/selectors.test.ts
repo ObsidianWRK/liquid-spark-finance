@@ -5,7 +5,7 @@ import {
   selectTotalLiabilities,
   selectLiquidAssets,
   selectInvestmentAssets,
-  selectAccountsByType
+  selectAccountsByType,
 } from '@/selectors/financialSelectors';
 import { Account } from '@/types/accounts';
 
@@ -24,7 +24,7 @@ const mockAccounts: Account[] = [
     syncStatus: 'active',
     metadata: {},
     createdAt: new Date(),
-    updatedAt: new Date()
+    updatedAt: new Date(),
   },
   {
     id: 'acc2',
@@ -39,7 +39,7 @@ const mockAccounts: Account[] = [
     syncStatus: 'active',
     metadata: {},
     createdAt: new Date(),
-    updatedAt: new Date()
+    updatedAt: new Date(),
   },
   {
     id: 'acc3',
@@ -54,7 +54,7 @@ const mockAccounts: Account[] = [
     syncStatus: 'active',
     metadata: {},
     createdAt: new Date(),
-    updatedAt: new Date()
+    updatedAt: new Date(),
   },
   {
     id: 'acc4',
@@ -69,7 +69,7 @@ const mockAccounts: Account[] = [
     syncStatus: 'active',
     metadata: {},
     createdAt: new Date(),
-    updatedAt: new Date()
+    updatedAt: new Date(),
   },
   {
     id: 'acc5',
@@ -84,7 +84,7 @@ const mockAccounts: Account[] = [
     syncStatus: 'active',
     metadata: {},
     createdAt: new Date(),
-    updatedAt: new Date()
+    updatedAt: new Date(),
   },
   {
     id: 'acc6',
@@ -99,8 +99,8 @@ const mockAccounts: Account[] = [
     syncStatus: 'inactive',
     metadata: {},
     createdAt: new Date(),
-    updatedAt: new Date()
-  }
+    updatedAt: new Date(),
+  },
 ];
 
 describe('Financial Selectors', () => {
@@ -129,24 +129,27 @@ describe('Financial Selectors', () => {
         {
           ...mockAccounts[0],
           id: 'acc7',
-          balance: undefined as any
-        }
+          balance: undefined as any,
+        },
       ];
       const wealth = selectTotalWealth(accountsWithUndefined);
       expect(wealth).toBe(55500); // Same as before, undefined account filtered out
     });
 
     test('handles only asset accounts', () => {
-      const assetOnly = mockAccounts.filter(acc => 
-        !acc.accountType.includes('credit') && !acc.accountType.includes('loan')
+      const assetOnly = mockAccounts.filter(
+        (acc) =>
+          !acc.accountType.includes('credit') &&
+          !acc.accountType.includes('loan')
       );
       const wealth = selectTotalWealth(assetOnly);
       expect(wealth).toBe(70000); // No liabilities to subtract
     });
 
     test('handles only liability accounts', () => {
-      const liabilitiesOnly = mockAccounts.filter(acc => 
-        acc.accountType.includes('credit') || acc.accountType.includes('loan')
+      const liabilitiesOnly = mockAccounts.filter(
+        (acc) =>
+          acc.accountType.includes('credit') || acc.accountType.includes('loan')
       );
       const wealth = selectTotalWealth(liabilitiesOnly);
       expect(wealth).toBe(-14500); // 0 assets - 14500 liabilities
@@ -179,8 +182,10 @@ describe('Financial Selectors', () => {
     });
 
     test('returns 0 for no liabilities', () => {
-      const noLiabilities = mockAccounts.filter(acc => 
-        !acc.accountType.includes('credit') && !acc.accountType.includes('loan')
+      const noLiabilities = mockAccounts.filter(
+        (acc) =>
+          !acc.accountType.includes('credit') &&
+          !acc.accountType.includes('loan')
       );
       expect(selectTotalLiabilities(noLiabilities)).toBe(0);
     });
@@ -216,8 +221,8 @@ describe('Financial Selectors', () => {
           accountType: 'investment' as const,
           accountSubtype: 'ira' as const,
           balance: 25000,
-          isActive: true
-        }
+          isActive: true,
+        },
       ];
       const investments = selectInvestmentAssets(extendedAccounts);
       expect(investments).toBe(75000); // 50000 + 25000
@@ -227,7 +232,7 @@ describe('Financial Selectors', () => {
   describe('selectAccountsByType', () => {
     test('groups accounts correctly by type', () => {
       const grouped = selectAccountsByType(mockAccounts);
-      
+
       expect(grouped.checking).toBe(5000);
       expect(grouped.savings).toBe(15000);
       expect(grouped.creditCards).toBe(2500); // Absolute value
@@ -242,11 +247,11 @@ describe('Financial Selectors', () => {
     });
 
     test('returns 0 for missing account types', () => {
-      const checkingOnly = mockAccounts.filter(acc => 
-        acc.accountSubtype === 'checking' && acc.isActive
+      const checkingOnly = mockAccounts.filter(
+        (acc) => acc.accountSubtype === 'checking' && acc.isActive
       );
       const grouped = selectAccountsByType(checkingOnly);
-      
+
       expect(grouped.checking).toBe(5000);
       expect(grouped.savings).toBe(0);
       expect(grouped.creditCards).toBe(0);
@@ -254,4 +259,4 @@ describe('Financial Selectors', () => {
       expect(grouped.loans).toBe(0);
     });
   });
-}); 
+});

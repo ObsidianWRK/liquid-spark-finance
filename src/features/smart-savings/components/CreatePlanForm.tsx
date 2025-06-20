@@ -1,19 +1,32 @@
-import React, { useState } from "react";
-import { Button } from "@/shared/ui/button";
-import { Input } from "@/shared/ui/input";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/shared/ui/select";
-import { useSmartSavingsStore } from "../store";
-import { PlusCircle } from "lucide-react";
+import React, { useState } from 'react';
+import { Button } from '@/shared/ui/button';
+import { Input } from '@/shared/ui/input';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/shared/ui/select';
+import { useSmartSavingsStore } from '../store';
+import { PlusCircle } from 'lucide-react';
 
 export const CreatePlanForm: React.FC = () => {
   const create = useSmartSavingsStore((s) => s.create);
   const loading = useSmartSavingsStore((s) => s.loading);
   const [amount, setAmount] = useState(10);
-  const [cadence, setCadence] = useState<"daily" | "weekly" | "monthly">("weekly");
+  const [cadence, setCadence] = useState<'daily' | 'weekly' | 'monthly'>(
+    'weekly'
+  );
 
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    await create({ accountId: "acc1", targetAmount: amount, cadence, isActive: true } as any);
+    await create({
+      accountId: 'acc1',
+      targetAmount: amount,
+      cadence,
+      isActive: true,
+    } as any);
     setAmount(10);
   };
 
@@ -42,4 +55,4 @@ export const CreatePlanForm: React.FC = () => {
       </Button>
     </form>
   );
-}; 
+};

@@ -9,7 +9,15 @@ export interface Holding {
   accountId: string;
   quantity: number;
   averageCostPerShare: number;
-  assetType: 'stock' | 'etf' | 'bond' | 'crypto' | 'reit' | 'commodity' | 'cash' | 'mutual_fund';
+  assetType:
+    | 'stock'
+    | 'etf'
+    | 'bond'
+    | 'crypto'
+    | 'reit'
+    | 'commodity'
+    | 'cash'
+    | 'mutual_fund';
   costBasis: number;
   marketValue: number;
   unrealizedGainLoss: number;
@@ -114,4 +122,4 @@ export interface PortfolioSnapshot {
 export interface PortfolioSummary {
   holdings: Holding[];
   snapshots: PortfolioSnapshot[];
-} 
+}

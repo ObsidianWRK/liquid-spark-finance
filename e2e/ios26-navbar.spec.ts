@@ -31,7 +31,10 @@ testDevices.forEach(({ name, device }) => {
       await expect(glassElement).toBeVisible();
     });
 
-    test('displays correct number of tabs on mobile', async ({ page, isMobile }) => {
+    test('displays correct number of tabs on mobile', async ({
+      page,
+      isMobile,
+    }) => {
       if (isMobile) {
         const tabs = page.locator('.ios26-nav__tab');
         const tabCount = await tabs.count();
@@ -52,7 +55,7 @@ testDevices.forEach(({ name, device }) => {
     test('badges display correctly', async ({ page }) => {
       // Look for any badge elements
       const badge = page.locator('.ios26-nav__badge').first();
-      const badgeExists = await badge.count() > 0;
+      const badgeExists = (await badge.count()) > 0;
 
       if (badgeExists) {
         await expect(badge).toBeVisible();
@@ -63,12 +66,12 @@ testDevices.forEach(({ name, device }) => {
 
     test('floating action button is accessible', async ({ page }) => {
       const fab = page.locator('.ios26-nav__fab');
-      const fabExists = await fab.count() > 0;
+      const fabExists = (await fab.count()) > 0;
 
       if (fabExists) {
         await expect(fab).toBeVisible();
         await expect(fab).toHaveAttribute('aria-label');
-        
+
         // Test click
         await fab.click();
         // Verify no console errors by checking the page doesn't throw
@@ -97,7 +100,7 @@ testDevices.forEach(({ name, device }) => {
 
     test('scroll hide behavior works', async ({ page }) => {
       const nav = page.locator('.ios26-nav');
-      
+
       // Initial state - should be visible
       await expect(nav).not.toHaveClass(/ios26-nav--hidden/);
 
@@ -105,7 +108,7 @@ testDevices.forEach(({ name, device }) => {
       await page.evaluate(() => {
         window.scrollTo(0, 500);
       });
-      
+
       // Wait a bit for scroll controller to react
       await page.waitForTimeout(300);
 
@@ -118,7 +121,7 @@ testDevices.forEach(({ name, device }) => {
     test('keyboard navigation works', async ({ page, browserName }) => {
       // Focus first tab
       await page.keyboard.press('Alt+n');
-      
+
       // Wait for focus
       await page.waitForTimeout(100);
 
@@ -126,7 +129,7 @@ testDevices.forEach(({ name, device }) => {
       const focusedElement = await page.evaluate(() => {
         return document.activeElement?.className || '';
       });
-      
+
       expect(focusedElement).toContain('ios26-nav__tab');
 
       // Navigate with arrow keys
@@ -155,7 +158,7 @@ testDevices.forEach(({ name, device }) => {
       // Check individual tabs
       const tabs = page.locator('[role="tab"]');
       const tabCount = await tabs.count();
-      
+
       for (let i = 0; i < tabCount; i++) {
         const tab = tabs.nth(i);
         await expect(tab).toHaveAttribute('aria-selected');
@@ -192,10 +195,10 @@ testDevices.forEach(({ name, device }) => {
       }
 
       const nav = page.locator('.ios26-nav');
-      
+
       // On desktop, should have side rail class if enabled
       const classes = await nav.getAttribute('class');
-      
+
       // This depends on whether side rail is enabled in the implementation
       if (classes?.includes('ios26-nav--side-rail')) {
         // Verify vertical orientation
@@ -210,8 +213,10 @@ testDevices.forEach(({ name, device }) => {
       }
 
       // Find an input field to trigger virtual keyboard
-      const searchInput = page.locator('input[type="search"], input[type="text"]').first();
-      const inputExists = await searchInput.count() > 0;
+      const searchInput = page
+        .locator('input[type="search"], input[type="text"]')
+        .first();
+      const inputExists = (await searchInput.count()) > 0;
 
       if (inputExists) {
         // Focus input to show virtual keyboard
@@ -227,7 +232,7 @@ testDevices.forEach(({ name, device }) => {
     test('performance - smooth animations', async ({ page }) => {
       // Measure animation performance
       const nav = page.locator('.ios26-nav');
-      
+
       // Check if CSS transitions are applied
       const transitionDuration = await nav.evaluate((el) => {
         return window.getComputedStyle(el).transitionDuration;
@@ -263,7 +268,7 @@ test.describe('iOS 26 NavBar - Desktop Features', () => {
 
   test('side rail layout on large screens', async ({ page }) => {
     await page.goto('/');
-    
+
     const nav = page.locator('.ios26-nav');
     const hasClass = await nav.evaluate((el, className) => {
       return el.classList.contains(className);
@@ -274,24 +279,24 @@ test.describe('iOS 26 NavBar - Desktop Features', () => {
       const navWidth = await nav.evaluate((el) => {
         return el.getBoundingClientRect().width;
       });
-      
+
       expect(navWidth).toBe(80); // Side rail width
     }
   });
 
   test('hover states work on desktop', async ({ page }) => {
     await page.goto('/');
-    
+
     const firstTab = page.locator('.ios26-nav__tab').first();
-    
+
     // Hover over tab
     await firstTab.hover();
-    
+
     // Check if hover styles are applied
     const backgroundColor = await firstTab.evaluate((el) => {
       return window.getComputedStyle(el).backgroundColor;
     });
-    
+
     // Should have some background color on hover
     expect(backgroundColor).not.toBe('transparent');
   });
@@ -301,22 +306,26 @@ test.describe('iOS 26 NavBar - Desktop Features', () => {
 test.describe('iOS 26 NavBar - Accessibility', () => {
   test('meets WCAG color contrast requirements', async ({ page }) => {
     await page.goto('/');
-    
+
     // Use axe-core for accessibility testing
     await page.addScriptTag({
-      url: 'https://cdnjs.cloudflare.com/ajax/libs/axe-core/4.8.2/axe.min.js'
+      url: 'https://cdnjs.cloudflare.com/ajax/libs/axe-core/4.8.2/axe.min.js',
     });
 
     const violations = await page.evaluate(() => {
       return new Promise((resolve) => {
         // @ts-ignore
-        axe.run('.ios26-nav', {
-          rules: {
-            'color-contrast': { enabled: true },
+        axe.run(
+          '.ios26-nav',
+          {
+            rules: {
+              'color-contrast': { enabled: true },
+            },
+          },
+          (err: any, results: any) => {
+            resolve(results.violations);
           }
-        }, (err: any, results: any) => {
-          resolve(results.violations);
-        });
+        );
       });
     });
 
@@ -343,8 +352,8 @@ test.describe('iOS 26 NavBar - Accessibility', () => {
     // Check for live regions
     const liveRegions = page.locator('[aria-live]');
     const liveRegionCount = await liveRegions.count();
-    
+
     // Should have at least one live region for announcements
     expect(liveRegionCount).toBeGreaterThan(0);
   });
-}); 
+});

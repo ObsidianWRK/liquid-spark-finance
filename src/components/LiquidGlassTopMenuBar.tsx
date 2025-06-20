@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { 
+import {
   User,
   Search,
   Bell,
@@ -7,7 +7,7 @@ import {
   BarChart3,
   Wallet,
   TrendingUp,
-  Menu
+  Menu,
 } from 'lucide-react';
 import LiquidGlassSVGFilters from '@/shared/ui/LiquidGlassSVGFilters';
 import { cn } from '@/shared/lib/utils';
@@ -22,8 +22,17 @@ import {
   MenubarSeparator,
   MenubarShortcut,
 } from '@/shared/ui/menubar';
-import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/shared/ui/sheet';
-import { MENU_BAR_HEIGHT, LIQUID_BG_DARK } from '@/shared/tokens/menuBar.tokens';
+import {
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from '@/shared/ui/sheet';
+import {
+  MENU_BAR_HEIGHT,
+  LIQUID_BG_DARK,
+} from '@/shared/tokens/menuBar.tokens';
 import { useMenuBarReveal } from '@/hooks/useMenuBarReveal';
 
 interface MenuBarProps {
@@ -36,7 +45,10 @@ interface MenuItem {
   items: { label: string; shortcut?: string; separator?: boolean }[];
 }
 
-const LiquidGlassTopMenuBar = ({ className, onMenuItemClick }: MenuBarProps) => {
+const LiquidGlassTopMenuBar = ({
+  className,
+  onMenuItemClick,
+}: MenuBarProps) => {
   const menubarRef = useRef<HTMLElement | null>(null);
   const { orientation, translateY } = useMenuBarReveal();
   const navigate = useNavigate();
@@ -96,7 +108,7 @@ const LiquidGlassTopMenuBar = ({ className, onMenuItemClick }: MenuBarProps) => 
       case 'Data Analysis':
         navigate('/?tab=insights');
         break;
-      
+
       // View Menu Navigation
       case 'Dashboard':
         navigate('/');
@@ -117,7 +129,7 @@ const LiquidGlassTopMenuBar = ({ className, onMenuItemClick }: MenuBarProps) => 
           document.documentElement.requestFullscreen();
         }
         break;
-      
+
       // File Menu Actions
       case 'New Transaction':
         navigate('/transactions?new=true');
@@ -125,7 +137,7 @@ const LiquidGlassTopMenuBar = ({ className, onMenuItemClick }: MenuBarProps) => 
       case 'Settings':
         navigate('/profile');
         break;
-      
+
       // Help Menu Actions
       case 'Documentation':
         window.open('https://github.com/your-org/vueni-finance/wiki', '_blank');
@@ -136,7 +148,7 @@ const LiquidGlassTopMenuBar = ({ className, onMenuItemClick }: MenuBarProps) => 
       case 'About Vueni':
         navigate('/profile');
         break;
-      
+
       // Default fallback
       default:
         onMenuItemClick?.(item);
@@ -160,7 +172,7 @@ const LiquidGlassTopMenuBar = ({ className, onMenuItemClick }: MenuBarProps) => 
   return (
     <>
       <LiquidGlassSVGFilters />
-      
+
       {/* Dark-only Liquid Glass Menu Bar */}
       <nav
         role="menubar"
@@ -168,14 +180,16 @@ const LiquidGlassTopMenuBar = ({ className, onMenuItemClick }: MenuBarProps) => 
         ref={menubarRef}
         tabIndex={0}
         className={cn(
-          "fixed inset-x-0 top-[env(safe-area-inset-top)] h-[--menu-bar-height] flex items-center z-50 backdrop-blur-md saturate-[180%] border-t border-white/20 transition-transform duration-200 dark:[&]:bg-[rgba(0,0,0,0.42)]",
+          'fixed inset-x-0 top-[env(safe-area-inset-top)] h-[--menu-bar-height] flex items-center z-50 backdrop-blur-md saturate-[180%] border-t border-white/20 transition-transform duration-200 dark:[&]:bg-[rgba(0,0,0,0.42)]',
           className
         )}
-        style={{
-          '--menu-bar-height': `${MENU_BAR_HEIGHT[orientation]}px`,
-          transform: `translateY(${translateY})`,
-          background: LIQUID_BG_DARK,
-        } as React.CSSProperties}
+        style={
+          {
+            '--menu-bar-height': `${MENU_BAR_HEIGHT[orientation]}px`,
+            transform: `translateY(${translateY})`,
+            background: LIQUID_BG_DARK,
+          } as React.CSSProperties
+        }
       >
         {/* Inner content wrapper for spacing (reuses existing layout) */}
         <div className="w-full px-2 sm:px-4">
@@ -204,9 +218,16 @@ const LiquidGlassTopMenuBar = ({ className, onMenuItemClick }: MenuBarProps) => 
                           item.separator ? (
                             <MenubarSeparator key={idx} />
                           ) : (
-                            <MenubarItem key={idx} onSelect={() => handleItemSelect(item.label)}>
+                            <MenubarItem
+                              key={idx}
+                              onSelect={() => handleItemSelect(item.label)}
+                            >
                               {item.label}
-                              {item.shortcut && <MenubarShortcut>{item.shortcut}</MenubarShortcut>}
+                              {item.shortcut && (
+                                <MenubarShortcut>
+                                  {item.shortcut}
+                                </MenubarShortcut>
+                              )}
                             </MenubarItem>
                           )
                         )}
@@ -221,9 +242,16 @@ const LiquidGlassTopMenuBar = ({ className, onMenuItemClick }: MenuBarProps) => 
                           item.separator ? (
                             <MenubarSeparator key={idx} />
                           ) : (
-                            <MenubarItem key={idx} onSelect={() => handleItemSelect(item.label)}>
+                            <MenubarItem
+                              key={idx}
+                              onSelect={() => handleItemSelect(item.label)}
+                            >
                               {item.label}
-                              {item.shortcut && <MenubarShortcut>{item.shortcut}</MenubarShortcut>}
+                              {item.shortcut && (
+                                <MenubarShortcut>
+                                  {item.shortcut}
+                                </MenubarShortcut>
+                              )}
                             </MenubarItem>
                           )
                         )}
@@ -238,7 +266,10 @@ const LiquidGlassTopMenuBar = ({ className, onMenuItemClick }: MenuBarProps) => 
                           item.separator ? (
                             <MenubarSeparator key={idx} />
                           ) : (
-                            <MenubarItem key={idx} onSelect={() => handleItemSelect(item.label)}>
+                            <MenubarItem
+                              key={idx}
+                              onSelect={() => handleItemSelect(item.label)}
+                            >
                               {item.label}
                             </MenubarItem>
                           )
@@ -254,9 +285,16 @@ const LiquidGlassTopMenuBar = ({ className, onMenuItemClick }: MenuBarProps) => 
                           item.separator ? (
                             <MenubarSeparator key={idx} />
                           ) : (
-                            <MenubarItem key={idx} onSelect={() => handleItemSelect(item.label)}>
+                            <MenubarItem
+                              key={idx}
+                              onSelect={() => handleItemSelect(item.label)}
+                            >
                               {item.label}
-                              {item.shortcut && <MenubarShortcut>{item.shortcut}</MenubarShortcut>}
+                              {item.shortcut && (
+                                <MenubarShortcut>
+                                  {item.shortcut}
+                                </MenubarShortcut>
+                              )}
                             </MenubarItem>
                           )
                         )}
@@ -266,7 +304,10 @@ const LiquidGlassTopMenuBar = ({ className, onMenuItemClick }: MenuBarProps) => 
                 </div>
 
                 {/* Mobile Menu Button - Tablet and smaller */}
-                <Sheet open={isMobileMenuOpen} onOpenChange={setIsMobileMenuOpen}>
+                <Sheet
+                  open={isMobileMenuOpen}
+                  onOpenChange={setIsMobileMenuOpen}
+                >
                   <SheetTrigger asChild>
                     <button
                       className="lg:hidden liquid-glass-menu-item p-2 rounded-xl text-white/90 hover:text-white transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-blue-400/50 flex items-center"
@@ -275,9 +316,14 @@ const LiquidGlassTopMenuBar = ({ className, onMenuItemClick }: MenuBarProps) => 
                       <Menu className="w-4 h-4" />
                     </button>
                   </SheetTrigger>
-                  <SheetContent side="left" className="liquid-glass-card border-0 backdrop-blur-xl w-80 sm:w-96">
+                  <SheetContent
+                    side="left"
+                    className="liquid-glass-card border-0 backdrop-blur-xl w-80 sm:w-96"
+                  >
                     <SheetHeader className="mb-6">
-                      <SheetTitle className="text-white text-left">Menu</SheetTitle>
+                      <SheetTitle className="text-white text-left">
+                        Menu
+                      </SheetTitle>
                     </SheetHeader>
                     <div className="space-y-6">
                       {/* File Menu */}
@@ -286,7 +332,10 @@ const LiquidGlassTopMenuBar = ({ className, onMenuItemClick }: MenuBarProps) => 
                         <div className="space-y-1">
                           {fileMenu.map((item, idx) =>
                             item.separator ? (
-                              <div key={idx} className="my-3 h-px bg-white/10" />
+                              <div
+                                key={idx}
+                                className="my-3 h-px bg-white/10"
+                              />
                             ) : (
                               <button
                                 key={idx}
@@ -294,7 +343,11 @@ const LiquidGlassTopMenuBar = ({ className, onMenuItemClick }: MenuBarProps) => 
                                 className="w-full text-left px-3 py-2 rounded-lg text-white/70 hover:text-white hover:bg-white/5 transition-all flex items-center justify-between"
                               >
                                 <span>{item.label}</span>
-                                {item.shortcut && <span className="text-xs text-white/40">{item.shortcut}</span>}
+                                {item.shortcut && (
+                                  <span className="text-xs text-white/40">
+                                    {item.shortcut}
+                                  </span>
+                                )}
                               </button>
                             )
                           )}
@@ -307,7 +360,10 @@ const LiquidGlassTopMenuBar = ({ className, onMenuItemClick }: MenuBarProps) => 
                         <div className="space-y-1">
                           {viewMenu.map((item, idx) =>
                             item.separator ? (
-                              <div key={idx} className="my-3 h-px bg-white/10" />
+                              <div
+                                key={idx}
+                                className="my-3 h-px bg-white/10"
+                              />
                             ) : (
                               <button
                                 key={idx}
@@ -315,7 +371,11 @@ const LiquidGlassTopMenuBar = ({ className, onMenuItemClick }: MenuBarProps) => 
                                 className="w-full text-left px-3 py-2 rounded-lg text-white/70 hover:text-white hover:bg-white/5 transition-all flex items-center justify-between"
                               >
                                 <span>{item.label}</span>
-                                {item.shortcut && <span className="text-xs text-white/40">{item.shortcut}</span>}
+                                {item.shortcut && (
+                                  <span className="text-xs text-white/40">
+                                    {item.shortcut}
+                                  </span>
+                                )}
                               </button>
                             )
                           )}
@@ -324,11 +384,16 @@ const LiquidGlassTopMenuBar = ({ className, onMenuItemClick }: MenuBarProps) => 
 
                       {/* Tools Menu */}
                       <div>
-                        <h3 className="text-white/80 font-medium mb-3">Tools</h3>
+                        <h3 className="text-white/80 font-medium mb-3">
+                          Tools
+                        </h3>
                         <div className="space-y-1">
                           {toolsMenu.map((item, idx) =>
                             item.separator ? (
-                              <div key={idx} className="my-3 h-px bg-white/10" />
+                              <div
+                                key={idx}
+                                className="my-3 h-px bg-white/10"
+                              />
                             ) : (
                               <button
                                 key={idx}
@@ -350,28 +415,28 @@ const LiquidGlassTopMenuBar = ({ className, onMenuItemClick }: MenuBarProps) => 
               <div className="flex items-center space-x-1 sm:space-x-2 flex-shrink-0">
                 {/* Quick Navigation Pills - Large screens only */}
                 <div className="hidden xl:flex items-center space-x-1">
-                  <button 
+                  <button
                     onClick={() => navigate('/')}
                     className="liquid-glass-menu-item p-2 rounded-xl text-white/80 hover:text-white transition-all duration-300 group"
                     aria-label="Dashboard"
                   >
                     <Home className="w-4 h-4" />
                   </button>
-                  <button 
+                  <button
                     onClick={() => navigate('/?tab=insights')}
                     className="liquid-glass-menu-item p-2 rounded-xl text-white/80 hover:text-white transition-all duration-300"
                     aria-label="Insights"
                   >
                     <BarChart3 className="w-4 h-4" />
                   </button>
-                  <button 
+                  <button
                     onClick={() => navigate('/transactions')}
                     className="liquid-glass-menu-item p-2 rounded-xl text-white/80 hover:text-white transition-all duration-300"
                     aria-label="Transactions"
                   >
                     <Wallet className="w-4 h-4" />
                   </button>
-                  <button 
+                  <button
                     onClick={() => navigate('/reports')}
                     className="liquid-glass-menu-item p-2 rounded-xl text-white/80 hover:text-white transition-all duration-300"
                     aria-label="Reports"
@@ -384,15 +449,15 @@ const LiquidGlassTopMenuBar = ({ className, onMenuItemClick }: MenuBarProps) => 
                 <div className="hidden xl:block w-px h-6 bg-white/10" />
 
                 {/* Essential Action Buttons - Always visible */}
-                <button 
+                <button
                   onClick={() => alert('Search functionality coming soon!')}
                   className="hidden sm:flex liquid-glass-menu-item p-2 rounded-xl text-white/80 hover:text-white transition-all duration-300 relative"
                   aria-label="Search"
                 >
                   <Search className="w-4 h-4 sm:w-5 sm:h-5" />
                 </button>
-                
-                <button 
+
+                <button
                   onClick={() => alert('Notifications coming soon!')}
                   className="liquid-glass-menu-item p-2 rounded-xl text-white/80 hover:text-white transition-all duration-300 relative"
                   aria-label="Notifications"
@@ -401,7 +466,7 @@ const LiquidGlassTopMenuBar = ({ className, onMenuItemClick }: MenuBarProps) => 
                   <span className="absolute -top-1 -right-1 w-2 h-2 sm:w-3 sm:h-3 bg-red-500 rounded-full border border-black/20"></span>
                 </button>
 
-                <button 
+                <button
                   onClick={() => navigate('/profile')}
                   className="liquid-glass-button p-2 rounded-xl text-white/90 hover:text-white transition-all duration-300"
                   aria-label="Profile"
@@ -417,4 +482,4 @@ const LiquidGlassTopMenuBar = ({ className, onMenuItemClick }: MenuBarProps) => 
   );
 };
 
-export default LiquidGlassTopMenuBar; 
+export default LiquidGlassTopMenuBar;

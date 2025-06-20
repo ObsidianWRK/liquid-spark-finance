@@ -19,7 +19,9 @@ const arrayBufferToString = (buffer: ArrayBuffer): string => {
 // Convert ArrayBuffer to hex string
 const arrayBufferToHex = (buffer: ArrayBuffer): string => {
   const bytes = new Uint8Array(buffer);
-  return Array.from(bytes, byte => byte.toString(16).padStart(2, '0')).join('');
+  return Array.from(bytes, (byte) => byte.toString(16).padStart(2, '0')).join(
+    ''
+  );
 };
 
 // Convert hex string to ArrayBuffer
@@ -38,7 +40,7 @@ export const generateSecureRandom = (length: number): string => {
     crypto.getRandomValues(array);
     return arrayBufferToHex(array.buffer);
   }
-  
+
   // Fallback for non-crypto environments
   const chars = '0123456789abcdef';
   let result = '';
@@ -55,9 +57,10 @@ export const generateSecureToken = (length: number = 32): string => {
     crypto.getRandomValues(array);
     return arrayBufferToHex(array.buffer).slice(0, length);
   }
-  
+
   // Fallback using Math.random
-  const chars = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+  const chars =
+    '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
   let result = '';
   for (let i = 0; i < length; i++) {
     result += chars[Math.floor(Math.random() * chars.length)];
@@ -66,7 +69,10 @@ export const generateSecureToken = (length: number = 32): string => {
 };
 
 // Derive key from password using PBKDF2
-const deriveKey = async (password: string, salt: ArrayBuffer): Promise<CryptoKey> => {
+const deriveKey = async (
+  password: string,
+  salt: ArrayBuffer
+): Promise<CryptoKey> => {
   if (!crypto.subtle) {
     throw new Error('Web Crypto API not available');
   }
@@ -86,7 +92,7 @@ const deriveKey = async (password: string, salt: ArrayBuffer): Promise<CryptoKey
       name: 'PBKDF2',
       salt: salt,
       iterations: 100000,
-      hash: 'SHA-256'
+      hash: 'SHA-256',
     },
     passwordKey,
     { name: 'AES-GCM', length: 256 },
@@ -96,7 +102,10 @@ const deriveKey = async (password: string, salt: ArrayBuffer): Promise<CryptoKey
 };
 
 // AES-GCM encryption (more secure than AES-CBC)
-export const encryptAES = async (data: string, password: string): Promise<string> => {
+export const encryptAES = async (
+  data: string,
+  password: string
+): Promise<string> => {
   if (!crypto.subtle) {
     throw new Error('Web Crypto API not available');
   }
@@ -118,7 +127,9 @@ export const encryptAES = async (data: string, password: string): Promise<string
     );
 
     // Combine salt + iv + encrypted data
-    const combined = new Uint8Array(salt.length + iv.length + encryptedBuffer.byteLength);
+    const combined = new Uint8Array(
+      salt.length + iv.length + encryptedBuffer.byteLength
+    );
     combined.set(salt, 0);
     combined.set(iv, salt.length);
     combined.set(new Uint8Array(encryptedBuffer), salt.length + iv.length);
@@ -131,7 +142,10 @@ export const encryptAES = async (data: string, password: string): Promise<string
 };
 
 // AES-GCM decryption
-export const decryptAES = async (encryptedHex: string, password: string): Promise<string> => {
+export const decryptAES = async (
+  encryptedHex: string,
+  password: string
+): Promise<string> => {
   if (!crypto.subtle) {
     throw new Error('Web Crypto API not available');
   }
@@ -169,7 +183,7 @@ export const hashSHA256 = async (data: string): Promise<string> => {
     let hash = 0;
     for (let i = 0; i < data.length; i++) {
       const char = data.charCodeAt(i);
-      hash = ((hash << 5) - hash) + char;
+      hash = (hash << 5) - hash + char;
       hash = hash & hash; // Convert to 32-bit integer
     }
     return Math.abs(hash).toString(16);
@@ -186,40 +200,49 @@ export const hashSHA256 = async (data: string): Promise<string> => {
 };
 
 // Generate integrity hash with secret
-export const generateIntegrityHash = async (data: string, secret: string): Promise<string> => {
+export const generateIntegrityHash = async (
+  data: string,
+  secret: string
+): Promise<string> => {
   return await hashSHA256(data + secret);
 };
 
 // CryptoJS compatibility layer
 export class WebCryptoJS {
   static AES = {
-    encrypt: async (data: string, key: string): Promise<{ toString: () => string }> => {
+    encrypt: async (
+      data: string,
+      key: string
+    ): Promise<{ toString: () => string }> => {
       const encrypted = await encryptAES(data, key);
       return { toString: () => encrypted };
     },
-    
-    decrypt: async (encryptedData: string, key: string): Promise<{ toString: (encoding: any) => string }> => {
+
+    decrypt: async (
+      encryptedData: string,
+      key: string
+    ): Promise<{ toString: (encoding: any) => string }> => {
       const decrypted = await decryptAES(encryptedData, key);
-      return { 
+      return {
         toString: (encoding: any) => {
           if (encoding === WebCryptoJS.enc.Utf8) {
             return decrypted;
           }
           return decrypted;
-        }
+        },
       };
-    }
+    },
   };
 
   static SHA256 = {
     hash: async (data: string): Promise<{ toString: () => string }> => {
       const hashed = await hashSHA256(data);
       return { toString: () => hashed };
-    }
+    },
   };
 
   static enc = {
-    Utf8: Symbol('utf8')
+    Utf8: Symbol('utf8'),
   };
 
   static lib = {
@@ -227,8 +250,8 @@ export class WebCryptoJS {
       random: (bytes: number): { toString: () => string } => {
         const hex = generateSecureRandom(bytes);
         return { toString: () => hex };
-      }
-    }
+      },
+    },
   };
 }
 
@@ -236,14 +259,18 @@ export class WebCryptoJS {
 export const encryptSync = (data: string, key: string): string => {
   // This is a simplified base64 encoding for immediate compatibility
   // In production, you should use the async version
-  console.warn('Using synchronous encryption fallback - consider migrating to async version');
+  console.warn(
+    'Using synchronous encryption fallback - consider migrating to async version'
+  );
   const payload = { data, key: key.slice(0, 8), timestamp: Date.now() };
   return btoa(JSON.stringify(payload));
 };
 
 export const decryptSync = (encryptedData: string, key: string): string => {
   // This is a simplified base64 decoding for immediate compatibility
-  console.warn('Using synchronous decryption fallback - consider migrating to async version');
+  console.warn(
+    'Using synchronous decryption fallback - consider migrating to async version'
+  );
   try {
     const payload = JSON.parse(atob(encryptedData));
     if (payload.key !== key.slice(0, 8)) {
@@ -260,8 +287,8 @@ export const hashSync = (data: string): string => {
   let hash = 0;
   for (let i = 0; i < data.length; i++) {
     const char = data.charCodeAt(i);
-    hash = ((hash << 5) - hash) + char;
+    hash = (hash << 5) - hash + char;
     hash = hash & hash;
   }
   return Math.abs(hash).toString(16);
-}; 
+};

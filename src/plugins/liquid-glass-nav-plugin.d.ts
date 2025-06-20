@@ -7,7 +7,10 @@ declare module 'tailwindcss/plugin' {
     addUtilities: (utilities: Record<string, any>, options?: any) => void;
     addComponents: (components: Record<string, any>, options?: any) => void;
     addBase: (base: Record<string, any>) => void;
-    addVariant: (name: string, definition: string | string[] | (() => string)) => void;
+    addVariant: (
+      name: string,
+      definition: string | string[] | (() => string)
+    ) => void;
     e: (className: string) => string;
     prefix: (selector: string) => string;
     theme: (path?: string, defaultValue?: any) => any;
@@ -49,27 +52,27 @@ declare module 'tailwindcss/types/config' {
       'nav-lg'?: string;
       'nav-xl'?: string;
     };
-    
+
     boxShadow?: {
       'nav-sm'?: string;
       'nav-md'?: string;
       'nav-lg'?: string;
       'nav-xl'?: string;
     };
-    
+
     backgroundColor?: {
       'glass-light'?: string;
       'glass-medium'?: string;
       'glass-strong'?: string;
       'glass-intense'?: string;
     };
-    
+
     borderColor?: {
       'glass-light'?: string;
       'glass-medium'?: string;
       'glass-focus'?: string;
     };
-    
+
     textColor?: {
       'glass-primary'?: string;
       'glass-secondary'?: string;

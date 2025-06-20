@@ -1,10 +1,10 @@
 import React from 'react';
-import { 
-  Banknote, 
-  TrendingUp, 
-  CreditCard, 
+import {
+  Banknote,
+  TrendingUp,
+  CreditCard,
   TrendingDown,
-  Building
+  Building,
 } from 'lucide-react';
 import { cn } from '@/shared/lib/utils';
 
@@ -47,14 +47,16 @@ const getAccountColor = (type: string) => {
 export const AccountTypeBadge: React.FC<AccountTypeBadgeProps> = ({
   accountType,
   last4,
-  className
+  className,
 }) => {
   return (
-    <span className={cn(
-      "inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-sm font-medium border",
-      getAccountColor(accountType),
-      className
-    )}>
+    <span
+      className={cn(
+        'inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-sm font-medium border',
+        getAccountColor(accountType),
+        className
+      )}
+    >
       {getAccountIcon(accountType)}
       <span>{accountType}</span>
       {last4 && <span>••{last4}</span>}
@@ -62,4 +64,4 @@ export const AccountTypeBadge: React.FC<AccountTypeBadgeProps> = ({
   );
 };
 
-export default AccountTypeBadge; 
+export default AccountTypeBadge;

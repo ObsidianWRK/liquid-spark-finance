@@ -12,16 +12,20 @@ export const ChartComponents = {
   LineChart: lazy(() => import('@/components/charts/LineChart')),
   AreaChart: lazy(() => import('@/components/charts/AreaChart')),
   StackedBarChart: lazy(() => import('@/components/charts/StackedBarChart')),
-  
+
   // Budget Charts (verified to exist)
-  SpendingBreakdownChart: lazy(() => import('@/features/budget/components/SpendingBreakdownChart')),
-  
+  SpendingBreakdownChart: lazy(
+    () => import('@/features/budget/components/SpendingBreakdownChart')
+  ),
+
   // Base Chart Components (verified to exist)
   GraphBase: lazy(() => import('@/components/charts/GraphBase')),
-  
+
   // Chart Utilities (verified to exist)
   TimeRangeToggle: lazy(() => import('@/components/charts/TimeRangeToggle')),
-  TimeRangeToggleRadix: lazy(() => import('@/components/charts/TimeRangeToggleRadix')),
+  TimeRangeToggleRadix: lazy(
+    () => import('@/components/charts/TimeRangeToggleRadix')
+  ),
 } as const;
 
 // Chart loading utilities
@@ -36,9 +40,10 @@ export const chartLoader = {
       reports: ['LineChart', 'AreaChart'],
     } as const;
 
-    const chartsForRoute = routeChartMap[routeName as keyof typeof routeChartMap];
+    const chartsForRoute =
+      routeChartMap[routeName as keyof typeof routeChartMap];
     if (chartsForRoute) {
-      chartsForRoute.forEach(chartName => {
+      chartsForRoute.forEach((chartName) => {
         // Trigger lazy loading for route-specific charts
         ChartComponents[chartName as keyof typeof ChartComponents];
       });
@@ -60,7 +65,7 @@ export const chartLoader = {
   isChartLoaded: (chartName: keyof typeof ChartComponents): boolean => {
     // This is a simplified check - in production you might want more sophisticated caching
     return true; // React.lazy handles this internally
-  }
+  },
 };
 
 // Chart bundle analysis utilities
@@ -68,7 +73,7 @@ export const chartBundleAnalyzer = {
   // Estimate chart bundle sizes (for monitoring)
   estimatedSizes: {
     LineChart: '45KB',
-    AreaChart: '42KB', 
+    AreaChart: '42KB',
     StackedBarChart: '38KB',
     SpendingBreakdownChart: '35KB',
     GraphBase: '25KB',
@@ -78,11 +83,15 @@ export const chartBundleAnalyzer = {
 
   // Calculate estimated savings
   calculateBundleSavings: (loadedCharts: string[]) => {
-    const totalPossibleSize = Object.values(chartBundleAnalyzer.estimatedSizes)
-      .reduce((sum, size) => sum + parseInt(size), 0);
-    
+    const totalPossibleSize = Object.values(
+      chartBundleAnalyzer.estimatedSizes
+    ).reduce((sum, size) => sum + parseInt(size), 0);
+
     const loadedSize = loadedCharts.reduce((sum, chartName) => {
-      const size = chartBundleAnalyzer.estimatedSizes[chartName as keyof typeof chartBundleAnalyzer.estimatedSizes];
+      const size =
+        chartBundleAnalyzer.estimatedSizes[
+          chartName as keyof typeof chartBundleAnalyzer.estimatedSizes
+        ];
       return sum + (size ? parseInt(size) : 0);
     }, 0);
 
@@ -90,13 +99,15 @@ export const chartBundleAnalyzer = {
       totalPossibleKB: totalPossibleSize,
       loadedKB: loadedSize,
       savedKB: totalPossibleSize - loadedSize,
-      savedPercentage: Math.round(((totalPossibleSize - loadedSize) / totalPossibleSize) * 100)
+      savedPercentage: Math.round(
+        ((totalPossibleSize - loadedSize) / totalPossibleSize) * 100
+      ),
     };
-  }
+  },
 };
 
 // Export types
 export type ChartComponentName = keyof typeof ChartComponents;
 export type ChartLoaderUtilities = typeof chartLoader;
 
-export default ChartComponents; 
+export default ChartComponents;

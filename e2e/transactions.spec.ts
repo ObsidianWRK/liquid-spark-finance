@@ -20,4 +20,4 @@ test.describe('TransactionList responsive alignment', () => {
       expect(hasOverflow).toBe(false);
     });
   }
-}); 
+});

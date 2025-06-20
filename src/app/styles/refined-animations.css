@@ -38,7 +38,8 @@
 }
 
 @keyframes refinedPulse {
-  0%, 100% {
+  0%,
+  100% {
     opacity: 0.6;
     transform: scale(1);
   }
@@ -50,7 +51,8 @@
 
 /* Trend Bar Animations */
 @keyframes trendPulse {
-  0%, 100% {
+  0%,
+  100% {
     opacity: 0.6;
   }
   50% {
@@ -80,7 +82,8 @@
 }
 
 @keyframes progressGlow {
-  0%, 100% {
+  0%,
+  100% {
     filter: drop-shadow(0 0 5px rgba(99, 102, 241, 0.3));
   }
   50% {
@@ -92,13 +95,13 @@
 @keyframes cardHover {
   0% {
     transform: translateY(0) scale(1);
-    box-shadow: 
+    box-shadow:
       0 4px 6px -1px rgba(0, 0, 0, 0.1),
       0 2px 4px -1px rgba(0, 0, 0, 0.06);
   }
   100% {
     transform: translateY(-2px) scale(1.01);
-    box-shadow: 
+    box-shadow:
       0 10px 15px -3px rgba(0, 0, 0, 0.1),
       0 4px 6px -2px rgba(0, 0, 0, 0.05);
   }
@@ -188,12 +191,24 @@
 }
 
 /* Staggered Animation Classes */
-.stagger-1 { animation-delay: 0ms; }
-.stagger-2 { animation-delay: 100ms; }
-.stagger-3 { animation-delay: 200ms; }
-.stagger-4 { animation-delay: 300ms; }
-.stagger-5 { animation-delay: 400ms; }
-.stagger-6 { animation-delay: 500ms; }
+.stagger-1 {
+  animation-delay: 0ms;
+}
+.stagger-2 {
+  animation-delay: 100ms;
+}
+.stagger-3 {
+  animation-delay: 200ms;
+}
+.stagger-4 {
+  animation-delay: 300ms;
+}
+.stagger-5 {
+  animation-delay: 400ms;
+}
+.stagger-6 {
+  animation-delay: 500ms;
+}
 
 /* Animation Utility Classes */
 .animate-slideInScale {
@@ -257,7 +272,8 @@
 
 /* Loading States */
 @keyframes skeletonPulse {
-  0%, 100% {
+  0%,
+  100% {
     opacity: 0.4;
   }
   50% {
@@ -290,17 +306,17 @@
   .skeleton {
     animation: none;
   }
-  
+
   .hover-shimmer:hover::before {
     animation: none;
   }
-  
+
   /* Simplified animations for reduced motion */
   .animate-slideInScale {
     opacity: 1;
     transform: none;
   }
-  
+
   .animate-fadeInUp,
   .animate-fadeInRight,
   .animate-metricCounter {
@@ -333,7 +349,7 @@
       rgba(71, 85, 105, 0.2) 75%
     );
   }
-  
+
   .hover-shimmer:hover::before {
     background: linear-gradient(
       90deg,
@@ -342,4 +358,4 @@
       transparent 100%
     );
   }
-} 
+}

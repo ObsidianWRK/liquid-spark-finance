@@ -2,7 +2,12 @@
   "scan_timestamp": "2024-01-01T00:00:00Z",
   "export_analysis": {
     "src/navigation/utils/scroll-controller.ts": {
-      "exports": ["iOS26ScrollController", "ScrollControllerConfig", "ScrollControllerState", "useScrollController"],
+      "exports": [
+        "iOS26ScrollController",
+        "ScrollControllerConfig",
+        "ScrollControllerState",
+        "useScrollController"
+      ],
       "missing_exports": ["ScrollController"],
       "line_numbers": {
         "iOS26ScrollController": 24,
@@ -24,7 +29,11 @@
       "status": "BROKEN - ScrollController not exported"
     },
     "src/navigation/hooks/useScrollController.ts": {
-      "imports": ["iOS26ScrollController", "ScrollControllerState", "ScrollControllerConfig"],
+      "imports": [
+        "iOS26ScrollController",
+        "ScrollControllerState",
+        "ScrollControllerConfig"
+      ],
       "line": 12,
       "status": "OK"
     },
@@ -54,4 +63,4 @@
     "step4": "Fix import paths to use hooks/useScrollController for the hook",
     "step5": "Update all broken imports to use correct symbol names"
   }
-} 
+}

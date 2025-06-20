@@ -1,15 +1,15 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { 
-  Users, 
-  Settings, 
-  Plus, 
-  Crown, 
-  Shield, 
-  Eye, 
+import {
+  Users,
+  Settings,
+  Plus,
+  Crown,
+  Shield,
+  Eye,
   Mail,
   Check,
   X,
-  Edit3
+  Edit3,
 } from 'lucide-react';
 import { Family, FamilyMember, FamilyInvitation } from '@/shared/types/family';
 import { familyService } from '@/features/shared-budgets/api/familyService';
@@ -21,7 +21,10 @@ interface FamilyManagementProps {
   currentUserId: string;
 }
 
-const FamilyManagement = ({ familyId, currentUserId }: FamilyManagementProps) => {
+const FamilyManagement = ({
+  familyId,
+  currentUserId,
+}: FamilyManagementProps) => {
   const [family, setFamily] = useState<Family | null>(null);
   const [members, setMembers] = useState<FamilyMember[]>([]);
   const [invitations, setInvitations] = useState<FamilyInvitation[]>([]);
@@ -29,7 +32,9 @@ const FamilyManagement = ({ familyId, currentUserId }: FamilyManagementProps) =>
   const [showSettingsModal, setShowSettingsModal] = useState(false);
   const [loading, setLoading] = useState(true);
   const [newMemberEmail, setNewMemberEmail] = useState('');
-  const [newMemberRole, setNewMemberRole] = useState<'member' | 'admin'>('member');
+  const [newMemberRole, setNewMemberRole] = useState<'member' | 'admin'>(
+    'member'
+  );
 
   const loadFamilyData = useCallback(async () => {
     try {
@@ -75,8 +80,9 @@ const FamilyManagement = ({ familyId, currentUserId }: FamilyManagementProps) =>
     }
   };
 
-  const currentMember = members.find(m => m.userId === currentUserId);
-  const canManageFamily = currentMember?.role === 'owner' || currentMember?.role === 'admin';
+  const currentMember = members.find((m) => m.userId === currentUserId);
+  const canManageFamily =
+    currentMember?.role === 'owner' || currentMember?.role === 'admin';
 
   if (loading) {
     return (
@@ -95,8 +101,12 @@ const FamilyManagement = ({ familyId, currentUserId }: FamilyManagementProps) =>
     return (
       <div className="min-h-screen bg-black text-white flex items-center justify-center">
         <div className="text-center">
-          <h2 className="text-2xl font-bold text-red-400 mb-2">Family Not Found</h2>
-          <p className="text-white/60">The requested family could not be found.</p>
+          <h2 className="text-2xl font-bold text-red-400 mb-2">
+            Family Not Found
+          </h2>
+          <p className="text-white/60">
+            The requested family could not be found.
+          </p>
         </div>
       </div>
     );
@@ -114,10 +124,11 @@ const FamilyManagement = ({ familyId, currentUserId }: FamilyManagementProps) =>
                 {family.name}
               </h1>
               <p className="text-white/70 mt-2">
-                {members.length} member{members.length !== 1 ? 's' : ''} • Created {family.createdAt.toLocaleDateString()}
+                {members.length} member{members.length !== 1 ? 's' : ''} •
+                Created {family.createdAt.toLocaleDateString()}
               </p>
             </div>
-            
+
             {canManageFamily && (
               <div className="flex items-center gap-3">
                 <button
@@ -127,7 +138,7 @@ const FamilyManagement = ({ familyId, currentUserId }: FamilyManagementProps) =>
                   <Plus className="w-4 h-4" />
                   Invite Member
                 </button>
-                
+
                 <button
                   onClick={() => setShowSettingsModal(true)}
                   className="liquid-glass-button p-2 rounded-xl text-white/90 hover:text-white transition-all"
@@ -159,18 +170,21 @@ const FamilyManagement = ({ familyId, currentUserId }: FamilyManagementProps) =>
                         {member.userId.charAt(0).toUpperCase()}
                       </span>
                     </div>
-                    
+
                     <div>
                       <div className="flex items-center gap-3">
                         <h3 className="font-semibold text-white">
                           User {member.userId}
                         </h3>
-                        <div className={cn(
-                          "flex items-center gap-1 px-2 py-1 rounded-lg border text-xs font-medium",
-                          getRoleColor(member.role)
-                        )}>
+                        <div
+                          className={cn(
+                            'flex items-center gap-1 px-2 py-1 rounded-lg border text-xs font-medium',
+                            getRoleColor(member.role)
+                          )}
+                        >
                           {getRoleIcon(member.role)}
-                          {member.role.charAt(0).toUpperCase() + member.role.slice(1)}
+                          {member.role.charAt(0).toUpperCase() +
+                            member.role.slice(1)}
                         </div>
                       </div>
                       <p className="text-white/60 text-sm mt-1">
@@ -188,19 +202,31 @@ const FamilyManagement = ({ familyId, currentUserId }: FamilyManagementProps) =>
 
                 {/* Member Permissions */}
                 <div className="mt-4 pt-4 border-t border-white/[0.05]">
-                  <h4 className="text-sm font-medium text-white/80 mb-3">Permissions</h4>
+                  <h4 className="text-sm font-medium text-white/80 mb-3">
+                    Permissions
+                  </h4>
                   <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-                    {Object.entries(member.permissions).map(([permission, granted]) => (
-                      <div key={permission} className="flex items-center justify-between">
-                        <span className="text-xs text-white/60 capitalize">
-                          {permission.replace('can', '').replace(/([A-Z])/g, ' $1').trim()}
-                        </span>
-                        <div className={cn(
-                          "w-2 h-2 rounded-full",
-                          granted ? "bg-green-400" : "bg-gray-600"
-                        )} />
-                      </div>
-                    ))}
+                    {Object.entries(member.permissions).map(
+                      ([permission, granted]) => (
+                        <div
+                          key={permission}
+                          className="flex items-center justify-between"
+                        >
+                          <span className="text-xs text-white/60 capitalize">
+                            {permission
+                              .replace('can', '')
+                              .replace(/([A-Z])/g, ' $1')
+                              .trim()}
+                          </span>
+                          <div
+                            className={cn(
+                              'w-2 h-2 rounded-full',
+                              granted ? 'bg-green-400' : 'bg-gray-600'
+                            )}
+                          />
+                        </div>
+                      )
+                    )}
                   </div>
                 </div>
               </div>
@@ -225,10 +251,11 @@ const FamilyManagement = ({ familyId, currentUserId }: FamilyManagementProps) =>
                   <div>
                     <p className="font-medium text-white">{invitation.email}</p>
                     <p className="text-white/60 text-sm">
-                      Invited as {invitation.role} • Expires {invitation.expiresAt.toLocaleDateString()}
+                      Invited as {invitation.role} • Expires{' '}
+                      {invitation.expiresAt.toLocaleDateString()}
                     </p>
                   </div>
-                  
+
                   {canManageFamily && (
                     <div className="flex items-center gap-2">
                       <button className="p-2 rounded-lg bg-red-500/20 text-red-400 hover:bg-red-500/30 transition-colors">
@@ -255,40 +282,54 @@ const FamilyManagement = ({ familyId, currentUserId }: FamilyManagementProps) =>
                 <h3 className="font-medium text-white mb-2">Currency</h3>
                 <p className="text-white/60">{family.settings.currency}</p>
               </div>
-              
+
               <div>
                 <h3 className="font-medium text-white mb-2">Budget Period</h3>
-                <p className="text-white/60 capitalize">{family.settings.budgetPeriod}</p>
+                <p className="text-white/60 capitalize">
+                  {family.settings.budgetPeriod}
+                </p>
               </div>
-              
+
               <div>
                 <h3 className="font-medium text-white mb-2">Risk Tolerance</h3>
-                <p className="text-white/60 capitalize">{family.settings.riskTolerance}</p>
+                <p className="text-white/60 capitalize">
+                  {family.settings.riskTolerance}
+                </p>
               </div>
-              
+
               <div>
-                <h3 className="font-medium text-white mb-2">Investment Style</h3>
-                <p className="text-white/60 capitalize">{family.settings.investmentStyle}</p>
+                <h3 className="font-medium text-white mb-2">
+                  Investment Style
+                </h3>
+                <p className="text-white/60 capitalize">
+                  {family.settings.investmentStyle}
+                </p>
               </div>
             </div>
 
             <div className="pt-6 border-t border-white/[0.05]">
-              <h3 className="font-medium text-white mb-4">Notification Preferences</h3>
+              <h3 className="font-medium text-white mb-4">
+                Notification Preferences
+              </h3>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {Object.entries(family.settings.notifications).map(([key, value]) => (
-                  key !== 'emailDigest' && (
-                    <div key={key} className="flex items-center justify-between">
-                      <span className="text-white/80 capitalize">
-                        {key.replace(/([A-Z])/g, ' $1').trim()}
-                      </span>
-                      <Switch
-                        checked={value as boolean}
-                        disabled={!canManageFamily}
-                        className="data-[state=checked]:bg-blue-500"
-                      />
-                    </div>
-                  )
-                ))}
+                {Object.entries(family.settings.notifications).map(
+                  ([key, value]) =>
+                    key !== 'emailDigest' && (
+                      <div
+                        key={key}
+                        className="flex items-center justify-between"
+                      >
+                        <span className="text-white/80 capitalize">
+                          {key.replace(/([A-Z])/g, ' $1').trim()}
+                        </span>
+                        <Switch
+                          checked={value as boolean}
+                          disabled={!canManageFamily}
+                          className="data-[state=checked]:bg-blue-500"
+                        />
+                      </div>
+                    )
+                )}
               </div>
             </div>
           </div>

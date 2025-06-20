@@ -18,7 +18,7 @@ const mockSpendingData: StackedBarDataPoint[] = [
     transportation: 300,
     entertainment: 200,
     utilities: 150,
-    other: 100
+    other: 100,
   },
   {
     date: '2024-02',
@@ -28,7 +28,7 @@ const mockSpendingData: StackedBarDataPoint[] = [
     transportation: 250,
     entertainment: 180,
     utilities: 140,
-    other: 120
+    other: 120,
   },
   {
     date: '2024-03',
@@ -38,8 +38,8 @@ const mockSpendingData: StackedBarDataPoint[] = [
     transportation: 400,
     entertainment: 300,
     utilities: 160,
-    other: 80
-  }
+    other: 80,
+  },
 ];
 
 const mockInvestmentData: StackedBarDataPoint[] = [
@@ -49,7 +49,7 @@ const mockInvestmentData: StackedBarDataPoint[] = [
     stocks: 50000,
     bonds: 20000,
     cash: 5000,
-    crypto: 3000
+    crypto: 3000,
   },
   {
     date: '2024-Q2',
@@ -57,8 +57,8 @@ const mockInvestmentData: StackedBarDataPoint[] = [
     stocks: 55000,
     bonds: 22000,
     cash: 4000,
-    crypto: 4000
-  }
+    crypto: 4000,
+  },
 ];
 
 // Mock ResizeObserver for tests
@@ -100,12 +100,12 @@ describe('StackedBarChart', () => {
 
   it('renders time controls when enabled', () => {
     render(
-      <StackedBarChart 
+      <StackedBarChart
         data={mockSpendingData}
         timeControls={{
           show: true,
           options: ['1M', '3M', '6M'],
-          defaultRange: '3M'
+          defaultRange: '3M',
         }}
       />
     );
@@ -118,17 +118,17 @@ describe('StackedBarChart', () => {
   it('handles time range changes', () => {
     const onTimeRangeChange = jest.fn();
     render(
-      <StackedBarChart 
+      <StackedBarChart
         data={mockSpendingData}
         timeControls={{
           show: true,
           options: ['1M', '3M', '6M'],
-          defaultRange: '3M'
+          defaultRange: '3M',
         }}
         onTimeRangeChange={onTimeRangeChange}
       />
     );
-    
+
     fireEvent.click(screen.getByText('6M'));
     expect(onTimeRangeChange).toHaveBeenCalledWith('6M');
   });
@@ -151,7 +151,7 @@ describe('StackedBarChart', () => {
 
   it('renders with financial color scheme', () => {
     render(
-      <StackedBarChart 
+      <StackedBarChart
         data={mockSpendingData}
         stackedBarConfig={{ colorScheme: 'financial' }}
       />
@@ -162,7 +162,7 @@ describe('StackedBarChart', () => {
 
   it('handles percentage display mode', () => {
     render(
-      <StackedBarChart 
+      <StackedBarChart
         data={mockSpendingData}
         stackedBarConfig={{ displayMode: 'percentage' }}
       />
@@ -172,7 +172,7 @@ describe('StackedBarChart', () => {
 
   it('handles currency formatting', () => {
     render(
-      <StackedBarChart 
+      <StackedBarChart
         data={mockSpendingData}
         financialType="currency"
         currencyCode="USD"
@@ -183,7 +183,7 @@ describe('StackedBarChart', () => {
 
   it('handles investment data correctly', () => {
     render(
-      <StackedBarChart 
+      <StackedBarChart
         data={mockInvestmentData}
         title="Portfolio Allocation"
         financialType="currency"
@@ -196,12 +196,9 @@ describe('StackedBarChart', () => {
   it('calls onChartReady when chart is ready', async () => {
     const onChartReady = jest.fn();
     render(
-      <StackedBarChart 
-        data={mockSpendingData}
-        onChartReady={onChartReady}
-      />
+      <StackedBarChart data={mockSpendingData} onChartReady={onChartReady} />
     );
-    
+
     await waitFor(() => {
       expect(onChartReady).toHaveBeenCalled();
     });
@@ -221,26 +218,21 @@ describe('StackedBarChart', () => {
   it('supports custom series configuration', () => {
     const customSeries = [
       { dataKey: 'food', label: 'Food & Dining', color: '#FF453A' },
-      { dataKey: 'housing', label: 'Housing & Utilities', color: '#FF9F0A' }
+      { dataKey: 'housing', label: 'Housing & Utilities', color: '#FF9F0A' },
     ];
-    
-    render(
-      <StackedBarChart 
-        data={mockSpendingData}
-        series={customSeries}
-      />
-    );
+
+    render(<StackedBarChart data={mockSpendingData} series={customSeries} />);
     expect(screen.getByRole('img')).toBeInTheDocument();
   });
 
   it('handles small category grouping', () => {
     render(
-      <StackedBarChart 
+      <StackedBarChart
         data={mockSpendingData}
         stackedBarConfig={{
           maxCategories: 3,
           groupSmallCategories: true,
-          smallCategoryThreshold: 0.1
+          smallCategoryThreshold: 0.1,
         }}
       />
     );
@@ -249,27 +241,29 @@ describe('StackedBarChart', () => {
 
   it('supports accessibility features', () => {
     render(
-      <StackedBarChart 
+      <StackedBarChart
         data={mockSpendingData}
         accessibility={{
           ariaLabel: 'Monthly spending breakdown chart',
-          keyboardNavigation: true
+          keyboardNavigation: true,
         }}
       />
     );
-    expect(screen.getByLabelText(/Monthly spending breakdown chart/)).toBeInTheDocument();
+    expect(
+      screen.getByLabelText(/Monthly spending breakdown chart/)
+    ).toBeInTheDocument();
   });
 
   it('handles bar click events', () => {
     const onBarClick = jest.fn();
     render(
-      <StackedBarChart 
+      <StackedBarChart
         data={mockSpendingData}
         onBarClick={onBarClick}
         stackedBarConfig={{ clickableSegments: true }}
       />
     );
-    
+
     // Note: In a real test, you'd simulate clicking on a bar segment
     // This would require more sophisticated interaction testing
     expect(screen.getByRole('img')).toBeInTheDocument();
@@ -278,41 +272,39 @@ describe('StackedBarChart', () => {
   it('handles bar hover events', () => {
     const onBarHover = jest.fn();
     render(
-      <StackedBarChart 
+      <StackedBarChart
         data={mockSpendingData}
         onBarHover={onBarHover}
         stackedBarConfig={{ hoverEffects: true }}
       />
     );
-    
+
     // Note: In a real test, you'd simulate hovering over a bar segment
     expect(screen.getByRole('img')).toBeInTheDocument();
   });
 
   it('renders header actions', () => {
-    const headerActions = (
-      <button data-testid="custom-action">Export</button>
-    );
-    
+    const headerActions = <button data-testid="custom-action">Export</button>;
+
     render(
-      <StackedBarChart 
+      <StackedBarChart
         data={mockSpendingData}
         title="Spending Chart"
         headerActions={headerActions}
       />
     );
-    
+
     expect(screen.getByTestId('custom-action')).toBeInTheDocument();
   });
 
   it('supports different dimensions', () => {
     render(
-      <StackedBarChart 
+      <StackedBarChart
         data={mockSpendingData}
         dimensions={{
           height: 400,
           minHeight: 300,
-          responsive: true
+          responsive: true,
         }}
       />
     );
@@ -321,7 +313,7 @@ describe('StackedBarChart', () => {
 
   it('handles gradient fill option', () => {
     render(
-      <StackedBarChart 
+      <StackedBarChart
         data={mockSpendingData}
         stackedBarConfig={{ gradientFill: true }}
       />
@@ -331,7 +323,7 @@ describe('StackedBarChart', () => {
 
   it('handles animation configuration', () => {
     render(
-      <StackedBarChart 
+      <StackedBarChart
         data={mockSpendingData}
         stackedBarConfig={{ animateOnLoad: false }}
       />
@@ -360,13 +352,13 @@ describe('StackedBarChart Performance', () => {
       label: `Day ${i + 1}`,
       category1: Math.random() * 1000,
       category2: Math.random() * 1000,
-      category3: Math.random() * 1000
+      category3: Math.random() * 1000,
     }));
 
     const startTime = performance.now();
     render(<StackedBarChart data={largeDataset} />);
     const endTime = performance.now();
-    
+
     // Should render in a reasonable time (less than 1 second)
     expect(endTime - startTime).toBeLessThan(1000);
   });
@@ -381,12 +373,12 @@ describe('StackedBarChart Financial Integration', () => {
         label: 'January',
         budgeted: 3000,
         actual: 3200,
-        variance: -200
-      }
+        variance: -200,
+      },
     ];
-    
+
     render(
-      <StackedBarChart 
+      <StackedBarChart
         data={budgetData}
         title="Budget vs Actual"
         financialType="currency"
@@ -402,19 +394,19 @@ describe('StackedBarChart Financial Integration', () => {
         label: 'Q1 2024',
         stocks: 70,
         bonds: 20,
-        cash: 10
+        cash: 10,
       },
       {
         date: '2024-Q2',
         label: 'Q2 2024',
         stocks: 65,
         bonds: 25,
-        cash: 10
-      }
+        cash: 10,
+      },
     ];
-    
+
     render(
-      <StackedBarChart 
+      <StackedBarChart
         data={portfolioData}
         title="Portfolio Allocation"
         stackedBarConfig={{ displayMode: 'percentage' }}

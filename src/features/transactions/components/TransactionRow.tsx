@@ -21,7 +21,11 @@ const formatAmount = (amount: number, currency: string = 'USD') => {
   return amount < 0 ? `-${formatted}` : formatted;
 };
 
-const TransactionRow: React.FC<TransactionRowProps> = ({ tx, className, onClick }) => {
+const TransactionRow: React.FC<TransactionRowProps> = ({
+  tx,
+  className,
+  onClick,
+}) => {
   // Color coding for amounts
   const amountColor = React.useMemo(() => {
     if (tx.amount < 0) return 'text-red-400';
@@ -47,21 +51,38 @@ const TransactionRow: React.FC<TransactionRowProps> = ({ tx, className, onClick 
   // Status handling – map existing status strings to new enum where possible
   const status: TransactionStatus = (() => {
     const rawStatus = (tx.status as string)?.toLowerCase();
-    const hasTracking = Boolean((tx as any).trackingNumber ?? (tx.metadata as any)?.tracking_number);
+    const hasTracking = Boolean(
+      (tx as any).trackingNumber ?? (tx.metadata as any)?.tracking_number
+    );
 
     // Handle shipment-related statuses first
     if (hasTracking) {
-      const shippingStatus = ((tx as any).shippingStatus ?? (tx.metadata as any)?.shipping_status)?.toUpperCase();
+      const shippingStatus = (
+        (tx as any).shippingStatus ?? (tx.metadata as any)?.shipping_status
+      )?.toUpperCase();
       if (shippingStatus === 'DELIVERED') return TransactionStatus.Delivered;
-      if (shippingStatus === 'IN_TRANSIT' || shippingStatus === 'OUT_FOR_DELIVERY') return TransactionStatus.InTransit;
+      if (
+        shippingStatus === 'IN_TRANSIT' ||
+        shippingStatus === 'OUT_FOR_DELIVERY'
+      )
+        return TransactionStatus.InTransit;
     }
 
     // Fallback to financial transaction status
     if (rawStatus === 'pending') return TransactionStatus.Pending;
-    if (rawStatus === 'refunded' || rawStatus === 'returned' || rawStatus === 'cancelled' || rawStatus === 'failed') {
+    if (
+      rawStatus === 'refunded' ||
+      rawStatus === 'returned' ||
+      rawStatus === 'cancelled' ||
+      rawStatus === 'failed'
+    ) {
       return TransactionStatus.Refunded;
     }
-    if (rawStatus === 'completed' || rawStatus === 'posted' || rawStatus === 'settled') {
+    if (
+      rawStatus === 'completed' ||
+      rawStatus === 'posted' ||
+      rawStatus === 'settled'
+    ) {
       return TransactionStatus.Completed;
     }
 
@@ -83,7 +104,10 @@ const TransactionRow: React.FC<TransactionRowProps> = ({ tx, className, onClick 
       )}
     >
       {/* Icon Placeholder */}
-      <div className="w-10 h-10 rounded-lg bg-white/5 flex items-center justify-center" aria-hidden="true">
+      <div
+        className="w-10 h-10 rounded-lg bg-white/5 flex items-center justify-center"
+        aria-hidden="true"
+      >
         <span className="text-sm text-white/60">💸</span>
       </div>
 
@@ -115,4 +139,4 @@ const TransactionRow: React.FC<TransactionRowProps> = ({ tx, className, onClick 
   );
 };
 
-export default TransactionRow; 
+export default TransactionRow;

@@ -1,8 +1,8 @@
-import React from "react";
-import { UniversalCard } from "@/shared/ui/UniversalCard";
-import { CreateHouseholdForm } from "./CreateHouseholdForm";
-import { HouseholdsList } from "./HouseholdsList";
-import { Users } from "lucide-react";
+import React from 'react';
+import { UniversalCard } from '@/shared/ui/UniversalCard';
+import { CreateHouseholdForm } from './CreateHouseholdForm';
+import { HouseholdsList } from './HouseholdsList';
+import { Users } from 'lucide-react';
 
 export const SharedBudgetsPanel: React.FC = () => {
   return (
@@ -19,4 +19,4 @@ export const SharedBudgetsPanel: React.FC = () => {
       </div>
     </UniversalCard>
   );
-}; 
+};

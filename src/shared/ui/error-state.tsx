@@ -16,18 +16,27 @@ interface ErrorStateProps {
 
 export const ErrorState: React.FC<ErrorStateProps> = ({
   error,
-  title = "Something went wrong",
+  title = 'Something went wrong',
   message,
   onRetry,
   onBack,
   className,
-  retryText = "Try Again",
-  backText = "Go Back"
+  retryText = 'Try Again',
+  backText = 'Go Back',
 }) => {
-  const errorMessage = message || (error instanceof Error ? error.message : String(error || "An unexpected error occurred"));
+  const errorMessage =
+    message ||
+    (error instanceof Error
+      ? error.message
+      : String(error || 'An unexpected error occurred'));
 
   return (
-    <div className={cn("min-h-screen flex items-center justify-center bg-black", className)}>
+    <div
+      className={cn(
+        'min-h-screen flex items-center justify-center bg-black',
+        className
+      )}
+    >
       <div className="text-center max-w-md mx-auto px-6">
         <div className="w-16 h-16 rounded-full bg-red-500/20 flex items-center justify-center mx-auto mb-4">
           <AlertTriangle className="w-8 h-8 text-red-400" />
@@ -51,4 +60,4 @@ export const ErrorState: React.FC<ErrorStateProps> = ({
   );
 };
 
-export default ErrorState; 
+export default ErrorState;

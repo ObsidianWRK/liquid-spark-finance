@@ -13,9 +13,9 @@ The investigation followed these steps:
 1.  **Initial Hypothesis (Incorrect):** Based on a previous incident, the initial suspicion was a malformed `@import` statement in `src/index.css`. Inspection of the file showed this was not the case, although the file had been recently modified.
 2.  **Evidence Gathering:** Error logs from Vite showed a recurring error: `[vite:css] Unknown feature: "backdrop-filter"`. This pointed directly to an issue with the CSS build process.
 3.  **Code Inspection:** Analysis of `postcss.config.js` revealed the critical misconfiguration:
-    *   The feature flag to enable `backdrop-filter` was incorrectly named (`'backdrop-filter': true` instead of the correct `'backdrop-filter-property': true`).
-    *   The `postcss-preset-env` stage was set to `2`, whereas `backdrop-filter` is a stage 3 feature.
-    *   The configuration redundantly included `autoprefixer` as a separate plugin, which is already handled by `postcss-preset-env`.
+    - The feature flag to enable `backdrop-filter` was incorrectly named (`'backdrop-filter': true` instead of the correct `'backdrop-filter-property': true`).
+    - The `postcss-preset-env` stage was set to `2`, whereas `backdrop-filter` is a stage 3 feature.
+    - The configuration redundantly included `autoprefixer` as a separate plugin, which is already handled by `postcss-preset-env`.
 
 This configuration error caused the PostCSS parser to fail whenever it encountered the `backdrop-filter` property in the stylesheets, leading to a build failure that prevented the application from rendering.
 
@@ -53,4 +53,4 @@ This incident highlights the importance of correct build tool configuration. A s
 
 ---
 
-*This document serves as both a historical record and a reference for preventing similar issues in the future. All team members should review and understand these findings.* 
+_This document serves as both a historical record and a reference for preventing similar issues in the future. All team members should review and understand these findings._

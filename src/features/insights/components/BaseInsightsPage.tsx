@@ -1,5 +1,17 @@
 import React, { useState, useEffect, useMemo, useCallback } from 'react';
-import { Heart, Leaf, TrendingUp, TrendingDown, DollarSign, Shield, PiggyBank, Calendar, ChevronRight, Activity, Recycle } from 'lucide-react';
+import {
+  Heart,
+  Leaf,
+  TrendingUp,
+  TrendingDown,
+  DollarSign,
+  Shield,
+  PiggyBank,
+  Calendar,
+  ChevronRight,
+  Activity,
+  Recycle,
+} from 'lucide-react';
 import { UniversalCard } from '@/shared/ui/UniversalCard';
 import { UniversalMetricCard } from './UniversalMetricCard';
 import { UniversalScoreCard } from './UniversalScoreCard';
@@ -16,7 +28,13 @@ import { Transaction, Account } from '@/shared/types/shared';
 
 // Enhanced TypeScript interfaces
 export type InsightsVariant = 'base' | 'configurable' | 'unified';
-export type ViewMode = 'overview' | 'trends' | 'financial' | 'health' | 'eco' | 'detailed';
+export type ViewMode =
+  | 'overview'
+  | 'trends'
+  | 'financial'
+  | 'health'
+  | 'eco'
+  | 'detailed';
 
 interface BaseInsightsPageProps {
   transactions: Transaction[];
@@ -48,9 +66,9 @@ interface FinancialMetrics {
   totalBalance: number;
 }
 
-const BaseInsightsPage = ({ 
-  transactions, 
-  accounts, 
+const BaseInsightsPage = ({
+  transactions,
+  accounts,
   variant = 'base',
   showHeader = true,
   showTabs = true,
@@ -58,17 +76,25 @@ const BaseInsightsPage = ({
   animationsEnabled = true,
   liquidIntensity = 0.6,
   defaultTab = 'overview',
-  className = ''
+  className = '',
 }: BaseInsightsPageProps) => {
-  const [animatedScores, setAnimatedScores] = useState<ScoreData>({ financial: 0, health: 0, eco: 0 });
+  const [animatedScores, setAnimatedScores] = useState<ScoreData>({
+    financial: 0,
+    health: 0,
+    eco: 0,
+  });
   const [activeTab, setActiveTab] = useState<ViewMode>(defaultTab);
-  const [scores, setScores] = useState<ScoreData>({ financial: 0, health: 0, eco: 0 });
+  const [scores, setScores] = useState<ScoreData>({
+    financial: 0,
+    health: 0,
+    eco: 0,
+  });
 
   // Performance and responsive hooks
   const { liquidSettings } = usePerformanceOptimization();
   const breakpoint = useBreakpoint();
   const getAnimationDelay = (index: number) => index * 100;
-  
+
   // Debug and performance tracking (development only)
   // useLayoutDebug('BaseInsightsPage');
   // usePerformanceTracking('BaseInsightsPage');
@@ -82,31 +108,78 @@ const BaseInsightsPage = ({
     return {
       overallScore: healthData.score,
       monthlySpending: {
-        fitness: Math.round(transactions
-          .filter(t => t.category?.name === 'Fitness' || t.merchant?.includes('Gym'))
-          .reduce((sum, t) => sum + Math.abs(t.amount), 0)),
-        nutrition: Math.round(transactions
-          .filter(t => t.category?.name === 'Food' && t.merchant?.includes('Organic'))
-          .reduce((sum, t) => sum + Math.abs(t.amount), 0)),
-        healthcare: Math.round(transactions
-          .filter(t => t.category?.name === 'Healthcare')
-          .reduce((sum, t) => sum + Math.abs(t.amount), 0)),
-        wellness: Math.round(transactions
-          .filter(t => t.merchant?.includes('Spa') || t.merchant?.includes('Yoga'))
-          .reduce((sum, t) => sum + Math.abs(t.amount), 0)),
-        supplements: Math.round(transactions
-          .filter(t => t.merchant?.includes('Vitamin') || t.merchant?.includes('CVS'))
-          .reduce((sum, t) => sum + Math.abs(t.amount), 0)),
-        mentalHealth: Math.round(transactions
-          .filter(t => t.merchant?.includes('Therapy') || t.merchant?.includes('Counseling'))
-          .reduce((sum, t) => sum + Math.abs(t.amount), 0))
+        fitness: Math.round(
+          transactions
+            .filter(
+              (t) =>
+                t.category?.name === 'Fitness' || t.merchant?.includes('Gym')
+            )
+            .reduce((sum, t) => sum + Math.abs(t.amount), 0)
+        ),
+        nutrition: Math.round(
+          transactions
+            .filter(
+              (t) =>
+                t.category?.name === 'Food' && t.merchant?.includes('Organic')
+            )
+            .reduce((sum, t) => sum + Math.abs(t.amount), 0)
+        ),
+        healthcare: Math.round(
+          transactions
+            .filter((t) => t.category?.name === 'Healthcare')
+            .reduce((sum, t) => sum + Math.abs(t.amount), 0)
+        ),
+        wellness: Math.round(
+          transactions
+            .filter(
+              (t) => t.merchant?.includes('Spa') || t.merchant?.includes('Yoga')
+            )
+            .reduce((sum, t) => sum + Math.abs(t.amount), 0)
+        ),
+        supplements: Math.round(
+          transactions
+            .filter(
+              (t) =>
+                t.merchant?.includes('Vitamin') || t.merchant?.includes('CVS')
+            )
+            .reduce((sum, t) => sum + Math.abs(t.amount), 0)
+        ),
+        mentalHealth: Math.round(
+          transactions
+            .filter(
+              (t) =>
+                t.merchant?.includes('Therapy') ||
+                t.merchant?.includes('Counseling')
+            )
+            .reduce((sum, t) => sum + Math.abs(t.amount), 0)
+        ),
       },
       healthTrends: {
-        exercise: healthData.trends.exercise > 70 ? 'up' as const : healthData.trends.exercise > 50 ? 'stable' as const : 'down' as const,
-        nutrition: healthData.trends.nutrition > 70 ? 'up' as const : healthData.trends.nutrition > 50 ? 'stable' as const : 'down' as const,
-        sleep: healthData.trends.sleep > 70 ? 'up' as const : healthData.trends.sleep > 50 ? 'stable' as const : 'down' as const,
-        stress: healthData.trends.stress > 70 ? 'down' as const : healthData.trends.stress > 50 ? 'stable' as const : 'up' as const
-      }
+        exercise:
+          healthData.trends.exercise > 70
+            ? ('up' as const)
+            : healthData.trends.exercise > 50
+              ? ('stable' as const)
+              : ('down' as const),
+        nutrition:
+          healthData.trends.nutrition > 70
+            ? ('up' as const)
+            : healthData.trends.nutrition > 50
+              ? ('stable' as const)
+              : ('down' as const),
+        sleep:
+          healthData.trends.sleep > 70
+            ? ('up' as const)
+            : healthData.trends.sleep > 50
+              ? ('stable' as const)
+              : ('down' as const),
+        stress:
+          healthData.trends.stress > 70
+            ? ('down' as const)
+            : healthData.trends.stress > 50
+              ? ('stable' as const)
+              : ('up' as const),
+      },
     };
   }, [transactions]);
 
@@ -114,67 +187,127 @@ const BaseInsightsPage = ({
   const ecoData = useMemo(() => {
     const ecoBreakdown = calculateEcoScore(transactions);
     const ecoHealthData = mockHealthEcoService.getEcoScore(transactions);
-    
+
     return {
       overallScore: ecoBreakdown.score,
       monthlyImpact: {
         co2Saved: Math.round(Math.max(0, (ecoBreakdown.score - 50) * 1.5)),
-        treesEquivalent: Math.round(Math.max(0, (ecoBreakdown.score - 50) * 0.1)),
+        treesEquivalent: Math.round(
+          Math.max(0, (ecoBreakdown.score - 50) * 0.1)
+        ),
         waterSaved: Math.round(Math.max(0, (ecoBreakdown.score - 50) * 10)),
-        energySaved: Math.round(Math.max(0, (ecoBreakdown.score - 50) * 8))
+        energySaved: Math.round(Math.max(0, (ecoBreakdown.score - 50) * 8)),
       },
       monthlySpending: {
-        sustainableFood: Math.round(transactions
-          .filter(t => ['Whole Foods', 'Trader Joe'].some(m => t.merchant?.includes(m)))
-          .reduce((sum, t) => sum + Math.abs(t.amount), 0)),
-        renewableEnergy: Math.round(transactions
-          .filter(t => t.merchant?.includes('Solar') || t.merchant?.includes('Tesla'))
-          .reduce((sum, t) => sum + Math.abs(t.amount), 0)),
-        ecoTransport: Math.round(transactions
-          .filter(t => t.merchant?.includes('Electric') || t.merchant?.includes('Bike'))
-          .reduce((sum, t) => sum + Math.abs(t.amount), 0)),
-        greenProducts: Math.round(transactions
-          .filter(t => ['Patagonia', 'REI'].some(m => t.merchant?.includes(m)))
-          .reduce((sum, t) => sum + Math.abs(t.amount), 0)),
-        carbonOffset: Math.round(transactions
-          .filter(t => t.merchant?.includes('Carbon') || t.merchant?.includes('Offset'))
-          .reduce((sum, t) => sum + Math.abs(t.amount), 0)),
-        conservation: Math.round(transactions
-          .filter(t => t.merchant?.includes('Conservation') || t.merchant?.includes('WWF'))
-          .reduce((sum, t) => sum + Math.abs(t.amount), 0))
+        sustainableFood: Math.round(
+          transactions
+            .filter((t) =>
+              ['Whole Foods', 'Trader Joe'].some((m) => t.merchant?.includes(m))
+            )
+            .reduce((sum, t) => sum + Math.abs(t.amount), 0)
+        ),
+        renewableEnergy: Math.round(
+          transactions
+            .filter(
+              (t) =>
+                t.merchant?.includes('Solar') || t.merchant?.includes('Tesla')
+            )
+            .reduce((sum, t) => sum + Math.abs(t.amount), 0)
+        ),
+        ecoTransport: Math.round(
+          transactions
+            .filter(
+              (t) =>
+                t.merchant?.includes('Electric') || t.merchant?.includes('Bike')
+            )
+            .reduce((sum, t) => sum + Math.abs(t.amount), 0)
+        ),
+        greenProducts: Math.round(
+          transactions
+            .filter((t) =>
+              ['Patagonia', 'REI'].some((m) => t.merchant?.includes(m))
+            )
+            .reduce((sum, t) => sum + Math.abs(t.amount), 0)
+        ),
+        carbonOffset: Math.round(
+          transactions
+            .filter(
+              (t) =>
+                t.merchant?.includes('Carbon') || t.merchant?.includes('Offset')
+            )
+            .reduce((sum, t) => sum + Math.abs(t.amount), 0)
+        ),
+        conservation: Math.round(
+          transactions
+            .filter(
+              (t) =>
+                t.merchant?.includes('Conservation') ||
+                t.merchant?.includes('WWF')
+            )
+            .reduce((sum, t) => sum + Math.abs(t.amount), 0)
+        ),
       },
       environmentalTrends: {
-        carbonFootprint: ecoBreakdown.totalKgCO2e < 200 ? 'down' as const : ecoBreakdown.totalKgCO2e < 400 ? 'stable' as const : 'up' as const,
-        sustainability: ecoBreakdown.sustainableSpendRatio > 20 ? 'up' as const : ecoBreakdown.sustainableSpendRatio > 10 ? 'stable' as const : 'down' as const,
+        carbonFootprint:
+          ecoBreakdown.totalKgCO2e < 200
+            ? ('down' as const)
+            : ecoBreakdown.totalKgCO2e < 400
+              ? ('stable' as const)
+              : ('up' as const),
+        sustainability:
+          ecoBreakdown.sustainableSpendRatio > 20
+            ? ('up' as const)
+            : ecoBreakdown.sustainableSpendRatio > 10
+              ? ('stable' as const)
+              : ('down' as const),
         renewable: 'up' as const,
-        waste: 'stable' as const
-      }
+        waste: 'stable' as const,
+      },
     };
   }, [transactions]);
 
   // Calculate comprehensive financial metrics
   const metrics = useMemo<FinancialMetrics>(() => {
     const monthlyIncome = transactions
-      .filter(t => t.amount > 0 && new Date(t.date).getMonth() === new Date().getMonth())
+      .filter(
+        (t) =>
+          t.amount > 0 && new Date(t.date).getMonth() === new Date().getMonth()
+      )
       .reduce((sum, t) => sum + t.amount, 0);
 
-    const monthlySpending = Math.abs(transactions
-      .filter(t => t.amount < 0 && new Date(t.date).getMonth() === new Date().getMonth())
-      .reduce((sum, t) => sum + t.amount, 0));
+    const monthlySpending = Math.abs(
+      transactions
+        .filter(
+          (t) =>
+            t.amount < 0 &&
+            new Date(t.date).getMonth() === new Date().getMonth()
+        )
+        .reduce((sum, t) => sum + t.amount, 0)
+    );
 
     const totalBalance = financialMetrics.totalWealth;
     const monthlyExpenses = monthlySpending;
-    
-    const spendingRatio = monthlyIncome > 0 ? (monthlySpending / monthlyIncome) * 100 : 0;
-    const emergencyFundMonths = monthlyExpenses > 0 ? financialMetrics.liquidAssets / monthlyExpenses : 0;
-    const savingsRate = monthlyIncome > 0 ? ((monthlyIncome - monthlySpending) / monthlyIncome) * 100 : 0;
-    
+
+    const spendingRatio =
+      monthlyIncome > 0 ? (monthlySpending / monthlyIncome) * 100 : 0;
+    const emergencyFundMonths =
+      monthlyExpenses > 0 ? financialMetrics.liquidAssets / monthlyExpenses : 0;
+    const savingsRate =
+      monthlyIncome > 0
+        ? ((monthlyIncome - monthlySpending) / monthlyIncome) * 100
+        : 0;
+
     const debtToIncomeRatio = financialMetrics.debtToAssetRatio;
-    
-    const completedTransactions = transactions.filter(t => t.status === 'completed').length;
+
+    const completedTransactions = transactions.filter(
+      (t) => t.status === 'completed'
+    ).length;
     const totalTransactions = transactions.length;
-    const billPaymentScore = totalTransactions > 0 ? Math.round((completedTransactions / totalTransactions) * 100) : 100;
-    
+    const billPaymentScore =
+      totalTransactions > 0
+        ? Math.round((completedTransactions / totalTransactions) * 100)
+        : 100;
+
     return {
       spendingRatio,
       emergencyFundMonths,
@@ -183,12 +316,14 @@ const BaseInsightsPage = ({
       billPaymentScore,
       monthlyIncome,
       monthlySpending,
-      totalBalance
+      totalBalance,
     };
   }, [transactions, financialMetrics]);
 
   useEffect(() => {
-    generateScoreSummary(transactions, accounts).then(setScores).catch(console.error);
+    generateScoreSummary(transactions, accounts)
+      .then(setScores)
+      .catch(console.error);
   }, [transactions, accounts]);
 
   // Enhanced animation with proper state management
@@ -197,20 +332,23 @@ const BaseInsightsPage = ({
     const timer = setTimeout(() => {
       setAnimatedScores(scores);
     }, 100); // Reduced delay for better UX
-    
+
     return () => clearTimeout(timer);
   }, [scores]);
 
   // Trend calculation helper
-  const getTrend = useCallback((value: number, threshold: { good: number; excellent: number }) => {
-    if (value >= threshold.excellent) return 'up';
-    if (value >= threshold.good) return 'stable';
-    return 'down';
-  }, []);
+  const getTrend = useCallback(
+    (value: number, threshold: { good: number; excellent: number }) => {
+      if (value >= threshold.excellent) return 'up';
+      if (value >= threshold.good) return 'stable';
+      return 'down';
+    },
+    []
+  );
 
-  const containerClasses = compactMode 
-    ? "relative overflow-hidden p-4" 
-    : "relative overflow-hidden";
+  const containerClasses = compactMode
+    ? 'relative overflow-hidden p-4'
+    : 'relative overflow-hidden';
 
   return (
     <div className={`${containerClasses} ${className}`}>
@@ -223,18 +361,16 @@ const BaseInsightsPage = ({
           <div className="liquid-orb liquid-orb-4" />
         </>
       )}
-      
+
       {/* Multiple overlay layers for stunning depth */}
       <div className="absolute inset-0 liquid-overlay-insights pointer-events-none" />
       <div className="absolute inset-0 insights-gradient-overlay pointer-events-none" />
-      
+
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Header */}
         {showHeader && (
           <div className="mb-8">
-            <h1 className="text-3xl font-bold text-white">
-              Financial Health
-            </h1>
+            <h1 className="text-3xl font-bold text-white">Financial Health</h1>
             <p className="text-lg text-white/70 mt-2">
               Track your financial wellness with AI-powered insights
             </p>
@@ -243,7 +379,7 @@ const BaseInsightsPage = ({
 
         {/* Navigation Tabs */}
         {showTabs && (
-          <UniversalCard 
+          <UniversalCard
             variant="glass"
             className="backdrop-blur-xl border border-white/20 mb-8"
           >
@@ -276,12 +412,17 @@ const BaseInsightsPage = ({
                   subtitle="Based on spending and savings patterns"
                   icon={<DollarSign />}
                   color={getScoreColor(scores.financial)}
-                  trend={getTrend(scores.financial, { good: 60, excellent: 75 })}
+                  trend={getTrend(scores.financial, {
+                    good: 60,
+                    excellent: 75,
+                  })}
                   delay={getAnimationDelay(0)}
                   size="md"
                   animationsEnabled={animationsEnabled}
                   onClick={() => {
-                    document.getElementById('key-metrics')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    document
+                      .getElementById('key-metrics')
+                      ?.scrollIntoView({ behavior: 'smooth', block: 'start' });
                   }}
                 />
               </div>
@@ -374,7 +515,7 @@ const BaseInsightsPage = ({
         {activeTab === 'health' && (
           <div className="space-y-6">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 w-full">
-              <ComprehensiveWellnessCard 
+              <ComprehensiveWellnessCard
                 score={wellnessData.overallScore}
                 healthKitData={{}}
                 spendingCategories={wellnessData.monthlySpending}
@@ -388,7 +529,7 @@ const BaseInsightsPage = ({
         {activeTab === 'eco' && (
           <div className="space-y-6">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 w-full">
-              <ComprehensiveEcoCard 
+              <ComprehensiveEcoCard
                 score={ecoData.overallScore}
                 ecoMetrics={{}}
                 spendingCategories={ecoData.monthlySpending}
@@ -404,7 +545,9 @@ const BaseInsightsPage = ({
           <div className="space-y-6">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <UniversalCard variant="glass" className="p-6">
-                <h3 className="text-xl font-semibold text-white mb-4">Financial Trends</h3>
+                <h3 className="text-xl font-semibold text-white mb-4">
+                  Financial Trends
+                </h3>
                 <div className="space-y-4">
                   <div className="flex justify-between items-center">
                     <span className="text-white/80">Monthly Spending</span>
@@ -421,7 +564,9 @@ const BaseInsightsPage = ({
                 </div>
               </UniversalCard>
               <UniversalCard variant="glass" className="p-6">
-                <h3 className="text-xl font-semibold text-white mb-4">Category Analysis</h3>
+                <h3 className="text-xl font-semibold text-white mb-4">
+                  Category Analysis
+                </h3>
                 <div className="space-y-4">
                   <div className="flex justify-between items-center">
                     <span className="text-white/80">Food & Dining</span>

@@ -1,13 +1,13 @@
-import { 
-  Transaction, 
-  TransactionCategory, 
-  TransactionRule, 
+import {
+  Transaction,
+  TransactionCategory,
+  TransactionRule,
   TransferPair,
   TransactionAnalytics,
   CategorySpending,
   SpendingInsight,
   TransactionImport,
-  FieldMapping
+  FieldMapping,
 } from '@/types/transactions';
 
 /**
@@ -23,16 +23,90 @@ export class TransactionService {
 
   // Category mapping with enhanced intelligence
   private categoryKeywords: Record<TransactionCategory, string[]> = {
-    income: ['salary', 'paycheck', 'bonus', 'freelance', 'dividend', 'interest', 'refund', 'cashback'],
-    housing: ['rent', 'mortgage', 'property tax', 'hoa', 'utilities', 'insurance home', 'repair', 'maintenance'],
-    transportation: ['gas', 'fuel', 'uber', 'lyft', 'parking', 'toll', 'car payment', 'auto insurance', 'metro', 'bus'],
-    food: ['grocery', 'restaurant', 'fast food', 'coffee', 'starbucks', 'mcdonalds', 'whole foods', 'safeway'],
-    utilities: ['electric', 'gas bill', 'water', 'internet', 'phone', 'cable', 'streaming', 'netflix'],
-    insurance: ['health insurance', 'auto insurance', 'life insurance', 'dental', 'vision'],
-    healthcare: ['doctor', 'hospital', 'pharmacy', 'medical', 'dentist', 'therapy', 'prescription'],
+    income: [
+      'salary',
+      'paycheck',
+      'bonus',
+      'freelance',
+      'dividend',
+      'interest',
+      'refund',
+      'cashback',
+    ],
+    housing: [
+      'rent',
+      'mortgage',
+      'property tax',
+      'hoa',
+      'utilities',
+      'insurance home',
+      'repair',
+      'maintenance',
+    ],
+    transportation: [
+      'gas',
+      'fuel',
+      'uber',
+      'lyft',
+      'parking',
+      'toll',
+      'car payment',
+      'auto insurance',
+      'metro',
+      'bus',
+    ],
+    food: [
+      'grocery',
+      'restaurant',
+      'fast food',
+      'coffee',
+      'starbucks',
+      'mcdonalds',
+      'whole foods',
+      'safeway',
+    ],
+    utilities: [
+      'electric',
+      'gas bill',
+      'water',
+      'internet',
+      'phone',
+      'cable',
+      'streaming',
+      'netflix',
+    ],
+    insurance: [
+      'health insurance',
+      'auto insurance',
+      'life insurance',
+      'dental',
+      'vision',
+    ],
+    healthcare: [
+      'doctor',
+      'hospital',
+      'pharmacy',
+      'medical',
+      'dentist',
+      'therapy',
+      'prescription',
+    ],
     savings: ['transfer to savings', 'investment', '401k', 'ira', 'pension'],
-    debt_payments: ['credit card payment', 'loan payment', 'student loan', 'mortgage payment'],
-    entertainment: ['movie', 'concert', 'sports', 'gaming', 'spotify', 'amazon prime', 'gym'],
+    debt_payments: [
+      'credit card payment',
+      'loan payment',
+      'student loan',
+      'mortgage payment',
+    ],
+    entertainment: [
+      'movie',
+      'concert',
+      'sports',
+      'gaming',
+      'spotify',
+      'amazon prime',
+      'gym',
+    ],
     personal_care: ['haircut', 'spa', 'cosmetics', 'clothing', 'shoes'],
     shopping: ['amazon', 'target', 'walmart', 'online shopping', 'retail'],
     education: ['tuition', 'books', 'course', 'training', 'certification'],
@@ -42,7 +116,7 @@ export class TransactionService {
     investments: ['brokerage', 'stock purchase', 'etf', 'mutual fund'],
     fees: ['bank fee', 'atm fee', 'overdraft', 'maintenance fee', 'late fee'],
     transfers: ['transfer', 'wire', 'check deposit', 'internal transfer'],
-    other: ['miscellaneous', 'unknown', 'cash withdrawal']
+    other: ['miscellaneous', 'unknown', 'cash withdrawal'],
   };
 
   static getInstance(): TransactionService {
@@ -55,12 +129,14 @@ export class TransactionService {
   /**
    * Create new transaction with automatic categorization
    */
-  async createTransaction(data: Omit<Transaction, 'id' | 'createdAt' | 'updatedAt'>): Promise<Transaction> {
+  async createTransaction(
+    data: Omit<Transaction, 'id' | 'createdAt' | 'updatedAt'>
+  ): Promise<Transaction> {
     const transaction: Transaction = {
       id: this.generateTransactionId(),
       ...data,
       createdAt: new Date(),
-      updatedAt: new Date()
+      updatedAt: new Date(),
     };
 
     // Apply automatic categorization
@@ -81,22 +157,25 @@ export class TransactionService {
   /**
    * Smart transaction categorization using ML-inspired algorithms
    */
-  async categorizeTransaction(transaction: Transaction): Promise<TransactionCategory> {
-    const text = `${transaction.description} ${transaction.merchantName || ''}`.toLowerCase();
-    
+  async categorizeTransaction(
+    transaction: Transaction
+  ): Promise<TransactionCategory> {
+    const text =
+      `${transaction.description} ${transaction.merchantName || ''}`.toLowerCase();
+
     // Calculate confidence scores for each category
     const categoryScores: Record<TransactionCategory, number> = {} as any;
-    
+
     for (const [category, keywords] of Object.entries(this.categoryKeywords)) {
       let score = 0;
-      
+
       for (const keyword of keywords) {
         if (text.includes(keyword.toLowerCase())) {
           // Boost score based on keyword relevance and position
           const position = text.indexOf(keyword.toLowerCase());
           const relevanceBoost = keyword.length / text.length;
           const positionBoost = position === 0 ? 2 : 1; // Boost if at beginning
-          
+
           score += (1 + relevanceBoost) * positionBoost;
         }
       }
@@ -109,7 +188,9 @@ export class TransactionService {
       }
 
       // Apply frequency-based learning
-      const historicalCategory = await this.getHistoricalCategoryForMerchant(transaction.merchantName);
+      const historicalCategory = await this.getHistoricalCategoryForMerchant(
+        transaction.merchantName
+      );
       if (historicalCategory === category) {
         score *= 1.5;
       }
@@ -118,8 +199,11 @@ export class TransactionService {
     }
 
     // Find category with highest score
-    const bestCategory = Object.entries(categoryScores).reduce((a, b) => 
-      categoryScores[a[0] as TransactionCategory] > categoryScores[b[0] as TransactionCategory] ? a : b
+    const bestCategory = Object.entries(categoryScores).reduce((a, b) =>
+      categoryScores[a[0] as TransactionCategory] >
+      categoryScores[b[0] as TransactionCategory]
+        ? a
+        : b
     )[0] as TransactionCategory;
 
     return categoryScores[bestCategory] > 0.5 ? bestCategory : 'other';
@@ -128,19 +212,21 @@ export class TransactionService {
   /**
    * Create and manage transaction rules
    */
-  async createTransactionRule(rule: Omit<TransactionRule, 'id' | 'createdAt' | 'updatedAt'>): Promise<TransactionRule> {
+  async createTransactionRule(
+    rule: Omit<TransactionRule, 'id' | 'createdAt' | 'updatedAt'>
+  ): Promise<TransactionRule> {
     const newRule: TransactionRule = {
       id: this.generateRuleId(),
       ...rule,
       createdAt: new Date(),
-      updatedAt: new Date()
+      updatedAt: new Date(),
     };
 
     this.rules.set(newRule.id, newRule);
-    
+
     // Apply rule to existing transactions
     await this.applyRuleToExistingTransactions(newRule);
-    
+
     return newRule;
   }
 
@@ -149,7 +235,7 @@ export class TransactionService {
    */
   private async applyRules(transaction: Transaction): Promise<void> {
     const activeRules = Array.from(this.rules.values())
-      .filter(rule => rule.isActive)
+      .filter((rule) => rule.isActive)
       .sort((a, b) => a.priority - b.priority);
 
     for (const rule of activeRules) {
@@ -164,21 +250,36 @@ export class TransactionService {
    */
   private async detectTransfers(transaction: Transaction): Promise<void> {
     // Look for potential matching transactions
-    const potentialMatches = Array.from(this.transactions.values()).filter(t => {
-      const timeDiff = Math.abs(t.date.getTime() - transaction.date.getTime());
-      const amountMatch = Math.abs(Math.abs(t.amount) - Math.abs(transaction.amount)) < 0.01;
-      const sameFamily = t.familyId === transaction.familyId;
-      const differentAccount = t.accountId !== transaction.accountId;
-      const oppositeSign = (t.amount > 0) !== (transaction.amount > 0);
-      const withinTimeWindow = timeDiff <= 3 * 24 * 60 * 60 * 1000; // 3 days
+    const potentialMatches = Array.from(this.transactions.values()).filter(
+      (t) => {
+        const timeDiff = Math.abs(
+          t.date.getTime() - transaction.date.getTime()
+        );
+        const amountMatch =
+          Math.abs(Math.abs(t.amount) - Math.abs(transaction.amount)) < 0.01;
+        const sameFamily = t.familyId === transaction.familyId;
+        const differentAccount = t.accountId !== transaction.accountId;
+        const oppositeSign = t.amount > 0 !== transaction.amount > 0;
+        const withinTimeWindow = timeDiff <= 3 * 24 * 60 * 60 * 1000; // 3 days
 
-      return sameFamily && differentAccount && amountMatch && oppositeSign && withinTimeWindow;
-    });
+        return (
+          sameFamily &&
+          differentAccount &&
+          amountMatch &&
+          oppositeSign &&
+          withinTimeWindow
+        );
+      }
+    );
 
     if (potentialMatches.length > 0) {
       const bestMatch = potentialMatches.sort((a, b) => {
-        const aTimeDiff = Math.abs(a.date.getTime() - transaction.date.getTime());
-        const bTimeDiff = Math.abs(b.date.getTime() - transaction.date.getTime());
+        const aTimeDiff = Math.abs(
+          a.date.getTime() - transaction.date.getTime()
+        );
+        const bTimeDiff = Math.abs(
+          b.date.getTime() - transaction.date.getTime()
+        );
         return aTimeDiff - bTimeDiff;
       })[0];
 
@@ -186,12 +287,14 @@ export class TransactionService {
       const transfer: TransferPair = {
         id: this.generateTransferId(),
         familyId: transaction.familyId,
-        sourceTransactionId: transaction.amount < 0 ? transaction.id : bestMatch.id,
-        targetTransactionId: transaction.amount > 0 ? transaction.id : bestMatch.id,
+        sourceTransactionId:
+          transaction.amount < 0 ? transaction.id : bestMatch.id,
+        targetTransactionId:
+          transaction.amount > 0 ? transaction.id : bestMatch.id,
         amount: Math.abs(transaction.amount),
         confidence: 0.9, // High confidence for amount and time matching
         isConfirmed: false,
-        createdAt: new Date()
+        createdAt: new Date(),
       };
 
       this.transfers.set(transfer.id, transfer);
@@ -216,7 +319,9 @@ export class TransactionService {
    */
   async bulkUpdateTransactions(
     transactionIds: string[],
-    updates: Partial<Pick<Transaction, 'category' | 'tags' | 'notes' | 'excludeFromBudget'>>
+    updates: Partial<
+      Pick<Transaction, 'category' | 'tags' | 'notes' | 'excludeFromBudget'>
+    >
   ): Promise<Transaction[]> {
     const updatedTransactions: Transaction[] = [];
 
@@ -226,7 +331,7 @@ export class TransactionService {
         const updated = {
           ...transaction,
           ...updates,
-          updatedAt: new Date()
+          updatedAt: new Date(),
         };
         this.transactions.set(id, updated);
         updatedTransactions.push(updated);
@@ -252,52 +357,60 @@ export class TransactionService {
       excludeFromBudget?: boolean;
     }
   ): Promise<Transaction[]> {
-    let results = Array.from(this.transactions.values())
-      .filter(t => t.familyId === familyId);
+    let results = Array.from(this.transactions.values()).filter(
+      (t) => t.familyId === familyId
+    );
 
     // Apply filters
     if (filters.query) {
       const query = filters.query.toLowerCase();
-      results = results.filter(t => 
-        t.description.toLowerCase().includes(query) ||
-        t.merchantName?.toLowerCase().includes(query) ||
-        t.notes?.toLowerCase().includes(query)
+      results = results.filter(
+        (t) =>
+          t.description.toLowerCase().includes(query) ||
+          t.merchantName?.toLowerCase().includes(query) ||
+          t.notes?.toLowerCase().includes(query)
       );
     }
 
     if (filters.categories?.length) {
-      results = results.filter(t => filters.categories!.includes(t.category));
+      results = results.filter((t) => filters.categories!.includes(t.category));
     }
 
     if (filters.accountIds?.length) {
-      results = results.filter(t => filters.accountIds!.includes(t.accountId));
+      results = results.filter((t) =>
+        filters.accountIds!.includes(t.accountId)
+      );
     }
 
     if (filters.dateRange) {
-      results = results.filter(t => 
-        t.date >= filters.dateRange!.start && t.date <= filters.dateRange!.end
+      results = results.filter(
+        (t) =>
+          t.date >= filters.dateRange!.start && t.date <= filters.dateRange!.end
       );
     }
 
     if (filters.amountRange) {
-      results = results.filter(t => 
-        Math.abs(t.amount) >= filters.amountRange!.min && 
-        Math.abs(t.amount) <= filters.amountRange!.max
+      results = results.filter(
+        (t) =>
+          Math.abs(t.amount) >= filters.amountRange!.min &&
+          Math.abs(t.amount) <= filters.amountRange!.max
       );
     }
 
     if (filters.tags?.length) {
-      results = results.filter(t => 
-        filters.tags!.some(tag => t.tags.includes(tag))
+      results = results.filter((t) =>
+        filters.tags!.some((tag) => t.tags.includes(tag))
       );
     }
 
     if (filters.excludeTransfers) {
-      results = results.filter(t => !t.isTransfer);
+      results = results.filter((t) => !t.isTransfer);
     }
 
     if (filters.excludeFromBudget !== undefined) {
-      results = results.filter(t => t.excludeFromBudget === filters.excludeFromBudget);
+      results = results.filter(
+        (t) => t.excludeFromBudget === filters.excludeFromBudget
+      );
     }
 
     return results.sort((a, b) => b.date.getTime() - a.date.getTime());
@@ -311,23 +424,28 @@ export class TransactionService {
     period: 'month' | 'quarter' | 'year'
   ): Promise<TransactionAnalytics> {
     const { startDate, endDate } = this.getPeriodDates(period);
-    
+
     const transactions = await this.searchTransactions(familyId, {
       dateRange: { start: startDate, end: endDate },
-      excludeTransfers: true
+      excludeTransfers: true,
     });
 
     const income = transactions
-      .filter(t => t.amount > 0)
+      .filter((t) => t.amount > 0)
       .reduce((sum, t) => sum + t.amount, 0);
 
     const expenses = transactions
-      .filter(t => t.amount < 0)
+      .filter((t) => t.amount < 0)
       .reduce((sum, t) => sum + Math.abs(t.amount), 0);
 
-    const categoryBreakdown = await this.calculateCategoryBreakdown(transactions);
-    const merchantBreakdown = await this.calculateMerchantBreakdown(transactions);
-    const insights = await this.generateSpendingInsights(transactions, categoryBreakdown);
+    const categoryBreakdown =
+      await this.calculateCategoryBreakdown(transactions);
+    const merchantBreakdown =
+      await this.calculateMerchantBreakdown(transactions);
+    const insights = await this.generateSpendingInsights(
+      transactions,
+      categoryBreakdown
+    );
 
     return {
       period,
@@ -337,7 +455,7 @@ export class TransactionService {
       categoryBreakdown,
       merchantBreakdown,
       trends: [], // TODO: Calculate trends
-      insights
+      insights,
     };
   }
 
@@ -361,7 +479,7 @@ export class TransactionService {
       duplicateTransactions: 0,
       mapping,
       errors: [],
-      createdAt: new Date()
+      createdAt: new Date(),
     };
 
     this.imports.set(importRecord.id, importRecord);
@@ -373,49 +491,67 @@ export class TransactionService {
   }
 
   // Private helper methods
-  private async getHistoricalCategoryForMerchant(merchantName?: string): Promise<TransactionCategory | null> {
+  private async getHistoricalCategoryForMerchant(
+    merchantName?: string
+  ): Promise<TransactionCategory | null> {
     if (!merchantName) return null;
 
-    const historicalTransactions = Array.from(this.transactions.values())
-      .filter(t => t.merchantName?.toLowerCase() === merchantName.toLowerCase());
+    const historicalTransactions = Array.from(
+      this.transactions.values()
+    ).filter(
+      (t) => t.merchantName?.toLowerCase() === merchantName.toLowerCase()
+    );
 
     if (historicalTransactions.length === 0) return null;
 
     // Return most common category for this merchant
     const categoryCount: Record<string, number> = {};
     for (const transaction of historicalTransactions) {
-      categoryCount[transaction.category] = (categoryCount[transaction.category] || 0) + 1;
+      categoryCount[transaction.category] =
+        (categoryCount[transaction.category] || 0) + 1;
     }
 
-    const mostCommon = Object.entries(categoryCount)
-      .sort(([,a], [,b]) => b - a)[0];
+    const mostCommon = Object.entries(categoryCount).sort(
+      ([, a], [, b]) => b - a
+    )[0];
 
-    return mostCommon ? mostCommon[0] as TransactionCategory : null;
+    return mostCommon ? (mostCommon[0] as TransactionCategory) : null;
   }
 
   private async evaluateRuleConditions(
     transaction: Transaction,
     conditions: TransactionRule['conditions']
   ): Promise<boolean> {
-    return conditions.every(condition => {
-      const fieldValue = this.getTransactionFieldValue(transaction, condition.field);
-      
+    return conditions.every((condition) => {
+      const fieldValue = this.getTransactionFieldValue(
+        transaction,
+        condition.field
+      );
+
       switch (condition.operator) {
         case 'equals':
           return fieldValue === condition.value;
         case 'contains':
-          return String(fieldValue).toLowerCase().includes(String(condition.value).toLowerCase());
+          return String(fieldValue)
+            .toLowerCase()
+            .includes(String(condition.value).toLowerCase());
         case 'starts_with':
-          return String(fieldValue).toLowerCase().startsWith(String(condition.value).toLowerCase());
+          return String(fieldValue)
+            .toLowerCase()
+            .startsWith(String(condition.value).toLowerCase());
         case 'ends_with':
-          return String(fieldValue).toLowerCase().endsWith(String(condition.value).toLowerCase());
+          return String(fieldValue)
+            .toLowerCase()
+            .endsWith(String(condition.value).toLowerCase());
         case 'greater_than':
           return Number(fieldValue) > Number(condition.value);
         case 'less_than':
           return Number(fieldValue) < Number(condition.value);
         case 'between':
-          return Number(fieldValue) >= Number(condition.value) && 
-                 Number(fieldValue) <= Number(condition.value2);
+          return (
+            Number(fieldValue) >= Number(condition.value) &&
+            Number(fieldValue) <= Number(condition.value2)
+          );
         default:
           return false;
       }
@@ -455,7 +591,10 @@ export class TransactionService {
     }
   }
 
-  private getTransactionFieldValue(transaction: Transaction, field: string): any {
+  private getTransactionFieldValue(
+    transaction: Transaction,
+    field: string
+  ): any {
     switch (field) {
       case 'merchant':
         return transaction.merchantName || '';
@@ -472,9 +611,11 @@ export class TransactionService {
     }
   }
 
-  private async applyRuleToExistingTransactions(rule: TransactionRule): Promise<void> {
+  private async applyRuleToExistingTransactions(
+    rule: TransactionRule
+  ): Promise<void> {
     const allTransactions = Array.from(this.transactions.values());
-    
+
     for (const transaction of allTransactions) {
       if (await this.evaluateRuleConditions(transaction, rule.conditions)) {
         await this.executeRuleActions(transaction, rule.actions);
@@ -484,38 +625,48 @@ export class TransactionService {
     }
   }
 
-  private async calculateCategoryBreakdown(transactions: Transaction[]): Promise<CategorySpending[]> {
-    const categoryMap: Record<string, { amount: number; count: number; transactions: Transaction[] }> = {};
+  private async calculateCategoryBreakdown(
+    transactions: Transaction[]
+  ): Promise<CategorySpending[]> {
+    const categoryMap: Record<
+      string,
+      { amount: number; count: number; transactions: Transaction[] }
+    > = {};
 
     for (const transaction of transactions) {
       if (transaction.amount >= 0) continue; // Skip income
-      
+
       const category = transaction.category;
       const amount = Math.abs(transaction.amount);
-      
+
       if (!categoryMap[category]) {
         categoryMap[category] = { amount: 0, count: 0, transactions: [] };
       }
-      
+
       categoryMap[category].amount += amount;
       categoryMap[category].count += 1;
       categoryMap[category].transactions.push(transaction);
     }
 
-    const totalExpenses = Object.values(categoryMap).reduce((sum, cat) => sum + cat.amount, 0);
+    const totalExpenses = Object.values(categoryMap).reduce(
+      (sum, cat) => sum + cat.amount,
+      0
+    );
 
-    return Object.entries(categoryMap).map(([category, data]) => ({
-      category: category as TransactionCategory,
-      amount: data.amount,
-      percentage: totalExpenses > 0 ? (data.amount / totalExpenses) * 100 : 0,
-      transactionCount: data.count,
-      averageAmount: data.amount / data.count,
-      change: {
-        amount: 0, // TODO: Calculate vs previous period
-        percentage: 0,
-        direction: 'stable' as const
-      }
-    })).sort((a, b) => b.amount - a.amount);
+    return Object.entries(categoryMap)
+      .map(([category, data]) => ({
+        category: category as TransactionCategory,
+        amount: data.amount,
+        percentage: totalExpenses > 0 ? (data.amount / totalExpenses) * 100 : 0,
+        transactionCount: data.count,
+        averageAmount: data.amount / data.count,
+        change: {
+          amount: 0, // TODO: Calculate vs previous period
+          percentage: 0,
+          direction: 'stable' as const,
+        },
+      }))
+      .sort((a, b) => b.amount - a.amount);
   }
 
   private async calculateMerchantBreakdown(transactions: Transaction[]) {
@@ -541,7 +692,7 @@ export class TransactionService {
           category: category.category,
           confidence: 0.9,
           actionable: true,
-          action: `Consider setting a budget for ${category.category} to control spending`
+          action: `Consider setting a budget for ${category.category} to control spending`,
         });
       }
     }
@@ -555,7 +706,10 @@ export class TransactionService {
     return insights;
   }
 
-  private getPeriodDates(period: 'month' | 'quarter' | 'year'): { startDate: Date; endDate: Date } {
+  private getPeriodDates(period: 'month' | 'quarter' | 'year'): {
+    startDate: Date;
+    endDate: Date;
+  } {
     const endDate = new Date();
     const startDate = new Date();
 
@@ -597,7 +751,7 @@ export class TransactionService {
   ): Promise<void> {
     // TODO: Implement actual file processing
     // This would parse CSV/OFX and create transactions
-    
+
     // Mock processing
     setTimeout(() => {
       importRecord.status = 'completed';
@@ -606,7 +760,7 @@ export class TransactionService {
       importRecord.duplicateTransactions = 3;
       importRecord.errorTransactions = 2;
       importRecord.completedAt = new Date();
-      
+
       this.imports.set(importRecord.id, importRecord);
     }, 3000);
   }

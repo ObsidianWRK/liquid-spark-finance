@@ -10,11 +10,22 @@ import {
   Calculator,
   PieChart,
   Clock,
-  Zap
+  Zap,
 } from 'lucide-react';
 import { RetirementPlan, RiskProfile } from '@/types/financialPlanning';
 import { financialPlanningService } from '@/features/planning/api/financialPlanningService';
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart as RechartsPieChart, Cell, Pie } from 'recharts';
+import {
+  LineChart,
+  Line,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  ResponsiveContainer,
+  PieChart as RechartsPieChart,
+  Cell,
+  Pie,
+} from 'recharts';
 import { cn } from '@/shared/lib/utils';
 
 interface RetirementPlannerProps {
@@ -29,7 +40,7 @@ const RetirementPlanner = ({ familyId }: RetirementPlannerProps) => {
     currentIncome: 100000,
     currentSavings: 150000,
     monthlyContribution: 2000,
-    riskProfile: 'moderate' as RiskProfile
+    riskProfile: 'moderate' as RiskProfile,
   });
   const [loading, setLoading] = useState(false);
   const [showProjections, setShowProjections] = useState(false);
@@ -59,7 +70,7 @@ const RetirementPlanner = ({ familyId }: RetirementPlannerProps) => {
   };
 
   const handleInputChange = (field: string, value: any) => {
-    setInputs(prev => ({ ...prev, [field]: value }));
+    setInputs((prev) => ({ ...prev, [field]: value }));
   };
 
   const recalculatePlan = async () => {
@@ -71,7 +82,7 @@ const RetirementPlanner = ({ familyId }: RetirementPlannerProps) => {
       style: 'currency',
       currency: 'USD',
       minimumFractionDigits: 0,
-      maximumFractionDigits: 0
+      maximumFractionDigits: 0,
     }).format(amount);
   };
 
@@ -82,29 +93,62 @@ const RetirementPlanner = ({ familyId }: RetirementPlannerProps) => {
   // Generate projection data for charts
   const generateProjectionData = () => {
     if (!plan) return [];
-    
+
     const data = [];
     const yearsToRetirement = plan.yearsToRetirement;
-    
+
     for (let year = 0; year <= yearsToRetirement; year++) {
-      const currentValue = plan.currentSavings * Math.pow(1 + plan.projections.expectedReturn, year);
-      const contributionValue = (plan.monthlyContribution * 12) * 
-        ((Math.pow(1 + plan.projections.expectedReturn, year) - 1) / plan.projections.expectedReturn);
-      
+      const currentValue =
+        plan.currentSavings *
+        Math.pow(1 + plan.projections.expectedReturn, year);
+      const contributionValue =
+        plan.monthlyContribution *
+        12 *
+        ((Math.pow(1 + plan.projections.expectedReturn, year) - 1) /
+          plan.projections.expectedReturn);
+
       data.push({
         year: inputs.currentAge + year,
         savings: currentValue + contributionValue,
-        target: plan.projections.targetRetirementSavings * (year / yearsToRetirement)
+        target:
+          plan.projections.targetRetirementSavings * (year / yearsToRetirement),
       });
     }
-    
+
     return data;
   };
 
   const riskAllocationData = [
-    { name: 'Stocks', value: inputs.riskProfile === 'conservative' ? 40 : inputs.riskProfile === 'moderate' ? 70 : 85, color: '#3b82f6' },
-    { name: 'Bonds', value: inputs.riskProfile === 'conservative' ? 50 : inputs.riskProfile === 'moderate' ? 25 : 10, color: '#10b981' },
-    { name: 'Other', value: inputs.riskProfile === 'conservative' ? 10 : inputs.riskProfile === 'moderate' ? 5 : 5, color: '#f59e0b' }
+    {
+      name: 'Stocks',
+      value:
+        inputs.riskProfile === 'conservative'
+          ? 40
+          : inputs.riskProfile === 'moderate'
+            ? 70
+            : 85,
+      color: '#3b82f6',
+    },
+    {
+      name: 'Bonds',
+      value:
+        inputs.riskProfile === 'conservative'
+          ? 50
+          : inputs.riskProfile === 'moderate'
+            ? 25
+            : 10,
+      color: '#10b981',
+    },
+    {
+      name: 'Other',
+      value:
+        inputs.riskProfile === 'conservative'
+          ? 10
+          : inputs.riskProfile === 'moderate'
+            ? 5
+            : 5,
+      color: '#f59e0b',
+    },
   ];
 
   if (loading && !plan) {
@@ -158,7 +202,9 @@ const RetirementPlanner = ({ familyId }: RetirementPlannerProps) => {
             <input
               type="number"
               value={inputs.currentAge}
-              onChange={(e) => handleInputChange('currentAge', parseInt(e.target.value))}
+              onChange={(e) =>
+                handleInputChange('currentAge', parseInt(e.target.value))
+              }
               className="w-full bg-white/[0.05] border border-white/[0.08] rounded-lg text-white px-3 py-2"
             />
           </div>
@@ -170,7 +216,9 @@ const RetirementPlanner = ({ familyId }: RetirementPlannerProps) => {
             <input
               type="number"
               value={inputs.retirementAge}
-              onChange={(e) => handleInputChange('retirementAge', parseInt(e.target.value))}
+              onChange={(e) =>
+                handleInputChange('retirementAge', parseInt(e.target.value))
+              }
               className="w-full bg-white/[0.05] border border-white/[0.08] rounded-lg text-white px-3 py-2"
             />
           </div>
@@ -182,7 +230,9 @@ const RetirementPlanner = ({ familyId }: RetirementPlannerProps) => {
             <input
               type="number"
               value={inputs.currentIncome}
-              onChange={(e) => handleInputChange('currentIncome', parseInt(e.target.value))}
+              onChange={(e) =>
+                handleInputChange('currentIncome', parseInt(e.target.value))
+              }
               className="w-full bg-white/[0.05] border border-white/[0.08] rounded-lg text-white px-3 py-2"
             />
           </div>
@@ -194,7 +244,9 @@ const RetirementPlanner = ({ familyId }: RetirementPlannerProps) => {
             <input
               type="number"
               value={inputs.currentSavings}
-              onChange={(e) => handleInputChange('currentSavings', parseInt(e.target.value))}
+              onChange={(e) =>
+                handleInputChange('currentSavings', parseInt(e.target.value))
+              }
               className="w-full bg-white/[0.05] border border-white/[0.08] rounded-lg text-white px-3 py-2"
             />
           </div>
@@ -206,7 +258,12 @@ const RetirementPlanner = ({ familyId }: RetirementPlannerProps) => {
             <input
               type="number"
               value={inputs.monthlyContribution}
-              onChange={(e) => handleInputChange('monthlyContribution', parseInt(e.target.value))}
+              onChange={(e) =>
+                handleInputChange(
+                  'monthlyContribution',
+                  parseInt(e.target.value)
+                )
+              }
               className="w-full bg-white/[0.05] border border-white/[0.08] rounded-lg text-white px-3 py-2"
             />
           </div>
@@ -250,7 +307,9 @@ const RetirementPlanner = ({ familyId }: RetirementPlannerProps) => {
               <div className="flex items-center justify-between">
                 <div>
                   <p className="text-white/60 text-sm">Years to Retirement</p>
-                  <p className="text-3xl font-bold text-white">{plan.yearsToRetirement}</p>
+                  <p className="text-3xl font-bold text-white">
+                    {plan.yearsToRetirement}
+                  </p>
                 </div>
                 <Calendar className="w-8 h-8 text-blue-400" />
               </div>
@@ -286,10 +345,14 @@ const RetirementPlanner = ({ familyId }: RetirementPlannerProps) => {
                   <p className="text-white/60 text-sm">
                     {plan.projections.shortfall > 0 ? 'Shortfall' : 'Surplus'}
                   </p>
-                  <p className={cn(
-                    "text-3xl font-bold",
-                    plan.projections.shortfall > 0 ? "text-red-400" : "text-green-400"
-                  )}>
+                  <p
+                    className={cn(
+                      'text-3xl font-bold',
+                      plan.projections.shortfall > 0
+                        ? 'text-red-400'
+                        : 'text-green-400'
+                    )}
+                  >
                     {plan.projections.shortfall > 0 ? '-' : '+'}
                     {formatCurrency(Math.abs(plan.projections.shortfall))}
                   </p>
@@ -313,19 +376,23 @@ const RetirementPlanner = ({ familyId }: RetirementPlannerProps) => {
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
               <div className="space-y-4">
                 <div className="flex items-center justify-between p-4 bg-white/[0.03] rounded-xl">
-                  <span className="text-white/80">Target Retirement Savings</span>
+                  <span className="text-white/80">
+                    Target Retirement Savings
+                  </span>
                   <span className="font-semibold text-white">
                     {formatCurrency(plan.projections.targetRetirementSavings)}
                   </span>
                 </div>
-                
+
                 <div className="flex items-center justify-between p-4 bg-white/[0.03] rounded-xl">
-                  <span className="text-white/80">Projected Retirement Value</span>
+                  <span className="text-white/80">
+                    Projected Retirement Value
+                  </span>
                   <span className="font-semibold text-white">
                     {formatCurrency(plan.projections.totalRetirementValue)}
                   </span>
                 </div>
-                
+
                 <div className="flex items-center justify-between p-4 bg-white/[0.03] rounded-xl">
                   <span className="text-white/80">Expected Annual Return</span>
                   <span className="font-semibold text-white">
@@ -334,16 +401,25 @@ const RetirementPlanner = ({ familyId }: RetirementPlannerProps) => {
                 </div>
 
                 <div className="flex items-center justify-between p-4 bg-white/[0.03] rounded-xl">
-                  <span className="text-white/80">Income Replacement Ratio</span>
+                  <span className="text-white/80">
+                    Income Replacement Ratio
+                  </span>
                   <span className="font-semibold text-white">
-                    {Math.round((plan.projections.monthlyIncomeAtRetirement * 12) / plan.currentIncome * 100)}%
+                    {Math.round(
+                      ((plan.projections.monthlyIncomeAtRetirement * 12) /
+                        plan.currentIncome) *
+                        100
+                    )}
+                    %
                   </span>
                 </div>
               </div>
 
               {/* Asset Allocation */}
               <div>
-                <h4 className="text-md font-semibold text-white mb-3">Recommended Asset Allocation</h4>
+                <h4 className="text-md font-semibold text-white mb-3">
+                  Recommended Asset Allocation
+                </h4>
                 <div className="h-64">
                   <ResponsiveContainer width="100%" height="100%">
                     <RechartsPieChart>
@@ -360,24 +436,27 @@ const RetirementPlanner = ({ familyId }: RetirementPlannerProps) => {
                           <Cell key={`cell-${index}`} fill={entry.color} />
                         ))}
                       </Pie>
-                      <Tooltip 
+                      <Tooltip
                         formatter={(value) => [`${value}%`, 'Allocation']}
                         contentStyle={{
                           backgroundColor: 'rgba(0, 0, 0, 0.8)',
                           border: '1px solid rgba(255, 255, 255, 0.1)',
                           borderRadius: '8px',
-                          color: 'white'
+                          color: 'white',
                         }}
                       />
                     </RechartsPieChart>
                   </ResponsiveContainer>
                 </div>
-                
+
                 <div className="space-y-2 mt-4">
                   {riskAllocationData.map((item, index) => (
-                    <div key={index} className="flex items-center justify-between text-sm">
+                    <div
+                      key={index}
+                      className="flex items-center justify-between text-sm"
+                    >
                       <div className="flex items-center gap-2">
-                        <div 
+                        <div
                           className="w-3 h-3 rounded"
                           style={{ backgroundColor: item.color }}
                         />
@@ -398,45 +477,52 @@ const RetirementPlanner = ({ familyId }: RetirementPlannerProps) => {
                 <TrendingUp className="w-5 h-5 text-blue-400" />
                 Savings Growth Projection
               </h3>
-              
+
               <div className="h-80">
                 <ResponsiveContainer width="100%" height="100%">
                   <LineChart data={generateProjectionData()}>
-                    <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.1)" />
-                    <XAxis 
-                      dataKey="year" 
+                    <CartesianGrid
+                      strokeDasharray="3 3"
+                      stroke="rgba(255,255,255,0.1)"
+                    />
+                    <XAxis
+                      dataKey="year"
                       stroke="rgba(255,255,255,0.6)"
                       tick={{ fill: 'rgba(255,255,255,0.6)' }}
                     />
-                    <YAxis 
+                    <YAxis
                       stroke="rgba(255,255,255,0.6)"
                       tick={{ fill: 'rgba(255,255,255,0.6)' }}
-                      tickFormatter={(value) => `$${(value / 1000000).toFixed(1)}M`}
+                      tickFormatter={(value) =>
+                        `$${(value / 1000000).toFixed(1)}M`
+                      }
                     />
-                    <Tooltip 
+                    <Tooltip
                       formatter={(value, name) => [
-                        formatCurrency(value as number), 
-                        name === 'savings' ? 'Projected Savings' : 'Target Savings'
+                        formatCurrency(value as number),
+                        name === 'savings'
+                          ? 'Projected Savings'
+                          : 'Target Savings',
                       ]}
                       labelFormatter={(label) => `Age ${label}`}
                       contentStyle={{
                         backgroundColor: 'rgba(0, 0, 0, 0.8)',
                         border: '1px solid rgba(255, 255, 255, 0.1)',
                         borderRadius: '8px',
-                        color: 'white'
+                        color: 'white',
                       }}
                     />
-                    <Line 
-                      type="monotone" 
-                      dataKey="savings" 
-                      stroke="#3b82f6" 
+                    <Line
+                      type="monotone"
+                      dataKey="savings"
+                      stroke="#3b82f6"
                       strokeWidth={3}
                       dot={{ fill: '#3b82f6', strokeWidth: 2, r: 4 }}
                     />
-                    <Line 
-                      type="monotone" 
-                      dataKey="target" 
-                      stroke="#ef4444" 
+                    <Line
+                      type="monotone"
+                      dataKey="target"
+                      stroke="#ef4444"
                       strokeWidth={2}
                       strokeDasharray="5 5"
                       dot={{ fill: '#ef4444', strokeWidth: 2, r: 3 }}
@@ -465,32 +551,46 @@ const RetirementPlanner = ({ familyId }: RetirementPlannerProps) => {
                 <Zap className="w-5 h-5 text-yellow-400" />
                 Recommendations
               </h3>
-              
+
               <div className="space-y-4">
                 {plan.recommendations.map((rec, index) => (
-                  <div key={index} className="bg-white/[0.03] rounded-xl p-4 border border-white/[0.05]">
+                  <div
+                    key={index}
+                    className="bg-white/[0.03] rounded-xl p-4 border border-white/[0.05]"
+                  >
                     <div className="flex items-start justify-between">
                       <div className="flex-1">
-                        <h4 className="font-semibold text-white mb-2">{rec.title}</h4>
-                        <p className="text-white/70 text-sm mb-3">{rec.description}</p>
-                        
+                        <h4 className="font-semibold text-white mb-2">
+                          {rec.title}
+                        </h4>
+                        <p className="text-white/70 text-sm mb-3">
+                          {rec.description}
+                        </p>
+
                         <div className="space-y-2">
                           {rec.actionItems.map((item, itemIndex) => (
-                            <div key={itemIndex} className="flex items-center gap-2 text-sm">
+                            <div
+                              key={itemIndex}
+                              className="flex items-center gap-2 text-sm"
+                            >
                               <div className="w-1.5 h-1.5 bg-blue-400 rounded-full"></div>
                               <span className="text-white/80">{item}</span>
                             </div>
                           ))}
                         </div>
                       </div>
-                      
+
                       <div className="text-right">
-                        <span className={cn(
-                          "text-xs px-2 py-1 rounded-lg font-medium",
-                          rec.impact === 'high' ? "bg-red-500/20 text-red-400" :
-                          rec.impact === 'medium' ? "bg-yellow-500/20 text-yellow-400" :
-                          "bg-green-500/20 text-green-400"
-                        )}>
+                        <span
+                          className={cn(
+                            'text-xs px-2 py-1 rounded-lg font-medium',
+                            rec.impact === 'high'
+                              ? 'bg-red-500/20 text-red-400'
+                              : rec.impact === 'medium'
+                                ? 'bg-yellow-500/20 text-yellow-400'
+                                : 'bg-green-500/20 text-green-400'
+                          )}
+                        >
                           {rec.impact} impact
                         </span>
                         {rec.estimatedBenefit > 0 && (

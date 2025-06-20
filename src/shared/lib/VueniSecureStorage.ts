@@ -4,7 +4,9 @@ import { generateSecureToken } from '../utils/secureRandom';
 import { encryptSync, decryptSync } from '../utils/browserCrypto';
 
 // Get validated encryption key from environment
-const VUENI_STORAGE_KEY = SecurityEnvValidator.getValidatedEncryptionKey('VITE_VUENI_ENCRYPTION_KEY');
+const VUENI_STORAGE_KEY = SecurityEnvValidator.getValidatedEncryptionKey(
+  'VITE_VUENI_ENCRYPTION_KEY'
+);
 
 // Constants for session management
 const SESSION_TIMEOUT = 30 * 60 * 1000; // 30 minutes
@@ -22,9 +24,9 @@ export class VueniSecureStorage {
     // Use Web Crypto API for encryption
     return encryptSync(JSON.stringify(data), VUENI_STORAGE_KEY);
   }
-  
+
   private static decrypt<T>(encryptedData: string): T {
-    // Use Web Crypto API for decryption  
+    // Use Web Crypto API for decryption
     const decryptedString = decryptSync(encryptedData, VUENI_STORAGE_KEY);
     return JSON.parse(decryptedString);
   }
@@ -35,11 +37,19 @@ export class VueniSecureStorage {
     }
   }
 
-  private static logAccess(action: string, key: string, metadata?: Record<string, unknown>): void {
+  private static logAccess(
+    action: string,
+    key: string,
+    metadata?: Record<string, unknown>
+  ): void {
     this.logVueniAccess(`${action}_FINANCIAL`, key);
   }
 
-  private static logSecurityEvent(event: string, key: string, details?: string): void {
+  private static logSecurityEvent(
+    event: string,
+    key: string,
+    details?: string
+  ): void {
     if (import.meta.env.PROD) {
       fetch('/api/vueni/security-event', {
         method: 'POST',
@@ -49,36 +59,38 @@ export class VueniSecureStorage {
           key,
           details,
           timestamp: new Date().toISOString(),
-          sessionId: this.getSessionId()
-        })
-      }).catch(error => {
+          sessionId: this.getSessionId(),
+        }),
+      }).catch((error) => {
         console.error('Security event log failed:', error);
       });
     }
   }
-  
+
   static setFinancialData<T>(key: string, value: T): void {
     this.logVueniAccess('SET_FINANCIAL', key);
     localStorage.setItem(`vueni_${key}`, this.encrypt(value));
   }
-  
+
   static getFinancialData<T>(key: string): T | null {
     this.logVueniAccess('GET_FINANCIAL', key);
     const encrypted = localStorage.getItem(`vueni_${key}`);
     return encrypted ? this.decrypt(encrypted) : null;
   }
-  
+
   static removeFinancialData(key: string): void {
     this.logVueniAccess('DELETE_FINANCIAL', key);
     localStorage.removeItem(`vueni_${key}`);
   }
-  
+
   static clearAllFinancialData(): void {
     this.logVueniAccess('CLEAR_ALL', 'all_financial_data');
-    const keys = Object.keys(localStorage).filter(key => key.startsWith('vueni_'));
-    keys.forEach(key => localStorage.removeItem(key));
+    const keys = Object.keys(localStorage).filter((key) =>
+      key.startsWith('vueni_')
+    );
+    keys.forEach((key) => localStorage.removeItem(key));
   }
-  
+
   private static logVueniAccess(action: string, key: string): void {
     if (import.meta.env.PROD) {
       fetch('/api/vueni/audit-log', {
@@ -89,14 +101,14 @@ export class VueniSecureStorage {
           key,
           timestamp: new Date().toISOString(),
           userAgent: navigator.userAgent,
-          sessionId: this.getSessionId()
-        })
-      }).catch(error => {
+          sessionId: this.getSessionId(),
+        }),
+      }).catch((error) => {
         console.error('Audit log failed:', error);
       });
     }
   }
-  
+
   private static getSessionId(): string {
     let sessionId = sessionStorage.getItem('vueni_session_id');
     if (!sessionId) {
@@ -109,23 +121,27 @@ export class VueniSecureStorage {
   /**
    * Stores encrypted financial data with audit trail
    */
-  static setItem<T>(key: string, value: T, options: { sensitive?: boolean; sessionOnly?: boolean } = {}): void {
+  static setItem<T>(
+    key: string,
+    value: T,
+    options: { sensitive?: boolean; sessionOnly?: boolean } = {}
+  ): void {
     try {
       this.validateFinancialDataKey(key);
-      
+
       if (options.sessionOnly) {
         // Store in memory session storage for highly sensitive data
         this.sessionData.set(key, {
           data: value,
           timestamp: Date.now(),
-          encrypted: options.sensitive || false
+          encrypted: options.sensitive || false,
         });
       } else {
         // Store encrypted in localStorage
         const encrypted = this.encrypt(value);
         localStorage.setItem(key, encrypted);
       }
-      
+
       this.logAccess('SET', key, { sensitive: options.sensitive });
     } catch (error) {
       console.error('VueniSecureStorage setItem error:', error);
@@ -157,7 +173,7 @@ export class VueniSecureStorage {
       // Fallback to localStorage
       const encrypted = localStorage.getItem(key);
       if (!encrypted) return null;
-      
+
       this.logAccess('GET', key, { source: 'localStorage' });
       return this.decrypt<T>(encrypted);
     } catch (error) {

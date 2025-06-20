@@ -9,6 +9,7 @@ Based on your comprehensive PRD for real-time biometric financial guardrails, I'
 ### **🏗️ Core Architecture**
 
 **Feature Module Structure** (`src/features/biometric-intervention/`)
+
 ```
 ├── index.ts                     # Public API exports
 ├── types.ts                     # TypeScript interfaces
@@ -33,24 +34,24 @@ interface BiometricData {
 }
 
 interface StressLevel {
-  score: number;        // 0-100 stress scale
-  confidence: number;   // Model confidence 0-1
-  baseline: number;     // Personal baseline
+  score: number; // 0-100 stress scale
+  confidence: number; // Model confidence 0-1
+  baseline: number; // Personal baseline
   trend: 'rising' | 'falling' | 'stable';
   timestamp: string;
 }
 
 interface InterventionPolicy {
   triggers: {
-    stressThreshold: number;      // Stress level trigger
-    spendingAmount: number;       // Dollar amount trigger
+    stressThreshold: number; // Stress level trigger
+    spendingAmount: number; // Dollar amount trigger
     consecutiveHighStress: number; // Minutes of high stress
   };
   actions: {
     cardFreeze: boolean;
     nudgeMessage: boolean;
     breathingExercise: boolean;
-    delayPurchase: number;        // Seconds to delay
+    delayPurchase: number; // Seconds to delay
     safeToSpendReduction: number; // Percentage reduction
   };
   // ... scheduling and metadata
@@ -60,6 +61,7 @@ interface InterventionPolicy {
 ### **🎛️ State Management**
 
 **Zustand Store** with comprehensive actions:
+
 - `updateBiometricData(data)` - Process incoming biometric data
 - `checkStressIntervention(amount)` - Real-time spending gate
 - `addPolicy/updatePolicy/deletePolicy` - Policy management
@@ -69,6 +71,7 @@ interface InterventionPolicy {
 ### **🎨 User Interface Components**
 
 **1. InterventionNudge** - Real-time spending intervention
+
 - Stress-level color coding (red/orange/yellow/green)
 - Countdown timer for purchase delays
 - Breathing exercise integration
@@ -76,6 +79,7 @@ interface InterventionPolicy {
 - Policy information display
 
 **2. BiometricMonitor** - Health dashboard
+
 - Live stress score visualization (0-100 scale)
 - Real-time biometric data display (HR, HRV, temp, breathing)
 - Connected device status
@@ -83,6 +87,7 @@ interface InterventionPolicy {
 - Compact & full-size viewing modes
 
 **3. InterventionSettings** - Policy configuration
+
 - Master enable/disable toggle
 - Policy CRUD operations
 - Wearable device integration toggles
@@ -91,6 +96,7 @@ interface InterventionPolicy {
 ### **🔄 Integration Points**
 
 **Existing System Compatibility:**
+
 - ✅ Extends current `src/features/` modular architecture
 - ✅ Uses existing `src/services/healthKitService.ts` foundation
 - ✅ Integrates with `src/features/safe-to-spend/` calculations
@@ -151,6 +157,7 @@ export class HealthKitBiometricService {
 ```
 
 **Key Deliverables:**
+
 - Native iOS HealthKit integration
 - Fitbit/Garmin/Oura API connections
 - Real-time WebSocket data streaming
@@ -174,6 +181,7 @@ export class StressMLService {
 ```
 
 **Key Deliverables:**
+
 - gpCAM Bayesian hyperparameter tuning
 - Personal baseline establishment
 - ROC-AUC ≥ 0.80 model accuracy
@@ -188,7 +196,7 @@ export class CardControlService {
     // Integration with bank APIs (Plaid, Visa, etc.)
     // Temporary card freeze implementation
   }
-  
+
   async adjustSpendingLimit(cardId: string, reduction: number): Promise<void> {
     // Dynamic spending limit adjustment
   }
@@ -216,7 +224,7 @@ graph TD
     F --> H{User Decision}
     H -->|Cancel| I[Prevent Purchase]
     H -->|Proceed| J[Log Override]
-    
+
     K[BiometricMonitor] --> C
     L[InterventionSettings] --> D
     M[Safe-to-Spend] --> D
@@ -225,12 +233,14 @@ graph TD
 ## 🧪 **Testing Strategy**
 
 **Current Test Coverage:**
+
 - Unit tests for store actions
 - Component rendering tests
 - Mock data validation
 - Integration with existing safe-to-spend
 
 **Production Test Plan:**
+
 - Stress detection model accuracy testing (ROC-AUC validation)
 - Real-time latency benchmarking (< 1s requirement)
 - User experience testing (intervention effectiveness)
@@ -238,11 +248,11 @@ graph TD
 
 ## 🎯 **Success Metrics Alignment**
 
-| PRD Metric | Current Implementation | Production Target |
-|------------|----------------------|-------------------|
-| Δ Impulse Spend | Mock tracking in place | -50% vs baseline |
-| Model Latency | Mock: ~100ms | ≤ 1s end-to-end |
-| Nudge CTR | UI framework ready | ≥ 30% effectiveness |
+| PRD Metric         | Current Implementation   | Production Target      |
+| ------------------ | ------------------------ | ---------------------- |
+| Δ Impulse Spend    | Mock tracking in place   | -50% vs baseline       |
+| Model Latency      | Mock: ~100ms             | ≤ 1s end-to-end        |
+| Nudge CTR          | UI framework ready       | ≥ 30% effectiveness    |
 | Daily Active Users | User preference tracking | ≥ 65% (wearable users) |
 
 ## 💻 **Code Quality & Standards**
@@ -258,12 +268,14 @@ graph TD
 ## 🔐 **Security & Privacy**
 
 **Implemented:**
+
 - Data encryption at rest (planned)
 - User consent management
 - Device-based data retention policies
 - Privacy settings (family sharing, analytics)
 
 **Production Requirements:**
+
 - HIPAA-grade biometric data vault
 - SOC-2 Type II audit logs
 - End-to-end encryption for data transmission
@@ -276,6 +288,7 @@ graph TD
 The biometric intervention system foundation is **production-ready** for Phase 1 implementation. The architecture elegantly extends your existing financial platform with a sophisticated intervention framework that can prevent stress-induced impulse spending.
 
 **Key Achievements:**
+
 - ✅ Complete feature module with 3 core components
 - ✅ Comprehensive TypeScript interfaces and state management
 - ✅ Production-ready UI components with full accessibility
@@ -283,9 +296,10 @@ The biometric intervention system foundation is **production-ready** for Phase 1
 - ✅ Extensible design for real ML/biometric data integration
 
 **Ready for Next Steps:**
+
 - Real HealthKit/wearable integration
 - ML stress detection model training
 - Financial institution API connections
 - Production deployment and compliance
 
-The foundation is solid, scalable, and ready to transform how users interact with their financial decisions during stressful moments. 🚀 
+The foundation is solid, scalable, and ready to transform how users interact with their financial decisions during stressful moments. 🚀

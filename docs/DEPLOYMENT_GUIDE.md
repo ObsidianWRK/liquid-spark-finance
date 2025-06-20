@@ -9,12 +9,14 @@ This comprehensive guide covers development environment setup, build processes, 
 ### Prerequisites
 
 #### System Requirements
+
 - **Node.js**: v18.0.0 or higher ([Install with nvm](https://github.com/nvm-sh/nvm))
 - **npm**: v8.0.0 or higher (comes with Node.js)
 - **Git**: Latest version
 - **VS Code**: Recommended IDE with extensions
 
 #### Recommended VS Code Extensions
+
 ```json
 {
   "recommendations": [
@@ -32,6 +34,7 @@ This comprehensive guide covers development environment setup, build processes, 
 ### Local Development Setup
 
 #### 1. Clone and Setup Repository
+
 ```bash
 # Clone the repository
 git clone https://github.com/yourusername/vueni.git
@@ -50,6 +53,7 @@ npm run dev
 #### 2. Environment Configuration
 
 Create `.env.local` file:
+
 ```bash
 # Development Configuration
 VITE_APP_NAME="Vueni"
@@ -105,6 +109,7 @@ VITE_PERFORMANCE_MONITORING="true"
 ### Database Setup (Future Enhancement)
 
 #### PostgreSQL Setup
+
 ```bash
 # Install PostgreSQL (macOS)
 brew install postgresql@14
@@ -119,6 +124,7 @@ npm run db:seed
 ```
 
 #### Environment Variables for Database
+
 ```bash
 # Add to .env.local when database is implemented
 DATABASE_URL="postgresql://user:password@localhost:5432/vueni_dev"
@@ -137,14 +143,14 @@ import { resolve } from 'path';
 
 export default defineConfig(({ command, mode }) => {
   const env = loadEnv(mode, process.cwd(), '');
-  
+
   return {
     plugins: [
       react({
         jsxImportSource: '@emotion/react',
       }),
     ],
-    
+
     resolve: {
       alias: {
         '@': resolve(__dirname, 'src'),
@@ -155,7 +161,7 @@ export default defineConfig(({ command, mode }) => {
         '@types': resolve(__dirname, 'src/types'),
       },
     },
-    
+
     build: {
       target: 'es2020',
       outDir: 'dist',
@@ -179,23 +185,23 @@ export default defineConfig(({ command, mode }) => {
       },
       chunkSizeWarningLimit: 1000,
     },
-    
+
     optimizeDeps: {
       include: ['react', 'react-dom', 'react-router-dom'],
     },
-    
+
     server: {
       port: 5173,
       host: true,
       open: true,
       cors: true,
     },
-    
+
     preview: {
       port: 4173,
       host: true,
     },
-    
+
     define: {
       __APP_VERSION__: JSON.stringify(env.npm_package_version),
       __BUILD_DATE__: JSON.stringify(new Date().toISOString()),
@@ -215,7 +221,7 @@ export default defineConfig(({ command, mode }) => {
     "module": "ESNext",
     "skipLibCheck": true,
     "allowJs": false,
-    
+
     /* Bundler mode */
     "moduleResolution": "bundler",
     "allowImportingTsExtensions": true,
@@ -223,7 +229,7 @@ export default defineConfig(({ command, mode }) => {
     "isolatedModules": true,
     "noEmit": true,
     "jsx": "react-jsx",
-    
+
     /* Linting */
     "strict": true,
     "noImplicitAny": true,
@@ -234,7 +240,7 @@ export default defineConfig(({ command, mode }) => {
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
     "noUncheckedIndexedAccess": true,
-    
+
     /* Path mapping */
     "baseUrl": ".",
     "paths": {
@@ -274,7 +280,7 @@ export default tseslint.config(
     plugins: {
       'react-hooks': reactHooks,
       'react-refresh': reactRefresh,
-      'security': security,
+      security: security,
     },
     rules: {
       ...reactHooks.configs.recommended.rules,
@@ -283,7 +289,7 @@ export default tseslint.config(
         { allowConstantExport: true },
       ],
       ...security.configs.recommended.rules,
-      
+
       // Custom rules
       '@typescript-eslint/no-unused-vars': 'error',
       '@typescript-eslint/no-explicit-any': 'warn',
@@ -291,7 +297,7 @@ export default tseslint.config(
       'no-console': process.env.NODE_ENV === 'production' ? 'error' : 'warn',
       'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'warn',
     },
-  },
+  }
 );
 ```
 
@@ -300,6 +306,7 @@ export default tseslint.config(
 ### 1. Vercel Deployment (Recommended)
 
 #### Setup Vercel
+
 ```bash
 # Install Vercel CLI
 npm i -g vercel
@@ -315,6 +322,7 @@ vercel --prod
 ```
 
 #### Vercel Configuration (`vercel.json`)
+
 ```json
 {
   "framework": "vite",
@@ -372,6 +380,7 @@ vercel --prod
 ### 2. Netlify Deployment
 
 #### Netlify Configuration (`netlify.toml`)
+
 ```toml
 [build]
   publish = "dist"
@@ -403,6 +412,7 @@ vercel --prod
 ### 3. Docker Deployment
 
 #### Dockerfile
+
 ```dockerfile
 # Build stage
 FROM node:18-alpine AS build
@@ -437,6 +447,7 @@ CMD ["nginx", "-g", "daemon off;"]
 ```
 
 #### Nginx Configuration (`nginx.conf`)
+
 ```nginx
 events {
     worker_connections 1024;
@@ -445,7 +456,7 @@ events {
 http {
     include       /etc/nginx/mime.types;
     default_type  application/octet-stream;
-    
+
     # Gzip compression
     gzip on;
     gzip_vary on;
@@ -490,6 +501,7 @@ http {
 ```
 
 #### Docker Compose (`docker-compose.yml`)
+
 ```yaml
 version: '3.8'
 
@@ -497,7 +509,7 @@ services:
   app:
     build: .
     ports:
-      - "80:80"
+      - '80:80'
     environment:
       - NODE_ENV=production
     restart: unless-stopped
@@ -528,6 +540,7 @@ volumes:
 ### 4. AWS S3 + CloudFront Deployment
 
 #### S3 Deployment Script
+
 ```bash
 #!/bin/bash
 
@@ -552,12 +565,13 @@ aws cloudfront create-invalidation \
 ```
 
 #### CloudFormation Template (partial)
+
 ```yaml
 Resources:
   S3Bucket:
     Type: AWS::S3::Bucket
     Properties:
-      BucketName: !Sub "${AWS::StackName}-app"
+      BucketName: !Sub '${AWS::StackName}-app'
       PublicAccessBlockConfiguration:
         BlockPublicAcls: true
         BlockPublicPolicy: true
@@ -572,11 +586,11 @@ Resources:
           - DomainName: !GetAtt S3Bucket.RegionalDomainName
             Id: S3Origin
             S3OriginConfig:
-              OriginAccessIdentity: !Sub "origin-access-identity/cloudfront/${OriginAccessIdentity}"
+              OriginAccessIdentity: !Sub 'origin-access-identity/cloudfront/${OriginAccessIdentity}'
         DefaultCacheBehavior:
           TargetOriginId: S3Origin
           ViewerProtocolPolicy: redirect-to-https
-          CachePolicyId: 4135ea2d-6df8-44a3-9df3-4b5a84be39ad  # Managed-CachingOptimized
+          CachePolicyId: 4135ea2d-6df8-44a3-9df3-4b5a84be39ad # Managed-CachingOptimized
         CustomErrorResponses:
           - ErrorCode: 404
             ResponseCode: 200
@@ -588,6 +602,7 @@ Resources:
 ## Environment-Specific Configurations
 
 ### Development Environment
+
 ```typescript
 // src/config/development.ts
 export const config = {
@@ -608,10 +623,11 @@ export const config = {
 ```
 
 ### Staging Environment
+
 ```typescript
 // src/config/staging.ts
 export const config = {
-          API_BASE_URL: 'https://staging-api.vueni.com',
+  API_BASE_URL: 'https://staging-api.vueni.com',
   ENABLE_MOCK_DATA: false,
   LOG_LEVEL: 'info',
   ENABLE_DEV_TOOLS: false,
@@ -628,10 +644,11 @@ export const config = {
 ```
 
 ### Production Environment
+
 ```typescript
 // src/config/production.ts
 export const config = {
-          API_BASE_URL: 'https://api.vueni.com',
+  API_BASE_URL: 'https://api.vueni.com',
   ENABLE_MOCK_DATA: false,
   LOG_LEVEL: 'error',
   ENABLE_DEV_TOOLS: false,
@@ -701,23 +718,21 @@ const urlsToCache = [
   '/',
   '/static/js/bundle.js',
   '/static/css/main.css',
-  '/manifest.json'
+  '/manifest.json',
 ];
 
 self.addEventListener('install', (event) => {
   event.waitUntil(
-    caches.open(CACHE_NAME)
-      .then((cache) => cache.addAll(urlsToCache))
+    caches.open(CACHE_NAME).then((cache) => cache.addAll(urlsToCache))
   );
 });
 
 self.addEventListener('fetch', (event) => {
   event.respondWith(
-    caches.match(event.request)
-      .then((response) => {
-        // Return cached version or fetch from network
-        return response || fetch(event.request);
-      })
+    caches.match(event.request).then((response) => {
+      // Return cached version or fetch from network
+      return response || fetch(event.request);
+    })
   );
 });
 ```
@@ -735,9 +750,7 @@ export const initMonitoring = () => {
   Sentry.init({
     dsn: process.env.VITE_SENTRY_DSN,
     environment: process.env.VITE_APP_ENV,
-    integrations: [
-      new BrowserTracing(),
-    ],
+    integrations: [new BrowserTracing()],
     tracesSampleRate: 1.0,
     beforeSend: (event) => {
       // Filter out development errors
@@ -777,7 +790,11 @@ export const initAnalytics = () => {
   }
 };
 
-export const trackEvent = (action: string, category: string, label?: string) => {
+export const trackEvent = (
+  action: string,
+  category: string,
+  label?: string
+) => {
   if (window.gtag) {
     window.gtag('event', action, {
       event_category: category,
@@ -790,6 +807,7 @@ export const trackEvent = (action: string, category: string, label?: string) => 
 ## Security Configuration
 
 ### Content Security Policy
+
 ```typescript
 // src/utils/security.ts
 export const CSP_DIRECTIVES = {
@@ -806,6 +824,7 @@ export const CSP_DIRECTIVES = {
 ```
 
 ### Environment Variable Validation
+
 ```typescript
 // src/utils/env.ts
 import { z } from 'zod';
@@ -849,13 +868,13 @@ jobs:
         with:
           node-version: '18'
           cache: 'npm'
-      
+
       - name: Install dependencies
         run: npm ci
-      
+
       - name: Run tests
         run: npm run test:coverage
-      
+
       - name: Run E2E tests
         run: npm run test:e2e
 
@@ -868,17 +887,17 @@ jobs:
         with:
           node-version: '18'
           cache: 'npm'
-      
+
       - name: Install dependencies
         run: npm ci
-      
+
       - name: Build application
         run: npm run build
         env:
           VITE_APP_ENV: production
           VITE_API_BASE_URL: ${{ secrets.PRODUCTION_API_URL }}
           VITE_ENCRYPTION_KEY: ${{ secrets.ENCRYPTION_KEY }}
-      
+
       - name: Deploy to Vercel
         uses: vercel/action@v1
         with:
@@ -893,6 +912,7 @@ jobs:
 ### Common Development Issues
 
 #### 1. Build Failures
+
 ```bash
 # Clear cache and reinstall
 rm -rf node_modules package-lock.json
@@ -906,6 +926,7 @@ npm run env:check
 ```
 
 #### 2. Performance Issues
+
 ```bash
 # Analyze bundle size
 npm run analyze
@@ -918,6 +939,7 @@ npm run dev -- --profile
 ```
 
 #### 3. Test Failures
+
 ```bash
 # Run tests in watch mode
 npm run test:watch
@@ -932,6 +954,7 @@ npm run test -- --updateSnapshot
 ### Production Issues
 
 #### 1. High Memory Usage
+
 ```bash
 # Monitor Node.js memory
 node --max-old-space-size=4096 dist/server.js
@@ -941,6 +964,7 @@ node --heapsnapshot-signal=SIGUSR2 dist/server.js
 ```
 
 #### 2. Slow Load Times
+
 ```typescript
 // Check bundle analysis
 import { lazy } from 'react';
@@ -960,18 +984,21 @@ performance.measure('component-render', 'component-start', 'component-end');
 ### Regular Maintenance Tasks
 
 #### Weekly
+
 - [ ] Check for security vulnerabilities (`npm audit`)
 - [ ] Review performance metrics
 - [ ] Update dependencies (`npm update`)
 - [ ] Run full test suite
 
 #### Monthly
+
 - [ ] Major dependency updates (`npx npm-check-updates`)
 - [ ] Performance optimization review
 - [ ] Security audit and review
 - [ ] Documentation updates
 
 #### Quarterly
+
 - [ ] Technology stack review
 - [ ] Architecture assessment
 - [ ] Dependency cleanup
@@ -980,6 +1007,7 @@ performance.measure('component-render', 'component-start', 'component-end');
 ### Update Procedures
 
 #### Dependency Updates
+
 ```bash
 # Check for outdated packages
 npm outdated
@@ -994,6 +1022,7 @@ npm run build
 ```
 
 #### Version Management
+
 ```json
 {
   "version": "1.0.0",

@@ -1,11 +1,19 @@
-import React, { useEffect } from "react";
-import { useSubscriptionsStore } from "../store";
-import { Card, CardContent, CardHeader, CardTitle, CardFooter } from "@/shared/ui/card";
-import { Button } from "@/shared/ui/button";
-import { Repeat, XCircle } from "lucide-react";
-import { cn } from "@/shared/lib/utils";
+import React, { useEffect } from 'react';
+import { useSubscriptionsStore } from '../store';
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+  CardFooter,
+} from '@/shared/ui/card';
+import { Button } from '@/shared/ui/button';
+import { Repeat, XCircle } from 'lucide-react';
+import { cn } from '@/shared/lib/utils';
 
-export const RecurringChargesList: React.FC<{ className?: string }> = ({ className }) => {
+export const RecurringChargesList: React.FC<{ className?: string }> = ({
+  className,
+}) => {
   const { charges, loading, detect, cancel } = useSubscriptionsStore((s) => ({
     charges: s.charges,
     loading: s.loading,
@@ -18,15 +26,23 @@ export const RecurringChargesList: React.FC<{ className?: string }> = ({ classNa
   }, [detect]);
 
   if (loading && charges.length === 0) {
-    return <p className={cn("text-muted-foreground", className)}>Scanning for subscriptions…</p>;
+    return (
+      <p className={cn('text-muted-foreground', className)}>
+        Scanning for subscriptions…
+      </p>
+    );
   }
 
   if (charges.length === 0) {
-    return <p className={cn("text-muted-foreground", className)}>No subscriptions detected.</p>;
+    return (
+      <p className={cn('text-muted-foreground', className)}>
+        No subscriptions detected.
+      </p>
+    );
   }
 
   return (
-    <div className={cn("space-y-4", className)}>
+    <div className={cn('space-y-4', className)}>
       {charges.map((ch) => (
         <Card key={ch.id}>
           <CardHeader className="flex-row items-center justify-between space-y-0">
@@ -34,21 +50,28 @@ export const RecurringChargesList: React.FC<{ className?: string }> = ({ classNa
               <Repeat className="text-primary" />
               <CardTitle>{ch.merchantName}</CardTitle>
             </div>
-            {ch.status === "active" ? (
-              <Button variant="destructive" size="sm" onClick={() => cancel(ch.id)}>
+            {ch.status === 'active' ? (
+              <Button
+                variant="destructive"
+                size="sm"
+                onClick={() => cancel(ch.id)}
+              >
                 Cancel
               </Button>
             ) : (
-              <span className="text-sm text-muted-foreground">{ch.status.replace("_", " ")}</span>
+              <span className="text-sm text-muted-foreground">
+                {ch.status.replace('_', ' ')}
+              </span>
             )}
           </CardHeader>
           <CardContent className="flex items-center justify-between">
             <p className="text-sm text-muted-foreground">
-              Next due {new Date(ch.nextDueDate).toLocaleDateString()} • ${ch.amount.toFixed(2)} / {ch.frequency}
+              Next due {new Date(ch.nextDueDate).toLocaleDateString()} • $
+              {ch.amount.toFixed(2)} / {ch.frequency}
             </p>
           </CardContent>
         </Card>
       ))}
     </div>
   );
-}; 
+};

@@ -44,7 +44,7 @@ export interface iOS26NavBarProps {
 
 /**
  * iOS 26-Style Navigation Bar
- * 
+ *
  * Features:
  * - Liquid Glass effect with backdrop blur
  * - Universal safe area support
@@ -68,7 +68,7 @@ const iOS26NavBar: React.FC<iOS26NavBarProps> = ({
   const location = useLocation();
   const navigate = useNavigate();
   const navRef = useRef<HTMLElement>(null);
-  
+
   // Viewport and scroll state
   const viewportState = useViewportGuardian();
   const scrollState = useScrollController({
@@ -85,45 +85,49 @@ const iOS26NavBar: React.FC<iOS26NavBarProps> = ({
   });
 
   // Determine if we should show as side rail
-  const showAsSideRail = enableSideRail && viewportState.dimensions.width >= 960;
-  
+  const showAsSideRail =
+    enableSideRail && viewportState.dimensions.width >= 960;
+
   // Filter tabs based on device constraints
   const visibleTabs = useMemo(() => {
     let filteredTabs = tabs;
-    
+
     // On mobile, respect hideOnMobile flag and maxTabs limit
     if (viewportState.dimensions.width < 640) {
-      filteredTabs = tabs.filter(tab => !tab.hideOnMobile);
+      filteredTabs = tabs.filter((tab) => !tab.hideOnMobile);
       if (filteredTabs.length > maxTabs) {
         filteredTabs = filteredTabs.slice(0, maxTabs);
       }
     }
-    
+
     return filteredTabs;
   }, [tabs, maxTabs, viewportState.dimensions.width]);
 
   // Handle tab press
-  const handleTabPress = useCallback((tab: typeof tabs[0]) => {
-    // Haptic feedback on supported devices
-    if ('vibrate' in navigator) {
-      navigator.vibrate(10);
-    }
-    
-    tab.action();
-    
-    if (onActiveTabChange) {
-      onActiveTabChange(tab.id);
-    }
-  }, [onActiveTabChange]);
+  const handleTabPress = useCallback(
+    (tab: (typeof tabs)[0]) => {
+      // Haptic feedback on supported devices
+      if ('vibrate' in navigator) {
+        navigator.vibrate(10);
+      }
+
+      tab.action();
+
+      if (onActiveTabChange) {
+        onActiveTabChange(tab.id);
+      }
+    },
+    [onActiveTabChange]
+  );
 
   // Handle FAB press
   const handleFabPress = useCallback(() => {
     if (!fab) return;
-    
+
     if ('vibrate' in navigator) {
       navigator.vibrate(15);
     }
-    
+
     fab.action();
   }, [fab]);
 
@@ -145,11 +149,14 @@ const iOS26NavBar: React.FC<iOS26NavBarProps> = ({
   }, []);
 
   // Calculate navigation visibility
-  const isVisible = !enableScrollHide || scrollState.isVisible || viewportState.isVirtualKeyboardOpen;
-  
+  const isVisible =
+    !enableScrollHide ||
+    scrollState.isVisible ||
+    viewportState.isVirtualKeyboardOpen;
+
   // Determine orientation-based height
   const navHeight = viewportState.orientation === 'landscape' ? '56px' : '68px';
-  
+
   return (
     <>
       {/* Skip Link for Accessibility */}
@@ -171,16 +178,26 @@ const iOS26NavBar: React.FC<iOS26NavBarProps> = ({
           className
         )}
         role="navigation"
-        aria-label={position === 'top' ? 'Primary navigation' : 'Bottom navigation'}
+        aria-label={
+          position === 'top' ? 'Primary navigation' : 'Bottom navigation'
+        }
         style={{
           // Apply safe area padding
-          paddingBottom: position === 'bottom' ? `${viewportState.safeAreaInsets.bottom}px` : undefined,
-          paddingTop: position === 'top' ? `${viewportState.safeAreaInsets.top}px` : undefined,
-          paddingLeft: showAsSideRail ? `${viewportState.safeAreaInsets.left}px` : undefined,
+          paddingBottom:
+            position === 'bottom'
+              ? `${viewportState.safeAreaInsets.bottom}px`
+              : undefined,
+          paddingTop:
+            position === 'top'
+              ? `${viewportState.safeAreaInsets.top}px`
+              : undefined,
+          paddingLeft: showAsSideRail
+            ? `${viewportState.safeAreaInsets.left}px`
+            : undefined,
         }}
       >
         <div className="ios26-nav__glass">
-          <div 
+          <div
             className="ios26-nav__tabs"
             role="tablist"
             aria-orientation={showAsSideRail ? 'vertical' : 'horizontal'}
@@ -190,8 +207,9 @@ const iOS26NavBar: React.FC<iOS26NavBarProps> = ({
           >
             {visibleTabs.map((tab, index) => {
               const IconComponent = tab.icon;
-              const isActive = tab.isActive || location.pathname === (tab as any).path;
-              
+              const isActive =
+                tab.isActive || location.pathname === (tab as any).path;
+
               return (
                 <button
                   key={tab.id}
@@ -206,14 +224,21 @@ const iOS26NavBar: React.FC<iOS26NavBarProps> = ({
                     if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
                       e.preventDefault();
                       const nextIndex = (index + 1) % visibleTabs.length;
-                      const nextButton = navRef.current?.querySelectorAll('[role="tab"]')[nextIndex];
+                      const nextButton =
+                        navRef.current?.querySelectorAll('[role="tab"]')[
+                          nextIndex
+                        ];
                       if (nextButton instanceof HTMLElement) {
                         nextButton.focus();
                       }
                     } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
                       e.preventDefault();
-                      const prevIndex = index === 0 ? visibleTabs.length - 1 : index - 1;
-                      const prevButton = navRef.current?.querySelectorAll('[role="tab"]')[prevIndex];
+                      const prevIndex =
+                        index === 0 ? visibleTabs.length - 1 : index - 1;
+                      const prevButton =
+                        navRef.current?.querySelectorAll('[role="tab"]')[
+                          prevIndex
+                        ];
                       if (prevButton instanceof HTMLElement) {
                         prevButton.focus();
                       }
@@ -229,12 +254,12 @@ const iOS26NavBar: React.FC<iOS26NavBarProps> = ({
                 >
                   {/* Icon with badge */}
                   <div className="relative">
-                    <IconComponent 
+                    <IconComponent
                       className="ios26-nav__icon"
                       aria-hidden={true}
                     />
                     {tab.badgeCount && tab.badgeCount > 0 && (
-                      <span 
+                      <span
                         className="ios26-nav__badge"
                         aria-label={`${tab.badgeCount} notifications`}
                       >
@@ -242,35 +267,30 @@ const iOS26NavBar: React.FC<iOS26NavBarProps> = ({
                       </span>
                     )}
                   </div>
-                  
+
                   {/* Label */}
                   {showLabels && (
-                    <span className="ios26-nav__label">
-                      {tab.label}
-                    </span>
+                    <span className="ios26-nav__label">{tab.label}</span>
                   )}
                 </button>
               );
             })}
           </div>
-          
+
           {/* Floating Action Button */}
           {fab && (
             <button
               onClick={handleFabPress}
               className={cn(
                 'ios26-nav__fab',
-                fab.variant === 'secondary' 
+                fab.variant === 'secondary'
                   ? 'ios26-nav__fab--secondary'
                   : 'ios26-nav__fab--primary'
               )}
               aria-label={fab.ariaLabel || 'Floating action button'}
               type="button"
             >
-              <fab.icon 
-                className="w-6 h-6"
-                aria-hidden={true}
-              />
+              <fab.icon className="w-6 h-6" aria-hidden={true} />
             </button>
           )}
         </div>
@@ -279,4 +299,4 @@ const iOS26NavBar: React.FC<iOS26NavBarProps> = ({
   );
 };
 
-export default iOS26NavBar; 
+export default iOS26NavBar;

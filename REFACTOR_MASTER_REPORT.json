@@ -48,7 +48,11 @@
           "severity": "Critical",
           "cvss_score": 9.1,
           "description": "Financial data stored in plain text in localStorage",
-          "affected_files": ["budgetService.ts", "savingsGoalsService.ts", "useLiquidGlass.ts"],
+          "affected_files": [
+            "budgetService.ts",
+            "savingsGoalsService.ts",
+            "useLiquidGlass.ts"
+          ],
           "remediation": "Implement AES-256 encryption for all sensitive data",
           "effort_estimate": "1 week"
         },

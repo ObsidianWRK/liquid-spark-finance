@@ -38,9 +38,17 @@ describe('TransactionRow', () => {
   });
 
   it('shows placeholders when fields are missing', () => {
-    render(<TransactionRow tx={{ ...baseTx, merchantName: undefined as any, category: undefined as any }} />);
+    render(
+      <TransactionRow
+        tx={{
+          ...baseTx,
+          merchantName: undefined as any,
+          category: undefined as any,
+        }}
+      />
+    );
 
     // en dash placeholder
     expect(screen.getAllByText('—').length).toBeGreaterThan(0);
   });
-}); 
+});

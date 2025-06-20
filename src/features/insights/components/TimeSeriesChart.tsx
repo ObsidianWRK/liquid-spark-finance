@@ -8,7 +8,11 @@ interface TimeSeriesChartProps {
   showLegend?: boolean;
 }
 
-const TimeSeriesChart: React.FC<TimeSeriesChartProps> = ({ data, title, showLegend = true }) => {
+const TimeSeriesChart: React.FC<TimeSeriesChartProps> = ({
+  data,
+  title,
+  showLegend = true,
+}) => {
   // Configure series for Apple-style LineChart
   const series = [
     {
@@ -17,7 +21,7 @@ const TimeSeriesChart: React.FC<TimeSeriesChartProps> = ({ data, title, showLege
       color: '#007AFF', // Apple system blue
     },
     {
-      dataKey: 'health', 
+      dataKey: 'health',
       label: 'Wellness Score',
       color: '#FF453A', // Apple system red
     },
@@ -25,7 +29,7 @@ const TimeSeriesChart: React.FC<TimeSeriesChartProps> = ({ data, title, showLege
       dataKey: 'eco',
       label: 'Eco Impact',
       color: '#32D74B', // Apple system green
-    }
+    },
   ];
 
   return (
@@ -50,4 +54,4 @@ const TimeSeriesChart: React.FC<TimeSeriesChartProps> = ({ data, title, showLege
   );
 };
 
-export default TimeSeriesChart; 
+export default TimeSeriesChart;

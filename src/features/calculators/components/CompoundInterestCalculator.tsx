@@ -1,8 +1,19 @@
 import React, { useState, useMemo, useCallback, useEffect } from 'react';
 import { calculateCompoundInterest } from '@/shared/utils/calculators';
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
+import {
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  ResponsiveContainer,
+} from 'recharts';
 import { LineChart } from '@/shared/ui/charts';
-import { SecureCalculatorWrapper, useSecureCalculator } from './SecureCalculatorWrapper';
+import {
+  SecureCalculatorWrapper,
+  useSecureCalculator,
+} from './SecureCalculatorWrapper';
 import { Alert, AlertDescription } from '@/shared/ui/alert';
 import { AlertTriangle } from 'lucide-react';
 import { getFinancialChartColor } from '@/shared/utils/theme-color-mapper';
@@ -26,431 +37,554 @@ interface SecureCalculatorProps {
   onSecurityEvent?: (violationType: string, details: unknown) => void;
 }
 
-const CompoundInterestCalculator = React.memo<SecureCalculatorProps>(({ securityContext, onSecurityEvent }) => {
-  const [principal, setPrincipal] = useState(10000);
-  const [rate, setRate] = useState(7);
-  const [years, setYears] = useState(10);
-  const [compoundFreq, setCompoundFreq] = useState(12);
-  const [monthlyContribution, setMonthlyContribution] = useState(200);
-  const [futureValue, setFutureValue] = useState<number | null>(null);
-  const [chartData, setChartData] = useState<CompoundData[]>([]);
-  const [inputErrors, setInputErrors] = useState<Record<string, string>>({});
+const CompoundInterestCalculator = React.memo<SecureCalculatorProps>(
+  ({ securityContext, onSecurityEvent }) => {
+    const [principal, setPrincipal] = useState(10000);
+    const [rate, setRate] = useState(7);
+    const [years, setYears] = useState(10);
+    const [compoundFreq, setCompoundFreq] = useState(12);
+    const [monthlyContribution, setMonthlyContribution] = useState(200);
+    const [futureValue, setFutureValue] = useState<number | null>(null);
+    const [chartData, setChartData] = useState<CompoundData[]>([]);
+    const [inputErrors, setInputErrors] = useState<Record<string, string>>({});
 
-  const { validateAndSanitizeInput, performSecureCalculation } = useSecureCalculator('compound-interest');
+    const { validateAndSanitizeInput, performSecureCalculation } =
+      useSecureCalculator('compound-interest');
 
-  // Memoized expensive calculation to prevent unnecessary recalculations
-  const compoundData = useMemo((): CompoundData[] => {
-    const data: CompoundData[] = [];
-    const currentPrincipal = principal;
-    const monthlyRate = rate / 100 / compoundFreq;
-    const periodsPerYear = compoundFreq;
-    
-    // Add initial data point
-    data.push({
-      year: 0,
-      date: new Date().toISOString(),
-      principal: principal,
-      interest: 0,
-      total: principal
-    });
+    // Memoized expensive calculation to prevent unnecessary recalculations
+    const compoundData = useMemo((): CompoundData[] => {
+      const data: CompoundData[] = [];
+      const currentPrincipal = principal;
+      const monthlyRate = rate / 100 / compoundFreq;
+      const periodsPerYear = compoundFreq;
 
-    for (let year = 1; year <= years; year++) {
-      // Calculate compound interest for the year
-      const yearlyContributions = monthlyContribution * 12;
-      
-      // Calculate compound growth
-      const periods = year * periodsPerYear;
-      const compoundAmount = currentPrincipal * Math.pow(1 + monthlyRate, periods);
-      
-      // Add yearly contributions with compound interest
-      let contributionGrowth = 0;
-      for (let i = 1; i <= 12; i++) {
-        const monthsRemaining = (years - year) * 12 + (12 - i);
-        contributionGrowth += monthlyContribution * Math.pow(1 + monthlyRate, monthsRemaining * periodsPerYear / 12);
-      }
-      
-      const totalContributions = principal + (yearlyContributions * year);
-      const totalInterest = compoundAmount + contributionGrowth - totalContributions;
-      const totalValue = totalContributions + totalInterest;
-      
-      // Create a date for this year
-      const futureDate = new Date();
-      futureDate.setFullYear(futureDate.getFullYear() + year);
-      
+      // Add initial data point
       data.push({
-        year,
-        date: futureDate.toISOString(),
-        principal: totalContributions,
-        interest: totalInterest,
-        total: totalValue
+        year: 0,
+        date: new Date().toISOString(),
+        principal: principal,
+        interest: 0,
+        total: principal,
       });
-    }
-    
-    return data;
-  }, [principal, rate, years, compoundFreq, monthlyContribution]);
 
-  const handleSecureInput = useCallback((field: string, value: string, type: 'amount' | 'interestRate' | 'timePeriod') => {
-    setInputErrors(prev => ({ ...prev, [field]: '' }));
-    
-    try {
-      const sanitizedValue = validateAndSanitizeInput(type, value) as number;
+      for (let year = 1; year <= years; year++) {
+        // Calculate compound interest for the year
+        const yearlyContributions = monthlyContribution * 12;
 
-      switch (field) {
-        case 'principal':
-          setPrincipal(sanitizedValue);
-          break;
-        case 'monthlyContribution':
-          setMonthlyContribution(sanitizedValue);
-          break;
-        case 'rate':
-          setRate(sanitizedValue);
-          break;
-        case 'years':
-          setYears(sanitizedValue);
-          break;
+        // Calculate compound growth
+        const periods = year * periodsPerYear;
+        const compoundAmount =
+          currentPrincipal * Math.pow(1 + monthlyRate, periods);
+
+        // Add yearly contributions with compound interest
+        let contributionGrowth = 0;
+        for (let i = 1; i <= 12; i++) {
+          const monthsRemaining = (years - year) * 12 + (12 - i);
+          contributionGrowth +=
+            monthlyContribution *
+            Math.pow(1 + monthlyRate, (monthsRemaining * periodsPerYear) / 12);
+        }
+
+        const totalContributions = principal + yearlyContributions * year;
+        const totalInterest =
+          compoundAmount + contributionGrowth - totalContributions;
+        const totalValue = totalContributions + totalInterest;
+
+        // Create a date for this year
+        const futureDate = new Date();
+        futureDate.setFullYear(futureDate.getFullYear() + year);
+
+        data.push({
+          year,
+          date: futureDate.toISOString(),
+          principal: totalContributions,
+          interest: totalInterest,
+          total: totalValue,
+        });
       }
-    } catch (error) {
-      const errorMessage = error instanceof Error ? error.message : 'Invalid input';
-      setInputErrors(prev => ({ ...prev, [field]: errorMessage }));
-      onSecurityEvent?.('invalid_input', { field, value, error: errorMessage });
-    }
-  }, [validateAndSanitizeInput, onSecurityEvent]);
 
-  const handleCalculate = useCallback(async () => {
-    try {
-      const calculationFunction = () => {
-        const result = calculateCompoundInterest(principal, rate, years, compoundFreq);
-        const chartData = compoundData;
-        setFutureValue(result);
-        setChartData(chartData);
-        return result;
-      };
+      return data;
+    }, [principal, rate, years, compoundFreq, monthlyContribution]);
 
-      await performSecureCalculation(calculationFunction);
+    const handleSecureInput = useCallback(
+      (
+        field: string,
+        value: string,
+        type: 'amount' | 'interestRate' | 'timePeriod'
+      ) => {
+        setInputErrors((prev) => ({ ...prev, [field]: '' }));
 
-    } catch (error) {
-      const e = error as Error;
-      setInputErrors(prev => ({ ...prev, calculation: e.message }));
-    }
-  }, [principal, rate, years, compoundFreq, monthlyContribution, performSecureCalculation, compoundData]);
+        try {
+          const sanitizedValue = validateAndSanitizeInput(
+            type,
+            value
+          ) as number;
 
-  // Auto-calculate on component mount and when inputs change
-  useEffect(() => {
-    if (principal > 0 && rate > 0 && years > 0) {
-      handleCalculate();
-    }
-  }, [principal, rate, years, compoundFreq, monthlyContribution, handleCalculate]);
+          switch (field) {
+            case 'principal':
+              setPrincipal(sanitizedValue);
+              break;
+            case 'monthlyContribution':
+              setMonthlyContribution(sanitizedValue);
+              break;
+            case 'rate':
+              setRate(sanitizedValue);
+              break;
+            case 'years':
+              setYears(sanitizedValue);
+              break;
+          }
+        } catch (error) {
+          const errorMessage =
+            error instanceof Error ? error.message : 'Invalid input';
+          setInputErrors((prev) => ({ ...prev, [field]: errorMessage }));
+          onSecurityEvent?.('invalid_input', {
+            field,
+            value,
+            error: errorMessage,
+          });
+        }
+      },
+      [validateAndSanitizeInput, onSecurityEvent]
+    );
 
-  // Memoized currency formatter
-  const formatCurrency = useMemo(() => {
-    const formatter = new Intl.NumberFormat('en-US', {
-      style: 'currency',
-      currency: 'USD',
-      minimumFractionDigits: 0,
-      maximumFractionDigits: 0,
-    });
-    return (value: number) => formatter.format(value);
-  }, []);
+    const handleCalculate = useCallback(async () => {
+      try {
+        const calculationFunction = () => {
+          const result = calculateCompoundInterest(
+            principal,
+            rate,
+            years,
+            compoundFreq
+          );
+          const chartData = compoundData;
+          setFutureValue(result);
+          setChartData(chartData);
+          return result;
+        };
 
-  const totalContributions = principal + (monthlyContribution * 12 * years);
-  const totalInterest = futureValue ? futureValue - totalContributions : 0;
+        await performSecureCalculation(calculationFunction);
+      } catch (error) {
+        const e = error as Error;
+        setInputErrors((prev) => ({ ...prev, calculation: e.message }));
+      }
+    }, [
+      principal,
+      rate,
+      years,
+      compoundFreq,
+      monthlyContribution,
+      performSecureCalculation,
+      compoundData,
+    ]);
 
-  const frequencyOptions = [
-    { value: 1, label: 'Annually' },
-    { value: 4, label: 'Quarterly' },
-    { value: 12, label: 'Monthly' },
-    { value: 365, label: 'Daily' }
-  ];
+    // Auto-calculate on component mount and when inputs change
+    useEffect(() => {
+      if (principal > 0 && rate > 0 && years > 0) {
+        handleCalculate();
+      }
+    }, [
+      principal,
+      rate,
+      years,
+      compoundFreq,
+      monthlyContribution,
+      handleCalculate,
+    ]);
 
-  const calculateResults = useCallback(() => {
-    if (!principal || !rate || !years) return [];
-    
-    const results = [];
-    const monthlyRate = rate / 100 / 12;
-    const months = years * 12;
-    
-    for (let month = 0; month <= months; month++) {
-      const compoundInterest = principal * Math.pow(1 + monthlyRate, month);
-      const contributionTotal = monthlyContribution * month;
-      const contributionInterest = monthlyContribution * 
-        ((Math.pow(1 + monthlyRate, month) - 1) / monthlyRate);
-      
-      const totalValue = compoundInterest + contributionInterest;
-      
-      results.push({
-        month,
-        year: Math.floor(month / 12),
-        principalValue: principal,
-        contributionValue: contributionTotal,
-        interestEarned: totalValue - principal - contributionTotal,
-        totalValue: totalValue
+    // Memoized currency formatter
+    const formatCurrency = useMemo(() => {
+      const formatter = new Intl.NumberFormat('en-US', {
+        style: 'currency',
+        currency: 'USD',
+        minimumFractionDigits: 0,
+        maximumFractionDigits: 0,
       });
-    }
-    
-    return results;
-  }, [principal, rate, years]);
+      return (value: number) => formatter.format(value);
+    }, []);
 
-  return (
-    <div className="max-w-6xl mx-auto p-6 space-y-8">
-      <h1 className="text-3xl font-bold text-white mb-8">Compound Interest Calculator</h1>
-      
-      <div className="grid lg:grid-cols-2 gap-8">
-        {/* Input Section */}
-        <div className="bg-white/5 backdrop-blur-xl rounded-3xl p-6 border border-white/10">
-          <h2 className="text-xl font-semibold text-white mb-6">Investment Parameters</h2>
-          <div className="space-y-6">
-            <div>
-              <label className="block text-sm font-medium text-white/80 mb-2">
-                Initial Investment
-              </label>
-              <div className="relative">
-                <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-white/60">$</span>
-                <input
-                  type="number"
-                  value={principal}
-                  onChange={(e) => handleSecureInput('principal', e.target.value, 'amount')}
-                  className={`w-full pl-8 pr-4 py-3 rounded-xl bg-white/5 text-white border transition-colors focus:outline-none ${
-                    inputErrors.principal ? 'border-red-400 focus:border-red-400' : 'border-white/10 focus:border-blue-400'
-                  }`}
-                  placeholder="10,000"
-                />
-                {inputErrors.principal && (
-                  <Alert className="mt-2 border-red-200 bg-red-50">
-                    <AlertTriangle className="h-4 w-4 text-red-600" />
-                    <AlertDescription className="text-red-700">{inputErrors.principal}</AlertDescription>
-                  </Alert>
-                )}
-              </div>
-            </div>
-            
-            <div>
-              <label className="block text-sm font-medium text-white/80 mb-2">
-                Monthly Contribution
-              </label>
-              <div className="relative">
-                <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-white/60">$</span>
-                <input
-                  type="number"
-                  value={monthlyContribution}
-                  onChange={(e) => handleSecureInput('monthlyContribution', e.target.value, 'amount')}
-                  className={`w-full pl-8 pr-4 py-3 rounded-xl bg-white/5 text-white border transition-colors focus:outline-none ${
-                    inputErrors.monthlyContribution ? 'border-red-400 focus:border-red-400' : 'border-white/10 focus:border-blue-400'
-                  }`}
-                  placeholder="200"
-                />
-                {inputErrors.monthlyContribution && (
-                  <Alert className="mt-2 border-red-200 bg-red-50">
-                    <AlertTriangle className="h-4 w-4 text-red-600" />
-                    <AlertDescription className="text-red-700">{inputErrors.monthlyContribution}</AlertDescription>
-                  </Alert>
-                )}
-              </div>
-            </div>
-            
-            <div>
-              <label className="block text-sm font-medium text-white/80 mb-2">
-                Annual Interest Rate
-              </label>
-              <div className="relative">
-                <input
-                  type="number"
-                  value={rate}
-                  onChange={(e) => handleSecureInput('rate', e.target.value, 'interestRate')}
-                  className={`w-full pr-8 pl-4 py-3 rounded-xl bg-white/5 text-white border transition-colors focus:outline-none ${
-                    inputErrors.rate ? 'border-red-400 focus:border-red-400' : 'border-white/10 focus:border-blue-400'
-                  }`}
-                  placeholder="7"
-                  step="0.1"
-                />
-                {inputErrors.rate && (
-                  <Alert className="mt-2 border-red-200 bg-red-50">
-                    <AlertTriangle className="h-4 w-4 text-red-600" />
-                    <AlertDescription className="text-red-700">{inputErrors.rate}</AlertDescription>
-                  </Alert>
-                )}
-                <span className="absolute right-3 top-1/2 transform -translate-y-1/2 text-white/60">%</span>
-              </div>
-            </div>
-            
-            <div>
-              <label className="block text-sm font-medium text-white/80 mb-2">
-                Investment Period
-              </label>
-              <div className="relative">
-                <input
-                  type="number"
-                  value={years}
-                  onChange={(e) => handleSecureInput('years', e.target.value, 'timePeriod')}
-                  className={`w-full pr-16 pl-4 py-3 rounded-xl bg-white/5 text-white border transition-colors focus:outline-none ${
-                    inputErrors.years ? 'border-red-400 focus:border-red-400' : 'border-white/10 focus:border-blue-400'
-                  }`}
-                  placeholder="10"
-                />
-                {inputErrors.years && (
-                  <Alert className="mt-2 border-red-200 bg-red-50">
-                    <AlertTriangle className="h-4 w-4 text-red-600" />
-                    <AlertDescription className="text-red-700">{inputErrors.years}</AlertDescription>
-                  </Alert>
-                )}
-                <span className="absolute right-3 top-1/2 transform -translate-y-1/2 text-white/60">years</span>
-              </div>
-            </div>
+    const totalContributions = principal + monthlyContribution * 12 * years;
+    const totalInterest = futureValue ? futureValue - totalContributions : 0;
 
-            <div>
-              <label className="block text-sm font-medium text-white/80 mb-2">
-                Compounding Frequency
-              </label>
-              <select
-                value={compoundFreq}
-                onChange={(e) => setCompoundFreq(+e.target.value)}
-                className="w-full px-4 py-3 rounded-xl bg-white/5 text-white border border-white/10 focus:border-blue-400 focus:outline-none transition-colors"
+    const frequencyOptions = [
+      { value: 1, label: 'Annually' },
+      { value: 4, label: 'Quarterly' },
+      { value: 12, label: 'Monthly' },
+      { value: 365, label: 'Daily' },
+    ];
+
+    const calculateResults = useCallback(() => {
+      if (!principal || !rate || !years) return [];
+
+      const results = [];
+      const monthlyRate = rate / 100 / 12;
+      const months = years * 12;
+
+      for (let month = 0; month <= months; month++) {
+        const compoundInterest = principal * Math.pow(1 + monthlyRate, month);
+        const contributionTotal = monthlyContribution * month;
+        const contributionInterest =
+          monthlyContribution *
+          ((Math.pow(1 + monthlyRate, month) - 1) / monthlyRate);
+
+        const totalValue = compoundInterest + contributionInterest;
+
+        results.push({
+          month,
+          year: Math.floor(month / 12),
+          principalValue: principal,
+          contributionValue: contributionTotal,
+          interestEarned: totalValue - principal - contributionTotal,
+          totalValue: totalValue,
+        });
+      }
+
+      return results;
+    }, [principal, rate, years]);
+
+    return (
+      <div className="max-w-6xl mx-auto p-6 space-y-8">
+        <h1 className="text-3xl font-bold text-white mb-8">
+          Compound Interest Calculator
+        </h1>
+
+        <div className="grid lg:grid-cols-2 gap-8">
+          {/* Input Section */}
+          <div className="bg-white/5 backdrop-blur-xl rounded-3xl p-6 border border-white/10">
+            <h2 className="text-xl font-semibold text-white mb-6">
+              Investment Parameters
+            </h2>
+            <div className="space-y-6">
+              <div>
+                <label className="block text-sm font-medium text-white/80 mb-2">
+                  Initial Investment
+                </label>
+                <div className="relative">
+                  <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-white/60">
+                    $
+                  </span>
+                  <input
+                    type="number"
+                    value={principal}
+                    onChange={(e) =>
+                      handleSecureInput('principal', e.target.value, 'amount')
+                    }
+                    className={`w-full pl-8 pr-4 py-3 rounded-xl bg-white/5 text-white border transition-colors focus:outline-none ${
+                      inputErrors.principal
+                        ? 'border-red-400 focus:border-red-400'
+                        : 'border-white/10 focus:border-blue-400'
+                    }`}
+                    placeholder="10,000"
+                  />
+                  {inputErrors.principal && (
+                    <Alert className="mt-2 border-red-200 bg-red-50">
+                      <AlertTriangle className="h-4 w-4 text-red-600" />
+                      <AlertDescription className="text-red-700">
+                        {inputErrors.principal}
+                      </AlertDescription>
+                    </Alert>
+                  )}
+                </div>
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-white/80 mb-2">
+                  Monthly Contribution
+                </label>
+                <div className="relative">
+                  <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-white/60">
+                    $
+                  </span>
+                  <input
+                    type="number"
+                    value={monthlyContribution}
+                    onChange={(e) =>
+                      handleSecureInput(
+                        'monthlyContribution',
+                        e.target.value,
+                        'amount'
+                      )
+                    }
+                    className={`w-full pl-8 pr-4 py-3 rounded-xl bg-white/5 text-white border transition-colors focus:outline-none ${
+                      inputErrors.monthlyContribution
+                        ? 'border-red-400 focus:border-red-400'
+                        : 'border-white/10 focus:border-blue-400'
+                    }`}
+                    placeholder="200"
+                  />
+                  {inputErrors.monthlyContribution && (
+                    <Alert className="mt-2 border-red-200 bg-red-50">
+                      <AlertTriangle className="h-4 w-4 text-red-600" />
+                      <AlertDescription className="text-red-700">
+                        {inputErrors.monthlyContribution}
+                      </AlertDescription>
+                    </Alert>
+                  )}
+                </div>
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-white/80 mb-2">
+                  Annual Interest Rate
+                </label>
+                <div className="relative">
+                  <input
+                    type="number"
+                    value={rate}
+                    onChange={(e) =>
+                      handleSecureInput('rate', e.target.value, 'interestRate')
+                    }
+                    className={`w-full pr-8 pl-4 py-3 rounded-xl bg-white/5 text-white border transition-colors focus:outline-none ${
+                      inputErrors.rate
+                        ? 'border-red-400 focus:border-red-400'
+                        : 'border-white/10 focus:border-blue-400'
+                    }`}
+                    placeholder="7"
+                    step="0.1"
+                  />
+                  {inputErrors.rate && (
+                    <Alert className="mt-2 border-red-200 bg-red-50">
+                      <AlertTriangle className="h-4 w-4 text-red-600" />
+                      <AlertDescription className="text-red-700">
+                        {inputErrors.rate}
+                      </AlertDescription>
+                    </Alert>
+                  )}
+                  <span className="absolute right-3 top-1/2 transform -translate-y-1/2 text-white/60">
+                    %
+                  </span>
+                </div>
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-white/80 mb-2">
+                  Investment Period
+                </label>
+                <div className="relative">
+                  <input
+                    type="number"
+                    value={years}
+                    onChange={(e) =>
+                      handleSecureInput('years', e.target.value, 'timePeriod')
+                    }
+                    className={`w-full pr-16 pl-4 py-3 rounded-xl bg-white/5 text-white border transition-colors focus:outline-none ${
+                      inputErrors.years
+                        ? 'border-red-400 focus:border-red-400'
+                        : 'border-white/10 focus:border-blue-400'
+                    }`}
+                    placeholder="10"
+                  />
+                  {inputErrors.years && (
+                    <Alert className="mt-2 border-red-200 bg-red-50">
+                      <AlertTriangle className="h-4 w-4 text-red-600" />
+                      <AlertDescription className="text-red-700">
+                        {inputErrors.years}
+                      </AlertDescription>
+                    </Alert>
+                  )}
+                  <span className="absolute right-3 top-1/2 transform -translate-y-1/2 text-white/60">
+                    years
+                  </span>
+                </div>
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-white/80 mb-2">
+                  Compounding Frequency
+                </label>
+                <select
+                  value={compoundFreq}
+                  onChange={(e) => setCompoundFreq(+e.target.value)}
+                  className="w-full px-4 py-3 rounded-xl bg-white/5 text-white border border-white/10 focus:border-blue-400 focus:outline-none transition-colors"
+                >
+                  {frequencyOptions.map((option) => (
+                    <option
+                      key={option.value}
+                      value={option.value}
+                      className="bg-gray-800"
+                    >
+                      {option.label}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              <button
+                onClick={handleCalculate}
+                className="w-full py-3 px-6 rounded-xl bg-white/10 border border-white/20 text-white font-semibold button-hover"
               >
-                {frequencyOptions.map(option => (
-                  <option key={option.value} value={option.value} className="bg-gray-800">
-                    {option.label}
-                  </option>
-                ))}
-              </select>
-            </div>
-            
-            <button
-              onClick={handleCalculate}
-              className="w-full py-3 px-6 rounded-xl bg-white/10 border border-white/20 text-white font-semibold button-hover"
-            >
-              Calculate Growth
-            </button>
+                Calculate Growth
+              </button>
 
-            {inputErrors.calculation && (
-              <Alert className="mt-4 border-red-200 bg-red-50">
-                <AlertTriangle className="h-4 w-4 text-red-600" />
-                <AlertDescription className="text-red-700">
-                  Calculation Error: {inputErrors.calculation}
-                </AlertDescription>
-              </Alert>
-            )}
+              {inputErrors.calculation && (
+                <Alert className="mt-4 border-red-200 bg-red-50">
+                  <AlertTriangle className="h-4 w-4 text-red-600" />
+                  <AlertDescription className="text-red-700">
+                    Calculation Error: {inputErrors.calculation}
+                  </AlertDescription>
+                </Alert>
+              )}
+            </div>
           </div>
+
+          {/* Results Section */}
+          {futureValue !== null && (
+            <div className="bg-white/5 backdrop-blur-xl rounded-3xl p-6 border border-white/10">
+              <h2 className="text-xl font-semibold text-white mb-6">Results</h2>
+              <div className="space-y-4">
+                <div className="text-center p-6 bg-white/5 rounded-2xl border border-white/20">
+                  <div className="text-3xl font-bold text-white mb-2">
+                    {formatCurrency(futureValue)}
+                  </div>
+                  <div className="text-white/80">Future Value</div>
+                </div>
+
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="text-center p-4 bg-white/5 rounded-xl">
+                    <div className="text-xl font-semibold text-white">
+                      {formatCurrency(totalContributions)}
+                    </div>
+                    <div className="text-sm text-white/60">
+                      Total Contributions
+                    </div>
+                  </div>
+                  <div className="text-center p-4 bg-white/5 rounded-xl">
+                    <div className="text-xl font-semibold text-white">
+                      {formatCurrency(totalInterest)}
+                    </div>
+                    <div className="text-sm text-white/60">Interest Earned</div>
+                  </div>
+                </div>
+
+                <div className="text-center p-4 bg-white/5 rounded-xl">
+                  <div className="text-lg font-semibold text-white">
+                    {totalContributions > 0
+                      ? ((totalInterest / totalContributions) * 100).toFixed(1)
+                      : 0}
+                    %
+                  </div>
+                  <div className="text-sm text-white/60">Total Return</div>
+                </div>
+              </div>
+            </div>
+          )}
         </div>
 
-        {/* Results Section */}
-        {futureValue !== null && (
-          <div className="bg-white/5 backdrop-blur-xl rounded-3xl p-6 border border-white/10">
-            <h2 className="text-xl font-semibold text-white mb-6">Results</h2>
-            <div className="space-y-4">
-              <div className="text-center p-6 bg-white/5 rounded-2xl border border-white/20">
-                <div className="text-3xl font-bold text-white mb-2">{formatCurrency(futureValue)}</div>
-                <div className="text-white/80">Future Value</div>
-              </div>
-              
-              <div className="grid grid-cols-2 gap-4">
-                <div className="text-center p-4 bg-white/5 rounded-xl">
-                  <div className="text-xl font-semibold text-white">{formatCurrency(totalContributions)}</div>
-                  <div className="text-sm text-white/60">Total Contributions</div>
-                </div>
-                <div className="text-center p-4 bg-white/5 rounded-xl">
-                  <div className="text-xl font-semibold text-white">{formatCurrency(totalInterest)}</div>
-                  <div className="text-sm text-white/60">Interest Earned</div>
-                </div>
-              </div>
+        {/* Charts Section */}
+        {chartData.length > 0 && (
+          <div className="grid lg:grid-cols-2 gap-8">
+            {/* Growth Projection Chart */}
+            <LineChart
+              data={chartData}
+              series={[
+                {
+                  dataKey: 'total',
+                  label: 'Total Value',
+                  color: getFinancialChartColor('savings'),
+                },
+                {
+                  dataKey: 'principal',
+                  label: 'Contributions',
+                  color: getFinancialChartColor('income'),
+                },
+                {
+                  dataKey: 'interest',
+                  label: 'Interest Earned',
+                  color: getFinancialChartColor('debt'),
+                },
+              ]}
+              title="Growth Projection Over Time"
+              multiSeries={true}
+              financialType="currency"
+              trendAnalysis={true}
+              dimensions={{ height: 320, responsive: true }}
+              legend={{ show: true, position: 'bottom' }}
+              lineConfig={{
+                smoothLines: true,
+                strokeWidth: 'medium',
+                showDots: true,
+                gradientFill: true,
+                gradientOpacity: 0.1,
+                hoverEffects: true,
+              }}
+              className="bg-white/5 backdrop-blur-xl rounded-3xl p-6 border border-white/10"
+            />
 
-              <div className="text-center p-4 bg-white/5 rounded-xl">
-                <div className="text-lg font-semibold text-white">
-                  {totalContributions > 0 ? ((totalInterest / totalContributions) * 100).toFixed(1) : 0}%
+            {/* Yearly Growth Bar Chart */}
+            <div className="bg-white/5 backdrop-blur-xl rounded-3xl p-6 border border-white/10">
+              <h2 className="text-xl font-semibold text-white mb-6">
+                Annual Growth Breakdown
+              </h2>
+              <div className="h-64">
+                <ResponsiveContainer width="100%" height="100%">
+                  <BarChart data={chartData.slice(1, 6)}>
+                    <CartesianGrid
+                      strokeDasharray="3 3"
+                      stroke="rgba(255,255,255,0.1)"
+                    />
+                    <XAxis
+                      dataKey="year"
+                      stroke={vueniTheme.colors.text.primary}
+                      fontSize={12}
+                      tickFormatter={(value) => `Year ${value}`}
+                    />
+                    <YAxis
+                      stroke={vueniTheme.colors.text.primary}
+                      fontSize={12}
+                      tickFormatter={(value) => formatCurrency(value)}
+                    />
+                    <Tooltip
+                      formatter={(value: number) => [
+                        formatCurrency(value),
+                        'Amount',
+                      ]}
+                      contentStyle={{
+                        backgroundColor: vueniTheme.colors.surface.overlay,
+                        border: `1px solid ${vueniTheme.colors.surface.glass.border}`,
+                        borderRadius: '12px',
+                        color: vueniTheme.colors.text.primary,
+                      }}
+                    />
+                    <Bar
+                      dataKey="principal"
+                      fill={getFinancialChartColor('savings')}
+                      radius={[4, 4, 0, 0]}
+                    />
+                    <Bar
+                      dataKey="interest"
+                      fill={getFinancialChartColor('income')}
+                      radius={[4, 4, 0, 0]}
+                    />
+                  </BarChart>
+                </ResponsiveContainer>
+              </div>
+              <div className="flex justify-center space-x-8 mt-4">
+                <div className="flex items-center space-x-2">
+                  <div
+                    className="w-4 h-4 rounded"
+                    style={{
+                      backgroundColor: getFinancialChartColor('savings'),
+                    }}
+                  ></div>
+                  <span className="text-white/80 text-sm">Principal</span>
                 </div>
-                <div className="text-sm text-white/60">Total Return</div>
+                <div className="flex items-center space-x-2">
+                  <div
+                    className="w-4 h-4 rounded"
+                    style={{
+                      backgroundColor: getFinancialChartColor('income'),
+                    }}
+                  ></div>
+                  <span className="text-white/80 text-sm">Interest</span>
+                </div>
               </div>
             </div>
           </div>
         )}
       </div>
-
-      {/* Charts Section */}
-      {chartData.length > 0 && (
-        <div className="grid lg:grid-cols-2 gap-8">
-          {/* Growth Projection Chart */}
-          <LineChart
-            data={chartData}
-            series={[
-              {
-                dataKey: 'total',
-                label: 'Total Value',
-                color: getFinancialChartColor('savings'),
-              },
-              {
-                dataKey: 'principal',
-                label: 'Contributions',
-                color: getFinancialChartColor('income'),
-              },
-              {
-                dataKey: 'interest',
-                label: 'Interest Earned',
-                color: getFinancialChartColor('debt'),
-              }
-            ]}
-            title="Growth Projection Over Time"
-            multiSeries={true}
-            financialType="currency"
-            trendAnalysis={true}
-            dimensions={{ height: 320, responsive: true }}
-            legend={{ show: true, position: 'bottom' }}
-            lineConfig={{
-              smoothLines: true,
-              strokeWidth: 'medium',
-              showDots: true,
-              gradientFill: true,
-              gradientOpacity: 0.1,
-              hoverEffects: true,
-            }}
-            className="bg-white/5 backdrop-blur-xl rounded-3xl p-6 border border-white/10"
-          />
-
-          {/* Yearly Growth Bar Chart */}
-          <div className="bg-white/5 backdrop-blur-xl rounded-3xl p-6 border border-white/10">
-            <h2 className="text-xl font-semibold text-white mb-6">Annual Growth Breakdown</h2>
-            <div className="h-64">
-              <ResponsiveContainer width="100%" height="100%">
-                <BarChart data={chartData.slice(1, 6)}>
-                  <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.1)" />
-                  <XAxis 
-                    dataKey="year" 
-                    stroke={vueniTheme.colors.text.primary} 
-                    fontSize={12}
-                    tickFormatter={(value) => `Year ${value}`}
-                  />
-                  <YAxis 
-                    stroke={vueniTheme.colors.text.primary}
-                    fontSize={12}
-                    tickFormatter={(value) => formatCurrency(value)}
-                  />
-                  <Tooltip 
-                    formatter={(value: number) => [formatCurrency(value), 'Amount']}
-                    contentStyle={{
-                      backgroundColor: vueniTheme.colors.surface.overlay,
-                      border: `1px solid ${vueniTheme.colors.surface.glass.border}`,
-                      borderRadius: '12px',
-                      color: vueniTheme.colors.text.primary
-                    }}
-                  />
-                  <Bar dataKey="principal" fill={getFinancialChartColor('savings')} radius={[4, 4, 0, 0]} />
-                  <Bar dataKey="interest" fill={getFinancialChartColor('income')} radius={[4, 4, 0, 0]} />
-                </BarChart>
-              </ResponsiveContainer>
-            </div>
-            <div className="flex justify-center space-x-8 mt-4">
-              <div className="flex items-center space-x-2">
-                <div className="w-4 h-4 rounded" style={{ backgroundColor: getFinancialChartColor('savings') }}></div>
-                <span className="text-white/80 text-sm">Principal</span>
-              </div>
-              <div className="flex items-center space-x-2">
-                <div className="w-4 h-4 rounded" style={{ backgroundColor: getFinancialChartColor('income') }}></div>
-                <span className="text-white/80 text-sm">Interest</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
-    </div>
-  );
-});
+    );
+  }
+);
 
 CompoundInterestCalculator.displayName = 'CompoundInterestCalculator';
 
@@ -464,4 +598,4 @@ const SecureCompoundInterestCalculator = () => {
 };
 
 export default SecureCompoundInterestCalculator;
-export { CompoundInterestCalculator }; 
+export { CompoundInterestCalculator };

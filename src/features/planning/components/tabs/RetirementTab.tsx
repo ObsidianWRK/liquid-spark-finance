@@ -8,7 +8,7 @@ import {
   Zap,
   AlertCircle,
   CheckCircle,
-  ArrowRight
+  ArrowRight,
 } from 'lucide-react';
 import { RetirementPlan } from '@/shared/types/financialPlanning';
 import { MockFinancialPlanningAPI } from '@/mocks/financialPlanningMocks';
@@ -31,7 +31,8 @@ const RetirementTab: React.FC<RetirementTabProps> = ({ familyId }) => {
   const loadRetirementPlan = async () => {
     setLoading(true);
     try {
-      const retirementPlan = await MockFinancialPlanningAPI.getRetirementPlan(familyId);
+      const retirementPlan =
+        await MockFinancialPlanningAPI.getRetirementPlan(familyId);
       setPlan(retirementPlan);
     } catch (error) {
       console.error('Failed to load retirement plan:', error);
@@ -45,7 +46,7 @@ const RetirementTab: React.FC<RetirementTabProps> = ({ familyId }) => {
       style: 'currency',
       currency: 'USD',
       minimumFractionDigits: 0,
-      maximumFractionDigits: 0
+      maximumFractionDigits: 0,
     }).format(amount);
   };
 
@@ -55,7 +56,7 @@ const RetirementTab: React.FC<RetirementTabProps> = ({ familyId }) => {
 
   const generateProjectionData = () => {
     if (!plan) return [];
-    
+
     const data: Array<{
       date: Date;
       value: number;
@@ -65,19 +66,20 @@ const RetirementTab: React.FC<RetirementTabProps> = ({ familyId }) => {
     const monthlyContribution = plan.monthlyContribution;
     const expectedReturn = plan.projections.expectedReturn;
     let currentValue = plan.currentSavings;
-    
+
     for (let year = 0; year <= yearsToRetirement; year++) {
       if (year > 0) {
-        currentValue = currentValue * (1 + expectedReturn) + (monthlyContribution * 12);
+        currentValue =
+          currentValue * (1 + expectedReturn) + monthlyContribution * 12;
       }
-      
+
       data.push({
         date: new Date(Date.now() + year * 365 * 24 * 60 * 60 * 1000),
         value: Math.round(currentValue),
-        label: `Year ${year}`
+        label: `Year ${year}`,
       });
     }
-    
+
     return data;
   };
 
@@ -85,7 +87,10 @@ const RetirementTab: React.FC<RetirementTabProps> = ({ familyId }) => {
     return (
       <div className="space-y-6">
         {[...Array(3)].map((_, i) => (
-          <div key={i} className="bg-white/[0.02] rounded-2xl border border-white/[0.08] p-6 animate-pulse">
+          <div
+            key={i}
+            className="bg-white/[0.02] rounded-2xl border border-white/[0.08] p-6 animate-pulse"
+          >
             <div className="flex items-center gap-4 mb-4">
               <div className="w-8 h-8 bg-white/[0.05] rounded"></div>
               <div className="h-6 bg-white/[0.05] rounded w-48"></div>
@@ -104,8 +109,12 @@ const RetirementTab: React.FC<RetirementTabProps> = ({ familyId }) => {
     return (
       <div className="text-center py-12">
         <AlertCircle className="w-12 h-12 text-orange-400 mx-auto mb-4" />
-        <h3 className="text-xl font-semibold text-white mb-2">No Retirement Plan Found</h3>
-        <p className="text-white/60">Create a retirement plan to get started.</p>
+        <h3 className="text-xl font-semibold text-white mb-2">
+          No Retirement Plan Found
+        </h3>
+        <p className="text-white/60">
+          Create a retirement plan to get started.
+        </p>
       </div>
     );
   }
@@ -176,9 +185,13 @@ const RetirementTab: React.FC<RetirementTabProps> = ({ familyId }) => {
         variant={isOnTrack ? 'gradient' : 'highlight'}
         icon={isOnTrack ? CheckCircle : AlertCircle}
         iconColor={isOnTrack ? 'text-green-400' : 'text-orange-400'}
-        title={isOnTrack ? 'On Track for Retirement' : 'Retirement Shortfall Detected'}
+        title={
+          isOnTrack
+            ? 'On Track for Retirement'
+            : 'Retirement Shortfall Detected'
+        }
         description={
-          isOnTrack 
+          isOnTrack
             ? 'Your current savings rate should meet your retirement goals.'
             : `Projected shortfall of ${formatCurrency(plan.projections.shortfall)}.`
         }
@@ -201,19 +214,28 @@ const RetirementTab: React.FC<RetirementTabProps> = ({ familyId }) => {
       >
         <div className="space-y-4">
           {plan.recommendations.map((rec, index) => (
-            <div key={index} className="p-4 bg-white/[0.03] rounded-xl border border-white/[0.05]">
+            <div
+              key={index}
+              className="p-4 bg-white/[0.03] rounded-xl border border-white/[0.05]"
+            >
               <div className="flex items-start justify-between">
                 <div className="flex-1">
                   <h4 className="font-semibold text-white mb-2">{rec.title}</h4>
-                  <p className="text-white/70 text-sm mb-3">{rec.description}</p>
-                  
+                  <p className="text-white/70 text-sm mb-3">
+                    {rec.description}
+                  </p>
+
                   <div className="flex items-center gap-4">
-                    <span className={cn(
-                      "text-xs px-2 py-1 rounded-lg font-medium",
-                      rec.impact === 'high' ? "bg-red-500/20 text-red-400" :
-                      rec.impact === 'medium' ? "bg-yellow-500/20 text-yellow-400" :
-                      "bg-green-500/20 text-green-400"
-                    )}>
+                    <span
+                      className={cn(
+                        'text-xs px-2 py-1 rounded-lg font-medium',
+                        rec.impact === 'high'
+                          ? 'bg-red-500/20 text-red-400'
+                          : rec.impact === 'medium'
+                            ? 'bg-yellow-500/20 text-yellow-400'
+                            : 'bg-green-500/20 text-green-400'
+                      )}
+                    >
                       {rec.impact} impact
                     </span>
                     <span className="text-xs text-green-400">
@@ -221,7 +243,7 @@ const RetirementTab: React.FC<RetirementTabProps> = ({ familyId }) => {
                     </span>
                   </div>
                 </div>
-                
+
                 <ArrowRight className="w-4 h-4 text-white/60" />
               </div>
             </div>
@@ -232,4 +254,4 @@ const RetirementTab: React.FC<RetirementTabProps> = ({ familyId }) => {
   );
 };
 
-export default RetirementTab; 
+export default RetirementTab;

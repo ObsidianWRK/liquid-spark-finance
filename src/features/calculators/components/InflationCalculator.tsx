@@ -8,7 +8,11 @@ const InflationCalculator = () => {
   const [futureValue, setFutureValue] = useState<number | null>(null);
 
   const handleCalculate = () => {
-    const result = calculateInflationAdjustedValue(currentPrice, inflationRate, years);
+    const result = calculateInflationAdjustedValue(
+      currentPrice,
+      inflationRate,
+      years
+    );
     setFutureValue(result);
   };
 
@@ -44,7 +48,10 @@ const InflationCalculator = () => {
           />
         </label>
       </div>
-              <button onClick={handleCalculate} className="w-full py-3 px-6 rounded-xl bg-white/10 border border-white/20 text-white font-semibold button-hover">
+      <button
+        onClick={handleCalculate}
+        className="w-full py-3 px-6 rounded-xl bg-white/10 border border-white/20 text-white font-semibold button-hover"
+      >
         Calculate
       </button>
       {futureValue !== null && (
@@ -56,4 +63,4 @@ const InflationCalculator = () => {
   );
 };
 
-export default InflationCalculator; 
+export default InflationCalculator;

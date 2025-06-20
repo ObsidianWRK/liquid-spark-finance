@@ -1,17 +1,19 @@
 // import CryptoJS from 'crypto-js';
 import { SecurityEnvValidator } from './envValidation';
-import { 
-  encryptAES, 
-  decryptAES, 
-  hashSHA256, 
+import {
+  encryptAES,
+  decryptAES,
+  hashSHA256,
   generateSecureToken as generateWebCryptoToken,
   encryptSync,
   decryptSync,
-  hashSync
+  hashSync,
 } from './browserCrypto';
 
 // Get validated encryption key from environment
-const SECRET_KEY = SecurityEnvValidator.getValidatedEncryptionKey('VITE_VUENI_ENCRYPTION_KEY');
+const SECRET_KEY = SecurityEnvValidator.getValidatedEncryptionKey(
+  'VITE_VUENI_ENCRYPTION_KEY'
+);
 
 // Session timeout for sensitive data (30 minutes)
 const SESSION_TIMEOUT = 30 * 60 * 1000;
@@ -38,7 +40,10 @@ interface SecurityEvent {
  * Now using Web Crypto API for better performance and security
  */
 export class VueniSecureStorage {
-  private static sessionData = new Map<string, { data: unknown; timestamp: number; encrypted: boolean }>();
+  private static sessionData = new Map<
+    string,
+    { data: unknown; timestamp: number; encrypted: boolean }
+  >();
   private static auditLog: AuditLogEntry[] = [];
 
   /**
@@ -48,8 +53,12 @@ export class VueniSecureStorage {
     try {
       const jsonString = JSON.stringify(data);
       const timestamp = Date.now().toString();
-      const payload = { data: jsonString, timestamp, integrity: this.generateIntegrityHash(jsonString) };
-      
+      const payload = {
+        data: jsonString,
+        timestamp,
+        integrity: this.generateIntegrityHash(jsonString),
+      };
+
       // Use synchronous encryption for immediate compatibility
       // TODO: Migrate to async encryptAES for production
       return encryptSync(JSON.stringify(payload), SECRET_KEY);
@@ -67,21 +76,24 @@ export class VueniSecureStorage {
       // Use synchronous decryption for immediate compatibility
       // TODO: Migrate to async decryptAES for production
       const decryptedString = decryptSync(encryptedData, SECRET_KEY);
-      
+
       if (!decryptedString) {
         throw new Error('Decryption failed - invalid key or corrupted data');
       }
 
       const payload = JSON.parse(decryptedString);
-      
+
       // Verify data integrity
       if (payload.integrity !== this.generateIntegrityHash(payload.data)) {
-        throw new Error('Data integrity check failed - possible tampering detected');
+        throw new Error(
+          'Data integrity check failed - possible tampering detected'
+        );
       }
 
       return JSON.parse(payload.data);
     } catch (error) {
-      const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+      const errorMessage =
+        error instanceof Error ? error.message : 'Unknown error';
       console.error('VueniSecureStorage decryption error:', error);
       this.logSecurityEvent('DECRYPTION_FAILED', 'unknown', errorMessage);
       return null;
@@ -100,26 +112,31 @@ export class VueniSecureStorage {
   /**
    * Stores encrypted financial data with audit trail
    */
-  static setItem<T>(key: string, value: T, options: { sensitive?: boolean; sessionOnly?: boolean } = {}): void {
+  static setItem<T>(
+    key: string,
+    value: T,
+    options: { sensitive?: boolean; sessionOnly?: boolean } = {}
+  ): void {
     try {
       this.validateFinancialDataKey(key);
-      
+
       if (options.sessionOnly) {
         // Store in memory session storage for highly sensitive data
         this.sessionData.set(key, {
           data: value,
           timestamp: Date.now(),
-          encrypted: options.sensitive || false
+          encrypted: options.sensitive || false,
         });
       } else {
         // Store encrypted in localStorage
         const encrypted = this.encrypt(value);
         localStorage.setItem(key, encrypted);
       }
-      
+
       this.logAccess('SET', key, { sensitive: options.sensitive });
     } catch (error) {
-      const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+      const errorMessage =
+        error instanceof Error ? error.message : 'Unknown error';
       console.error('VueniSecureStorage setItem error:', error);
       this.logSecurityEvent('STORAGE_ERROR', key, errorMessage);
       throw error;
@@ -149,11 +166,12 @@ export class VueniSecureStorage {
       // Fallback to localStorage
       const encrypted = localStorage.getItem(key);
       if (!encrypted) return null;
-      
+
       this.logAccess('GET', key, { source: 'localStorage' });
       return this.decrypt(encrypted);
     } catch (error) {
-      const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+      const errorMessage =
+        error instanceof Error ? error.message : 'Unknown error';
       console.error('VueniSecureStorage getItem error:', error);
       this.logSecurityEvent('RETRIEVAL_ERROR', key, errorMessage);
       return null;
@@ -166,16 +184,17 @@ export class VueniSecureStorage {
   static removeItem(key: string): void {
     try {
       this.validateFinancialDataKey(key);
-      
+
       // Remove from session storage
       this.sessionData.delete(key);
-      
+
       // Remove from localStorage
       localStorage.removeItem(key);
-      
+
       this.logAccess('REMOVE', key);
     } catch (error) {
-      const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+      const errorMessage =
+        error instanceof Error ? error.message : 'Unknown error';
       console.error('VueniSecureStorage removeItem error:', error);
       this.logSecurityEvent('REMOVAL_ERROR', key, errorMessage);
     }
@@ -190,7 +209,7 @@ export class VueniSecureStorage {
     }
 
     this.sessionData.clear();
-    
+
     // Only clear Vueni-related keys from localStorage
     const keysToRemove = [];
     for (let i = 0; i < localStorage.length; i++) {
@@ -199,8 +218,8 @@ export class VueniSecureStorage {
         keysToRemove.push(key);
       }
     }
-    
-    keysToRemove.forEach(key => localStorage.removeItem(key));
+
+    keysToRemove.forEach((key) => localStorage.removeItem(key));
     this.logAccess('CLEAR', 'all');
   }
 
@@ -209,20 +228,27 @@ export class VueniSecureStorage {
    */
   private static validateFinancialDataKey(key: string): void {
     if (!key.startsWith('vueni:')) {
-      throw new Error(`Invalid financial data key format: ${key}. Must start with 'vueni:'`);
+      throw new Error(
+        `Invalid financial data key format: ${key}. Must start with 'vueni:'`
+      );
     }
   }
 
   /**
    * Enhanced audit logging for financial compliance
    */
-  private static logAccess(action: string, key: string, metadata: any = {}): void {
+  private static logAccess(
+    action: string,
+    key: string,
+    metadata: any = {}
+  ): void {
     const logEntry = {
       action,
       key: this.maskSensitiveKey(key),
       timestamp: new Date().toISOString(),
-      userAgent: typeof window !== 'undefined' ? window.navigator.userAgent : undefined,
-      ...metadata
+      userAgent:
+        typeof window !== 'undefined' ? window.navigator.userAgent : undefined,
+      ...metadata,
     };
 
     this.auditLog.push(logEntry);
@@ -233,7 +259,10 @@ export class VueniSecureStorage {
     }
 
     if (import.meta.env.DEV) {
-      console.log(`[VueniSecureStorage] ${action}: ${this.maskSensitiveKey(key)}`, metadata);
+      console.log(
+        `[VueniSecureStorage] ${action}: ${this.maskSensitiveKey(key)}`,
+        metadata
+      );
     }
 
     // In production, send to audit service
@@ -245,13 +274,18 @@ export class VueniSecureStorage {
   /**
    * Logs security events for monitoring
    */
-  private static logSecurityEvent(event: string, key: string, details?: string): void {
+  private static logSecurityEvent(
+    event: string,
+    key: string,
+    details?: string
+  ): void {
     const securityEvent = {
       event,
       key: this.maskSensitiveKey(key),
       details,
       timestamp: new Date().toISOString(),
-      userAgent: typeof window !== 'undefined' ? window.navigator.userAgent : undefined
+      userAgent:
+        typeof window !== 'undefined' ? window.navigator.userAgent : undefined,
     };
 
     console.warn('[VueniSecureStorage Security Event]', securityEvent);
@@ -316,13 +350,19 @@ export class VueniSecureStorage {
   /**
    * Gets storage statistics for monitoring
    */
-  static getStorageStats(): { sessionItems: number; localStorageItems: number; auditLogSize: number } {
-    const localStorageItems = Object.keys(localStorage).filter(key => key.startsWith('vueni:')).length;
-    
+  static getStorageStats(): {
+    sessionItems: number;
+    localStorageItems: number;
+    auditLogSize: number;
+  } {
+    const localStorageItems = Object.keys(localStorage).filter((key) =>
+      key.startsWith('vueni:')
+    ).length;
+
     return {
       sessionItems: this.sessionData.size,
       localStorageItems,
-      auditLogSize: this.auditLog.length
+      auditLogSize: this.auditLog.length,
     };
   }
 }
@@ -351,14 +391,14 @@ export const secureStorage = {
   setItem: (key: string, value: any) => SecureStorage.setItem(key, value),
   getItem: (key: string) => SecureStorage.getItem(key),
   removeItem: (key: string) => SecureStorage.removeItem(key),
-  clear: () => SecureStorage.clear()
+  clear: () => SecureStorage.clear(),
 };
 
 // Generate or retrieve encryption key using Web Crypto
 const getEncryptionKey = (): string => {
   const storedKey = sessionStorage.getItem('_ek');
   if (storedKey) return storedKey;
-  
+
   // Use Web Crypto for key generation
   const newKey = generateWebCryptoToken(32);
   sessionStorage.setItem('_ek', newKey);
@@ -401,10 +441,13 @@ export const generateSecureToken = (length: number = 32): string => {
 };
 
 // Mask financial data for display
-export const maskFinancialData = (value: string | number, showLast: number = 4): string => {
+export const maskFinancialData = (
+  value: string | number,
+  showLast: number = 4
+): string => {
   const str = value.toString();
   if (str.length <= showLast) return str;
-  
+
   const masked = '*'.repeat(str.length - showLast);
   return masked + str.slice(-showLast);
-}; 
+};

@@ -12,25 +12,25 @@ declare global {
   }
 }
 
-if (typeof window !== "undefined" && typeof window.process === "undefined") {
+if (typeof window !== 'undefined' && typeof window.process === 'undefined') {
   (window as any).process = {
     env: {},
     browser: true,
-    version: "",
-    platform: "browser",
-    nextTick: (fn: (...args: unknown[]) => void) => setTimeout(fn, 0)
+    version: '',
+    platform: 'browser',
+    nextTick: (fn: (...args: unknown[]) => void) => setTimeout(fn, 0),
   };
 }
-if (typeof window !== "undefined" && typeof window.global === "undefined") {
+if (typeof window !== 'undefined' && typeof window.global === 'undefined') {
   window.global = window;
 }
 
-import { createRoot } from 'react-dom/client'
-import App from './App.tsx'
-import './index.css'
-import './app/styles/scroll-fix.css' // WHY: Critical fix for double scroll issue - must load after index.css
-import { SecurityEnvValidator } from './shared/utils/envValidation'
-import './telemetry/vitals.ts' // Initialize performance monitoring
+import { createRoot } from 'react-dom/client';
+import App from './App.tsx';
+import './index.css';
+import './app/styles/scroll-fix.css'; // WHY: Critical fix for double scroll issue - must load after index.css
+import { SecurityEnvValidator } from './shared/utils/envValidation';
+import './telemetry/vitals.ts'; // Initialize performance monitoring
 
 // Validate security environment before app startup
 try {
@@ -59,6 +59,4 @@ ${errorMessage}
 // Add dark mode class to document by default
 document.documentElement.classList.add('dark');
 
-createRoot(document.getElementById("root")!).render(
-  <App />
-);
+createRoot(document.getElementById('root')!).render(<App />);

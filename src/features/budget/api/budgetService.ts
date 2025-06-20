@@ -1,8 +1,8 @@
-import { 
-  Budget, 
-  BudgetCategory, 
-  BudgetTemplate, 
-  BudgetRecommendation, 
+import {
+  Budget,
+  BudgetCategory,
+  BudgetTemplate,
+  BudgetRecommendation,
   BudgetAnalytics,
   BudgetPerformance,
   BudgetType,
@@ -10,7 +10,7 @@ import {
   BudgetStatus,
   SavingsGoal,
   GoalAnalytics,
-  GoalRecommendation
+  GoalRecommendation,
 } from '@/types/budgets';
 import { TransactionCategory } from '@/types/transactions';
 import { transactionService } from './transactionService';
@@ -29,35 +29,99 @@ class BudgetService {
   private recommendations: Map<string, BudgetRecommendation[]> = new Map();
 
   // Legacy support
-  private legacyCategories: Array<{ id: string; name: string; type: string }> = [];
+  private legacyCategories: Array<{ id: string; name: string; type: string }> =
+    [];
 
   // Default budget category allocations (based on 50/30/20 rule and expert recommendations)
-  private defaultCategoryAllocations: Record<TransactionCategory, {
-    percentage: number;
-    isEssential: boolean;
-    isFixed: boolean;
-    priority: number;
-  }> = {
+  private defaultCategoryAllocations: Record<
+    TransactionCategory,
+    {
+      percentage: number;
+      isEssential: boolean;
+      isFixed: boolean;
+      priority: number;
+    }
+  > = {
     housing: { percentage: 30, isEssential: true, isFixed: true, priority: 1 },
-    transportation: { percentage: 15, isEssential: true, isFixed: false, priority: 2 },
+    transportation: {
+      percentage: 15,
+      isEssential: true,
+      isFixed: false,
+      priority: 2,
+    },
     food: { percentage: 12, isEssential: true, isFixed: false, priority: 3 },
-    utilities: { percentage: 8, isEssential: true, isFixed: false, priority: 4 },
+    utilities: {
+      percentage: 8,
+      isEssential: true,
+      isFixed: false,
+      priority: 4,
+    },
     insurance: { percentage: 5, isEssential: true, isFixed: true, priority: 5 },
-    healthcare: { percentage: 5, isEssential: true, isFixed: false, priority: 6 },
-    debt_payments: { percentage: 10, isEssential: true, isFixed: true, priority: 1 },
+    healthcare: {
+      percentage: 5,
+      isEssential: true,
+      isFixed: false,
+      priority: 6,
+    },
+    debt_payments: {
+      percentage: 10,
+      isEssential: true,
+      isFixed: true,
+      priority: 1,
+    },
     savings: { percentage: 20, isEssential: true, isFixed: false, priority: 2 },
-    entertainment: { percentage: 5, isEssential: false, isFixed: false, priority: 8 },
-    personal_care: { percentage: 3, isEssential: false, isFixed: false, priority: 9 },
-    shopping: { percentage: 5, isEssential: false, isFixed: false, priority: 10 },
-    education: { percentage: 2, isEssential: false, isFixed: false, priority: 7 },
-    gifts_donations: { percentage: 2, isEssential: false, isFixed: false, priority: 11 },
-    business: { percentage: 0, isEssential: false, isFixed: false, priority: 12 },
+    entertainment: {
+      percentage: 5,
+      isEssential: false,
+      isFixed: false,
+      priority: 8,
+    },
+    personal_care: {
+      percentage: 3,
+      isEssential: false,
+      isFixed: false,
+      priority: 9,
+    },
+    shopping: {
+      percentage: 5,
+      isEssential: false,
+      isFixed: false,
+      priority: 10,
+    },
+    education: {
+      percentage: 2,
+      isEssential: false,
+      isFixed: false,
+      priority: 7,
+    },
+    gifts_donations: {
+      percentage: 2,
+      isEssential: false,
+      isFixed: false,
+      priority: 11,
+    },
+    business: {
+      percentage: 0,
+      isEssential: false,
+      isFixed: false,
+      priority: 12,
+    },
     taxes: { percentage: 0, isEssential: true, isFixed: true, priority: 1 },
-    investments: { percentage: 0, isEssential: false, isFixed: false, priority: 3 },
+    investments: {
+      percentage: 0,
+      isEssential: false,
+      isFixed: false,
+      priority: 3,
+    },
     fees: { percentage: 1, isEssential: false, isFixed: false, priority: 13 },
-    transfers: { percentage: 0, isEssential: false, isFixed: false, priority: 14 },
+    transfers: {
+      percentage: 0,
+      isEssential: false,
+      isFixed: false,
+      priority: 14,
+    },
     other: { percentage: 2, isEssential: false, isFixed: false, priority: 15 },
-    income: { percentage: 0, isEssential: false, isFixed: false, priority: 16 }
+    income: { percentage: 0, isEssential: false, isFixed: false, priority: 16 },
   };
 
   private constructor() {
@@ -86,7 +150,7 @@ class BudgetService {
             budget.endDate = new Date(budget.endDate);
             budget.createdAt = new Date(budget.createdAt);
             budget.updatedAt = new Date(budget.updatedAt);
-            
+
             this.budgets.set(budget.id, budget);
           });
         }
@@ -96,7 +160,7 @@ class BudgetService {
             goal.targetDate = new Date(goal.targetDate);
             goal.createdAt = new Date(goal.createdAt);
             goal.updatedAt = new Date(goal.updatedAt);
-            
+
             // Convert milestone dates
             if (goal.milestones) {
               goal.milestones.forEach((milestone: any) => {
@@ -106,7 +170,7 @@ class BudgetService {
                 }
               });
             }
-            
+
             this.goals.set(goal.id, goal);
           });
         }
@@ -145,10 +209,10 @@ class BudgetService {
           includePendingTransactions: true,
           excludeRefunds: true,
           automaticAdjustments: false,
-          syncWithGoals: true
+          syncWithGoals: true,
         },
         status: 'active',
-        isTemplate: false
+        isTemplate: false,
       });
 
       // Create demo goals
@@ -163,13 +227,15 @@ class BudgetService {
         priority: 1,
         linkedAccountIds: [],
         autoContribute: true,
-        contributionRules: [{
-          id: 'rule_1',
-          type: 'fixed_amount',
-          amount: 500,
-          frequency: 'monthly',
-          isActive: true
-        }],
+        contributionRules: [
+          {
+            id: 'rule_1',
+            type: 'fixed_amount',
+            amount: 500,
+            frequency: 'monthly',
+            isActive: true,
+          },
+        ],
         milestones: [
           {
             id: 'milestone_1',
@@ -177,7 +243,7 @@ class BudgetService {
             targetAmount: 4500,
             targetDate: new Date(2025, 2, 31),
             isCompleted: false,
-            description: 'First milestone - $4,500 saved'
+            description: 'First milestone - $4,500 saved',
           },
           {
             id: 'milestone_2',
@@ -185,11 +251,11 @@ class BudgetService {
             targetAmount: 9000,
             targetDate: new Date(2025, 5, 30),
             isCompleted: false,
-            description: 'Halfway point - $9,000 saved'
-          }
+            description: 'Halfway point - $9,000 saved',
+          },
         ],
         tags: ['emergency', 'security', 'priority'],
-        isArchived: false
+        isArchived: false,
       });
 
       await this.createSavingsGoal({
@@ -206,7 +272,7 @@ class BudgetService {
         contributionRules: [],
         milestones: [],
         tags: ['vacation', 'travel', 'family'],
-        isArchived: false
+        isArchived: false,
       });
     }
   }
@@ -216,7 +282,7 @@ class BudgetService {
     const data = {
       budgets: Array.from(this.budgets.values()),
       goals: Array.from(this.goals.values()),
-      templates: Array.from(this.templates.values())
+      templates: Array.from(this.templates.values()),
     };
     secureStorage.setItem(this.storageKey, data);
   }
@@ -224,7 +290,17 @@ class BudgetService {
   /**
    * Create a new budget
    */
-  async createBudget(data: Omit<Budget, 'id' | 'createdAt' | 'updatedAt' | 'totalSpent' | 'totalRemaining' | 'categories'>): Promise<Budget> {
+  async createBudget(
+    data: Omit<
+      Budget,
+      | 'id'
+      | 'createdAt'
+      | 'updatedAt'
+      | 'totalSpent'
+      | 'totalRemaining'
+      | 'categories'
+    >
+  ): Promise<Budget> {
     const budget: Budget = {
       id: this.generateBudgetId(),
       ...data,
@@ -232,7 +308,7 @@ class BudgetService {
       totalRemaining: data.totalBudgeted,
       categories: [],
       createdAt: new Date(),
-      updatedAt: new Date()
+      updatedAt: new Date(),
     };
 
     // Create default categories based on budget type
@@ -246,14 +322,19 @@ class BudgetService {
   /**
    * Create savings goal
    */
-  async createSavingsGoal(data: Omit<SavingsGoal, 'id' | 'createdAt' | 'updatedAt' | 'currentAmount' | 'status'>): Promise<SavingsGoal> {
+  async createSavingsGoal(
+    data: Omit<
+      SavingsGoal,
+      'id' | 'createdAt' | 'updatedAt' | 'currentAmount' | 'status'
+    >
+  ): Promise<SavingsGoal> {
     const goal: SavingsGoal = {
       id: this.generateGoalId(),
       ...data,
       currentAmount: 0,
       status: 'not_started',
       createdAt: new Date(),
-      updatedAt: new Date()
+      updatedAt: new Date(),
     };
 
     this.goals.set(goal.id, goal);
@@ -266,7 +347,7 @@ class BudgetService {
    */
   async getFamilyBudgets(familyId: string): Promise<Budget[]> {
     return Array.from(this.budgets.values())
-      .filter(budget => budget.familyId === familyId)
+      .filter((budget) => budget.familyId === familyId)
       .sort((a, b) => b.startDate.getTime() - a.startDate.getTime());
   }
 
@@ -275,7 +356,7 @@ class BudgetService {
    */
   async getActiveBudget(familyId: string): Promise<Budget | null> {
     const budgets = await this.getFamilyBudgets(familyId);
-    return budgets.find(budget => budget.status === 'active') || null;
+    return budgets.find((budget) => budget.status === 'active') || null;
   }
 
   /**
@@ -283,7 +364,7 @@ class BudgetService {
    */
   async getFamilySavingsGoals(familyId: string): Promise<SavingsGoal[]> {
     return Array.from(this.goals.values())
-      .filter(goal => goal.familyId === familyId && !goal.isArchived)
+      .filter((goal) => goal.familyId === familyId && !goal.isArchived)
       .sort((a, b) => a.priority - b.priority);
   }
 
@@ -294,13 +375,13 @@ class BudgetService {
     // Try to get from active budget first
     const activeBudget = await this.getActiveBudget('demo_family');
     if (activeBudget) {
-      return activeBudget.categories.map(cat => ({
+      return activeBudget.categories.map((cat) => ({
         id: cat.id,
         name: cat.categoryName,
         budget: cat.budgetedAmount,
         spent: cat.spentAmount,
         color: this.getCategoryColor(cat.categoryName),
-        recurring: true
+        recurring: true,
       }));
     }
 
@@ -311,23 +392,61 @@ class BudgetService {
 
     // Default demo categories
     return [
-      { id: '1', name: 'Groceries', budget: 600, spent: 450, color: '#4ade80', recurring: true },
-      { id: '2', name: 'Dining', budget: 300, spent: 220, color: '#38bdf8', recurring: true },
-      { id: '3', name: 'Transportation', budget: 200, spent: 145, color: '#f97316', recurring: true },
-      { id: '4', name: 'Entertainment', budget: 200, spent: 165, color: '#a855f7', recurring: true },
-      { id: '5', name: 'Savings & Investments', budget: 500, spent: 500, color: '#facc15', recurring: true }
+      {
+        id: '1',
+        name: 'Groceries',
+        budget: 600,
+        spent: 450,
+        color: '#4ade80',
+        recurring: true,
+      },
+      {
+        id: '2',
+        name: 'Dining',
+        budget: 300,
+        spent: 220,
+        color: '#38bdf8',
+        recurring: true,
+      },
+      {
+        id: '3',
+        name: 'Transportation',
+        budget: 200,
+        spent: 145,
+        color: '#f97316',
+        recurring: true,
+      },
+      {
+        id: '4',
+        name: 'Entertainment',
+        budget: 200,
+        spent: 165,
+        color: '#a855f7',
+        recurring: true,
+      },
+      {
+        id: '5',
+        name: 'Savings & Investments',
+        budget: 500,
+        spent: 500,
+        color: '#facc15',
+        recurring: true,
+      },
     ];
   }
 
   // Private helper methods
-  private async createDefaultCategories(budget: Budget): Promise<BudgetCategory[]> {
+  private async createDefaultCategories(
+    budget: Budget
+  ): Promise<BudgetCategory[]> {
     const categories: BudgetCategory[] = [];
     const allocations = this.defaultCategoryAllocations;
 
     for (const [categoryName, allocation] of Object.entries(allocations)) {
       if (allocation.percentage > 0) {
-        const budgetedAmount = (budget.totalBudgeted * allocation.percentage) / 100;
-        
+        const budgetedAmount =
+          (budget.totalBudgeted * allocation.percentage) / 100;
+
         categories.push({
           id: this.generateCategoryId(),
           budgetId: budget.id,
@@ -342,7 +461,7 @@ class BudgetService {
           isFixed: allocation.isFixed,
           isEssential: allocation.isEssential,
           alerts: [],
-          historicalSpending: []
+          historicalSpending: [],
         });
       }
     }
@@ -365,7 +484,7 @@ class BudgetService {
       shopping: '#f59e0b',
       education: '#6366f1',
       gifts_donations: '#84cc16',
-      other: '#6b7280'
+      other: '#6b7280',
     };
     return colors[category] || '#6b7280';
   }
@@ -383,4 +502,4 @@ class BudgetService {
   }
 }
 
-export const budgetService = BudgetService.getInstance(); 
+export const budgetService = BudgetService.getInstance();

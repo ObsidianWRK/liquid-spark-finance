@@ -2,37 +2,41 @@
 
 // Transaction List Components
 export { default as VueniUnifiedTransactionList } from './VueniUnifiedTransactionList';
-export type { 
-  VueniUnifiedTransactionListProps, 
+export type {
+  VueniUnifiedTransactionListProps,
   VueniTransaction,
   VueniTransactionFeatures,
-  TransactionVariant
+  TransactionVariant,
 } from './VueniUnifiedTransactionList';
 
 // Score Circle Components
 export { SharedScoreCircle } from './SharedScoreCircle';
-export type { SharedScoreCircleProps, ScoreGroupProps, ScoreType } from './SharedScoreCircle';
+export type {
+  SharedScoreCircleProps,
+  ScoreGroupProps,
+  ScoreType,
+} from './SharedScoreCircle';
 
 // Insights Page Components
 export { ConfigurableInsightsPage } from '@/features/insights/components/ConfigurableInsightsPage';
 export type { ConfigurableInsightsPageProps } from '@/features/insights/components/ConfigurableInsightsPage';
 
 // Temporarily commented out during consolidation
-// export { 
+// export {
 //   VueniUnifiedInsightsPage,
 //   insightsPresets
 // } from '@/features/insights/components/VueniUnifiedInsightsPage';
-// export type { 
-//   VueniUnifiedInsightsPageProps, 
-//   InsightsVariant, 
+// export type {
+//   VueniUnifiedInsightsPageProps,
+//   InsightsVariant,
 //   ViewMode,
-//   Transaction as InsightsTransaction, 
-//   Account as InsightsAccount 
+//   Transaction as InsightsTransaction,
+//   Account as InsightsAccount
 // } from '@/features/insights/components/VueniUnifiedInsightsPage';
 
 // Design System Components
 export { default as VueniDesignSystem } from './VueniDesignSystem';
-export { 
+export {
   VueniGlassCard,
   VueniButton,
   VueniMetric,
@@ -41,14 +45,14 @@ export {
   VueniContainer,
   VueniSection,
   VueniGrid,
-  vueniTokens
+  vueniTokens,
 } from './VueniDesignSystem';
 export type {
   VueniGlassCardProps,
   VueniButtonProps,
   VueniMetricProps,
   VueniStatusBadgeProps,
-  VueniSkeletonProps
+  VueniSkeletonProps,
 } from './VueniDesignSystem';
 
 // Feature Flag System
@@ -63,12 +67,9 @@ export {
   FeatureFlagDebugPanel,
   withFeatureFlag,
   checkFeatureFlag,
-  featureFlagPresets
+  featureFlagPresets,
 } from './VueniFeatureFlags';
-export type { 
-  FeatureFlags, 
-  FeatureFlagContextType 
-} from './VueniFeatureFlags';
+export type { FeatureFlags, FeatureFlagContextType } from './VueniFeatureFlags';
 
 // All core components now consolidated and production-ready
 

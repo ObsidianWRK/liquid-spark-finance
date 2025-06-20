@@ -1,7 +1,7 @@
-import { create } from "zustand";
-import { negotiationService } from "@/features/bill-negotiation/api/negotiationService";
-import { useSubscriptionsStore } from "@/features/subscriptions/store";
-import { NegotiationCase } from "@/shared/types/shared";
+import { create } from 'zustand';
+import { negotiationService } from '@/features/bill-negotiation/api/negotiationService';
+import { useSubscriptionsStore } from '@/features/subscriptions/store';
+import { NegotiationCase } from '@/shared/types/shared';
 
 interface NegotiationState {
   cases: NegotiationCase[];
@@ -21,17 +21,22 @@ export const useNegotiationStore = create<NegotiationState>((set, get) => ({
       const current = get().cases;
       // refresh each case status
       const updated: NegotiationCase[] = await Promise.all(
-        current.map(async (c) => (await negotiationService.getNegotiationStatus(c.id)) ?? c)
+        current.map(
+          async (c) =>
+            (await negotiationService.getNegotiationStatus(c.id)) ?? c
+        )
       );
       set({ cases: updated, loading: false });
     } catch (err: any) {
-      set({ error: err.message ?? "Unknown", loading: false });
+      set({ error: err.message ?? 'Unknown', loading: false });
     }
   },
   negotiateOutstanding: async () => {
     set({ loading: true, error: undefined });
     try {
-      const charges = useSubscriptionsStore.getState().charges.filter((c) => c.status === "active");
+      const charges = useSubscriptionsStore
+        .getState()
+        .charges.filter((c) => c.status === 'active');
       const newCases: NegotiationCase[] = [];
       for (const charge of charges) {
         // avoid duplicate negotiation per chargeId
@@ -42,7 +47,7 @@ export const useNegotiationStore = create<NegotiationState>((set, get) => ({
       }
       set({ cases: [...get().cases, ...newCases], loading: false });
     } catch (err: any) {
-      set({ error: err.message ?? "Unknown", loading: false });
+      set({ error: err.message ?? 'Unknown', loading: false });
     }
   },
-})); 
+}));

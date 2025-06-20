@@ -7,6 +7,7 @@ Successfully migrated existing line chart implementations to Apple-style using G
 ## Components Created
 
 ### `/src/components/charts/LineChart.tsx`
+
 - **Apple-style LineChart component** extending GraphBase
 - Smooth curved lines (monotone) matching Apple aesthetic
 - Gradient fills under lines for depth
@@ -17,6 +18,7 @@ Successfully migrated existing line chart implementations to Apple-style using G
 - Trend analysis with up/down indicators
 
 ### Key Features
+
 - **Financial Context**: Currency formatting, trend indicators, time-based data
 - **Apple UX**: Animated drawing, hover interactions, clean axes, rounded tooltips
 - **Performance**: Data reduction for large datasets, optimized rendering
@@ -25,6 +27,7 @@ Successfully migrated existing line chart implementations to Apple-style using G
 ## Migrations Completed
 
 ### 1. TimeSeriesChart (`/src/components/insights/TimeSeriesChart.tsx`)
+
 - **Before**: MultiLineChart from lightweight-charts
 - **After**: Apple-style LineChart with:
   - Financial Health, Wellness Score, Eco Impact series
@@ -33,6 +36,7 @@ Successfully migrated existing line chart implementations to Apple-style using G
   - Legend support
 
 ### 2. CompoundInterestCalculator (`/src/components/calculators/CompoundInterestCalculator.tsx`)
+
 - **Before**: Recharts AreaChart with custom gradients
 - **After**: Apple-style LineChart with:
   - Total Value, Contributions, Interest Earned series
@@ -41,6 +45,7 @@ Successfully migrated existing line chart implementations to Apple-style using G
   - Gradient fills and smooth animations
 
 ### 3. FinancialFreedomCalculator (`/src/components/calculators/FinancialFreedomCalculator.tsx`)
+
 - **Before**: Recharts AreaChart with Line overlay
 - **After**: Apple-style LineChart with:
   - Remaining Balance, Total Withdrawn series
@@ -51,18 +56,21 @@ Successfully migrated existing line chart implementations to Apple-style using G
 ## Technical Improvements
 
 ### Apple Design System Integration
+
 - Uses Apple system colors from `@/theme/graph-tokens`
 - Consistent with Apple Human Interface Guidelines 2025
 - Smooth animations with Apple's standard easing functions
 - Clean typography hierarchy
 
 ### Enhanced Data Handling
+
 - Auto-generation of series from data structure
 - Financial-specific formatters (currency, percentage)
 - Date-based time series support
 - Performance optimization for large datasets
 
 ### Component Architecture
+
 - Extends GraphBase foundation for consistency
 - Type-safe configuration with LineChartConfig
 - Composable series definitions
@@ -71,6 +79,7 @@ Successfully migrated existing line chart implementations to Apple-style using G
 ## Testing
 
 ### Automated Tests
+
 - **LineChart.test.tsx**: 6 test cases covering:
   - Basic rendering and error handling
   - Empty data states

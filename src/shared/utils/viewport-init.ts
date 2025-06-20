@@ -1,6 +1,6 @@
 /**
  * Viewport Guardian Initialization
- * 
+ *
  * Provides initialization utilities for the Viewport Guardian system:
  * - Automatic initialization on app startup
  * - CSS class application for feature detection
@@ -8,18 +8,18 @@
  * - Integration with React app lifecycle
  */
 
-import { 
+import {
   initializeViewportGuardian,
   getViewportDebugInfo,
   getFeatureSupport,
   getBrowserInfo,
-  configureViewportGuardian
+  configureViewportGuardian,
 } from './viewport-guardian';
-import { 
+import {
   addViewportChangeListener,
   addOrientationChangeListener,
   type ViewportChangeEvent,
-  type OrientationChangeEvent
+  type OrientationChangeEvent,
 } from './viewport-guardian';
 
 /**
@@ -98,27 +98,39 @@ const setupDynamicClasses = (): void => {
   // Handle viewport changes
   const handleViewportChange = (event: ViewportChangeEvent) => {
     // Update keyboard state
-    root.setAttribute('data-keyboard-open', event.state.isVirtualKeyboardOpen.toString());
-    
+    root.setAttribute(
+      'data-keyboard-open',
+      event.state.isVirtualKeyboardOpen.toString()
+    );
+
     // Update CSS custom properties
     root.style.setProperty('--viewport-width', `${event.state.width}px`);
     root.style.setProperty('--viewport-height', `${event.state.height}px`);
-    root.style.setProperty('--keyboard-height', `${event.state.keyboardHeight}px`);
-    root.style.setProperty('--keyboard-open', event.state.isVirtualKeyboardOpen ? '1' : '0');
+    root.style.setProperty(
+      '--keyboard-height',
+      `${event.state.keyboardHeight}px`
+    );
+    root.style.setProperty(
+      '--keyboard-open',
+      event.state.isVirtualKeyboardOpen ? '1' : '0'
+    );
   };
 
   // Handle orientation changes
   const handleOrientationChange = (event: OrientationChangeEvent) => {
     // Remove old orientation classes
     root.classList.remove('orientation-portrait', 'orientation-landscape');
-    
+
     // Add new orientation class
     root.classList.add(`orientation-${event.current.type}`);
-    
+
     // Update data attributes
     root.setAttribute('data-orientation', event.current.type);
     root.setAttribute('data-orientation-angle', event.current.angle.toString());
-    root.setAttribute('data-orientation-locked', event.current.isLocked.toString());
+    root.setAttribute(
+      'data-orientation-locked',
+      event.current.isLocked.toString()
+    );
   };
 
   // Add listeners
@@ -159,13 +171,19 @@ const addDevelopmentHelpers = (): void => {
   // Add keyboard shortcuts for testing
   document.addEventListener('keydown', (event) => {
     // Ctrl/Cmd + Shift + V for viewport debug
-    if ((event.ctrlKey || event.metaKey) && event.shiftKey && event.key === 'V') {
+    if (
+      (event.ctrlKey || event.metaKey) &&
+      event.shiftKey &&
+      event.key === 'V'
+    ) {
       console.log('🛡️ Viewport Guardian Debug Info:', getViewportDebugInfo());
       event.preventDefault();
     }
   });
 
-  console.log('🛡️ Development helpers added. Press Ctrl/Cmd+Shift+V for debug info or call window.viewportDebug()');
+  console.log(
+    '🛡️ Development helpers added. Press Ctrl/Cmd+Shift+V for debug info or call window.viewportDebug()'
+  );
 };
 
 /**

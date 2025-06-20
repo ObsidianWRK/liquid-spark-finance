@@ -31,7 +31,7 @@ export class VueniCacheManager {
     hits: 0,
     misses: 0,
     evictions: 0,
-    compressionSavings: 0
+    compressionSavings: 0,
   };
 
   constructor(config: Partial<VueniCacheConfig> = {}) {
@@ -46,7 +46,7 @@ export class VueniCacheManager {
       compressionThreshold: 1024,
       enablePersistence: true,
       persistenceKey: 'vueni_cache',
-      ...config
+      ...config,
     };
 
     // Cleanup expired items periodically
@@ -56,13 +56,17 @@ export class VueniCacheManager {
   set<T>(key: string, data: T, ttl?: number): void {
     const timestamp = Date.now();
     const expiresAt = timestamp + (ttl || this.config.maxAge);
-    
+
     // Estimate size
     const dataSize = this.estimateSize(data);
-    
+
     // Compress data if enabled and beneficial
     let processedData = data;
-    if (this.config.enableCompression && dataSize > this.config.compressionThreshold) { // Compress if > 1KB
+    if (
+      this.config.enableCompression &&
+      dataSize > this.config.compressionThreshold
+    ) {
+      // Compress if > 1KB
       processedData = this.compress(data);
       const compressedSize = this.estimateSize(processedData);
       this.metrics.compressionSavings += dataSize - compressedSize;
@@ -75,7 +79,7 @@ export class VueniCacheManager {
       key,
       size: dataSize,
       accessCount: 0,
-      lastAccessed: timestamp
+      lastAccessed: timestamp,
     };
 
     // Remove old item if exists
@@ -97,7 +101,7 @@ export class VueniCacheManager {
 
   get<T>(key: string): T | null {
     const item = this.cache.get(key) as VueniCacheItem<T> | undefined;
-    
+
     if (!item) {
       this.metrics.misses++;
       return null;
@@ -142,16 +146,16 @@ export class VueniCacheManager {
   // Cache financial transactions with optimized strategy
   cacheTransactions(transactions: Transaction[], userId: string): void {
     const key = `vueni_transactions_${userId}`;
-    
+
     // Optimize transaction data for caching
-    const optimizedTransactions = transactions.map(transaction => ({
+    const optimizedTransactions = transactions.map((transaction) => ({
       id: transaction.id,
       merchant: transaction.merchant,
       category: transaction.category,
       amount: transaction.amount,
       date: transaction.date,
       status: transaction.status,
-      scores: transaction.scores
+      scores: transaction.scores,
     }));
 
     this.set(key, optimizedTransactions, 10 * 60 * 1000); // 10 minutes for transactions
@@ -163,7 +167,10 @@ export class VueniCacheManager {
   }
 
   // Cache insights with longer TTL
-  cacheInsights<T = Record<string, unknown>>(insights: T, userId: string): void {
+  cacheInsights<T = Record<string, unknown>>(
+    insights: T,
+    userId: string
+  ): void {
     const key = `vueni_insights_${userId}`;
     this.set(key, insights, 60 * 60 * 1000); // 1 hour for insights
   }
@@ -174,12 +181,17 @@ export class VueniCacheManager {
   }
 
   // Cache component state
-  cacheComponentState<T = Record<string, unknown>>(componentName: string, state: T): void {
+  cacheComponentState<T = Record<string, unknown>>(
+    componentName: string,
+    state: T
+  ): void {
     const key = `vueni_component_${componentName}`;
     this.set(key, state, 5 * 60 * 1000); // 5 minutes for component state
   }
 
-  getCachedComponentState<T = Record<string, unknown>>(componentName: string): T | null {
+  getCachedComponentState<T = Record<string, unknown>>(
+    componentName: string
+  ): T | null {
     const key = `vueni_component_${componentName}`;
     return this.get(key);
   }
@@ -191,7 +203,10 @@ export class VueniCacheManager {
     }
 
     // If we exceed max size, evict until we have enough space
-    while (this.currentSize + requiredSize > this.config.maxSize && this.cache.size > 0) {
+    while (
+      this.currentSize + requiredSize > this.config.maxSize &&
+      this.cache.size > 0
+    ) {
       this.evictLRU(1);
     }
   }
@@ -201,7 +216,7 @@ export class VueniCacheManager {
       .sort((a, b) => a.lastAccessed - b.lastAccessed)
       .slice(0, count);
 
-    items.forEach(item => {
+    items.forEach((item) => {
       this.delete(item.key);
       this.metrics.evictions++;
     });
@@ -221,10 +236,12 @@ export class VueniCacheManager {
       }
     });
 
-    expiredKeys.forEach(key => this.delete(key));
+    expiredKeys.forEach((key) => this.delete(key));
 
     if (this.config.enableMetrics && expiredKeys.length > 0) {
-      console.log(`[Vueni Cache] Cleaned up ${expiredKeys.length} expired items`);
+      console.log(
+        `[Vueni Cache] Cleaned up ${expiredKeys.length} expired items`
+      );
     }
   }
 
@@ -232,29 +249,29 @@ export class VueniCacheManager {
     if (typeof data === 'string') {
       return data.length * 2; // UTF-16 encoding
     }
-    
+
     if (typeof data === 'number') {
       return 8; // 64-bit number
     }
-    
+
     if (typeof data === 'boolean') {
       return 4;
     }
-    
+
     if (data === null || data === undefined) {
       return 0;
     }
-    
+
     if (Array.isArray(data)) {
       return data.reduce((total, item) => total + this.estimateSize(item), 0);
     }
-    
+
     if (typeof data === 'object') {
       return Object.entries(data).reduce((total, [key, value]) => {
         return total + this.estimateSize(key) + this.estimateSize(value);
       }, 0);
     }
-    
+
     return JSON.stringify(data).length * 2; // Fallback
   }
 
@@ -263,7 +280,7 @@ export class VueniCacheManager {
     if (typeof data === 'object') {
       const compressed = {
         __compressed: true,
-        data: JSON.stringify(data)
+        data: JSON.stringify(data),
       };
       return compressed;
     }
@@ -277,7 +294,9 @@ export class VueniCacheManager {
     return data;
   }
 
-  private isCompressed(data: unknown): data is { __compressed: true; data: string } {
+  private isCompressed(
+    data: unknown
+  ): data is { __compressed: true; data: string } {
     return typeof data === 'object' && data.__compressed === true;
   }
 
@@ -285,12 +304,12 @@ export class VueniCacheManager {
     const units = ['B', 'KB', 'MB', 'GB'];
     let size = bytes;
     let unitIndex = 0;
-    
+
     while (size >= 1024 && unitIndex < units.length - 1) {
       size /= 1024;
       unitIndex++;
     }
-    
+
     return `${size.toFixed(1)}${units[unitIndex]}`;
   }
 
@@ -300,9 +319,13 @@ export class VueniCacheManager {
       size: this.cache.size,
       currentSize: this.formatSize(this.currentSize),
       maxSize: this.formatSize(this.config.maxSize),
-      hitRate: (this.metrics.hits / (this.metrics.hits + this.metrics.misses) * 100).toFixed(1) + '%',
+      hitRate:
+        (
+          (this.metrics.hits / (this.metrics.hits + this.metrics.misses)) *
+          100
+        ).toFixed(1) + '%',
       metrics: this.metrics,
-      compressionSavings: this.formatSize(this.metrics.compressionSavings)
+      compressionSavings: this.formatSize(this.metrics.compressionSavings),
     };
   }
 
@@ -318,7 +341,7 @@ export class VueniCacheManager {
       accessCount: number;
       lastAccessed: string;
     }> = [];
-    
+
     this.cache.forEach((item, key) => {
       items.push({
         key,
@@ -328,13 +351,13 @@ export class VueniCacheManager {
         size: this.formatSize(item.size || 0),
         expiresIn: Math.max(0, item.expiresAt - Date.now()),
         accessCount: item.accessCount,
-        lastAccessed: new Date(item.lastAccessed).toISOString()
+        lastAccessed: new Date(item.lastAccessed).toISOString(),
       });
     });
-    
+
     return {
       stats: this.getStats(),
-      items: items.sort((a, b) => b.accessCount - a.accessCount)
+      items: items.sort((a, b) => b.accessCount - a.accessCount),
     };
   }
 
@@ -344,10 +367,10 @@ export class VueniCacheManager {
     const commonKeys = [
       'vueni_user_preferences',
       'vueni_category_mappings',
-      'vueni_feature_flags'
+      'vueni_feature_flags',
     ];
 
-    commonKeys.forEach(key => {
+    commonKeys.forEach((key) => {
       // Check if data exists in localStorage and cache it
       const data = localStorage.getItem(key);
       if (data) {
@@ -368,7 +391,7 @@ export const vueniCache = new VueniCacheManager({
   maxAge: 30 * 60 * 1000, // 30 minutes default
   maxItems: 500,
   enableCompression: true,
-  enableMetrics: import.meta.env.DEV // Enable metrics in development
+  enableMetrics: import.meta.env.DEV, // Enable metrics in development
 });
 
 // Initialize cache

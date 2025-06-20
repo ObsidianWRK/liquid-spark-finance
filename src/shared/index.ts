@@ -23,4 +23,4 @@ export * from './utils/webCrypto';
 
 // Shared Types
 export * from './types/shared';
-export * from './types/financial'; 
+export * from './types/financial';

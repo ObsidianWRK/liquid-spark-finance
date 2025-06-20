@@ -4,9 +4,7 @@
  */
 
 export class SecurityEnvValidator {
-  private static readonly REQUIRED_ENV_VARS = [
-    'VITE_VUENI_ENCRYPTION_KEY'
-  ];
+  private static readonly REQUIRED_ENV_VARS = ['VITE_VUENI_ENCRYPTION_KEY'];
 
   private static readonly MIN_KEY_LENGTH = 32;
 
@@ -19,21 +17,25 @@ export class SecurityEnvValidator {
 
     for (const envVar of this.REQUIRED_ENV_VARS) {
       const value = this.getEnvVar(envVar);
-      
+
       if (!value) {
         missingVars.push(envVar);
       } else if (value.length < this.MIN_KEY_LENGTH) {
-        invalidVars.push(`${envVar} (must be at least ${this.MIN_KEY_LENGTH} characters)`);
+        invalidVars.push(
+          `${envVar} (must be at least ${this.MIN_KEY_LENGTH} characters)`
+        );
       }
     }
 
     if (missingVars.length > 0 || invalidVars.length > 0) {
       const errors: string[] = [];
-      
+
       if (missingVars.length > 0) {
-        errors.push(`Missing required environment variables: ${missingVars.join(', ')}`);
+        errors.push(
+          `Missing required environment variables: ${missingVars.join(', ')}`
+        );
       }
-      
+
       if (invalidVars.length > 0) {
         errors.push(`Invalid environment variables: ${invalidVars.join(', ')}`);
       }
@@ -48,12 +50,14 @@ export class SecurityEnvValidator {
         '   VITE_VUENI_ENCRYPTION_KEY=your-secure-32-character-or-longer-key-here',
         '3. Restart your development server',
         '',
-        'For production, ensure these variables are set in your deployment environment.'
+        'For production, ensure these variables are set in your deployment environment.',
       ].join('\n');
 
       // In development, log warning instead of throwing
       if (!this.isProduction()) {
-        console.warn('⚠️ [SECURITY WARNING] Development mode detected - continuing without proper environment variables');
+        console.warn(
+          '⚠️ [SECURITY WARNING] Development mode detected - continuing without proper environment variables'
+        );
         console.warn(errorMessage);
         return;
       }
@@ -68,15 +72,19 @@ export class SecurityEnvValidator {
    */
   static getValidatedEncryptionKey(envVarName: string): string {
     const key = this.getEnvVar(envVarName);
-    
+
     if (!key) {
-      throw new Error(`CRITICAL SECURITY ERROR: ${envVarName} environment variable is required`);
+      throw new Error(
+        `CRITICAL SECURITY ERROR: ${envVarName} environment variable is required`
+      );
     }
-    
+
     if (key.length < this.MIN_KEY_LENGTH) {
-      throw new Error(`CRITICAL SECURITY ERROR: ${envVarName} must be at least ${this.MIN_KEY_LENGTH} characters long`);
+      throw new Error(
+        `CRITICAL SECURITY ERROR: ${envVarName} must be at least ${this.MIN_KEY_LENGTH} characters long`
+      );
     }
-    
+
     return key;
   }
 
@@ -88,12 +96,12 @@ export class SecurityEnvValidator {
     if (typeof import.meta !== 'undefined' && import.meta.env) {
       return import.meta.env[name];
     }
-    
+
     // Node.js environment
     if (typeof process !== 'undefined' && process.env) {
       return process.env[name];
     }
-    
+
     return undefined;
   }
 
@@ -103,7 +111,7 @@ export class SecurityEnvValidator {
   static isProduction(): boolean {
     const nodeEnv = this.getEnvVar('NODE_ENV');
     const mode = this.getEnvVar('MODE');
-    
+
     return nodeEnv === 'production' || mode === 'production';
   }
 
@@ -113,8 +121,10 @@ export class SecurityEnvValidator {
   static logSecurityStatus(): void {
     const status = {
       environment: this.isProduction() ? 'production' : 'development',
-      encryptionKeysConfigured: this.REQUIRED_ENV_VARS.every(envVar => !!this.getEnvVar(envVar)),
-      timestamp: new Date().toISOString()
+      encryptionKeysConfigured: this.REQUIRED_ENV_VARS.every(
+        (envVar) => !!this.getEnvVar(envVar)
+      ),
+      timestamp: new Date().toISOString(),
     };
 
     if (this.isProduction()) {

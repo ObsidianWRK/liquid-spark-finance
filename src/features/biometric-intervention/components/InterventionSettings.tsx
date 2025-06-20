@@ -1,5 +1,14 @@
 import React, { useState } from 'react';
-import { Settings, Plus, Edit2, Trash2, Power, Shield, Clock, DollarSign } from 'lucide-react';
+import {
+  Settings,
+  Plus,
+  Edit2,
+  Trash2,
+  Power,
+  Shield,
+  Clock,
+  DollarSign,
+} from 'lucide-react';
 import { Card, CardHeader, CardTitle, CardContent } from '@/shared/ui/card';
 import { Button } from '@/shared/ui/button';
 import { Badge } from '@/shared/ui/badge';
@@ -40,7 +49,7 @@ const defaultPolicyForm: PolicyFormData = {
 };
 
 export const InterventionSettings: React.FC<InterventionSettingsProps> = ({
-  className
+  className,
 }) => {
   const {
     activePolicies,
@@ -51,7 +60,7 @@ export const InterventionSettings: React.FC<InterventionSettingsProps> = ({
     updatePolicy,
     deletePolicy,
     updatePreferences,
-    initialize
+    initialize,
   } = useBiometricInterventionStore();
 
   const [showAddForm, setShowAddForm] = useState(false);
@@ -95,7 +104,7 @@ export const InterventionSettings: React.FC<InterventionSettingsProps> = ({
       await addPolicy(policyData);
       setShowAddForm(false);
     }
-    
+
     setFormData(defaultPolicyForm);
   };
 
@@ -121,7 +130,9 @@ export const InterventionSettings: React.FC<InterventionSettingsProps> = ({
     }
   };
 
-  const handleWearableToggle = async (device: keyof typeof preferences.wearableIntegrations) => {
+  const handleWearableToggle = async (
+    device: keyof typeof preferences.wearableIntegrations
+  ) => {
     await updatePreferences({
       wearableIntegrations: {
         ...preferences.wearableIntegrations,
@@ -131,7 +142,7 @@ export const InterventionSettings: React.FC<InterventionSettingsProps> = ({
   };
 
   return (
-    <div className={cn("space-y-6", className)}>
+    <div className={cn('space-y-6', className)}>
       {/* Main Toggle */}
       <Card className="bg-white/[0.02] border-white/[0.08]">
         <CardHeader>
@@ -149,10 +160,9 @@ export const InterventionSettings: React.FC<InterventionSettingsProps> = ({
         </CardHeader>
         <CardContent>
           <p className="text-sm text-white/70">
-            {isActive 
+            {isActive
               ? 'Smart interventions are active and monitoring your stress levels.'
-              : 'Enable biometric interventions to help prevent stress-induced spending.'
-            }
+              : 'Enable biometric interventions to help prevent stress-induced spending.'}
           </p>
         </CardContent>
       </Card>
@@ -177,7 +187,8 @@ export const InterventionSettings: React.FC<InterventionSettingsProps> = ({
             <CardContent className="space-y-4">
               {activePolicies.length === 0 ? (
                 <p className="text-sm text-white/60 text-center py-4">
-                  No intervention policies configured. Add your first policy to get started.
+                  No intervention policies configured. Add your first policy to
+                  get started.
                 </p>
               ) : (
                 activePolicies.map((policy) => (
@@ -187,9 +198,14 @@ export const InterventionSettings: React.FC<InterventionSettingsProps> = ({
                   >
                     <div className="flex items-start justify-between mb-3">
                       <div>
-                        <h4 className="font-medium text-white/90">{policy.name}</h4>
+                        <h4 className="font-medium text-white/90">
+                          {policy.name}
+                        </h4>
                         <div className="flex items-center space-x-2 mt-1">
-                          <Badge variant={policy.enabled ? "default" : "secondary"} className="text-xs">
+                          <Badge
+                            variant={policy.enabled ? 'default' : 'secondary'}
+                            className="text-xs"
+                          >
                             {policy.enabled ? 'Active' : 'Disabled'}
                           </Badge>
                         </div>
@@ -213,22 +229,28 @@ export const InterventionSettings: React.FC<InterventionSettingsProps> = ({
                         </Button>
                       </div>
                     </div>
-                    
+
                     <div className="grid grid-cols-2 gap-4 text-sm">
                       <div className="flex items-center space-x-2">
                         <Shield className="w-4 h-4 text-orange-400" />
                         <span className="text-white/70">Stress Threshold:</span>
-                        <span className="text-white/90">{policy.triggers.stressThreshold}/100</span>
+                        <span className="text-white/90">
+                          {policy.triggers.stressThreshold}/100
+                        </span>
                       </div>
                       <div className="flex items-center space-x-2">
                         <DollarSign className="w-4 h-4 text-green-400" />
                         <span className="text-white/70">Spending Limit:</span>
-                        <span className="text-white/90">${policy.triggers.spendingAmount}</span>
+                        <span className="text-white/90">
+                          ${policy.triggers.spendingAmount}
+                        </span>
                       </div>
                       <div className="flex items-center space-x-2">
                         <Clock className="w-4 h-4 text-blue-400" />
                         <span className="text-white/70">Delay:</span>
-                        <span className="text-white/90">{policy.actions.delayPurchase}s</span>
+                        <span className="text-white/90">
+                          {policy.actions.delayPurchase}s
+                        </span>
                       </div>
                       <div className="flex items-center space-x-2">
                         <Power className="w-4 h-4 text-purple-400" />
@@ -237,8 +259,10 @@ export const InterventionSettings: React.FC<InterventionSettingsProps> = ({
                           {[
                             policy.actions.nudgeMessage && 'Nudge',
                             policy.actions.breathingExercise && 'Breathing',
-                            policy.actions.cardFreeze && 'Freeze'
-                          ].filter(Boolean).join(', ') || 'None'}
+                            policy.actions.cardFreeze && 'Freeze',
+                          ]
+                            .filter(Boolean)
+                            .join(', ') || 'None'}
                         </span>
                       </div>
                     </div>
@@ -262,7 +286,9 @@ export const InterventionSettings: React.FC<InterventionSettingsProps> = ({
                   <Input
                     id="policy-name"
                     value={formData.name}
-                    onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                    onChange={(e) =>
+                      setFormData({ ...formData, name: e.target.value })
+                    }
                     placeholder="Enter policy name"
                     className="bg-white/[0.02] border-white/[0.08]"
                   />
@@ -270,22 +296,33 @@ export const InterventionSettings: React.FC<InterventionSettingsProps> = ({
 
                 <div className="grid grid-cols-2 gap-4">
                   <div>
-                    <Label>Stress Threshold: {formData.stressThreshold}/100</Label>
+                    <Label>
+                      Stress Threshold: {formData.stressThreshold}/100
+                    </Label>
                     <Slider
                       value={[formData.stressThreshold]}
-                      onValueChange={([value]) => setFormData({ ...formData, stressThreshold: value })}
+                      onValueChange={([value]) =>
+                        setFormData({ ...formData, stressThreshold: value })
+                      }
                       max={100}
                       step={5}
                       className="mt-2"
                     />
                   </div>
                   <div>
-                    <Label htmlFor="spending-amount">Spending Trigger ($)</Label>
+                    <Label htmlFor="spending-amount">
+                      Spending Trigger ($)
+                    </Label>
                     <Input
                       id="spending-amount"
                       type="number"
                       value={formData.spendingAmount}
-                      onChange={(e) => setFormData({ ...formData, spendingAmount: Number(e.target.value) })}
+                      onChange={(e) =>
+                        setFormData({
+                          ...formData,
+                          spendingAmount: Number(e.target.value),
+                        })
+                      }
                       className="bg-white/[0.02] border-white/[0.08]"
                     />
                   </div>
@@ -296,17 +333,26 @@ export const InterventionSettings: React.FC<InterventionSettingsProps> = ({
                     <Label>Delay Purchase: {formData.delayPurchase}s</Label>
                     <Slider
                       value={[formData.delayPurchase]}
-                      onValueChange={([value]) => setFormData({ ...formData, delayPurchase: value })}
+                      onValueChange={([value]) =>
+                        setFormData({ ...formData, delayPurchase: value })
+                      }
                       max={300}
                       step={10}
                       className="mt-2"
                     />
                   </div>
                   <div>
-                    <Label>Safe-to-Spend Reduction: {formData.safeToSpendReduction}%</Label>
+                    <Label>
+                      Safe-to-Spend Reduction: {formData.safeToSpendReduction}%
+                    </Label>
                     <Slider
                       value={[formData.safeToSpendReduction]}
-                      onValueChange={([value]) => setFormData({ ...formData, safeToSpendReduction: value })}
+                      onValueChange={([value]) =>
+                        setFormData({
+                          ...formData,
+                          safeToSpendReduction: value,
+                        })
+                      }
                       max={100}
                       step={5}
                       className="mt-2"
@@ -321,21 +367,30 @@ export const InterventionSettings: React.FC<InterventionSettingsProps> = ({
                       <span className="text-sm">Show nudge message</span>
                       <Switch
                         checked={formData.nudgeMessage}
-                        onCheckedChange={(checked) => setFormData({ ...formData, nudgeMessage: checked })}
+                        onCheckedChange={(checked) =>
+                          setFormData({ ...formData, nudgeMessage: checked })
+                        }
                       />
                     </div>
                     <div className="flex items-center justify-between">
                       <span className="text-sm">Offer breathing exercise</span>
                       <Switch
                         checked={formData.breathingExercise}
-                        onCheckedChange={(checked) => setFormData({ ...formData, breathingExercise: checked })}
+                        onCheckedChange={(checked) =>
+                          setFormData({
+                            ...formData,
+                            breathingExercise: checked,
+                          })
+                        }
                       />
                     </div>
                     <div className="flex items-center justify-between">
                       <span className="text-sm">Temporarily freeze card</span>
                       <Switch
                         checked={formData.cardFreeze}
-                        onCheckedChange={(checked) => setFormData({ ...formData, cardFreeze: checked })}
+                        onCheckedChange={(checked) =>
+                          setFormData({ ...formData, cardFreeze: checked })
+                        }
                       />
                     </div>
                   </div>
@@ -358,7 +413,11 @@ export const InterventionSettings: React.FC<InterventionSettingsProps> = ({
                     disabled={loading}
                     className="flex-1 bg-blue-600 hover:bg-blue-700"
                   >
-                    {loading ? 'Saving...' : editingPolicy ? 'Update Policy' : 'Add Policy'}
+                    {loading
+                      ? 'Saving...'
+                      : editingPolicy
+                        ? 'Update Policy'
+                        : 'Add Policy'}
                   </Button>
                 </div>
               </CardContent>
@@ -371,21 +430,30 @@ export const InterventionSettings: React.FC<InterventionSettingsProps> = ({
               <CardTitle>Wearable Devices</CardTitle>
             </CardHeader>
             <CardContent className="space-y-3">
-              {Object.entries(preferences.wearableIntegrations).map(([device, enabled]) => (
-                <div key={device} className="flex items-center justify-between">
-                  <span className="text-sm capitalize">
-                    {device.replace(/([A-Z])/g, ' $1').trim()}
-                  </span>
-                  <Switch
-                    checked={enabled}
-                    onCheckedChange={() => handleWearableToggle(device as keyof typeof preferences.wearableIntegrations)}
-                  />
-                </div>
-              ))}
+              {Object.entries(preferences.wearableIntegrations).map(
+                ([device, enabled]) => (
+                  <div
+                    key={device}
+                    className="flex items-center justify-between"
+                  >
+                    <span className="text-sm capitalize">
+                      {device.replace(/([A-Z])/g, ' $1').trim()}
+                    </span>
+                    <Switch
+                      checked={enabled}
+                      onCheckedChange={() =>
+                        handleWearableToggle(
+                          device as keyof typeof preferences.wearableIntegrations
+                        )
+                      }
+                    />
+                  </div>
+                )
+              )}
             </CardContent>
           </Card>
         </>
       )}
     </div>
   );
-}; 
+};

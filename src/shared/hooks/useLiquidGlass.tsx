@@ -1,5 +1,10 @@
-
-import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
+import {
+  createContext,
+  useContext,
+  useState,
+  useEffect,
+  ReactNode,
+} from 'react';
 import { secureStorage } from '@/shared/utils/crypto';
 
 interface LiquidGlassSettings {
@@ -34,7 +39,9 @@ const defaultSettings: LiquidGlassSettings = {
   autoDetectPerformance: true,
 };
 
-const LiquidGlassContext = createContext<LiquidGlassContextType | undefined>(undefined);
+const LiquidGlassContext = createContext<LiquidGlassContextType | undefined>(
+  undefined
+);
 
 // Performance detection utilities
 const detectPerformance = () => {
@@ -42,7 +49,8 @@ const detectPerformance = () => {
   const checkWebGL = () => {
     try {
       const canvas = document.createElement('canvas');
-      const gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
+      const gl =
+        canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
       return !!gl;
     } catch (e) {
       return false;
@@ -50,15 +58,20 @@ const detectPerformance = () => {
   };
 
   // Detect mobile devices
-  const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
-    navigator.userAgent
-  );
+  const isMobile =
+    /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+      navigator.userAgent
+    );
 
   // Detect low-end devices
-  const isLowEnd = navigator.hardwareConcurrency ? navigator.hardwareConcurrency < 4 : false;
+  const isLowEnd = navigator.hardwareConcurrency
+    ? navigator.hardwareConcurrency < 4
+    : false;
 
   // Check reduced motion preference
-  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const prefersReducedMotion = window.matchMedia(
+    '(prefers-reduced-motion: reduce)'
+  ).matches;
 
   return {
     webGLSupported: checkWebGL(),
@@ -75,7 +88,8 @@ const getOptimizedSettings = (
 ): LiquidGlassSettings => {
   if (!settings.autoDetectPerformance) return settings;
 
-  const { isMobile, isLowEnd, prefersReducedMotion, webGLSupported } = performanceInfo;
+  const { isMobile, isLowEnd, prefersReducedMotion, webGLSupported } =
+    performanceInfo;
 
   // If no WebGL support, disable entirely
   if (!webGLSupported) {
@@ -133,7 +147,7 @@ export const LiquidGlassProvider = ({ children }: { children: ReactNode }) => {
   const updateSettings = (updates: Partial<LiquidGlassSettings>) => {
     const newSettings = { ...settings, ...updates };
     setSettings(newSettings);
-    
+
     // Save to secure storage
     try {
       secureStorage.setItem('vueni:liquidGlassSettings', newSettings);
@@ -162,14 +176,18 @@ export const LiquidGlassProvider = ({ children }: { children: ReactNode }) => {
     const monitorPerformance = () => {
       frameCount++;
       const currentTime = performance.now();
-      
+
       if (currentTime - lastTime >= 1000) {
         fps = Math.round((frameCount * 1000) / (currentTime - lastTime));
         frameCount = 0;
         lastTime = currentTime;
 
         // Auto-enable performance mode if FPS drops too low
-        if (fps < 30 && settings.autoDetectPerformance && !settings.performanceMode) {
+        if (
+          fps < 30 &&
+          settings.autoDetectPerformance &&
+          !settings.performanceMode
+        ) {
           console.warn('Low FPS detected, enabling performance mode');
           updateSettings({ performanceMode: true });
         }
@@ -183,7 +201,11 @@ export const LiquidGlassProvider = ({ children }: { children: ReactNode }) => {
     return () => {
       cancelAnimationFrame(animationId);
     };
-  }, [optimizedSettings.enabled, settings.autoDetectPerformance, settings.performanceMode]);
+  }, [
+    optimizedSettings.enabled,
+    settings.autoDetectPerformance,
+    settings.performanceMode,
+  ]);
 
   const contextValue: LiquidGlassContextType = {
     settings: optimizedSettings,
@@ -222,7 +244,9 @@ export const useLiquidGlassSettings = (
     enabled: settings.enabled && performanceInfo.webGLSupported,
     intensity: componentSettings?.intensity ?? settings.globalIntensity,
     distortion: componentSettings?.distortion ?? settings.globalDistortion,
-    animated: (componentSettings?.animated ?? settings.animated) && !performanceInfo.prefersReducedMotion,
+    animated:
+      (componentSettings?.animated ?? settings.animated) &&
+      !performanceInfo.prefersReducedMotion,
     interactive: componentSettings?.interactive ?? settings.interactive,
     performanceMode: settings.performanceMode,
   };

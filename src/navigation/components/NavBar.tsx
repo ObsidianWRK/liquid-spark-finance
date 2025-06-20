@@ -1,4 +1,10 @@
-import React, { useCallback, useEffect, useRef, useState, useMemo } from 'react';
+import React, {
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+  useMemo,
+} from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { cn } from '@/shared/lib/utils';
 import { useBreakpoint } from '@/shared/hooks/useBreakpoint';
@@ -57,7 +63,7 @@ const SCROLL_DEBOUNCE = 16; // ~60fps
 
 /**
  * NavBar Component
- * 
+ *
  * A performant and accessible navigation bar component with:
  * - TypeScript support with comprehensive interfaces
  * - Scroll-based hide/reveal functionality
@@ -83,11 +89,13 @@ const NavBar: React.FC<NavBarProps> = ({
   const location = useLocation();
   const navigate = useNavigate();
   const { breakpoint, isMobile, isTablet } = useBreakpoint();
-  
+
   // State
   const [isVisible, setIsVisible] = useState(true);
-  const [orientation, setOrientation] = useState<'portrait' | 'landscape'>('portrait');
-  
+  const [orientation, setOrientation] = useState<'portrait' | 'landscape'>(
+    'portrait'
+  );
+
   // Refs
   const navRef = useRef<HTMLElement>(null);
   const lastScrollY = useRef(0);
@@ -97,7 +105,9 @@ const NavBar: React.FC<NavBarProps> = ({
   useEffect(() => {
     const getOrientation = (): 'portrait' | 'landscape' => {
       if (typeof window === 'undefined') return 'portrait';
-      return window.matchMedia('(orientation: landscape)').matches ? 'landscape' : 'portrait';
+      return window.matchMedia('(orientation: landscape)').matches
+        ? 'landscape'
+        : 'portrait';
     };
 
     const handleOrientationChange = () => {
@@ -167,7 +177,7 @@ const NavBar: React.FC<NavBarProps> = ({
 
     // On mobile, respect hideOnMobile flag and maxTabs limit
     if (isMobile) {
-      filteredTabs = tabs.filter(tab => !tab.hideOnMobile);
+      filteredTabs = tabs.filter((tab) => !tab.hideOnMobile);
       if (filteredTabs.length > maxTabs) {
         filteredTabs = filteredTabs.slice(0, maxTabs);
       }
@@ -177,20 +187,23 @@ const NavBar: React.FC<NavBarProps> = ({
   }, [tabs, isMobile, maxTabs]);
 
   // Handle tab press with haptic feedback simulation
-  const handleTabPress = useCallback((tab: Tab) => {
-    // Simulate haptic feedback on supported devices
-    if ('vibrate' in navigator) {
-      navigator.vibrate(10);
-    }
+  const handleTabPress = useCallback(
+    (tab: Tab) => {
+      // Simulate haptic feedback on supported devices
+      if ('vibrate' in navigator) {
+        navigator.vibrate(10);
+      }
 
-    // Execute tab action
-    tab.action();
+      // Execute tab action
+      tab.action();
 
-    // Notify parent of active tab change
-    if (onActiveTabChange) {
-      onActiveTabChange(tab.id);
-    }
-  }, [onActiveTabChange]);
+      // Notify parent of active tab change
+      if (onActiveTabChange) {
+        onActiveTabChange(tab.id);
+      }
+    },
+    [onActiveTabChange]
+  );
 
   // Handle FAB press
   const handleFabPress = useCallback(() => {
@@ -207,45 +220,60 @@ const NavBar: React.FC<NavBarProps> = ({
   // Calculate transform for hide/reveal animation
   const transform = useMemo(() => {
     if (!scrollController) return 'translateY(0)';
-    
-    const translateValue = position === 'top' 
-      ? (isVisible ? '0' : '-100%')
-      : (isVisible ? '0' : '100%');
-      
+
+    const translateValue =
+      position === 'top'
+        ? isVisible
+          ? '0'
+          : '-100%'
+        : isVisible
+          ? '0'
+          : '100%';
+
     return `translateY(${translateValue})`;
   }, [isVisible, position, scrollController]);
 
   // Dynamic styles based on breakpoint and orientation
-  const navStyles = useMemo(() => ({
-    transform,
-    paddingBottom: position === 'bottom' && isMobile ? 'env(safe-area-inset-bottom)' : undefined,
-    paddingTop: position === 'top' && isMobile ? 'env(safe-area-inset-top)' : undefined,
-    height: orientation === 'landscape' && isMobile ? '52px' : undefined,
-  }), [transform, position, isMobile, orientation]);
+  const navStyles = useMemo(
+    () => ({
+      transform,
+      paddingBottom:
+        position === 'bottom' && isMobile
+          ? 'env(safe-area-inset-bottom)'
+          : undefined,
+      paddingTop:
+        position === 'top' && isMobile ? 'env(safe-area-inset-top)' : undefined,
+      height: orientation === 'landscape' && isMobile ? '52px' : undefined,
+    }),
+    [transform, position, isMobile, orientation]
+  );
 
   // Accessibility attributes
-  const navAriaLabel = position === 'top' ? 'Primary navigation' : 'Bottom navigation';
+  const navAriaLabel =
+    position === 'top' ? 'Primary navigation' : 'Bottom navigation';
 
   return (
     <>
       <LiquidGlassSVGFilters />
-      
+
       <nav
         ref={navRef}
         className={cn(
           // Base styles
           'fixed left-0 right-0 z-50 transition-transform duration-300 ease-out',
-          
+
           // Position
           position === 'top' ? 'top-0' : 'bottom-0',
-          
+
           // Responsive visibility
           isMobile ? 'block' : 'hidden md:block',
-          
+
           // Glass effect
           'liquid-glass-nav backdrop-blur-md saturate-[180%]',
-          position === 'top' ? 'border-b border-white/20' : 'border-t border-white/20',
-          
+          position === 'top'
+            ? 'border-b border-white/20'
+            : 'border-t border-white/20',
+
           // Custom className
           className
         )}
@@ -255,18 +283,21 @@ const NavBar: React.FC<NavBarProps> = ({
       >
         <div className="relative">
           {/* Main navigation container */}
-          <div className={cn(
-            'flex items-center justify-around px-2',
-            // Responsive padding
-            isMobile && orientation === 'portrait' ? 'py-3' : 'py-2',
-            isTablet ? 'px-4 py-3' : '',
-            // Ensure proper spacing for FAB
-            fab && !isMobile ? 'pr-16' : ''
-          )}>
+          <div
+            className={cn(
+              'flex items-center justify-around px-2',
+              // Responsive padding
+              isMobile && orientation === 'portrait' ? 'py-3' : 'py-2',
+              isTablet ? 'px-4 py-3' : '',
+              // Ensure proper spacing for FAB
+              fab && !isMobile ? 'pr-16' : ''
+            )}
+          >
             {visibleTabs.map((tab) => {
               const IconComponent = tab.icon;
-              const isActive = tab.isActive || location.pathname === (tab as any).path;
-              
+              const isActive =
+                tab.isActive || location.pathname === (tab as any).path;
+
               return (
                 <button
                   key={tab.id}
@@ -276,20 +307,20 @@ const NavBar: React.FC<NavBarProps> = ({
                     'flex flex-col items-center justify-center transition-all duration-300',
                     'focus:outline-none focus:ring-2 focus:ring-blue-400/50 focus:ring-offset-2 focus:ring-offset-transparent',
                     'touch-manipulation rounded-xl',
-                    
+
                     // Touch target size
                     `min-w-[${TOUCH_TARGET_SIZE}px] min-h-[${TOUCH_TARGET_SIZE}px]`,
-                    
+
                     // Spacing
                     showLabels ? 'space-y-1 py-2 px-3' : 'p-3',
-                    
+
                     // Active state
-                    isActive 
-                      ? 'liquid-glass-menu-item text-white bg-white/10 scale-105 shadow-lg' 
+                    isActive
+                      ? 'liquid-glass-menu-item text-white bg-white/10 scale-105 shadow-lg'
                       : 'text-white/70 hover:text-white hover:bg-white/5 hover:scale-102',
-                    
+
                     // Responsive adjustments
-                    isMobile && orientation === 'landscape' ? 'px-2 py-1' : '',
+                    isMobile && orientation === 'landscape' ? 'px-2 py-1' : ''
                   )}
                   aria-label={tab.ariaLabel || `Navigate to ${tab.label}`}
                   aria-current={isActive ? 'page' : undefined}
@@ -297,20 +328,22 @@ const NavBar: React.FC<NavBarProps> = ({
                 >
                   {/* Icon */}
                   <div className="relative">
-                    <IconComponent 
+                    <IconComponent
                       className={cn(
                         'transition-all duration-300',
                         // Responsive icon sizes
-                        isMobile && orientation === 'landscape' ? 'w-4 h-4' : 'w-5 h-5',
+                        isMobile && orientation === 'landscape'
+                          ? 'w-4 h-4'
+                          : 'w-5 h-5',
                         isTablet ? 'w-6 h-6' : '',
                         isActive ? 'scale-110' : ''
                       )}
                       aria-hidden={true}
                     />
-                    
+
                     {/* Badge indicator */}
                     {tab.badgeCount && tab.badgeCount > 0 && (
-                      <span 
+                      <span
                         className={cn(
                           'absolute -top-1 -right-1 min-w-[16px] h-4 px-1',
                           'bg-red-500 text-white text-xs font-bold rounded-full',
@@ -323,17 +356,21 @@ const NavBar: React.FC<NavBarProps> = ({
                       </span>
                     )}
                   </div>
-                  
+
                   {/* Label */}
                   {showLabels && (
-                    <span className={cn(
-                      'font-medium leading-tight text-center',
-                      // Responsive text sizes
-                      isMobile && orientation === 'landscape' ? 'text-xs' : 'text-xs',
-                      isTablet ? 'text-sm' : '',
-                      // Ensure text doesn't wrap
-                      'max-w-full truncate'
-                    )}>
+                    <span
+                      className={cn(
+                        'font-medium leading-tight text-center',
+                        // Responsive text sizes
+                        isMobile && orientation === 'landscape'
+                          ? 'text-xs'
+                          : 'text-xs',
+                        isTablet ? 'text-sm' : '',
+                        // Ensure text doesn't wrap
+                        'max-w-full truncate'
+                      )}
+                    >
                       {tab.label}
                     </span>
                   )}
@@ -341,7 +378,7 @@ const NavBar: React.FC<NavBarProps> = ({
               );
             })}
           </div>
-          
+
           {/* Floating Action Button */}
           {fab && (
             <button
@@ -351,32 +388,31 @@ const NavBar: React.FC<NavBarProps> = ({
                 'absolute rounded-full shadow-lg transition-all duration-300',
                 'focus:outline-none focus:ring-2 focus:ring-blue-400/50 focus:ring-offset-2',
                 'touch-manipulation',
-                
+
                 // Position (detached)
                 position === 'bottom' ? '-top-6' : '-bottom-6',
                 'right-4',
-                
+
                 // Size
                 'w-14 h-14',
-                
+
                 // Colors based on variant
-                fab.variant === 'secondary' 
+                fab.variant === 'secondary'
                   ? 'bg-white/20 text-white hover:bg-white/30 liquid-glass-menu-item'
                   : 'bg-blue-500 text-white hover:bg-blue-600 shadow-blue-500/25',
-                
+
                 // Responsive adjustments
-                isMobile ? 'scale-100 hover:scale-105' : 'scale-110 hover:scale-115',
-                
+                isMobile
+                  ? 'scale-100 hover:scale-105'
+                  : 'scale-110 hover:scale-115',
+
                 // Animation
                 'transform-gpu active:scale-95'
               )}
               aria-label={fab.ariaLabel || 'Floating action button'}
               type="button"
             >
-              <fab.icon 
-                className="w-6 h-6 mx-auto" 
-                aria-hidden={true}
-              />
+              <fab.icon className="w-6 h-6 mx-auto" aria-hidden={true} />
             </button>
           )}
         </div>

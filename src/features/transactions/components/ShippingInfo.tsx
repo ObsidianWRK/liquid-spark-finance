@@ -1,4 +1,3 @@
-
 import React from 'react';
 
 interface ShippingInfoProps {
@@ -7,13 +6,21 @@ interface ShippingInfoProps {
   deliveryStatus?: 'In Transit' | 'Out for Delivery' | 'Delivered';
 }
 
-const ShippingInfo = ({ trackingNumber, shippingProvider, deliveryStatus }: ShippingInfoProps) => {
+const ShippingInfo = ({
+  trackingNumber,
+  shippingProvider,
+  deliveryStatus,
+}: ShippingInfoProps) => {
   const getDeliveryStatusColor = (status?: string) => {
     switch (status) {
-      case 'Delivered': return 'text-green-400';
-      case 'Out for Delivery': return 'text-orange-400';
-      case 'In Transit': return 'text-blue-400';
-      default: return 'text-white/70';
+      case 'Delivered':
+        return 'text-green-400';
+      case 'Out for Delivery':
+        return 'text-orange-400';
+      case 'In Transit':
+        return 'text-blue-400';
+      default:
+        return 'text-white/70';
     }
   };
 

@@ -28,10 +28,10 @@ const formatCurrency = (value: number) => {
 };
 
 const getMinMax = (data: ChartData[]) => {
-  const values = data.map(d => d.y);
+  const values = data.map((d) => d.y);
   return {
     min: Math.min(...values),
-    max: Math.max(...values)
+    max: Math.max(...values),
   };
 };
 
@@ -53,7 +53,7 @@ export const SimpleLineChart: React.FC<SimpleLineChartProps> = ({
   strokeColor = '#3B82F6',
   strokeWidth = 2,
   showDots = true,
-  className = ''
+  className = '',
 }) => {
   if (!data || data.length === 0) return null;
 
@@ -63,23 +63,35 @@ export const SimpleLineChart: React.FC<SimpleLineChartProps> = ({
   const chartHeight = height - padding * 2;
 
   // Create path
-  const pathData = data.map((point, index) => {
-    const x = padding + (index / (data.length - 1)) * chartWidth;
-    const y = padding + (1 - (point.y - min) / (max - min)) * chartHeight;
-    return `${index === 0 ? 'M' : 'L'} ${x} ${y}`;
-  }).join(' ');
+  const pathData = data
+    .map((point, index) => {
+      const x = padding + (index / (data.length - 1)) * chartWidth;
+      const y = padding + (1 - (point.y - min) / (max - min)) * chartHeight;
+      return `${index === 0 ? 'M' : 'L'} ${x} ${y}`;
+    })
+    .join(' ');
 
   return (
     <div className={`relative ${className}`}>
       <svg width={width} height={height} className="overflow-visible">
         {/* Grid lines */}
         <defs>
-          <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
-            <path d="M 40 0 L 0 0 0 40" fill="none" stroke="rgba(255,255,255,0.1)" strokeWidth="1"/>
+          <pattern
+            id="grid"
+            width="40"
+            height="40"
+            patternUnits="userSpaceOnUse"
+          >
+            <path
+              d="M 40 0 L 0 0 0 40"
+              fill="none"
+              stroke="rgba(255,255,255,0.1)"
+              strokeWidth="1"
+            />
           </pattern>
         </defs>
         <rect width={width} height={height} fill="url(#grid)" opacity="0.3" />
-        
+
         {/* Main line */}
         <path
           d={pathData}
@@ -89,24 +101,26 @@ export const SimpleLineChart: React.FC<SimpleLineChartProps> = ({
           strokeLinecap="round"
           strokeLinejoin="round"
         />
-        
+
         {/* Data points */}
-        {showDots && data.map((point, index) => {
-          const x = padding + (index / (data.length - 1)) * chartWidth;
-          const y = padding + (1 - (point.y - min) / (max - min)) * chartHeight;
-          return (
-            <circle
-              key={index}
-              cx={x}
-              cy={y}
-              r="4"
-              fill={strokeColor}
-              className="hover:r-6 transition-all duration-200"
-            />
-          );
-        })}
+        {showDots &&
+          data.map((point, index) => {
+            const x = padding + (index / (data.length - 1)) * chartWidth;
+            const y =
+              padding + (1 - (point.y - min) / (max - min)) * chartHeight;
+            return (
+              <circle
+                key={index}
+                cx={x}
+                cy={y}
+                r="4"
+                fill={strokeColor}
+                className="hover:r-6 transition-all duration-200"
+              />
+            );
+          })}
       </svg>
-      
+
       {/* Tooltip container */}
       <div className="absolute inset-0 pointer-events-none">
         {data.map((point, index) => {
@@ -119,7 +133,7 @@ export const SimpleLineChart: React.FC<SimpleLineChartProps> = ({
               style={{
                 left: `${(x / width) * 100}%`,
                 top: `${(y / height) * 100}%`,
-                transform: 'translate(-50%, -100%)'
+                transform: 'translate(-50%, -100%)',
               }}
             >
               {point.label || point.x}: {formatCurrency(point.y)}
@@ -145,7 +159,7 @@ export const SimpleAreaChart: React.FC<SimpleAreaChartProps> = ({
   fillColor = '#3B82F6',
   strokeWidth = 2,
   className = '',
-  gradientId = 'areaGradient'
+  gradientId = 'areaGradient',
 }) => {
   if (!data || data.length === 0) return null;
 
@@ -155,11 +169,13 @@ export const SimpleAreaChart: React.FC<SimpleAreaChartProps> = ({
   const chartHeight = height - padding * 2;
 
   // Create area path
-  const linePath = data.map((point, index) => {
-    const x = padding + (index / (data.length - 1)) * chartWidth;
-    const y = padding + (1 - (point.y - min) / (max - min)) * chartHeight;
-    return `${index === 0 ? 'M' : 'L'} ${x} ${y}`;
-  }).join(' ');
+  const linePath = data
+    .map((point, index) => {
+      const x = padding + (index / (data.length - 1)) * chartWidth;
+      const y = padding + (1 - (point.y - min) / (max - min)) * chartHeight;
+      return `${index === 0 ? 'M' : 'L'} ${x} ${y}`;
+    })
+    .join(' ');
 
   // Complete area path
   const areaPath = `${linePath} L ${padding + chartWidth} ${padding + chartHeight} L ${padding} ${padding + chartHeight} Z`;
@@ -174,14 +190,10 @@ export const SimpleAreaChart: React.FC<SimpleAreaChartProps> = ({
             <stop offset="100%" stopColor={fillColor} stopOpacity="0" />
           </linearGradient>
         </defs>
-        
+
         {/* Area fill */}
-        <path
-          d={areaPath}
-          fill={`url(#${gradientId})`}
-          stroke="none"
-        />
-        
+        <path d={areaPath} fill={`url(#${gradientId})`} stroke="none" />
+
         {/* Top line */}
         <path
           d={linePath}
@@ -210,7 +222,7 @@ export const SimplePieChart: React.FC<SimplePieChartProps> = ({
   size = 200,
   innerRadius = 0,
   className = '',
-  showLabels = true
+  showLabels = true,
 }) => {
   if (!data || data.length === 0) return null;
 
@@ -251,7 +263,7 @@ export const SimplePieChart: React.FC<SimplePieChartProps> = ({
         `A ${radius} ${radius} 0 ${largeArcFlag} 1 ${x2} ${y2}`,
         `L ${innerX2} ${innerY2}`,
         `A ${innerRadius} ${innerRadius} 0 ${largeArcFlag} 0 ${innerX1} ${innerY1}`,
-        'Z'
+        'Z',
       ].join(' ');
     } else {
       // Regular pie chart
@@ -259,7 +271,7 @@ export const SimplePieChart: React.FC<SimplePieChartProps> = ({
         `M ${center} ${center}`,
         `L ${x1} ${y1}`,
         `A ${radius} ${radius} 0 ${largeArcFlag} 1 ${x2} ${y2}`,
-        'Z'
+        'Z',
       ].join(' ');
     }
 
@@ -269,7 +281,7 @@ export const SimplePieChart: React.FC<SimplePieChartProps> = ({
       ...item,
       path,
       percentage: percentage * 100,
-      midAngle: startAngle + angle / 2
+      midAngle: startAngle + angle / 2,
     };
   });
 
@@ -287,18 +299,23 @@ export const SimplePieChart: React.FC<SimplePieChartProps> = ({
           />
         ))}
       </svg>
-      
+
       {/* Labels */}
       {showLabels && (
         <div className="absolute inset-0 flex items-center justify-center">
           <div className="text-center space-y-1">
             {segments.map((segment, index) => (
-              <div key={index} className="flex items-center text-xs text-white/80">
-                <div 
-                  className="w-3 h-3 rounded mr-2" 
+              <div
+                key={index}
+                className="flex items-center text-xs text-white/80"
+              >
+                <div
+                  className="w-3 h-3 rounded mr-2"
                   style={{ backgroundColor: segment.color }}
                 />
-                <span>{segment.label}: {segment.percentage.toFixed(1)}%</span>
+                <span>
+                  {segment.label}: {segment.percentage.toFixed(1)}%
+                </span>
               </div>
             ))}
           </div>
@@ -324,7 +341,7 @@ export const SimpleBarChart: React.FC<SimpleBarChartProps> = ({
   height = 200,
   barColor = '#3B82F6',
   className = '',
-  showValues = true
+  showValues = true,
 }) => {
   if (!data || data.length === 0) return null;
 
@@ -332,8 +349,8 @@ export const SimpleBarChart: React.FC<SimpleBarChartProps> = ({
   const padding = 20;
   const chartWidth = width - padding * 2;
   const chartHeight = height - padding * 2;
-  const barWidth = chartWidth / data.length * 0.8;
-  const barSpacing = chartWidth / data.length * 0.2;
+  const barWidth = (chartWidth / data.length) * 0.8;
+  const barSpacing = (chartWidth / data.length) * 0.2;
 
   return (
     <div className={`relative ${className}`}>
@@ -403,13 +420,13 @@ export const MultiLineChart: React.FC<MultiLineChartProps> = ({
   className = '',
   xAxisKey = 'x',
   showDots = true,
-  showLegend = true
+  showLegend = true,
 }) => {
   if (!data || data.length === 0 || !lines || lines.length === 0) return null;
 
   // Get min/max for all line data
-  const allValues = data.flatMap(item => 
-    lines.map(line => Number(item[line.dataKey]) || 0)
+  const allValues = data.flatMap((item) =>
+    lines.map((line) => Number(item[line.dataKey]) || 0)
   );
   const min = Math.min(...allValues);
   const max = Math.max(...allValues);
@@ -421,20 +438,44 @@ export const MultiLineChart: React.FC<MultiLineChartProps> = ({
   // Format date for display
   const formatDate = (dateStr: string) => {
     const date = new Date(dateStr);
-    return date.toLocaleDateString('en-US', { month: 'short', year: '2-digit' });
+    return date.toLocaleDateString('en-US', {
+      month: 'short',
+      year: '2-digit',
+    });
   };
 
   return (
     <div className={`relative ${className}`}>
-      <svg width={width} height={height + (showLegend ? 40 : 0)} className="overflow-visible">
+      <svg
+        width={width}
+        height={height + (showLegend ? 40 : 0)}
+        className="overflow-visible"
+      >
         {/* Grid lines */}
         <defs>
-          <pattern id="multiGrid" width="40" height="30" patternUnits="userSpaceOnUse">
-            <path d="M 40 0 L 0 0 0 30" fill="none" stroke="rgba(255,255,255,0.1)" strokeWidth="1"/>
+          <pattern
+            id="multiGrid"
+            width="40"
+            height="30"
+            patternUnits="userSpaceOnUse"
+          >
+            <path
+              d="M 40 0 L 0 0 0 30"
+              fill="none"
+              stroke="rgba(255,255,255,0.1)"
+              strokeWidth="1"
+            />
           </pattern>
         </defs>
-        <rect x={padding} y={padding} width={chartWidth} height={chartHeight} fill="url(#multiGrid)" opacity="0.3" />
-        
+        <rect
+          x={padding}
+          y={padding}
+          width={chartWidth}
+          height={chartHeight}
+          fill="url(#multiGrid)"
+          opacity="0.3"
+        />
+
         {/* Y-axis labels */}
         <g>
           {[0, 25, 50, 75, 100].map((value, index) => {
@@ -461,7 +502,7 @@ export const MultiLineChart: React.FC<MultiLineChartProps> = ({
             );
           })}
         </g>
-        
+
         {/* X-axis labels */}
         <g>
           {data.map((point, index) => {
@@ -485,12 +526,15 @@ export const MultiLineChart: React.FC<MultiLineChartProps> = ({
 
         {/* Draw lines */}
         {lines.map((line, lineIndex) => {
-          const pathData = data.map((point, index) => {
-            const x = padding + (index / (data.length - 1)) * chartWidth;
-            const value = Number(point[line.dataKey]) || 0;
-            const y = padding + (1 - (value - min) / (max - min)) * chartHeight;
-            return `${index === 0 ? 'M' : 'L'} ${x} ${y}`;
-          }).join(' ');
+          const pathData = data
+            .map((point, index) => {
+              const x = padding + (index / (data.length - 1)) * chartWidth;
+              const value = Number(point[line.dataKey]) || 0;
+              const y =
+                padding + (1 - (value - min) / (max - min)) * chartHeight;
+              return `${index === 0 ? 'M' : 'L'} ${x} ${y}`;
+            })
+            .join(' ');
 
           return (
             <g key={lineIndex}>
@@ -503,35 +547,37 @@ export const MultiLineChart: React.FC<MultiLineChartProps> = ({
                 strokeLinecap="round"
                 strokeLinejoin="round"
               />
-              
+
               {/* Data points */}
-              {showDots && data.map((point, index) => {
-                const x = padding + (index / (data.length - 1)) * chartWidth;
-                const value = Number(point[line.dataKey]) || 0;
-                const y = padding + (1 - (value - min) / (max - min)) * chartHeight;
-                return (
-                  <circle
-                    key={`${lineIndex}-${index}`}
-                    cx={x}
-                    cy={y}
-                    r="3"
-                    fill={line.stroke}
-                    className="hover:r-5 transition-all duration-200"
-                  />
-                );
-              })}
+              {showDots &&
+                data.map((point, index) => {
+                  const x = padding + (index / (data.length - 1)) * chartWidth;
+                  const value = Number(point[line.dataKey]) || 0;
+                  const y =
+                    padding + (1 - (value - min) / (max - min)) * chartHeight;
+                  return (
+                    <circle
+                      key={`${lineIndex}-${index}`}
+                      cx={x}
+                      cy={y}
+                      r="3"
+                      fill={line.stroke}
+                      className="hover:r-5 transition-all duration-200"
+                    />
+                  );
+                })}
             </g>
           );
         })}
       </svg>
-      
+
       {/* Legend */}
       {showLegend && (
         <div className="flex justify-center space-x-6 mt-4">
           {lines.map((line, index) => (
             <div key={index} className="flex items-center space-x-2">
-              <div 
-                className="w-4 h-4 rounded-full" 
+              <div
+                className="w-4 h-4 rounded-full"
                 style={{ backgroundColor: line.stroke }}
               />
               <span className="text-white text-xs">
@@ -541,7 +587,7 @@ export const MultiLineChart: React.FC<MultiLineChartProps> = ({
           ))}
         </div>
       )}
-      
+
       {/* Interactive tooltip overlay */}
       <div className="absolute inset-0 pointer-events-none">
         {data.map((point, pointIndex) => {
@@ -552,23 +598,30 @@ export const MultiLineChart: React.FC<MultiLineChartProps> = ({
               className="absolute w-2 h-full pointer-events-auto group"
               style={{
                 left: `${(x / width) * 100}%`,
-                transform: 'translateX(-50%)'
+                transform: 'translateX(-50%)',
               }}
             >
-              <div className="absolute opacity-0 group-hover:opacity-100 transition-opacity bg-black/90 text-white text-xs p-2 rounded border border-white/20 z-10 whitespace-nowrap"
-                   style={{
-                     bottom: '100%',
-                     left: '50%',
-                     transform: 'translateX(-50%)',
-                     marginBottom: '8px'
-                   }}>
+              <div
+                className="absolute opacity-0 group-hover:opacity-100 transition-opacity bg-black/90 text-white text-xs p-2 rounded border border-white/20 z-10 whitespace-nowrap"
+                style={{
+                  bottom: '100%',
+                  left: '50%',
+                  transform: 'translateX(-50%)',
+                  marginBottom: '8px',
+                }}
+              >
                 <div className="font-medium mb-1">
                   {formatDate(String(point[xAxisKey]))}
                 </div>
                 {lines.map((line, lineIndex) => (
-                  <div key={lineIndex} className="flex items-center justify-between space-x-4">
+                  <div
+                    key={lineIndex}
+                    className="flex items-center justify-between space-x-4"
+                  >
                     <span>{line.label || line.dataKey}:</span>
-                    <span className="font-medium">{Math.round(Number(point[line.dataKey]) || 0)}</span>
+                    <span className="font-medium">
+                      {Math.round(Number(point[line.dataKey]) || 0)}
+                    </span>
                   </div>
                 ))}
               </div>
@@ -586,5 +639,5 @@ export default {
   SimpleAreaChart,
   SimplePieChart,
   SimpleBarChart,
-  MultiLineChart
-}; 
+  MultiLineChart,
+};

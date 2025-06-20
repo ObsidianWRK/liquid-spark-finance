@@ -20,7 +20,9 @@ export const usePerformanceOptimization = (): PerformanceSettings => {
 
   useEffect(() => {
     // Check for reduced motion preference
-    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const prefersReducedMotion = window.matchMedia(
+      '(prefers-reduced-motion: reduce)'
+    ).matches;
     setShouldReduceMotion(prefersReducedMotion);
 
     // Simple performance detection
@@ -46,13 +48,13 @@ export const usePerformanceOptimization = (): PerformanceSettings => {
   const liquidSettings = {
     intensity: isLowPerformanceDevice ? 0.1 : 0.3,
     animated: !shouldReduceMotion && !isLowPerformanceDevice,
-    interactive: !isLowPerformanceDevice
+    interactive: !isLowPerformanceDevice,
   };
 
   return {
     shouldReduceMotion,
     isLowPerformanceDevice,
-    liquidSettings
+    liquidSettings,
   };
 };
 
@@ -60,7 +62,9 @@ export const usePerformanceOptimization = (): PerformanceSettings => {
  * Hook for responsive breakpoint detection
  */
 export const useResponsiveBreakpoint = () => {
-  const [breakpoint, setBreakpoint] = useState<'mobile' | 'tablet' | 'desktop' | 'large'>('mobile');
+  const [breakpoint, setBreakpoint] = useState<
+    'mobile' | 'tablet' | 'desktop' | 'large'
+  >('mobile');
 
   useEffect(() => {
     const updateBreakpoint = () => {
@@ -88,9 +92,12 @@ export const useAnimationDelay = () => {
   const getAnimationDelay = (index: number): number => {
     switch (breakpoint) {
       case 'large':
-      case 'desktop': return index * 150; // Faster for desktop
-      case 'tablet': return index * 200;
-      default: return index * 100; // Fastest for mobile
+      case 'desktop':
+        return index * 150; // Faster for desktop
+      case 'tablet':
+        return index * 200;
+      default:
+        return index * 100; // Fastest for mobile
     }
   };
 
@@ -106,7 +113,7 @@ export const useLayoutDebug = (componentName: string) => {
       console.log(`${componentName} mounted:`, {
         viewport: { width: window.innerWidth, height: window.innerHeight },
         userAgent: navigator.userAgent,
-        timestamp: new Date().toISOString()
+        timestamp: new Date().toISOString(),
       });
     }
   }, [componentName]);
@@ -123,9 +130,10 @@ export const usePerformanceTracking = (componentName: string) => {
       const endTime = performance.now();
       const renderTime = endTime - startTime;
 
-      if (renderTime > 16.67) { // Longer than 1 frame at 60fps
+      if (renderTime > 16.67) {
+        // Longer than 1 frame at 60fps
         console.warn(`${componentName} render took ${renderTime}ms`);
       }
     };
   }, [componentName]);
-}; 
+};

@@ -1,4 +1,4 @@
-import React, { Component, ErrorInfo, ReactNode } from "react";
+import React, { Component, ErrorInfo, ReactNode } from 'react';
 
 interface Props {
   children: ReactNode;
@@ -20,7 +20,7 @@ class ErrorBoundary extends Component<Props, State> {
 
   public componentDidCatch(error: Error, errorInfo: ErrorInfo) {
     // You can log the error to an error reporting service here
-    console.error("Uncaught error:", error, errorInfo);
+    console.error('Uncaught error:', error, errorInfo);
   }
 
   public render() {
@@ -32,7 +32,8 @@ class ErrorBoundary extends Component<Props, State> {
               Oops! Something went wrong.
             </h1>
             <p className="mb-4">
-              We've encountered an unexpected error. Please try refreshing the page.
+              We've encountered an unexpected error. Please try refreshing the
+              page.
             </p>
             <button
               onClick={() => window.location.reload()}
@@ -42,7 +43,9 @@ class ErrorBoundary extends Component<Props, State> {
             </button>
             {process.env.NODE_ENV === 'development' && this.state.error && (
               <details className="mt-6 text-left p-4 bg-muted rounded-lg">
-                <summary className="cursor-pointer font-semibold">Error Details</summary>
+                <summary className="cursor-pointer font-semibold">
+                  Error Details
+                </summary>
                 <pre className="mt-2 text-sm whitespace-pre-wrap">
                   {this.state.error.stack}
                 </pre>
@@ -57,4 +60,4 @@ class ErrorBoundary extends Component<Props, State> {
   }
 }
 
-export default ErrorBoundary; 
+export default ErrorBoundary;

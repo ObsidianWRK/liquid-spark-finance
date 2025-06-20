@@ -7,4 +7,4 @@ const EnhancedGlassCard: React.FC<EnhancedGlassCardProps> = (props) => (
 );
 
 export default EnhancedGlassCard;
-export { EnhancedGlassCard }; 
+export { EnhancedGlassCard };

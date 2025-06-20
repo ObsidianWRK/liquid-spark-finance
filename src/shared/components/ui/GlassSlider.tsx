@@ -6,17 +6,23 @@ interface GlassSliderProps {
   min?: number;
   max?: number;
   step?: number;
-  onChange: (v:number)=>void;
+  onChange: (v: number) => void;
 }
 
-const GlassSlider: React.FC<GlassSliderProps> = ({value, min=0, max=100, step=1, onChange}) => (
+const GlassSlider: React.FC<GlassSliderProps> = ({
+  value,
+  min = 0,
+  max = 100,
+  step = 1,
+  onChange,
+}) => (
   <Slider.Root
     className="relative flex items-center select-none touch-none w-full h-8"
     value={[value]}
     min={min}
     max={max}
     step={step}
-    onValueChange={(v)=>onChange(v[0])}
+    onValueChange={(v) => onChange(v[0])}
   >
     <Slider.Track className="bg-white/10 relative grow rounded-full h-2">
       <Slider.Range className="absolute bg-gradient-to-r from-blue-400 to-purple-500 rounded-full h-full" />
@@ -25,4 +31,4 @@ const GlassSlider: React.FC<GlassSliderProps> = ({value, min=0, max=100, step=1,
   </Slider.Root>
 );
 
-export default GlassSlider; 
+export default GlassSlider;

@@ -5,6 +5,7 @@ A high-performance, accessible React navigation bar component built with TypeScr
 ## Features
 
 ### Core Functionality
+
 - ✅ **TypeScript Support**: Comprehensive interfaces for type safety
 - ✅ **Responsive Design**: Adapts to mobile, tablet, and desktop viewports
 - ✅ **Accessibility**: WCAG 2.1 compliant with proper ARIA attributes
@@ -15,6 +16,7 @@ A high-performance, accessible React navigation bar component built with TypeScr
 - ✅ **Floating Action Button**: Optional detached FAB support
 
 ### Technical Highlights
+
 - Uses `useMemo` and `useCallback` to prevent unnecessary re-renders
 - Debounced scroll event handling for smooth performance
 - Passive scroll listeners to avoid blocking main thread
@@ -89,29 +91,29 @@ const MyApp = () => {
 
 ### NavBarProps
 
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `tabs` | `Tab[]` | Required | Array of navigation tabs |
-| `fab` | `FABConfig` | Optional | Floating action button configuration |
-| `scrollController` | `boolean` | `false` | Enable scroll-based hide/reveal |
-| `className` | `string` | Optional | Additional CSS classes |
-| `position` | `'top' \| 'bottom'` | `'bottom'` | Position of the navbar |
-| `showLabels` | `boolean` | `true` | Whether to show tab labels |
-| `maxTabs` | `number` | `5` | Maximum tabs before overflow |
-| `onActiveTabChange` | `(tabId: string) => void` | Optional | Called when active tab changes |
+| Prop                | Type                      | Default    | Description                          |
+| ------------------- | ------------------------- | ---------- | ------------------------------------ |
+| `tabs`              | `Tab[]`                   | Required   | Array of navigation tabs             |
+| `fab`               | `FABConfig`               | Optional   | Floating action button configuration |
+| `scrollController`  | `boolean`                 | `false`    | Enable scroll-based hide/reveal      |
+| `className`         | `string`                  | Optional   | Additional CSS classes               |
+| `position`          | `'top' \| 'bottom'`       | `'bottom'` | Position of the navbar               |
+| `showLabels`        | `boolean`                 | `true`     | Whether to show tab labels           |
+| `maxTabs`           | `number`                  | `5`        | Maximum tabs before overflow         |
+| `onActiveTabChange` | `(tabId: string) => void` | Optional   | Called when active tab changes       |
 
 ### Tab Interface
 
 ```tsx
 interface Tab {
-  id: string;                    // Unique identifier
-  label: string;                 // Display label
-  icon: React.ComponentType;     // Icon component (Lucide React)
-  action: () => void;            // Function to call when pressed
-  isActive?: boolean;            // Whether tab is currently active
-  badgeCount?: number;           // Notification badge count
-  hideOnMobile?: boolean;        // Hide on mobile devices
-  ariaLabel?: string;            // Custom accessibility label
+  id: string; // Unique identifier
+  label: string; // Display label
+  icon: React.ComponentType; // Icon component (Lucide React)
+  action: () => void; // Function to call when pressed
+  isActive?: boolean; // Whether tab is currently active
+  badgeCount?: number; // Notification badge count
+  hideOnMobile?: boolean; // Hide on mobile devices
+  ariaLabel?: string; // Custom accessibility label
 }
 ```
 
@@ -119,9 +121,9 @@ interface Tab {
 
 ```tsx
 interface FABConfig {
-  icon: React.ComponentType;     // FAB icon component
-  action: () => void;            // Function to call when pressed
-  ariaLabel?: string;            // Accessibility label
+  icon: React.ComponentType; // FAB icon component
+  action: () => void; // Function to call when pressed
+  ariaLabel?: string; // Accessibility label
   variant?: 'primary' | 'secondary'; // Visual variant
 }
 ```
@@ -166,7 +168,9 @@ import { setActiveTab } from '@/store/navigationSlice';
 
 const StatefulNavigation = () => {
   const dispatch = useAppDispatch();
-  const { activeTab, notifications } = useAppSelector(state => state.navigation);
+  const { activeTab, notifications } = useAppSelector(
+    (state) => state.navigation
+  );
 
   const tabs: Tab[] = [
     {
@@ -186,7 +190,12 @@ const StatefulNavigation = () => {
     },
   ];
 
-  return <NavBar tabs={tabs} onActiveTabChange={(id) => dispatch(setActiveTab(id))} />;
+  return (
+    <NavBar
+      tabs={tabs}
+      onActiveTabChange={(id) => dispatch(setActiveTab(id))}
+    />
+  );
 };
 ```
 
@@ -209,13 +218,15 @@ const CustomNavBar = () => {
 
 The component automatically adapts to different screen sizes:
 
-- **Mobile (< 768px)**: 
+- **Mobile (< 768px)**:
+
   - Shows maximum of 5 tabs
   - Filters out tabs with `hideOnMobile: true`
   - Adjusts spacing for portrait/landscape orientation
   - Includes safe area insets for modern phones
 
 - **Tablet (768px - 1023px)**:
+
   - Shows all provided tabs
   - Larger touch targets and spacing
   - Optimized for touch interaction
@@ -228,6 +239,7 @@ The component automatically adapts to different screen sizes:
 ## Accessibility Features
 
 ### ARIA Support
+
 - Proper `role="navigation"` on container
 - `aria-label` for navigation context
 - `aria-current="page"` for active tabs
@@ -235,16 +247,19 @@ The component automatically adapts to different screen sizes:
 - Custom `aria-label` support for complex actions
 
 ### Keyboard Navigation
+
 - All interactive elements are focusable
 - Visible focus indicators
 - Proper tab order
 
 ### Touch Targets
+
 - Minimum 48px touch targets (WCAG 2.5.5)
 - Comfortable spacing between elements
 - Touch-friendly gestures
 
 ### High Contrast Support
+
 - Respects system color preferences
 - Sufficient color contrast ratios
 - Clear visual hierarchy
@@ -252,6 +267,7 @@ The component automatically adapts to different screen sizes:
 ## Performance Considerations
 
 ### Optimizations
+
 - Uses `React.memo` where appropriate
 - Debounced scroll event handling (16ms)
 - Passive event listeners
@@ -259,11 +275,13 @@ The component automatically adapts to different screen sizes:
 - Conditional rendering based on breakpoints
 
 ### Memory Management
+
 - Automatic cleanup of event listeners
 - Timeout clearing on unmount
 - Efficient re-render prevention
 
 ### Animation Performance
+
 - Hardware-accelerated CSS transforms
 - `transform-gpu` class for better performance
 - Reduced motion support for accessibility
@@ -291,16 +309,19 @@ npm test -- --coverage NavBar.test.tsx
 ### Common Issues
 
 1. **Navbar not showing on mobile**
+
    - Check that you're not accidentally hiding it with CSS
    - Ensure proper z-index values
    - Verify responsive breakpoint detection
 
 2. **Scroll controller not working**
+
    - Ensure `scrollController={true}` is set
    - Check for CSS that might interfere with transforms
    - Verify scroll events are not prevented elsewhere
 
 3. **Icons not displaying**
+
    - Ensure Lucide React icons are properly imported
    - Check that icon components accept `className` prop
    - Verify icon components are passed correctly to tabs

@@ -7,12 +7,14 @@ This document outlines a comprehensive testing strategy for the Vueni applicatio
 ## Current State Analysis
 
 ### Testing Infrastructure: ❌ Missing
+
 - **No testing framework** installed
 - **No test files** present in codebase
 - **No CI/CD testing** pipeline
 - **No test coverage** reporting
 
 ### Risk Assessment: 🔴 Critical
+
 - **Financial calculations** have no validation
 - **User input handling** is untested
 - **Component rendering** has no regression protection
@@ -39,6 +41,7 @@ npm install -D msw@latest happy-dom
 ### 2. Configuration Files
 
 #### Vitest Configuration (`vitest.config.ts`)
+
 ```typescript
 import { defineConfig } from 'vitest/config';
 import react from '@vitejs/plugin-react-swc';
@@ -60,27 +63,28 @@ export default defineConfig({
         'src/test/',
         '**/*.d.ts',
         '**/*.stories.{js,jsx,ts,tsx}',
-        '**/index.ts'
+        '**/index.ts',
       ],
       thresholds: {
         global: {
           branches: 80,
           functions: 80,
           lines: 80,
-          statements: 80
-        }
-      }
-    }
+          statements: 80,
+        },
+      },
+    },
   },
   resolve: {
     alias: {
-      '@': path.resolve(__dirname, './src')
-    }
-  }
+      '@': path.resolve(__dirname, './src'),
+    },
+  },
 });
 ```
 
 #### Test Setup (`src/test/setup.ts`)
+
 ```typescript
 import '@testing-library/jest-dom';
 import { vi } from 'vitest';
@@ -112,12 +116,13 @@ Object.defineProperty(global, 'crypto', {
       encrypt: vi.fn(),
       decrypt: vi.fn(),
       generateKey: vi.fn(),
-    }
-  }
+    },
+  },
 });
 ```
 
 #### Playwright Configuration (`playwright.config.ts`)
+
 ```typescript
 import { defineConfig, devices } from '@playwright/test';
 
@@ -127,10 +132,7 @@ export default defineConfig({
   forbidOnly: !!process.env.CI,
   retries: process.env.CI ? 2 : 0,
   workers: process.env.CI ? 1 : undefined,
-  reporter: [
-    ['html'],
-    ['junit', { outputFile: 'test-results/junit.xml' }]
-  ],
+  reporter: [['html'], ['junit', { outputFile: 'test-results/junit.xml' }]],
   use: {
     baseURL: 'http://localhost:5173',
     trace: 'on-first-retry',
@@ -182,7 +184,7 @@ import {
   calculateMaximumHomePrice,
   calculateInflationAdjustedValue,
   calculatePortfolioBacktest,
-  convertCurrency
+  convertCurrency,
 } from '../calculators';
 
 describe('Financial Calculators', () => {
@@ -265,7 +267,9 @@ describe('Financial Calculators', () => {
     });
 
     it('should throw error for zero initial investment', () => {
-      expect(() => calculateROI(0, 1000)).toThrow('Initial investment cannot be 0');
+      expect(() => calculateROI(0, 1000)).toThrow(
+        'Initial investment cannot be 0'
+      );
     });
   });
 
@@ -287,10 +291,12 @@ describe('Financial Calculators', () => {
     });
 
     it('should throw error for zero or negative expenses', () => {
-      expect(() => calculateFinancialFreedomYears(500000, 0, 0.04))
-        .toThrow('Monthly expenses must be greater than 0');
-      expect(() => calculateFinancialFreedomYears(500000, -1000, 0.04))
-        .toThrow('Monthly expenses must be greater than 0');
+      expect(() => calculateFinancialFreedomYears(500000, 0, 0.04)).toThrow(
+        'Monthly expenses must be greater than 0'
+      );
+      expect(() => calculateFinancialFreedomYears(500000, -1000, 0.04)).toThrow(
+        'Monthly expenses must be greater than 0'
+      );
     });
   });
 
@@ -311,25 +317,25 @@ describe('EcoScore Service', () => {
       id: '1',
       merchant: 'Gas Station',
       category: { name: 'Transportation' },
-      amount: -50
+      amount: -50,
     },
     {
       id: '2',
       merchant: 'Whole Foods',
       category: { name: 'Food' },
-      amount: -100
+      amount: -100,
     },
     {
       id: '3',
       merchant: 'Amazon',
       category: { name: 'Shopping' },
-      amount: -75
-    }
+      amount: -75,
+    },
   ];
 
   it('should calculate eco score from transactions', () => {
     const result = calculateEcoScore(mockTransactions);
-    
+
     expect(result.score).toBeGreaterThanOrEqual(0);
     expect(result.score).toBeLessThanOrEqual(100);
     expect(result.totalKgCO2e).toBeGreaterThan(0);
@@ -340,7 +346,7 @@ describe('EcoScore Service', () => {
 
   it('should handle empty transaction list', () => {
     const result = calculateEcoScore([]);
-    
+
     expect(result.score).toBe(0);
     expect(result.totalKgCO2e).toBe(0);
     expect(result.sustainableSpendRatio).toBe(0);
@@ -352,10 +358,10 @@ describe('EcoScore Service', () => {
         id: '1',
         merchant: 'Whole Foods Market',
         category: { name: 'Food' },
-        amount: -100
-      }
+        amount: -100,
+      },
     ];
-    
+
     const result = calculateEcoScore(sustainableTransactions);
     expect(result.sustainableSpendRatio).toBeGreaterThan(0);
   });
@@ -367,13 +373,13 @@ describe('EcoScore Service', () => {
         id: '4',
         merchant: 'Employer',
         category: { name: 'Income' },
-        amount: 5000
-      }
+        amount: 5000,
+      },
     ];
-    
+
     const result = calculateEcoScore(mixedTransactions);
     const originalResult = calculateEcoScore(mockTransactions);
-    
+
     expect(result.totalKgCO2e).toBe(originalResult.totalKgCO2e);
   });
 });
@@ -410,7 +416,7 @@ const mockTransactions = [
 describe('TransactionList Component', () => {
   it('should render transaction list correctly', () => {
     render(<TransactionList transactions={mockTransactions} />);
-    
+
     expect(screen.getByText('Apple Store')).toBeInTheDocument();
     expect(screen.getByText('Starbucks')).toBeInTheDocument();
     expect(screen.getByText('-$299.99')).toBeInTheDocument();
@@ -419,47 +425,47 @@ describe('TransactionList Component', () => {
 
   it('should handle empty transaction list', () => {
     render(<TransactionList transactions={[]} />);
-    
+
     expect(screen.getByText(/no transactions/i)).toBeInTheDocument();
   });
 
   it('should call onTransactionClick when transaction is clicked', async () => {
     const onTransactionClick = vi.fn();
     const user = userEvent.setup();
-    
+
     render(
-      <TransactionList 
+      <TransactionList
         transactions={mockTransactions}
         onTransactionClick={onTransactionClick}
       />
     );
-    
+
     const firstTransaction = screen.getByTestId('transaction-trans_001');
     await user.click(firstTransaction);
-    
+
     expect(onTransactionClick).toHaveBeenCalledWith(mockTransactions[0]);
   });
 
   it('should filter transactions when search is used', async () => {
     const user = userEvent.setup();
-    
+
     render(<TransactionList transactions={mockTransactions} searchable />);
-    
+
     const searchInput = screen.getByPlaceholderText(/search transactions/i);
     await user.type(searchInput, 'Apple');
-    
+
     expect(screen.getByText('Apple Store')).toBeInTheDocument();
     expect(screen.queryByText('Starbucks')).not.toBeInTheDocument();
   });
 
   it('should group transactions by date when enabled', () => {
     render(
-      <TransactionList 
+      <TransactionList
         transactions={mockTransactions}
-        groupByDate 
+        groupByDate
       />
     );
-    
+
     expect(screen.getByText('January 15, 2024')).toBeInTheDocument();
     expect(screen.getByText('January 14, 2024')).toBeInTheDocument();
   });
@@ -481,7 +487,7 @@ describe('useLiquidGlass Hook', () => {
 
   it('should initialize with default settings', () => {
     const { result } = renderHook(() => useLiquidGlass());
-    
+
     expect(result.current.settings.opacity).toBe(0.1);
     expect(result.current.settings.blur).toBe(20);
     expect(result.current.settings.enabled).toBe(true);
@@ -489,11 +495,11 @@ describe('useLiquidGlass Hook', () => {
 
   it('should update settings and persist to localStorage', () => {
     const { result } = renderHook(() => useLiquidGlass());
-    
+
     act(() => {
       result.current.updateSettings({ opacity: 0.5 });
     });
-    
+
     expect(result.current.settings.opacity).toBe(0.5);
     expect(localStorage.setItem).toHaveBeenCalledWith(
       'liquidGlassSettings',
@@ -502,14 +508,17 @@ describe('useLiquidGlass Hook', () => {
   });
 
   it('should load settings from localStorage', () => {
-    localStorage.setItem('liquidGlassSettings', JSON.stringify({
-      opacity: 0.3,
-      blur: 15,
-      enabled: false
-    }));
-    
+    localStorage.setItem(
+      'liquidGlassSettings',
+      JSON.stringify({
+        opacity: 0.3,
+        blur: 15,
+        enabled: false,
+      })
+    );
+
     const { result } = renderHook(() => useLiquidGlass());
-    
+
     expect(result.current.settings.opacity).toBe(0.3);
     expect(result.current.settings.blur).toBe(15);
     expect(result.current.settings.enabled).toBe(false);
@@ -540,32 +549,32 @@ const renderWithRouter = (component: React.ReactElement) => {
 describe('Calculator Flow Integration', () => {
   it('should complete compound interest calculation flow', async () => {
     const user = userEvent.setup();
-    
+
     renderWithRouter(<CompoundInterestCalculator />);
-    
+
     // Fill in form inputs
     const principalInput = screen.getByLabelText(/principal/i);
     const rateInput = screen.getByLabelText(/interest rate/i);
     const yearsInput = screen.getByLabelText(/years/i);
-    
+
     await user.clear(principalInput);
     await user.type(principalInput, '10000');
-    
+
     await user.clear(rateInput);
     await user.type(rateInput, '5');
-    
+
     await user.clear(yearsInput);
     await user.type(yearsInput, '10');
-    
+
     // Submit calculation
     const calculateButton = screen.getByRole('button', { name: /calculate/i });
     await user.click(calculateButton);
-    
+
     // Verify results
     await waitFor(() => {
       expect(screen.getByTestId('result-value')).toHaveTextContent('$16,470.09');
     });
-    
+
     // Verify breakdown is shown
     expect(screen.getByText(/interest earned/i)).toBeInTheDocument();
     expect(screen.getByText(/total amount/i)).toBeInTheDocument();
@@ -573,17 +582,17 @@ describe('Calculator Flow Integration', () => {
 
   it('should handle input validation errors', async () => {
     const user = userEvent.setup();
-    
+
     renderWithRouter(<CompoundInterestCalculator />);
-    
+
     const principalInput = screen.getByLabelText(/principal/i);
     const calculateButton = screen.getByRole('button', { name: /calculate/i });
-    
+
     // Enter invalid input
     await user.clear(principalInput);
     await user.type(principalInput, '-1000');
     await user.click(calculateButton);
-    
+
     // Verify error message
     await waitFor(() => {
       expect(screen.getByText(/principal must be positive/i)).toBeInTheDocument();
@@ -642,61 +651,72 @@ import { test, expect } from '@playwright/test';
 test.describe('Calculator User Journeys', () => {
   test('Complete compound interest calculation journey', async ({ page }) => {
     await page.goto('/calculators');
-    
+
     // Navigate to compound interest calculator
     await page.click('[data-testid="compound-interest-card"]');
-    
+
     // Verify page loaded
-    await expect(page.locator('h1')).toContainText('Compound Interest Calculator');
-    
+    await expect(page.locator('h1')).toContainText(
+      'Compound Interest Calculator'
+    );
+
     // Fill in form
     await page.fill('[data-testid="principal-input"]', '10000');
     await page.fill('[data-testid="rate-input"]', '5');
     await page.fill('[data-testid="years-input"]', '10');
     await page.selectOption('[data-testid="compounds-select"]', '12');
-    
+
     // Calculate
     await page.click('[data-testid="calculate-button"]');
-    
+
     // Verify result
-    await expect(page.locator('[data-testid="result-value"]')).toContainText('$16,470.09');
-    
+    await expect(page.locator('[data-testid="result-value"]')).toContainText(
+      '$16,470.09'
+    );
+
     // Verify chart is displayed
     await expect(page.locator('[data-testid="growth-chart"]')).toBeVisible();
-    
+
     // Test saving calculation
     await page.click('[data-testid="save-calculation-button"]');
-    await page.fill('[data-testid="calculation-name-input"]', 'My Retirement Fund');
+    await page.fill(
+      '[data-testid="calculation-name-input"]',
+      'My Retirement Fund'
+    );
     await page.click('[data-testid="save-confirm-button"]');
-    
+
     // Verify saved calculation appears in history
-    await expect(page.locator('[data-testid="saved-calculations"]')).toContainText('My Retirement Fund');
+    await expect(
+      page.locator('[data-testid="saved-calculations"]')
+    ).toContainText('My Retirement Fund');
   });
 
   test('Multi-calculator comparison journey', async ({ page }) => {
     await page.goto('/calculators');
-    
+
     // Calculate compound interest
     await page.click('[data-testid="compound-interest-card"]');
     await page.fill('[data-testid="principal-input"]', '10000');
     await page.fill('[data-testid="rate-input"]', '5');
     await page.fill('[data-testid="years-input"]', '10');
     await page.click('[data-testid="calculate-button"]');
-    
-    const compoundResult = await page.textContent('[data-testid="result-value"]');
-    
+
+    const compoundResult = await page.textContent(
+      '[data-testid="result-value"]'
+    );
+
     // Navigate to loan calculator
     await page.click('[data-testid="back-button"]');
     await page.click('[data-testid="loan-calculator-card"]');
-    
+
     // Calculate loan payment
     await page.fill('[data-testid="principal-input"]', '300000');
     await page.fill('[data-testid="rate-input"]', '4.5');
     await page.fill('[data-testid="years-input"]', '30');
     await page.click('[data-testid="calculate-button"]');
-    
+
     const loanResult = await page.textContent('[data-testid="result-value"]');
-    
+
     // Verify both calculations are different and valid
     expect(compoundResult).not.toBe(loanResult);
     expect(compoundResult).toMatch(/\$[\d,]+\.\d{2}/);
@@ -714,21 +734,25 @@ import { test, expect } from '@playwright/test';
 test.describe('Responsive Design', () => {
   test('Calculator works on mobile devices', async ({ page }) => {
     await page.setViewportSize({ width: 375, height: 667 }); // iPhone SE
-    
+
     await page.goto('/calculators/compound-interest');
-    
+
     // Verify mobile layout
-    await expect(page.locator('[data-testid="mobile-calculator-layout"]')).toBeVisible();
-    
+    await expect(
+      page.locator('[data-testid="mobile-calculator-layout"]')
+    ).toBeVisible();
+
     // Test form interactions on mobile
     await page.fill('[data-testid="principal-input"]', '5000');
     await page.fill('[data-testid="rate-input"]', '3.5');
     await page.fill('[data-testid="years-input"]', '15');
-    
+
     // Scroll to calculate button (might be below fold on mobile)
-    await page.locator('[data-testid="calculate-button"]').scrollIntoViewIfNeeded();
+    await page
+      .locator('[data-testid="calculate-button"]')
+      .scrollIntoViewIfNeeded();
     await page.click('[data-testid="calculate-button"]');
-    
+
     // Verify result is displayed
     await expect(page.locator('[data-testid="result-value"]')).toBeVisible();
   });
@@ -737,23 +761,33 @@ test.describe('Responsive Design', () => {
     // Test desktop navigation
     await page.setViewportSize({ width: 1200, height: 800 });
     await page.goto('/');
-    
-    await expect(page.locator('[data-testid="desktop-navigation"]')).toBeVisible();
-    await expect(page.locator('[data-testid="mobile-menu-button"]')).not.toBeVisible();
-    
+
+    await expect(
+      page.locator('[data-testid="desktop-navigation"]')
+    ).toBeVisible();
+    await expect(
+      page.locator('[data-testid="mobile-menu-button"]')
+    ).not.toBeVisible();
+
     // Test tablet navigation
     await page.setViewportSize({ width: 768, height: 1024 });
     await page.reload();
-    
-    await expect(page.locator('[data-testid="tablet-navigation"]')).toBeVisible();
-    
+
+    await expect(
+      page.locator('[data-testid="tablet-navigation"]')
+    ).toBeVisible();
+
     // Test mobile navigation
     await page.setViewportSize({ width: 375, height: 667 });
     await page.reload();
-    
-    await expect(page.locator('[data-testid="mobile-menu-button"]')).toBeVisible();
+
+    await expect(
+      page.locator('[data-testid="mobile-menu-button"]')
+    ).toBeVisible();
     await page.click('[data-testid="mobile-menu-button"]');
-    await expect(page.locator('[data-testid="mobile-navigation-menu"]')).toBeVisible();
+    await expect(
+      page.locator('[data-testid="mobile-navigation-menu"]')
+    ).toBeVisible();
   });
 });
 ```
@@ -765,42 +799,49 @@ test.describe('Responsive Design', () => {
 import { test, expect } from '@playwright/test';
 
 test.describe('Security Testing', () => {
-  test('Should prevent XSS attacks in transaction descriptions', async ({ page }) => {
+  test('Should prevent XSS attacks in transaction descriptions', async ({
+    page,
+  }) => {
     await page.goto('/transactions');
-    
+
     // Attempt to inject XSS
     const xssPayload = '<script>window.xssTriggered = true;</script>';
-    
+
     await page.click('[data-testid="add-transaction-button"]');
     await page.fill('[data-testid="merchant-input"]', xssPayload);
     await page.fill('[data-testid="description-input"]', xssPayload);
     await page.fill('[data-testid="amount-input"]', '-50');
     await page.click('[data-testid="save-transaction-button"]');
-    
+
     // Verify XSS was not executed
     const xssTriggered = await page.evaluate(() => window.xssTriggered);
     expect(xssTriggered).toBeUndefined();
-    
+
     // Verify content is safely displayed
-    await expect(page.locator('[data-testid="transaction-list"]')).toContainText(xssPayload);
+    await expect(
+      page.locator('[data-testid="transaction-list"]')
+    ).toContainText(xssPayload);
   });
 
   test('Should implement rate limiting on calculations', async ({ page }) => {
     await page.goto('/calculators/compound-interest');
-    
+
     // Attempt rapid-fire calculations
     const promises = [];
     for (let i = 0; i < 20; i++) {
       promises.push(
-        page.fill('[data-testid="principal-input"]', `${1000 + i}`)
+        page
+          .fill('[data-testid="principal-input"]', `${1000 + i}`)
           .then(() => page.click('[data-testid="calculate-button"]'))
       );
     }
-    
+
     await Promise.all(promises);
-    
+
     // Should see rate limiting message
-    await expect(page.locator('[data-testid="rate-limit-warning"]')).toBeVisible();
+    await expect(
+      page.locator('[data-testid="rate-limit-warning"]')
+    ).toBeVisible();
   });
 });
 ```
@@ -816,24 +857,28 @@ import { test, expect } from '@playwright/test';
 test.describe('Performance Testing', () => {
   test('Page load performance', async ({ page }) => {
     const startTime = Date.now();
-    
+
     await page.goto('/');
-    
+
     // Wait for page to be fully loaded
     await page.waitForLoadState('networkidle');
-    
+
     const loadTime = Date.now() - startTime;
     expect(loadTime).toBeLessThan(3000); // Should load within 3 seconds
-    
+
     // Check Lighthouse metrics
     const performance = await page.evaluate(() => {
-      const navigation = performance.getEntriesByType('navigation')[0] as PerformanceNavigationTiming;
+      const navigation = performance.getEntriesByType(
+        'navigation'
+      )[0] as PerformanceNavigationTiming;
       return {
-        domContentLoaded: navigation.domContentLoadedEventEnd - navigation.domContentLoadedEventStart,
+        domContentLoaded:
+          navigation.domContentLoadedEventEnd -
+          navigation.domContentLoadedEventStart,
         loadComplete: navigation.loadEventEnd - navigation.loadEventStart,
       };
     });
-    
+
     expect(performance.domContentLoaded).toBeLessThan(1500);
     expect(performance.loadComplete).toBeLessThan(3000);
   });
@@ -841,21 +886,21 @@ test.describe('Performance Testing', () => {
   test('Large transaction list performance', async ({ page }) => {
     // Navigate to page with large dataset
     await page.goto('/transactions?mock=large');
-    
+
     const startTime = Date.now();
-    
+
     // Wait for virtual scrolling to initialize
     await page.waitForSelector('[data-testid="virtualized-list"]');
-    
+
     const renderTime = Date.now() - startTime;
     expect(renderTime).toBeLessThan(1000); // Should render within 1 second
-    
+
     // Test scrolling performance
     const scrollStart = Date.now();
     await page.mouse.wheel(0, 5000); // Scroll down
     await page.waitForTimeout(100); // Allow for scroll to complete
     const scrollTime = Date.now() - scrollStart;
-    
+
     expect(scrollTime).toBeLessThan(200); // Scrolling should be smooth
   });
 });
@@ -873,27 +918,41 @@ export const createMockTransaction = (overrides = {}) => ({
   id: faker.string.uuid(),
   merchant: faker.company.name(),
   category: {
-    name: faker.helpers.arrayElement(['Food', 'Transportation', 'Shopping', 'Utilities']),
-    color: faker.color.rgb()
+    name: faker.helpers.arrayElement([
+      'Food',
+      'Transportation',
+      'Shopping',
+      'Utilities',
+    ]),
+    color: faker.color.rgb(),
   },
   amount: faker.number.float({ min: -500, max: -0.01, fractionDigits: 2 }),
   date: faker.date.recent().toISOString(),
   status: faker.helpers.arrayElement(['completed', 'pending', 'failed']),
   description: faker.lorem.sentence(),
-  ...overrides
+  ...overrides,
 });
 
-export const createMockTransactions = (count: number) => 
+export const createMockTransactions = (count: number) =>
   Array.from({ length: count }, () => createMockTransaction());
 
 export const createMockAccount = (overrides = {}) => ({
   id: faker.string.uuid(),
-  type: faker.helpers.arrayElement(['Checking', 'Savings', 'Credit Card', 'Investment']),
+  type: faker.helpers.arrayElement([
+    'Checking',
+    'Savings',
+    'Credit Card',
+    'Investment',
+  ]),
   nickname: faker.finance.accountName(),
   balance: faker.number.float({ min: 0, max: 100000, fractionDigits: 2 }),
-  availableBalance: faker.number.float({ min: 0, max: 100000, fractionDigits: 2 }),
+  availableBalance: faker.number.float({
+    min: 0,
+    max: 100000,
+    fractionDigits: 2,
+  }),
   currency: 'USD',
-  ...overrides
+  ...overrides,
 });
 ```
 
@@ -906,7 +965,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { BrowserRouter } from 'react-router-dom';
 import { ThemeProvider } from 'next-themes';
 
-export const createTestQueryClient = () => 
+export const createTestQueryClient = () =>
   new QueryClient({
     defaultOptions: {
       queries: { retry: false },
@@ -957,16 +1016,16 @@ jobs:
         with:
           node-version: '18'
           cache: 'npm'
-      
+
       - name: Install dependencies
         run: npm ci
-      
+
       - name: Run unit tests
         run: npm run test:unit
-      
+
       - name: Generate coverage report
         run: npm run test:coverage
-      
+
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v3
         with:
@@ -980,19 +1039,19 @@ jobs:
         with:
           node-version: '18'
           cache: 'npm'
-      
+
       - name: Install dependencies
         run: npm ci
-      
+
       - name: Install Playwright
         run: npx playwright install --with-deps
-      
+
       - name: Build application
         run: npm run build
-      
+
       - name: Run E2E tests
         run: npm run test:e2e
-      
+
       - name: Upload test results
         uses: actions/upload-artifact@v3
         if: failure()
@@ -1022,13 +1081,13 @@ jobs:
 
 ### 1. Coverage Targets
 
-| Component Type | Target Coverage | Priority |
-|----------------|----------------|----------|
-| Financial Calculators | 100% | Critical |
-| Service Layer | 90% | High |
-| UI Components | 80% | Medium |
-| Utility Functions | 95% | High |
-| Integration Flows | 70% | Medium |
+| Component Type        | Target Coverage | Priority |
+| --------------------- | --------------- | -------- |
+| Financial Calculators | 100%            | Critical |
+| Service Layer         | 90%             | High     |
+| UI Components         | 80%             | Medium   |
+| Utility Functions     | 95%             | High     |
+| Integration Flows     | 70%             | Medium   |
 
 ### 2. Quality Gates
 
@@ -1061,24 +1120,28 @@ coverage: {
 ## Implementation Timeline
 
 ### Week 1: Foundation
+
 - [ ] Set up testing framework (Vitest, Playwright)
 - [ ] Configure test environment and CI/CD
 - [ ] Create test utilities and factories
 - [ ] Write first calculator tests (compound interest)
 
 ### Week 2: Core Testing
+
 - [ ] Complete all calculator tests (100% coverage)
 - [ ] Implement service layer tests
 - [ ] Create component test templates
 - [ ] Set up performance testing baseline
 
 ### Week 3: Component Testing
+
 - [ ] Test critical UI components
 - [ ] Implement integration tests
 - [ ] Add responsive design tests
 - [ ] Create security test suite
 
 ### Week 4: E2E & Polish
+
 - [ ] Complete end-to-end test scenarios
 - [ ] Add performance regression tests
 - [ ] Implement load testing
@@ -1087,6 +1150,7 @@ coverage: {
 ## Success Metrics
 
 ### Quantitative Goals
+
 - **80% overall test coverage** across codebase
 - **100% calculator function coverage** (critical business logic)
 - **Zero critical security vulnerabilities** in automated scans
@@ -1094,6 +1158,7 @@ coverage: {
 - **95% test reliability** (passing rate in CI/CD)
 
 ### Qualitative Goals
+
 - **Developer confidence** in making changes
 - **Regression prevention** for critical features
 - **Documentation coverage** for all test scenarios

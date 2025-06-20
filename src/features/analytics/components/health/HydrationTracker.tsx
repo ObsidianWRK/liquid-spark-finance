@@ -6,7 +6,8 @@ import { useHydrationStore } from '../../store/hydration';
 const TOTAL_GLASSES = 8;
 
 export const HydrationTracker: React.FC = () => {
-  const { count, increment, checkReminder, remind, dismissReminder } = useHydrationStore();
+  const { count, increment, checkReminder, remind, dismissReminder } =
+    useHydrationStore();
 
   useEffect(() => {
     checkReminder();
@@ -37,4 +38,4 @@ export const HydrationTracker: React.FC = () => {
   );
 };
 
-export default HydrationTracker; 
+export default HydrationTracker;

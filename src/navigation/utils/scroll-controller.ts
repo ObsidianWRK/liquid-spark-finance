@@ -87,11 +87,20 @@ export class ScrollController {
     window.removeEventListener('scroll', this.handleScroll);
 
     if (this.visualViewport) {
-      this.visualViewport.removeEventListener('resize', this.handleViewportResize);
-      this.visualViewport.removeEventListener('scroll', this.handleViewportScroll);
+      this.visualViewport.removeEventListener(
+        'resize',
+        this.handleViewportResize
+      );
+      this.visualViewport.removeEventListener(
+        'scroll',
+        this.handleViewportScroll
+      );
     }
 
-    window.removeEventListener('orientationchange', this.handleOrientationChange);
+    window.removeEventListener(
+      'orientationchange',
+      this.handleOrientationChange
+    );
 
     // Cancel any pending updates
     if (this.scrollTimeout) {
@@ -108,7 +117,9 @@ export class ScrollController {
   /**
    * Subscribe to state changes
    */
-  public subscribe(listener: (state: ScrollControllerState) => void): () => void {
+  public subscribe(
+    listener: (state: ScrollControllerState) => void
+  ): () => void {
     this.listeners.add(listener);
     return () => this.listeners.delete(listener);
   }
@@ -172,7 +183,7 @@ export class ScrollController {
     const currentScrollY = window.scrollY;
     const currentTime = performance.now();
     const timeDelta = currentTime - this.lastScrollTime;
-    
+
     // Calculate velocity only if enough time has passed
     let velocity = 0;
     if (timeDelta > 0) {
@@ -250,7 +261,7 @@ export class ScrollController {
     // Reset state on orientation change
     this.lastScrollY = window.scrollY;
     this.lastScrollTime = performance.now();
-    
+
     // Always show navigation after orientation change
     this.updateVisibility(true);
   };
@@ -261,7 +272,7 @@ export class ScrollController {
   private updateVisibility(isVisible: boolean): void {
     if (this.state.isVisible !== isVisible) {
       this.state.isVisible = isVisible;
-      
+
       // Call config callback
       if (this.config.onVisibilityChange) {
         this.config.onVisibilityChange(isVisible);
@@ -276,7 +287,7 @@ export class ScrollController {
    */
   private notifyListeners(): void {
     const state = this.getState();
-    this.listeners.forEach(listener => listener(state));
+    this.listeners.forEach((listener) => listener(state));
   }
 }
 
@@ -284,7 +295,9 @@ export class ScrollController {
 export const scrollController = new ScrollController();
 
 // Factory function for creating new controller instances
-export function createScrollController(config?: Partial<ScrollControllerConfig>): ScrollController {
+export function createScrollController(
+  config?: Partial<ScrollControllerConfig>
+): ScrollController {
   return new ScrollController(config);
 }
 
@@ -297,14 +310,17 @@ export function getNavigationTransform(
   if (isVisible) {
     return `translateY(${safeAreaTop}px)`;
   }
-  
+
   // Hide by moving up beyond the safe area
   const hideDistance = orientation === 'landscape' ? -80 : -100; // Adjust for nav height
   return `translateY(${hideDistance - safeAreaTop}px)`;
 }
 
 // Utility function to detect virtual keyboard
-export function detectVirtualKeyboard(): { isVisible: boolean; height: number } {
+export function detectVirtualKeyboard(): {
+  isVisible: boolean;
+  height: number;
+} {
   if (typeof window === 'undefined') {
     return { isVisible: false, height: 0 };
   }
@@ -315,7 +331,7 @@ export function detectVirtualKeyboard(): { isVisible: boolean; height: number } 
     const keyboardHeight = window.innerHeight - viewport.height;
     return {
       isVisible: keyboardHeight > 50, // Threshold for keyboard detection
-      height: Math.max(0, keyboardHeight)
+      height: Math.max(0, keyboardHeight),
     };
   }
 
@@ -323,10 +339,10 @@ export function detectVirtualKeyboard(): { isVisible: boolean; height: number } 
   const originalHeight = window.screen.height;
   const currentHeight = window.innerHeight;
   const heightDiff = originalHeight - currentHeight;
-  
+
   return {
     isVisible: heightDiff > 150, // Conservative threshold
-    height: Math.max(0, heightDiff)
+    height: Math.max(0, heightDiff),
   };
 }
 

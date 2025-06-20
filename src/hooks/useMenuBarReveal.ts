@@ -4,7 +4,9 @@ import { MENU_BAR_HEIGHT } from '@/shared/tokens/menuBar.tokens';
 // Detect current screen orientation. Portrait is default fallback.
 function getOrientation(): 'portrait' | 'landscape' {
   if (typeof window === 'undefined') return 'portrait';
-  return window.matchMedia('(orientation: landscape)').matches ? 'landscape' : 'portrait';
+  return window.matchMedia('(orientation: landscape)').matches
+    ? 'landscape'
+    : 'portrait';
 }
 
 /**
@@ -14,7 +16,9 @@ function getOrientation(): 'portrait' | 'landscape' {
  */
 export function useMenuBarReveal() {
   const [visible, setVisible] = useState(true);
-  const [orientation, setOrientation] = useState<'portrait' | 'landscape'>(getOrientation);
+  const [orientation, setOrientation] = useState<'portrait' | 'landscape'>(
+    getOrientation
+  );
 
   // ----- Orientation listener -----
   useEffect(() => {
@@ -72,6 +76,8 @@ export function useMenuBarReveal() {
   }, [visible]);
 
   // ----- Public interface -----
-  const translateY = visible ? '0' : `calc(-1 * ${MENU_BAR_HEIGHT[orientation]}px)`;
+  const translateY = visible
+    ? '0'
+    : `calc(-1 * ${MENU_BAR_HEIGHT[orientation]}px)`;
   return { visible, orientation, translateY } as const;
-} 
+}

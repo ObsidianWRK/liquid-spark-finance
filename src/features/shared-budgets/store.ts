@@ -1,6 +1,6 @@
-import { create } from "zustand";
-import { householdService } from "@/features/shared-budgets/api/householdService";
-import { Household } from "@/shared/types/shared";
+import { create } from 'zustand';
+import { householdService } from '@/features/shared-budgets/api/householdService';
+import { Household } from '@/shared/types/shared';
 
 interface SharedBudgetsState {
   households: Household[];
@@ -20,11 +20,11 @@ export const useSharedBudgetsStore = create<SharedBudgetsState>((set, get) => ({
       const households = await householdService.listHouseholds();
       set({ households, loading: false });
     } catch (err: any) {
-      set({ error: err.message ?? "Unknown", loading: false });
+      set({ error: err.message ?? 'Unknown', loading: false });
     }
   },
   create: async (name: string) => {
     await householdService.createHousehold(name);
     await get().refresh();
   },
-})); 
+}));

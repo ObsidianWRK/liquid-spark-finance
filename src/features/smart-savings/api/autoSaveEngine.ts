@@ -1,7 +1,9 @@
-import { AutosavePlan } from "../types";
+import { AutosavePlan } from '../types';
 
 export interface AutoSaveEngine {
-  createPlan: (plan: Omit<AutosavePlan, "id" | "nextTransferDate">) => Promise<AutosavePlan>;
+  createPlan: (
+    plan: Omit<AutosavePlan, 'id' | 'nextTransferDate'>
+  ) => Promise<AutosavePlan>;
   listPlans: () => Promise<AutosavePlan[]>;
   pausePlan: (planId: string) => Promise<void>;
   resumePlan: (planId: string) => Promise<void>;
@@ -10,10 +12,12 @@ export interface AutoSaveEngine {
 class MockAutoSaveEngine implements AutoSaveEngine {
   private plans: AutosavePlan[] = [];
 
-  async createPlan(planInput: Omit<AutosavePlan, "id" | "nextTransferDate">): Promise<AutosavePlan> {
+  async createPlan(
+    planInput: Omit<AutosavePlan, 'id' | 'nextTransferDate'>
+  ): Promise<AutosavePlan> {
     const plan: AutosavePlan = {
       ...planInput,
-      id: "plan-" + Math.random().toString(36).substring(2),
+      id: 'plan-' + Math.random().toString(36).substring(2),
       nextTransferDate: new Date().toISOString(),
       isActive: true,
     };
@@ -36,4 +40,4 @@ class MockAutoSaveEngine implements AutoSaveEngine {
   }
 }
 
-export const autoSaveEngine: AutoSaveEngine = new MockAutoSaveEngine(); 
+export const autoSaveEngine: AutoSaveEngine = new MockAutoSaveEngine();

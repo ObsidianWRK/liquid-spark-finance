@@ -1,6 +1,6 @@
-import { create } from "zustand";
-import { bankLinkProvider } from "@/features/bank-linking/api/bankLinkProvider";
-import { LinkedAccount } from "@/shared/types/shared";
+import { create } from 'zustand';
+import { bankLinkProvider } from '@/features/bank-linking/api/bankLinkProvider';
+import { LinkedAccount } from '@/shared/types/shared';
 
 interface BankLinkingState {
   accounts: LinkedAccount[];
@@ -21,15 +21,15 @@ export const useBankLinkingStore = create<BankLinkingState>((set, get) => ({
       const accounts = await bankLinkProvider.getLinkedAccounts();
       set({ accounts, loading: false });
     } catch (err: any) {
-      set({ error: err.message ?? "Unknown error", loading: false });
+      set({ error: err.message ?? 'Unknown error', loading: false });
     }
   },
   linkMockAccount: async () => {
-    await bankLinkProvider.exchangePublicToken("public-token-" + Date.now());
+    await bankLinkProvider.exchangePublicToken('public-token-' + Date.now());
     await get().refresh();
   },
   unlink: async (id: string) => {
     await bankLinkProvider.unlinkAccount(id);
     await get().refresh();
   },
-})); 
+}));

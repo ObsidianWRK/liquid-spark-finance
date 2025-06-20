@@ -21,7 +21,12 @@ interface AIResponse {
 
 interface FinancialInsight {
   id: string;
-  type: 'spending_pattern' | 'savings_opportunity' | 'budget_analysis' | 'investment_advice' | 'debt_management';
+  type:
+    | 'spending_pattern'
+    | 'savings_opportunity'
+    | 'budget_analysis'
+    | 'investment_advice'
+    | 'debt_management';
   title: string;
   description: string;
   impact: 'high' | 'medium' | 'low';
@@ -68,15 +73,17 @@ export class AIFinancialService {
         create: async (params: any) => {
           // Mock AI response - in production this would call OpenAI API
           return {
-            choices: [{
-              message: {
-                content: this.generateMockResponse(params.messages)
-              }
-            }]
+            choices: [
+              {
+                message: {
+                  content: this.generateMockResponse(params.messages),
+                },
+              },
+            ],
           };
-        }
-      }
-    }
+        },
+      },
+    },
   };
 
   static getInstance(): AIFinancialService {
@@ -99,20 +106,23 @@ export class AIFinancialService {
       const userMessage = this.buildUserMessage(message, context);
 
       const response = await this.openaiClient.chat.completions.create({
-        model: "gpt-4",
+        model: 'gpt-4',
         messages: [
-          { role: "system", content: systemPrompt },
-          { role: "user", content: userMessage }
+          { role: 'system', content: systemPrompt },
+          { role: 'user', content: userMessage },
         ],
         temperature: 0.3,
-        max_tokens: 1000
+        max_tokens: 1000,
       });
 
       const aiContent = response.choices[0].message.content;
-      
+
       // Generate insights and recommendations based on the query and context
       const insights = await this.generateInsights(message, context);
-      const recommendations = await this.generateRecommendations(message, context);
+      const recommendations = await this.generateRecommendations(
+        message,
+        context
+      );
 
       // Store in chat history
       const chatMessage: ChatMessage = {
@@ -122,7 +132,7 @@ export class AIFinancialService {
         timestamp: new Date(),
         insights,
         recommendations,
-        context
+        context,
       };
 
       this.addToChatHistory(familyId, chatMessage);
@@ -131,7 +141,7 @@ export class AIFinancialService {
         content: aiContent,
         insights,
         recommendations,
-        confidence: 0.85
+        confidence: 0.85,
       };
     } catch (error) {
       console.error('AI query processing failed:', error);
@@ -189,11 +199,11 @@ export class AIFinancialService {
         actionItems: [
           'Set up automatic transfers to savings',
           'Reduce discretionary spending by 10%',
-          'Consider a high-yield savings account'
+          'Consider a high-yield savings account',
         ],
         potentialSavings: context.stats.monthlyExpenses * 3,
         timeframe: 'long_term',
-        priority: 'high'
+        priority: 'high',
       });
     }
 
@@ -208,11 +218,11 @@ export class AIFinancialService {
         actionItems: [
           'Review recent transactions in this category',
           'Set a monthly budget limit',
-          'Look for alternative options to reduce costs'
+          'Look for alternative options to reduce costs',
         ],
         potentialSavings: topCategory.amount * 0.15,
         timeframe: 'short_term',
-        priority: 'medium'
+        priority: 'medium',
       });
     }
 
@@ -226,30 +236,37 @@ export class AIFinancialService {
         actionItems: [
           'Consider debt consolidation',
           'Pay more than minimum on high-interest debt',
-          'Avoid taking on new debt'
+          'Avoid taking on new debt',
         ],
         timeframe: 'long_term',
-        priority: 'high'
+        priority: 'high',
       });
     }
 
     // Investment allocation
-    const stockAllocation = context.stats.investmentAllocation.stocks / 
-      (context.stats.investmentAllocation.stocks + context.stats.investmentAllocation.bonds + context.stats.investmentAllocation.cash);
-    
-    if (stockAllocation < 0.6 && context.family.settings.riskTolerance !== 'conservative') {
+    const stockAllocation =
+      context.stats.investmentAllocation.stocks /
+      (context.stats.investmentAllocation.stocks +
+        context.stats.investmentAllocation.bonds +
+        context.stats.investmentAllocation.cash);
+
+    if (
+      stockAllocation < 0.6 &&
+      context.family.settings.riskTolerance !== 'conservative'
+    ) {
       recommendations.push({
         id: this.generateRecommendationId(),
         type: 'optimization',
         title: 'Optimize Investment Allocation',
-        description: 'Your portfolio may be too conservative for your risk tolerance and time horizon.',
+        description:
+          'Your portfolio may be too conservative for your risk tolerance and time horizon.',
         actionItems: [
           'Consider increasing stock allocation',
           'Review investment fees and expenses',
-          'Rebalance portfolio quarterly'
+          'Rebalance portfolio quarterly',
         ],
         timeframe: 'medium_term',
-        priority: 'medium'
+        priority: 'medium',
       });
     }
 
@@ -301,10 +318,13 @@ Key Guidelines:
 Always format your response in a friendly, professional tone and include specific dollar amounts or percentages when relevant.`;
   }
 
-  private buildUserMessage(message: string, context: AIFinancialContext): string {
+  private buildUserMessage(
+    message: string,
+    context: AIFinancialContext
+  ): string {
     const recentSpending = context.analytics.categoryBreakdown
       .slice(0, 3)
-      .map(cat => `${cat.category}: $${cat.amount.toLocaleString()}`)
+      .map((cat) => `${cat.category}: $${cat.amount.toLocaleString()}`)
       .join(', ');
 
     return `User Query: ${message}
@@ -319,44 +339,63 @@ Please provide a helpful response based on their specific financial situation.`;
 
   private generateMockResponse(messages: any[]): string {
     const userMessage = messages[messages.length - 1]?.content || '';
-    
+
     // Simple keyword-based responses for demonstration
     if (userMessage.toLowerCase().includes('budget')) {
       return "Based on your spending patterns, I notice you're spending about 35% of your income on housing and 15% on food. This is within healthy ranges! However, I see some opportunities to optimize your entertainment spending, which could free up an additional $200 per month for savings or debt reduction.";
     }
-    
-    if (userMessage.toLowerCase().includes('save') || userMessage.toLowerCase().includes('savings')) {
+
+    if (
+      userMessage.toLowerCase().includes('save') ||
+      userMessage.toLowerCase().includes('savings')
+    ) {
       return "Your current savings rate of 12% is a good start! To reach the recommended 20%, consider automating transfers to savings right after payday. Based on your spending patterns, you could potentially increase this by reducing discretionary spending by just 8%. I'd recommend starting with a high-yield savings account for your emergency fund.";
     }
-    
-    if (userMessage.toLowerCase().includes('invest') || userMessage.toLowerCase().includes('investment')) {
+
+    if (
+      userMessage.toLowerCase().includes('invest') ||
+      userMessage.toLowerCase().includes('investment')
+    ) {
       return "Given your moderate risk tolerance and current financial position, I'd suggest a diversified portfolio with 70% stocks and 30% bonds. Your emergency fund looks solid, so you're ready to invest for long-term growth. Consider low-cost index funds to start, and you could benefit from dollar-cost averaging with $500 monthly contributions.";
     }
-    
+
     if (userMessage.toLowerCase().includes('debt')) {
-      return "I see you have a debt-to-income ratio of 28%, which is within acceptable limits. However, focusing on high-interest debt first (like credit cards) could save you significant money. Based on your cash flow, you could allocate an extra $300 per month toward debt reduction and be debt-free 18 months sooner.";
+      return 'I see you have a debt-to-income ratio of 28%, which is within acceptable limits. However, focusing on high-interest debt first (like credit cards) could save you significant money. Based on your cash flow, you could allocate an extra $300 per month toward debt reduction and be debt-free 18 months sooner.';
     }
-    
+
     return "I'm here to help with your financial questions! Based on your current financial picture, you're doing well with a positive net worth and steady income. I can provide specific advice about budgeting, saving, investing, or debt management. What would you like to focus on?";
   }
 
-  private async generateInsights(message: string, context: AIFinancialContext): Promise<FinancialInsight[]> {
+  private async generateInsights(
+    message: string,
+    context: AIFinancialContext
+  ): Promise<FinancialInsight[]> {
     // Generate contextual insights based on the query
     return this.analyzeSpendingPatterns(context).slice(0, 2);
   }
 
-  private async generateRecommendations(message: string, context: AIFinancialContext): Promise<FinancialRecommendation[]> {
+  private async generateRecommendations(
+    message: string,
+    context: AIFinancialContext
+  ): Promise<FinancialRecommendation[]> {
     // Generate contextual recommendations based on the query
-    const allRecommendations = await this.getPersonalizedRecommendations('temp', context);
+    const allRecommendations = await this.getPersonalizedRecommendations(
+      'temp',
+      context
+    );
     return allRecommendations.slice(0, 2);
   }
 
-  private analyzeSpendingPatterns(context: AIFinancialContext): FinancialInsight[] {
+  private analyzeSpendingPatterns(
+    context: AIFinancialContext
+  ): FinancialInsight[] {
     const insights: FinancialInsight[] = [];
     const categories = context.analytics.categoryBreakdown;
 
     // High spending categories
-    const highSpendingCategories = categories.filter(cat => cat.percentage > 25);
+    const highSpendingCategories = categories.filter(
+      (cat) => cat.percentage > 25
+    );
     for (const category of highSpendingCategories) {
       insights.push({
         id: this.generateInsightId(),
@@ -366,16 +405,18 @@ Please provide a helpful response based on their specific financial situation.`;
         impact: 'medium',
         category: category.category,
         amount: category.amount,
-        confidence: 0.8
+        confidence: 0.8,
       });
     }
 
     return insights;
   }
 
-  private analyzeBudgetPerformance(context: AIFinancialContext): FinancialInsight[] {
+  private analyzeBudgetPerformance(
+    context: AIFinancialContext
+  ): FinancialInsight[] {
     const insights: FinancialInsight[] = [];
-    
+
     if (context.stats.savingsRate < 10) {
       insights.push({
         id: this.generateInsightId(),
@@ -383,20 +424,23 @@ Please provide a helpful response based on their specific financial situation.`;
         title: 'Low Savings Rate',
         description: `Your current savings rate is ${context.stats.savingsRate.toFixed(1)}%. Financial experts recommend saving at least 10-20% of income.`,
         impact: 'high',
-        confidence: 0.9
+        confidence: 0.9,
       });
     }
 
     return insights;
   }
 
-  private identifySavingsOpportunities(context: AIFinancialContext): FinancialInsight[] {
+  private identifySavingsOpportunities(
+    context: AIFinancialContext
+  ): FinancialInsight[] {
     const insights: FinancialInsight[] = [];
-    
+
     // Look for subscription patterns or high-frequency spending
-    const frequentCategories = context.analytics.categoryBreakdown
-      .filter(cat => cat.transactionCount > 20); // More than 20 transactions per month
-    
+    const frequentCategories = context.analytics.categoryBreakdown.filter(
+      (cat) => cat.transactionCount > 20
+    ); // More than 20 transactions per month
+
     for (const category of frequentCategories) {
       if (category.averageAmount > 10) {
         insights.push({
@@ -406,7 +450,7 @@ Please provide a helpful response based on their specific financial situation.`;
           description: `You make ${category.transactionCount} ${category.category} purchases monthly, averaging $${category.averageAmount.toFixed(2)} each. Consider bulk purchases or subscriptions to save money.`,
           impact: 'low',
           category: category.category,
-          confidence: 0.7
+          confidence: 0.7,
         });
       }
     }
@@ -414,17 +458,23 @@ Please provide a helpful response based on their specific financial situation.`;
     return insights;
   }
 
-  private generateInvestmentAdvice(context: AIFinancialContext): FinancialInsight[] {
+  private generateInvestmentAdvice(
+    context: AIFinancialContext
+  ): FinancialInsight[] {
     const insights: FinancialInsight[] = [];
-    
-    if (context.stats.emergencyFundMonths > 6 && context.stats.totalNetWorth > 10000) {
+
+    if (
+      context.stats.emergencyFundMonths > 6 &&
+      context.stats.totalNetWorth > 10000
+    ) {
       insights.push({
         id: this.generateInsightId(),
         type: 'investment_advice',
         title: 'Ready for Investment Growth',
-        description: 'You have a solid emergency fund and positive net worth. Consider increasing your investment allocation to grow wealth faster.',
+        description:
+          'You have a solid emergency fund and positive net worth. Consider increasing your investment allocation to grow wealth faster.',
         impact: 'high',
-        confidence: 0.8
+        confidence: 0.8,
       });
     }
 
@@ -434,12 +484,12 @@ Please provide a helpful response based on their specific financial situation.`;
   private addToChatHistory(familyId: string, message: ChatMessage): void {
     const history = this.chatHistory.get(familyId) || [];
     history.push(message);
-    
+
     // Keep only last 50 messages
     if (history.length > 50) {
       history.splice(0, history.length - 50);
     }
-    
+
     this.chatHistory.set(familyId, history);
   }
 

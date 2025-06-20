@@ -1,7 +1,6 @@
- 
 /**
  * React Hook for Scroll Controller Integration
- * 
+ *
  * Provides a clean React API for the ScrollController with:
  * - Automatic lifecycle management
  * - State synchronization
@@ -20,7 +19,7 @@ const useScrollController = (
   config?: Partial<ScrollControllerConfig>
 ): ScrollControllerState => {
   const controllerRef = useRef<ScrollController | null>(null);
-  
+
   // Get an instance of the controller
   if (controllerRef.current === null) {
     controllerRef.current = new ScrollController(config);
@@ -70,7 +69,11 @@ export const useNavigationVisibility = (
 };
 
 export const useVirtualKeyboard = () => {
-  if (typeof window !== 'undefined' && 'visualViewport' in window && window.visualViewport) {
+  if (
+    typeof window !== 'undefined' &&
+    'visualViewport' in window &&
+    window.visualViewport
+  ) {
     const vv = window.visualViewport;
     const heightDiff = window.innerHeight - vv.height;
     return {

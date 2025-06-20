@@ -1,6 +1,11 @@
-
 import React, { useState, useEffect, useRef } from 'react';
-import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/shared/ui/sheet';
+import {
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from '@/shared/ui/sheet';
 import { Button } from '@/shared/ui/button';
 import GlassCard from '@/components/GlassCard';
 import { MessageCircle, Send, Sparkles, X } from 'lucide-react';
@@ -32,16 +37,19 @@ const ChatDrawer = ({ userContext }: ChatDrawerProps) => {
       id: `msg_${Date.now()}`,
       role: 'user',
       content: inputValue.trim(),
-      timestamp: new Date()
+      timestamp: new Date(),
     };
 
-    setMessages(prev => [...prev, userMessage]);
+    setMessages((prev) => [...prev, userMessage]);
     setInputValue('');
     setIsLoading(true);
 
     try {
-      const response = await mockAiService.sendMessage(userMessage.content, userContext);
-      setMessages(prev => [...prev, response]);
+      const response = await mockAiService.sendMessage(
+        userMessage.content,
+        userContext
+      );
+      setMessages((prev) => [...prev, response]);
     } catch (error) {
       console.error('Failed to send message:', error);
     } finally {
@@ -53,7 +61,7 @@ const ChatDrawer = ({ userContext }: ChatDrawerProps) => {
     'Help me create a budget',
     'Analyze my spending patterns',
     'Set a savings goal',
-    'Review my subscriptions'
+    'Review my subscriptions',
   ];
 
   return (
@@ -67,7 +75,7 @@ const ChatDrawer = ({ userContext }: ChatDrawerProps) => {
           <MessageCircle className="w-6 h-6 text-white" />
         </GlassCard>
       </SheetTrigger>
-      
+
       <SheetContent className="w-full sm:max-w-md bg-gradient-to-br from-[#0A0A0B] via-[#1C1C1E] to-[#0A0A0B] border-white/10">
         <SheetHeader className="pb-4">
           <SheetTitle className="text-white flex items-center gap-2">
@@ -82,8 +90,11 @@ const ChatDrawer = ({ userContext }: ChatDrawerProps) => {
             {messages.length === 0 && (
               <div className="text-center py-8">
                 <Sparkles className="w-12 h-12 text-blue-400 mx-auto mb-4 opacity-50" />
-                <p className="text-white/70 mb-4">Hi! I'm your financial assistant. I can help you with budgeting, spending analysis, and financial goals.</p>
-                
+                <p className="text-white/70 mb-4">
+                  Hi! I'm your financial assistant. I can help you with
+                  budgeting, spending analysis, and financial goals.
+                </p>
+
                 <div className="space-y-2">
                   <p className="text-white/50 text-sm">Try asking:</p>
                   {quickActions.map((action, index) => (
@@ -113,9 +124,9 @@ const ChatDrawer = ({ userContext }: ChatDrawerProps) => {
                 >
                   <p className="text-sm">{message.content}</p>
                   <p className="text-xs text-white/50 mt-1">
-                    {message.timestamp.toLocaleTimeString([], { 
-                      hour: '2-digit', 
-                      minute: '2-digit' 
+                    {message.timestamp.toLocaleTimeString([], {
+                      hour: '2-digit',
+                      minute: '2-digit',
                     })}
                   </p>
                 </GlassCard>
@@ -128,15 +139,21 @@ const ChatDrawer = ({ userContext }: ChatDrawerProps) => {
                   <div className="flex items-center gap-2">
                     <div className="flex gap-1">
                       <div className="w-2 h-2 bg-blue-400 rounded-full animate-pulse"></div>
-                      <div className="w-2 h-2 bg-blue-400 rounded-full animate-pulse" style={{ animationDelay: '0.2s' }}></div>
-                      <div className="w-2 h-2 bg-blue-400 rounded-full animate-pulse" style={{ animationDelay: '0.4s' }}></div>
+                      <div
+                        className="w-2 h-2 bg-blue-400 rounded-full animate-pulse"
+                        style={{ animationDelay: '0.2s' }}
+                      ></div>
+                      <div
+                        className="w-2 h-2 bg-blue-400 rounded-full animate-pulse"
+                        style={{ animationDelay: '0.4s' }}
+                      ></div>
                     </div>
                     <span className="text-white/70 text-sm">Thinking...</span>
                   </div>
                 </GlassCard>
               </div>
             )}
-            
+
             <div ref={messagesEndRef} />
           </div>
 

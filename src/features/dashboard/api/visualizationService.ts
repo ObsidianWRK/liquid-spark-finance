@@ -108,11 +108,14 @@ export class VisualizationService {
   /**
    * Get comprehensive dashboard data for a family
    */
-  async getDashboardData(familyId: string, timeframe: '1m' | '3m' | '6m' | '1y' = '3m'): Promise<DashboardData> {
+  async getDashboardData(
+    familyId: string,
+    timeframe: '1m' | '3m' | '6m' | '1y' = '3m'
+  ): Promise<DashboardData> {
     try {
       // Convert timeframe to months
       const months = this.convertTimeframeToMonths(timeframe);
-      
+
       // 🛡️ BULLETPROOF: Use Promise.allSettled instead of Promise.all
       // This prevents complete failure if any single service fails
       const results = await Promise.allSettled([
@@ -121,46 +124,68 @@ export class VisualizationService {
         this.getSpendingTrends(familyId),
         this.getPortfolioAllocation(familyId),
         this.getBudgetPerformance(familyId),
-        this.getKeyMetrics(familyId)
+        this.getKeyMetrics(familyId),
       ]);
 
       // Extract results with fallback to mock data for failed promises
       const mockData = this.getMockDashboardData(timeframe);
-      
+
       const [
         netWorthHistory,
         cashFlowHistory,
         spendingTrends,
         portfolioAllocation,
         budgetPerformance,
-        keyMetrics
+        keyMetrics,
       ] = results.map((result, index) => {
         if (result.status === 'fulfilled' && result.value) {
           return result.value;
         } else {
           // 🛡️ BULLETPROOF: Provide appropriate fallback for each failed service
-          console.warn(`Service ${index} failed, using mock data:`, result.status === 'rejected' ? result.reason : 'undefined result');
+          console.warn(
+            `Service ${index} failed, using mock data:`,
+            result.status === 'rejected' ? result.reason : 'undefined result'
+          );
           switch (index) {
-            case 0: return mockData.netWorthHistory;
-            case 1: return mockData.cashFlowHistory;
-            case 2: return mockData.spendingTrends;
-            case 3: return mockData.portfolioAllocation;
-            case 4: return mockData.budgetPerformance;
-            case 5: return mockData.keyMetrics;
-            default: return [];
+            case 0:
+              return mockData.netWorthHistory;
+            case 1:
+              return mockData.cashFlowHistory;
+            case 2:
+              return mockData.spendingTrends;
+            case 3:
+              return mockData.portfolioAllocation;
+            case 4:
+              return mockData.budgetPerformance;
+            case 5:
+              return mockData.keyMetrics;
+            default:
+              return [];
           }
         }
       });
 
       // 🛡️ BULLETPROOF: Final validation that all required data is present
       const safeData = {
-        netWorthHistory: Array.isArray(netWorthHistory) ? netWorthHistory : mockData.netWorthHistory,
-        cashFlowHistory: Array.isArray(cashFlowHistory) ? cashFlowHistory : mockData.cashFlowHistory,
-        spendingTrends: Array.isArray(spendingTrends) ? spendingTrends : mockData.spendingTrends,
-        portfolioAllocation: Array.isArray(portfolioAllocation) ? portfolioAllocation : mockData.portfolioAllocation,
-        budgetPerformance: Array.isArray(budgetPerformance) ? budgetPerformance : mockData.budgetPerformance,
-        keyMetrics: Array.isArray(keyMetrics) ? keyMetrics : mockData.keyMetrics,
-        lastUpdated: new Date()
+        netWorthHistory: Array.isArray(netWorthHistory)
+          ? netWorthHistory
+          : mockData.netWorthHistory,
+        cashFlowHistory: Array.isArray(cashFlowHistory)
+          ? cashFlowHistory
+          : mockData.cashFlowHistory,
+        spendingTrends: Array.isArray(spendingTrends)
+          ? spendingTrends
+          : mockData.spendingTrends,
+        portfolioAllocation: Array.isArray(portfolioAllocation)
+          ? portfolioAllocation
+          : mockData.portfolioAllocation,
+        budgetPerformance: Array.isArray(budgetPerformance)
+          ? budgetPerformance
+          : mockData.budgetPerformance,
+        keyMetrics: Array.isArray(keyMetrics)
+          ? keyMetrics
+          : mockData.keyMetrics,
+        lastUpdated: new Date(),
       };
 
       return safeData;
@@ -173,41 +198,50 @@ export class VisualizationService {
   /**
    * Convert timeframe string to number of months
    */
-  private convertTimeframeToMonths(timeframe: '1m' | '3m' | '6m' | '1y'): number {
+  private convertTimeframeToMonths(
+    timeframe: '1m' | '3m' | '6m' | '1y'
+  ): number {
     switch (timeframe) {
-      case '1m': return 1;
-      case '3m': return 3;
-      case '6m': return 6;
-      case '1y': return 12;
-      default: return 3;
+      case '1m':
+        return 1;
+      case '3m':
+        return 3;
+      case '6m':
+        return 6;
+      case '1y':
+        return 12;
+      default:
+        return 3;
     }
   }
 
   /**
    * Fallback mock data for development/demo
    */
-  private getMockDashboardData(timeframe: '1m' | '3m' | '6m' | '1y' = '3m'): DashboardData {
+  private getMockDashboardData(
+    timeframe: '1m' | '3m' | '6m' | '1y' = '3m'
+  ): DashboardData {
     const mockNetWorthHistory: NetWorthData[] = [];
     const currentDate = new Date();
-    
+
     // Calculate the number of months based on the timeframe
     const months = this.convertTimeframeToMonths(timeframe);
-    
+
     for (let i = months - 1; i >= 0; i--) {
       const date = new Date(currentDate);
       date.setMonth(date.getMonth() - i);
-      
+
       const baseValue = 127450;
       const growth = i * 2340;
       const variance = (Math.random() - 0.5) * 5000;
-      
+
       mockNetWorthHistory.push({
         date: date.toISOString().split('T')[0],
         assets: baseValue + growth + variance + 50000,
-        liabilities: 25000 - (i * 500),
+        liabilities: 25000 - i * 500,
         netWorth: baseValue + growth + variance,
-        investmentValue: 85000 + (i * 1200) + variance * 0.8,
-        cashValue: 42450 + variance * 0.3
+        investmentValue: 85000 + i * 1200 + variance * 0.8,
+        cashValue: 42450 + variance * 0.3,
       });
     }
 
@@ -216,30 +250,35 @@ export class VisualizationService {
     for (let i = months - 1; i >= 0; i--) {
       const date = new Date();
       date.setMonth(date.getMonth() - i);
-      
+
       // Simulate realistic income and expenses with seasonal variations
       const baseIncome = 7500;
-      const seasonalFactor = 1 + (Math.sin((date.getMonth() / 12) * 2 * Math.PI) * 0.1); // ±10% seasonal variation
+      const seasonalFactor =
+        1 + Math.sin((date.getMonth() / 12) * 2 * Math.PI) * 0.1; // ±10% seasonal variation
       const income = baseIncome * seasonalFactor + (Math.random() - 0.5) * 800;
-      
+
       // Expenses vary with some correlation to income
       const baseExpenses = 5800;
-      const expenseFactor = 0.9 + (Math.random() * 0.4); // 90%-130% of base
+      const expenseFactor = 0.9 + Math.random() * 0.4; // 90%-130% of base
       const expenses = baseExpenses * expenseFactor;
-      
+
       const netCashFlow = income - expenses;
-      
+
       // Calculate rolling average (last 3 months)
-      const rollingAverage = mockCashFlowHistory.length > 0 
-        ? mockCashFlowHistory.slice(-3).reduce((sum, h) => sum + h.netCashFlow, netCashFlow) / Math.min(mockCashFlowHistory.length + 1, 4)
-        : netCashFlow;
-      
+      const rollingAverage =
+        mockCashFlowHistory.length > 0
+          ? mockCashFlowHistory
+              .slice(-3)
+              .reduce((sum, h) => sum + h.netCashFlow, netCashFlow) /
+            Math.min(mockCashFlowHistory.length + 1, 4)
+          : netCashFlow;
+
       mockCashFlowHistory.push({
         date: date.toISOString().split('T')[0],
         income: Math.round(income),
         expenses: Math.round(expenses),
         netCashFlow: Math.round(netCashFlow),
-        monthlyAverage: Math.round(rollingAverage)
+        monthlyAverage: Math.round(rollingAverage),
       });
     }
 
@@ -251,7 +290,7 @@ export class VisualizationService {
         change: 70,
         changePercent: 2.5,
         trend: 'up',
-        color: getFinancialChartColor('neutral')
+        color: getFinancialChartColor('neutral'),
       },
       {
         category: 'Food & Dining',
@@ -260,7 +299,7 @@ export class VisualizationService {
         change: 275,
         changePercent: 23.9,
         trend: 'up',
-        color: getFinancialChartColor('spending')
+        color: getFinancialChartColor('spending'),
       },
       {
         category: 'Transportation',
@@ -269,7 +308,7 @@ export class VisualizationService {
         change: -140,
         changePercent: -17.1,
         trend: 'down',
-        color: getFinancialChartColor('income')
+        color: getFinancialChartColor('income'),
       },
       {
         category: 'Healthcare & Insurance',
@@ -278,7 +317,7 @@ export class VisualizationService {
         change: 30,
         changePercent: 4.2,
         trend: 'stable',
-        color: vueniTheme.colors.semantic.status.info
+        color: vueniTheme.colors.semantic.status.info,
       },
       {
         category: 'Entertainment & Recreation',
@@ -287,7 +326,7 @@ export class VisualizationService {
         change: -155,
         changePercent: -22.8,
         trend: 'down',
-        color: getFinancialChartColor('investments')
+        color: getFinancialChartColor('investments'),
       },
       {
         category: 'Shopping & Personal',
@@ -296,7 +335,7 @@ export class VisualizationService {
         change: 145,
         changePercent: 19.5,
         trend: 'up',
-        color: getFinancialChartColor('debt')
+        color: getFinancialChartColor('debt'),
       },
       {
         category: 'Education & Development',
@@ -305,7 +344,7 @@ export class VisualizationService {
         change: -30,
         changePercent: -8.6,
         trend: 'down',
-        color: vueniTheme.colors.palette.primary
+        color: vueniTheme.colors.palette.primary,
       },
       {
         category: 'Savings & Investments',
@@ -314,8 +353,8 @@ export class VisualizationService {
         change: 150,
         changePercent: 10.0,
         trend: 'up',
-        color: getFinancialChartColor('savings')
-      }
+        color: getFinancialChartColor('savings'),
+      },
     ];
 
     const mockPortfolioAllocation: PortfolioAllocationData[] = [
@@ -325,7 +364,7 @@ export class VisualizationService {
         percentage: 65,
         color: getFinancialChartColor('savings'),
         change: 2340,
-        changePercent: 3.6
+        changePercent: 3.6,
       },
       {
         name: 'Bonds',
@@ -333,7 +372,7 @@ export class VisualizationService {
         percentage: 20,
         color: getFinancialChartColor('income'),
         change: 156,
-        changePercent: 0.7
+        changePercent: 0.7,
       },
       {
         name: 'Cash',
@@ -341,7 +380,7 @@ export class VisualizationService {
         percentage: 10,
         color: getFinancialChartColor('debt'),
         change: -45,
-        changePercent: -0.4
+        changePercent: -0.4,
       },
       {
         name: 'REITs',
@@ -349,8 +388,8 @@ export class VisualizationService {
         percentage: 5,
         color: getFinancialChartColor('investments'),
         change: 89,
-        changePercent: 1.7
-      }
+        changePercent: 1.7,
+      },
     ];
 
     const mockBudgetPerformance: BudgetPerformanceData[] = [
@@ -361,7 +400,7 @@ export class VisualizationService {
         remaining: 0,
         progress: 100,
         status: 'on-track',
-        color: getFinancialChartColor('income')
+        color: getFinancialChartColor('income'),
       },
       {
         category: 'Food',
@@ -370,7 +409,7 @@ export class VisualizationService {
         remaining: -450,
         progress: 156,
         status: 'over-budget',
-        color: getFinancialChartColor('spending')
+        color: getFinancialChartColor('spending'),
       },
       {
         category: 'Transportation',
@@ -379,8 +418,8 @@ export class VisualizationService {
         remaining: 180,
         progress: 64,
         status: 'on-track',
-        color: getFinancialChartColor('income')
-      }
+        color: getFinancialChartColor('income'),
+      },
     ];
 
     const mockKeyMetrics: FinancialMetric[] = [
@@ -393,7 +432,7 @@ export class VisualizationService {
         trend: 'up',
         format: 'currency',
         color: getFinancialChartColor('income'),
-        icon: 'trending-up'
+        icon: 'trending-up',
       },
       {
         id: 'monthly-cash-flow',
@@ -404,7 +443,7 @@ export class VisualizationService {
         trend: 'up',
         format: 'currency',
         color: getFinancialChartColor('savings'),
-        icon: 'trending-up'
+        icon: 'trending-up',
       },
       {
         id: 'investment-return',
@@ -415,7 +454,7 @@ export class VisualizationService {
         trend: 'up',
         format: 'percentage',
         color: getFinancialChartColor('investments'),
-        icon: 'trending-up'
+        icon: 'trending-up',
       },
       {
         id: 'savings-rate',
@@ -426,7 +465,7 @@ export class VisualizationService {
         trend: 'up',
         format: 'percentage',
         color: getFinancialChartColor('debt'),
-        icon: 'piggy-bank'
+        icon: 'piggy-bank',
       },
       {
         id: 'debt-ratio',
@@ -437,7 +476,7 @@ export class VisualizationService {
         trend: 'down',
         format: 'percentage',
         color: getFinancialChartColor('income'),
-        icon: 'credit-card'
+        icon: 'credit-card',
       },
       {
         id: 'emergency-fund',
@@ -448,8 +487,8 @@ export class VisualizationService {
         trend: 'up',
         format: 'number',
         color: vueniTheme.colors.semantic.status.info,
-        icon: 'shield'
-      }
+        icon: 'shield',
+      },
     ];
 
     return {
@@ -459,14 +498,17 @@ export class VisualizationService {
       portfolioAllocation: mockPortfolioAllocation,
       budgetPerformance: mockBudgetPerformance,
       keyMetrics: mockKeyMetrics,
-      lastUpdated: new Date()
+      lastUpdated: new Date(),
     };
   }
 
   /**
    * Generate net worth history over time
    */
-  async getNetWorthHistory(familyId: string, months: number = 12): Promise<NetWorthData[]> {
+  async getNetWorthHistory(
+    familyId: string,
+    months: number = 12
+  ): Promise<NetWorthData[]> {
     try {
       const family = await familyService.getFamilyById(familyId);
       const accounts = await accountService.getFamilyAccounts(familyId);
@@ -486,18 +528,19 @@ export class VisualizationService {
       for (let i = months - 1; i >= 0; i--) {
         const date = new Date(currentDate);
         date.setMonth(date.getMonth() - i);
-        
+
         // Simulate historical data with growth trend
         const monthsAgo = i;
-        const growthFactor = 1 + (monthsAgo * 0.01); // 1% monthly growth
+        const growthFactor = 1 + monthsAgo * 0.01; // 1% monthly growth
         const volatility = (Math.random() - 0.5) * 0.1; // ±5% volatility
-        
+
         const netWorth = baseNetWorth * growthFactor * (1 + volatility);
-        const investmentValue = totalInvestmentValue * growthFactor * (1 + volatility * 1.5);
+        const investmentValue =
+          totalInvestmentValue * growthFactor * (1 + volatility * 1.5);
         const cashValue = 42450 + volatility * 0.3;
-        
+
         const assets = netWorth + 25000;
-        const liabilities = Math.max(0, 25000 - (monthsAgo * 500)); // Decreasing debt
+        const liabilities = Math.max(0, 25000 - monthsAgo * 500); // Decreasing debt
 
         history.push({
           date: date.toISOString().split('T')[0],
@@ -505,13 +548,16 @@ export class VisualizationService {
           liabilities,
           netWorth,
           investmentValue,
-          cashValue
+          cashValue,
         });
       }
 
       return history;
     } catch (error) {
-      console.error('Error generating net worth history, using mock data:', error);
+      console.error(
+        'Error generating net worth history, using mock data:',
+        error
+      );
       // Return subset of mock data
       return this.getMockDashboardData('3m').netWorthHistory;
     }
@@ -520,7 +566,10 @@ export class VisualizationService {
   /**
    * Generate cash flow history
    */
-  async getCashFlowHistory(familyId: string, months: number = 12): Promise<CashFlowData[]> {
+  async getCashFlowHistory(
+    familyId: string,
+    months: number = 12
+  ): Promise<CashFlowData[]> {
     try {
       const history: CashFlowData[] = [];
       const currentDate = new Date();
@@ -528,42 +577,54 @@ export class VisualizationService {
       for (let i = months - 1; i >= 0; i--) {
         const date = new Date(currentDate);
         date.setMonth(date.getMonth() - i);
-        
+
         const startDate = new Date(date.getFullYear(), date.getMonth(), 1);
         const endDate = new Date(date.getFullYear(), date.getMonth() + 1, 0);
-        
+
         // Try to get actual transactions for the month
-        const transactions = await transactionService.searchTransactions(familyId, {
-          dateRange: { start: startDate, end: endDate }
-        });
+        const transactions = await transactionService.searchTransactions(
+          familyId,
+          {
+            dateRange: { start: startDate, end: endDate },
+          }
+        );
 
         const income = transactions
-          .filter(t => t.amount > 0)
+          .filter((t) => t.amount > 0)
           .reduce((sum, t) => sum + t.amount, 0);
-        
-        const expenses = Math.abs(transactions
-          .filter(t => t.amount < 0)
-          .reduce((sum, t) => sum + t.amount, 0));
+
+        const expenses = Math.abs(
+          transactions
+            .filter((t) => t.amount < 0)
+            .reduce((sum, t) => sum + t.amount, 0)
+        );
 
         const netCashFlow = income - expenses;
-        
+
         // Calculate rolling average
-        const monthlyAverage = history.length > 0 
-          ? history.slice(-3).reduce((sum, h) => sum + h.netCashFlow, netCashFlow) / (history.length > 2 ? 4 : history.length + 1)
-          : netCashFlow;
+        const monthlyAverage =
+          history.length > 0
+            ? history
+                .slice(-3)
+                .reduce((sum, h) => sum + h.netCashFlow, netCashFlow) /
+              (history.length > 2 ? 4 : history.length + 1)
+            : netCashFlow;
 
         history.push({
           date: date.toISOString().split('T')[0],
           income,
           expenses,
           netCashFlow,
-          monthlyAverage
+          monthlyAverage,
         });
       }
 
       return history;
     } catch (error) {
-      console.error('Error generating cash flow history, using mock data:', error);
+      console.error(
+        'Error generating cash flow history, using mock data:',
+        error
+      );
       return this.getMockDashboardData('3m').cashFlowHistory;
     }
   }
@@ -574,24 +635,43 @@ export class VisualizationService {
   async getSpendingTrends(familyId: string): Promise<SpendingTrendData[]> {
     try {
       const currentDate = new Date();
-      const currentMonth = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1);
-      const previousMonth = new Date(currentDate.getFullYear(), currentDate.getMonth() - 1, 1);
-      const previousMonthEnd = new Date(currentDate.getFullYear(), currentDate.getMonth(), 0);
+      const currentMonth = new Date(
+        currentDate.getFullYear(),
+        currentDate.getMonth(),
+        1
+      );
+      const previousMonth = new Date(
+        currentDate.getFullYear(),
+        currentDate.getMonth() - 1,
+        1
+      );
+      const previousMonthEnd = new Date(
+        currentDate.getFullYear(),
+        currentDate.getMonth(),
+        0
+      );
 
       const [currentTransactions, previousTransactions] = await Promise.all([
         transactionService.searchTransactions(familyId, {
-          dateRange: { start: currentMonth, end: currentDate }
+          dateRange: { start: currentMonth, end: currentDate },
         }),
         transactionService.searchTransactions(familyId, {
-          dateRange: { start: previousMonth, end: previousMonthEnd }
-        })
+          dateRange: { start: previousMonth, end: previousMonthEnd },
+        }),
       ]);
 
       // Group by category - ensure we handle the correct transaction type
-      const currentSpending = this.groupTransactionsByCategory(currentTransactions.filter(t => t.category));
-      const previousSpending = this.groupTransactionsByCategory(previousTransactions.filter(t => t.category));
+      const currentSpending = this.groupTransactionsByCategory(
+        currentTransactions.filter((t) => t.category)
+      );
+      const previousSpending = this.groupTransactionsByCategory(
+        previousTransactions.filter((t) => t.category)
+      );
 
-      const categories = new Set([...Object.keys(currentSpending), ...Object.keys(previousSpending)]);
+      const categories = new Set([
+        ...Object.keys(currentSpending),
+        ...Object.keys(previousSpending),
+      ]);
       const trends: SpendingTrendData[] = [];
 
       for (const category of categories) {
@@ -599,7 +679,7 @@ export class VisualizationService {
         const previous = previousSpending[category] || 0;
         const change = current - previous;
         const changePercent = previous > 0 ? (change / previous) * 100 : 0;
-        
+
         let trend: 'up' | 'down' | 'stable' = 'stable';
         if (Math.abs(changePercent) > 5) {
           trend = changePercent > 0 ? 'up' : 'down';
@@ -612,13 +692,16 @@ export class VisualizationService {
           change,
           changePercent,
           trend,
-          color: this.getCategoryColor(category)
+          color: this.getCategoryColor(category),
         });
       }
 
       return trends.sort((a, b) => b.currentMonth - a.currentMonth);
     } catch (error) {
-      console.error('Error generating spending trends, using mock data:', error);
+      console.error(
+        'Error generating spending trends, using mock data:',
+        error
+      );
       return this.getMockDashboardData('3m').spendingTrends;
     }
   }
@@ -626,10 +709,12 @@ export class VisualizationService {
   /**
    * Get portfolio allocation data
    */
-  async getPortfolioAllocation(familyId: string): Promise<PortfolioAllocationData[]> {
+  async getPortfolioAllocation(
+    familyId: string
+  ): Promise<PortfolioAllocationData[]> {
     try {
       const portfolio = await investmentService.getFamilyPortfolio(familyId);
-      
+
       if (!portfolio || !portfolio.allocation) {
         throw new Error('Portfolio data not available');
       }
@@ -643,7 +728,7 @@ export class VisualizationService {
           percentage: allocation.stocks,
           color: getFinancialChartColor('savings'),
           change: Math.random() * 1000 - 500,
-          changePercent: (Math.random() - 0.5) * 10
+          changePercent: (Math.random() - 0.5) * 10,
         },
         {
           name: 'Bonds',
@@ -651,7 +736,7 @@ export class VisualizationService {
           percentage: allocation.bonds,
           color: getFinancialChartColor('income'),
           change: Math.random() * 500 - 250,
-          changePercent: (Math.random() - 0.5) * 5
+          changePercent: (Math.random() - 0.5) * 5,
         },
         {
           name: 'Cash',
@@ -659,7 +744,7 @@ export class VisualizationService {
           percentage: allocation.cash,
           color: getFinancialChartColor('debt'),
           change: Math.random() * 200 - 100,
-          changePercent: (Math.random() - 0.5) * 2
+          changePercent: (Math.random() - 0.5) * 2,
         },
         {
           name: 'REITs',
@@ -667,7 +752,7 @@ export class VisualizationService {
           percentage: allocation.reits,
           color: getFinancialChartColor('investments'),
           change: Math.random() * 300 - 150,
-          changePercent: (Math.random() - 0.5) * 8
+          changePercent: (Math.random() - 0.5) * 8,
         },
         {
           name: 'Crypto',
@@ -675,7 +760,7 @@ export class VisualizationService {
           percentage: allocation.crypto,
           color: vueniTheme.colors.semantic.status.warning,
           change: Math.random() * 1000 - 500,
-          changePercent: (Math.random() - 0.5) * 20
+          changePercent: (Math.random() - 0.5) * 20,
         },
         {
           name: 'Other',
@@ -683,13 +768,16 @@ export class VisualizationService {
           percentage: allocation.other,
           color: vueniTheme.colors.palette.neutral,
           change: Math.random() * 100 - 50,
-          changePercent: (Math.random() - 0.5) * 3
-        }
-      ].filter(item => item.value > 0);
+          changePercent: (Math.random() - 0.5) * 3,
+        },
+      ].filter((item) => item.value > 0);
 
       return allocationData;
     } catch (error) {
-      console.error('Error generating portfolio allocation, using mock data:', error);
+      console.error(
+        'Error generating portfolio allocation, using mock data:',
+        error
+      );
       return this.getMockDashboardData('3m').portfolioAllocation;
     }
   }
@@ -697,39 +785,49 @@ export class VisualizationService {
   /**
    * Get budget performance data
    */
-  async getBudgetPerformance(familyId: string): Promise<BudgetPerformanceData[]> {
+  async getBudgetPerformance(
+    familyId: string
+  ): Promise<BudgetPerformanceData[]> {
     try {
       const budget = await budgetService.getActiveBudget(familyId);
       if (!budget) {
         throw new Error('No active budget found');
       }
 
-      return budget.categories.map(category => {
-        const progress = category.budgetedAmount > 0 ? (category.spentAmount / category.budgetedAmount) * 100 : 0;
-        
-        let status: 'on-track' | 'warning' | 'over-budget' = 'on-track';
-        let color = getFinancialChartColor('income');
-        
-        if (progress >= 100) {
-          status = 'over-budget';
-          color = getFinancialChartColor('spending');
-        } else if (progress >= 80) {
-          status = 'warning';
-          color = getFinancialChartColor('debt');
-        }
+      return budget.categories
+        .map((category) => {
+          const progress =
+            category.budgetedAmount > 0
+              ? (category.spentAmount / category.budgetedAmount) * 100
+              : 0;
 
-        return {
-          category: category.categoryName,
-          budgeted: category.budgetedAmount,
-          spent: category.spentAmount,
-          remaining: category.remainingAmount,
-          progress,
-          status,
-          color
-        };
-      }).sort((a, b) => b.spent - a.spent);
+          let status: 'on-track' | 'warning' | 'over-budget' = 'on-track';
+          let color = getFinancialChartColor('income');
+
+          if (progress >= 100) {
+            status = 'over-budget';
+            color = getFinancialChartColor('spending');
+          } else if (progress >= 80) {
+            status = 'warning';
+            color = getFinancialChartColor('debt');
+          }
+
+          return {
+            category: category.categoryName,
+            budgeted: category.budgetedAmount,
+            spent: category.spentAmount,
+            remaining: category.remainingAmount,
+            progress,
+            status,
+            color,
+          };
+        })
+        .sort((a, b) => b.spent - a.spent);
     } catch (error) {
-      console.error('Error generating budget performance, using mock data:', error);
+      console.error(
+        'Error generating budget performance, using mock data:',
+        error
+      );
       return this.getMockDashboardData('3m').budgetPerformance;
     }
   }
@@ -763,26 +861,26 @@ export class VisualizationService {
     const insights: SpendingInsight[] = [];
 
     // High spending increase alerts
-    const increasingSpending = trends.filter(t => t.changePercent > 20);
+    const increasingSpending = trends.filter((t) => t.changePercent > 20);
     for (const trend of increasingSpending) {
       insights.push({
         type: 'warning',
         title: `${trend.category} spending increased`,
         description: `${trend.category} spending is up ${trend.changePercent.toFixed(1)}% from last month`,
         value: trend.change,
-        category: trend.category
+        category: trend.category,
       });
     }
 
     // Significant spending decreases (positive insights)
-    const decreasingSpending = trends.filter(t => t.changePercent < -15);
+    const decreasingSpending = trends.filter((t) => t.changePercent < -15);
     for (const trend of decreasingSpending) {
       insights.push({
         type: 'success',
         title: `Great job reducing ${trend.category} spending`,
         description: `You've decreased ${trend.category} spending by ${Math.abs(trend.changePercent).toFixed(1)}%`,
         value: Math.abs(trend.change),
-        category: trend.category
+        category: trend.category,
       });
     }
 
@@ -790,19 +888,21 @@ export class VisualizationService {
   }
 
   // Helper methods
-  private groupTransactionsByCategory(transactions: any[]): Record<string, number> {
+  private groupTransactionsByCategory(
+    transactions: any[]
+  ): Record<string, number> {
     const grouped: Record<string, number> = {};
-    
+
     for (const transaction of transactions) {
       if (transaction.amount >= 0) continue; // Skip income
-      
+
       const category = transaction.category;
       if (!category) continue; // Skip transactions without category
       const amount = Math.abs(transaction.amount);
-      
+
       grouped[category] = (grouped[category] || 0) + amount;
     }
-    
+
     return grouped;
   }
 
@@ -821,7 +921,7 @@ export class VisualizationService {
       shopping: vueniTheme.colors.palette.warning,
       education: vueniTheme.colors.palette.primary,
       gifts_donations: vueniTheme.colors.semantic.financial.positive,
-      other: vueniTheme.colors.palette.neutral
+      other: vueniTheme.colors.palette.neutral,
     };
     return colors[category] || vueniTheme.colors.palette.neutral;
   }

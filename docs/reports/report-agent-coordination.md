@@ -1,14 +1,17 @@
 # 🎭 Vueni UI Refactor - Agent Coordination
 
 ## Overview
+
 This document coordinates the work of 8 specialized agents to unify Vueni's UI design language and fix data integrity issues.
 
 ## Agent Workflow
 
 ### Phase 1: Foundation (Parallel)
+
 **Agents 2 & 3 can work simultaneously**
 
 #### 🔢 Agent 2: Data-Integrity
+
 - **Branch**: `feat/agent-2/totalwealth-selector`
 - **Priority**: HIGH
 - **Duration**: 4 hours
@@ -17,7 +20,8 @@ This document coordinates the work of 8 specialized agents to unify Vueni's UI d
   - `src/hooks/useFinancialMetrics.ts`
   - Unit tests with 100% coverage
 
-#### 💯 Agent 3: Numeric-Formatter  
+#### 💯 Agent 3: Numeric-Formatter
+
 - **Branch**: `feat/agent-3/format-utilities`
 - **Priority**: HIGH
 - **Duration**: 3 hours
@@ -27,9 +31,11 @@ This document coordinates the work of 8 specialized agents to unify Vueni's UI d
   - ESLint rule configured
 
 ### Phase 2: Design System
+
 **Agent 4 must complete before Agents 5 & 6**
 
 #### 🎨 Agent 4: Card-Stylist
+
 - **Branch**: `feat/agent-4/cardshell-component`
 - **Priority**: CRITICAL
 - **Duration**: 5 hours
@@ -40,9 +46,11 @@ This document coordinates the work of 8 specialized agents to unify Vueni's UI d
   - Design tokens updated
 
 ### Phase 3: UI Implementation (Parallel)
+
 **Agents 5 & 6 can work simultaneously after Agent 4**
 
 #### 📋 Agent 5: Transactions-Stylist
+
 - **Branch**: `feat/agent-5/transaction-list-styling`
 - **Priority**: MEDIUM
 - **Duration**: 3 hours
@@ -52,8 +60,9 @@ This document coordinates the work of 8 specialized agents to unify Vueni's UI d
   - Scroll container fixes
 
 #### 💰 Agent 6: Savings-Goals-Stylist
+
 - **Branch**: `feat/agent-6/savings-ui-update`
-- **Priority**: MEDIUM  
+- **Priority**: MEDIUM
 - **Duration**: 3 hours
 - **Dependencies**: Agent 4 (CardShell)
 - **Deliverables**:
@@ -63,6 +72,7 @@ This document coordinates the work of 8 specialized agents to unify Vueni's UI d
 ### Phase 4: Quality Assurance
 
 #### 🧪 Agent 7: Visual-QA
+
 - **Branch**: `feat/agent-7/visual-tests`
 - **Priority**: HIGH
 - **Duration**: 4 hours
@@ -75,6 +85,7 @@ This document coordinates the work of 8 specialized agents to unify Vueni's UI d
 ### Phase 5: Cleanup
 
 #### 🧹 Agent 8: Refactor-Linter
+
 - **Branch**: `feat/agent-8/cleanup`
 - **Priority**: LOW
 - **Duration**: 2 hours
@@ -87,23 +98,28 @@ This document coordinates the work of 8 specialized agents to unify Vueni's UI d
 ## Merge Order
 
 1. **Phase 1 Merges** (can be any order):
+
    - PR #1: `feat/agent-2/totalwealth-selector`
    - PR #2: `feat/agent-3/format-utilities`
 
 2. **Phase 2 Merge**:
+
    - PR #3: `feat/agent-4/cardshell-component` ⚠️ BLOCKING
 
 3. **Phase 3 Merges** (can be any order):
+
    - PR #4: `feat/agent-5/transaction-list-styling`
    - PR #5: `feat/agent-6/savings-ui-update`
 
 4. **Phase 4 Merge**:
+
    - PR #6: `feat/agent-7/visual-tests`
 
 5. **Phase 5 Merge**:
    - PR #7: `feat/agent-8/cleanup`
 
 ## Critical Path
+
 ```
 Agent 2 ──┐
           ├─→ Agent 4 ─→ Agent 5 ──┐
@@ -114,7 +130,7 @@ Agent 3 ──┘               Agent 6 ──┼─→ Agent 7 ─→ Agent 8
 ## Success Metrics
 
 - ✅ All cards use unified CardShell component
-- ✅ totalWealth shows accurate sum across all views  
+- ✅ totalWealth shows accurate sum across all views
 - ✅ No numbers with excessive decimal places
 - ✅ Visual regression tests passing
 - ✅ Axe accessibility score > 90
@@ -142,4 +158,4 @@ Agent 3 ──┘               Agent 6 ──┼─→ Agent 7 ─→ Agent 8
 - **Phase 3 Complete**: Wednesday 12 PM
 - **Phase 4 Complete**: Wednesday 5 PM
 - **Phase 5 Complete**: Thursday 12 PM
-- **Deploy**: Thursday 2 PM 
+- **Deploy**: Thursday 2 PM

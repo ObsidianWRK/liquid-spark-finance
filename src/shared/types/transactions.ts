@@ -29,7 +29,7 @@ export interface Transaction {
   updatedAt: Date;
 }
 
-export type TransactionCategory = 
+export type TransactionCategory =
   | 'income'
   | 'housing'
   | 'transportation'
@@ -51,17 +51,43 @@ export type TransactionCategory =
   | 'transfers'
   | 'other';
 
-export type PaymentChannel = 
-  | 'online' | 'in_store' | 'atm' | 'phone' | 'mail' | 'mobile' | 'other';
+export type PaymentChannel =
+  | 'online'
+  | 'in_store'
+  | 'atm'
+  | 'phone'
+  | 'mail'
+  | 'mobile'
+  | 'other';
 
-export type TransactionType = 
-  | 'purchase' | 'deposit' | 'withdrawal' | 'transfer' | 'payment' | 'fee' | 'interest' | 'dividend' | 'adjustment';
+export type TransactionType =
+  | 'purchase'
+  | 'deposit'
+  | 'withdrawal'
+  | 'transfer'
+  | 'payment'
+  | 'fee'
+  | 'interest'
+  | 'dividend'
+  | 'adjustment';
 
-export type TransactionStatus = 
-  | 'posted' | 'completed' | 'pending' | 'refunded' | 'cancelled' | 'failed' | 'returned';
+export type TransactionStatus =
+  | 'posted'
+  | 'completed'
+  | 'pending'
+  | 'refunded'
+  | 'cancelled'
+  | 'failed'
+  | 'returned';
 
 export interface RecurrenceRule {
-  frequency: 'daily' | 'weekly' | 'biweekly' | 'monthly' | 'quarterly' | 'annually';
+  frequency:
+    | 'daily'
+    | 'weekly'
+    | 'biweekly'
+    | 'monthly'
+    | 'quarterly'
+    | 'annually';
   interval: number;
   endDate?: Date;
   confidence: number; // 0-1 confidence score
@@ -138,13 +164,26 @@ export interface TransactionRule {
 
 export interface RuleCondition {
   field: 'merchant' | 'description' | 'amount' | 'category' | 'account';
-  operator: 'equals' | 'contains' | 'starts_with' | 'ends_with' | 'greater_than' | 'less_than' | 'between';
+  operator:
+    | 'equals'
+    | 'contains'
+    | 'starts_with'
+    | 'ends_with'
+    | 'greater_than'
+    | 'less_than'
+    | 'between';
   value: string | number;
   value2?: string | number; // For 'between' operator
 }
 
 export interface RuleAction {
-  type: 'set_category' | 'set_subcategory' | 'add_tag' | 'set_merchant' | 'exclude_from_budget' | 'mark_as_transfer';
+  type:
+    | 'set_category'
+    | 'set_subcategory'
+    | 'add_tag'
+    | 'set_merchant'
+    | 'exclude_from_budget'
+    | 'mark_as_transfer';
   value: string | boolean;
 }
 
@@ -241,7 +280,12 @@ export interface SpendingTrend {
 }
 
 export interface SpendingInsight {
-  type: 'high_spending' | 'unusual_merchant' | 'recurring_charge' | 'budget_alert' | 'savings_opportunity';
+  type:
+    | 'high_spending'
+    | 'unusual_merchant'
+    | 'recurring_charge'
+    | 'budget_alert'
+    | 'savings_opportunity';
   title: string;
   description: string;
   amount?: number;

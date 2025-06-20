@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { UniversalCard } from '@/shared/ui/UniversalCard';
-import { 
+import {
   Home,
   CreditCard,
   Receipt,
@@ -11,7 +11,7 @@ import {
   Menu,
   X,
   Bell,
-  Search
+  Search,
 } from 'lucide-react';
 
 interface AppShellProps {
@@ -20,7 +20,11 @@ interface AppShellProps {
   onTabChange?: (tab: string) => void;
 }
 
-const AppShell = ({ children, activeTab = 'dashboard', onTabChange }: AppShellProps) => {
+const AppShell = ({
+  children,
+  activeTab = 'dashboard',
+  onTabChange,
+}: AppShellProps) => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   const navigation = [
@@ -28,12 +32,12 @@ const AppShell = ({ children, activeTab = 'dashboard', onTabChange }: AppShellPr
     { id: 'accounts', label: 'Accounts', icon: CreditCard },
     { id: 'transactions', label: 'Transactions', icon: Receipt },
     { id: 'insights', label: 'Insights', icon: TrendingUp },
-    { id: 'reports', label: 'Reports', icon: BarChart3 }
+    { id: 'reports', label: 'Reports', icon: BarChart3 },
   ];
 
   const secondaryNavigation = [
     { id: 'profile', label: 'Profile', icon: User },
-    { id: 'settings', label: 'Settings', icon: Settings }
+    { id: 'settings', label: 'Settings', icon: Settings },
   ];
 
   const handleTabChange = (tabId: string) => {
@@ -45,7 +49,10 @@ const AppShell = ({ children, activeTab = 'dashboard', onTabChange }: AppShellPr
     <div className="min-h-screen bg-gray-950">
       {/* Top Header */}
       <header className="fixed top-0 left-0 right-0 z-50">
-        <UniversalCard variant="glass" className="m-4 p-4 rounded-xl backdrop-blur-xl">
+        <UniversalCard
+          variant="glass"
+          className="m-4 p-4 rounded-xl backdrop-blur-xl"
+        >
           <div className="flex items-center justify-between">
             {/* Left side */}
             <div className="flex items-center gap-4">
@@ -59,7 +66,7 @@ const AppShell = ({ children, activeTab = 'dashboard', onTabChange }: AppShellPr
                   <Menu className="w-5 h-5 text-white" />
                 )}
               </button>
-              
+
               <div className="flex items-center gap-3">
                 <div className="w-8 h-8 rounded-lg bg-blue-500 flex items-center justify-center">
                   <span className="text-white font-bold text-sm">V</span>
@@ -86,7 +93,7 @@ const AppShell = ({ children, activeTab = 'dashboard', onTabChange }: AppShellPr
                 <Bell className="w-5 h-5 text-white/70" />
                 <div className="absolute -top-1 -right-1 w-3 h-3 bg-red-500 rounded-full"></div>
               </button>
-              
+
               <div className="w-8 h-8 rounded-full bg-gradient-to-br from-blue-400 to-purple-500 flex items-center justify-center">
                 <span className="text-white text-sm font-medium">JD</span>
               </div>
@@ -96,11 +103,13 @@ const AppShell = ({ children, activeTab = 'dashboard', onTabChange }: AppShellPr
       </header>
 
       {/* Sidebar */}
-      <aside className={`
+      <aside
+        className={`
         fixed top-0 left-0 z-40 h-full w-64 pt-24 pb-4 pl-4 transform transition-transform duration-300 ease-in-out
         ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full'}
         lg:translate-x-0
-      `}>
+      `}
+      >
         <UniversalCard variant="glass" className="h-full p-4 rounded-xl">
           {/* Main Navigation */}
           <nav className="space-y-2">
@@ -116,9 +125,10 @@ const AppShell = ({ children, activeTab = 'dashboard', onTabChange }: AppShellPr
                     onClick={() => handleTabChange(item.id)}
                     className={`
                       w-full flex items-center gap-3 px-3 py-2 rounded-lg text-left transition-all duration-200
-                      ${activeTab === item.id 
-                        ? 'bg-blue-500/20 text-blue-300 border border-blue-500/30' 
-                        : 'text-white/70 hover:text-white hover:bg-white/[0.05]'
+                      ${
+                        activeTab === item.id
+                          ? 'bg-blue-500/20 text-blue-300 border border-blue-500/30'
+                          : 'text-white/70 hover:text-white hover:bg-white/[0.05]'
                       }
                     `}
                   >
@@ -142,9 +152,10 @@ const AppShell = ({ children, activeTab = 'dashboard', onTabChange }: AppShellPr
                     onClick={() => handleTabChange(item.id)}
                     className={`
                       w-full flex items-center gap-3 px-3 py-2 rounded-lg text-left transition-all duration-200
-                      ${activeTab === item.id 
-                        ? 'bg-blue-500/20 text-blue-300 border border-blue-500/30' 
-                        : 'text-white/70 hover:text-white hover:bg-white/[0.05]'
+                      ${
+                        activeTab === item.id
+                          ? 'bg-blue-500/20 text-blue-300 border border-blue-500/30'
+                          : 'text-white/70 hover:text-white hover:bg-white/[0.05]'
                       }
                     `}
                   >
@@ -175,23 +186,23 @@ const AppShell = ({ children, activeTab = 'dashboard', onTabChange }: AppShellPr
 
       {/* Overlay for mobile */}
       {isSidebarOpen && (
-        <div 
+        <div
           className="fixed inset-0 bg-black/50 z-30 lg:hidden"
           onClick={() => setIsSidebarOpen(false)}
         />
       )}
 
       {/* Main Content */}
-      <main className={`
+      <main
+        className={`
         pt-32 pb-6 px-4 transition-all duration-300
         lg:ml-64 lg:pl-4
-      `}>
-        <div className="max-w-none">
-          {children}
-        </div>
+      `}
+      >
+        <div className="max-w-none">{children}</div>
       </main>
     </div>
   );
 };
 
-export default AppShell; 
+export default AppShell;

@@ -6,9 +6,14 @@ import React from 'react';
  */
 export const LiquidGlassSVGFilters: React.FC = () => {
   return (
-    <svg 
-      className="liquid-glass-svg-filters" 
-      style={{ position: 'absolute', width: 0, height: 0, pointerEvents: 'none' }}
+    <svg
+      className="liquid-glass-svg-filters"
+      style={{
+        position: 'absolute',
+        width: 0,
+        height: 0,
+        pointerEvents: 'none',
+      }}
       aria-hidden="true"
     >
       <defs>
@@ -496,4 +501,4 @@ export const LiquidGlassSVGFilters: React.FC = () => {
   );
 };
 
-export default LiquidGlassSVGFilters; 
+export default LiquidGlassSVGFilters;

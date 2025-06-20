@@ -23,7 +23,7 @@ export default function App() {
       <div className="min-h-screen bg-gray-900 text-white">
         {/* 🎯 One line - handles all navigation variants */}
         <AdaptiveNavigation />
-        
+
         {/* Your app content with proper spacing */}
         <main className="main-content">
           <Routes>
@@ -74,15 +74,16 @@ npm run dev
 
 # Test with device simulation in browser dev tools:
 # - Mobile: 390x844 (iPhone)
-# - Tablet: 820x1180 (iPad) 
+# - Tablet: 820x1180 (iPad)
 # - Desktop: 1440x900 (Laptop)
 ```
 
 ## ✅ You're Done!
 
 The navigation will automatically:
+
 - Show bottom nav on mobile
-- Show navigation rail on tablet  
+- Show navigation rail on tablet
 - Show sidebar + topbar on desktop
 - Handle all transitions smoothly
 
@@ -113,7 +114,7 @@ import { useBreakpoint } from '@/navigation';
 
 function MyComponent() {
   const { isMobile, isTablet, isDesktop } = useBreakpoint();
-  
+
   return (
     <div>
       {isMobile && <MobileOnlyComponent />}
@@ -128,9 +129,9 @@ function MyComponent() {
 
 ```tsx
 // Show badge counts on navigation items
-const routes = mainRoutes.map(route => ({
+const routes = mainRoutes.map((route) => ({
   ...route,
-  badgeCount: route.badgeKey ? badges[route.badgeKey] : undefined
+  badgeCount: route.badgeKey ? badges[route.badgeKey] : undefined,
 }));
 ```
 
@@ -155,4 +156,4 @@ const routes = mainRoutes.map(route => ({
 
 ---
 
-*That's it! Your navigation system is now responsive and production-ready.*
+_That's it! Your navigation system is now responsive and production-ready._

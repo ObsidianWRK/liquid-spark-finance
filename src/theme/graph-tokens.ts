@@ -1,6 +1,6 @@
 /**
  * Apple HIG-compliant design tokens for charts and graphs
- * 
+ *
  * TEMPORARY FILE: Re-exports chart system from unified.ts
  * This file exists to maintain backward compatibility with existing chart imports
  * while the unified theme system is being rolled out.
@@ -39,11 +39,20 @@ export const {
  * Get a graph color based on type and theme
  */
 export const getGraphColor = (
-  type: 'income' | 'spending' | 'savings' | 'investments' | 'debt' | 'positive' | 'negative' | 'neutral' | 'warning',
+  type:
+    | 'income'
+    | 'spending'
+    | 'savings'
+    | 'investments'
+    | 'debt'
+    | 'positive'
+    | 'negative'
+    | 'neutral'
+    | 'warning',
   theme: 'light' | 'dark' = 'dark'
 ): string => {
   const chartColors = vueniTheme.charts.colors;
-  
+
   switch (type) {
     case 'income':
     case 'positive':
@@ -81,7 +90,7 @@ export const getChartAnimationPreset = (
   type: 'standard' | 'ios' | 'line' | 'hover' = 'standard'
 ) => {
   const animation = vueniTheme.charts.animation;
-  
+
   const presets = {
     standard: {
       duration: parseInt(animation.duration.standard),
@@ -104,7 +113,7 @@ export const getChartAnimationPreset = (
       delay: 0,
     },
   };
-  
+
   return presets[type] || presets.standard;
 };
 
@@ -119,13 +128,9 @@ export const shouldReduceMotion = (): boolean => {
 /**
  * Get optimal animation duration based on user preferences
  */
-export const getOptimalAnimationDuration = (
-  baseMs: number = 300
-): number => {
+export const getOptimalAnimationDuration = (baseMs: number = 300): number => {
   return shouldReduceMotion() ? 0 : baseMs;
 };
-
-
 
 /**
  * Get background color for chart elements
@@ -134,7 +139,7 @@ export const getBackgroundColor = (
   variant: 'primary' | 'secondary' | 'surface' = 'surface'
 ): string => {
   const surface = vueniTheme.colors.surface;
-  
+
   switch (variant) {
     case 'primary':
       return surface.card;
@@ -154,38 +159,40 @@ export const generateGraphCSSProperties = (
 ): Record<string, string> => {
   const chartTokens = vueniTheme.charts;
   const colors = vueniTheme.colors;
-  
+
   return {
     // Chart colors
     '--chart-color-positive': chartTokens.colors.positive,
     '--chart-color-negative': chartTokens.colors.negative,
     '--chart-color-neutral': chartTokens.colors.neutral,
     '--chart-color-warning': chartTokens.colors.warning,
-    
+
     // Extended colors
     '--chart-color-teal': chartTokens.colors.extended.teal,
     '--chart-color-mint': chartTokens.colors.extended.mint,
     '--chart-color-pink': chartTokens.colors.extended.pink,
     '--chart-color-yellow': chartTokens.colors.extended.yellow,
     '--chart-color-purple': chartTokens.colors.extended.purple,
-    
+
     // Background colors
     '--chart-background': colors.surface.background,
     '--chart-card-background': colors.surface.card,
     '--chart-overlay-background': colors.surface.overlay,
-    
+
     // Text colors
     '--chart-text-primary': colors.text.primary,
     '--chart-text-secondary': colors.text.secondary,
     '--chart-text-muted': colors.text.muted,
-    
+
     // Animation
     '--chart-animation-standard': chartTokens.animation.standard,
     '--chart-animation-ios': chartTokens.animation.ios,
     '--chart-animation-duration-fast': chartTokens.animation.duration.fast,
-    '--chart-animation-duration-standard': chartTokens.animation.duration.standard,
-    '--chart-animation-duration-chart-drawing': chartTokens.animation.duration.chartDrawing,
-    
+    '--chart-animation-duration-standard':
+      chartTokens.animation.duration.standard,
+    '--chart-animation-duration-chart-drawing':
+      chartTokens.animation.duration.chartDrawing,
+
     // Spacing
     '--chart-spacing-xs': chartTokens.spacing.xs,
     '--chart-spacing-sm': chartTokens.spacing.sm,
@@ -193,13 +200,13 @@ export const generateGraphCSSProperties = (
     '--chart-spacing-lg': chartTokens.spacing.lg,
     '--chart-spacing-xl': chartTokens.spacing.xl,
     '--chart-spacing-xxl': chartTokens.spacing.xxl,
-    
+
     // Border radius
     '--chart-border-radius-sm': chartTokens.borderRadius.sm,
     '--chart-border-radius-md': chartTokens.borderRadius.md,
     '--chart-border-radius-lg': chartTokens.borderRadius.lg,
     '--chart-border-radius-tooltip': chartTokens.borderRadius.tooltip,
-    
+
     // Typography
     '--chart-font-family': chartTokens.typography.fontFamily,
     '--chart-font-size-title': chartTokens.typography.fontSize.chartTitle,
@@ -207,11 +214,16 @@ export const generateGraphCSSProperties = (
     '--chart-font-size-data-label': chartTokens.typography.fontSize.dataLabel,
     '--chart-font-size-legend': chartTokens.typography.fontSize.legend,
     '--chart-font-size-tooltip': chartTokens.typography.fontSize.tooltip,
-    '--chart-font-weight-title': chartTokens.typography.fontWeight.chartTitle.toString(),
-    '--chart-font-weight-axis-label': chartTokens.typography.fontWeight.axisLabel.toString(),
-    '--chart-font-weight-data-label': chartTokens.typography.fontWeight.dataLabel.toString(),
-    '--chart-font-weight-legend': chartTokens.typography.fontWeight.legend.toString(),
-    '--chart-font-weight-tooltip': chartTokens.typography.fontWeight.tooltip.toString(),
+    '--chart-font-weight-title':
+      chartTokens.typography.fontWeight.chartTitle.toString(),
+    '--chart-font-weight-axis-label':
+      chartTokens.typography.fontWeight.axisLabel.toString(),
+    '--chart-font-weight-data-label':
+      chartTokens.typography.fontWeight.dataLabel.toString(),
+    '--chart-font-weight-legend':
+      chartTokens.typography.fontWeight.legend.toString(),
+    '--chart-font-weight-tooltip':
+      chartTokens.typography.fontWeight.tooltip.toString(),
   };
 };
 
@@ -223,4 +235,4 @@ export default appleGraphTokens;
  * this file can be removed and imports updated to:
  * import { vueniTheme } from '@/theme/unified';
  * const chartTokens = vueniTheme.charts;
- */ 
+ */

@@ -9,4 +9,4 @@ const SimpleGlassCard: React.FC<SimpleGlassCardProps> = (props) => (
 );
 
 export default SimpleGlassCard;
-export { SimpleGlassCard }; 
+export { SimpleGlassCard };

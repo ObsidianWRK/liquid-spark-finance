@@ -88,7 +88,10 @@ describe('useBreakpoint', () => {
     mockInnerWidth(1200);
     renderHook(() => useBreakpoint());
 
-    expect(mockAddEventListener).toHaveBeenCalledWith('resize', expect.any(Function));
+    expect(mockAddEventListener).toHaveBeenCalledWith(
+      'resize',
+      expect.any(Function)
+    );
   });
 
   it('removes resize event listener on unmount', () => {
@@ -97,7 +100,10 @@ describe('useBreakpoint', () => {
 
     unmount();
 
-    expect(mockRemoveEventListener).toHaveBeenCalledWith('resize', expect.any(Function));
+    expect(mockRemoveEventListener).toHaveBeenCalledWith(
+      'resize',
+      expect.any(Function)
+    );
   });
 
   it('updates breakpoint when window resizes', () => {
@@ -108,10 +114,10 @@ describe('useBreakpoint', () => {
 
     // Simulate resize to desktop
     mockInnerWidth(1200);
-    
+
     // Get the resize handler that was registered
     const resizeHandler = mockAddEventListener.mock.calls.find(
-      call => call[0] === 'resize'
+      (call) => call[0] === 'resize'
     )?.[1];
 
     act(() => {
@@ -136,4 +142,4 @@ describe('useBreakpoint', () => {
     // Restore window
     global.window = originalWindow;
   });
-}); 
+});

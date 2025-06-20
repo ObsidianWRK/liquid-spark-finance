@@ -1,5 +1,11 @@
 import { Observable, BehaviorSubject, interval, combineLatest } from 'rxjs';
-import { map, shareReplay, startWith, distinctUntilChanged, filter } from 'rxjs/operators';
+import {
+  map,
+  shareReplay,
+  startWith,
+  distinctUntilChanged,
+  filter,
+} from 'rxjs/operators';
 import { z } from 'zod';
 
 // Zod schemas for type safety
@@ -35,7 +41,10 @@ class BiometricStreamService {
   private generateMockReading(deviceId: string): BiometricReading {
     const baseStress = Math.random() * 30 + 20; // 20-50 baseline
     const timeVariation = Math.sin(Date.now() / 60000) * 10; // Time-based variation
-    const stressIndex = Math.max(0, Math.min(100, baseStress + timeVariation + (Math.random() - 0.5) * 20));
+    const stressIndex = Math.max(
+      0,
+      Math.min(100, baseStress + timeVariation + (Math.random() - 0.5) * 20)
+    );
 
     return {
       timestamp: new Date().toISOString(),
@@ -52,17 +61,17 @@ class BiometricStreamService {
   }
 
   // Public observables
-  public readonly readings$: Observable<BiometricReading> = this._readings$.pipe(
-    filter((reading): reading is BiometricReading => reading !== null),
-    distinctUntilChanged((a, b) => 
-      Math.abs(a.stressIndex || 0 - (b.stressIndex || 0)) < 2
-    ),
-    shareReplay(1)
-  );
+  public readonly readings$: Observable<BiometricReading> =
+    this._readings$.pipe(
+      filter((reading): reading is BiometricReading => reading !== null),
+      distinctUntilChanged(
+        (a, b) => Math.abs(a.stressIndex || 0 - (b.stressIndex || 0)) < 2
+      ),
+      shareReplay(1)
+    );
 
-  public readonly connectedDevices$: Observable<BiometricDataSource[]> = this._connectedDevices$.pipe(
-    shareReplay(1)
-  );
+  public readonly connectedDevices$: Observable<BiometricDataSource[]> =
+    this._connectedDevices$.pipe(shareReplay(1));
 
   public readonly isActive$: Observable<boolean> = this._isActive$.pipe(
     shareReplay(1)
@@ -70,28 +79,28 @@ class BiometricStreamService {
 
   // Derived observables
   public readonly stressLevel$: Observable<number> = this.readings$.pipe(
-    map(reading => reading.stressIndex || 0),
+    map((reading) => reading.stressIndex || 0),
     distinctUntilChanged(),
     shareReplay(1)
   );
 
   public readonly heartRate$: Observable<number> = this.readings$.pipe(
-    map(reading => reading.heartRate || 0),
+    map((reading) => reading.heartRate || 0),
     distinctUntilChanged(),
     shareReplay(1)
   );
 
   public readonly wellnessScore$: Observable<number> = this.readings$.pipe(
-    map(reading => {
+    map((reading) => {
       const stress = reading.stressIndex || 50;
       const hrv = reading.heartRateVariability || 30;
       const hr = reading.heartRate || 70;
-      
+
       // Calculate wellness score (inverse of stress, normalized)
       const stressScore = (100 - stress) * 0.4;
       const hrvScore = Math.min(100, hrv * 2) * 0.3;
       const hrScore = Math.max(0, 100 - Math.abs(hr - 70) * 2) * 0.3;
-      
+
       return Math.round(stressScore + hrvScore + hrScore);
     }),
     distinctUntilChanged(),
@@ -110,14 +119,14 @@ class BiometricStreamService {
     this.stressLevel$,
     this.wellnessScore$,
     this.isActive$,
-    this.connectedDevices$
+    this.connectedDevices$,
   ]).pipe(
     map(([reading, stressIndex, wellnessScore, isActive, devices]) => ({
       reading,
       stressIndex,
       wellnessScore,
       isActive,
-      devices
+      devices,
     })),
     shareReplay(1)
   );
@@ -125,9 +134,9 @@ class BiometricStreamService {
   // Control methods
   public startStream(): void {
     if (this._isActive$.value) return;
-    
+
     this._isActive$.next(true);
-    
+
     // Initialize mock devices
     this._connectedDevices$.next([
       {
@@ -141,16 +150,18 @@ class BiometricStreamService {
         name: 'Oura Ring Gen 3',
         type: 'oura',
         isConnected: Math.random() > 0.3, // 70% connected
-      }
+      },
     ]);
 
     // Start mock data stream (every 5 seconds)
-    interval(5000).pipe(
-      filter(() => this._isActive$.value),
-      map(() => this.generateMockReading('apple-watch-series-8'))
-    ).subscribe(reading => {
-      this._readings$.next(reading);
-    });
+    interval(5000)
+      .pipe(
+        filter(() => this._isActive$.value),
+        map(() => this.generateMockReading('apple-watch-series-8'))
+      )
+      .subscribe((reading) => {
+        this._readings$.next(reading);
+      });
   }
 
   public stopStream(): void {
@@ -164,7 +175,7 @@ class BiometricStreamService {
       ...this.generateMockReading('manual-input'),
       ...reading,
     };
-    
+
     try {
       const validated = BiometricReadingSchema.parse(fullReading);
       this._readings$.next(validated);
@@ -175,14 +186,16 @@ class BiometricStreamService {
 
   public addDevice(device: BiometricDataSource): void {
     const currentDevices = this._connectedDevices$.value;
-    if (!currentDevices.find(d => d.id === device.id)) {
+    if (!currentDevices.find((d) => d.id === device.id)) {
       this._connectedDevices$.next([...currentDevices, device]);
     }
   }
 
   public removeDevice(deviceId: string): void {
     const currentDevices = this._connectedDevices$.value;
-    this._connectedDevices$.next(currentDevices.filter(d => d.id !== deviceId));
+    this._connectedDevices$.next(
+      currentDevices.filter((d) => d.id !== deviceId)
+    );
   }
 
   // Get current values synchronously
@@ -193,15 +206,15 @@ class BiometricStreamService {
   public getCurrentWellnessScore(): number {
     const reading = this._readings$.value;
     if (!reading) return 0;
-    
+
     const stress = reading.stressIndex || 50;
     const hrv = reading.heartRateVariability || 30;
     const hr = reading.heartRate || 70;
-    
+
     const stressScore = (100 - stress) * 0.4;
     const hrvScore = Math.min(100, hrv * 2) * 0.3;
     const hrScore = Math.max(0, 100 - Math.abs(hr - 70) * 2) * 0.3;
-    
+
     return Math.round(stressScore + hrvScore + hrScore);
   }
 }
@@ -210,4 +223,4 @@ class BiometricStreamService {
 export const biometricStream = new BiometricStreamService();
 
 // Export for React hooks
-export type BiometricStreamType = typeof biometricStream; 
+export type BiometricStreamType = typeof biometricStream;

@@ -1,9 +1,9 @@
-import React from "react";
-import { HomeWidget } from "@/shared/types/shared";
-import { formatCurrency } from "@/shared/utils/formatters";
-import { DollarSign, Banknote, X } from "lucide-react";
-import { Button } from "@/shared/ui/button";
-import { useWidgetsStore } from "../store";
+import React from 'react';
+import { HomeWidget } from '@/shared/types/shared';
+import { formatCurrency } from '@/shared/utils/formatters';
+import { DollarSign, Banknote, X } from 'lucide-react';
+import { Button } from '@/shared/ui/button';
+import { useWidgetsStore } from '../store';
 
 interface WidgetPreviewProps {
   widget: HomeWidget;
@@ -14,23 +14,23 @@ export const WidgetPreview: React.FC<WidgetPreviewProps> = ({ widget }) => {
 
   const renderContent = () => {
     switch (widget.type) {
-      case "balance":
+      case 'balance':
         return (
           <div className="flex items-center gap-2">
             <Banknote className="text-blue-400" />
             <div>
               <p className="text-sm font-medium">Account Balance</p>
-              <p className="text-lg font-bold">{formatCurrency(5432.10)}</p>
+              <p className="text-lg font-bold">{formatCurrency(5432.1)}</p>
             </div>
           </div>
         );
-      case "safe_to_spend":
+      case 'safe_to_spend':
         return (
           <div className="flex items-center gap-2">
             <DollarSign className="text-green-400" />
             <div>
               <p className="text-sm font-medium">Safe to Spend</p>
-              <p className="text-lg font-bold">{formatCurrency(687.50)}</p>
+              <p className="text-lg font-bold">{formatCurrency(687.5)}</p>
             </div>
           </div>
         );
@@ -52,4 +52,4 @@ export const WidgetPreview: React.FC<WidgetPreviewProps> = ({ widget }) => {
       {renderContent()}
     </div>
   );
-}; 
+};

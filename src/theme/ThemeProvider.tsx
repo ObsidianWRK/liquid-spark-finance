@@ -1,15 +1,21 @@
 /**
  * Vueni Theme Provider - React Context for Unified Theme System
- * 
+ *
  * Provides the unified theme to all components throughout the app.
  * Only supports dark mode as per design requirements.
  */
 
 import React, { createContext, useContext, useMemo, ReactNode } from 'react';
-import { vueniTheme, type VueniThemeContextValue, generateCSSProperties } from './unified';
+import {
+  vueniTheme,
+  type VueniThemeContextValue,
+  generateCSSProperties,
+} from './unified';
 
 // Theme context
-const VueniThemeContext = createContext<VueniThemeContextValue | undefined>(undefined);
+const VueniThemeContext = createContext<VueniThemeContextValue | undefined>(
+  undefined
+);
 
 // Hook for accessing theme
 export const useVueniTheme = () => {
@@ -26,32 +32,37 @@ interface VueniThemeProviderProps {
 }
 
 // Theme provider component
-export const VueniThemeProvider: React.FC<VueniThemeProviderProps> = ({ children }) => {
+export const VueniThemeProvider: React.FC<VueniThemeProviderProps> = ({
+  children,
+}) => {
   // Generate CSS custom properties
   const cssProperties = useMemo(() => generateCSSProperties(), []);
-  
+
   // Theme context value
-  const contextValue: VueniThemeContextValue = useMemo(() => ({
-    theme: vueniTheme,
-    colorMode: 'dark',
-  }), []);
+  const contextValue: VueniThemeContextValue = useMemo(
+    () => ({
+      theme: vueniTheme,
+      colorMode: 'dark',
+    }),
+    []
+  );
 
   // Apply CSS custom properties to document root
   React.useEffect(() => {
     const rootElement = document.documentElement;
-    
+
     // Apply all theme CSS properties
     Object.entries(cssProperties).forEach(([property, value]) => {
       rootElement.style.setProperty(property, value);
     });
-    
+
     // Ensure dark mode class is applied
     rootElement.classList.add('dark');
     rootElement.classList.remove('light'); // Remove any light mode remnants
-    
+
     // Set primary font family on body
     document.body.style.fontFamily = vueniTheme.typography.fontFamily.primary;
-    
+
     // Clean up function
     return () => {
       Object.keys(cssProperties).forEach((property) => {
@@ -96,7 +107,7 @@ export const useThemeCards = () => {
 // Utility hook for semantic colors
 export const useSemanticColors = () => {
   const { theme } = useVueniTheme();
-  
+
   return {
     // Semantic aliases
     primary: theme.colors.palette.primary,
@@ -104,13 +115,13 @@ export const useSemanticColors = () => {
     danger: theme.colors.palette.danger,
     warning: theme.colors.palette.warning,
     neutral: theme.colors.palette.neutral,
-    
+
     // Financial colors
     financial: theme.colors.semantic.financial,
-    
+
     // Status colors
     status: theme.colors.semantic.status,
-    
+
     // Chart colors
     chart: theme.colors.semantic.chart,
   };
@@ -119,7 +130,7 @@ export const useSemanticColors = () => {
 // Utility hook for glass effects with Tailwind classes
 export const useGlassClasses = () => {
   const { theme } = useVueniTheme();
-  
+
   return {
     subtle: `${theme.cards.background.default} ${theme.cards.border.default} ${theme.glass.subtle.backdrop}`,
     default: `${theme.cards.background.hover} ${theme.cards.border.default} ${theme.glass.default.backdrop}`,
@@ -136,9 +147,9 @@ export function withVueniTheme<P extends object>(
       <Component {...props} />
     </VueniThemeProvider>
   );
-  
+
   WrappedComponent.displayName = `withVueniTheme(${Component.displayName || Component.name})`;
-  
+
   return WrappedComponent;
 }
 
@@ -147,4 +158,4 @@ export { vueniTheme } from './unified';
 export type { VueniTheme, VueniThemeContextValue } from './unified';
 
 // Default export
-export default VueniThemeProvider; 
+export default VueniThemeProvider;

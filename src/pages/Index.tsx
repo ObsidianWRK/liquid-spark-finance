@@ -16,18 +16,37 @@ import { Transaction } from '@/shared/types/shared';
 // CC: New Feature Cloud and Smart Accounts Deck imports
 import FeatureCloud from '@/components/FeatureCloud';
 import { VirtualizedDeck } from '@/components/AccountDeck/VirtualizedDeck';
-import { isFeatureEnabled, trackFeatureUsage } from '@/shared/utils/featureFlags';
+import {
+  isFeatureEnabled,
+  trackFeatureUsage,
+} from '@/shared/utils/featureFlags';
 import { transformToAccountRowData } from '@/shared/utils/accountTransformers';
 import CleanCreditScoreCard from '@/features/credit/components/CleanCreditScoreCard';
-import { BiometricMonitor, InterventionNudge, useBiometricInterventionStore } from '@/features/biometric-intervention';
+import {
+  BiometricMonitor,
+  InterventionNudge,
+  useBiometricInterventionStore,
+} from '@/features/biometric-intervention';
 
 // Lazy load components properly without webpack comments
-const InvestmentTrackerPage = lazy(() => import('@/features/investments/components/InvestmentTrackerPage'));
-const BudgetPlannerPage = lazy(() => import('@/features/budget/components/BudgetPlannerPage'));
-const DashboardPage = lazy(() => import('@/features/dashboard/components/DashboardPage'));
-const FinancialPlanningPage = lazy(() => import('@/features/planning/components/FinancialPlanningPage'));
-const CreditScorePage = lazy(() => import('@/features/credit/components/CreditScorePage'));
-const AnalyticsPage = lazy(() => import('@/features/analytics/components/AnalyticsPage'));
+const InvestmentTrackerPage = lazy(
+  () => import('@/features/investments/components/InvestmentTrackerPage')
+);
+const BudgetPlannerPage = lazy(
+  () => import('@/features/budget/components/BudgetPlannerPage')
+);
+const DashboardPage = lazy(
+  () => import('@/features/dashboard/components/DashboardPage')
+);
+const FinancialPlanningPage = lazy(
+  () => import('@/features/planning/components/FinancialPlanningPage')
+);
+const CreditScorePage = lazy(
+  () => import('@/features/credit/components/CreditScorePage')
+);
+const AnalyticsPage = lazy(
+  () => import('@/features/analytics/components/AnalyticsPage')
+);
 const InsightsPage = lazy(() => import('./InsightsPage'));
 
 // Error Boundary Component
@@ -54,9 +73,11 @@ class ErrorBoundary extends React.Component<
       return (
         <div className="min-h-screen bg-black text-white flex items-center justify-center">
           <div className="text-center space-y-4 p-8">
-            <h1 className="text-2xl font-bold text-red-400">Something went wrong</h1>
+            <h1 className="text-2xl font-bold text-red-400">
+              Something went wrong
+            </h1>
             <p className="text-white/60">Error: {this.state.error?.message}</p>
-            <button 
+            <button
               onClick={() => this.setState({ hasError: false })}
               className="bg-blue-500 hover:bg-blue-600 px-4 py-2 rounded-lg"
             >
@@ -72,12 +93,15 @@ class ErrorBoundary extends React.Component<
 }
 
 // Adapt mock transactions for new UI fields
-const adaptTransactions = (transactions: typeof mockData.transactions): Transaction[] => {
+const adaptTransactions = (
+  transactions: typeof mockData.transactions
+): Transaction[] => {
   // Helper to convert legacy transaction into full shape expected by UI
   const baseAdapted = transactions.map((t, idx) => {
-    const categoryName = typeof (t as any).category === 'string'
-      ? (t as any).category
-      : ((t as any).category?.name?.toLowerCase() || 'other');
+    const categoryName =
+      typeof (t as any).category === 'string'
+        ? (t as any).category
+        : (t as any).category?.name?.toLowerCase() || 'other';
 
     return {
       // Legacy + required fields
@@ -88,17 +112,22 @@ const adaptTransactions = (transactions: typeof mockData.transactions): Transact
       currency: (t as any).currency ?? 'USD',
       date: new Date(t.date),
       merchantName: (t as any).merchantName ?? (t as any).merchant ?? 'Unknown',
-      description: (t as any).description ?? ((t as any).merchant ? `Purchase at ${(t as any).merchant}` : 'Transaction'),
+      description:
+        (t as any).description ??
+        ((t as any).merchant
+          ? `Purchase at ${(t as any).merchant}`
+          : 'Transaction'),
       category: categoryName,
       paymentChannel: 'online',
       transactionType: t.amount < 0 ? 'purchase' : 'deposit',
       status: (() => {
         const raw = ((t.status as string) ?? '').toLowerCase();
         if (raw === 'pending') return 'pending';
-        if (['cancelled', 'failed', 'returned', 'refunded'].includes(raw)) return 'refunded';
+        if (['cancelled', 'failed', 'returned', 'refunded'].includes(raw))
+          return 'refunded';
         return 'completed';
       })(),
-      isPending: ((t.status as string)?.toLowerCase() === 'pending'),
+      isPending: (t.status as string)?.toLowerCase() === 'pending',
       isRecurring: false,
       metadata: {
         tracking_number: (t as any).trackingNumber,
@@ -119,11 +148,23 @@ const adaptTransactions = (transactions: typeof mockData.transactions): Transact
   // --- Ensure 60 days of transactions ---
   const DAY_MS = 24 * 60 * 60 * 1000;
   const today = new Date();
-  const existingDateKeys = new Set(baseAdapted.map(tx => new Date(tx.date).toDateString()));
+  const existingDateKeys = new Set(
+    baseAdapted.map((tx) => new Date(tx.date).toDateString())
+  );
 
   const fillerMerchants = [
-    'Starbucks', 'Amazon', 'Target', 'Whole Foods', 'CVS', 'Walmart',
-    'Netflix', 'Spotify', 'Uber', 'Airbnb', 'Costco', 'Home Depot'
+    'Starbucks',
+    'Amazon',
+    'Target',
+    'Whole Foods',
+    'CVS',
+    'Walmart',
+    'Netflix',
+    'Spotify',
+    'Uber',
+    'Airbnb',
+    'Costco',
+    'Home Depot',
   ];
 
   let fillerIdx = 0;
@@ -159,13 +200,15 @@ const adaptTransactions = (transactions: typeof mockData.transactions): Transact
     } as unknown as Transaction);
   }
 
-  return baseAdapted.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+  return baseAdapted.sort(
+    (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
+  );
 };
 
 // Demo component to showcase intervention system
 const DemoInterventionNudge: React.FC = () => {
   const [showDemo, setShowDemo] = useState(false);
-  
+
   useEffect(() => {
     // Show demo intervention after 3 seconds for demonstration
     const timer = setTimeout(() => setShowDemo(true), 3000);
@@ -180,7 +223,7 @@ const DemoInterventionNudge: React.FC = () => {
       confidence: 0.85,
       baseline: 30,
       trend: 'rising' as const,
-      timestamp: new Date().toISOString()
+      timestamp: new Date().toISOString(),
     },
     policy: {
       id: 'high-stress-policy',
@@ -189,25 +232,25 @@ const DemoInterventionNudge: React.FC = () => {
       triggers: {
         stressThreshold: 75,
         spendingAmount: 50,
-        consecutiveHighStress: 2
+        consecutiveHighStress: 2,
       },
       actions: {
         cardFreeze: false,
         nudgeMessage: true,
         breathingExercise: true,
         delayPurchase: 30,
-        safeToSpendReduction: 50
+        safeToSpendReduction: 50,
       },
       schedule: {
         enabled: false,
         startTime: '09:00',
         endTime: '22:00',
-        daysOfWeek: [1, 2, 3, 4, 5]
-      }
+        daysOfWeek: [1, 2, 3, 4, 5],
+      },
     },
     action: 'nudge_displayed',
     outcome: 'prevented_purchase' as const,
-    timestamp: new Date().toISOString()
+    timestamp: new Date().toISOString(),
   };
 
   if (!showDemo) return null;
@@ -236,9 +279,11 @@ export default function Index() {
   const [error, setError] = useState<string | null>(null);
   const [isDataValid, setIsDataValid] = useState(false);
   // Initialize balance visibility with all accounts visible by default
-  const [balanceVisibility, setBalanceVisibility] = useState<Record<string, boolean>>(() => {
+  const [balanceVisibility, setBalanceVisibility] = useState<
+    Record<string, boolean>
+  >(() => {
     const initialVisibility: Record<string, boolean> = {};
-    getCompactAccountCards().forEach(account => {
+    getCompactAccountCards().forEach((account) => {
       initialVisibility[account.id] = true; // Show balances by default
     });
     return initialVisibility;
@@ -251,10 +296,10 @@ export default function Index() {
       try {
         setLoading(true);
         setError(null);
-        
+
         // Simulate data validation and loading
-        await new Promise(resolve => setTimeout(resolve, 500));
-        
+        await new Promise((resolve) => setTimeout(resolve, 500));
+
         // Data validation logic
         setIsDataValid(true);
         setLoading(false);
@@ -269,19 +314,23 @@ export default function Index() {
 
   // View management in useEffect
   useEffect(() => {
-    const tab = searchParams.get('tab') || searchParams.get('view') || 'dashboard';
+    const tab =
+      searchParams.get('tab') || searchParams.get('view') || 'dashboard';
     setCurrentView(tab);
   }, [searchParams]);
 
-  const handleViewChange = useCallback((view: string) => {
-    setCurrentView(view);
-    setSearchParams({ tab: view });
-  }, [setSearchParams]);
+  const handleViewChange = useCallback(
+    (view: string) => {
+      setCurrentView(view);
+      setSearchParams({ tab: view });
+    },
+    [setSearchParams]
+  );
 
   const handleToggleBalance = useCallback((accountId: string) => {
-    setBalanceVisibility(prev => ({
+    setBalanceVisibility((prev) => ({
       ...prev,
-      [accountId]: !prev[accountId]
+      [accountId]: !prev[accountId],
     }));
   }, []);
 
@@ -295,10 +344,12 @@ export default function Index() {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
-          <h2 className="text-2xl font-bold text-red-400 mb-4">Error Loading Dashboard</h2>
+          <h2 className="text-2xl font-bold text-red-400 mb-4">
+            Error Loading Dashboard
+          </h2>
           <p className="text-white/70">{error}</p>
-          <button 
-            onClick={() => window.location.reload()} 
+          <button
+            onClick={() => window.location.reload()}
             className="mt-4 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
           >
             Retry
@@ -308,7 +359,7 @@ export default function Index() {
     );
   }
 
-  // Loading display after hooks  
+  // Loading display after hooks
   if (loading || !isDataValid) {
     return (
       <div className="min-h-screen flex items-center justify-center">
@@ -333,13 +384,19 @@ export default function Index() {
                 </p>
               </div>
             </div>
-            
+
             {/* Compact Account Cards Grid */}
             <Grid>
-              {getCompactAccountCards().map(account => (
+              {getCompactAccountCards().map((account) => (
                 <AccountCard
                   key={account.id}
-                  acct={{ ...account, category: account.accountType === 'Credit Card' ? 'CREDIT' : account.accountType.toUpperCase() as any }}
+                  acct={{
+                    ...account,
+                    category:
+                      account.accountType === 'Credit Card'
+                        ? 'CREDIT'
+                        : (account.accountType.toUpperCase() as any),
+                  }}
                   showBalance={balanceVisibility[account.id] ?? true}
                   onAction={(id, act) => handleQuickAction(id, act)}
                 />
@@ -349,7 +406,9 @@ export default function Index() {
         );
       case 'insights':
         return (
-          <Suspense fallback={<div className="p-6 text-white">Loading insights...</div>}>
+          <Suspense
+            fallback={<div className="p-6 text-white">Loading insights...</div>}
+          >
             <InsightsPage />
           </Suspense>
         );
@@ -359,23 +418,29 @@ export default function Index() {
             <div className="p-4 md:p-6 lg:p-8">
               <div className="mb-6 flex items-start justify-between">
                 <div>
-                  <h1 className="text-2xl lg:text-3xl font-bold text-white mb-2">Recent Transactions</h1>
+                  <h1 className="text-2xl lg:text-3xl font-bold text-white mb-2">
+                    Recent Transactions
+                  </h1>
                   <p className="text-white/60">
-                    {adaptTransactions(mockData.transactions).length} transactions • Showing latest {adaptTransactions(mockData.transactions).length}
+                    {adaptTransactions(mockData.transactions).length}{' '}
+                    transactions • Showing latest{' '}
+                    {adaptTransactions(mockData.transactions).length}
                   </p>
                 </div>
-                
+
                 {/* Compact Biometric Monitor */}
                 <div className="hidden lg:block">
                   <BiometricMonitor compact={true} className="w-80" />
                 </div>
               </div>
-              
+
               <div className="max-w-none">
-                <TransactionList 
+                <TransactionList
                   transactions={adaptTransactions(mockData.transactions) || []}
                   isLoading={false}
-                  onTransactionClick={(transaction) => console.log('Transaction clicked:', transaction)}
+                  onTransactionClick={(transaction) =>
+                    console.log('Transaction clicked:', transaction)
+                  }
                   className="w-full"
                 />
               </div>
@@ -393,31 +458,55 @@ export default function Index() {
         return <CalculatorList />;
       case 'investments':
         return (
-          <Suspense fallback={<div className="p-6 text-white">Loading investments...</div>}>
+          <Suspense
+            fallback={
+              <div className="p-6 text-white">Loading investments...</div>
+            }
+          >
             <InvestmentTrackerPage />
           </Suspense>
         );
       case 'budget':
         return (
-          <Suspense fallback={<div className="p-6 text-white">Loading budget planner...</div>}>
+          <Suspense
+            fallback={
+              <div className="p-6 text-white">Loading budget planner...</div>
+            }
+          >
             <BudgetPlannerPage />
           </Suspense>
         );
       case 'analytics':
         return (
-          <Suspense fallback={<div className="p-6 text-white">Loading analytics dashboard...</div>}>
+          <Suspense
+            fallback={
+              <div className="p-6 text-white">
+                Loading analytics dashboard...
+              </div>
+            }
+          >
             <AnalyticsPage />
           </Suspense>
         );
       case 'planning':
         return (
-          <Suspense fallback={<div className="p-6 text-white">Loading financial planning...</div>}>
+          <Suspense
+            fallback={
+              <div className="p-6 text-white">
+                Loading financial planning...
+              </div>
+            }
+          >
             <FinancialPlanningPage familyId="demo_family" />
           </Suspense>
         );
       case 'credit':
         return (
-          <Suspense fallback={<div className="p-6 text-white">Loading credit score...</div>}>
+          <Suspense
+            fallback={
+              <div className="p-6 text-white">Loading credit score...</div>
+            }
+          >
             <CreditScorePage />
           </Suspense>
         );
@@ -427,9 +516,7 @@ export default function Index() {
             {/* CC: Feature Cloud Hero Section (R1 requirement) */}
             {isFeatureEnabled('FEATURE_CLOUD') && (
               <div className="relative py-16 px-6">
-                <FeatureCloud 
-                  className="max-w-6xl mx-auto"
-                />
+                <FeatureCloud className="max-w-6xl mx-auto" />
               </div>
             )}
 
@@ -439,30 +526,37 @@ export default function Index() {
                 {/* Smart Accounts Deck (R2 requirement) */}
                 {isFeatureEnabled('SMART_ACCOUNTS_DECK') && (
                   <div>
-                    <VirtualizedDeck 
+                    <VirtualizedDeck
                       accounts={transformToAccountRowData()}
                       height={400}
                       onAccountClick={(account) => {
-                        trackFeatureUsage('smart_accounts_deck', 'account_clicked');
+                        trackFeatureUsage(
+                          'smart_accounts_deck',
+                          'account_clicked'
+                        );
                         // Account click handler
                       }}
                     />
                   </div>
                 )}
-                
+
                 {/* Enhanced Quick Access Rail */}
                 <div>
                   <QuickAccessRail
                     accounts={getCompactAccountCards()}
                     title="Quick Access"
                     subtitle={`${getCompactAccountCards().length} accounts • Total Balance: $83.8K`}
-                    showBalance={Object.values(balanceVisibility).some(v => v === true)}
+                    showBalance={Object.values(balanceVisibility).some(
+                      (v) => v === true
+                    )}
                     onToggleBalance={() => {
                       // Check if any balance is currently visible
-                      const anyVisible = Object.values(balanceVisibility).some(v => v === true);
+                      const anyVisible = Object.values(balanceVisibility).some(
+                        (v) => v === true
+                      );
                       // Toggle all accounts to the opposite state
                       const newVisibility: Record<string, boolean> = {};
-                      getCompactAccountCards().forEach(account => {
+                      getCompactAccountCards().forEach((account) => {
                         newVisibility[account.id] = !anyVisible; // If any visible, hide all. If all hidden, show all.
                       });
                       setBalanceVisibility(newVisibility);
@@ -476,13 +570,18 @@ export default function Index() {
                   />
                 </div>
               </div>
-              
+
               <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
                 <div className="lg:col-span-2">
-                  <TransactionList 
-                    transactions={adaptTransactions(mockData.transactions)?.slice(0, 10) || []}
+                  <TransactionList
+                    transactions={
+                      adaptTransactions(mockData.transactions)?.slice(0, 10) ||
+                      []
+                    }
                     isLoading={false}
-                    onTransactionClick={(transaction) => console.log('Transaction clicked:', transaction)}
+                    onTransactionClick={(transaction) =>
+                      console.log('Transaction clicked:', transaction)
+                    }
                   />
                 </div>
                 <div className="space-y-6">
@@ -502,22 +601,22 @@ export default function Index() {
         {/* WHY: Removed min-h-screen and flex - let content flow naturally */}
         <PerformanceMonitor />
         <LiquidGlassTopMenuBar />
-        
+
         <div className="flex">
-          <Navigation 
-            activeTab={currentView}
-            onTabChange={handleViewChange}
-          />
-          
-          <main className="flex-1 pt-24 pb-safe" style={{ paddingBottom: 'max(8rem, env(safe-area-inset-bottom) + 6rem)' }}>
+          <Navigation activeTab={currentView} onTabChange={handleViewChange} />
+
+          <main
+            className="flex-1 pt-24 pb-safe"
+            style={{
+              paddingBottom: 'max(8rem, env(safe-area-inset-bottom) + 6rem)',
+            }}
+          >
             {/* WHY: Let main content flow naturally without height constraints */}
-            <div>
-              {renderCurrentView()}
-            </div>
+            <div>{renderCurrentView()}</div>
             {/* Extra bottom spacing to ensure content is never clipped */}
             <div className="h-16"></div>
           </main>
-          </div>
+        </div>
       </div>
     </ErrorBoundary>
   );

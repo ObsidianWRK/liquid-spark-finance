@@ -5,11 +5,11 @@ import { Badge } from '@/shared/ui/badge';
 import { Button } from '@/shared/ui/button';
 import { AccountCardDTO } from '@/types/accounts';
 import { formatCurrency } from '@/shared/utils/formatters';
-import { 
-  Eye, 
-  EyeOff, 
-  TrendingUp, 
-  ArrowUpRight, 
+import {
+  Eye,
+  EyeOff,
+  TrendingUp,
+  ArrowUpRight,
   ArrowDownRight,
   Send,
   Download,
@@ -18,7 +18,7 @@ import {
   Banknote,
   Building2,
   PiggyBank,
-  Landmark
+  Landmark,
 } from 'lucide-react';
 import { cn } from '@/shared/lib/utils';
 
@@ -35,17 +35,22 @@ const CompactAccountCard: React.FC<CompactAccountCardProps> = ({
   showBalance = true,
   onToggleBalance,
   onQuickAction,
-  className
+  className,
 }) => {
   const navigate = useNavigate();
 
   const getAccountIcon = () => {
     switch (account.accountType) {
-      case 'Checking': return Banknote;
-      case 'Savings': return TrendingUp;
-      case 'Credit Card': return CreditCard;
-      case 'Investment': return ArrowUpRight;
-      default: return Banknote;
+      case 'Checking':
+        return Banknote;
+      case 'Savings':
+        return TrendingUp;
+      case 'Credit Card':
+        return CreditCard;
+      case 'Investment':
+        return ArrowUpRight;
+      default:
+        return Banknote;
     }
   };
 
@@ -62,11 +67,13 @@ const CompactAccountCard: React.FC<CompactAccountCardProps> = ({
   };
 
   // Map spendDelta to UnifiedCard delta format
-  const delta = account.spendDelta ? {
-    value: account.spendDelta.percentage,
-    format: 'percentage' as const,
-    label: 'spending'
-  } : undefined;
+  const delta = account.spendDelta
+    ? {
+        value: account.spendDelta.percentage,
+        format: 'percentage' as const,
+        label: 'spending',
+      }
+    : undefined;
 
   // Handle card click to navigate to account overview
   const handleCardClick = (e: React.MouseEvent) => {
@@ -82,22 +89,37 @@ const CompactAccountCard: React.FC<CompactAccountCardProps> = ({
       <UnifiedCard
         variant="default"
         size="lg"
-        className={cn("card w-full min-w-[18rem] sm:max-w-[20rem] lg:max-w-[22rem] xl:max-w-[24rem] card-hover", className)}
+        className={cn(
+          'card w-full min-w-[18rem] sm:max-w-[20rem] lg:max-w-[22rem] xl:max-w-[24rem] card-hover',
+          className
+        )}
         interactive
         icon={getAccountIcon()}
         iconColor={account.institution.color || '#6366f1'}
         title={`${account.accountType} ••${account.last4}`}
         subtitle={account.institution.name}
-        metric={showBalance ? formatCurrency(account.currentBalance, { currency: account.currency }) : '••••••'}
+        metric={
+          showBalance
+            ? formatCurrency(account.currentBalance, {
+                currency: account.currency,
+              })
+            : '••••••'
+        }
         delta={delta}
         trendDirection={getTrendDirection()}
-        badge={account.alerts && account.alerts.length > 0 ? {
-          text: `${account.alerts.length} Alert${account.alerts.length > 1 ? 's' : ''}`,
-          variant: account.alerts.some(a => a.severity === 'critical') ? 'error' : 'warning'
-        } : undefined}
+        badge={
+          account.alerts && account.alerts.length > 0
+            ? {
+                text: `${account.alerts.length} Alert${account.alerts.length > 1 ? 's' : ''}`,
+                variant: account.alerts.some((a) => a.severity === 'critical')
+                  ? 'error'
+                  : 'warning',
+              }
+            : undefined
+        }
       >
         {/* Institution Brand Strip */}
-        <div 
+        <div
           className="absolute top-0 left-0 right-0 h-1 rounded-t-2xl"
           style={{ backgroundColor: account.institution.color || '#6366f1' }}
         />
@@ -114,21 +136,27 @@ const CompactAccountCard: React.FC<CompactAccountCardProps> = ({
               }}
               className="p-1 h-8 w-8 bg-white/5 hover:bg-white/10"
             >
-              {showBalance ? 
-                <Eye className="w-4 h-4" /> : 
+              {showBalance ? (
+                <Eye className="w-4 h-4" />
+              ) : (
                 <EyeOff className="w-4 h-4" />
-              }
+              )}
             </Button>
           </div>
         )}
 
         {/* Available Balance */}
-        {account.availableBalance !== undefined && 
-         account.availableBalance !== account.currentBalance && (
-          <div className="text-sm text-white/60 mt-1">
-            Available: {showBalance ? formatCurrency(account.availableBalance, { currency: account.currency }) : '••••••'}
-          </div>
-        )}
+        {account.availableBalance !== undefined &&
+          account.availableBalance !== account.currentBalance && (
+            <div className="text-sm text-white/60 mt-1">
+              Available:{' '}
+              {showBalance
+                ? formatCurrency(account.availableBalance, {
+                    currency: account.currency,
+                  })
+                : '••••••'}
+            </div>
+          )}
 
         {/* Metrics Grid */}
         <div className="grid grid-cols-2 gap-3 text-sm mt-4">
@@ -138,10 +166,14 @@ const CompactAccountCard: React.FC<CompactAccountCardProps> = ({
               {account.pendingCount ? 'Pending' : 'Available'}
             </div>
             <div className="text-white font-semibold">
-              {account.pendingCount ? 
-                `${account.pendingCount} txns` : 
-                (showBalance ? formatCurrency(account.availableBalance || account.currentBalance, { currency: account.currency }) : '••••••')
-              }
+              {account.pendingCount
+                ? `${account.pendingCount} txns`
+                : showBalance
+                  ? formatCurrency(
+                      account.availableBalance || account.currentBalance,
+                      { currency: account.currency }
+                    )
+                  : '••••••'}
             </div>
           </div>
 
@@ -150,14 +182,20 @@ const CompactAccountCard: React.FC<CompactAccountCardProps> = ({
             <div className="text-white/60 text-xs mb-1">
               {account.accountType === 'Credit Card' ? 'Utilization' : 'APY'}
             </div>
-            <div className={cn(
-              "font-semibold",
-              account.accountType === 'Credit Card' ? getUtilizationColor() : "text-white"
-            )}>
-              {account.accountType === 'Credit Card' && account.creditUtilization !== undefined ? 
-                `${account.creditUtilization}%` :
-                account.interestApy ? `${account.interestApy}%` : '--'
-              }
+            <div
+              className={cn(
+                'font-semibold',
+                account.accountType === 'Credit Card'
+                  ? getUtilizationColor()
+                  : 'text-white'
+              )}
+            >
+              {account.accountType === 'Credit Card' &&
+              account.creditUtilization !== undefined
+                ? `${account.creditUtilization}%`
+                : account.interestApy
+                  ? `${account.interestApy}%`
+                  : '--'}
             </div>
           </div>
         </div>
@@ -177,7 +215,11 @@ const CompactAccountCard: React.FC<CompactAccountCardProps> = ({
               </div>
             </div>
             <div className="text-sm font-semibold text-white">
-              {showBalance ? formatCurrency(account.lastTransaction.amount, { currency: account.currency }) : '••••'}
+              {showBalance
+                ? formatCurrency(account.lastTransaction.amount, {
+                    currency: account.currency,
+                  })
+                : '••••'}
             </div>
           </div>
         )}
@@ -186,12 +228,17 @@ const CompactAccountCard: React.FC<CompactAccountCardProps> = ({
         {account.alerts && account.alerts.length > 0 && (
           <div className="space-y-2 mt-4">
             {account.alerts.map((alert, idx) => (
-              <div key={idx} className={cn(
-                "flex items-center gap-2 p-2 rounded-xl text-xs",
-                alert.severity === 'critical' ? 'bg-red-500/20 text-red-400 border border-red-500/30' :
-                alert.severity === 'warning' ? 'bg-yellow-500/20 text-yellow-400 border border-yellow-500/30' :
-                'bg-blue-500/20 text-blue-400 border border-blue-500/30'
-              )}>
+              <div
+                key={idx}
+                className={cn(
+                  'flex items-center gap-2 p-2 rounded-xl text-xs',
+                  alert.severity === 'critical'
+                    ? 'bg-red-500/20 text-red-400 border border-red-500/30'
+                    : alert.severity === 'warning'
+                      ? 'bg-yellow-500/20 text-yellow-400 border border-yellow-500/30'
+                      : 'bg-blue-500/20 text-blue-400 border border-blue-500/30'
+                )}
+              >
                 <AlertTriangle className="w-3 h-3" />
                 <span>{alert.message}</span>
               </div>
@@ -204,8 +251,8 @@ const CompactAccountCard: React.FC<CompactAccountCardProps> = ({
           <div
             className={cn(
               account.quickActions.length > 2
-                ? "grid grid-cols-2 gap-2 mt-4"
-                : "flex gap-2 mt-4 flex-wrap"
+                ? 'grid grid-cols-2 gap-2 mt-4'
+                : 'flex gap-2 mt-4 flex-wrap'
             )}
           >
             {account.quickActions!.map((action, idx) => {
@@ -221,13 +268,17 @@ const CompactAccountCard: React.FC<CompactAccountCardProps> = ({
                     onQuickAction?.(action.type);
                   }}
                   className={cn(
-                    "h-8 text-xs bg-white/5 border-white/10 text-white hover:bg-white/10 truncate",
-                    account.quickActions!.length > 2 ? "w-full" : "flex-1",
-                    spanFull && "col-span-2"
+                    'h-8 text-xs bg-white/5 border-white/10 text-white hover:bg-white/10 truncate',
+                    account.quickActions!.length > 2 ? 'w-full' : 'flex-1',
+                    spanFull && 'col-span-2'
                   )}
                 >
-                  {action.type === 'transfer' && <Send className="w-3 h-3 mr-1" />}
-                  {action.type === 'deposit' && <Download className="w-3 h-3 mr-1" />}
+                  {action.type === 'transfer' && (
+                    <Send className="w-3 h-3 mr-1" />
+                  )}
+                  {action.type === 'deposit' && (
+                    <Download className="w-3 h-3 mr-1" />
+                  )}
                   {action.label}
                 </Button>
               );

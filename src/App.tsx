@@ -12,18 +12,28 @@ const Profile = React.lazy(() => import('./pages/Profile'));
 const TransactionDemo = React.lazy(() => import('./pages/TransactionDemo'));
 const CalculatorsPage = React.lazy(() => import('./pages/CalculatorsPage'));
 const CalculatorsHub = React.lazy(() => import('./pages/CalculatorsHub'));
-const CreditScorePage = React.lazy(() => import('@/features/credit/components/CreditScorePage'));
-const SavingsGoals = React.lazy(() => import('@/features/savings/components/SavingsGoals'));
-const BudgetPlannerPage = React.lazy(() => import('@/features/budget/components/BudgetPlannerPage'));
-const InvestmentTrackerPage = React.lazy(() => import('@/features/investments/components/InvestmentTrackerPage'));
-const BudgetReportsPage = React.lazy(() => import('@/features/budget/components/BudgetReportsPage'));
+const CreditScorePage = React.lazy(
+  () => import('@/features/credit/components/CreditScorePage')
+);
+const SavingsGoals = React.lazy(
+  () => import('@/features/savings/components/SavingsGoals')
+);
+const BudgetPlannerPage = React.lazy(
+  () => import('@/features/budget/components/BudgetPlannerPage')
+);
+const InvestmentTrackerPage = React.lazy(
+  () => import('@/features/investments/components/InvestmentTrackerPage')
+);
+const BudgetReportsPage = React.lazy(
+  () => import('@/features/budget/components/BudgetReportsPage')
+);
 const InsightsPage = React.lazy(() => import('./pages/InsightsPage'));
 const AccountOverview = React.lazy(() => import('./pages/AccountOverview'));
 const AccountsListPage = React.lazy(() => import('./pages/AccountsListPage'));
 
 // Loading component
 const LoadingSpinner = () => (
-          <div className="min-h-screen bg-black flex items-center justify-center">
+  <div className="min-h-screen bg-black flex items-center justify-center">
     <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-blue-400"></div>
   </div>
 );
@@ -54,7 +64,7 @@ class ErrorBoundary extends React.Component<
 
   componentDidCatch(error: Error, errorInfo: React.ErrorInfo) {
     console.error('Global Application Error:', error, errorInfo);
-    
+
     // In development, log more details
     if (import.meta.env.DEV) {
       console.error('Error stack:', error.stack);
@@ -77,9 +87,12 @@ class ErrorBoundary extends React.Component<
         <div className="min-h-screen bg-black flex items-center justify-center p-4">
           <div className="max-w-md text-center space-y-6">
             <div className="space-y-2">
-              <h1 className="text-2xl font-bold text-white">Oops! Something went wrong</h1>
+              <h1 className="text-2xl font-bold text-white">
+                Oops! Something went wrong
+              </h1>
               <p className="text-white/70">
-                Don&apos;t worry, this happens sometimes. We&apos;ve logged the error and will look into it.
+                Don&apos;t worry, this happens sometimes. We&apos;ve logged the
+                error and will look into it.
               </p>
               {import.meta.env.DEV && this.state.errorMessage && (
                 <details className="mt-4 p-3 bg-red-900/20 border border-red-500/30 rounded-lg text-left">
@@ -92,7 +105,7 @@ class ErrorBoundary extends React.Component<
                 </details>
               )}
             </div>
-            
+
             <div className="flex flex-col sm:flex-row gap-3 justify-center">
               <button
                 className="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium"
@@ -139,7 +152,10 @@ function App() {
 
           {/* Main Content Area */}
           <main className="relative">
-            <BiometricsProvider autoStart={true} debugMode={import.meta.env.DEV}>
+            <BiometricsProvider
+              autoStart={true}
+              debugMode={import.meta.env.DEV}
+            >
               <ErrorBoundary>
                 <Suspense fallback={<LoadingSpinner />}>
                   <Routes>
@@ -149,27 +165,36 @@ function App() {
                     <Route path="/transactions" element={<TransactionDemo />} />
                     <Route path="/insights" element={<InsightsPage />} />
                     <Route path="/reports" element={<BudgetReportsPage />} />
-                    
+
                     {/* Accounts Routes */}
                     <Route path="/accounts" element={<AccountsListPage />} />
-                    <Route 
-                      path="/accounts/:accountId" 
+                    <Route
+                      path="/accounts/:accountId"
                       element={
                         <Suspense fallback={<AccountLoadingFallback />}>
                           <AccountOverview />
                         </Suspense>
-                      } 
+                      }
                     />
-                    
+
                     {/* Feature Pages */}
                     <Route path="/calculators" element={<CalculatorsHub />} />
-                    <Route path="/calculators/:id" element={<CalculatorsPage />} />
-                    <Route path="/budget-planner" element={<BudgetPlannerPage />} />
-                    <Route path="/investment-tracker" element={<InvestmentTrackerPage />} />
+                    <Route
+                      path="/calculators/:id"
+                      element={<CalculatorsPage />}
+                    />
+                    <Route
+                      path="/budget-planner"
+                      element={<BudgetPlannerPage />}
+                    />
+                    <Route
+                      path="/investment-tracker"
+                      element={<InvestmentTrackerPage />}
+                    />
                     <Route path="/goal-setting" element={<SavingsGoals />} />
                     <Route path="/credit" element={<CreditScorePage />} />
                     <Route path="/savings" element={<SavingsGoals />} />
-                    
+
                     {/* Legacy Route Redirects */}
                     <Route path="/credit-score" element={<CreditScorePage />} />
                   </Routes>

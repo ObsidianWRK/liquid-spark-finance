@@ -1,7 +1,7 @@
 ---
-name: "🧹 Agent 8: Refactor-Linter"
+name: '🧹 Agent 8: Refactor-Linter'
 about: Clean up code with ESLint and remove dead code
-title: "[Agent 8] Run linter fixes & clean dead code"
+title: '[Agent 8] Run linter fixes & clean dead code'
 labels: agent-8, cleanup, linting
 assignees: ''
 ---
@@ -9,28 +9,33 @@ assignees: ''
 # 🧹 Agent 8: Refactor-Linter Task
 
 ## Overview
+
 Final cleanup pass to run ESLint auto-fixes, remove unused code, and add lint rules to prevent future issues.
 
 ## Tasks
+
 - [ ] Run comprehensive ESLint fixes:
+
   ```bash
   # Auto-fix all fixable issues
   npx eslint src --fix --ext .ts,.tsx
-  
+
   # Run Prettier formatting
   npx prettier --write "src/**/*.{ts,tsx,css}"
   ```
 
 - [ ] Remove unused imports:
+
   ```bash
   # Use ts-prune to find unused exports
   npx ts-prune
-  
+
   # Remove unused imports with eslint
   npx eslint src --fix --rule 'no-unused-vars: error'
   ```
 
 - [ ] Update ESLint configuration:
+
   ```javascript
   // Add to eslint.config.js
   {
@@ -58,21 +63,24 @@ Final cleanup pass to run ESLint auto-fixes, remove unused code, and add lint ru
   ```
 
 - [ ] Clean up after refactor:
+
   - [ ] Remove deprecated GlassCard component
   - [ ] Delete unused transaction list variants
   - [ ] Remove old formatting utilities if replaced
   - [ ] Clean up duplicate mock data files
 
 - [ ] TypeScript strict checks:
+
   ```bash
   # Check for any type errors
   npx tsc --noEmit
-  
+
   # Find implicit any types
   npx tsc --noImplicitAny
   ```
 
 - [ ] Bundle size analysis:
+
   ```bash
   # Analyze bundle after cleanup
   npm run build
@@ -87,6 +95,7 @@ Final cleanup pass to run ESLint auto-fixes, remove unused code, and add lint ru
   - [ ] Unused CSS classes
 
 ## Validation Checklist
+
 - [ ] No ESLint errors
 - [ ] No TypeScript errors
 - [ ] No unused imports
@@ -96,9 +105,10 @@ Final cleanup pass to run ESLint auto-fixes, remove unused code, and add lint ru
 - [ ] Build completes successfully
 
 ## Definition of Done
+
 - [ ] Zero linting errors
 - [ ] All auto-fixable issues resolved
 - [ ] Dead code removed
 - [ ] New lint rules preventing regressions
 - [ ] Clean build with no warnings
-- [ ] Documentation updated if needed 
+- [ ] Documentation updated if needed

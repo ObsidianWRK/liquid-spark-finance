@@ -2,7 +2,7 @@
  * Utility functions for formatting values in the insights system
  */
 
-import { usePrivacyStore } from "@/features/privacy-hide-amounts/store";
+import { usePrivacyStore } from '@/features/privacy-hide-amounts/store';
 import { vueniTheme } from '@/theme/unified';
 
 /**
@@ -11,11 +11,14 @@ import { vueniTheme } from '@/theme/unified';
  * @param denominator - The denominator value (can be 0)
  * @returns Number ratio or null if denominator is 0
  */
-export const safeRatio = (numerator: number, denominator: number | 0): number | null => {
+export const safeRatio = (
+  numerator: number,
+  denominator: number | 0
+): number | null => {
   if (denominator === 0 || !isFinite(denominator) || !isFinite(numerator)) {
     return null;
   }
-  
+
   const ratio = numerator / denominator;
   return isFinite(ratio) ? ratio : null;
 };
@@ -28,18 +31,18 @@ export const safeRatio = (numerator: number, denominator: number | 0): number | 
  * @returns Formatted percentage string with % sign
  */
 export const formatPercent = (
-  value: number | null, 
-  decimals: number = 1, 
+  value: number | null,
+  decimals: number = 1,
   clampTo: number = 999
 ): string => {
   if (value === null || !isFinite(value)) {
     return '--';
   }
-  
+
   // Convert to percentage and clamp to prevent extreme values
   const percentage = value * 100;
   const clampedPercentage = Math.max(Math.min(percentage, clampTo), -clampTo);
-  
+
   return `${clampedPercentage.toFixed(decimals)}%`;
 };
 
@@ -50,18 +53,22 @@ export const formatPercent = (
  * @param locale - Locale for formatting. Default is 'en-US'
  * @returns Formatted score string (e.g., "79", "79.4", "79.37")
  */
-export const formatScore = (value: number, precision: 0 | 1 | 2 = 0, locale: string = 'en-US'): string => {
+export const formatScore = (
+  value: number,
+  precision: 0 | 1 | 2 = 0,
+  locale: string = 'en-US'
+): string => {
   // Clamp precision to valid range
   const validPrecision = Math.max(0, Math.min(2, precision)) as 0 | 1 | 2;
-  
+
   // Round the value appropriately for the precision
   const roundedValue = validPrecision === 0 ? Math.round(value) : value;
-  
+
   // Use Intl.NumberFormat for locale-safe formatting
   return new Intl.NumberFormat(locale, {
     minimumFractionDigits: validPrecision,
     maximumFractionDigits: validPrecision,
-    useGrouping: false // No thousands separators for scores
+    useGrouping: false, // No thousands separators for scores
   }).format(roundedValue);
 };
 
@@ -80,7 +87,10 @@ export const formatFinancialScore = (value: number): string => {
  * @param decimals - Number of decimal places (default: 1)
  * @returns Formatted percentage string with % sign
  */
-export const formatPercentage = (value: number, decimals: number = 1): string => {
+export const formatPercentage = (
+  value: number,
+  decimals: number = 1
+): string => {
   return `${value.toFixed(decimals)}%`;
 };
 
@@ -91,25 +101,22 @@ export const formatPercentage = (value: number, decimals: number = 1): string =>
  * @returns Formatted currency string
  */
 export const formatCurrency = (
-  value: number, 
-  options?: { 
-    decimals?: number; 
+  value: number,
+  options?: {
+    decimals?: number;
     currency?: string;
     locale?: string;
   }
 ): string => {
-  const { 
-    decimals, 
-    currency = 'USD', 
-    locale = 'en-US' 
-  } = options || {};
-  
+  const { decimals, currency = 'USD', locale = 'en-US' } = options || {};
+
   // Round the value when decimals is explicitly set to 0
   const processedValue = decimals === 0 ? Math.round(value) : value;
-  
+
   // Determine decimal places
-  const shouldShowDecimals = decimals !== undefined ? decimals > 0 : processedValue % 1 !== 0;
-  
+  const shouldShowDecimals =
+    decimals !== undefined ? decimals > 0 : processedValue % 1 !== 0;
+
   const hide = (usePrivacyStore as any)?.getState?.()?.setting?.hideAmounts;
 
   const formatted = new Intl.NumberFormat(locale, {
@@ -132,7 +139,10 @@ export const formatCurrency = (
  * @param decimals - Number of decimal places (default: 1)
  * @returns Formatted number string with suffix
  */
-export const formatLargeNumber = (value: number, decimals: number = 1): string => {
+export const formatLargeNumber = (
+  value: number,
+  decimals: number = 1
+): string => {
   if (value >= 1e9) {
     return `${(value / 1e9).toFixed(decimals)}B`;
   }
@@ -153,7 +163,7 @@ export const formatLargeNumber = (value: number, decimals: number = 1): string =
 export const formatCompactNumber = (value: number): string => {
   const absValue = Math.abs(value);
   const sign = value < 0 ? '-' : '';
-  
+
   if (absValue >= 1e9) {
     return `${sign}${(absValue / 1e9).toFixed(1)}B`;
   }
@@ -215,8 +225,8 @@ export const getScoreColorClass = (score: number): string => {
  */
 export const getScoreColor = (score: number): string => {
   if (score >= 80) return vueniTheme.colors.palette.success; // Green
-  if (score >= 70) return vueniTheme.colors.palette.primary; // Blue  
+  if (score >= 70) return vueniTheme.colors.palette.primary; // Blue
   if (score >= 60) return vueniTheme.colors.palette.warning; // Yellow
   if (score >= 40) return vueniTheme.colors.palette.warning; // Orange (map to warning)
   return vueniTheme.colors.palette.danger; // Red
-}; 
+};

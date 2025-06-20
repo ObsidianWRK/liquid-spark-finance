@@ -14,39 +14,39 @@
   --nav-glass-secondary: rgba(255, 255, 255, 0.12);
   --nav-glass-tertiary: rgba(255, 255, 255, 0.16);
   --nav-glass-accent: rgba(0, 122, 255, 0.6);
-  
+
   /* Border Colors */
   --nav-border-primary: rgba(255, 255, 255, 0.15);
   --nav-border-secondary: rgba(255, 255, 255, 0.25);
   --nav-border-focus: rgba(0, 122, 255, 0.5);
-  
+
   /* Text Colors */
   --nav-text-primary: rgba(255, 255, 255, 0.95);
   --nav-text-secondary: rgba(255, 255, 255, 0.7);
   --nav-text-tertiary: rgba(255, 255, 255, 0.5);
-  
+
   /* Shadow System */
   --nav-shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.08);
   --nav-shadow-md: 0 4px 16px rgba(0, 0, 0, 0.12);
   --nav-shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.16);
-  --nav-shadow-xl: 0 12px 48px rgba(0, 0, 0, 0.20);
-  
+  --nav-shadow-xl: 0 12px 48px rgba(0, 0, 0, 0.2);
+
   /* Blur Intensity */
   --nav-blur-sm: 16px;
   --nav-blur-md: 20px;
   --nav-blur-lg: 24px;
   --nav-blur-xl: 32px;
-  
+
   /* Animation Durations */
   --nav-duration-fast: 0.15s;
   --nav-duration-normal: 0.3s;
   --nav-duration-slow: 0.5s;
-  
+
   /* Responsive Hit Targets */
   --nav-hit-target-sm: 44px;
   --nav-hit-target-md: 48px;
   --nav-hit-target-lg: 52px;
-  
+
   /* Safe Area Insets */
   --nav-safe-area-bottom: env(safe-area-inset-bottom, 0px);
   --nav-safe-area-left: env(safe-area-inset-left, 0px);
@@ -83,27 +83,28 @@
   /* Core Liquid Glass Effect */
   background: var(--nav-glass-primary);
   backdrop-filter: blur(var(--nav-blur-md)) saturate(180%) contrast(120%);
-  -webkit-backdrop-filter: blur(var(--nav-blur-md)) saturate(180%) contrast(120%);
-  
+  -webkit-backdrop-filter: blur(var(--nav-blur-md)) saturate(180%)
+    contrast(120%);
+
   /* Positioning & Layout */
   position: fixed;
   bottom: 0;
   left: 0;
   right: 0;
   z-index: 50;
-  
+
   /* Safe Area Handling */
   padding-bottom: var(--nav-safe-area-bottom);
   padding-left: var(--nav-safe-area-left);
   padding-right: var(--nav-safe-area-right);
-  
+
   /* Border & Shadow */
   border-top: 1px solid var(--nav-border-primary);
   box-shadow: var(--nav-shadow-lg);
-  
+
   /* Transitions */
   transition: all var(--nav-duration-normal) cubic-bezier(0.4, 0, 0.2, 1);
-  
+
   /* Performance Optimization */
   will-change: transform, opacity;
   contain: layout style paint;
@@ -113,7 +114,8 @@
 .liquid-glass-nav:hover {
   background: var(--nav-glass-secondary);
   backdrop-filter: blur(var(--nav-blur-lg)) saturate(200%) contrast(130%);
-  -webkit-backdrop-filter: blur(var(--nav-blur-lg)) saturate(200%) contrast(130%);
+  -webkit-backdrop-filter: blur(var(--nav-blur-lg)) saturate(200%)
+    contrast(130%);
   border-top-color: var(--nav-border-secondary);
   box-shadow: var(--nav-shadow-xl);
 }
@@ -143,30 +145,30 @@
   align-items: center;
   justify-content: center;
   gap: 0.25rem;
-  
+
   /* Hit Target Sizing */
   min-width: var(--nav-hit-target-sm);
   min-height: var(--nav-hit-target-sm);
   padding: 0.5rem 0.75rem;
-  
+
   /* Styling */
   background: transparent;
   border: 1px solid transparent;
   border-radius: 0.75rem;
   color: var(--nav-text-secondary);
-  
+
   /* Interaction */
   cursor: pointer;
   touch-action: manipulation;
   user-select: none;
   -webkit-tap-highlight-color: transparent;
-  
+
   /* Transitions */
   transition: all var(--nav-duration-normal) cubic-bezier(0.4, 0, 0.2, 1);
-  
+
   /* Accessibility */
   outline: none;
-  
+
   /* Performance */
   will-change: transform, background-color, color;
 }
@@ -236,7 +238,8 @@
   text-align: center;
   white-space: nowrap;
   letter-spacing: -0.01em;
-  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', sans-serif;
+  font-family:
+    -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', sans-serif;
 }
 
 /* ==========================================================================
@@ -262,11 +265,12 @@
 }
 
 @keyframes nav-badge-pulse {
-  0%, 100% { 
+  0%,
+  100% {
     transform: scale(1);
     opacity: 1;
   }
-  50% { 
+  50% {
     transform: scale(1.2);
     opacity: 0.8;
   }
@@ -292,7 +296,8 @@
 }
 
 .liquid-glass-nav.slide-down {
-  animation: nav-slide-down var(--nav-duration-slow) cubic-bezier(0.4, 0, 0.2, 1);
+  animation: nav-slide-down var(--nav-duration-slow)
+    cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 @keyframes nav-slide-up {
@@ -327,19 +332,19 @@
     padding: 0.5rem 0.25rem;
     gap: 0.125rem;
   }
-  
+
   .liquid-glass-nav-item {
     min-width: var(--nav-hit-target-sm);
     min-height: var(--nav-hit-target-sm);
     padding: 0.375rem 0.5rem;
     border-radius: 0.625rem;
   }
-  
+
   .liquid-glass-nav-icon {
     width: 1.125rem;
     height: 1.125rem;
   }
-  
+
   .liquid-glass-nav-label {
     font-size: 0.6875rem;
   }
@@ -351,13 +356,13 @@
     padding: 0.625rem 0.5rem;
     gap: 0.5rem;
   }
-  
+
   .liquid-glass-nav-item {
     min-width: var(--nav-hit-target-md);
     min-height: var(--nav-hit-target-md);
     padding: 0.5rem 0.75rem;
   }
-  
+
   .liquid-glass-nav-icon {
     width: 1.25rem;
     height: 1.25rem;
@@ -389,7 +394,7 @@
     backdrop-filter: none;
     -webkit-backdrop-filter: none;
   }
-  
+
   .liquid-glass-nav-item:hover,
   .liquid-glass-nav-item.active {
     background: rgba(255, 255, 255, 0.1);
@@ -401,7 +406,7 @@
   .liquid-glass-nav-item {
     border-color: var(--nav-border-primary);
   }
-  
+
   .liquid-glass-nav-item:focus {
     outline-width: 3px;
     outline-color: #00ff00;
@@ -443,7 +448,8 @@
 }
 
 /* IE11 fallback */
-@media screen and (-ms-high-contrast: active), screen and (-ms-high-contrast: none) {
+@media screen and (-ms-high-contrast: active),
+  screen and (-ms-high-contrast: none) {
   .liquid-glass-nav {
     background: rgba(0, 0, 0, 0.9);
   }
@@ -493,7 +499,7 @@
     border: 2px dashed rgba(255, 0, 0, 0.5);
     background: rgba(255, 0, 0, 0.1);
   }
-  
+
   .nav-debug .liquid-glass-nav-item {
     border: 1px dashed rgba(0, 255, 0, 0.5);
     background: rgba(0, 255, 0, 0.1);

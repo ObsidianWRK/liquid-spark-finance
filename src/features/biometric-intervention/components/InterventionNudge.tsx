@@ -18,9 +18,11 @@ export const InterventionNudge: React.FC<InterventionNudgeProps> = ({
   onDismiss,
   onProceedAnyway,
   onTakeBreathing,
-  className
+  className,
 }) => {
-  const [countdown, setCountdown] = useState(event.policy.actions.delayPurchase);
+  const [countdown, setCountdown] = useState(
+    event.policy.actions.delayPurchase
+  );
   const [showBreathingOption, setShowBreathingOption] = useState(false);
 
   useEffect(() => {
@@ -38,7 +40,8 @@ export const InterventionNudge: React.FC<InterventionNudgeProps> = ({
 
   const getStressColor = (score: number) => {
     if (score >= 80) return 'text-red-400 border-red-500/30 bg-red-500/10';
-    if (score >= 60) return 'text-orange-400 border-orange-500/30 bg-orange-500/10';
+    if (score >= 60)
+      return 'text-orange-400 border-orange-500/30 bg-orange-500/10';
     return 'text-yellow-400 border-yellow-500/30 bg-yellow-500/10';
   };
 
@@ -49,17 +52,21 @@ export const InterventionNudge: React.FC<InterventionNudgeProps> = ({
   };
 
   const getStressMessage = (score: number) => {
-    if (score >= 80) return "High stress detected! Consider taking a moment to breathe before this purchase.";
-    if (score >= 60) return "Elevated stress noticed. This might be a good time to pause and reflect.";
-    return "Mild stress detected. Would you like to take a moment before proceeding?";
+    if (score >= 80)
+      return 'High stress detected! Consider taking a moment to breathe before this purchase.';
+    if (score >= 60)
+      return 'Elevated stress noticed. This might be a good time to pause and reflect.';
+    return 'Mild stress detected. Would you like to take a moment before proceeding?';
   };
 
   return (
-    <Card className={cn(
-      'fixed bottom-4 right-4 w-80 z-50 shadow-2xl border',
-      getStressColor(event.stressLevel.score),
-      className
-    )}>
+    <Card
+      className={cn(
+        'fixed bottom-4 right-4 w-80 z-50 shadow-2xl border',
+        getStressColor(event.stressLevel.score),
+        className
+      )}
+    >
       <CardContent className="p-4">
         {/* Header */}
         <div className="flex items-start justify-between mb-3">
@@ -84,11 +91,14 @@ export const InterventionNudge: React.FC<InterventionNudgeProps> = ({
             <span>{event.stressLevel.score}/100</span>
           </div>
           <div className="w-full bg-white/10 rounded-full h-2">
-            <div 
+            <div
               className={cn(
-                "h-2 rounded-full transition-all duration-300",
-                event.stressLevel.score >= 80 ? "bg-red-400" :
-                event.stressLevel.score >= 60 ? "bg-orange-400" : "bg-yellow-400"
+                'h-2 rounded-full transition-all duration-300',
+                event.stressLevel.score >= 80
+                  ? 'bg-red-400'
+                  : event.stressLevel.score >= 60
+                    ? 'bg-orange-400'
+                    : 'bg-yellow-400'
               )}
               style={{ width: `${event.stressLevel.score}%` }}
             />
@@ -123,7 +133,7 @@ export const InterventionNudge: React.FC<InterventionNudgeProps> = ({
               Take a 30-second breathing break
             </Button>
           )}
-          
+
           <div className="flex space-x-2">
             <Button
               onClick={onDismiss}
@@ -133,16 +143,16 @@ export const InterventionNudge: React.FC<InterventionNudgeProps> = ({
             >
               Cancel Purchase
             </Button>
-            
+
             <Button
               onClick={onProceedAnyway}
               disabled={countdown > 0}
               size="sm"
               className={cn(
-                "flex-1",
-                countdown > 0 
-                  ? "opacity-50 cursor-not-allowed" 
-                  : "bg-white/20 border-white/30 text-white hover:bg-white/30"
+                'flex-1',
+                countdown > 0
+                  ? 'opacity-50 cursor-not-allowed'
+                  : 'bg-white/20 border-white/30 text-white hover:bg-white/30'
               )}
             >
               {countdown > 0 ? `Wait ${countdown}s` : 'Proceed Anyway'}
@@ -153,10 +163,11 @@ export const InterventionNudge: React.FC<InterventionNudgeProps> = ({
         {/* Policy Info */}
         <div className="mt-3 pt-3 border-t border-white/10">
           <p className="text-xs text-white/60">
-            Policy: {event.policy.name} • Confidence: {Math.round(event.stressLevel.confidence * 100)}%
+            Policy: {event.policy.name} • Confidence:{' '}
+            {Math.round(event.stressLevel.confidence * 100)}%
           </p>
         </div>
       </CardContent>
     </Card>
   );
-}; 
+};

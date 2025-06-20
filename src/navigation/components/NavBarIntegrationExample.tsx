@@ -1,19 +1,19 @@
 import React, { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { 
-  Home, 
-  CreditCard, 
-  Receipt, 
-  TrendingUp, 
+import {
+  Home,
+  CreditCard,
+  Receipt,
+  TrendingUp,
   BarChart3,
-  Plus 
+  Plus,
 } from 'lucide-react';
 import NavBar, { type Tab } from './NavBar';
 import { mainRoutes } from '../routeConfig';
 
 /**
  * NavBarIntegrationExample
- * 
+ *
  * Demonstrates how to integrate the NavBar component with existing route configuration
  * and React Router for a real-world application.
  */
@@ -26,13 +26,15 @@ const NavBarIntegrationExample: React.FC = () => {
   });
 
   // Convert existing route configuration to NavBar tabs
-  const tabs: Tab[] = mainRoutes.map(route => ({
+  const tabs: Tab[] = mainRoutes.map((route) => ({
     id: route.id,
     label: route.label,
     icon: route.icon,
     action: () => navigate(route.path),
     isActive: location.pathname === route.path,
-    badgeCount: notificationCounts[route.id as keyof typeof notificationCounts] || undefined,
+    badgeCount:
+      notificationCounts[route.id as keyof typeof notificationCounts] ||
+      undefined,
     hideOnMobile: route.hideInBottomNav,
     ariaLabel: `Navigate to ${route.label} page`,
   }));
@@ -51,10 +53,10 @@ const NavBarIntegrationExample: React.FC = () => {
 
   const handleActiveTabChange = (tabId: string) => {
     console.log(`Active tab changed to: ${tabId}`);
-    
+
     // Clear notifications for the visited tab
     if (notificationCounts[tabId as keyof typeof notificationCounts]) {
-      setNotificationCounts(prev => ({
+      setNotificationCounts((prev) => ({
         ...prev,
         [tabId]: 0,
       }));
@@ -64,11 +66,12 @@ const NavBarIntegrationExample: React.FC = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900">
       {/* Main app content */}
-      <div className="px-4 py-8 pb-24"> {/* pb-24 to account for navbar height */}
+      <div className="px-4 py-8 pb-24">
+        {' '}
+        {/* pb-24 to account for navbar height */}
         <h1 className="text-3xl font-bold text-white mb-6">
           NavBar Integration Example
         </h1>
-        
         <div className="space-y-6">
           <div className="bg-white/10 backdrop-blur-md rounded-lg p-6">
             <h2 className="text-xl font-semibold text-white mb-4">
@@ -93,10 +96,12 @@ const NavBarIntegrationExample: React.FC = () => {
               </p>
             </div>
             <button
-              onClick={() => setNotificationCounts({
-                transactions: Math.floor(Math.random() * 10),
-                insights: Math.floor(Math.random() * 5),
-              })}
+              onClick={() =>
+                setNotificationCounts({
+                  transactions: Math.floor(Math.random() * 10),
+                  insights: Math.floor(Math.random() * 5),
+                })
+              }
               className="mt-4 bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg transition-colors"
             >
               Simulate New Notifications
@@ -134,14 +139,17 @@ const NavBarIntegrationExample: React.FC = () => {
 
           {/* Demo content to enable scrolling */}
           {Array.from({ length: 10 }, (_, i) => (
-            <div 
+            <div
               key={i}
               className="bg-white/5 backdrop-blur-sm rounded-lg p-4 border border-white/10"
             >
-              <h3 className="text-white font-semibold mb-2">Demo Content {i + 1}</h3>
+              <h3 className="text-white font-semibold mb-2">
+                Demo Content {i + 1}
+              </h3>
               <p className="text-white/70 text-sm">
-                This is sample content to demonstrate the scroll behavior. 
-                The navbar will hide when scrolling down and reveal when scrolling up.
+                This is sample content to demonstrate the scroll behavior. The
+                navbar will hide when scrolling down and reveal when scrolling
+                up.
               </p>
             </div>
           ))}

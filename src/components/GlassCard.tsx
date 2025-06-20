@@ -8,4 +8,4 @@ const GlassCard: React.FC<GlassCardProps> = (props) => (
 );
 
 export default GlassCard;
-export { GlassCard }; 
+export { GlassCard };

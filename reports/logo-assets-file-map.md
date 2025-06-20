@@ -1,6 +1,7 @@
 # Vueni Logo Right-Click Download Assets - File Map
 
 ## 📍 Current Logo Location
+
 ```
 src/components/LiquidGlassTopMenuBar.tsx:166
 ├── Currently just text "Vueni" in button
@@ -14,6 +15,7 @@ src/index.html:6
 ## 🎯 Target Architecture
 
 ### Brand Assets Structure
+
 ```
 public/branding/
 ├── vueni-logo.svg          # ≤4KB optimized SVG
@@ -21,7 +23,8 @@ public/branding/
 └── LLM.txt                # ≤1KB branding prompt
 ```
 
-### Component Structure  
+### Component Structure
+
 ```
 src/shared/ui/
 ├── VueniLogo.tsx           # New logo component
@@ -33,6 +36,7 @@ src/shared/hooks/
 ```
 
 ### Test Coverage
+
 ```
 e2e/
 └── logo-download.spec.ts   # Playwright E2E tests
@@ -46,17 +50,20 @@ src/shared/ui/__tests__/
 ## 🔧 Implementation Dependencies
 
 ### Required Packages
+
 - `file-saver` - For download functionality
 - `@radix-ui/react-context-menu` - A11y compliant context menu
 - `@types/file-saver` - TypeScript types
 
 ### Theme Integration
+
 - Uses `src/theme/unified.ts` design tokens
 - Inherits glass morphism from VueniDesignSystem
 - Consistent with dark-mode only approach
 
 ## 📊 Impact Analysis
+
 - Zero breaking changes to existing navigation
-- Maintains current LiquidGlassTopMenuBar.tsx API  
+- Maintains current LiquidGlassTopMenuBar.tsx API
 - Adds new brand asset download capability
-- Mobile-responsive with long-press support 
+- Mobile-responsive with long-press support

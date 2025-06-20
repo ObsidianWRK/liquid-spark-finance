@@ -6,7 +6,7 @@ import {
   selectTotalLiabilities,
   selectLiquidAssets,
   selectInvestmentAssets,
-  selectAccountsByType
+  selectAccountsByType,
 } from '@/selectors/financialSelectors';
 
 /**
@@ -16,10 +16,19 @@ import {
 export const useFinancialMetrics = (accounts: Account[]) => {
   const totalWealth = useMemo(() => selectTotalWealth(accounts), [accounts]);
   const totalAssets = useMemo(() => selectTotalAssets(accounts), [accounts]);
-  const totalLiabilities = useMemo(() => selectTotalLiabilities(accounts), [accounts]);
+  const totalLiabilities = useMemo(
+    () => selectTotalLiabilities(accounts),
+    [accounts]
+  );
   const liquidAssets = useMemo(() => selectLiquidAssets(accounts), [accounts]);
-  const investmentAssets = useMemo(() => selectInvestmentAssets(accounts), [accounts]);
-  const accountsByType = useMemo(() => selectAccountsByType(accounts), [accounts]);
+  const investmentAssets = useMemo(
+    () => selectInvestmentAssets(accounts),
+    [accounts]
+  );
+  const accountsByType = useMemo(
+    () => selectAccountsByType(accounts),
+    [accounts]
+  );
 
   // Additional derived metrics
   const debtToAssetRatio = useMemo(() => {
@@ -44,19 +53,19 @@ export const useFinancialMetrics = (accounts: Account[]) => {
     totalLiabilities,
     liquidAssets,
     investmentAssets,
-    
+
     // Grouped by type
     accountsByType,
-    
+
     // Ratios
     debtToAssetRatio,
     liquidityRatio,
     investmentRatio,
-    
+
     // Helper values
     hasDebt: totalLiabilities > 0,
     isPositiveNetWorth: totalWealth > 0,
-    hasInvestments: investmentAssets > 0
+    hasInvestments: investmentAssets > 0,
   };
 };
 
@@ -65,4 +74,4 @@ export const useFinancialMetrics = (accounts: Account[]) => {
  */
 export const useTotalWealth = (accounts: Account[]) => {
   return useMemo(() => selectTotalWealth(accounts), [accounts]);
-}; 
+};

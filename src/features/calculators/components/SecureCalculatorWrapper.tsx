@@ -31,17 +31,17 @@ interface ValidationResult {
 /**
  * SecureCalculatorWrapper - Wraps financial calculators with security measures
  */
-export function SecureCalculatorWrapper({ 
-  calculatorName, 
-  children, 
-  onSecurityEvent 
+export function SecureCalculatorWrapper({
+  calculatorName,
+  children,
+  onSecurityEvent,
 }: SecureCalculatorWrapperProps) {
   const [securityState, setSecurityState] = useState<SecurityState>({
     isRateLimited: false,
     remainingRequests: 100,
     lastCalculation: null,
     securityLevel: 'normal',
-    consecutiveErrors: 0
+    consecutiveErrors: 0,
   });
 
   const [showSecurityInfo, setShowSecurityInfo] = useState(false);
@@ -49,13 +49,17 @@ export function SecureCalculatorWrapper({
   // Check rate limits on component mount and at intervals
   useEffect(() => {
     const checkRateLimit = () => {
-      const isLimited = security.rateLimit.isRateLimited(`calculator:${calculatorName}`);
-      const remaining = security.rateLimit.getRemainingRequests(`calculator:${calculatorName}`);
-      
-      setSecurityState(prev => ({
+      const isLimited = security.rateLimit.isRateLimited(
+        `calculator:${calculatorName}`
+      );
+      const remaining = security.rateLimit.getRemainingRequests(
+        `calculator:${calculatorName}`
+      );
+
+      setSecurityState((prev) => ({
         ...prev,
         isRateLimited: isLimited,
-        remainingRequests: remaining
+        remainingRequests: remaining,
       }));
 
       if (isLimited) {
@@ -78,7 +82,7 @@ export function SecureCalculatorWrapper({
 
   // Handle security violations
   const handleSecurityViolation = (violationType: string, details: unknown) => {
-    setSecurityState(prev => {
+    setSecurityState((prev) => {
       const newConsecutiveErrors = prev.consecutiveErrors + 1;
       let newSecurityLevel = prev.securityLevel;
 
@@ -92,7 +96,7 @@ export function SecureCalculatorWrapper({
       return {
         ...prev,
         consecutiveErrors: newConsecutiveErrors,
-        securityLevel: newSecurityLevel
+        securityLevel: newSecurityLevel,
       };
     });
 
@@ -108,11 +112,12 @@ export function SecureCalculatorWrapper({
 
   // Reset security state on successful calculation
   const handleSuccessfulCalculation = () => {
-    setSecurityState(prev => ({
+    setSecurityState((prev) => ({
       ...prev,
       lastCalculation: new Date(),
       consecutiveErrors: Math.max(0, prev.consecutiveErrors - 1),
-      securityLevel: prev.consecutiveErrors <= 1 ? 'normal' : prev.securityLevel
+      securityLevel:
+        prev.consecutiveErrors <= 1 ? 'normal' : prev.securityLevel,
     }));
   };
 
@@ -138,7 +143,11 @@ export function SecureCalculatorWrapper({
             return value;
         }
       } catch (error) {
-        handleSecurityViolation('invalid_input', { type, value, error: error.message });
+        handleSecurityViolation('invalid_input', {
+          type,
+          value,
+          error: error.message,
+        });
         throw error;
       }
     },
@@ -146,7 +155,7 @@ export function SecureCalculatorWrapper({
     onCalculationError: (error: Error) => {
       handleSecurityViolation('calculation_error', { error: error.message });
     },
-    securityLevel: securityState.securityLevel
+    securityLevel: securityState.securityLevel,
   };
 
   // Render security locked state
@@ -155,17 +164,19 @@ export function SecureCalculatorWrapper({
       <div className="p-6 bg-red-50 border border-red-200 rounded-lg">
         <div className="flex items-center gap-3 mb-4">
           <Shield className="h-6 w-6 text-red-600" />
-          <h3 className="text-lg font-semibold text-red-800">Calculator Temporarily Locked</h3>
+          <h3 className="text-lg font-semibold text-red-800">
+            Calculator Temporarily Locked
+          </h3>
         </div>
         <Alert className="border-red-200 bg-red-50">
           <AlertTriangle className="h-4 w-4" />
           <AlertDescription className="text-red-700">
-            This calculator has been temporarily locked due to multiple security violations. 
-            Please refresh the page to reset the security status.
+            This calculator has been temporarily locked due to multiple security
+            violations. Please refresh the page to reset the security status.
           </AlertDescription>
         </Alert>
-        <Button 
-          onClick={() => window.location.reload()} 
+        <Button
+          onClick={() => window.location.reload()}
           className="mt-4 bg-red-600 hover:bg-red-700"
         >
           Refresh Page
@@ -180,12 +191,14 @@ export function SecureCalculatorWrapper({
       <div className="p-6 bg-yellow-50 border border-yellow-200 rounded-lg">
         <div className="flex items-center gap-3 mb-4">
           <Clock className="h-6 w-6 text-yellow-600" />
-          <h3 className="text-lg font-semibold text-yellow-800">Rate Limit Reached</h3>
+          <h3 className="text-lg font-semibold text-yellow-800">
+            Rate Limit Reached
+          </h3>
         </div>
         <Alert className="border-yellow-200 bg-yellow-50">
           <Clock className="h-4 w-4" />
           <AlertDescription className="text-yellow-700">
-            You've reached the maximum number of calculations for this hour. 
+            You've reached the maximum number of calculations for this hour.
             Please wait a moment before trying again.
           </AlertDescription>
         </Alert>
@@ -209,7 +222,8 @@ export function SecureCalculatorWrapper({
             </span>
           </div>
           <p className="text-sm text-orange-700 mt-1">
-            Input validation has been strengthened due to recent security events.
+            Input validation has been strengthened due to recent security
+            events.
           </p>
         </div>
       )}
@@ -229,12 +243,17 @@ export function SecureCalculatorWrapper({
       {/* Security Information Panel */}
       {showSecurityInfo && (
         <div className="mb-4 p-4 bg-blue-50 border border-blue-200 rounded-lg">
-          <h4 className="font-semibold text-blue-800 mb-2">Security Information</h4>
+          <h4 className="font-semibold text-blue-800 mb-2">
+            Security Information
+          </h4>
           <div className="text-sm text-blue-700 space-y-1">
             <p>Calculator: {calculatorName}</p>
             <p>Remaining calculations: {securityState.remainingRequests}</p>
             <p>Security level: {securityState.securityLevel}</p>
-            <p>Last calculation: {securityState.lastCalculation?.toLocaleTimeString() || 'None'}</p>
+            <p>
+              Last calculation:{' '}
+              {securityState.lastCalculation?.toLocaleTimeString() || 'None'}
+            </p>
             <p>All inputs are sanitized and validated for security</p>
             <p>Financial data is encrypted and stored securely</p>
           </div>
@@ -243,9 +262,9 @@ export function SecureCalculatorWrapper({
 
       {/* Calculator Content with Security Context */}
       <div className="calculator-content">
-        {React.cloneElement(children as React.ReactElement, { 
+        {React.cloneElement(children as React.ReactElement, {
           securityContext,
-          onSecurityEvent: handleSecurityViolation
+          onSecurityEvent: handleSecurityViolation,
         })}
       </div>
 
@@ -257,7 +276,9 @@ export function SecureCalculatorWrapper({
             <span>Secured by Vueni Financial Security</span>
           </div>
           <div className="flex items-center gap-4">
-            <span>Calculations: {100 - securityState.remainingRequests}/100</span>
+            <span>
+              Calculations: {100 - securityState.remainingRequests}/100
+            </span>
             <span>Security: {securityState.securityLevel}</span>
           </div>
         </div>
@@ -272,13 +293,13 @@ export function SecureCalculatorWrapper({
 export function useSecureCalculator(calculatorName: string) {
   const [securityState, setSecurityState] = useState({
     isRateLimited: false,
-    remainingRequests: 100
+    remainingRequests: 100,
   });
 
   const validateAndSanitizeInput = (type: string, value: string | number) => {
     // Check rate limit before processing
     if (security.rateLimit.isRateLimited(`calculator:${calculatorName}`)) {
-      setSecurityState(prev => ({ ...prev, isRateLimited: true }));
+      setSecurityState((prev) => ({ ...prev, isRateLimited: true }));
       throw new Error('Rate limit exceeded');
     }
 
@@ -313,11 +334,13 @@ export function useSecureCalculator(calculatorName: string) {
   const performSecureCalculation = async (calculationFn: () => any) => {
     try {
       // Update remaining requests
-      const remaining = security.rateLimit.getRemainingRequests(`calculator:${calculatorName}`);
-      setSecurityState(prev => ({ ...prev, remainingRequests: remaining }));
+      const remaining = security.rateLimit.getRemainingRequests(
+        `calculator:${calculatorName}`
+      );
+      setSecurityState((prev) => ({ ...prev, remainingRequests: remaining }));
 
       const result = await calculationFn();
-      
+
       VueniSecurityMonitoring.logEvent(
         'FINANCIAL_CALCULATION_SUCCESS',
         'low',
@@ -342,6 +365,6 @@ export function useSecureCalculator(calculatorName: string) {
     performSecureCalculation,
     securityState,
     isRateLimited: securityState.isRateLimited,
-    remainingRequests: securityState.remainingRequests
+    remainingRequests: securityState.remainingRequests,
   };
 }

@@ -12,11 +12,11 @@ const generateSampleData = (days: number = 30) => {
   const data = [];
   const startDate = new Date();
   startDate.setDate(startDate.getDate() - days);
-  
+
   for (let i = 0; i < days; i++) {
     const date = new Date(startDate);
     date.setDate(startDate.getDate() + i);
-    
+
     data.push({
       date: date.toISOString().split('T')[0],
       income: Math.random() * 1000 + 2000,
@@ -26,7 +26,7 @@ const generateSampleData = (days: number = 30) => {
       debt: Math.random() * 200 + 50,
     });
   }
-  
+
   return data;
 };
 
@@ -35,40 +35,47 @@ const GraphBaseDemo: React.FC = () => {
   const [timeRange, setTimeRange] = useState<TimeRangeOption>('1M');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  
+
   // Generate data based on time range
   const getDaysFromRange = (range: TimeRangeOption): number => {
     switch (range) {
-      case '1W': return 7;
-      case '1M': return 30;
-      case '3M': return 90;
-      case '6M': return 180;
-      case '1Y': return 365;
-      case 'ALL': return 730; // 2 years
-      default: return 30;
+      case '1W':
+        return 7;
+      case '1M':
+        return 30;
+      case '3M':
+        return 90;
+      case '6M':
+        return 180;
+      case '1Y':
+        return 365;
+      case 'ALL':
+        return 730; // 2 years
+      default:
+        return 30;
     }
   };
-  
+
   const data = generateSampleData(getDaysFromRange(timeRange));
-  
+
   const handleTimeRangeChange = (newRange: TimeRangeOption) => {
     setLoading(true);
     setTimeRange(newRange);
-    
+
     // Simulate loading delay
     setTimeout(() => {
       setLoading(false);
     }, 500);
   };
-  
+
   const handleChartTypeChange = (newType: ChartType) => {
     setChartType(newType);
   };
-  
+
   const simulateError = () => {
-    setError("Failed to load chart data. Please try again.");
+    setError('Failed to load chart data. Please try again.');
   };
-  
+
   const clearError = () => {
     setError(null);
   };
@@ -81,7 +88,7 @@ const GraphBaseDemo: React.FC = () => {
           Apple-style chart component with financial data visualization
         </p>
       </div>
-      
+
       {/* Controls */}
       <div className="bg-white/5 backdrop-blur-sm rounded-xl p-6 border border-white/10">
         <div className="flex flex-wrap gap-4 items-center justify-between">
@@ -90,22 +97,24 @@ const GraphBaseDemo: React.FC = () => {
               Chart Type
             </label>
             <div className="flex gap-2">
-              {(['line', 'area', 'bar', 'stackedBar'] as ChartType[]).map((type) => (
-                <button
-                  key={type}
-                  onClick={() => handleChartTypeChange(type)}
-                  className={`px-3 py-1.5 text-sm rounded-lg transition-all ${
-                    chartType === type
-                      ? 'bg-blue-500/20 text-blue-300 border border-blue-500/30'
-                      : 'bg-white/5 text-white/70 border border-white/10 hover:bg-white/10'
-                  }`}
-                >
-                  {type}
-                </button>
-              ))}
+              {(['line', 'area', 'bar', 'stackedBar'] as ChartType[]).map(
+                (type) => (
+                  <button
+                    key={type}
+                    onClick={() => handleChartTypeChange(type)}
+                    className={`px-3 py-1.5 text-sm rounded-lg transition-all ${
+                      chartType === type
+                        ? 'bg-blue-500/20 text-blue-300 border border-blue-500/30'
+                        : 'bg-white/5 text-white/70 border border-white/10 hover:bg-white/10'
+                    }`}
+                  >
+                    {type}
+                  </button>
+                )
+              )}
             </div>
           </div>
-          
+
           <div className="flex gap-2">
             <button
               onClick={simulateError}
@@ -122,7 +131,7 @@ const GraphBaseDemo: React.FC = () => {
           </div>
         </div>
       </div>
-      
+
       {/* Chart Examples */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
         {/* Main Chart */}
@@ -136,35 +145,36 @@ const GraphBaseDemo: React.FC = () => {
             timeControls={{
               show: true,
               options: ['1W', '1M', '3M', '6M', '1Y', 'ALL'],
-              defaultRange: '1M'
+              defaultRange: '1M',
             }}
             onTimeRangeChange={handleTimeRangeChange}
             loading={loading}
             error={error}
             errorConfig={{
               showRetry: true,
-              onRetry: clearError
+              onRetry: clearError,
             }}
             dimensions={{
               height: 400,
-              responsive: true
+              responsive: true,
             }}
             legend={{
               show: true,
-              position: 'bottom'
+              position: 'bottom',
             }}
             grid={{
               show: true,
               horizontal: true,
-              vertical: false
+              vertical: false,
             }}
             accessibility={{
-              title: "Financial data chart",
-              description: "A chart showing income, spending, savings, investments, and debt over time"
+              title: 'Financial data chart',
+              description:
+                'A chart showing income, spending, savings, investments, and debt over time',
             }}
           />
         </div>
-        
+
         {/* Compact Charts */}
         <div>
           <GraphBase
@@ -173,19 +183,19 @@ const GraphBaseDemo: React.FC = () => {
             title="Income vs Spending"
             series={[
               { dataKey: 'income', label: 'Income', color: '#10b981' },
-              { dataKey: 'spending', label: 'Spending', color: '#ef4444' }
+              { dataKey: 'spending', label: 'Spending', color: '#ef4444' },
             ]}
             dimensions={{
               height: 250,
-              responsive: true
+              responsive: true,
             }}
             animation={{
               enable: true,
-              duration: 600
+              duration: 600,
             }}
           />
         </div>
-        
+
         <div>
           <GraphBase
             data={data}
@@ -193,20 +203,24 @@ const GraphBaseDemo: React.FC = () => {
             title="Monthly Breakdown"
             series={[
               { dataKey: 'savings', label: 'Savings', color: '#3b82f6' },
-              { dataKey: 'investments', label: 'Investments', color: '#8b5cf6' }
+              {
+                dataKey: 'investments',
+                label: 'Investments',
+                color: '#8b5cf6',
+              },
             ]}
             dimensions={{
               height: 250,
-              responsive: true
+              responsive: true,
             }}
             legend={{
               show: true,
-              position: 'top'
+              position: 'top',
             }}
           />
         </div>
       </div>
-      
+
       {/* Feature Showcase */}
       <div className="bg-white/5 backdrop-blur-sm rounded-xl p-6 border border-white/10">
         <h3 className="text-xl font-semibold text-white mb-4">Features</h3>
@@ -220,7 +234,7 @@ const GraphBaseDemo: React.FC = () => {
               <li>• Glass morphism</li>
             </ul>
           </div>
-          
+
           <div className="space-y-2">
             <h4 className="font-medium text-white/90">📊 Chart Types</h4>
             <ul className="text-white/70 space-y-1">
@@ -230,7 +244,7 @@ const GraphBaseDemo: React.FC = () => {
               <li>• Stacked bars</li>
             </ul>
           </div>
-          
+
           <div className="space-y-2">
             <h4 className="font-medium text-white/90">♿ Accessibility</h4>
             <ul className="text-white/70 space-y-1">
@@ -240,7 +254,7 @@ const GraphBaseDemo: React.FC = () => {
               <li>• High contrast mode</li>
             </ul>
           </div>
-          
+
           <div className="space-y-2">
             <h4 className="font-medium text-white/90">🚀 Performance</h4>
             <ul className="text-white/70 space-y-1">
@@ -250,7 +264,7 @@ const GraphBaseDemo: React.FC = () => {
               <li>• Debounced updates</li>
             </ul>
           </div>
-          
+
           <div className="space-y-2">
             <h4 className="font-medium text-white/90">📱 Responsive</h4>
             <ul className="text-white/70 space-y-1">
@@ -260,7 +274,7 @@ const GraphBaseDemo: React.FC = () => {
               <li>• Smooth animations</li>
             </ul>
           </div>
-          
+
           <div className="space-y-2">
             <h4 className="font-medium text-white/90">🔧 Customizable</h4>
             <ul className="text-white/70 space-y-1">

@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Package } from 'lucide-react';
 
@@ -11,7 +10,11 @@ interface TransactionMainProps {
   hasShippingInfo: boolean;
 }
 
-const TransactionMain = ({ merchant, category, hasShippingInfo }: TransactionMainProps) => {
+const TransactionMain = ({
+  merchant,
+  category,
+  hasShippingInfo,
+}: TransactionMainProps) => {
   return (
     <div className="transaction-main">
       {hasShippingInfo && (
@@ -20,12 +23,8 @@ const TransactionMain = ({ merchant, category, hasShippingInfo }: TransactionMai
         </div>
       )}
       <div className="transaction-merchant-info">
-        <p className="transaction-merchant-name">
-          {merchant}
-        </p>
-        <p className="transaction-category">
-          {category.name}
-        </p>
+        <p className="transaction-merchant-name">{merchant}</p>
+        <p className="transaction-category">{category.name}</p>
       </div>
     </div>
   );

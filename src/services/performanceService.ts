@@ -50,7 +50,9 @@ class PerformanceService {
               const navEntry = entry as PerformanceNavigationTiming;
               this.recordMetric({
                 loadTime: navEntry.loadEventEnd - navEntry.loadEventStart,
-                renderTime: navEntry.domContentLoadedEventEnd - navEntry.domContentLoadedEventStart,
+                renderTime:
+                  navEntry.domContentLoadedEventEnd -
+                  navEntry.domContentLoadedEventStart,
                 memoryUsage: this.getCurrentMemoryUsage(),
                 componentCount: this.getComponentCount(),
                 bundleSize: this.estimateBundleSize(),
@@ -72,9 +74,11 @@ class PerformanceService {
             }
           });
         });
-        paintObserver.observe({ entryTypes: ['paint', 'largest-contentful-paint'] });
+        paintObserver.observe({
+          entryTypes: ['paint', 'largest-contentful-paint'],
+        });
 
-                 // Observe layout shift
+        // Observe layout shift
         const layoutObserver = new PerformanceObserver((list) => {
           const entries = list.getEntries();
           let cls = 0;
@@ -97,11 +101,17 @@ class PerformanceService {
 
   // Track memory usage periodically
   private trackMemoryUsage(): void {
-    if (typeof window !== 'undefined' && 'performance' in window && 'memory' in performance) {
+    if (
+      typeof window !== 'undefined' &&
+      'performance' in window &&
+      'memory' in performance
+    ) {
       setInterval(() => {
         const memoryUsage = this.getCurrentMemoryUsage();
         if (memoryUsage > this.thresholds.maxMemoryUsage) {
-          console.warn(`High memory usage detected: ${(memoryUsage / 1024 / 1024).toFixed(2)}MB`);
+          console.warn(
+            `High memory usage detected: ${(memoryUsage / 1024 / 1024).toFixed(2)}MB`
+          );
           this.triggerGarbageCollection();
         }
       }, 30000); // Check every 30 seconds
@@ -110,7 +120,11 @@ class PerformanceService {
 
   // Get current memory usage (Chrome only)
   private getCurrentMemoryUsage(): number {
-    if (typeof window !== 'undefined' && 'performance' in window && 'memory' in performance) {
+    if (
+      typeof window !== 'undefined' &&
+      'performance' in window &&
+      'memory' in performance
+    ) {
       return (performance as any).memory.usedJSHeapSize || 0;
     }
     return 0;
@@ -119,10 +133,10 @@ class PerformanceService {
   // Estimate bundle size based on script tags
   private estimateBundleSize(): number {
     if (typeof document === 'undefined') return 0;
-    
+
     const scripts = document.querySelectorAll('script[src]');
     let totalSize = 0;
-    
+
     scripts.forEach((script) => {
       // This is an estimation - in production you'd want actual bundle size metrics
       const src = (script as HTMLScriptElement).src;
@@ -130,16 +144,18 @@ class PerformanceService {
         totalSize += 500 * 1024; // Estimate 500KB per major bundle
       }
     });
-    
+
     return totalSize;
   }
 
   // Count React components (estimation)
   private getComponentCount(): number {
     if (typeof document === 'undefined') return 0;
-    
+
     // Estimate based on elements with React-like attributes
-    const reactElements = document.querySelectorAll('[data-reactroot], [data-testid], .react-component');
+    const reactElements = document.querySelectorAll(
+      '[data-reactroot], [data-testid], .react-component'
+    );
     return reactElements.length;
   }
 
@@ -164,15 +180,21 @@ class PerformanceService {
     const violations: string[] = [];
 
     if (metric.loadTime > this.thresholds.maxLoadTime) {
-      violations.push(`Load time: ${metric.loadTime}ms (max: ${this.thresholds.maxLoadTime}ms)`);
+      violations.push(
+        `Load time: ${metric.loadTime}ms (max: ${this.thresholds.maxLoadTime}ms)`
+      );
     }
 
     if (metric.renderTime > this.thresholds.maxRenderTime) {
-      violations.push(`Render time: ${metric.renderTime}ms (max: ${this.thresholds.maxRenderTime}ms)`);
+      violations.push(
+        `Render time: ${metric.renderTime}ms (max: ${this.thresholds.maxRenderTime}ms)`
+      );
     }
 
     if (metric.memoryUsage > this.thresholds.maxMemoryUsage) {
-      violations.push(`Memory usage: ${(metric.memoryUsage / 1024 / 1024).toFixed(2)}MB (max: ${(this.thresholds.maxMemoryUsage / 1024 / 1024).toFixed(2)}MB)`);
+      violations.push(
+        `Memory usage: ${(metric.memoryUsage / 1024 / 1024).toFixed(2)}MB (max: ${(this.thresholds.maxMemoryUsage / 1024 / 1024).toFixed(2)}MB)`
+      );
     }
 
     if (violations.length > 0) {
@@ -192,12 +214,12 @@ class PerformanceService {
   private optimizePerformance(): void {
     // Remove unused event listeners
     this.cleanupEventListeners();
-    
+
     // Clear old metrics
     if (this.metrics.length > 50) {
       this.metrics = this.metrics.slice(-50);
     }
-    
+
     // Suggest lazy loading
     this.suggestLazyLoading();
   }
@@ -211,35 +233,48 @@ class PerformanceService {
   // Suggest lazy loading opportunities
   private suggestLazyLoading(): void {
     if (typeof document === 'undefined') return;
-    
+
     // Check for images that could be lazy loaded
     const images = document.querySelectorAll('img:not([loading="lazy"])');
     if (images.length > 10) {
-      console.warn(`Consider lazy loading ${images.length} images for better performance`);
+      console.warn(
+        `Consider lazy loading ${images.length} images for better performance`
+      );
     }
 
     // Check for heavy components that could be code-split
     const heavyComponents = document.querySelectorAll('[data-heavy-component]');
     if (heavyComponents.length > 0) {
-      console.warn('Consider code-splitting heavy components:', heavyComponents);
+      console.warn(
+        'Consider code-splitting heavy components:',
+        heavyComponents
+      );
     }
   }
 
   // Public API methods
   public getAverageLoadTime(): number {
     if (this.metrics.length === 0) return 0;
-    const totalLoadTime = this.metrics.reduce((sum, metric) => sum + metric.loadTime, 0);
+    const totalLoadTime = this.metrics.reduce(
+      (sum, metric) => sum + metric.loadTime,
+      0
+    );
     return totalLoadTime / this.metrics.length;
   }
 
   public getAverageMemoryUsage(): number {
     if (this.metrics.length === 0) return 0;
-    const totalMemory = this.metrics.reduce((sum, metric) => sum + metric.memoryUsage, 0);
+    const totalMemory = this.metrics.reduce(
+      (sum, metric) => sum + metric.memoryUsage,
+      0
+    );
     return totalMemory / this.metrics.length;
   }
 
   public getCurrentMetrics(): PerformanceMetrics | null {
-    return this.metrics.length > 0 ? this.metrics[this.metrics.length - 1] : null;
+    return this.metrics.length > 0
+      ? this.metrics[this.metrics.length - 1]
+      : null;
   }
 
   public getMetricHistory(): PerformanceMetrics[] {
@@ -253,7 +288,9 @@ class PerformanceService {
   // Component performance tracking
   public trackComponentRender(componentName: string, renderTime: number): void {
     if (renderTime > this.thresholds.maxRenderTime) {
-      console.warn(`Slow component render detected: ${componentName} took ${renderTime}ms`);
+      console.warn(
+        `Slow component render detected: ${componentName} took ${renderTime}ms`
+      );
     }
   }
 
@@ -262,8 +299,8 @@ class PerformanceService {
     return new Promise((resolve) => {
       if (typeof window !== 'undefined' && 'performance' in window) {
         const entries = performance.getEntriesByType('resource');
-        const scripts = entries.filter(entry => entry.name.endsWith('.js'));
-        
+        const scripts = entries.filter((entry) => entry.name.endsWith('.js'));
+
         let totalSize = 0;
         scripts.forEach((script) => {
           if ('transferSize' in script) {
@@ -271,9 +308,12 @@ class PerformanceService {
           }
         });
 
-        console.log(`Total JavaScript bundle size: ${(totalSize / 1024).toFixed(2)}KB`);
-        
-        if (totalSize > 1024 * 1024) { // 1MB
+        console.log(
+          `Total JavaScript bundle size: ${(totalSize / 1024).toFixed(2)}KB`
+        );
+
+        if (totalSize > 1024 * 1024) {
+          // 1MB
           console.warn('Large bundle size detected. Consider code splitting.');
         }
       }
@@ -306,7 +346,7 @@ export const performanceService = PerformanceService.getInstance();
 export const usePerformanceTracking = (componentName: string) => {
   React.useEffect(() => {
     const startTime = performance.now();
-    
+
     return () => {
       const endTime = performance.now();
       const renderTime = endTime - startTime;
@@ -321,15 +361,19 @@ export const withPerformanceTracking = <P extends object>(
   componentName?: string
 ) => {
   const PerformanceTrackedComponent = (props: P) => {
-    const name = componentName || WrappedComponent.displayName || WrappedComponent.name || 'Unknown';
+    const name =
+      componentName ||
+      WrappedComponent.displayName ||
+      WrappedComponent.name ||
+      'Unknown';
     usePerformanceTracking(name);
-    
+
     return React.createElement(WrappedComponent, props);
   };
 
   PerformanceTrackedComponent.displayName = `withPerformanceTracking(${WrappedComponent.displayName || WrappedComponent.name})`;
-  
+
   return PerformanceTrackedComponent;
 };
 
-export default PerformanceService; 
+export default PerformanceService;

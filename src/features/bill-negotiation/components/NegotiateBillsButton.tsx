@@ -1,8 +1,8 @@
-import React from "react";
-import { Button } from "@/shared/ui/button";
-import { useNegotiationStore } from "../store";
-import { useToast } from "@/shared/hooks/use-toast";
-import { Handshake } from "lucide-react";
+import React from 'react';
+import { Button } from '@/shared/ui/button';
+import { useNegotiationStore } from '../store';
+import { useToast } from '@/shared/hooks/use-toast';
+import { Handshake } from 'lucide-react';
 
 export const NegotiateBillsButton: React.FC = () => {
   const negotiate = useNegotiationStore((s) => s.negotiateOutstanding);
@@ -11,7 +11,10 @@ export const NegotiateBillsButton: React.FC = () => {
 
   const onClick = async () => {
     await negotiate();
-    toast({ title: "Negotiation started", description: "We'll work on lowering your bills." });
+    toast({
+      title: 'Negotiation started',
+      description: "We'll work on lowering your bills.",
+    });
   };
 
   return (
@@ -19,4 +22,4 @@ export const NegotiateBillsButton: React.FC = () => {
       <Handshake className="mr-2" /> Negotiate Bills
     </Button>
   );
-}; 
+};

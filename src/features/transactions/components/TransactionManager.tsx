@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useMemo, useCallback } from 'react';
-import { 
-  Search, 
-  Filter, 
-  Download, 
-  Upload, 
+import {
+  Search,
+  Filter,
+  Download,
+  Upload,
   Plus,
   Edit3,
   Trash2,
@@ -17,7 +17,7 @@ import {
   MoreHorizontal,
   TrendingUp,
   ArrowLeftRight,
-  AlertCircle
+  AlertCircle,
 } from 'lucide-react';
 import { Transaction, TransactionCategory } from '@/types/transactions';
 import { transactionService } from '@/features/transactions/api/transactionService';
@@ -30,12 +30,22 @@ interface TransactionManagerProps {
   compact?: boolean;
 }
 
-const TransactionManager = ({ familyId, accountId, compact = false }: TransactionManagerProps) => {
+const TransactionManager = ({
+  familyId,
+  accountId,
+  compact = false,
+}: TransactionManagerProps) => {
   const [transactions, setTransactions] = useState<Transaction[]>([]);
-  const [selectedTransactions, setSelectedTransactions] = useState<Set<string>>(new Set());
+  const [selectedTransactions, setSelectedTransactions] = useState<Set<string>>(
+    new Set()
+  );
   const [searchQuery, setSearchQuery] = useState('');
-  const [selectedCategories, setSelectedCategories] = useState<TransactionCategory[]>([]);
-  const [dateRange, setDateRange] = useState<{ start: Date; end: Date } | null>(null);
+  const [selectedCategories, setSelectedCategories] = useState<
+    TransactionCategory[]
+  >([]);
+  const [dateRange, setDateRange] = useState<{ start: Date; end: Date } | null>(
+    null
+  );
   const [showFilters, setShowFilters] = useState(false);
   const [showBulkActions, setShowBulkActions] = useState(false);
   const [sortBy, setSortBy] = useState<'date' | 'amount' | 'merchant'>('date');
@@ -51,23 +61,24 @@ const TransactionManager = ({ familyId, accountId, compact = false }: Transactio
   const loadTransactions = async () => {
     setLoading(true);
     try {
-      const filters: { 
-        category?: string; 
-        minAmount?: number; 
-        maxAmount?: number; 
+      const filters: {
+        category?: string;
+        minAmount?: number;
+        maxAmount?: number;
         dateRange?: { start: Date; end: Date };
         accountId?: string;
       } = {
         query: searchQuery || undefined,
-        categories: selectedCategories.length > 0 ? selectedCategories : undefined,
+        categories:
+          selectedCategories.length > 0 ? selectedCategories : undefined,
         accountIds: accountId ? [accountId] : undefined,
         dateRange: dateRange || undefined,
-        excludeTransfers: false
+        excludeTransfers: false,
       };
 
       const [transactionData, analyticsData] = await Promise.all([
         transactionService.searchTransactions(familyId, filters),
-        transactionService.generateAnalytics(familyId, 'month')
+        transactionService.generateAnalytics(familyId, 'month'),
       ]);
 
       setTransactions(transactionData);
@@ -82,7 +93,7 @@ const TransactionManager = ({ familyId, accountId, compact = false }: Transactio
   const sortedTransactions = useMemo(() => {
     return [...transactions].sort((a, b) => {
       let comparison = 0;
-      
+
       switch (sortBy) {
         case 'date':
           comparison = a.date.getTime() - b.date.getTime();
@@ -91,36 +102,44 @@ const TransactionManager = ({ familyId, accountId, compact = false }: Transactio
           comparison = Math.abs(a.amount) - Math.abs(b.amount);
           break;
         case 'merchant':
-          comparison = (a.merchantName || '').localeCompare(b.merchantName || '');
+          comparison = (a.merchantName || '').localeCompare(
+            b.merchantName || ''
+          );
           break;
       }
-      
+
       return sortOrder === 'desc' ? -comparison : comparison;
     });
   }, [transactions, sortBy, sortOrder]);
 
-  const handleSelectTransaction = useCallback((transactionId: string, selected: boolean) => {
-    const newSelected = new Set(selectedTransactions);
-    if (selected) {
-      newSelected.add(transactionId);
-    } else {
-      newSelected.delete(transactionId);
-    }
-    setSelectedTransactions(newSelected);
-    setShowBulkActions(newSelected.size > 0);
-  }, [selectedTransactions]);
+  const handleSelectTransaction = useCallback(
+    (transactionId: string, selected: boolean) => {
+      const newSelected = new Set(selectedTransactions);
+      if (selected) {
+        newSelected.add(transactionId);
+      } else {
+        newSelected.delete(transactionId);
+      }
+      setSelectedTransactions(newSelected);
+      setShowBulkActions(newSelected.size > 0);
+    },
+    [selectedTransactions]
+  );
 
   const handleSelectAll = useCallback(() => {
     if (selectedTransactions.size === transactions.length) {
       setSelectedTransactions(new Set());
       setShowBulkActions(false);
     } else {
-      setSelectedTransactions(new Set(transactions.map(t => t.id)));
+      setSelectedTransactions(new Set(transactions.map((t) => t.id)));
       setShowBulkActions(true);
     }
   }, [selectedTransactions.size, transactions]);
 
-  const handleBulkUpdate = async (updates: { transactionIds: string[]; changes: Partial<Transaction> }) => {
+  const handleBulkUpdate = async (updates: {
+    transactionIds: string[];
+    changes: Partial<Transaction>;
+  }) => {
     try {
       await transactionService.bulkUpdateTransactions(
         Array.from(selectedTransactions),
@@ -165,7 +184,7 @@ const TransactionManager = ({ familyId, accountId, compact = false }: Transactio
       investments: 'bg-green-600/20 text-green-300 border-green-600/30',
       fees: 'bg-gray-500/20 text-gray-400 border-gray-500/30',
       transfers: 'bg-blue-500/20 text-blue-400 border-blue-500/30',
-      other: 'bg-gray-500/20 text-gray-400 border-gray-500/30'
+      other: 'bg-gray-500/20 text-gray-400 border-gray-500/30',
     };
     return colors[category] || colors.other;
   };
@@ -174,7 +193,7 @@ const TransactionManager = ({ familyId, accountId, compact = false }: Transactio
     return new Intl.NumberFormat('en-US', {
       style: 'currency',
       currency: 'USD',
-      minimumFractionDigits: 2
+      minimumFractionDigits: 2,
     }).format(amount);
   };
 
@@ -182,7 +201,8 @@ const TransactionManager = ({ familyId, accountId, compact = false }: Transactio
     return date.toLocaleDateString('en-US', {
       month: 'short',
       day: 'numeric',
-      year: date.getFullYear() !== new Date().getFullYear() ? 'numeric' : undefined
+      year:
+        date.getFullYear() !== new Date().getFullYear() ? 'numeric' : undefined,
     });
   };
 
@@ -190,7 +210,10 @@ const TransactionManager = ({ familyId, accountId, compact = false }: Transactio
     return (
       <div className="space-y-4">
         {[...Array(5)].map((_, i) => (
-          <div key={i} className="bg-white/[0.02] rounded-2xl border border-white/[0.08] p-4 animate-pulse">
+          <div
+            key={i}
+            className="bg-white/[0.02] rounded-2xl border border-white/[0.08] p-4 animate-pulse"
+          >
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-4">
                 <div className="w-12 h-12 bg-white/[0.05] rounded-2xl"></div>
@@ -219,10 +242,12 @@ const TransactionManager = ({ familyId, accountId, compact = false }: Transactio
                 Transactions
               </h2>
               <p className="text-white/60 mt-1">
-                {transactions.length} transaction{transactions.length !== 1 ? 's' : ''}
+                {transactions.length} transaction
+                {transactions.length !== 1 ? 's' : ''}
                 {analytics && (
                   <span className="ml-2">
-                    • ${Math.abs(analytics.totalExpenses).toLocaleString()} spent this month
+                    • ${Math.abs(analytics.totalExpenses).toLocaleString()}{' '}
+                    spent this month
                   </span>
                 )}
               </p>
@@ -232,8 +257,10 @@ const TransactionManager = ({ familyId, accountId, compact = false }: Transactio
               <button
                 onClick={() => setShowFilters(!showFilters)}
                 className={cn(
-                  "liquid-glass-button px-4 py-2 rounded-xl transition-all flex items-center gap-2",
-                  showFilters ? "bg-blue-500/20 text-blue-400" : "text-white/80 hover:text-white"
+                  'liquid-glass-button px-4 py-2 rounded-xl transition-all flex items-center gap-2',
+                  showFilters
+                    ? 'bg-blue-500/20 text-blue-400'
+                    : 'text-white/80 hover:text-white'
                 )}
               >
                 <Filter className="w-4 h-4" />
@@ -269,21 +296,33 @@ const TransactionManager = ({ familyId, accountId, compact = false }: Transactio
             <div className="bg-white/[0.03] rounded-xl p-4 border border-white/[0.05] space-y-4">
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <div>
-                  <label className="block text-sm font-medium text-white/80 mb-2">Categories</label>
+                  <label className="block text-sm font-medium text-white/80 mb-2">
+                    Categories
+                  </label>
                   <select
                     multiple
                     className="w-full bg-white/[0.05] border border-white/[0.08] rounded-lg text-white text-sm"
                   >
-                    {Object.values(['income', 'housing', 'food', 'transportation', 'entertainment']).map(category => (
+                    {Object.values([
+                      'income',
+                      'housing',
+                      'food',
+                      'transportation',
+                      'entertainment',
+                    ]).map((category) => (
                       <option key={category} value={category}>
-                        {category.replace('_', ' ').replace(/\b\w/g, l => l.toUpperCase())}
+                        {category
+                          .replace('_', ' ')
+                          .replace(/\b\w/g, (l) => l.toUpperCase())}
                       </option>
                     ))}
                   </select>
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-white/80 mb-2">Date Range</label>
+                  <label className="block text-sm font-medium text-white/80 mb-2">
+                    Date Range
+                  </label>
                   <select className="w-full bg-white/[0.05] border border-white/[0.08] rounded-lg text-white text-sm py-2 px-3">
                     <option value="">All Time</option>
                     <option value="7d">Last 7 Days</option>
@@ -294,7 +333,9 @@ const TransactionManager = ({ familyId, accountId, compact = false }: Transactio
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-white/80 mb-2">Amount Range</label>
+                  <label className="block text-sm font-medium text-white/80 mb-2">
+                    Amount Range
+                  </label>
                   <div className="flex gap-2">
                     <input
                       type="number"
@@ -313,13 +354,19 @@ const TransactionManager = ({ familyId, accountId, compact = false }: Transactio
               <div className="flex items-center gap-4">
                 <div className="flex items-center gap-2">
                   <Switch id="exclude-transfers" />
-                  <label htmlFor="exclude-transfers" className="text-sm text-white/80">
+                  <label
+                    htmlFor="exclude-transfers"
+                    className="text-sm text-white/80"
+                  >
                     Exclude Transfers
                   </label>
                 </div>
                 <div className="flex items-center gap-2">
                   <Switch id="pending-only" />
-                  <label htmlFor="pending-only" className="text-sm text-white/80">
+                  <label
+                    htmlFor="pending-only"
+                    className="text-sm text-white/80"
+                  >
                     Pending Only
                   </label>
                 </div>
@@ -363,7 +410,9 @@ const TransactionManager = ({ familyId, accountId, compact = false }: Transactio
                 <option value="merchant">Merchant</option>
               </select>
               <button
-                onClick={() => setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc')}
+                onClick={() =>
+                  setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc')
+                }
                 className="p-1 rounded hover:bg-white/[0.05] transition-colors"
               >
                 <ArrowUpDown className="w-4 h-4 text-white/60" />
@@ -378,29 +427,43 @@ const TransactionManager = ({ familyId, accountId, compact = false }: Transactio
         <div className="bg-blue-500/10 border border-blue-500/20 rounded-xl p-4">
           <div className="flex items-center justify-between">
             <span className="text-blue-400 font-medium">
-              {selectedTransactions.size} transaction{selectedTransactions.size !== 1 ? 's' : ''} selected
+              {selectedTransactions.size} transaction
+              {selectedTransactions.size !== 1 ? 's' : ''} selected
             </span>
-            
+
             <div className="flex items-center gap-3">
               <select
-                onChange={(e) => e.target.value && handleBulkUpdate({ changes: { category: e.target.value } })}
+                onChange={(e) =>
+                  e.target.value &&
+                  handleBulkUpdate({ changes: { category: e.target.value } })
+                }
                 className="bg-white/[0.05] border border-white/[0.08] rounded-lg text-white text-sm py-2 px-3"
               >
                 <option value="">Set Category...</option>
-                {Object.values(['income', 'housing', 'food', 'transportation', 'entertainment']).map(category => (
+                {Object.values([
+                  'income',
+                  'housing',
+                  'food',
+                  'transportation',
+                  'entertainment',
+                ]).map((category) => (
                   <option key={category} value={category}>
-                    {category.replace('_', ' ').replace(/\b\w/g, l => l.toUpperCase())}
+                    {category
+                      .replace('_', ' ')
+                      .replace(/\b\w/g, (l) => l.toUpperCase())}
                   </option>
                 ))}
               </select>
-              
+
               <button
-                onClick={() => handleBulkUpdate({ changes: { excludeFromBudget: true } })}
+                onClick={() =>
+                  handleBulkUpdate({ changes: { excludeFromBudget: true } })
+                }
                 className="px-3 py-2 bg-white/[0.05] border border-white/[0.08] rounded-lg text-white/80 hover:text-white text-sm transition-colors"
               >
                 Exclude from Budget
               </button>
-              
+
               <button
                 onClick={() => setSelectedTransactions(new Set())}
                 className="p-2 text-white/60 hover:text-white transition-colors"
@@ -417,12 +480,13 @@ const TransactionManager = ({ familyId, accountId, compact = false }: Transactio
         {sortedTransactions.length === 0 ? (
           <div className="bg-white/[0.02] rounded-2xl border border-white/[0.08] p-12 text-center">
             <DollarSign className="w-16 h-16 text-white/20 mx-auto mb-4" />
-            <h3 className="text-xl font-bold text-white mb-2">No Transactions Found</h3>
+            <h3 className="text-xl font-bold text-white mb-2">
+              No Transactions Found
+            </h3>
             <p className="text-white/60">
-              {searchQuery || selectedCategories.length > 0 
+              {searchQuery || selectedCategories.length > 0
                 ? 'Try adjusting your search or filters'
-                : 'Your transactions will appear here once you link accounts'
-              }
+                : 'Your transactions will appear here once you link accounts'}
             </p>
           </div>
         ) : (
@@ -430,14 +494,20 @@ const TransactionManager = ({ familyId, accountId, compact = false }: Transactio
             <div
               key={transaction.id}
               className={cn(
-                "bg-white/[0.02] rounded-2xl border border-white/[0.08] p-4 hover:bg-white/[0.03] transition-all duration-300 backdrop-blur-md",
-                selectedTransactions.has(transaction.id) && "ring-2 ring-blue-500/50 bg-blue-500/5"
+                'bg-white/[0.02] rounded-2xl border border-white/[0.08] p-4 hover:bg-white/[0.03] transition-all duration-300 backdrop-blur-md',
+                selectedTransactions.has(transaction.id) &&
+                  'ring-2 ring-blue-500/50 bg-blue-500/5'
               )}
             >
               <div className="flex items-center gap-4">
                 {/* Selection Checkbox */}
                 <button
-                  onClick={() => handleSelectTransaction(transaction.id, !selectedTransactions.has(transaction.id))}
+                  onClick={() =>
+                    handleSelectTransaction(
+                      transaction.id,
+                      !selectedTransactions.has(transaction.id)
+                    )
+                  }
                   className="flex-shrink-0"
                 >
                   {selectedTransactions.has(transaction.id) ? (
@@ -462,10 +532,12 @@ const TransactionManager = ({ familyId, accountId, compact = false }: Transactio
                         {transaction.merchantName || transaction.description}
                       </h4>
                       <div className="flex items-center gap-3 mt-1">
-                        <span className={cn(
-                          "text-xs px-2 py-1 rounded-lg border font-medium",
-                          getCategoryColor(transaction.category)
-                        )}>
+                        <span
+                          className={cn(
+                            'text-xs px-2 py-1 rounded-lg border font-medium',
+                            getCategoryColor(transaction.category)
+                          )}
+                        >
                           {transaction.category.replace('_', ' ')}
                         </span>
                         <span className="text-xs text-white/60">
@@ -487,11 +559,16 @@ const TransactionManager = ({ familyId, accountId, compact = false }: Transactio
                     </div>
 
                     <div className="text-right flex-shrink-0 ml-4">
-                      <p className={cn(
-                        "font-bold text-sm",
-                        transaction.amount > 0 ? "text-green-400" : "text-white"
-                      )}>
-                        {transaction.amount > 0 ? '+' : ''}{formatCurrency(transaction.amount)}
+                      <p
+                        className={cn(
+                          'font-bold text-sm',
+                          transaction.amount > 0
+                            ? 'text-green-400'
+                            : 'text-white'
+                        )}
+                      >
+                        {transaction.amount > 0 ? '+' : ''}
+                        {formatCurrency(transaction.amount)}
                       </p>
                       {transaction.tags.length > 0 && (
                         <div className="flex items-center gap-1 mt-1 justify-end">

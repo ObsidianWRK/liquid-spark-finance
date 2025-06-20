@@ -20,98 +20,97 @@ const realBudgetData: StackedBarDataPoint[] = [
   {
     date: '2024-01',
     label: 'January',
-    housing: 2000.00,
-    food: 800.50,
+    housing: 2000.0,
+    food: 800.5,
     transportation: 350.25,
     entertainment: 200.75,
-    utilities: 150.00,
-    healthcare: 120.30,
-    shopping: 250.40,
-    debt_payments: 500.00,
-    savings: 800.00,
-    other: 85.20
+    utilities: 150.0,
+    healthcare: 120.3,
+    shopping: 250.4,
+    debt_payments: 500.0,
+    savings: 800.0,
+    other: 85.2,
   },
   {
     date: '2024-02',
     label: 'February',
-    housing: 2000.00,
-    food: 750.80,
+    housing: 2000.0,
+    food: 750.8,
     transportation: 280.15,
-    entertainment: 180.90,
+    entertainment: 180.9,
     utilities: 140.25,
     healthcare: 95.75,
-    shopping: 320.60,
-    debt_payments: 500.00,
-    savings: 900.00,
-    other: 125.35
+    shopping: 320.6,
+    debt_payments: 500.0,
+    savings: 900.0,
+    other: 125.35,
   },
   {
     date: '2024-03',
     label: 'March',
-    housing: 2000.00,
+    housing: 2000.0,
     food: 875.25,
-    transportation: 420.80,
-    entertainment: 290.50,
-    utilities: 165.40,
+    transportation: 420.8,
+    entertainment: 290.5,
+    utilities: 165.4,
     healthcare: 210.15,
-    shopping: 180.90,
-    debt_payments: 500.00,
-    savings: 750.00,
-    other: 95.80
-  }
+    shopping: 180.9,
+    debt_payments: 500.0,
+    savings: 750.0,
+    other: 95.8,
+  },
 ];
 
 const realPortfolioData: StackedBarDataPoint[] = [
   {
     date: '2024-Q1',
     label: 'Q1 2024',
-    stocks: 325000.00,
-    bonds: 100000.00,
-    cash: 40000.00,
-    real_estate: 25000.00,
-    crypto: 10000.00
+    stocks: 325000.0,
+    bonds: 100000.0,
+    cash: 40000.0,
+    real_estate: 25000.0,
+    crypto: 10000.0,
   },
   {
     date: '2024-Q2',
     label: 'Q2 2024',
-    stocks: 342500.00,
-    bonds: 105000.00,
-    cash: 35000.00,
-    real_estate: 26250.00,
-    crypto: 8750.00
-  }
+    stocks: 342500.0,
+    bonds: 105000.0,
+    cash: 35000.0,
+    real_estate: 26250.0,
+    crypto: 8750.0,
+  },
 ];
 
 describe('StackedBarChart Financial Accuracy Tests', () => {
   describe('Currency Formatting', () => {
     it('formats currency values correctly', () => {
       render(
-        <StackedBarChart 
+        <StackedBarChart
           data={realBudgetData}
           financialType="currency"
           currencyCode="USD"
           title="Budget Test"
         />
       );
-      
+
       expect(screen.getByText('Budget Test')).toBeInTheDocument();
     });
 
     it('handles fractional cents correctly', () => {
-      const fractionalData = [{
-        date: '2024-01',
-        label: 'Test',
-        category1: 123.456,
-        category2: 789.123
-      }];
-      
+      const fractionalData = [
+        {
+          date: '2024-01',
+          label: 'Test',
+          category1: 123.456,
+          category2: 789.123,
+        },
+      ];
+
       render(
-        <StackedBarChart 
-          data={fractionalData}
-          financialType="currency"
-        />
+        <StackedBarChart data={fractionalData} financialType="currency" />
       );
-      
+
       // Should round to nearest cent
       expect(screen.getByRole('img')).toBeInTheDocument();
     });
@@ -120,34 +119,36 @@ describe('StackedBarChart Financial Accuracy Tests', () => {
   describe('Percentage Calculations', () => {
     it('calculates percentages accurately', () => {
       render(
-        <StackedBarChart 
+        <StackedBarChart
           data={realBudgetData}
           stackedBarConfig={{ displayMode: 'percentage' }}
           financialType="percentage"
         />
       );
-      
+
       expect(screen.getByRole('img')).toBeInTheDocument();
     });
 
     it('ensures percentages sum to 100%', () => {
-      const testData = [{
-        date: '2024-01',
-        label: 'Test',
-        cat1: 25,
-        cat2: 25,
-        cat3: 25,
-        cat4: 25
-      }];
-      
+      const testData = [
+        {
+          date: '2024-01',
+          label: 'Test',
+          cat1: 25,
+          cat2: 25,
+          cat3: 25,
+          cat4: 25,
+        },
+      ];
+
       render(
-        <StackedBarChart 
+        <StackedBarChart
           data={testData}
           stackedBarConfig={{ displayMode: 'percentage' }}
           financialType="percentage"
         />
       );
-      
+
       expect(screen.getByRole('img')).toBeInTheDocument();
     });
   });
@@ -155,34 +156,33 @@ describe('StackedBarChart Financial Accuracy Tests', () => {
   describe('Data Aggregation', () => {
     it('correctly aggregates spending categories', () => {
       const total = realBudgetData[0];
-      const expectedTotal = 2000 + 800.5 + 350.25 + 200.75 + 150 + 120.3 + 250.4 + 500 + 800 + 85.2;
-      
+      const expectedTotal =
+        2000 + 800.5 + 350.25 + 200.75 + 150 + 120.3 + 250.4 + 500 + 800 + 85.2;
+
       render(
-        <StackedBarChart 
+        <StackedBarChart
           data={[total]}
           stackedBarConfig={{ showTotal: true }}
         />
       );
-      
+
       expect(screen.getByRole('img')).toBeInTheDocument();
       // In real implementation, would verify calculated totals
     });
 
     it('handles zero and negative values appropriately', () => {
-      const dataWithZeros = [{
-        date: '2024-01',
-        label: 'Test',
-        positive: 1000,
-        zero: 0,
-        negative: -500
-      }];
-      
-      render(
-        <StackedBarChart 
-          data={dataWithZeros}
-        />
-      );
-      
+      const dataWithZeros = [
+        {
+          date: '2024-01',
+          label: 'Test',
+          positive: 1000,
+          zero: 0,
+          negative: -500,
+        },
+      ];
+
+      render(<StackedBarChart data={dataWithZeros} />);
+
       expect(screen.getByRole('img')).toBeInTheDocument();
     });
   });
@@ -190,76 +190,77 @@ describe('StackedBarChart Financial Accuracy Tests', () => {
   describe('Investment Portfolio Accuracy', () => {
     it('handles large investment values correctly', () => {
       render(
-        <StackedBarChart 
+        <StackedBarChart
           data={realPortfolioData}
           financialType="currency"
           title="Portfolio Test"
         />
       );
-      
+
       expect(screen.getByText('Portfolio Test')).toBeInTheDocument();
     });
 
     it('maintains precision with large numbers', () => {
-      const largeValueData = [{
-        date: '2024-01',
-        label: 'Million Dollar Portfolio',
-        stocks: 1250000.50,
-        bonds: 750000.25,
-        cash: 125000.75
-      }];
-      
+      const largeValueData = [
+        {
+          date: '2024-01',
+          label: 'Million Dollar Portfolio',
+          stocks: 1250000.5,
+          bonds: 750000.25,
+          cash: 125000.75,
+        },
+      ];
+
       render(
-        <StackedBarChart 
-          data={largeValueData}
-          financialType="currency"
-        />
+        <StackedBarChart data={largeValueData} financialType="currency" />
       );
-      
+
       expect(screen.getByRole('img')).toBeInTheDocument();
     });
   });
 
   describe('Category Grouping Logic', () => {
     it('groups small categories correctly', () => {
-      const dataWithSmallCategories = [{
-        date: '2024-01',
-        label: 'Test',
-        major1: 1000,
-        major2: 800,
-        major3: 600,
-        small1: 50,
-        small2: 30,
-        small3: 20,
-        small4: 15,
-        small5: 10
-      }];
-      
+      const dataWithSmallCategories = [
+        {
+          date: '2024-01',
+          label: 'Test',
+          major1: 1000,
+          major2: 800,
+          major3: 600,
+          small1: 50,
+          small2: 30,
+          small3: 20,
+          small4: 15,
+          small5: 10,
+        },
+      ];
+
       render(
-        <StackedBarChart 
+        <StackedBarChart
           data={dataWithSmallCategories}
           stackedBarConfig={{
             maxCategories: 5,
             groupSmallCategories: true,
-            smallCategoryThreshold: 0.05
+            smallCategoryThreshold: 0.05,
           }}
         />
       );
-      
+
       expect(screen.getByRole('img')).toBeInTheDocument();
     });
 
     it('preserves category ordering by value', () => {
       render(
-        <StackedBarChart 
+        <StackedBarChart
           data={realBudgetData}
           stackedBarConfig={{
             maxCategories: 8,
-            groupSmallCategories: true
+            groupSmallCategories: true,
           }}
         />
       );
-      
+
       expect(screen.getByRole('img')).toBeInTheDocument();
     });
   });
@@ -267,17 +268,17 @@ describe('StackedBarChart Financial Accuracy Tests', () => {
   describe('Time Range Filtering', () => {
     it('filters data correctly by time range', () => {
       render(
-        <StackedBarChart 
+        <StackedBarChart
           data={realBudgetData}
           timeRange="3M"
           timeControls={{
             show: true,
             options: ['1M', '3M', '6M'],
-            defaultRange: '3M'
+            defaultRange: '3M',
           }}
         />
       );
-      
+
       expect(screen.getByRole('img')).toBeInTheDocument();
     });
   });
@@ -289,18 +290,18 @@ describe('StackedBarChart Financial Accuracy Tests', () => {
         label: `Day ${i + 1}`,
         category1: Math.floor(Math.random() * 1000 + 100),
         category2: Math.floor(Math.random() * 800 + 50),
-        category3: Math.floor(Math.random() * 600 + 25)
+        category3: Math.floor(Math.random() * 600 + 25),
       }));
 
       const startTime = performance.now();
       render(
-        <StackedBarChart 
+        <StackedBarChart
           data={largeDataset}
           stackedBarConfig={{ animateOnLoad: false }}
         />
       );
       const endTime = performance.now();
-      
+
       expect(endTime - startTime).toBeLessThan(500); // Should render quickly
       expect(screen.getByRole('img')).toBeInTheDocument();
     });
@@ -315,16 +316,12 @@ describe('StackedBarChart Financial Accuracy Tests', () => {
           category1: 'invalid' as any,
           category2: null as any,
           category3: undefined as any,
-          category4: 100
-        }
+          category4: 100,
+        },
       ];
-      
-      render(
-        <StackedBarChart 
-          data={malformedData}
-        />
-      );
-      
+
+      render(<StackedBarChart data={malformedData} />);
+
       expect(screen.getByRole('img')).toBeInTheDocument();
     });
 
@@ -333,16 +330,12 @@ describe('StackedBarChart Financial Accuracy Tests', () => {
         {
           label: 'No Date',
           category1: 100,
-          category2: 200
-        } as any
+          category2: 200,
+        } as any,
       ];
-      
-      render(
-        <StackedBarChart 
-          data={missingDateData}
-        />
-      );
-      
+
+      render(<StackedBarChart data={missingDateData} />);
+
       expect(screen.getByRole('img')).toBeInTheDocument();
     });
   });
@@ -353,17 +346,17 @@ describe('StackedBarChart Financial Accuracy Tests', () => {
       const calculatedTotal = Object.entries(budgetMonth)
         .filter(([key]) => key !== 'date' && key !== 'label' && key !== 'total')
         .reduce((sum, [_, value]) => sum + (value as number), 0);
-      
+
       render(
-        <StackedBarChart 
+        <StackedBarChart
           data={[budgetMonth]}
           stackedBarConfig={{ showTotal: true }}
         />
       );
-      
+
       // Verify the chart renders without calculation errors
       expect(screen.getByRole('img')).toBeInTheDocument();
-      
+
       // In a real test environment, you'd verify the calculated total
       expect(calculatedTotal).toBeGreaterThan(0);
     });
@@ -373,15 +366,15 @@ describe('StackedBarChart Financial Accuracy Tests', () => {
       const totalValue = Object.entries(portfolioQuarter)
         .filter(([key]) => key !== 'date' && key !== 'label' && key !== 'total')
         .reduce((sum, [_, value]) => sum + (value as number), 0);
-      
+
       render(
-        <StackedBarChart 
+        <StackedBarChart
           data={[portfolioQuarter]}
           stackedBarConfig={{ displayMode: 'percentage' }}
           financialType="percentage"
         />
       );
-      
+
       expect(screen.getByRole('img')).toBeInTheDocument();
       expect(totalValue).toBe(500000); // Verify our test data total
     });
@@ -390,54 +383,58 @@ describe('StackedBarChart Financial Accuracy Tests', () => {
   describe('Accessibility and Interaction', () => {
     it('provides proper ARIA labels for financial data', () => {
       render(
-        <StackedBarChart 
+        <StackedBarChart
           data={realBudgetData}
           accessibility={{
             ariaLabel: 'Monthly budget breakdown showing spending by category',
-            keyboardNavigation: true
+            keyboardNavigation: true,
           }}
         />
       );
-      
-      expect(screen.getByLabelText(/Monthly budget breakdown/)).toBeInTheDocument();
+
+      expect(
+        screen.getByLabelText(/Monthly budget breakdown/)
+      ).toBeInTheDocument();
     });
 
     it('handles keyboard navigation correctly', () => {
       render(
-        <StackedBarChart 
+        <StackedBarChart
           data={realBudgetData}
           accessibility={{ keyboardNavigation: true }}
         />
       );
-      
+
       const chart = screen.getByRole('img');
       expect(chart).toBeInTheDocument();
-      
+
       // In a full implementation, would test tab navigation
     });
   });
 
   describe('Real-world Budget Scenarios', () => {
     it('handles budget overage scenarios', () => {
-      const overBudgetData = [{
-        date: '2024-01',
-        label: 'Over Budget Month',
-        budgeted: 3000,
-        actual: 3500,
-        overage: 500
-      }];
-      
+      const overBudgetData = [
+        {
+          date: '2024-01',
+          label: 'Over Budget Month',
+          budgeted: 3000,
+          actual: 3500,
+          overage: 500,
+        },
+      ];
+
       render(
-        <StackedBarChart 
+        <StackedBarChart
           data={overBudgetData}
           series={[
             { dataKey: 'budgeted', label: 'Budgeted', color: '#007AFF' },
             { dataKey: 'actual', label: 'Actual', color: '#FF453A' },
-            { dataKey: 'overage', label: 'Over Budget', color: '#FF9F0A' }
+            { dataKey: 'overage', label: 'Over Budget', color: '#FF9F0A' },
           ]}
         />
       );
-      
+
       expect(screen.getByRole('img')).toBeInTheDocument();
     });
 
@@ -446,27 +443,22 @@ describe('StackedBarChart Financial Accuracy Tests', () => {
         {
           date: '2024-01',
           label: 'Normal Month',
-          spending: 3000
+          spending: 3000,
         },
         {
           date: '2024-02',
           label: 'Vacation Month',
-          spending: 8000
+          spending: 8000,
         },
         {
           date: '2024-03',
           label: 'Recovery Month',
-          spending: 1500
-        }
+          spending: 1500,
+        },
       ];
-      
-      render(
-        <StackedBarChart 
-          data={irregularData}
-          financialType="currency"
-        />
-      );
-      
+
+      render(<StackedBarChart data={irregularData} financialType="currency" />);
+
       expect(screen.getByRole('img')).toBeInTheDocument();
     });
   });
@@ -476,16 +468,16 @@ describe('StackedBarChart Financial Accuracy Tests', () => {
 describe('Financial Calculation Utilities', () => {
   describe('Currency Formatting', () => {
     it('formats various currency amounts correctly', () => {
-      const amounts = [0, 0.99, 1.00, 123.45, 1234.56, 12345.67, 123456.78];
-      
-      amounts.forEach(amount => {
+      const amounts = [0, 0.99, 1.0, 123.45, 1234.56, 12345.67, 123456.78];
+
+      amounts.forEach((amount) => {
         const formatted = new Intl.NumberFormat('en-US', {
           style: 'currency',
           currency: 'USD',
           minimumFractionDigits: 0,
-          maximumFractionDigits: 2
+          maximumFractionDigits: 2,
         }).format(amount);
-        
+
         expect(formatted).toMatch(/^\$[\d,]+(\.\d{2})?$/);
       });
     });
@@ -495,16 +487,18 @@ describe('Financial Calculation Utilities', () => {
     it('calculates category percentages accurately', () => {
       const data = { cat1: 250, cat2: 500, cat3: 750 };
       const total = Object.values(data).reduce((sum, val) => sum + val, 0);
-      
+
       Object.entries(data).forEach(([key, value]) => {
         const percentage = (value / total) * 100;
         expect(percentage).toBeGreaterThan(0);
         expect(percentage).toBeLessThanOrEqual(100);
       });
-      
-      const totalPercentage = Object.values(data)
-        .reduce((sum, value) => sum + (value / total) * 100, 0);
-      
+
+      const totalPercentage = Object.values(data).reduce(
+        (sum, value) => sum + (value / total) * 100,
+        0
+      );
+
       expect(Math.round(totalPercentage)).toBe(100);
     });
   });

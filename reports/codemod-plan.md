@@ -72,31 +72,33 @@ git rm -r src/domains
 This will be performed by the **ImportFixer** agent. The logic will be a series of find-and-replace operations on file contents.
 
 **Path Mapping Rules:**
-*   `from 'src/utils/` -> `from 'src/shared/utils/`
-*   `from '~/utils/` -> `from '~/shared/utils/`
-*   `from 'src/hooks/` -> `from 'src/shared/hooks/`
-*   `from '~/hooks/` -> `from '~/shared/hooks/`
-*   `from 'src/types/` -> `from 'src/shared/types/`
-*   `from '~/types/` -> `from '~/shared/types/`
-*   `from 'src/lib/` -> `from 'src/shared/lib/`
-*   `from '~/lib/` -> `from '~/shared/lib/`
-*   `from 'src/components/ui/` -> `from 'src/shared/ui/`
-*   `from '~/components/ui/` -> `from '~/shared/ui/`
-*   `from 'src/components/accounts/` -> `from 'src/features/accounts/components/`
-*   `from '~/components/accounts/` -> `from '~/features/accounts/components/`
-*   ... and so on for every moved directory.
+
+- `from 'src/utils/` -> `from 'src/shared/utils/`
+- `from '~/utils/` -> `from '~/shared/utils/`
+- `from 'src/hooks/` -> `from 'src/shared/hooks/`
+- `from '~/hooks/` -> `from '~/shared/hooks/`
+- `from 'src/types/` -> `from 'src/shared/types/`
+- `from '~/types/` -> `from '~/shared/types/`
+- `from 'src/lib/` -> `from 'src/shared/lib/`
+- `from '~/lib/` -> `from '~/shared/lib/`
+- `from 'src/components/ui/` -> `from 'src/shared/ui/`
+- `from '~/components/ui/` -> `from '~/shared/ui/`
+- `from 'src/components/accounts/` -> `from 'src/features/accounts/components/`
+- `from '~/components/accounts/` -> `from '~/features/accounts/components/`
+- ... and so on for every moved directory.
 
 ### Part 6: Configuration Updates
 
 **Objective:** Update all workspace configuration files with new paths and aliases.
 
 The **ConfigGuardian** agent will be responsible for updating these files:
-*   `tsconfig.json` (paths and aliases)
-*   `vite.config.ts` (aliases)
-*   `playwright.config.ts` (test directories)
-*   `jest.config.js` (if present)
-*   `.eslintrc.js` (import rules)
+
+- `tsconfig.json` (paths and aliases)
+- `vite.config.ts` (aliases)
+- `playwright.config.ts` (test directories)
+- `jest.config.js` (if present)
+- `.eslintrc.js` (import rules)
 
 ---
 
-This plan is reversible by reversing the `git mv` and `git rm` commands. The import paths would need to be reverted using the same mapping rules. 
+This plan is reversible by reversing the `git mv` and `git rm` commands. The import paths would need to be reverted using the same mapping rules.

@@ -46,7 +46,9 @@ function MyComponent() {
 
   return (
     <div className="safe-all">
-      <p>Viewport: {viewport.width}x{viewport.height}</p>
+      <p>
+        Viewport: {viewport.width}x{viewport.height}
+      </p>
       <p>Safe Area Top: {safeArea.top}px</p>
       <p>Keyboard: {keyboard.isOpen ? 'Open' : 'Closed'}</p>
     </div>
@@ -64,11 +66,11 @@ function SafeAreaDemo() {
       <header className="top-nav-safe">
         {/* Top navigation with safe area support */}
       </header>
-      
+
       <main className="keyboard-aware">
         {/* Content that adjusts for virtual keyboard */}
       </main>
-      
+
       <footer className="bottom-nav-safe">
         {/* Bottom navigation with safe area support */}
       </footer>
@@ -87,13 +89,13 @@ Complete viewport state management:
 const viewport = useViewport();
 
 // Available properties:
-viewport.width          // Current viewport width
-viewport.height         // Current viewport height
-viewport.safeArea       // Safe area insets
-viewport.orientation    // Orientation information
-viewport.isKeyboardOpen // Virtual keyboard status
-viewport.isMobile       // Device type detection
-viewport.capabilities   // Browser capabilities
+viewport.width; // Current viewport width
+viewport.height; // Current viewport height
+viewport.safeArea; // Safe area insets
+viewport.orientation; // Orientation information
+viewport.isKeyboardOpen; // Virtual keyboard status
+viewport.isMobile; // Device type detection
+viewport.capabilities; // Browser capabilities
 ```
 
 ### `useSafeArea()`
@@ -104,10 +106,10 @@ Safe area insets with automatic polyfills:
 const safeArea = useSafeArea();
 
 // Available properties:
-safeArea.top    // Top safe area inset (px)
-safeArea.right  // Right safe area inset (px)
-safeArea.bottom // Bottom safe area inset (px)
-safeArea.left   // Left safe area inset (px)
+safeArea.top; // Top safe area inset (px)
+safeArea.right; // Right safe area inset (px)
+safeArea.bottom; // Bottom safe area inset (px)
+safeArea.left; // Left safe area inset (px)
 ```
 
 ### `useVirtualKeyboard()`
@@ -118,8 +120,8 @@ Virtual keyboard detection:
 const keyboard = useVirtualKeyboard();
 
 // Available properties:
-keyboard.isOpen  // Boolean: is virtual keyboard open
-keyboard.height  // Number: keyboard height in pixels
+keyboard.isOpen; // Boolean: is virtual keyboard open
+keyboard.height; // Number: keyboard height in pixels
 ```
 
 ### `useOrientation()`
@@ -130,12 +132,12 @@ Orientation change handling:
 const orientation = useOrientation();
 
 // Available properties:
-orientation.type        // 'portrait' | 'landscape'
-orientation.angle       // 0 | 90 | 180 | 270
-orientation.isLocked    // Boolean: is orientation locked
-orientation.isPrimary   // Boolean: is natural orientation
-orientation.isPortrait  // Boolean convenience property
-orientation.isLandscape // Boolean convenience property
+orientation.type; // 'portrait' | 'landscape'
+orientation.angle; // 0 | 90 | 180 | 270
+orientation.isLocked; // Boolean: is orientation locked
+orientation.isPrimary; // Boolean: is natural orientation
+orientation.isPortrait; // Boolean convenience property
+orientation.isLandscape; // Boolean convenience property
 ```
 
 ### `useResponsiveBreakpoint()`
@@ -146,11 +148,11 @@ Responsive breakpoint detection:
 const breakpoint = useResponsiveBreakpoint();
 
 // Available properties:
-breakpoint.breakpoint // 'mobile' | 'sm' | 'md' | 'lg' | 'xl' | '2xl'
-breakpoint.isMobile   // Boolean
-breakpoint.isTablet   // Boolean
-breakpoint.isDesktop  // Boolean
-breakpoint.width      // Current width
+breakpoint.breakpoint; // 'mobile' | 'sm' | 'md' | 'lg' | 'xl' | '2xl'
+breakpoint.isMobile; // Boolean
+breakpoint.isTablet; // Boolean
+breakpoint.isDesktop; // Boolean
+breakpoint.width; // Current width
 ```
 
 ## CSS Utilities
@@ -204,13 +206,13 @@ breakpoint.width      // Current width
 
 ## Browser Support
 
-| Feature | Chrome | Safari | Firefox | Edge | iOS Safari | Android |
-|---------|---------|---------|---------|------|------------|---------|
-| Safe Area Polyfills | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
-| Visual Viewport API | ✅ | ✅ | ❌ | ✅ | ✅ | ✅ |
-| Virtual Keyboard Detection | ✅ | ✅ | ⚠️ | ✅ | ✅ | ✅ |
-| Orientation API | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
-| Modern CSS Units (dvh) | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
+| Feature                    | Chrome | Safari | Firefox | Edge | iOS Safari | Android |
+| -------------------------- | ------ | ------ | ------- | ---- | ---------- | ------- |
+| Safe Area Polyfills        | ✅     | ✅     | ✅      | ✅   | ✅         | ✅      |
+| Visual Viewport API        | ✅     | ✅     | ❌      | ✅   | ✅         | ✅      |
+| Virtual Keyboard Detection | ✅     | ✅     | ⚠️      | ✅   | ✅         | ✅      |
+| Orientation API            | ✅     | ✅     | ✅      | ✅   | ✅         | ✅      |
+| Modern CSS Units (dvh)     | ✅     | ✅     | ✅      | ✅   | ✅         | ✅      |
 
 ✅ Full Support • ⚠️ Partial Support • ❌ Polyfilled
 
@@ -223,16 +225,19 @@ import { initializeViewportGuardianCustom } from '@/shared/utils/viewport-init';
 
 // Custom initialization
 initializeViewportGuardianCustom({
-  debug: true,                 // Enable debug logging
-  applyCSSClasses: true,       // Apply feature detection CSS classes
-  setupDynamicUpdates: true,   // Enable real-time class updates
+  debug: true, // Enable debug logging
+  applyCSSClasses: true, // Apply feature detection CSS classes
+  setupDynamicUpdates: true, // Enable real-time class updates
 });
 ```
 
 ### Feature Detection
 
 ```tsx
-import { getFeatureSupport, getBrowserInfo } from '@/shared/utils/viewport-guardian';
+import {
+  getFeatureSupport,
+  getBrowserInfo,
+} from '@/shared/utils/viewport-guardian';
 
 const features = getFeatureSupport();
 const browser = getBrowserInfo();
@@ -281,9 +286,9 @@ The system automatically sets these CSS custom properties:
 ### Event Listeners
 
 ```tsx
-import { 
-  addViewportChangeListener, 
-  addOrientationChangeListener 
+import {
+  addViewportChangeListener,
+  addOrientationChangeListener,
 } from '@/shared/utils/viewport-guardian';
 
 // Listen for viewport changes
@@ -313,6 +318,7 @@ removeOrientationListener();
 ### Safe Areas Not Working
 
 1. Ensure you're using `env()` with fallbacks:
+
    ```css
    padding-top: env(safe-area-inset-top, var(--safe-area-inset-top, 0px));
    ```

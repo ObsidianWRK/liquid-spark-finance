@@ -14,8 +14,8 @@ export type { Route } from './routeConfig';
 export type { Tab, NavBarProps } from './components/NavBar';
 
 // Scroll Controller
-export { 
-  ScrollController, 
+export {
+  ScrollController,
   scrollController,
   // Legacy alias
   iOS26ScrollController,
@@ -60,4 +60,4 @@ export {
   useAccessibility,
   useKeyboardNavigation,
   useTouchTarget,
-} from './hooks/useAccessibility'; 
+} from './hooks/useAccessibility';

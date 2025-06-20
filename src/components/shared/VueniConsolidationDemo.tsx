@@ -23,10 +23,10 @@ const sampleTransactions = [
     scores: { health: 85, eco: 92, financial: 78 },
   },
   {
-    id: '2', 
+    id: '2',
     merchant: 'Apple Store',
     category: { name: 'Electronics', color: '#3B82F6' },
-    amount: -899.00,
+    amount: -899.0,
     date: '2024-12-14',
     status: 'completed' as const,
     scores: { health: 45, eco: 60, financial: 85 },
@@ -35,7 +35,7 @@ const sampleTransactions = [
     id: '3',
     merchant: 'Salary Deposit',
     category: { name: 'Income', color: '#059669' },
-    amount: 4500.00,
+    amount: 4500.0,
     date: '2024-12-01',
     status: 'completed' as const,
     scores: { health: 100, eco: 75, financial: 100 },
@@ -47,16 +47,16 @@ const sampleAccounts = [
     id: '1',
     type: 'Checking',
     nickname: 'Main Checking',
-    balance: 5420.50,
-    availableBalance: 5420.50,
+    balance: 5420.5,
+    availableBalance: 5420.5,
     currency: 'USD',
   },
   {
     id: '2',
     type: 'Savings',
     nickname: 'Emergency Fund',
-    balance: 12500.00,
-    availableBalance: 12500.00,
+    balance: 12500.0,
+    availableBalance: 12500.0,
     currency: 'USD',
   },
 ];
@@ -64,8 +64,10 @@ const sampleAccounts = [
 // Component showcase with feature flags
 const ConsolidationDemo: React.FC = () => {
   const { flags, updateFlag } = useFeatureFlags();
-  const [selectedTransactionVariant, setSelectedTransactionVariant] = useState<TransactionVariant>('default');
-  const [selectedInsightsVariant, setSelectedInsightsVariant] = useState<string>('standard');
+  const [selectedTransactionVariant, setSelectedTransactionVariant] =
+    useState<TransactionVariant>('default');
+  const [selectedInsightsVariant, setSelectedInsightsVariant] =
+    useState<string>('standard');
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 p-6">
@@ -76,16 +78,23 @@ const ConsolidationDemo: React.FC = () => {
             🚀 Vueni Component Consolidation Demo
           </h1>
           <p className="text-white/70 text-lg">
-            Demonstrating the power of unified, configurable components with feature flags
+            Demonstrating the power of unified, configurable components with
+            feature flags
           </p>
-          
+
           {/* Live Configuration */}
           <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
-              <label className="text-white font-medium mb-2 block">Transaction List Variant:</label>
+              <label className="text-white font-medium mb-2 block">
+                Transaction List Variant:
+              </label>
               <select
                 value={selectedTransactionVariant}
-                onChange={(e) => setSelectedTransactionVariant(e.target.value as TransactionVariant)}
+                onChange={(e) =>
+                  setSelectedTransactionVariant(
+                    e.target.value as TransactionVariant
+                  )
+                }
                 className="w-full p-2 bg-white/10 border border-white/20 rounded-lg text-white"
               >
                 <option value="default">Default</option>
@@ -96,9 +105,11 @@ const ConsolidationDemo: React.FC = () => {
                 <option value="mobile">Mobile</option>
               </select>
             </div>
-            
+
             <div>
-              <label className="text-white font-medium mb-2 block">Insights Page Variant:</label>
+              <label className="text-white font-medium mb-2 block">
+                Insights Page Variant:
+              </label>
               <select
                 value={selectedInsightsVariant}
                 onChange={(e) => setSelectedInsightsVariant(e.target.value)}
@@ -118,8 +129,10 @@ const ConsolidationDemo: React.FC = () => {
 
         {/* Design System Showcase */}
         <VueniDesignSystem.Section className="mb-8">
-          <h2 className="text-2xl font-bold text-white mb-6">Design System Components</h2>
-          
+          <h2 className="text-2xl font-bold text-white mb-6">
+            Design System Components
+          </h2>
+
           <VueniDesignSystem.Grid cols="3" gap="6">
             {/* Metrics */}
             <VueniDesignSystem.Metric
@@ -131,7 +144,7 @@ const ConsolidationDemo: React.FC = () => {
               color="green"
               icon={<span>💰</span>}
             />
-            
+
             <VueniDesignSystem.Metric
               variant="prominent"
               label="Wellness Score"
@@ -141,7 +154,7 @@ const ConsolidationDemo: React.FC = () => {
               color="red"
               icon={<span>❤️</span>}
             />
-            
+
             <VueniDesignSystem.Metric
               variant="prominent"
               label="Eco Impact"
@@ -152,21 +165,37 @@ const ConsolidationDemo: React.FC = () => {
               icon={<span>🌱</span>}
             />
           </VueniDesignSystem.Grid>
-          
+
           {/* Buttons Showcase */}
           <div className="mt-6 flex flex-wrap gap-4">
-            <VueniDesignSystem.Button variant="default">Default Button</VueniDesignSystem.Button>
-            <VueniDesignSystem.Button variant="glass">Glass Button</VueniDesignSystem.Button>
-            <VueniDesignSystem.Button variant="glow" glowing>Glowing Button</VueniDesignSystem.Button>
-            <VueniDesignSystem.Button variant="minimal">Minimal Button</VueniDesignSystem.Button>
+            <VueniDesignSystem.Button variant="default">
+              Default Button
+            </VueniDesignSystem.Button>
+            <VueniDesignSystem.Button variant="glass">
+              Glass Button
+            </VueniDesignSystem.Button>
+            <VueniDesignSystem.Button variant="glow" glowing>
+              Glowing Button
+            </VueniDesignSystem.Button>
+            <VueniDesignSystem.Button variant="minimal">
+              Minimal Button
+            </VueniDesignSystem.Button>
           </div>
-          
+
           {/* Status Badges */}
           <div className="mt-4 flex flex-wrap gap-3">
-            <VueniDesignSystem.StatusBadge status="success">Completed</VueniDesignSystem.StatusBadge>
-            <VueniDesignSystem.StatusBadge status="warning">Pending</VueniDesignSystem.StatusBadge>
-            <VueniDesignSystem.StatusBadge status="error">Failed</VueniDesignSystem.StatusBadge>
-            <VueniDesignSystem.StatusBadge status="info">Processing</VueniDesignSystem.StatusBadge>
+            <VueniDesignSystem.StatusBadge status="success">
+              Completed
+            </VueniDesignSystem.StatusBadge>
+            <VueniDesignSystem.StatusBadge status="warning">
+              Pending
+            </VueniDesignSystem.StatusBadge>
+            <VueniDesignSystem.StatusBadge status="error">
+              Failed
+            </VueniDesignSystem.StatusBadge>
+            <VueniDesignSystem.StatusBadge status="info">
+              Processing
+            </VueniDesignSystem.StatusBadge>
           </div>
         </VueniDesignSystem.Section>
 
@@ -175,7 +204,7 @@ const ConsolidationDemo: React.FC = () => {
           <h2 className="text-2xl font-bold text-white mb-6">
             Unified Transaction List - {selectedTransactionVariant} variant
           </h2>
-          
+
           <VueniUnifiedTransactionList
             variant={selectedTransactionVariant}
             transactions={sampleTransactions}
@@ -199,36 +228,43 @@ const ConsolidationDemo: React.FC = () => {
           <h2 className="text-2xl font-bold text-white mb-6">
             Unified Insights Page - {selectedInsightsVariant} variant
           </h2>
-          
+
           {/* Temporarily disabled during consolidation */}
-          {/* <VueniUnifiedInsightsPage
-            variant={selectedInsightsVariant}
-            transactions={sampleTransactions}
-            accounts={sampleAccounts}
-            enableFeatureFlags={true}
-            onExportData={() => {
-              /* Export data requested */
-            }}
-          /> */}
+          {/* 
+            <VueniUnifiedInsightsPage
+              variant={selectedInsightsVariant}
+              transactions={sampleTransactions}
+              accounts={sampleAccounts}
+              enableFeatureFlags={true}
+              onExportData={() => {
+                // Export data requested
+              }}
+            /> 
+          */}
           <div className="p-8 text-center text-white/60 bg-white/5 rounded-lg border border-white/10">
-            VueniUnifiedInsightsPage temporarily disabled during consolidation refactor
+            VueniUnifiedInsightsPage temporarily disabled during consolidation
+            refactor
           </div>
         </VueniDesignSystem.Section>
 
         {/* Feature Flags Panel */}
         <VueniDesignSystem.GlassCard variant="subtle" className="mt-8 p-6">
-          <h3 className="text-xl font-bold text-white mb-4">Live Feature Flags Control</h3>
+          <h3 className="text-xl font-bold text-white mb-4">
+            Live Feature Flags Control
+          </h3>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             <label className="flex items-center space-x-2">
               <input
                 type="checkbox"
                 checked={flags.showScoreCircles}
-                onChange={(e) => updateFlag('showScoreCircles', e.target.checked)}
+                onChange={(e) =>
+                  updateFlag('showScoreCircles', e.target.checked)
+                }
                 className="rounded"
               />
               <span className="text-white/70 text-sm">Show Score Circles</span>
             </label>
-            
+
             <label className="flex items-center space-x-2">
               <input
                 type="checkbox"
@@ -238,22 +274,26 @@ const ConsolidationDemo: React.FC = () => {
               />
               <span className="text-white/70 text-sm">Compact Mode</span>
             </label>
-            
+
             <label className="flex items-center space-x-2">
               <input
                 type="checkbox"
                 checked={flags.enableAnimations}
-                onChange={(e) => updateFlag('enableAnimations', e.target.checked)}
+                onChange={(e) =>
+                  updateFlag('enableAnimations', e.target.checked)
+                }
                 className="rounded"
               />
               <span className="text-white/70 text-sm">Animations</span>
             </label>
-            
+
             <label className="flex items-center space-x-2">
               <input
                 type="checkbox"
                 checked={flags.enableGlassEffects}
-                onChange={(e) => updateFlag('enableGlassEffects', e.target.checked)}
+                onChange={(e) =>
+                  updateFlag('enableGlassEffects', e.target.checked)
+                }
                 className="rounded"
               />
               <span className="text-white/70 text-sm">Glass Effects</span>
@@ -266,30 +306,34 @@ const ConsolidationDemo: React.FC = () => {
           <h3 className="text-2xl font-bold text-white mb-6 text-center">
             Consolidation Impact Summary
           </h3>
-          
+
           <VueniDesignSystem.Grid cols="4" gap="6">
             <div className="text-center">
               <div className="text-3xl font-bold text-green-400">6→1</div>
               <div className="text-white/70">Transaction Lists</div>
               <div className="text-green-400 text-sm">82.6% reduction</div>
             </div>
-            
+
             <div className="text-center">
               <div className="text-3xl font-bold text-blue-400">7→1</div>
               <div className="text-white/70">Insights Pages</div>
               <div className="text-blue-400 text-sm">76.8% reduction</div>
             </div>
-            
+
             <div className="text-center">
               <div className="text-3xl font-bold text-purple-400">2,614</div>
               <div className="text-white/70">Lines Saved</div>
-              <div className="text-purple-400 text-sm">60.6% total reduction</div>
+              <div className="text-purple-400 text-sm">
+                60.6% total reduction
+              </div>
             </div>
-            
+
             <div className="text-center">
               <div className="text-3xl font-bold text-yellow-400">100%</div>
               <div className="text-white/70">Feature Parity</div>
-              <div className="text-yellow-400 text-sm">No functionality lost</div>
+              <div className="text-yellow-400 text-sm">
+                No functionality lost
+              </div>
             </div>
           </VueniDesignSystem.Grid>
         </VueniDesignSystem.GlassCard>

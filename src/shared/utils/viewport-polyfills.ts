@@ -1,6 +1,6 @@
 /**
  * Viewport Guardian - Cross-browser safe area polyfills and utilities
- * 
+ *
  * Provides comprehensive viewport support including:
  * - Safe area insets polyfill for non-iOS browsers
  * - Visual viewport API utilities
@@ -31,7 +31,7 @@ export interface ViewportCapabilities {
 // Detect browser and platform capabilities
 export const detectViewportCapabilities = (): ViewportCapabilities => {
   const isSSR = typeof window === 'undefined';
-  
+
   if (isSSR) {
     return {
       hasSafeAreaSupport: false,
@@ -47,8 +47,9 @@ export const detectViewportCapabilities = (): ViewportCapabilities => {
   const userAgent = navigator.userAgent.toLowerCase();
   const isIOS = /iphone|ipad|ipod/.test(userAgent);
   const isAndroid = /android/.test(userAgent);
-  const isMobile = /mobile|tablet|android|iphone|ipad|ipod/.test(userAgent) || 
-                   window.innerWidth <= 768;
+  const isMobile =
+    /mobile|tablet|android|iphone|ipad|ipod/.test(userAgent) ||
+    window.innerWidth <= 768;
 
   // Test for CSS env() support
   const testEl = document.createElement('div');
@@ -82,7 +83,7 @@ export const getViewportCapabilities = (): ViewportCapabilities => {
  */
 export const getSafeAreaInsets = (): SafeAreaInsets => {
   const capabilities = getViewportCapabilities();
-  
+
   // If native support exists, try to get real values
   if (capabilities.hasSafeAreaSupport && typeof window !== 'undefined') {
     try {
@@ -120,10 +121,10 @@ export const getSafeAreaInsets = (): SafeAreaInsets => {
     const isLandscape = window.innerWidth > window.innerHeight;
     const screenHeight = window.screen.height;
     const screenWidth = window.screen.width;
-    
+
     // iPhone with notch detection (rough heuristic)
     const hasNotch = screenHeight >= 812 || screenWidth >= 812;
-    
+
     if (hasNotch) {
       polyfillInsets.top = isLandscape ? 0 : 44;
       polyfillInsets.bottom = isLandscape ? 21 : 34;
@@ -139,7 +140,7 @@ export const getSafeAreaInsets = (): SafeAreaInsets => {
   // Android Chrome - estimated safe areas
   else if (capabilities.isAndroid) {
     const isLandscape = window.innerWidth > window.innerHeight;
-    
+
     // Android status bar and navigation
     polyfillInsets.top = 24; // Status bar height
     polyfillInsets.bottom = isLandscape ? 0 : 48; // Navigation bar (portrait only)
@@ -172,10 +173,22 @@ export const applySafeAreaInsets = (): void => {
   root.style.setProperty('--safe-area-inset-left', `${insets.left}px`);
 
   // Also set env() fallback values for better compatibility
-  root.style.setProperty('--sai-top', `env(safe-area-inset-top, ${insets.top}px)`);
-  root.style.setProperty('--sai-right', `env(safe-area-inset-right, ${insets.right}px)`);
-  root.style.setProperty('--sai-bottom', `env(safe-area-inset-bottom, ${insets.bottom}px)`);
-  root.style.setProperty('--sai-left', `env(safe-area-inset-left, ${insets.left}px)`);
+  root.style.setProperty(
+    '--sai-top',
+    `env(safe-area-inset-top, ${insets.top}px)`
+  );
+  root.style.setProperty(
+    '--sai-right',
+    `env(safe-area-inset-right, ${insets.right}px)`
+  );
+  root.style.setProperty(
+    '--sai-bottom',
+    `env(safe-area-inset-bottom, ${insets.bottom}px)`
+  );
+  root.style.setProperty(
+    '--sai-left',
+    `env(safe-area-inset-left, ${insets.left}px)`
+  );
 };
 
 /**
@@ -203,8 +216,14 @@ export const initializeViewportPolyfills = (): void => {
   window.addEventListener('resize', updateOnOrientationChange);
 
   // Screen orientation API (modern browsers)
-  if (getViewportCapabilities().hasScreenOrientation && window.screen.orientation) {
-    window.screen.orientation.addEventListener('change', updateOnOrientationChange);
+  if (
+    getViewportCapabilities().hasScreenOrientation &&
+    window.screen.orientation
+  ) {
+    window.screen.orientation.addEventListener(
+      'change',
+      updateOnOrientationChange
+    );
   }
 
   // Initial application
@@ -221,8 +240,9 @@ export const getOrientation = (): 'portrait' | 'landscape' => {
 
   // Modern Screen Orientation API
   if (capabilities.hasScreenOrientation && window.screen.orientation) {
-    return window.screen.orientation.angle === 0 || window.screen.orientation.angle === 180 
-      ? 'portrait' 
+    return window.screen.orientation.angle === 0 ||
+      window.screen.orientation.angle === 180
+      ? 'portrait'
       : 'landscape';
   }
 

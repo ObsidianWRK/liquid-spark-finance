@@ -22,20 +22,20 @@ export const CardSkeleton: React.FC<CardSkeletonProps> = ({
     // Base Eco Impact card styling (dark mode only)
     'bg-white/[0.02] border-white/[0.08] rounded-2xl backdrop-blur-md',
     'transition-all duration-300 ease-out',
-    
+
     // Variant-specific styling
     {
       'p-4 sm:p-6': variant === 'default',
       'p-3 sm:p-4': variant === 'compact',
       'p-6 sm:p-8': variant === 'expanded',
     },
-    
+
     // Interactive states
     {
-              'card-hover': interactive && !loading,
+      'card-hover': interactive && !loading,
       'cursor-not-allowed opacity-60': loading,
     },
-    
+
     // Custom classes
     className
   );
@@ -52,7 +52,7 @@ export const CardSkeleton: React.FC<CardSkeletonProps> = ({
             </div>
             <div className="w-16 h-8 bg-white/[0.1] rounded"></div>
           </div>
-          
+
           <div className="space-y-3">
             <div className="h-12 bg-white/[0.1] rounded-lg"></div>
             <div className="grid grid-cols-2 gap-3">
@@ -60,7 +60,7 @@ export const CardSkeleton: React.FC<CardSkeletonProps> = ({
               <div className="h-8 bg-white/[0.1] rounded"></div>
             </div>
           </div>
-          
+
           <div className="h-4 bg-white/[0.1] rounded w-3/4"></div>
         </div>
       </div>
@@ -75,7 +75,9 @@ export const CardSkeleton: React.FC<CardSkeletonProps> = ({
 };
 
 // Specialized skeletons for different card types
-export const BiometricCardSkeleton: React.FC<Omit<CardSkeletonProps, 'children'>> = (props) => (
+export const BiometricCardSkeleton: React.FC<
+  Omit<CardSkeletonProps, 'children'>
+> = (props) => (
   <CardSkeleton {...props}>
     <div className="animate-pulse space-y-4">
       {/* Header */}
@@ -86,7 +88,7 @@ export const BiometricCardSkeleton: React.FC<Omit<CardSkeletonProps, 'children'>
         </div>
         <div className="w-12 h-6 bg-green-400/20 rounded-full"></div>
       </div>
-      
+
       {/* Stress level bar */}
       <div className="space-y-2">
         <div className="flex justify-between">
@@ -97,7 +99,7 @@ export const BiometricCardSkeleton: React.FC<Omit<CardSkeletonProps, 'children'>
           <div className="h-3 bg-gradient-to-r from-green-400 to-red-400 rounded-full w-2/3"></div>
         </div>
       </div>
-      
+
       {/* Metrics grid */}
       <div className="grid grid-cols-2 gap-3">
         {[1, 2, 3, 4].map((i) => (
@@ -111,7 +113,9 @@ export const BiometricCardSkeleton: React.FC<Omit<CardSkeletonProps, 'children'>
   </CardSkeleton>
 );
 
-export const WellnessCardSkeleton: React.FC<Omit<CardSkeletonProps, 'children'>> = (props) => (
+export const WellnessCardSkeleton: React.FC<
+  Omit<CardSkeletonProps, 'children'>
+> = (props) => (
   <CardSkeleton {...props}>
     <div className="animate-pulse space-y-4">
       {/* Header with score circle */}
@@ -121,7 +125,7 @@ export const WellnessCardSkeleton: React.FC<Omit<CardSkeletonProps, 'children'>>
           <div className="h-4 bg-white/[0.1] rounded w-24"></div>
         </div>
       </div>
-      
+
       {/* Score circle */}
       <div className="flex justify-center">
         <div className="relative">
@@ -131,7 +135,7 @@ export const WellnessCardSkeleton: React.FC<Omit<CardSkeletonProps, 'children'>>
           </div>
         </div>
       </div>
-      
+
       {/* Metrics */}
       <div className="space-y-2">
         <div className="h-4 bg-white/[0.1] rounded w-32 mx-auto"></div>
@@ -141,7 +145,9 @@ export const WellnessCardSkeleton: React.FC<Omit<CardSkeletonProps, 'children'>>
   </CardSkeleton>
 );
 
-export const AccountCardSkeleton: React.FC<Omit<CardSkeletonProps, 'children'>> = (props) => (
+export const AccountCardSkeleton: React.FC<
+  Omit<CardSkeletonProps, 'children'>
+> = (props) => (
   <CardSkeleton {...props}>
     <div className="animate-pulse space-y-4">
       {/* Institution header */}
@@ -155,13 +161,13 @@ export const AccountCardSkeleton: React.FC<Omit<CardSkeletonProps, 'children'>> 
         </div>
         <div className="h-6 bg-white/[0.1] rounded w-12"></div>
       </div>
-      
+
       {/* Balance */}
       <div className="space-y-1">
         <div className="h-6 bg-white/[0.1] rounded w-24"></div>
         <div className="h-3 bg-white/[0.1] rounded w-16"></div>
       </div>
-      
+
       {/* Last transaction */}
       <div className="flex items-center justify-between pt-2 border-t border-white/[0.08]">
         <div className="flex items-center space-x-2">
@@ -172,4 +178,4 @@ export const AccountCardSkeleton: React.FC<Omit<CardSkeletonProps, 'children'>> 
       </div>
     </div>
   </CardSkeleton>
-); 
+);

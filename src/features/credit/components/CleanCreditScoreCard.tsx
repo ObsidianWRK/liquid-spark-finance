@@ -2,9 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { UniversalCard } from '@/shared/ui/UniversalCard';
 import { vueniTheme } from '@/theme/unified';
-import { 
-  CreditCard, 
-  TrendingUp, 
+import {
+  CreditCard,
+  TrendingUp,
   TrendingDown,
   ArrowRight,
   Info,
@@ -29,10 +29,10 @@ interface CleanCreditScoreCardProps {
   className?: string;
 }
 
-const CleanCreditScoreCard = ({ 
+const CleanCreditScoreCard = ({
   creditData,
   onViewReport,
-  className 
+  className,
 }: CleanCreditScoreCardProps) => {
   const navigate = useNavigate();
   const [data, setData] = useState<CreditScoreData | null>(creditData ?? null);
@@ -47,11 +47,13 @@ const CleanCreditScoreCard = ({
         maxScore: 850,
         change: {
           amount: 12,
-          period: 'last month'
+          period: 'last month',
         },
         utilization: 23,
         rating: 'Very Good',
-        nextReviewDate: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString()
+        nextReviewDate: new Date(
+          Date.now() + 30 * 24 * 60 * 60 * 1000
+        ).toISOString(),
       });
     }
   }, [data]);
@@ -85,10 +87,15 @@ const CleanCreditScoreCard = ({
 
   const scorePercentage = (animatedScore / data.maxScore) * 100;
   const circumference = 2 * Math.PI * 45; // radius of 45
-  const strokeDashoffset = circumference - (scorePercentage / 100) * circumference;
+  const strokeDashoffset =
+    circumference - (scorePercentage / 100) * circumference;
 
   return (
-    <UniversalCard variant="glass" className={`p-6 ${className || ''}`} interactive>
+    <UniversalCard
+      variant="glass"
+      className={`p-6 ${className || ''}`}
+      interactive
+    >
       {/* Header */}
       <div className="flex items-center justify-between mb-6">
         <div className="flex items-center gap-3">
@@ -100,7 +107,7 @@ const CleanCreditScoreCard = ({
             <p className="text-white/60 text-sm">Updated weekly</p>
           </div>
         </div>
-        
+
         <button className="p-2 rounded-xl bg-white/[0.06] hover:bg-white/[0.08] transition-colors">
           <Info className="w-4 h-4 text-white/70" />
         </button>
@@ -133,35 +140,33 @@ const CleanCreditScoreCard = ({
               className="transition-all duration-1000 ease-out"
             />
           </svg>
-          
+
           {/* Score display */}
           <div className="absolute inset-0 flex flex-col items-center justify-center">
-            <div 
+            <div
               className="text-3xl font-bold"
               style={{ color: getScoreColor(data.score) }}
             >
               {animatedScore}
             </div>
-            <div className="text-xs text-white/60">
-              out of {data.maxScore}
-            </div>
+            <div className="text-xs text-white/60">out of {data.maxScore}</div>
           </div>
         </div>
       </div>
 
       {/* Score Rating */}
       <div className="text-center mb-6">
-        <div 
+        <div
           className="text-lg font-semibold mb-1"
           style={{ color: getScoreColor(data.score) }}
         >
           {getScoreRating(data.score)}
         </div>
         <div className="flex items-center justify-center gap-2">
-          <div 
+          <div
             className="flex items-center gap-1"
-            style={{ 
-              color: data.change.amount >= 0 ? '#10b981' : '#ef4444'
+            style={{
+              color: data.change.amount >= 0 ? '#10b981' : '#ef4444',
             }}
           >
             {data.change.amount >= 0 ? (
@@ -170,12 +175,11 @@ const CleanCreditScoreCard = ({
               <TrendingDown className="w-4 h-4" />
             )}
             <span className="text-sm font-medium">
-              {data.change.amount >= 0 ? '+' : ''}{data.change.amount}
+              {data.change.amount >= 0 ? '+' : ''}
+              {data.change.amount}
             </span>
           </div>
-          <span className="text-white/60 text-sm">
-            {data.change.period}
-          </span>
+          <span className="text-white/60 text-sm">{data.change.period}</span>
         </div>
       </div>
 
@@ -187,28 +191,34 @@ const CleanCreditScoreCard = ({
             {animatedUtilization}%
           </span>
         </div>
-        
+
         <div className="w-full bg-white/[0.06] rounded-full h-2">
-          <div 
+          <div
             className="h-2 rounded-full transition-all duration-1000 ease-out"
-            style={{ 
+            style={{
               width: `${animatedUtilization}%`,
-              backgroundColor: animatedUtilization <= 30 
-                ? '#10b981'
-                : animatedUtilization <= 50 
-                ? '#f59e0b'
-                : '#ef4444'
+              backgroundColor:
+                animatedUtilization <= 30
+                  ? '#10b981'
+                  : animatedUtilization <= 50
+                    ? '#f59e0b'
+                    : '#ef4444',
             }}
           />
         </div>
-        
+
         <p className="text-xs text-white/50 mt-1">
-          {animatedUtilization <= 30 ? 'Excellent' : animatedUtilization <= 50 ? 'Good' : 'High'} utilization
+          {animatedUtilization <= 30
+            ? 'Excellent'
+            : animatedUtilization <= 50
+              ? 'Good'
+              : 'High'}{' '}
+          utilization
         </p>
       </div>
 
       {/* Action Button */}
-      <button 
+      <button
         onClick={() => {
           if (onViewReport) {
             onViewReport();

@@ -4,10 +4,10 @@
  * Based on Apple Human Interface Guidelines 2025
  */
 
-import { 
-  appleGraphTokens, 
-  shouldReduceMotion, 
-  getChartAnimationPreset 
+import {
+  appleGraphTokens,
+  shouldReduceMotion,
+  getChartAnimationPreset,
 } from '@/theme/graph-tokens';
 
 // Performance monitoring state
@@ -41,39 +41,41 @@ export const startFrameRateMonitoring = (): void => {
   const measureFrameRate = () => {
     const now = Date.now();
     frameCount++;
-    
+
     // Measure FPS every second
     if (now - lastFrameTime >= 1000) {
       const fps = Math.round((frameCount * 1000) / (now - lastFrameTime));
       performanceState.averageFPS = fps;
-      
+
       // Detect frame drops (below 55 FPS)
       if (fps < 55) {
         performanceState.frameDrops++;
       }
-      
+
       // Update performance score
       performanceState.performanceScore = Math.min(100, (fps / 60) * 100);
-      
+
       // Notify callbacks
-      frameRateCallbacks.forEach(callback => callback(fps));
-      
+      frameRateCallbacks.forEach((callback) => callback(fps));
+
       frameCount = 0;
       lastFrameTime = now;
     }
-    
+
     requestAnimationFrame(measureFrameRate);
   };
-  
+
   requestAnimationFrame(measureFrameRate);
 };
 
 /**
  * Subscribe to frame rate updates
  */
-export const onFrameRateUpdate = (callback: (fps: number) => void): (() => void) => {
+export const onFrameRateUpdate = (
+  callback: (fps: number) => void
+): (() => void) => {
   frameRateCallbacks.push(callback);
-  
+
   return () => {
     const index = frameRateCallbacks.indexOf(callback);
     if (index > -1) {
@@ -98,8 +100,9 @@ export const getOptimizedAnimationConfig = (
 ) => {
   const basePreset = getChartAnimationPreset(chartType);
   const reducedMotion = shouldReduceMotion();
-  const lowPerformance = performanceState.performanceScore < 80 || forceOptimization;
-  
+  const lowPerformance =
+    performanceState.performanceScore < 80 || forceOptimization;
+
   // Disable animations for reduced motion
   if (reducedMotion) {
     return {
@@ -109,7 +112,7 @@ export const getOptimizedAnimationConfig = (
       enabled: false,
     };
   }
-  
+
   // Optimize for low performance
   if (lowPerformance) {
     return {
@@ -119,7 +122,7 @@ export const getOptimizedAnimationConfig = (
       enabled: true,
     };
   }
-  
+
   // Full quality for good performance
   return {
     duration: basePreset.duration,
@@ -134,13 +137,15 @@ export const getOptimizedAnimationConfig = (
  */
 class AnimationScheduler {
   private activeAnimations = new Set<string>();
-  private queue: Array<{ id: string; callback: () => void; priority: number }> = [];
+  private queue: Array<{ id: string; callback: () => void; priority: number }> =
+    [];
   private maxConcurrent: number;
-  
+
   constructor() {
-    this.maxConcurrent = appleGraphTokens.animation.performance.maxConcurrentAnimations;
+    this.maxConcurrent =
+      appleGraphTokens.animation.performance.maxConcurrentAnimations;
   }
-  
+
   /**
    * Schedule an animation with priority
    */
@@ -148,7 +153,7 @@ class AnimationScheduler {
     return new Promise((resolve) => {
       const execute = () => {
         this.activeAnimations.add(id);
-        
+
         // Wrap callback to clean up when done
         const wrappedCallback = () => {
           try {
@@ -159,7 +164,7 @@ class AnimationScheduler {
             resolve();
           }
         };
-        
+
         // Execute immediately or queue
         if (this.activeAnimations.size < this.maxConcurrent) {
           wrappedCallback();
@@ -168,32 +173,35 @@ class AnimationScheduler {
           this.queue.sort((a, b) => b.priority - a.priority); // Higher priority first
         }
       };
-      
+
       execute();
     });
   }
-  
+
   /**
    * Process queued animations
    */
   private processQueue(): void {
-    while (this.queue.length > 0 && this.activeAnimations.size < this.maxConcurrent) {
+    while (
+      this.queue.length > 0 &&
+      this.activeAnimations.size < this.maxConcurrent
+    ) {
       const next = this.queue.shift();
       if (next) {
         next.callback();
       }
     }
   }
-  
+
   /**
    * Cancel an animation
    */
   cancel(id: string): void {
     this.activeAnimations.delete(id);
-    this.queue = this.queue.filter(item => item.id !== id);
+    this.queue = this.queue.filter((item) => item.id !== id);
     this.processQueue();
   }
-  
+
   /**
    * Cancel all animations
    */
@@ -201,7 +209,7 @@ class AnimationScheduler {
     this.activeAnimations.clear();
     this.queue = [];
   }
-  
+
   /**
    * Get current animation count
    */
@@ -220,33 +228,39 @@ export const createPerformantAnimation = (
   element: HTMLElement,
   keyframes: Keyframe[],
   options: KeyframeAnimationOptions,
-  chartType: 'line' | 'area' | 'bar' | 'stacked' | 'hover' | 'selection' = 'hover'
+  chartType:
+    | 'line'
+    | 'area'
+    | 'bar'
+    | 'stacked'
+    | 'hover'
+    | 'selection' = 'hover'
 ): Animation | null => {
   if (typeof window === 'undefined') return null;
-  
+
   const config = getOptimizedAnimationConfig(chartType);
-  
+
   if (!config.enabled) {
     return null;
   }
-  
+
   // Add will-change for GPU acceleration
   if (appleGraphTokens.animation.performance.enableWillChange) {
     element.style.willChange = 'transform, opacity';
   }
-  
+
   // Create optimized animation
   const animation = element.animate(keyframes, {
     ...options,
     duration: config.duration,
     easing: config.easing,
   });
-  
+
   // Clean up will-change when done
   animation.addEventListener('finish', () => {
     element.style.willChange = 'auto';
   });
-  
+
   return animation;
 };
 
@@ -255,7 +269,7 @@ export const createPerformantAnimation = (
  */
 export const usePerformantAnimation = () => {
   const metrics = getPerformanceMetrics();
-  
+
   return {
     metrics,
     shouldOptimize: metrics.performanceScore < 80,
@@ -271,7 +285,7 @@ export const usePerformantAnimation = () => {
 export const initializeAnimationPerformance = (): void => {
   if (typeof window !== 'undefined') {
     startFrameRateMonitoring();
-    
+
     // Log performance metrics in development
     if (process.env.NODE_ENV === 'development') {
       onFrameRateUpdate((fps) => {

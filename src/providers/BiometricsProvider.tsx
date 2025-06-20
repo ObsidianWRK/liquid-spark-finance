@@ -1,7 +1,22 @@
-import React, { createContext, useContext, useEffect, useState, useRef, useCallback, useMemo } from 'react';
+import React, {
+  createContext,
+  useContext,
+  useEffect,
+  useState,
+  useRef,
+  useCallback,
+  useMemo,
+} from 'react';
 import { Subscription } from 'rxjs';
-import { wellnessEngine, BiometricsState, WellnessTrigger } from '@/features/biometric-intervention/api/WellnessEngine';
-import { biometricStream, BiometricReading } from '@/features/biometric-intervention/api/BiometricStream';
+import {
+  wellnessEngine,
+  BiometricsState,
+  WellnessTrigger,
+} from '@/features/biometric-intervention/api/WellnessEngine';
+import {
+  biometricStream,
+  BiometricReading,
+} from '@/features/biometric-intervention/api/BiometricStream';
 
 // Context selector types
 type BiometricsSelector<T> = (state: BiometricsState) => T;
@@ -19,7 +34,9 @@ interface BiometricsContextValue {
   clearHistory: () => void;
 }
 
-const BiometricsContext = createContext<BiometricsContextValue | undefined>(undefined);
+const BiometricsContext = createContext<BiometricsContextValue | undefined>(
+  undefined
+);
 
 // Context selector hook for optimized re-renders
 export function useBiometricsSelector<T>(
@@ -28,11 +45,13 @@ export function useBiometricsSelector<T>(
 ): T {
   const context = useContext(BiometricsContext);
   if (!context) {
-    throw new Error('useBiometricsSelector must be used within a BiometricsProvider');
+    throw new Error(
+      'useBiometricsSelector must be used within a BiometricsProvider'
+    );
   }
 
   const { state } = context;
-  
+
   // Provide safer default initialization with proper fallback
   const [selectedValue, setSelectedValue] = useState<T>(() => {
     if (!state) {
@@ -47,7 +66,7 @@ export function useBiometricsSelector<T>(
         interventionLevel: 'none',
         connectedDevices: [],
         timestamp: new Date().toISOString(),
-        lastReading: new Date().toISOString()
+        lastReading: new Date().toISOString(),
       };
       try {
         return selector(defaultState);
@@ -58,7 +77,7 @@ export function useBiometricsSelector<T>(
     }
     return selector(state);
   });
-  
+
   const selectorRef = useRef(selector);
   const equalityFnRef = useRef(equalityFn);
   const lastSelectedRef = useRef(selectedValue);
@@ -72,7 +91,7 @@ export function useBiometricsSelector<T>(
 
     try {
       const newValue = selectorRef.current(state);
-      const isEqual = equalityFnRef.current 
+      const isEqual = equalityFnRef.current
         ? equalityFnRef.current(lastSelectedRef.current, newValue)
         : lastSelectedRef.current === newValue;
 
@@ -98,20 +117,27 @@ export function useBiometrics(): BiometricsContextValue {
 }
 
 export function useStressIndex(): number {
-  return useBiometricsSelector(state => state.stressIndex, (a, b) => Math.abs(a - b) < 1);
+  return useBiometricsSelector(
+    (state) => state.stressIndex,
+    (a, b) => Math.abs(a - b) < 1
+  );
 }
 
 export function useWellnessScore(): number {
-  return useBiometricsSelector(state => state.wellnessScore, (a, b) => Math.abs(a - b) < 1);
+  return useBiometricsSelector(
+    (state) => state.wellnessScore,
+    (a, b) => Math.abs(a - b) < 1
+  );
 }
 
 export function useShouldIntervene(): boolean {
-  return useBiometricsSelector(state => state.shouldIntervene);
+  return useBiometricsSelector((state) => state.shouldIntervene);
 }
 
 export function useHeartRate(): number | undefined {
-  return useBiometricsSelector(state => state.heartRate, (a, b) => 
-    (a || 0) === (b || 0) || Math.abs((a || 0) - (b || 0)) < 2
+  return useBiometricsSelector(
+    (state) => state.heartRate,
+    (a, b) => (a || 0) === (b || 0) || Math.abs((a || 0) - (b || 0)) < 2
   );
 }
 
@@ -120,11 +146,12 @@ export function useBiometricTrends(): {
   wellnessTrend: 'improving' | 'declining' | 'stable';
 } {
   return useBiometricsSelector(
-    state => ({
+    (state) => ({
       stressTrend: state.stressTrend,
       wellnessTrend: state.wellnessTrend,
     }),
-    (a, b) => a.stressTrend === b.stressTrend && a.wellnessTrend === b.wellnessTrend
+    (a, b) =>
+      a.stressTrend === b.stressTrend && a.wellnessTrend === b.wellnessTrend
   );
 }
 
@@ -135,18 +162,23 @@ export function useConnectedDevices(): Array<{
   isConnected: boolean;
 }> {
   return useBiometricsSelector(
-    state => state.connectedDevices,
-    (a, b) => 
-      a.length === b.length && 
-      a.every((device, index) => 
-        device.id === b[index].id && 
-        device.isConnected === b[index].isConnected
+    (state) => state.connectedDevices,
+    (a, b) =>
+      a.length === b.length &&
+      a.every(
+        (device, index) =>
+          device.id === b[index].id &&
+          device.isConnected === b[index].isConnected
       )
   );
 }
 
-export function useInterventionLevel(): 'none' | 'mild' | 'moderate' | 'severe' {
-  return useBiometricsSelector(state => state.interventionLevel);
+export function useInterventionLevel():
+  | 'none'
+  | 'mild'
+  | 'moderate'
+  | 'severe' {
+  return useBiometricsSelector((state) => state.interventionLevel);
 }
 
 // Provider component with initialization and cleanup
@@ -175,14 +207,15 @@ export const BiometricsProvider: React.FC<BiometricsProviderProps> = ({
     const subscription = wellnessEngine.state$.subscribe({
       next: (newState) => {
         setState(newState);
-        
+
         if (debugMode) {
           console.log('🧠 BiometricsState Update:', {
             stressIndex: newState.stressIndex,
             wellnessScore: newState.wellnessScore,
             shouldIntervene: newState.shouldIntervene,
             timestamp: newState.timestamp,
-            syncDelay: Date.now() - new Date(newState.lastReading || 0).getTime(),
+            syncDelay:
+              Date.now() - new Date(newState.lastReading || 0).getTime(),
           });
         }
       },
@@ -203,7 +236,8 @@ export const BiometricsProvider: React.FC<BiometricsProviderProps> = ({
       debugTimerRef.current = setInterval(() => {
         const currentState = wellnessEngine.getCurrentState();
         if (currentState) {
-          const syncDelay = Date.now() - new Date(currentState.lastReading || 0).getTime();
+          const syncDelay =
+            Date.now() - new Date(currentState.lastReading || 0).getTime();
           if (syncDelay > 50) {
             console.warn(`🧠 Sync delay warning: ${syncDelay}ms`);
           }
@@ -217,7 +251,7 @@ export const BiometricsProvider: React.FC<BiometricsProviderProps> = ({
         clearInterval(debugTimerRef.current);
       }
       wellnessEngine.stopEngine();
-      
+
       if (debugMode) {
         console.log('🧠 BiometricsProvider: Cleaned up');
       }
@@ -225,39 +259,42 @@ export const BiometricsProvider: React.FC<BiometricsProviderProps> = ({
   }, [autoStart, debugMode]);
 
   // Memoized context value to prevent unnecessary re-renders
-  const contextValue = useMemo<BiometricsContextValue>(() => ({
-    state,
-    isInitialized,
-    startEngine: () => {
-      wellnessEngine.startEngine();
-      if (debugMode) console.log('🧠 Engine started');
-    },
-    stopEngine: () => {
-      wellnessEngine.stopEngine();
-      if (debugMode) console.log('🧠 Engine stopped');
-    },
-    triggerManualCheck: async () => {
-      if (debugMode) console.log('🧠 Manual check triggered');
-      return wellnessEngine.triggerManualCheck();
-    },
-    addTrigger: (trigger: WellnessTrigger) => {
-      wellnessEngine.addTrigger(trigger);
-      if (debugMode) console.log('🧠 Trigger added:', trigger.id);
-    },
-    removeTrigger: (triggerId: string) => {
-      wellnessEngine.removeTrigger(triggerId);
-      if (debugMode) console.log('🧠 Trigger removed:', triggerId);
-    },
-    updateTrigger: (triggerId: string, updates: Partial<WellnessTrigger>) => {
-      wellnessEngine.updateTrigger(triggerId, updates);
-      if (debugMode) console.log('🧠 Trigger updated:', triggerId);
-    },
-    getHistory: () => wellnessEngine.getHistory(),
-    clearHistory: () => {
-      wellnessEngine.clearHistory();
-      if (debugMode) console.log('🧠 History cleared');
-    },
-  }), [state, isInitialized, debugMode]);
+  const contextValue = useMemo<BiometricsContextValue>(
+    () => ({
+      state,
+      isInitialized,
+      startEngine: () => {
+        wellnessEngine.startEngine();
+        if (debugMode) console.log('🧠 Engine started');
+      },
+      stopEngine: () => {
+        wellnessEngine.stopEngine();
+        if (debugMode) console.log('🧠 Engine stopped');
+      },
+      triggerManualCheck: async () => {
+        if (debugMode) console.log('🧠 Manual check triggered');
+        return wellnessEngine.triggerManualCheck();
+      },
+      addTrigger: (trigger: WellnessTrigger) => {
+        wellnessEngine.addTrigger(trigger);
+        if (debugMode) console.log('🧠 Trigger added:', trigger.id);
+      },
+      removeTrigger: (triggerId: string) => {
+        wellnessEngine.removeTrigger(triggerId);
+        if (debugMode) console.log('🧠 Trigger removed:', triggerId);
+      },
+      updateTrigger: (triggerId: string, updates: Partial<WellnessTrigger>) => {
+        wellnessEngine.updateTrigger(triggerId, updates);
+        if (debugMode) console.log('🧠 Trigger updated:', triggerId);
+      },
+      getHistory: () => wellnessEngine.getHistory(),
+      clearHistory: () => {
+        wellnessEngine.clearHistory();
+        if (debugMode) console.log('🧠 History cleared');
+      },
+    }),
+    [state, isInitialized, debugMode]
+  );
 
   return (
     <BiometricsContext.Provider value={contextValue}>
@@ -287,16 +324,17 @@ export function useSynchronizedMetrics(): {
   isInSync: boolean;
 } {
   return useBiometricsSelector(
-    state => ({
+    (state) => ({
       stressIndex: state.stressIndex,
       wellnessScore: state.wellnessScore,
       syncTimestamp: state.timestamp,
-      isInSync: state.lastReading ? 
-        (Date.now() - new Date(state.lastReading).getTime()) < 50 : false,
+      isInSync: state.lastReading
+        ? Date.now() - new Date(state.lastReading).getTime() < 50
+        : false,
     }),
-    (a, b) => 
-      a.stressIndex === b.stressIndex && 
+    (a, b) =>
+      a.stressIndex === b.stressIndex &&
       a.wellnessScore === b.wellnessScore &&
       a.syncTimestamp === b.syncTimestamp
   );
-} 
+}

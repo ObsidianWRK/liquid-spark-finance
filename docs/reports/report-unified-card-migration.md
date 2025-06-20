@@ -17,14 +17,14 @@ All card styling is now centralized in `src/theme/unified-card-tokens.ts`:
 
 ### ✅ Completed Migrations
 
-| Component | Status | Notes |
-|-----------|--------|-------|
-| **UnifiedCard** | ✅ Created | Core component with full API |
-| **unified-card-tokens.ts** | ✅ Created | Centralized design tokens |
-| **CompactAccountCard** | ✅ Migrated | Uses UnifiedCard internally |
-| **CreditScoreCard** | ✅ Migrated | Updated to UnifiedCard |
-| **GoalCard** | ✅ Migrated | Simplified with UnifiedCard |
-| **card.tsx (shadcn)** | ✅ Wrapped | Maintains compatibility |
+| Component                  | Status      | Notes                        |
+| -------------------------- | ----------- | ---------------------------- |
+| **UnifiedCard**            | ✅ Created  | Core component with full API |
+| **unified-card-tokens.ts** | ✅ Created  | Centralized design tokens    |
+| **CompactAccountCard**     | ✅ Migrated | Uses UnifiedCard internally  |
+| **CreditScoreCard**        | ✅ Migrated | Updated to UnifiedCard       |
+| **GoalCard**               | ✅ Migrated | Simplified with UnifiedCard  |
+| **card.tsx (shadcn)**      | ✅ Wrapped  | Maintains compatibility      |
 
 ### 🔄 Pending Migrations
 
@@ -49,18 +49,18 @@ interface UnifiedCardProps {
     format?: 'currency' | 'percentage' | 'number';
     label?: string;
   };
-  
+
   // Visual props
   icon?: LucideIcon | ReactNode;
   iconColor?: string;
   trendDirection?: 'up' | 'down' | 'flat';
   variant?: 'default' | 'eco' | 'wellness' | 'financial';
   size?: 'sm' | 'md' | 'lg' | 'xl';
-  
+
   // Interaction
   interactive?: boolean;
   onClick?: () => void;
-  
+
   // Special features
   progress?: {
     value: number;
@@ -72,7 +72,7 @@ interface UnifiedCardProps {
     text: string;
     variant: 'success' | 'warning' | 'error' | 'info';
   };
-  
+
   // Content
   children?: ReactNode;
   className?: string;
@@ -82,6 +82,7 @@ interface UnifiedCardProps {
 ## Usage Examples
 
 ### Basic Metric Card
+
 ```tsx
 <UnifiedCard
   icon={TrendingUp}
@@ -91,13 +92,14 @@ interface UnifiedCardProps {
   delta={{
     value: 12.5,
     format: 'percentage',
-    label: 'vs last month'
+    label: 'vs last month',
   }}
   trendDirection="up"
 />
 ```
 
 ### Account Card
+
 ```tsx
 <UnifiedCard
   icon={CreditCard}
@@ -112,6 +114,7 @@ interface UnifiedCardProps {
 ```
 
 ### Progress Card
+
 ```tsx
 <UnifiedCard
   icon="🎯"
@@ -121,11 +124,11 @@ interface UnifiedCardProps {
     value: 3200,
     max: 5000,
     color: '#22c55e',
-    showLabel: true
+    showLabel: true,
   }}
   badge={{
     text: '64% Complete',
-    variant: 'success'
+    variant: 'success',
   }}
 />
 ```
@@ -135,17 +138,20 @@ interface UnifiedCardProps {
 ### For Legacy Card Components
 
 1. **Import UnifiedCard**:
+
    ```tsx
    import { UnifiedCard } from '@/components/ui/UnifiedCard';
    ```
 
 2. **Map old props to UnifiedCard props**:
+
    - `balance` → `metric`
    - `change` → `delta`
    - `accountName` → `title`
    - `institutionName` → `subtitle`
 
 3. **Move custom content to children**:
+
    ```tsx
    <UnifiedCard {...mappedProps}>
      {/* Custom content like alerts, actions, etc */}
@@ -187,4 +193,4 @@ Screenshots are saved to `__screenshots__/cards/` for comparison.
 - The `variant="glass"` prop is now `variant="default"`
 - Custom glass effects should use the `className` prop
 - Icon props now accept both Lucide components and ReactNode
-- Removed specialized props in favor of composition with `children` 
+- Removed specialized props in favor of composition with `children`

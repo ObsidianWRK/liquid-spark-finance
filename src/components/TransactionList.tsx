@@ -10,16 +10,23 @@ interface TransactionListProps {
   enhanced?: boolean;
 }
 
-const TransactionList = ({ transactions, currency, enhanced = false }: TransactionListProps) => {
+const TransactionList = ({
+  transactions,
+  currency,
+  enhanced = false,
+}: TransactionListProps) => {
   // Group transactions by date
-  const groupedTransactions = transactions.reduce((groups, transaction) => {
-    const date = new Date(transaction.date).toDateString();
-    if (!groups[date]) {
-      groups[date] = [];
-    }
-    groups[date].push(transaction);
-    return groups;
-  }, {} as Record<string, Transaction[]>);
+  const groupedTransactions = transactions.reduce(
+    (groups, transaction) => {
+      const date = new Date(transaction.date).toDateString();
+      if (!groups[date]) {
+        groups[date] = [];
+      }
+      groups[date].push(transaction);
+      return groups;
+    },
+    {} as Record<string, Transaction[]>
+  );
 
   const formatDateHeader = (dateString: string) => {
     const date = new Date(dateString);
@@ -35,7 +42,7 @@ const TransactionList = ({ transactions, currency, enhanced = false }: Transacti
       return date.toLocaleDateString('en-US', {
         weekday: 'long',
         month: 'long',
-        day: 'numeric'
+        day: 'numeric',
       });
     }
   };
@@ -63,7 +70,7 @@ const TransactionList = ({ transactions, currency, enhanced = false }: Transacti
               );
 
               return (
-                <div key={transaction.id} className={index > 0 ? "mt-3" : ""}>
+                <div key={transaction.id} className={index > 0 ? 'mt-3' : ''}>
                   {TransactionComponent}
                 </div>
               );

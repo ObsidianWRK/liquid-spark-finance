@@ -32,10 +32,7 @@
           "outputFile": "test-results/junit.xml"
         }
       ],
-      [
-        "line",
-        null
-      ]
+      ["line", null]
     ],
     "reportSlowTests": {
       "max": 5,
@@ -70,9 +67,7 @@
           "**/hook-*.spec.ts",
           "**/comprehensive-hook-validation.spec.ts"
         ],
-        "testMatch": [
-          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
-        ],
+        "testMatch": ["**/*.@(spec|test).?(c|m)[jt]s?(x)"],
         "timeout": 30000
       },
       {
@@ -87,9 +82,7 @@
           "**/hook-*.spec.ts",
           "**/comprehensive-hook-validation.spec.ts"
         ],
-        "testMatch": [
-          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
-        ],
+        "testMatch": ["**/*.@(spec|test).?(c|m)[jt]s?(x)"],
         "timeout": 30000
       },
       {
@@ -104,9 +97,7 @@
           "**/hook-*.spec.ts",
           "**/comprehensive-hook-validation.spec.ts"
         ],
-        "testMatch": [
-          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
-        ],
+        "testMatch": ["**/*.@(spec|test).?(c|m)[jt]s?(x)"],
         "timeout": 30000
       },
       {
@@ -136,9 +127,7 @@
           "**/hook-*.spec.ts",
           "**/comprehensive-hook-validation.spec.ts"
         ],
-        "testMatch": [
-          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
-        ],
+        "testMatch": ["**/*.@(spec|test).?(c|m)[jt]s?(x)"],
         "timeout": 30000
       },
       {
@@ -153,9 +142,7 @@
           "**/hook-*.spec.ts",
           "**/comprehensive-hook-validation.spec.ts"
         ],
-        "testMatch": [
-          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
-        ],
+        "testMatch": ["**/*.@(spec|test).?(c|m)[jt]s?(x)"],
         "timeout": 30000
       }
     ],

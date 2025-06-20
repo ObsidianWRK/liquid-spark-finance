@@ -7,66 +7,77 @@ This document outlines the implementation of 10 competitive PFM (Personal Financ
 ## Features Implemented
 
 ### 1. Secure Bank Account Aggregation & Auto-Import
+
 - **Location**: `src/features/bank-linking/`
 - **Service**: `bankLinkProvider.ts` (mock Plaid/Teller integration)
 - **UI**: Link button, accounts list with unlink capability
 - **Store**: Zustand slice with refresh/link/unlink actions
 
 ### 2. Subscription Detection + 1-Tap Cancellation
-- **Location**: `src/features/subscriptions/`  
+
+- **Location**: `src/features/subscriptions/`
 - **Service**: `subscriptionService.ts` (auto-detects Netflix, Spotify)
 - **UI**: Recurring charges list with cancel buttons
 - **Store**: Zustand slice with detect/cancel actions
 
 ### 3. Bill Negotiation Concierge
+
 - **Location**: `src/features/bill-negotiation/`
 - **Service**: `negotiationService.ts` (queues cases, status polling)
 - **UI**: Negotiate button, cases list with live status updates
 - **Store**: Zustand slice with submit/refresh actions
 
 ### 4. Smart Automated Savings Plans
+
 - **Location**: `src/features/smart-savings/`
 - **Service**: `autoSaveEngine.ts` (creates/manages transfer plans)
 - **UI**: Creation form, plans list with pause/resume controls
 - **Store**: Zustand slice with CRUD operations
 
 ### 5. Shared Budgets / Household Collaboration
+
 - **Location**: `src/features/shared-budgets/`
 - **Service**: `householdService.ts` (manages households/members)
 - **UI**: Create household form, households list
 - **Store**: Zustand slice with create/list actions
 
 ### 6. Age-of-Money Metric
+
 - **Location**: `src/features/age-of-money/`
 - **Service**: `ageMetricService.ts` (calculates average days held)
 - **UI**: Circular progress visualization
 - **Store**: Zustand slice with refresh action
 
 ### 7. Privacy "Hide Amounts" Toggle
+
 - **Location**: `src/features/privacy-hide-amounts/`
 - **Integration**: Global currency formatter patching
 - **UI**: Switch toggle in dashboard header
 - **Store**: Persisted Zustand slice with toggle action
 
 ### 8. Ask-an-Advisor Live CFP Chat
+
 - **Location**: `src/features/advisor-chat/`
 - **Service**: `advisorService.ts` (manages threads/messages)
 - **UI**: Chat button, modal dialog with message history
 - **Store**: Zustand slice with open/send/close actions
 
 ### 9. Safe-to-Spend & Payday View
+
 - **Location**: `src/features/safe-to-spend/`
 - **Service**: `safeToSpendService.ts` (calculates available cash)
 - **UI**: Card showing amount + next payday date
 - **Store**: Zustand slice with refresh action
 
 ### 10. Home-Screen Balance / Safe-to-Spend Widgets
+
 - **Location**: `src/features/widgets/`
 - **Service**: `widgetService.ts` (manages widget configurations)
 - **UI**: Add buttons, widget previews with delete controls
 - **Store**: Zustand slice with CRUD operations
 
 ### 11. Biometric Stress Intervention (Bonus Feature)
+
 - **Location**: `src/features/biometric-intervention/`
 - **Service**: `biometricService.ts` (monitors stress levels and triggers)
 - **UI**: Real-time stress monitoring, intervention alerts, device connections
@@ -76,21 +87,25 @@ This document outlines the implementation of 10 competitive PFM (Personal Financ
 ## Architecture
 
 ### State Management
+
 - Each feature uses Zustand for state management
 - Persisted state where appropriate (privacy settings)
 - Optimistic updates for better UX
 
 ### Services Layer
+
 - Abstract interfaces with mock implementations
 - Easy to swap for production integrations
 - Consistent error handling patterns
 
 ### UI Components
+
 - Built with shadcn/ui + Tailwind CSS
 - Responsive design across all breakpoints
 - Dark mode compatible styling
 
 ### Testing
+
 - Vitest unit tests for all stores
 - Snapshot tests for schemas
 - Service integration tests
@@ -98,11 +113,13 @@ This document outlines the implementation of 10 competitive PFM (Personal Financ
 ## Development Setup
 
 1. **Install dependencies**:
+
    ```bash
    npm install zustand@^4.5.2
    ```
 
 2. **Run tests**:
+
    ```bash
    npm run test
    ```
@@ -115,10 +132,11 @@ This document outlines the implementation of 10 competitive PFM (Personal Financ
 ## Integration Points
 
 ### Dashboard Integration
+
 All 10+ features are integrated into the main dashboard (`DashboardPage.tsx`) in logical sequence:
 
 1. Bank Linking
-2. Subscriptions Detection  
+2. Subscriptions Detection
 3. Bill Negotiation
 4. Smart Savings
 5. Shared Budgets
@@ -130,11 +148,13 @@ All 10+ features are integrated into the main dashboard (`DashboardPage.tsx`) in
 11. Biometric Monitoring (health section)
 
 ### Privacy Integration
+
 The privacy toggle globally affects currency display across all features by patching the `formatCurrency` utility.
 
 ## Production Considerations
 
 ### Service Replacements
+
 Replace mock services with production integrations:
 
 - **Bank Linking**: Plaid, Teller, or Yodlee
@@ -144,12 +164,14 @@ Replace mock services with production integrations:
 - **Biometric Monitoring**: Apple HealthKit, Google Fit, or wearable APIs
 
 ### Security
+
 - Implement proper authentication
 - Encrypt sensitive data at rest
 - Use secure communication channels
 - Add rate limiting and input validation
 
 ### Performance
+
 - Implement proper caching strategies
 - Add pagination for large data sets
 - Optimize bundle sizes with code splitting
@@ -165,8 +187,9 @@ Replace mock services with production integrations:
 ## Deployment
 
 The features are fully integrated and production-ready with:
+
 - ✅ TypeScript strict mode compliance
-- ✅ ESLint configuration compatibility  
+- ✅ ESLint configuration compatibility
 - ✅ Responsive design validation
 - ✅ Dark mode support
 - ✅ Accessibility considerations
@@ -182,6 +205,7 @@ The features are fully integrated and production-ready with:
 ## Recent Updates
 
 ### Design System Migration (Latest)
+
 All PFM Gap-10 components have been updated to use the **UniversalCard** design system to match the modern glass morphism UI used throughout the Vueni application:
 
 - **Consistent Styling**: All cards now use `bg-white/[0.02]`, `border-white/[0.08]`, and `rounded-2xl` with proper backdrop blur
@@ -190,8 +214,9 @@ All PFM Gap-10 components have been updated to use the **UniversalCard** design 
 - **Glass Morphism**: Replaced basic shadcn/ui Card components with sophisticated glass cards that match Budget Reports and other core pages
 
 **Updated Components:**
+
 - BankLinkingPanel → UniversalCard with Banknote icon (#6366f1)
-- SubscriptionsPanel → UniversalCard with Repeat icon (#f59e0b)  
+- SubscriptionsPanel → UniversalCard with Repeat icon (#f59e0b)
 - BillNegotiationPanel → UniversalCard with Handshake icon (#10b981)
 - SmartSavingsPanel → UniversalCard with PiggyBank icon (#ec4899)
 - SharedBudgetsPanel → UniversalCard with Users icon (#8b5cf6)
@@ -202,4 +227,4 @@ All PFM Gap-10 components have been updated to use the **UniversalCard** design 
 - BiometricMonitorCard → Wellness variant with Activity icon and metrics grid
 - PrivacyToggle → UniversalCard with EyeOff icon (#8b5cf6)
 
-The entire feature set now seamlessly integrates with the modern Vueni design language, providing a cohesive and professional user experience across all Personal Finance Management capabilities. 
+The entire feature set now seamlessly integrates with the modern Vueni design language, providing a cohesive and professional user experience across all Personal Finance Management capabilities.

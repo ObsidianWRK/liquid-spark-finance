@@ -9,21 +9,99 @@ import { ChartDataPoint, ChartSeries } from './types';
 
 // Sample financial data
 const portfolioData: ChartDataPoint[] = [
-  { date: '2024-01', stocks: 150000, bonds: 50000, cash: 20000, alternatives: 30000 },
-  { date: '2024-02', stocks: 148000, bonds: 52000, cash: 18000, alternatives: 32000 },
-  { date: '2024-03', stocks: 162000, bonds: 48000, cash: 22000, alternatives: 28000 },
-  { date: '2024-04', stocks: 175000, bonds: 55000, cash: 15000, alternatives: 35000 },
-  { date: '2024-05', stocks: 170000, bonds: 58000, cash: 17000, alternatives: 40000 },
-  { date: '2024-06', stocks: 185000, bonds: 52000, cash: 23000, alternatives: 42000 },
+  {
+    date: '2024-01',
+    stocks: 150000,
+    bonds: 50000,
+    cash: 20000,
+    alternatives: 30000,
+  },
+  {
+    date: '2024-02',
+    stocks: 148000,
+    bonds: 52000,
+    cash: 18000,
+    alternatives: 32000,
+  },
+  {
+    date: '2024-03',
+    stocks: 162000,
+    bonds: 48000,
+    cash: 22000,
+    alternatives: 28000,
+  },
+  {
+    date: '2024-04',
+    stocks: 175000,
+    bonds: 55000,
+    cash: 15000,
+    alternatives: 35000,
+  },
+  {
+    date: '2024-05',
+    stocks: 170000,
+    bonds: 58000,
+    cash: 17000,
+    alternatives: 40000,
+  },
+  {
+    date: '2024-06',
+    stocks: 185000,
+    bonds: 52000,
+    cash: 23000,
+    alternatives: 42000,
+  },
 ];
 
 const spendingData: ChartDataPoint[] = [
-  { date: '2024-01', housing: 2500, transportation: 800, food: 600, entertainment: 400, other: 300 },
-  { date: '2024-02', housing: 2500, transportation: 750, food: 650, entertainment: 500, other: 350 },
-  { date: '2024-03', housing: 2500, transportation: 900, food: 580, entertainment: 300, other: 280 },
-  { date: '2024-04', housing: 2500, transportation: 820, food: 620, entertainment: 450, other: 320 },
-  { date: '2024-05', housing: 2500, transportation: 880, food: 700, entertainment: 600, other: 400 },
-  { date: '2024-06', housing: 2500, transportation: 760, food: 590, entertainment: 350, other: 300 },
+  {
+    date: '2024-01',
+    housing: 2500,
+    transportation: 800,
+    food: 600,
+    entertainment: 400,
+    other: 300,
+  },
+  {
+    date: '2024-02',
+    housing: 2500,
+    transportation: 750,
+    food: 650,
+    entertainment: 500,
+    other: 350,
+  },
+  {
+    date: '2024-03',
+    housing: 2500,
+    transportation: 900,
+    food: 580,
+    entertainment: 300,
+    other: 280,
+  },
+  {
+    date: '2024-04',
+    housing: 2500,
+    transportation: 820,
+    food: 620,
+    entertainment: 450,
+    other: 320,
+  },
+  {
+    date: '2024-05',
+    housing: 2500,
+    transportation: 880,
+    food: 700,
+    entertainment: 600,
+    other: 400,
+  },
+  {
+    date: '2024-06',
+    housing: 2500,
+    transportation: 760,
+    food: 590,
+    entertainment: 350,
+    other: 300,
+  },
 ];
 
 const netWorthData: ChartDataPoint[] = [
@@ -36,7 +114,9 @@ const netWorthData: ChartDataPoint[] = [
 ];
 
 const AreaChartDemo: React.FC = () => {
-  const [selectedDemo, setSelectedDemo] = useState<'portfolio' | 'spending' | 'networth'>('portfolio');
+  const [selectedDemo, setSelectedDemo] = useState<
+    'portfolio' | 'spending' | 'networth'
+  >('portfolio');
 
   const portfolioSeries: ChartSeries[] = [
     { dataKey: 'stocks', label: 'Stocks', color: '#0A84FF' },
@@ -60,8 +140,12 @@ const AreaChartDemo: React.FC = () => {
   return (
     <div className="w-full space-y-8 p-6 bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 min-h-screen">
       <div className="text-center mb-8">
-        <h1 className="text-3xl font-bold text-white mb-4">AreaChart Component Demo</h1>
-        <p className="text-white/70 text-lg">Apple-style area charts for financial data visualization</p>
+        <h1 className="text-3xl font-bold text-white mb-4">
+          AreaChart Component Demo
+        </h1>
+        <p className="text-white/70 text-lg">
+          Apple-style area charts for financial data visualization
+        </p>
       </div>
 
       {/* Demo Selector */}
@@ -70,7 +154,7 @@ const AreaChartDemo: React.FC = () => {
           { key: 'portfolio', label: 'Portfolio Allocation' },
           { key: 'spending', label: 'Spending Breakdown' },
           { key: 'networth', label: 'Net Worth Trend' },
-        ].map(demo => (
+        ].map((demo) => (
           <button
             key={demo.key}
             onClick={() => setSelectedDemo(demo.key as any)}
@@ -207,23 +291,32 @@ const AreaChartDemo: React.FC = () => {
       {/* Feature Highlights */}
       <div className="grid md:grid-cols-3 gap-6 mt-12">
         <div className="bg-black/20 backdrop-blur-xl rounded-2xl p-6 border border-white/10">
-          <h3 className="text-lg font-semibold text-white mb-3">🍎 Apple Design</h3>
+          <h3 className="text-lg font-semibold text-white mb-3">
+            🍎 Apple Design
+          </h3>
           <p className="text-white/70 text-sm">
-            Follows Apple Human Interface Guidelines with smooth curves, gradients, and clean typography.
+            Follows Apple Human Interface Guidelines with smooth curves,
+            gradients, and clean typography.
           </p>
         </div>
-        
+
         <div className="bg-black/20 backdrop-blur-xl rounded-2xl p-6 border border-white/10">
-          <h3 className="text-lg font-semibold text-white mb-3">💰 Financial Focus</h3>
+          <h3 className="text-lg font-semibold text-white mb-3">
+            💰 Financial Focus
+          </h3>
           <p className="text-white/70 text-sm">
-            Built-in currency formatting, percentage calculations, and portfolio analysis features.
+            Built-in currency formatting, percentage calculations, and portfolio
+            analysis features.
           </p>
         </div>
-        
+
         <div className="bg-black/20 backdrop-blur-xl rounded-2xl p-6 border border-white/10">
-          <h3 className="text-lg font-semibold text-white mb-3">⚡ Performance</h3>
+          <h3 className="text-lg font-semibold text-white mb-3">
+            ⚡ Performance
+          </h3>
           <p className="text-white/70 text-sm">
-            Optimized for large datasets with data reduction and smooth animations.
+            Optimized for large datasets with data reduction and smooth
+            animations.
           </p>
         </div>
       </div>
@@ -232,7 +325,7 @@ const AreaChartDemo: React.FC = () => {
       <div className="bg-black/20 backdrop-blur-xl rounded-2xl p-6 border border-white/10">
         <h3 className="text-lg font-semibold text-white mb-4">Usage Example</h3>
         <pre className="text-xs text-white/80 bg-black/30 rounded-lg p-4 overflow-x-auto">
-{`<AreaChart
+          {`<AreaChart
   data={portfolioData}
   series={portfolioSeries}
   title="Portfolio Allocation"

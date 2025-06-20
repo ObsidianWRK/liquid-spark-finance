@@ -1,4 +1,4 @@
-import { describe, it, expect } from "vitest";
+import { describe, it, expect } from 'vitest';
 import {
   LinkedAccountSchema,
   RecurringChargeSchema,
@@ -10,77 +10,77 @@ import {
   AdvisorThreadSchema,
   SpendableCashSchema,
   HomeWidgetSchema,
-} from "../schemas/gap10";
+} from '../schemas/gap10';
 
 /**
  * Simple helper to make a valid ISO date string.
  */
 const now = () => new Date().toISOString();
 
-describe("Gap-10 Domain Schemas", () => {
-  it("validates LinkedAccount", () => {
+describe('Gap-10 Domain Schemas', () => {
+  it('validates LinkedAccount', () => {
     const obj = {
-      id: "acc1",
-      provider: "mock",
-      displayName: "Mock Checking",
-      institutionName: "Mock Bank",
-      lastFour: "1234",
-      type: "checking",
+      id: 'acc1',
+      provider: 'mock',
+      displayName: 'Mock Checking',
+      institutionName: 'Mock Bank',
+      lastFour: '1234',
+      type: 'checking',
       createdAt: now(),
       updatedAt: now(),
     };
     expect(LinkedAccountSchema.parse(obj)).toMatchSnapshot();
   });
 
-  it("validates RecurringCharge", () => {
+  it('validates RecurringCharge', () => {
     const obj = {
-      id: "rc1",
-      accountId: "acc1",
-      merchantName: "Netflix",
+      id: 'rc1',
+      accountId: 'acc1',
+      merchantName: 'Netflix',
       amount: 15.99,
-      frequency: "monthly",
+      frequency: 'monthly',
       nextDueDate: now(),
-      status: "active",
+      status: 'active',
     };
     expect(RecurringChargeSchema.parse(obj)).toMatchSnapshot();
   });
 
-  it("validates NegotiationCase", () => {
+  it('validates NegotiationCase', () => {
     const obj = {
-      id: "case1",
-      chargeId: "rc1",
-      status: "queued",
+      id: 'case1',
+      chargeId: 'rc1',
+      status: 'queued',
       submittedAt: now(),
     };
     expect(NegotiationCaseSchema.parse(obj)).toMatchSnapshot();
   });
 
-  it("validates AutosavePlan", () => {
+  it('validates AutosavePlan', () => {
     const obj = {
-      id: "plan1",
-      accountId: "acc1",
+      id: 'plan1',
+      accountId: 'acc1',
       targetAmount: 50,
-      cadence: "weekly",
+      cadence: 'weekly',
       nextTransferDate: now(),
       isActive: true,
     };
     expect(AutosavePlanSchema.parse(obj)).toMatchSnapshot();
   });
 
-  it("validates Household", () => {
+  it('validates Household', () => {
     const obj = {
-      id: "house1",
-      name: "Smith Family",
+      id: 'house1',
+      name: 'Smith Family',
       members: [
-        { userId: "user1", role: "owner" },
-        { userId: "user2", role: "member" },
+        { userId: 'user1', role: 'owner' },
+        { userId: 'user2', role: 'member' },
       ],
       createdAt: now(),
     };
     expect(HouseholdSchema.parse(obj)).toMatchSnapshot();
   });
 
-  it("validates AgeMetric", () => {
+  it('validates AgeMetric', () => {
     const obj = {
       averageDaysHeld: 27,
       calculatedAt: now(),
@@ -88,7 +88,7 @@ describe("Gap-10 Domain Schemas", () => {
     expect(AgeMetricSchema.parse(obj)).toMatchSnapshot();
   });
 
-  it("validates PrivacySetting", () => {
+  it('validates PrivacySetting', () => {
     const obj = {
       hideAmounts: true,
       updatedAt: now(),
@@ -96,19 +96,19 @@ describe("Gap-10 Domain Schemas", () => {
     expect(PrivacySettingSchema.parse(obj)).toMatchSnapshot();
   });
 
-  it("validates AdvisorThread", () => {
+  it('validates AdvisorThread', () => {
     const obj = {
-      id: "thread1",
-      userId: "user1",
+      id: 'thread1',
+      userId: 'user1',
       messages: [
-        { id: "msg1", sender: "user", content: "Hi!", createdAt: now() },
+        { id: 'msg1', sender: 'user', content: 'Hi!', createdAt: now() },
       ],
       isEscalated: false,
     };
     expect(AdvisorThreadSchema.parse(obj)).toMatchSnapshot();
   });
 
-  it("validates SpendableCash", () => {
+  it('validates SpendableCash', () => {
     const obj = {
       amount: 1200,
       payday: now(),
@@ -117,13 +117,13 @@ describe("Gap-10 Domain Schemas", () => {
     expect(SpendableCashSchema.parse(obj)).toMatchSnapshot();
   });
 
-  it("validates HomeWidget", () => {
+  it('validates HomeWidget', () => {
     const obj = {
-      id: "widget1",
-      type: "balance",
+      id: 'widget1',
+      type: 'balance',
       position: 1,
       config: {},
     };
     expect(HomeWidgetSchema.parse(obj)).toMatchSnapshot();
   });
-}); 
+});

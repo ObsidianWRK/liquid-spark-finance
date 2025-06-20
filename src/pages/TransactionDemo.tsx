@@ -18,13 +18,13 @@ const TransactionDemo: React.FC = () => {
       date: '2025-06-14',
       time: '2:34 PM',
       status: 'completed' as const,
-      paymentMethod: 'Vueni Card •••• 4242'
+      paymentMethod: 'Vueni Card •••• 4242',
     },
     {
       id: '2',
       merchant: 'Apple Store',
       category: 'Electronics',
-      amount: -899.00,
+      amount: -899.0,
       date: '2025-06-14',
       time: '11:15 AM',
       status: 'completed' as const,
@@ -33,8 +33,8 @@ const TransactionDemo: React.FC = () => {
         trackingNumber: '1Z999AA1234567890',
         provider: 'UPS' as const,
         status: 'In Transit' as const,
-        estimatedDelivery: '2025-06-17'
-      }
+        estimatedDelivery: '2025-06-17',
+      },
     },
     {
       id: '3',
@@ -48,18 +48,18 @@ const TransactionDemo: React.FC = () => {
       shipping: {
         trackingNumber: '771234567890',
         provider: 'FedEx' as const,
-        status: 'Delivered' as const
-      }
+        status: 'Delivered' as const,
+      },
     },
     {
       id: '4',
       merchant: 'Salary Deposit',
       category: 'Income',
-      amount: 3250.00,
+      amount: 3250.0,
       date: '2025-06-13',
       time: '12:00 AM',
       status: 'completed' as const,
-      reference: 'PAYROLL-2025-06-13'
+      reference: 'PAYROLL-2025-06-13',
     },
     {
       id: '5',
@@ -74,8 +74,8 @@ const TransactionDemo: React.FC = () => {
         trackingNumber: '940010020079323456789',
         provider: 'USPS' as const,
         status: 'Out for Delivery' as const,
-        estimatedDelivery: '2025-06-14'
-      }
+        estimatedDelivery: '2025-06-14',
+      },
     },
     {
       id: '6',
@@ -85,7 +85,7 @@ const TransactionDemo: React.FC = () => {
       date: '2025-06-13',
       time: '8:15 AM',
       status: 'completed' as const,
-      paymentMethod: 'Vueni Card •••• 4242'
+      paymentMethod: 'Vueni Card •••• 4242',
     },
     {
       id: '7',
@@ -99,9 +99,9 @@ const TransactionDemo: React.FC = () => {
       shipping: {
         trackingNumber: '1Z12345E0123456789',
         provider: 'UPS' as const,
-        status: 'Delivered' as const
-      }
-    }
+        status: 'Delivered' as const,
+      },
+    },
   ];
 
   const ViewToggle = () => (
@@ -110,8 +110,8 @@ const TransactionDemo: React.FC = () => {
         onClick={() => setView('mobile')}
         className={cn(
           'px-4 py-2 rounded-lg flex items-center gap-2 transition-all',
-          view === 'mobile' 
-            ? 'bg-white/[0.1] text-white' 
+          view === 'mobile'
+            ? 'bg-white/[0.1] text-white'
             : 'text-white/60 hover:text-white/80'
         )}
       >
@@ -122,8 +122,8 @@ const TransactionDemo: React.FC = () => {
         onClick={() => setView('tablet')}
         className={cn(
           'px-4 py-2 rounded-lg flex items-center gap-2 transition-all',
-          view === 'tablet' 
-            ? 'bg-white/[0.1] text-white' 
+          view === 'tablet'
+            ? 'bg-white/[0.1] text-white'
             : 'text-white/60 hover:text-white/80'
         )}
       >
@@ -134,8 +134,8 @@ const TransactionDemo: React.FC = () => {
         onClick={() => setView('desktop')}
         className={cn(
           'px-4 py-2 rounded-lg flex items-center gap-2 transition-all',
-          view === 'desktop' 
-            ? 'bg-white/[0.1] text-white' 
+          view === 'desktop'
+            ? 'bg-white/[0.1] text-white'
             : 'text-white/60 hover:text-white/80'
         )}
       >
@@ -162,12 +162,14 @@ const TransactionDemo: React.FC = () => {
         </div>
 
         {/* Device Frame */}
-        <div className={cn(
-          'mx-auto transition-all duration-500',
-          view === 'mobile' && 'max-w-[390px]',
-          view === 'tablet' && 'max-w-[768px]',
-          view === 'desktop' && 'max-w-full'
-        )}>
+        <div
+          className={cn(
+            'mx-auto transition-all duration-500',
+            view === 'mobile' && 'max-w-[390px]',
+            view === 'tablet' && 'max-w-[768px]',
+            view === 'desktop' && 'max-w-full'
+          )}
+        >
           {/* Mobile View */}
           {view === 'mobile' && (
             <div className="relative">
@@ -192,20 +194,20 @@ const TransactionDemo: React.FC = () => {
             <div className="bg-gray-900 rounded-2xl p-8 shadow-2xl">
               <div className="bg-black rounded-xl overflow-hidden">
                 <VueniUnifiedTransactionList
-                                      transactions={transactions.map(t => ({
+                  transactions={transactions.map((t) => ({
                     id: t.id,
                     date: t.date,
                     description: t.merchant,
                     amount: Math.abs(t.amount),
                     category: t.category.toLowerCase(),
-                    type: t.amount < 0 ? 'expense' : 'income' as const,
+                    type: t.amount < 0 ? 'expense' : ('income' as const),
                     merchant: t.merchant,
                     status: t.status,
                     scores: {
                       health: Math.floor(Math.random() * 100),
                       eco: Math.floor(Math.random() * 100),
                       financial: Math.floor(Math.random() * 100),
-                    }
+                    },
                   }))}
                   variant="polished"
                   currency="USD"
@@ -215,7 +217,9 @@ const TransactionDemo: React.FC = () => {
                     searchable: true,
                     filterable: true,
                   }}
-                  onTransactionClick={(t) => {/* Transaction selected */}}
+                  onTransactionClick={(t) => {
+                    /* Transaction selected */
+                  }}
                 />
               </div>
             </div>
@@ -229,34 +233,43 @@ const TransactionDemo: React.FC = () => {
 
         {/* Feature Highlights */}
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 md:gap-6 mt-8 sm:mt-10 md:mt-12">
-          <div className="p-4 sm:p-5 md:p-6 bg-white/[0.02] rounded-xl border border-white/[0.08] 
-                          card-hover">
+          <div
+            className="p-4 sm:p-5 md:p-6 bg-white/[0.02] rounded-xl border border-white/[0.08] 
+                          card-hover"
+          >
             <h3 className="text-base sm:text-lg font-semibold text-white mb-2">
               Clean Design
             </h3>
             <p className="text-white/60 text-sm sm:text-base">
-              Minimal visual noise with focus on content. Every pixel serves a purpose.
+              Minimal visual noise with focus on content. Every pixel serves a
+              purpose.
             </p>
           </div>
-          
-          <div className="p-4 sm:p-5 md:p-6 bg-white/[0.02] rounded-xl border border-white/[0.08]
-                          card-hover">
+
+          <div
+            className="p-4 sm:p-5 md:p-6 bg-white/[0.02] rounded-xl border border-white/[0.08]
+                          card-hover"
+          >
             <h3 className="text-base sm:text-lg font-semibold text-white mb-2">
               Smart UX
             </h3>
             <p className="text-white/60 text-sm sm:text-base">
-              Inline shipping tracking, smart date formatting, and contextual information.
+              Inline shipping tracking, smart date formatting, and contextual
+              information.
             </p>
           </div>
-          
-          <div className="p-4 sm:p-5 md:p-6 bg-white/[0.02] rounded-xl border border-white/[0.08]
+
+          <div
+            className="p-4 sm:p-5 md:p-6 bg-white/[0.02] rounded-xl border border-white/[0.08]
                           card-hover
-                          sm:col-span-2 lg:col-span-1">
+                          sm:col-span-2 lg:col-span-1"
+          >
             <h3 className="text-base sm:text-lg font-semibold text-white mb-2">
               Performance
             </h3>
             <p className="text-white/60 text-sm sm:text-base">
-              Optimized for large datasets with virtualization support and minimal rerenders.
+              Optimized for large datasets with virtualization support and
+              minimal rerenders.
             </p>
           </div>
         </div>

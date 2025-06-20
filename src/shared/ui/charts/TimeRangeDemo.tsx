@@ -11,12 +11,13 @@ import { GraphBase } from './GraphBase';
 
 // Mock data for demonstration
 const generateMockData = (range: string) => {
-  const days = range === '1W' ? 7 : range === '1M' ? 30 : range === '3M' ? 90 : 365;
+  const days =
+    range === '1W' ? 7 : range === '1M' ? 30 : range === '3M' ? 90 : 365;
   const data = [];
   const now = new Date();
-  
+
   for (let i = days; i >= 0; i--) {
-    const date = new Date(now.getTime() - (i * 24 * 60 * 60 * 1000));
+    const date = new Date(now.getTime() - i * 24 * 60 * 60 * 1000);
     data.push({
       date: date.toISOString().split('T')[0],
       income: Math.random() * 5000 + 2000,
@@ -24,21 +25,17 @@ const generateMockData = (range: string) => {
       savings: Math.random() * 1000 + 500,
     });
   }
-  
+
   return data;
 };
 
 // Inner component that uses the context
 const TimeRangeDemo: React.FC = memo(() => {
-  const { 
-    selectedRange, 
-    setTimeRange, 
-    rangeLabel, 
-    getFilteredData 
-  } = useTimeRange({
-    stabilizeCallbacks: true,
-    memoizeData: true
-  });
+  const { selectedRange, setTimeRange, rangeLabel, getFilteredData } =
+    useTimeRange({
+      stabilizeCallbacks: true,
+      memoizeData: true,
+    });
 
   // Generate mock data and filter it
   const allData = generateMockData('1Y');
@@ -51,16 +48,22 @@ const TimeRangeDemo: React.FC = memo(() => {
           TimeRange Integration Demo
         </h1>
         <p className="text-white/70">
-          Current range: <span className="text-blue-400 font-medium">{rangeLabel}</span>
+          Current range:{' '}
+          <span className="text-blue-400 font-medium">{rangeLabel}</span>
         </p>
         <p className="text-white/70">
-          Data points: <span className="text-green-400 font-medium">{filteredData.length}</span>
+          Data points:{' '}
+          <span className="text-green-400 font-medium">
+            {filteredData.length}
+          </span>
         </p>
       </div>
 
       {/* Standalone TimeRangeToggle */}
       <div className="space-y-4">
-        <h2 className="text-lg font-semibold text-white">Standalone Time Range Toggle</h2>
+        <h2 className="text-lg font-semibold text-white">
+          Standalone Time Range Toggle
+        </h2>
         <div className="flex justify-center">
           <TimeRangeToggleRadix
             value={selectedRange}
@@ -74,7 +77,9 @@ const TimeRangeDemo: React.FC = memo(() => {
 
       {/* GraphBase with integrated TimeRange */}
       <div className="space-y-4">
-        <h2 className="text-lg font-semibold text-white">Chart with Integrated Time Range</h2>
+        <h2 className="text-lg font-semibold text-white">
+          Chart with Integrated Time Range
+        </h2>
         <GraphBase
           data={allData} // Pass unfiltered data - GraphBase will filter when useGlobalTimeRange=true
           type="line"
@@ -84,12 +89,12 @@ const TimeRangeDemo: React.FC = memo(() => {
           timeControls={{
             show: true,
             options: ['1W', '1M', '3M', '6M', '1Y', 'ALL'],
-            defaultRange: '1M'
+            defaultRange: '1M',
           }}
           series={[
             { dataKey: 'income', label: 'Income', color: '#32D74B' },
             { dataKey: 'spending', label: 'Spending', color: '#FF453A' },
-            { dataKey: 'savings', label: 'Savings', color: '#0A84FF' }
+            { dataKey: 'savings', label: 'Savings', color: '#0A84FF' },
           ]}
           animation={{ enable: true, duration: 600 }}
           accessibility={{ keyboardNavigation: true }}
@@ -106,31 +111,34 @@ const TimeRangeDemo: React.FC = memo(() => {
           timeControls={{ show: false }} // Hide controls on secondary charts
           series={[
             { dataKey: 'income', label: 'Income', color: '#32D74B' },
-            { dataKey: 'spending', label: 'Spending', color: '#FF453A' }
+            { dataKey: 'spending', label: 'Spending', color: '#FF453A' },
           ]}
         />
-        
+
         <GraphBase
           data={allData}
           type="bar"
           title="Savings Trend"
           useGlobalTimeRange={true}
           timeControls={{ show: false }}
-          series={[
-            { dataKey: 'savings', label: 'Savings', color: '#0A84FF' }
-          ]}
+          series={[{ dataKey: 'savings', label: 'Savings', color: '#0A84FF' }]}
         />
       </div>
 
       {/* Debug information */}
       <div className="mt-8 p-4 bg-white/5 rounded-lg border border-white/10">
-        <h3 className="text-sm font-medium text-white mb-2">Debug Information</h3>
+        <h3 className="text-sm font-medium text-white mb-2">
+          Debug Information
+        </h3>
         <div className="text-xs text-white/60 space-y-1">
           <div>Selected Range: {selectedRange}</div>
           <div>Range Label: {rangeLabel}</div>
           <div>Total Data Points: {allData.length}</div>
           <div>Filtered Data Points: {filteredData.length}</div>
-          <div>Filter Percentage: {((filteredData.length / allData.length) * 100).toFixed(1)}%</div>
+          <div>
+            Filter Percentage:{' '}
+            {((filteredData.length / allData.length) * 100).toFixed(1)}%
+          </div>
         </div>
       </div>
     </div>

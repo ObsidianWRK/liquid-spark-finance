@@ -8,7 +8,7 @@ import {
   formatLargeNumber,
   formatFinancialScore,
   safeRatio,
-  formatPercent
+  formatPercent,
 } from '@/shared/utils/formatters';
 
 describe('Formatter Functions', () => {
@@ -102,19 +102,23 @@ describe('Formatter Functions', () => {
     });
 
     test('formats amounts with cents when needed', () => {
-      expect(formatCurrency(12450.50)).toBe('$12,450.50');
+      expect(formatCurrency(12450.5)).toBe('$12,450.50');
       expect(formatCurrency(99.99)).toBe('$99.99');
-      expect(formatCurrency(0.50)).toBe('$0.50');
+      expect(formatCurrency(0.5)).toBe('$0.50');
     });
 
     test('respects decimal option', () => {
-      expect(formatCurrency(12450.50, { decimals: 0 })).toBe('$12,450');
+      expect(formatCurrency(12450.5, { decimals: 0 })).toBe('$12,450');
       expect(formatCurrency(12450, { decimals: 2 })).toBe('$12,450.00');
     });
 
     test('handles different currencies', () => {
-      expect(formatCurrency(1000, { currency: 'EUR', locale: 'en-US' })).toBe('€1,000');
-      expect(formatCurrency(1000, { currency: 'GBP', locale: 'en-US' })).toBe('£1,000');
+      expect(formatCurrency(1000, { currency: 'EUR', locale: 'en-US' })).toBe(
+        '€1,000'
+      );
+      expect(formatCurrency(1000, { currency: 'GBP', locale: 'en-US' })).toBe(
+        '£1,000'
+      );
     });
 
     test('handles negative values', () => {
@@ -264,7 +268,7 @@ describe('Formatter Functions', () => {
       test('should clamp invalid precision values', () => {
         // @ts-expect-error Testing invalid precision values
         expect(formatScore(79.374, -1)).toBe('79'); // Clamped to 0
-        // @ts-expect-error Testing invalid precision values  
+        // @ts-expect-error Testing invalid precision values
         expect(formatScore(79.374, 5)).toBe('79.37'); // Clamped to 2
       });
     });
@@ -274,7 +278,7 @@ describe('Formatter Functions', () => {
         // German locale uses comma as decimal separator
         expect(formatScore(79.34, 2, 'de-DE')).toBe('79,34');
         expect(formatScore(79.3, 1, 'de-DE')).toBe('79,3');
-        
+
         // French locale
         expect(formatScore(79.34, 2, 'fr-FR')).toBe('79,34');
       });
@@ -309,9 +313,10 @@ describe('Formatter Functions', () => {
 
       test('should handle weighted financial score calculations', () => {
         // Simulating complex weighted calculations
-        const complexScore = 79.37449477564985 * 0.4 + 82.15 * 0.3 + 76.23 * 0.3;
+        const complexScore =
+          79.37449477564985 * 0.4 + 82.15 * 0.3 + 76.23 * 0.3;
         expect(formatScore(complexScore)).toBe('79'); // Clean integer
       });
     });
   });
-}); 
+});

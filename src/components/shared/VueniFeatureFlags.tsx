@@ -1,4 +1,10 @@
-import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
+import React, {
+  createContext,
+  useContext,
+  useState,
+  useEffect,
+  ReactNode,
+} from 'react';
 import { TransactionVariant } from './VueniUnifiedTransactionList';
 import { InsightsVariant } from '@/features/insights/components/UnifiedInsightsPage';
 
@@ -7,7 +13,7 @@ export interface FeatureFlags {
   // Component variants
   transactionListVariant: TransactionVariant;
   insightsPageVariant: InsightsVariant;
-  
+
   // Feature toggles
   enableAdvancedScoring: boolean;
   enableRealTimeUpdates: boolean;
@@ -16,19 +22,19 @@ export interface FeatureFlags {
   enableExperimentalFeatures: boolean;
   enablePerformanceMode: boolean;
   enableDebugMode: boolean;
-  
+
   // UI preferences
   compactMode: boolean;
   showScoreCircles: boolean;
   showCategoryIcons: boolean;
   enableDarkMode: boolean;
   enableGlassEffects: boolean;
-  
+
   // Data and privacy
   enableDataExport: boolean;
   enableOfflineMode: boolean;
   enableAnalytics: boolean;
-  
+
   // Performance settings
   maxTransactionsPerPage: number;
   enableVirtualScrolling: boolean;
@@ -41,7 +47,7 @@ const defaultFeatureFlags: FeatureFlags = {
   // Component variants
   transactionListVariant: 'default',
   insightsPageVariant: 'standard',
-  
+
   // Feature toggles
   enableAdvancedScoring: true,
   enableRealTimeUpdates: false,
@@ -50,19 +56,19 @@ const defaultFeatureFlags: FeatureFlags = {
   enableExperimentalFeatures: false,
   enablePerformanceMode: false,
   enableDebugMode: false,
-  
+
   // UI preferences
   compactMode: false,
   showScoreCircles: true,
   showCategoryIcons: true,
   enableDarkMode: true,
   enableGlassEffects: true,
-  
+
   // Data and privacy
   enableDataExport: false,
   enableOfflineMode: false,
   enableAnalytics: false,
-  
+
   // Performance settings
   maxTransactionsPerPage: 50,
   enableVirtualScrolling: false,
@@ -126,14 +132,19 @@ export const featureFlagPresets = {
 // Feature flag context
 interface FeatureFlagContextType {
   flags: FeatureFlags;
-  updateFlag: <K extends keyof FeatureFlags>(key: K, value: FeatureFlags[K]) => void;
+  updateFlag: <K extends keyof FeatureFlags>(
+    key: K,
+    value: FeatureFlags[K]
+  ) => void;
   updateFlags: (newFlags: Partial<FeatureFlags>) => void;
   resetFlags: () => void;
   loadPreset: (preset: keyof typeof featureFlagPresets) => void;
   isFeatureEnabled: (feature: keyof FeatureFlags) => boolean;
 }
 
-const FeatureFlagContext = createContext<FeatureFlagContextType | undefined>(undefined);
+const FeatureFlagContext = createContext<FeatureFlagContextType | undefined>(
+  undefined
+);
 
 // Feature flag provider component
 interface FeatureFlagProviderProps {
@@ -154,15 +165,15 @@ export const FeatureFlagProvider: React.FC<FeatureFlagProviderProps> = ({
   // Initialize flags with preset, initial flags, and stored flags
   const [flags, setFlags] = useState<FeatureFlags>(() => {
     let baseFlags = defaultFeatureFlags;
-    
+
     // Apply preset if provided
     if (preset && featureFlagPresets[preset]) {
       baseFlags = { ...baseFlags, ...featureFlagPresets[preset] };
     }
-    
+
     // Apply initial flags
     baseFlags = { ...baseFlags, ...initialFlags };
-    
+
     // Load from storage if enabled
     if (persistToStorage && typeof window !== 'undefined') {
       try {
@@ -175,7 +186,7 @@ export const FeatureFlagProvider: React.FC<FeatureFlagProviderProps> = ({
         console.warn('Failed to load feature flags from storage:', error);
       }
     }
-    
+
     return baseFlags;
   });
 
@@ -190,12 +201,15 @@ export const FeatureFlagProvider: React.FC<FeatureFlagProviderProps> = ({
     }
   }, [flags, persistToStorage, storageKey]);
 
-  const updateFlag = <K extends keyof FeatureFlags>(key: K, value: FeatureFlags[K]) => {
-    setFlags(prev => ({ ...prev, [key]: value }));
+  const updateFlag = <K extends keyof FeatureFlags>(
+    key: K,
+    value: FeatureFlags[K]
+  ) => {
+    setFlags((prev) => ({ ...prev, [key]: value }));
   };
 
   const updateFlags = (newFlags: Partial<FeatureFlags>) => {
-    setFlags(prev => ({ ...prev, ...newFlags }));
+    setFlags((prev) => ({ ...prev, ...newFlags }));
   };
 
   const resetFlags = () => {
@@ -204,7 +218,7 @@ export const FeatureFlagProvider: React.FC<FeatureFlagProviderProps> = ({
 
   const loadPreset = (presetName: keyof typeof featureFlagPresets) => {
     const presetFlags = featureFlagPresets[presetName];
-    setFlags(prev => ({ ...prev, ...presetFlags }));
+    setFlags((prev) => ({ ...prev, ...presetFlags }));
   };
 
   const isFeatureEnabled = (feature: keyof FeatureFlags): boolean => {
@@ -232,7 +246,9 @@ export const FeatureFlagProvider: React.FC<FeatureFlagProviderProps> = ({
 export const useFeatureFlags = (): FeatureFlagContextType => {
   const context = useContext(FeatureFlagContext);
   if (context === undefined) {
-    throw new Error('useFeatureFlags must be used within a FeatureFlagProvider');
+    throw new Error(
+      'useFeatureFlags must be used within a FeatureFlagProvider'
+    );
   }
   return context;
 };
@@ -274,7 +290,7 @@ export const FeatureFlagDebugPanel: React.FC = () => {
   return (
     <div className="fixed bottom-4 right-4 bg-black/90 backdrop-blur-sm border border-white/20 rounded-lg p-4 max-w-sm max-h-96 overflow-y-auto z-50">
       <h3 className="text-white font-bold mb-3">Feature Flags Debug</h3>
-      
+
       <div className="space-y-2 mb-4">
         <button
           onClick={() => loadPreset('development')}
@@ -310,7 +326,9 @@ export const FeatureFlagDebugPanel: React.FC = () => {
               <input
                 type="checkbox"
                 checked={value}
-                onChange={(e) => updateFlag(key as keyof FeatureFlags, e.target.checked as any)}
+                onChange={(e) =>
+                  updateFlag(key as keyof FeatureFlags, e.target.checked as any)
+                }
                 className="ml-2"
               />
             ) : (
@@ -333,17 +351,20 @@ export function withFeatureFlag<P extends object>(
 ) {
   return function FeatureGatedComponent(props: P) {
     const { isFeatureEnabled } = useFeatureFlags();
-    
+
     if (!isFeatureEnabled(featureKey)) {
       return fallback ? React.createElement(fallback, props) : null;
     }
-    
+
     return React.createElement(Component, props);
   };
 }
 
 // Utility function to check feature flags outside of React components
-export const checkFeatureFlag = (flags: FeatureFlags, feature: keyof FeatureFlags): boolean => {
+export const checkFeatureFlag = (
+  flags: FeatureFlags,
+  feature: keyof FeatureFlags
+): boolean => {
   const value = flags[feature];
   return typeof value === 'boolean' ? value : Boolean(value);
 };

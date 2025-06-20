@@ -1,5 +1,16 @@
 import React from 'react';
-import { Activity, Heart, Users, Utensils, Moon, Brain, Ear, Accessibility, Wind, Droplet } from 'lucide-react';
+import {
+  Activity,
+  Heart,
+  Users,
+  Utensils,
+  Moon,
+  Brain,
+  Ear,
+  Accessibility,
+  Wind,
+  Droplet,
+} from 'lucide-react';
 
 export interface HealthKitMetrics {
   // Physical Activity
@@ -9,7 +20,7 @@ export interface HealthKitMetrics {
   distanceWalkingRunning: number;
   flightsClimbed: number;
   exerciseTime: number;
-  
+
   // Body Measurements
   bodyMass: number;
   height: number;
@@ -17,7 +28,7 @@ export interface HealthKitMetrics {
   bodyFatPercentage: number;
   leanBodyMass: number;
   waistCircumference: number;
-  
+
   // Vital Signs
   heartRate: number;
   bloodPressureSystolic: number;
@@ -25,7 +36,7 @@ export interface HealthKitMetrics {
   respiratoryRate: number;
   bodyTemperature: number;
   oxygenSaturation: number;
-  
+
   // Nutrition
   dietaryWater: number;
   dietaryFiber: number;
@@ -35,31 +46,31 @@ export interface HealthKitMetrics {
   dietaryFat: number;
   dietarySugar: number;
   dietarySodium: number;
-  
+
   // Sleep
   sleepAnalysis: number;
   timeInBed: number;
   sleepEfficiency: number;
-  
+
   // Mindfulness
   mindfulMinutes: number;
   stressLevel: number;
-  
+
   // Reproductive Health
   menstrualFlow: number;
   ovulationTestResult: number;
-  
+
   // Lab Results
   bloodGlucose: number;
   cholesterolTotal: number;
   cholesterolLDL: number;
   cholesterolHDL: number;
-  
+
   // Hearing
   audioExposure: number;
   environmentalAudioExposure: number;
   headphoneAudioExposure: number;
-  
+
   // Mobility
   walkingAsymmetry: number;
   walkingDoubleSupportPercentage: number;
@@ -67,20 +78,20 @@ export interface HealthKitMetrics {
   stairAscentSpeed: number;
   stairDescentSpeed: number;
   walkingSpeed: number;
-  
+
   // Wheelchair Use
   wheelchairUse: number;
-  
+
   // Respiratory
   peakExpiratoryFlowRate: number;
   forcedExpiratoryVolume1: number;
-  
+
   // Symptoms
   symptomDiarrhea: number;
   symptomNausea: number;
   symptomHeadache: number;
   symptomFever: number;
-  
+
   // Other
   uvExposure: number;
   electrodermalActivity: number;
@@ -118,19 +129,51 @@ export interface WellnessCategory {
   }>;
 }
 
-export const getWellnessCategories = (healthKitData: Partial<HealthKitMetrics>): WellnessCategory[] => [
+export const getWellnessCategories = (
+  healthKitData: Partial<HealthKitMetrics>
+): WellnessCategory[] => [
   {
     id: 'activity',
     name: 'Physical Activity',
     iconName: 'Activity',
     color: '#ef4444',
     metrics: [
-      { key: 'stepCount', label: 'Steps', value: healthKitData.stepCount || 8542, unit: 'steps', target: 10000 },
-      { key: 'activeEnergyBurned', label: 'Active Calories', value: healthKitData.activeEnergyBurned || 387, unit: 'cal', target: 500 },
-      { key: 'exerciseTime', label: 'Exercise Time', value: healthKitData.exerciseTime || 45, unit: 'min', target: 60 },
-      { key: 'distanceWalkingRunning', label: 'Distance', value: healthKitData.distanceWalkingRunning || 6.2, unit: 'km', target: 8 },
-      { key: 'flightsClimbed', label: 'Flights Climbed', value: healthKitData.flightsClimbed || 12, unit: 'flights', target: 15 }
-    ]
+      {
+        key: 'stepCount',
+        label: 'Steps',
+        value: healthKitData.stepCount || 8542,
+        unit: 'steps',
+        target: 10000,
+      },
+      {
+        key: 'activeEnergyBurned',
+        label: 'Active Calories',
+        value: healthKitData.activeEnergyBurned || 387,
+        unit: 'cal',
+        target: 500,
+      },
+      {
+        key: 'exerciseTime',
+        label: 'Exercise Time',
+        value: healthKitData.exerciseTime || 45,
+        unit: 'min',
+        target: 60,
+      },
+      {
+        key: 'distanceWalkingRunning',
+        label: 'Distance',
+        value: healthKitData.distanceWalkingRunning || 6.2,
+        unit: 'km',
+        target: 8,
+      },
+      {
+        key: 'flightsClimbed',
+        label: 'Flights Climbed',
+        value: healthKitData.flightsClimbed || 12,
+        unit: 'flights',
+        target: 15,
+      },
+    ],
   },
   {
     id: 'vitals',
@@ -138,12 +181,42 @@ export const getWellnessCategories = (healthKitData: Partial<HealthKitMetrics>):
     iconName: 'Heart',
     color: '#dc2626',
     metrics: [
-      { key: 'heartRate', label: 'Heart Rate', value: healthKitData.heartRate || 72, unit: 'bpm', target: 70 },
-      { key: 'bloodPressure', label: 'Blood Pressure', value: `${healthKitData.bloodPressureSystolic || 120}/${healthKitData.bloodPressureDiastolic || 80}`, unit: 'mmHg', target: '120/80' },
-      { key: 'respiratoryRate', label: 'Respiratory Rate', value: healthKitData.respiratoryRate || 16, unit: '/min', target: 16 },
-      { key: 'bodyTemperature', label: 'Body Temperature', value: healthKitData.bodyTemperature || 98.6, unit: '°F', target: 98.6 },
-      { key: 'oxygenSaturation', label: 'Oxygen Saturation', value: healthKitData.oxygenSaturation || 98, unit: '%', target: 98 }
-    ]
+      {
+        key: 'heartRate',
+        label: 'Heart Rate',
+        value: healthKitData.heartRate || 72,
+        unit: 'bpm',
+        target: 70,
+      },
+      {
+        key: 'bloodPressure',
+        label: 'Blood Pressure',
+        value: `${healthKitData.bloodPressureSystolic || 120}/${healthKitData.bloodPressureDiastolic || 80}`,
+        unit: 'mmHg',
+        target: '120/80',
+      },
+      {
+        key: 'respiratoryRate',
+        label: 'Respiratory Rate',
+        value: healthKitData.respiratoryRate || 16,
+        unit: '/min',
+        target: 16,
+      },
+      {
+        key: 'bodyTemperature',
+        label: 'Body Temperature',
+        value: healthKitData.bodyTemperature || 98.6,
+        unit: '°F',
+        target: 98.6,
+      },
+      {
+        key: 'oxygenSaturation',
+        label: 'Oxygen Saturation',
+        value: healthKitData.oxygenSaturation || 98,
+        unit: '%',
+        target: 98,
+      },
+    ],
   },
   {
     id: 'body',
@@ -151,12 +224,42 @@ export const getWellnessCategories = (healthKitData: Partial<HealthKitMetrics>):
     iconName: 'Users',
     color: '#7c3aed',
     metrics: [
-      { key: 'bodyMass', label: 'Weight', value: healthKitData.bodyMass || 165, unit: 'lbs', target: 160 },
-      { key: 'height', label: 'Height', value: healthKitData.height || 70, unit: 'inches', target: 70 },
-      { key: 'bmi', label: 'BMI', value: healthKitData.bmi || 23.6, unit: '', target: 22 },
-      { key: 'bodyFatPercentage', label: 'Body Fat', value: healthKitData.bodyFatPercentage || 18, unit: '%', target: 15 },
-      { key: 'waistCircumference', label: 'Waist', value: healthKitData.waistCircumference || 32, unit: 'inches', target: 30 }
-    ]
+      {
+        key: 'bodyMass',
+        label: 'Weight',
+        value: healthKitData.bodyMass || 165,
+        unit: 'lbs',
+        target: 160,
+      },
+      {
+        key: 'height',
+        label: 'Height',
+        value: healthKitData.height || 70,
+        unit: 'inches',
+        target: 70,
+      },
+      {
+        key: 'bmi',
+        label: 'BMI',
+        value: healthKitData.bmi || 23.6,
+        unit: '',
+        target: 22,
+      },
+      {
+        key: 'bodyFatPercentage',
+        label: 'Body Fat',
+        value: healthKitData.bodyFatPercentage || 18,
+        unit: '%',
+        target: 15,
+      },
+      {
+        key: 'waistCircumference',
+        label: 'Waist',
+        value: healthKitData.waistCircumference || 32,
+        unit: 'inches',
+        target: 30,
+      },
+    ],
   },
   {
     id: 'nutrition',
@@ -164,15 +267,63 @@ export const getWellnessCategories = (healthKitData: Partial<HealthKitMetrics>):
     iconName: 'Utensils',
     color: '#16a34a',
     metrics: [
-      { key: 'dietaryCalories', label: 'Calories', value: healthKitData.dietaryCalories || 2150, unit: 'cal', target: 2000 },
-      { key: 'dietaryProtein', label: 'Protein', value: healthKitData.dietaryProtein || 85, unit: 'g', target: 100 },
-      { key: 'dietaryCarbohydrates', label: 'Carbs', value: healthKitData.dietaryCarbohydrates || 250, unit: 'g', target: 225 },
-      { key: 'dietaryFat', label: 'Fat', value: healthKitData.dietaryFat || 75, unit: 'g', target: 65 },
-      { key: 'dietaryFiber', label: 'Fiber', value: healthKitData.dietaryFiber || 22, unit: 'g', target: 25 },
-      { key: 'dietaryWater', label: 'Water', value: healthKitData.dietaryWater || 2.1, unit: 'L', target: 2.5 },
-      { key: 'dietarySugar', label: 'Sugar', value: healthKitData.dietarySugar || 45, unit: 'g', target: 25 },
-      { key: 'dietarySodium', label: 'Sodium', value: healthKitData.dietarySodium || 2100, unit: 'mg', target: 2300 }
-    ]
+      {
+        key: 'dietaryCalories',
+        label: 'Calories',
+        value: healthKitData.dietaryCalories || 2150,
+        unit: 'cal',
+        target: 2000,
+      },
+      {
+        key: 'dietaryProtein',
+        label: 'Protein',
+        value: healthKitData.dietaryProtein || 85,
+        unit: 'g',
+        target: 100,
+      },
+      {
+        key: 'dietaryCarbohydrates',
+        label: 'Carbs',
+        value: healthKitData.dietaryCarbohydrates || 250,
+        unit: 'g',
+        target: 225,
+      },
+      {
+        key: 'dietaryFat',
+        label: 'Fat',
+        value: healthKitData.dietaryFat || 75,
+        unit: 'g',
+        target: 65,
+      },
+      {
+        key: 'dietaryFiber',
+        label: 'Fiber',
+        value: healthKitData.dietaryFiber || 22,
+        unit: 'g',
+        target: 25,
+      },
+      {
+        key: 'dietaryWater',
+        label: 'Water',
+        value: healthKitData.dietaryWater || 2.1,
+        unit: 'L',
+        target: 2.5,
+      },
+      {
+        key: 'dietarySugar',
+        label: 'Sugar',
+        value: healthKitData.dietarySugar || 45,
+        unit: 'g',
+        target: 25,
+      },
+      {
+        key: 'dietarySodium',
+        label: 'Sodium',
+        value: healthKitData.dietarySodium || 2100,
+        unit: 'mg',
+        target: 2300,
+      },
+    ],
   },
   {
     id: 'sleep',
@@ -180,10 +331,28 @@ export const getWellnessCategories = (healthKitData: Partial<HealthKitMetrics>):
     iconName: 'Moon',
     color: '#3b82f6',
     metrics: [
-      { key: 'sleepAnalysis', label: 'Sleep Duration', value: healthKitData.sleepAnalysis || 7.5, unit: 'hours', target: 8 },
-      { key: 'timeInBed', label: 'Time in Bed', value: healthKitData.timeInBed || 8.2, unit: 'hours', target: 8.5 },
-      { key: 'sleepEfficiency', label: 'Sleep Efficiency', value: healthKitData.sleepEfficiency || 89, unit: '%', target: 85 }
-    ]
+      {
+        key: 'sleepAnalysis',
+        label: 'Sleep Duration',
+        value: healthKitData.sleepAnalysis || 7.5,
+        unit: 'hours',
+        target: 8,
+      },
+      {
+        key: 'timeInBed',
+        label: 'Time in Bed',
+        value: healthKitData.timeInBed || 8.2,
+        unit: 'hours',
+        target: 8.5,
+      },
+      {
+        key: 'sleepEfficiency',
+        label: 'Sleep Efficiency',
+        value: healthKitData.sleepEfficiency || 89,
+        unit: '%',
+        target: 85,
+      },
+    ],
   },
   {
     id: 'mindfulness',
@@ -191,9 +360,21 @@ export const getWellnessCategories = (healthKitData: Partial<HealthKitMetrics>):
     iconName: 'Brain',
     color: '#8b5cf6',
     metrics: [
-      { key: 'mindfulMinutes', label: 'Mindful Minutes', value: healthKitData.mindfulMinutes || 15, unit: 'min', target: 20 },
-      { key: 'stressLevel', label: 'Stress Level', value: healthKitData.stressLevel || 3, unit: '/10', target: 2 }
-    ]
+      {
+        key: 'mindfulMinutes',
+        label: 'Mindful Minutes',
+        value: healthKitData.mindfulMinutes || 15,
+        unit: 'min',
+        target: 20,
+      },
+      {
+        key: 'stressLevel',
+        label: 'Stress Level',
+        value: healthKitData.stressLevel || 3,
+        unit: '/10',
+        target: 2,
+      },
+    ],
   },
   {
     id: 'hearing',
@@ -201,9 +382,21 @@ export const getWellnessCategories = (healthKitData: Partial<HealthKitMetrics>):
     iconName: 'Ear',
     color: '#f59e0b',
     metrics: [
-      { key: 'audioExposure', label: 'Audio Exposure', value: healthKitData.audioExposure || 75, unit: 'dB', target: 70 },
-      { key: 'headphoneAudioExposure', label: 'Headphone Exposure', value: healthKitData.headphoneAudioExposure || 68, unit: 'dB', target: 60 }
-    ]
+      {
+        key: 'audioExposure',
+        label: 'Audio Exposure',
+        value: healthKitData.audioExposure || 75,
+        unit: 'dB',
+        target: 70,
+      },
+      {
+        key: 'headphoneAudioExposure',
+        label: 'Headphone Exposure',
+        value: healthKitData.headphoneAudioExposure || 68,
+        unit: 'dB',
+        target: 60,
+      },
+    ],
   },
   {
     id: 'mobility',
@@ -211,11 +404,35 @@ export const getWellnessCategories = (healthKitData: Partial<HealthKitMetrics>):
     iconName: 'Accessibility',
     color: '#06b6d4',
     metrics: [
-      { key: 'walkingSpeed', label: 'Walking Speed', value: healthKitData.walkingSpeed || 1.2, unit: 'm/s', target: 1.3 },
-      { key: 'walkingAsymmetry', label: 'Walking Asymmetry', value: healthKitData.walkingAsymmetry || 2.1, unit: '%', target: 2.0 },
-      { key: 'sixMinuteWalkTestDistance', label: '6-Min Walk Test', value: healthKitData.sixMinuteWalkTestDistance || 550, unit: 'm', target: 600 },
-      { key: 'stairAscentSpeed', label: 'Stair Ascent Speed', value: healthKitData.stairAscentSpeed || 0.8, unit: 'm/s', target: 1.0 }
-    ]
+      {
+        key: 'walkingSpeed',
+        label: 'Walking Speed',
+        value: healthKitData.walkingSpeed || 1.2,
+        unit: 'm/s',
+        target: 1.3,
+      },
+      {
+        key: 'walkingAsymmetry',
+        label: 'Walking Asymmetry',
+        value: healthKitData.walkingAsymmetry || 2.1,
+        unit: '%',
+        target: 2.0,
+      },
+      {
+        key: 'sixMinuteWalkTestDistance',
+        label: '6-Min Walk Test',
+        value: healthKitData.sixMinuteWalkTestDistance || 550,
+        unit: 'm',
+        target: 600,
+      },
+      {
+        key: 'stairAscentSpeed',
+        label: 'Stair Ascent Speed',
+        value: healthKitData.stairAscentSpeed || 0.8,
+        unit: 'm/s',
+        target: 1.0,
+      },
+    ],
   },
   {
     id: 'respiratory',
@@ -223,9 +440,21 @@ export const getWellnessCategories = (healthKitData: Partial<HealthKitMetrics>):
     iconName: 'Wind',
     color: '#84cc16',
     metrics: [
-      { key: 'peakExpiratoryFlowRate', label: 'Peak Flow Rate', value: healthKitData.peakExpiratoryFlowRate || 420, unit: 'L/min', target: 450 },
-      { key: 'forcedExpiratoryVolume1', label: 'FEV1', value: healthKitData.forcedExpiratoryVolume1 || 3.2, unit: 'L', target: 3.5 }
-    ]
+      {
+        key: 'peakExpiratoryFlowRate',
+        label: 'Peak Flow Rate',
+        value: healthKitData.peakExpiratoryFlowRate || 420,
+        unit: 'L/min',
+        target: 450,
+      },
+      {
+        key: 'forcedExpiratoryVolume1',
+        label: 'FEV1',
+        value: healthKitData.forcedExpiratoryVolume1 || 3.2,
+        unit: 'L',
+        target: 3.5,
+      },
+    ],
   },
   {
     id: 'reproductive',
@@ -233,9 +462,21 @@ export const getWellnessCategories = (healthKitData: Partial<HealthKitMetrics>):
     iconName: 'Heart',
     color: '#ec4899',
     metrics: [
-      { key: 'menstrualFlow', label: 'Menstrual Flow', value: healthKitData.menstrualFlow || 2, unit: '/5', target: 2 },
-      { key: 'ovulationTestResult', label: 'Ovulation Test', value: healthKitData.ovulationTestResult || 1, unit: '', target: 1 }
-    ]
+      {
+        key: 'menstrualFlow',
+        label: 'Menstrual Flow',
+        value: healthKitData.menstrualFlow || 2,
+        unit: '/5',
+        target: 2,
+      },
+      {
+        key: 'ovulationTestResult',
+        label: 'Ovulation Test',
+        value: healthKitData.ovulationTestResult || 1,
+        unit: '',
+        target: 1,
+      },
+    ],
   },
   {
     id: 'lab',
@@ -243,12 +484,36 @@ export const getWellnessCategories = (healthKitData: Partial<HealthKitMetrics>):
     iconName: 'Droplet',
     color: '#ef4444',
     metrics: [
-      { key: 'bloodGlucose', label: 'Blood Glucose', value: healthKitData.bloodGlucose || 95, unit: 'mg/dL', target: 100 },
-      { key: 'cholesterolTotal', label: 'Total Cholesterol', value: healthKitData.cholesterolTotal || 180, unit: 'mg/dL', target: 200 },
-      { key: 'cholesterolLDL', label: 'LDL Cholesterol', value: healthKitData.cholesterolLDL || 110, unit: 'mg/dL', target: 100 },
-      { key: 'cholesterolHDL', label: 'HDL Cholesterol', value: healthKitData.cholesterolHDL || 55, unit: 'mg/dL', target: 60 }
-    ]
-  }
+      {
+        key: 'bloodGlucose',
+        label: 'Blood Glucose',
+        value: healthKitData.bloodGlucose || 95,
+        unit: 'mg/dL',
+        target: 100,
+      },
+      {
+        key: 'cholesterolTotal',
+        label: 'Total Cholesterol',
+        value: healthKitData.cholesterolTotal || 180,
+        unit: 'mg/dL',
+        target: 200,
+      },
+      {
+        key: 'cholesterolLDL',
+        label: 'LDL Cholesterol',
+        value: healthKitData.cholesterolLDL || 110,
+        unit: 'mg/dL',
+        target: 100,
+      },
+      {
+        key: 'cholesterolHDL',
+        label: 'HDL Cholesterol',
+        value: healthKitData.cholesterolHDL || 55,
+        unit: 'mg/dL',
+        target: 60,
+      },
+    ],
+  },
 ];
 
 export const getWellnessScoreColor = (value: number): string => {
@@ -315,7 +580,7 @@ export const getMockWellnessData = () => ({
     bloodGlucose: 95,
     cholesterolTotal: 180,
     cholesterolLDL: 110,
-    cholesterolHDL: 55
+    cholesterolHDL: 55,
   } as HealthKitMetrics,
   spendingCategories: {
     fitness: 125,
@@ -323,14 +588,14 @@ export const getMockWellnessData = () => ({
     healthcare: 450,
     wellness: 89,
     supplements: 76,
-    mentalHealth: 150
+    mentalHealth: 150,
   } as WellnessSpendingCategories,
   trends: {
     exercise: 'up',
     nutrition: 'stable',
     sleep: 'up',
-    stress: 'down'
-  } as WellnessTrends
+    stress: 'down',
+  } as WellnessTrends,
 });
 
 export default {
@@ -338,5 +603,5 @@ export default {
   getWellnessScoreColor,
   getWellnessScoreLabel,
   getProgress,
-  getMockWellnessData
+  getMockWellnessData,
 };

@@ -14,8 +14,8 @@
   .area-chart,
   .line-chart,
   .stacked-bar-chart,
-  [class*="chart-"],
-  [class*="graph-"] {
+  [class*='chart-'],
+  [class*='graph-'] {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
@@ -54,7 +54,7 @@
 /* Enhanced Focus Indicators - Fix contrast issues */
 .chart-component:focus,
 .chart-component:focus-visible {
-  outline: 3px solid #007AFF;
+  outline: 3px solid #007aff;
   outline-offset: 2px;
   background: rgba(0, 122, 255, 0.1);
   border: 2px solid rgba(0, 122, 255, 0.3);
@@ -63,17 +63,17 @@
 /* Time Range Toggle Focus Enhancement */
 .time-range-toggle button:focus,
 .time-range-toggle button:focus-visible {
-  outline: 2px solid #007AFF;
+  outline: 2px solid #007aff;
   outline-offset: 2px;
   background: rgba(0, 122, 255, 0.15) !important;
   border: 1px solid rgba(0, 122, 255, 0.4) !important;
 }
 
 /* Selected state with better contrast */
-.time-range-toggle button[aria-selected="true"] {
+.time-range-toggle button[aria-selected='true'] {
   background: rgba(255, 255, 255, 0.25) !important;
   border: 1px solid rgba(255, 255, 255, 0.4) !important;
-  color: #FFFFFF !important;
+  color: #ffffff !important;
 }
 
 /* High Contrast Mode Support */
@@ -126,14 +126,14 @@
   top: -40px;
   left: 6px;
   background: #000000;
-  color: #FFFFFF;
+  color: #ffffff;
   padding: 8px;
   text-decoration: none;
   border-radius: 4px;
   z-index: 1000;
   font-size: 14px;
   font-weight: 500;
-  border: 2px solid #007AFF;
+  border: 2px solid #007aff;
 }
 
 .skip-link:focus {
@@ -158,7 +158,7 @@
 .chart-data-table th {
   background: rgba(255, 255, 255, 0.1);
   font-weight: 600;
-  color: #FFFFFF;
+  color: #ffffff;
 }
 
 .chart-data-table td {
@@ -168,7 +168,7 @@
 .chart-data-table caption {
   padding: 8px 0;
   font-weight: 600;
-  color: #FFFFFF;
+  color: #ffffff;
   text-align: left;
 }
 
@@ -194,12 +194,12 @@
 }
 
 .chart-keyboard-navigation-active::before {
-  content: "Use arrow keys to navigate data points";
+  content: 'Use arrow keys to navigate data points';
   position: absolute;
   top: -30px;
   left: 0;
   background: rgba(0, 0, 0, 0.9);
-  color: #FFFFFF;
+  color: #ffffff;
   padding: 4px 8px;
   border-radius: 4px;
   font-size: 12px;
@@ -217,7 +217,7 @@
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5) !important;
 }
 
-.chart-tooltip[role="tooltip"] {
+.chart-tooltip[role='tooltip'] {
   z-index: 1000;
 }
 
@@ -241,8 +241,8 @@
   text-align: center;
 }
 
-.chart-error-state [role="img"],
-.chart-loading-state [role="img"] {
+.chart-error-state [role='img'],
+.chart-loading-state [role='img'] {
   width: 48px;
   height: 48px;
   margin-bottom: 1rem;
@@ -250,11 +250,11 @@
 
 /* Ensure proper color contrast for all states */
 .chart-component {
-  --focus-color: #007AFF;
+  --focus-color: #007aff;
   --focus-bg: rgba(0, 122, 255, 0.1);
-  --error-color: #FF453A;
-  --success-color: #32D74B;
-  --warning-color: #FF9F0A;
+  --error-color: #ff453a;
+  --success-color: #32d74b;
+  --warning-color: #ff9f0a;
 }
 
 /* Dark mode specific adjustments */
@@ -262,7 +262,7 @@
   .chart-data-table th {
     background: rgba(255, 255, 255, 0.15);
   }
-  
+
   .chart-data-table th,
   .chart-data-table td {
     border-color: rgba(255, 255, 255, 0.15);
@@ -272,19 +272,19 @@
 /* Light mode specific adjustments */
 @media (prefers-color-scheme: light) {
   .chart-component {
-    --focus-color: #007AFF;
+    --focus-color: #007aff;
     --focus-bg: rgba(0, 122, 255, 0.1);
   }
-  
+
   .chart-data-table th {
     background: rgba(0, 0, 0, 0.05);
     color: #000000;
   }
-  
+
   .chart-data-table td {
     color: rgba(0, 0, 0, 0.8);
   }
-  
+
   .chart-data-table th,
   .chart-data-table td {
     border-color: rgba(0, 0, 0, 0.1);

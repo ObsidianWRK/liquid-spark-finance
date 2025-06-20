@@ -1,16 +1,11 @@
 /**
  * Scroll Controller Context
- * 
+ *
  * Provides global scroll controller state management for the application.
  * This allows components to share scroll state and coordinate navigation visibility.
  */
 
-import React, {
-  createContext,
-  useContext,
-  useMemo,
-  ReactNode,
-} from 'react';
+import React, { createContext, useContext, useMemo, ReactNode } from 'react';
 import { useScrollController } from '../hooks/useScrollController';
 import type {
   ScrollControllerState,
@@ -43,11 +38,9 @@ const DEFAULT_GLOBAL_OPTIONS: Partial<ScrollControllerConfig> = {
   alwaysShowTop: 100,
 };
 
-export const ScrollControllerProvider: React.FC<ScrollControllerProviderProps> = ({
-  children,
-  options = {},
-  disabled = false,
-}) => {
+export const ScrollControllerProvider: React.FC<
+  ScrollControllerProviderProps
+> = ({ children, options = {}, disabled = false }) => {
   const mergedOptions = useMemo(
     () => ({ ...DEFAULT_GLOBAL_OPTIONS, ...options }),
     [options]
@@ -172,7 +165,9 @@ export const ScrollControllerDebugger: React.FC<DebuggerProps> = ({
       className={`fixed z-[9999] p-3 bg-black/80 text-white text-xs font-mono rounded-lg backdrop-blur-sm border border-white/20 max-w-xs ${positionClasses[position]} ${className}`}
       style={{ pointerEvents: 'none' }}
     >
-      <div className="mb-2 font-semibold text-blue-300">Scroll Controller Debug</div>
+      <div className="mb-2 font-semibold text-blue-300">
+        Scroll Controller Debug
+      </div>
 
       <div className="space-y-1">
         <div>
@@ -210,7 +205,11 @@ export const ScrollControllerDebugger: React.FC<DebuggerProps> = ({
 
 export const useVirtualKeyboard = () => {
   // Basic detection using VisualViewport if available
-  if (typeof window !== 'undefined' && 'visualViewport' in window && window.visualViewport) {
+  if (
+    typeof window !== 'undefined' &&
+    'visualViewport' in window &&
+    window.visualViewport
+  ) {
     const vv = window.visualViewport;
     const heightDiff = window.innerHeight - vv.height;
     return {
@@ -270,21 +269,18 @@ export interface WithScrollControllerProps {
 export function withScrollController<P extends WithScrollControllerProps>(
   Component: React.ComponentType<P>
 ): React.FC<Omit<P, keyof WithScrollControllerProps>> {
-  const WrappedComponent = (props: Omit<P, keyof WithScrollControllerProps>) => {
+  const WrappedComponent = (
+    props: Omit<P, keyof WithScrollControllerProps>
+  ) => {
     const scrollController = useScrollControllerContext();
-    
-    return (
-      <Component
-        {...(props as P)}
-        scrollController={scrollController}
-      />
-    );
+
+    return <Component {...(props as P)} scrollController={scrollController} />;
   };
-  
+
   WrappedComponent.displayName = `withScrollController(${Component.displayName || Component.name})`;
-  
+
   return WrappedComponent;
 }
 
 // Default export for convenience
-export default ScrollControllerProvider; 
+export default ScrollControllerProvider;

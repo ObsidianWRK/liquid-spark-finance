@@ -1,6 +1,6 @@
 /**
  * Viewport Feature Detection and Fallbacks
- * 
+ *
  * Provides comprehensive feature detection for viewport-related APIs:
  * - CSS env() support detection
  * - Visual Viewport API availability
@@ -21,7 +21,7 @@ interface FeatureTestResults {
     vmin: boolean;
     vmax: boolean;
     dvh: boolean; // Dynamic viewport height
-    lvh: boolean; // Large viewport height  
+    lvh: boolean; // Large viewport height
     svh: boolean; // Small viewport height
     dvw: boolean; // Dynamic viewport width
     lvw: boolean; // Large viewport width
@@ -61,13 +61,13 @@ const testCSSEnvSupport = (): boolean => {
   try {
     const testEl = document.createElement('div');
     testEl.style.paddingTop = 'env(safe-area-inset-top, 0px)';
-    
+
     // If the browser supports env(), the computed style will be different
     document.body.appendChild(testEl);
     const computedStyle = getComputedStyle(testEl);
     const paddingTop = computedStyle.paddingTop;
     document.body.removeChild(testEl);
-    
+
     // If env() is supported, paddingTop should be set (even if to '0px')
     return paddingTop !== '' && paddingTop !== 'auto';
   } catch {
@@ -81,9 +81,16 @@ const testCSSEnvSupport = (): boolean => {
 const testViewportUnitsSupport = () => {
   if (typeof window === 'undefined') {
     return {
-      vh: false, vw: false, vmin: false, vmax: false,
-      dvh: false, lvh: false, svh: false,
-      dvw: false, lvw: false, svw: false,
+      vh: false,
+      vw: false,
+      vmin: false,
+      vmax: false,
+      dvh: false,
+      lvh: false,
+      svh: false,
+      dvw: false,
+      lvw: false,
+      svw: false,
     };
   }
 
@@ -91,12 +98,12 @@ const testViewportUnitsSupport = () => {
     try {
       const testEl = document.createElement('div');
       testEl.style.height = `100${unit}`;
-      
+
       document.body.appendChild(testEl);
       const computedStyle = getComputedStyle(testEl);
       const height = computedStyle.height;
       document.body.removeChild(testEl);
-      
+
       return height !== '' && height !== 'auto' && !height.includes(unit);
     } catch {
       return false;
@@ -127,12 +134,12 @@ const testCSSCustomPropertiesSupport = (): boolean => {
     const testEl = document.createElement('div');
     testEl.style.setProperty('--test-prop', 'test-value');
     testEl.style.color = 'var(--test-prop)';
-    
+
     document.body.appendChild(testEl);
     const computedStyle = getComputedStyle(testEl);
     const color = computedStyle.color;
     document.body.removeChild(testEl);
-    
+
     return color === 'test-value';
   } catch {
     return false;
@@ -142,20 +149,23 @@ const testCSSCustomPropertiesSupport = (): boolean => {
 /**
  * Test backdrop-filter support
  */
-const testBackdropFilterSupport = (): { backdrop: boolean; webkit: boolean } => {
+const testBackdropFilterSupport = (): {
+  backdrop: boolean;
+  webkit: boolean;
+} => {
   if (typeof window === 'undefined') return { backdrop: false, webkit: false };
 
   try {
     const testEl = document.createElement('div');
-    
+
     // Test standard backdrop-filter
     testEl.style.backdropFilter = 'blur(10px)';
     const hasBackdrop = testEl.style.backdropFilter !== '';
-    
+
     // Test -webkit-backdrop-filter
     (testEl.style as any).webkitBackdropFilter = 'blur(10px)';
     const hasWebkit = (testEl.style as any).webkitBackdropFilter !== '';
-    
+
     return { backdrop: hasBackdrop, webkit: hasWebkit };
   } catch {
     return { backdrop: false, webkit: false };
@@ -180,7 +190,7 @@ const detectBrowserInfo = (): BrowserInfo => {
   }
 
   const userAgent = navigator.userAgent.toLowerCase();
-  
+
   // Detect browser
   let name = 'unknown';
   let version = '0';
@@ -214,11 +224,18 @@ const detectBrowserInfo = (): BrowserInfo => {
   else if (userAgent.includes('mac')) platform = 'macos';
   else if (userAgent.includes('linux')) platform = 'linux';
   else if (userAgent.includes('android')) platform = 'android';
-  else if (userAgent.includes('ios') || userAgent.includes('iphone') || userAgent.includes('ipad')) platform = 'ios';
+  else if (
+    userAgent.includes('ios') ||
+    userAgent.includes('iphone') ||
+    userAgent.includes('ipad')
+  )
+    platform = 'ios';
 
   // Detect device type
-  const isMobile = /mobile|android|iphone|ipod/.test(userAgent) && window.innerWidth <= 768;
-  const isTablet = /tablet|ipad/.test(userAgent) || (!isMobile && window.innerWidth <= 1024);
+  const isMobile =
+    /mobile|android|iphone|ipod/.test(userAgent) && window.innerWidth <= 768;
+  const isTablet =
+    /tablet|ipad/.test(userAgent) || (!isMobile && window.innerWidth <= 1024);
   const isDesktop = !isMobile && !isTablet;
 
   // Determine modern CSS support
@@ -256,9 +273,16 @@ export const runFeatureDetection = (): FeatureTestResults => {
       visualViewportAPI: false,
       screenOrientationAPI: false,
       cssViewportUnits: {
-        vh: false, vw: false, vmin: false, vmax: false,
-        dvh: false, lvh: false, svh: false,
-        dvw: false, lvw: false, svw: false,
+        vh: false,
+        vw: false,
+        vmin: false,
+        vmax: false,
+        dvh: false,
+        lvh: false,
+        svh: false,
+        dvw: false,
+        lvw: false,
+        svw: false,
       },
       cssCustomProperties: false,
       matchMediaSupport: false,
@@ -335,38 +359,42 @@ export const getViewportFallbacks = () => {
 
   return {
     // Safe area fallbacks
-    safeAreaTop: features.cssEnvSupport 
-      ? 'env(safe-area-inset-top, 0px)' 
-      : browser.platform === 'ios' ? '44px' : '0px',
-    
-    safeAreaBottom: features.cssEnvSupport 
-      ? 'env(safe-area-inset-bottom, 0px)' 
-      : browser.platform === 'ios' ? '34px' : '0px',
-    
-    safeAreaLeft: features.cssEnvSupport 
-      ? 'env(safe-area-inset-left, 0px)' 
+    safeAreaTop: features.cssEnvSupport
+      ? 'env(safe-area-inset-top, 0px)'
+      : browser.platform === 'ios'
+        ? '44px'
+        : '0px',
+
+    safeAreaBottom: features.cssEnvSupport
+      ? 'env(safe-area-inset-bottom, 0px)'
+      : browser.platform === 'ios'
+        ? '34px'
+        : '0px',
+
+    safeAreaLeft: features.cssEnvSupport
+      ? 'env(safe-area-inset-left, 0px)'
       : '0px',
-    
-    safeAreaRight: features.cssEnvSupport 
-      ? 'env(safe-area-inset-right, 0px)' 
+
+    safeAreaRight: features.cssEnvSupport
+      ? 'env(safe-area-inset-right, 0px)'
       : '0px',
 
     // Viewport height fallbacks
-    viewportHeight: features.cssViewportUnits.dvh 
-      ? '100dvh' 
-      : features.cssViewportUnits.vh 
-        ? '100vh' 
+    viewportHeight: features.cssViewportUnits.dvh
+      ? '100dvh'
+      : features.cssViewportUnits.vh
+        ? '100vh'
         : '100%',
 
     // Backdrop filter fallbacks
-    backdropFilter: features.backdropFilterSupport 
-      ? 'blur(20px)' 
-      : features.webkitBackdropFilter 
-        ? 'blur(20px)' 
+    backdropFilter: features.backdropFilterSupport
+      ? 'blur(20px)'
+      : features.webkitBackdropFilter
+        ? 'blur(20px)'
         : 'none',
 
     // Custom properties fallback
-    customProperty: (property: string, fallback: string) => 
+    customProperty: (property: string, fallback: string) =>
       features.cssCustomProperties ? `var(${property}, ${fallback})` : fallback,
   };
 };
@@ -395,8 +423,11 @@ export const generateResponsiveCSS = () => {
       background: rgba(255, 255, 255, 0.1);
       ${features.backdropFilterSupport ? 'backdrop-filter: blur(20px);' : ''}
       ${features.webkitBackdropFilter ? '-webkit-backdrop-filter: blur(20px);' : ''}
-      ${!features.backdropFilterSupport && !features.webkitBackdropFilter ? 
-        'background: rgba(255, 255, 255, 0.2);' : ''}
+      ${
+        !features.backdropFilterSupport && !features.webkitBackdropFilter
+          ? 'background: rgba(255, 255, 255, 0.2);'
+          : ''
+      }
     `,
   };
 };

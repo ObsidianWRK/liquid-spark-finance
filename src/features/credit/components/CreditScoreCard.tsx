@@ -1,5 +1,10 @@
 import React, { useState, useEffect, useMemo, useCallback } from 'react';
-import { TrendingUp, TrendingDown, AlertCircle, CheckCircle } from 'lucide-react';
+import {
+  TrendingUp,
+  TrendingDown,
+  AlertCircle,
+  CheckCircle,
+} from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import AnimatedCircularProgress from '../insights/components/AnimatedCircularProgress';
 import { creditScoreService } from '@/features/credit/api/creditScoreService';
@@ -27,23 +32,28 @@ const CreditScoreCard = React.memo(() => {
     loadCreditScore();
   }, []);
 
-  const getScoreColor = useMemo(() => (score: number) => {
-    if (score >= 800) return '#22c55e'; // Excellent
-    if (score >= 740) return '#84cc16'; // Very Good  
-    if (score >= 670) return '#eab308'; // Good
-    if (score >= 580) return '#f97316'; // Fair
-    return '#ef4444'; // Poor
-  }, []);
+  const getScoreColor = useMemo(
+    () => (score: number) => {
+      if (score >= 800) return '#22c55e'; // Excellent
+      if (score >= 740) return '#84cc16'; // Very Good
+      if (score >= 670) return '#eab308'; // Good
+      if (score >= 580) return '#f97316'; // Fair
+      return '#ef4444'; // Poor
+    },
+    []
+  );
 
   const getScoreDescription = useMemo(() => {
     const descriptions = {
-      'Excellent': 'You have excellent credit! Keep up the great work.',
-      'Very Good': 'Your credit is in great shape with room for small improvements.',
-      'Good': 'You have good credit with opportunities to improve.',
-      'Fair': 'Your credit is fair. Focus on improvement strategies.',
-      'Poor': 'Work on building your credit with consistent payments.'
+      Excellent: 'You have excellent credit! Keep up the great work.',
+      'Very Good':
+        'Your credit is in great shape with room for small improvements.',
+      Good: 'You have good credit with opportunities to improve.',
+      Fair: 'Your credit is fair. Focus on improvement strategies.',
+      Poor: 'Work on building your credit with consistent payments.',
     };
-    return (range: string) => descriptions[range as keyof typeof descriptions] || '';
+    return (range: string) =>
+      descriptions[range as keyof typeof descriptions] || '';
   }, []);
 
   const handleViewFullReport = useCallback(() => {
@@ -65,8 +75,12 @@ const CreditScoreCard = React.memo(() => {
       <div className="liquid-glass-card p-6">
         <div className="text-center">
           <AlertCircle className="w-12 h-12 text-orange-400 mx-auto mb-4" />
-          <h3 className="text-white text-lg font-semibold mb-2">Credit Score Unavailable</h3>
-          <p className="text-slate-400 text-sm">We're working to get your credit score. Check back soon!</p>
+          <h3 className="text-white text-lg font-semibold mb-2">
+            Credit Score Unavailable
+          </h3>
+          <p className="text-slate-400 text-sm">
+            We're working to get your credit score. Check back soon!
+          </p>
         </div>
       </div>
     );
@@ -76,7 +90,9 @@ const CreditScoreCard = React.memo(() => {
     <UniversalCard variant="glass" className="p-6" interactive>
       {/* Header */}
       <div className="flex items-center justify-between mb-6">
-        <h3 className="text-2xl font-black text-white tracking-wide">Credit Score</h3>
+        <h3 className="text-2xl font-black text-white tracking-wide">
+          Credit Score
+        </h3>
         <div className="text-xs text-slate-400 font-medium italic">
           Updated {new Date(creditScore.lastUpdated).toLocaleDateString()}
         </div>
@@ -93,8 +109,8 @@ const CreditScoreCard = React.memo(() => {
             color: getScoreColor(creditScore.score),
             trend: {
               direction: 'up',
-              percentage: 5
-            }
+              percentage: 5,
+            },
           }}
           variant="enhanced"
           size="lg"
@@ -103,7 +119,9 @@ const CreditScoreCard = React.memo(() => {
 
       {/* Quick Factors */}
       <div className="space-y-3 mb-6">
-        <h4 className="text-white font-black text-sm tracking-wide">Key Factors</h4>
+        <h4 className="text-white font-black text-sm tracking-wide">
+          Key Factors
+        </h4>
         {creditScore.factors.slice(0, 3).map((factor, index) => (
           <div key={index} className="flex items-center justify-between">
             <div className="flex items-center space-x-2">
@@ -124,7 +142,7 @@ const CreditScoreCard = React.memo(() => {
       {/* Optimized Action Button */}
       <UniversalCard
         variant="glass"
-                        className="card-hover-enhanced"
+        className="card-hover-enhanced"
         interactive
         onClick={handleViewFullReport}
       >
@@ -140,4 +158,4 @@ const CreditScoreCard = React.memo(() => {
 
 CreditScoreCard.displayName = 'CreditScoreCard';
 
-export default CreditScoreCard; 
+export default CreditScoreCard;

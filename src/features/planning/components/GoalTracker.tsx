@@ -14,7 +14,7 @@ import {
   ArrowUp,
   ArrowDown,
   Pause,
-  Play
+  Play,
 } from 'lucide-react';
 import { FinancialGoal, GoalCategory } from '@/types/financialPlanning';
 import { financialPlanningService } from '@/features/planning/api/financialPlanningService';
@@ -27,8 +27,12 @@ interface GoalTrackerProps {
 
 const GoalTracker = ({ familyId, compact = false }: GoalTrackerProps) => {
   const [goals, setGoals] = useState<FinancialGoal[]>([]);
-  const [filter, setFilter] = useState<'all' | 'active' | 'completed' | 'paused'>('active');
-  const [sortBy, setSortBy] = useState<'priority' | 'progress' | 'deadline' | 'amount'>('priority');
+  const [filter, setFilter] = useState<
+    'all' | 'active' | 'completed' | 'paused'
+  >('active');
+  const [sortBy, setSortBy] = useState<
+    'priority' | 'progress' | 'deadline' | 'amount'
+  >('priority');
   const [loading, setLoading] = useState(true);
   const [showNewGoal, setShowNewGoal] = useState(false);
 
@@ -67,12 +71,14 @@ const GoalTracker = ({ familyId, compact = false }: GoalTrackerProps) => {
           currentAmount: 18000,
           percentComplete: 60,
           monthlyContribution: 2000,
-          projectedCompletionDate: new Date(Date.now() + 6 * 30 * 24 * 60 * 60 * 1000),
-          onTrack: true
+          projectedCompletionDate: new Date(
+            Date.now() + 6 * 30 * 24 * 60 * 60 * 1000
+          ),
+          onTrack: true,
         },
         tags: ['safety', 'high-priority'],
         createdAt: new Date(Date.now() - 6 * 30 * 24 * 60 * 60 * 1000),
-        updatedAt: new Date()
+        updatedAt: new Date(),
       },
       {
         id: 'goal_2',
@@ -90,12 +96,14 @@ const GoalTracker = ({ familyId, compact = false }: GoalTrackerProps) => {
           currentAmount: 35000,
           percentComplete: 35,
           monthlyContribution: 2500,
-          projectedCompletionDate: new Date(Date.now() + 26 * 30 * 24 * 60 * 60 * 1000),
-          onTrack: true
+          projectedCompletionDate: new Date(
+            Date.now() + 26 * 30 * 24 * 60 * 60 * 1000
+          ),
+          onTrack: true,
         },
         tags: ['home', 'long-term'],
         createdAt: new Date(Date.now() - 14 * 30 * 24 * 60 * 60 * 1000),
-        updatedAt: new Date()
+        updatedAt: new Date(),
       },
       {
         id: 'goal_3',
@@ -113,12 +121,14 @@ const GoalTracker = ({ familyId, compact = false }: GoalTrackerProps) => {
           currentAmount: 6400,
           percentComplete: 43,
           monthlyContribution: 800,
-          projectedCompletionDate: new Date(Date.now() + 11 * 30 * 24 * 60 * 60 * 1000),
-          onTrack: true
+          projectedCompletionDate: new Date(
+            Date.now() + 11 * 30 * 24 * 60 * 60 * 1000
+          ),
+          onTrack: true,
         },
         tags: ['travel', 'family'],
         createdAt: new Date(Date.now() - 8 * 30 * 24 * 60 * 60 * 1000),
-        updatedAt: new Date()
+        updatedAt: new Date(),
       },
       {
         id: 'goal_4',
@@ -136,17 +146,19 @@ const GoalTracker = ({ familyId, compact = false }: GoalTrackerProps) => {
           currentAmount: 12000,
           percentComplete: 20,
           monthlyContribution: 0,
-          projectedCompletionDate: new Date(Date.now() + 40 * 30 * 24 * 60 * 60 * 1000),
-          onTrack: false
+          projectedCompletionDate: new Date(
+            Date.now() + 40 * 30 * 24 * 60 * 60 * 1000
+          ),
+          onTrack: false,
         },
         tags: ['transportation'],
         createdAt: new Date(Date.now() - 10 * 30 * 24 * 60 * 60 * 1000),
-        updatedAt: new Date()
-      }
+        updatedAt: new Date(),
+      },
     ];
   };
 
-  const filteredGoals = goals.filter(goal => {
+  const filteredGoals = goals.filter((goal) => {
     if (filter === 'all') return true;
     return goal.status === filter;
   });
@@ -171,7 +183,7 @@ const GoalTracker = ({ familyId, compact = false }: GoalTrackerProps) => {
       style: 'currency',
       currency: 'USD',
       minimumFractionDigits: 0,
-      maximumFractionDigits: 0
+      maximumFractionDigits: 0,
     }).format(amount);
   };
 
@@ -179,7 +191,7 @@ const GoalTracker = ({ familyId, compact = false }: GoalTrackerProps) => {
     return date.toLocaleDateString('en-US', {
       month: 'short',
       day: 'numeric',
-      year: 'numeric'
+      year: 'numeric',
     });
   };
 
@@ -209,7 +221,10 @@ const GoalTracker = ({ familyId, compact = false }: GoalTrackerProps) => {
     return (
       <div className="space-y-4">
         {[...Array(4)].map((_, i) => (
-          <div key={i} className="bg-white/[0.02] rounded-2xl border border-white/[0.08] p-4 animate-pulse">
+          <div
+            key={i}
+            className="bg-white/[0.02] rounded-2xl border border-white/[0.08] p-4 animate-pulse"
+          >
             <div className="flex items-center justify-between mb-3">
               <div className="h-5 bg-white/[0.05] rounded w-48"></div>
               <div className="h-4 bg-white/[0.05] rounded w-16"></div>
@@ -226,7 +241,7 @@ const GoalTracker = ({ familyId, compact = false }: GoalTrackerProps) => {
   }
 
   return (
-    <div className={cn("space-y-6", compact && "space-y-4")}>
+    <div className={cn('space-y-6', compact && 'space-y-4')}>
       {/* Header */}
       {!compact && (
         <div className="flex items-center justify-between">
@@ -258,10 +273,10 @@ const GoalTracker = ({ familyId, compact = false }: GoalTrackerProps) => {
               key={status}
               onClick={() => setFilter(status as any)}
               className={cn(
-                "px-3 py-1 rounded-lg text-sm transition-colors capitalize",
+                'px-3 py-1 rounded-lg text-sm transition-colors capitalize',
                 filter === status
-                  ? "bg-blue-500 text-white"
-                  : "text-white/60 hover:text-white hover:bg-white/[0.05]"
+                  ? 'bg-blue-500 text-white'
+                  : 'text-white/60 hover:text-white hover:bg-white/[0.05]'
               )}
             >
               {status}
@@ -286,12 +301,13 @@ const GoalTracker = ({ familyId, compact = false }: GoalTrackerProps) => {
         {sortedGoals.length === 0 ? (
           <div className="bg-white/[0.02] rounded-2xl border border-white/[0.08] p-8 text-center">
             <Target className="w-12 h-12 text-white/20 mx-auto mb-3" />
-            <h3 className="text-lg font-semibold text-white mb-2">No Goals Found</h3>
+            <h3 className="text-lg font-semibold text-white mb-2">
+              No Goals Found
+            </h3>
             <p className="text-white/60 mb-4">
-              {filter === 'all' 
+              {filter === 'all'
                 ? 'Start by creating your first financial goal'
-                : `No ${filter} goals found`
-              }
+                : `No ${filter} goals found`}
             </p>
             <button
               onClick={() => setShowNewGoal(true)}
@@ -303,7 +319,7 @@ const GoalTracker = ({ familyId, compact = false }: GoalTrackerProps) => {
         ) : (
           sortedGoals.map((goal) => {
             const StatusIcon = getStatusIcon(goal);
-            
+
             return (
               <div
                 key={goal.id}
@@ -312,15 +328,21 @@ const GoalTracker = ({ familyId, compact = false }: GoalTrackerProps) => {
                 <div className="flex items-start justify-between mb-3">
                   <div className="flex-1">
                     <div className="flex items-center gap-3">
-                      <h3 className="text-lg font-semibold text-white">{goal.title}</h3>
+                      <h3 className="text-lg font-semibold text-white">
+                        {goal.title}
+                      </h3>
                       <div className="flex items-center gap-1">
-                        <StatusIcon className={cn("w-4 h-4", getStatusColor(goal))} />
-                        <span className={cn("text-xs", getStatusColor(goal))}>
+                        <StatusIcon
+                          className={cn('w-4 h-4', getStatusColor(goal))}
+                        />
+                        <span className={cn('text-xs', getStatusColor(goal))}>
                           {goal.status}
                         </span>
                       </div>
                     </div>
-                    <p className="text-white/60 text-sm mt-1">{goal.description}</p>
+                    <p className="text-white/60 text-sm mt-1">
+                      {goal.description}
+                    </p>
                   </div>
 
                   <div className="flex items-center gap-2">
@@ -344,19 +366,25 @@ const GoalTracker = ({ familyId, compact = false }: GoalTrackerProps) => {
                 <div className="mb-3">
                   <div className="flex items-center justify-between text-sm mb-2">
                     <span className="text-white/80">
-                      {formatCurrency(goal.progress.currentAmount)} of {formatCurrency(goal.targetAmount)}
+                      {formatCurrency(goal.progress.currentAmount)} of{' '}
+                      {formatCurrency(goal.targetAmount)}
                     </span>
                     <span className="text-white/60">
                       {Math.round(goal.progress.percentComplete)}%
                     </span>
                   </div>
                   <div className="w-full bg-white/[0.05] rounded-full h-2">
-                    <div 
+                    <div
                       className={cn(
-                        "h-2 rounded-full transition-all duration-500 bg-gradient-to-r",
-                        getProgressColor(goal.progress.percentComplete, goal.progress.onTrack)
+                        'h-2 rounded-full transition-all duration-500 bg-gradient-to-r',
+                        getProgressColor(
+                          goal.progress.percentComplete,
+                          goal.progress.onTrack
+                        )
                       )}
-                      style={{ width: `${Math.min(goal.progress.percentComplete, 100)}%` }}
+                      style={{
+                        width: `${Math.min(goal.progress.percentComplete, 100)}%`,
+                      }}
                     />
                   </div>
                 </div>
@@ -378,13 +406,19 @@ const GoalTracker = ({ familyId, compact = false }: GoalTrackerProps) => {
                   <div>
                     <p className="text-white/60 text-xs">Priority</p>
                     <p className="font-semibold text-white">
-                      {goal.priority === 1 ? 'High' : goal.priority === 2 ? 'Medium' : 'Low'}
+                      {goal.priority === 1
+                        ? 'High'
+                        : goal.priority === 2
+                          ? 'Medium'
+                          : 'Low'}
                     </p>
                   </div>
                   <div>
                     <p className="text-white/60 text-xs">Remaining</p>
                     <p className="font-semibold text-white">
-                      {formatCurrency(goal.targetAmount - goal.progress.currentAmount)}
+                      {formatCurrency(
+                        goal.targetAmount - goal.progress.currentAmount
+                      )}
                     </p>
                   </div>
                 </div>
@@ -401,7 +435,7 @@ const GoalTracker = ({ familyId, compact = false }: GoalTrackerProps) => {
                       </span>
                     ))}
                   </div>
-                  
+
                   <div className="flex items-center gap-2">
                     <button className="text-xs px-2 py-1 bg-green-500/20 text-green-400 rounded hover:bg-green-500/30 transition-colors">
                       Add Funds
@@ -423,25 +457,41 @@ const GoalTracker = ({ familyId, compact = false }: GoalTrackerProps) => {
           <div className="grid grid-cols-4 gap-4 text-center">
             <div>
               <p className="text-2xl font-bold text-white">
-                {goals.filter(g => g.status === 'active').length}
+                {goals.filter((g) => g.status === 'active').length}
               </p>
               <p className="text-white/60 text-sm">Active Goals</p>
             </div>
             <div>
               <p className="text-2xl font-bold text-white">
-                {formatCurrency(goals.reduce((sum, goal) => sum + goal.progress.currentAmount, 0))}
+                {formatCurrency(
+                  goals.reduce(
+                    (sum, goal) => sum + goal.progress.currentAmount,
+                    0
+                  )
+                )}
               </p>
               <p className="text-white/60 text-sm">Total Saved</p>
             </div>
             <div>
               <p className="text-2xl font-bold text-white">
-                {formatCurrency(goals.reduce((sum, goal) => sum + (goal.monthlyContribution || 0), 0))}
+                {formatCurrency(
+                  goals.reduce(
+                    (sum, goal) => sum + (goal.monthlyContribution || 0),
+                    0
+                  )
+                )}
               </p>
               <p className="text-white/60 text-sm">Monthly Contributions</p>
             </div>
             <div>
               <p className="text-2xl font-bold text-white">
-                {Math.round(goals.reduce((sum, goal) => sum + goal.progress.percentComplete, 0) / goals.length)}%
+                {Math.round(
+                  goals.reduce(
+                    (sum, goal) => sum + goal.progress.percentComplete,
+                    0
+                  ) / goals.length
+                )}
+                %
               </p>
               <p className="text-white/60 text-sm">Avg Progress</p>
             </div>

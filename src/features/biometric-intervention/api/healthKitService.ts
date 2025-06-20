@@ -8,12 +8,12 @@
 
 export interface HealthMetrics {
   activeEnergyBurned: number; // kcal per day average
-  exerciseMinutes: number;    // minutes per day average
-  stepCount: number;          // steps per day average
-  sleepHours: number;         // hours per night average
-  restingHeartRate: number;   // bpm
-  vo2Max: number;             // ml/kg·min
-  mindfulMinutes: number;     // minutes per day average
+  exerciseMinutes: number; // minutes per day average
+  stepCount: number; // steps per day average
+  sleepHours: number; // hours per night average
+  restingHeartRate: number; // bpm
+  vo2Max: number; // ml/kg·min
+  mindfulMinutes: number; // minutes per day average
 }
 
 export interface HealthScoreBreakdown {
@@ -23,26 +23,42 @@ export interface HealthScoreBreakdown {
   totalScore: number;
 }
 
-const clamp = (value: number, min: number, max: number) => Math.min(max, Math.max(min, value));
+const clamp = (value: number, min: number, max: number) =>
+  Math.min(max, Math.max(min, value));
 
 /**
  * Convert raw HealthKit metrics into a 0-100 health score using a simple weighted model
  * loosely inspired by Oura / WHOOP methodologies.
  */
-export const calculateHealthScore = (metrics: HealthMetrics): HealthScoreBreakdown => {
+export const calculateHealthScore = (
+  metrics: HealthMetrics
+): HealthScoreBreakdown => {
   // Activity (40%) – active energy + exercise minutes + steps
   const activityTargetCalories = 450; // Apple Activity default move goal
-  const activityTargetExercise = 30;  // mins
+  const activityTargetExercise = 30; // mins
   const activityTargetSteps = 7500;
 
-  const activityCalScore = clamp((metrics.activeEnergyBurned / activityTargetCalories) * 100, 0, 100);
-  const activityExScore = clamp((metrics.exerciseMinutes / activityTargetExercise) * 100, 0, 100);
-  const activityStepScore = clamp((metrics.stepCount / activityTargetSteps) * 100, 0, 100);
-  const activityScore = (activityCalScore + activityExScore + activityStepScore) / 3;
+  const activityCalScore = clamp(
+    (metrics.activeEnergyBurned / activityTargetCalories) * 100,
+    0,
+    100
+  );
+  const activityExScore = clamp(
+    (metrics.exerciseMinutes / activityTargetExercise) * 100,
+    0,
+    100
+  );
+  const activityStepScore = clamp(
+    (metrics.stepCount / activityTargetSteps) * 100,
+    0,
+    100
+  );
+  const activityScore =
+    (activityCalScore + activityExScore + activityStepScore) / 3;
 
   // Cardio (30%) – resting heart rate (lower is better) + VO2Max (higher is better)
   const rhrScore = clamp(((80 - metrics.restingHeartRate) / 40) * 100, 0, 100); // 40-80 bpm range
-  const vo2Score = clamp(((metrics.vo2Max - 25) / 30) * 100, 0, 100);           // 25-55 range
+  const vo2Score = clamp(((metrics.vo2Max - 25) / 30) * 100, 0, 100); // 25-55 range
   const cardioScore = (rhrScore + vo2Score) / 2;
 
   // Recovery (30%) – sleep + mindful minutes
@@ -51,16 +67,14 @@ export const calculateHealthScore = (metrics: HealthMetrics): HealthScoreBreakdo
   const recoveryScore = (sleepScore + mindfulnessScore) / 2;
 
   const totalScore = Math.round(
-    activityScore * 0.4 +
-    cardioScore * 0.3 +
-    recoveryScore * 0.3
+    activityScore * 0.4 + cardioScore * 0.3 + recoveryScore * 0.3
   );
 
   return {
     activityScore: Math.round(activityScore),
     cardioScore: Math.round(cardioScore),
     recoveryScore: Math.round(recoveryScore),
-    totalScore
+    totalScore,
   };
 };
 
@@ -92,6 +106,6 @@ export const fetchHealthMetrics = async (): Promise<HealthMetrics> => {
     sleepHours: 7.4,
     restingHeartRate: 58,
     vo2Max: 42,
-    mindfulMinutes: 12
+    mindfulMinutes: 12,
   };
-}; 
+};

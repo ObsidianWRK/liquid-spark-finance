@@ -1,13 +1,13 @@
-import { create } from "zustand";
-import { widgetService } from "@/features/widgets/api/widgetService";
-import { HomeWidget } from "@/shared/types/shared";
+import { create } from 'zustand';
+import { widgetService } from '@/features/widgets/api/widgetService';
+import { HomeWidget } from '@/shared/types/shared';
 
 interface WidgetsState {
   widgets: HomeWidget[];
   loading: boolean;
   error?: string;
   refresh: () => Promise<void>;
-  create: (type: "balance" | "safe_to_spend") => Promise<void>;
+  create: (type: 'balance' | 'safe_to_spend') => Promise<void>;
   delete: (id: string) => Promise<void>;
 }
 
@@ -21,7 +21,7 @@ export const useWidgetsStore = create<WidgetsState>((set, get) => ({
       const widgets = await widgetService.listWidgets();
       set({ widgets, loading: false });
     } catch (err: any) {
-      set({ error: err.message ?? "Unknown", loading: false });
+      set({ error: err.message ?? 'Unknown', loading: false });
     }
   },
   create: async (type) => {
@@ -32,4 +32,4 @@ export const useWidgetsStore = create<WidgetsState>((set, get) => ({
     await widgetService.deleteWidget(id);
     await get().refresh();
   },
-})); 
+}));
