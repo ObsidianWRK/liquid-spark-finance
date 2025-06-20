@@ -1,6 +1,6 @@
 import React from "react";
-import { HomeWidget } from "@/types";
-import { formatCurrency } from "@/utils/formatters";
+import { HomeWidget } from "@/shared/types/shared";
+import { formatCurrency } from "@/shared/utils/formatters";
 import { DollarSign, Banknote, X } from "lucide-react";
 import { Button } from "@/shared/ui/button";
 import { useWidgetsStore } from "../store";

@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useSafeToSpendStore } from "../store";
 import { UniversalCard } from "@/shared/ui/UniversalCard";
-import { formatCurrency } from "@/utils/formatters";
+import { formatCurrency } from "@/shared/utils/formatters";
 import { DollarSign, Calendar } from "lucide-react";
 
 export const SafeToSpendCard: React.FC = () => {

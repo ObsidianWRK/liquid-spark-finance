@@ -1,6 +1,6 @@
 import React, { memo } from 'react';
 import { ChevronRight } from 'lucide-react';
-import { EnhancedGlassCard } from '@/shared/ui/EnhancedGlassCard';
+import EnhancedGlassCard from '@/shared/ui/EnhancedGlassCard';
 
 interface EnhancedMetricCardProps {
   title: string;

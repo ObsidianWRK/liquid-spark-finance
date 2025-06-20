@@ -1,6 +1,6 @@
 import { describe, it, expect } from "vitest";
 import { usePrivacyStore as store } from "@/features/privacy-hide-amounts/store";
-import { formatCurrency } from "@/utils/formatters";
+import { formatCurrency } from "@/shared/utils/formatters";
 
 describe("Privacy hide amounts", () => {
   it("masks currency when enabled", () => {

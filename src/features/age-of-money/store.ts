@@ -1,6 +1,6 @@
 import { create } from "zustand";
-import { ageMetricService } from "@/features/ageMetricService";
-import { AgeMetric } from "@/types";
+import { ageMetricService } from "@/features/age-of-money/api/ageMetricService";
+import { AgeMetric } from "@/shared/types/shared";
 
 interface AgeOfMoneyState {
   metric?: AgeMetric;

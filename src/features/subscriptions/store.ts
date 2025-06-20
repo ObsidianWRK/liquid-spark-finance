@@ -1,6 +1,6 @@
 import { create } from "zustand";
-import { subscriptionService } from "@/features/subscriptionService";
-import { RecurringCharge } from "@/types";
+import { subscriptionService } from "@/features/subscriptions/api/subscriptionService";
+import { RecurringCharge } from "@/shared/types/shared";
 
 interface SubscriptionsState {
   charges: RecurringCharge[];

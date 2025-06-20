@@ -1,6 +1,6 @@
 import React from 'react';
 import { cn } from '@/shared/lib/utils';
-import GlassCard from '../GlassCard';
+import GlassCard from '@/components/GlassCard';
 import LiquidGlass from './LiquidGlass';
 
 interface EnhancedGlassCardProps {

@@ -1,6 +1,6 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
-import { PrivacySetting } from "@/types";
+import { PrivacySetting } from "@/shared/types/shared";
 
 interface PrivacyState {
   setting: PrivacySetting;
