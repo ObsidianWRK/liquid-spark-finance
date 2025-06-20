@@ -212,7 +212,7 @@ const BudgetTracker = ({ familyId, className }: BudgetTrackerProps) => {
     <div className="space-y-6">
       {/* Budget Summary */}
       {budget && (
-        <div className="bg-white/[0.02] rounded-2xl border border-white/[0.08] p-6">
+        <div className="bg-white/[0.02] rounded-2xl border border-white/[0.08] p-6" data-testid="budget-card">
           <h3 className="text-xl font-bold text-white mb-6 flex items-center gap-3">
             <PieChart className="w-6 h-6 text-blue-400" />
             {budget.name}
@@ -263,7 +263,7 @@ const BudgetTracker = ({ familyId, className }: BudgetTrackerProps) => {
 
       {/* Top Categories */}
       {budget && budget.categories.length > 0 && (
-        <div className="bg-white/[0.02] rounded-2xl border border-white/[0.08] p-6">
+        <div className="bg-white/[0.02] rounded-2xl border border-white/[0.08] p-6" data-testid="budget-card">
           <h3 className="text-lg font-bold text-white mb-4 flex items-center gap-3">
             <BarChart3 className="w-5 h-5 text-blue-400" />
             Top Spending Categories
@@ -319,7 +319,7 @@ const BudgetTracker = ({ familyId, className }: BudgetTrackerProps) => {
 
       {/* Savings Goals */}
       {goals.length > 0 && (
-        <div className="bg-white/[0.02] rounded-2xl border border-white/[0.08] p-6">
+        <div className="bg-white/[0.02] rounded-2xl border border-white/[0.08] p-6" data-testid="budget-card">
           <h3 className="text-lg font-bold text-white mb-4 flex items-center gap-3">
             <Target className="w-5 h-5 text-green-400" />
             Savings Goals
@@ -382,6 +382,7 @@ const BudgetTracker = ({ familyId, className }: BudgetTrackerProps) => {
           <div
             key={category.id}
             className="bg-white/[0.02] rounded-2xl border border-white/[0.08] p-6 hover:bg-white/[0.03] transition-all duration-300"
+            data-testid="budget-card"
           >
             <div className="flex items-center justify-between mb-4">
               <div className="flex items-center gap-3">
@@ -472,6 +473,7 @@ const BudgetTracker = ({ familyId, className }: BudgetTrackerProps) => {
           <div
             key={goal.id}
             className="bg-white/[0.02] rounded-2xl border border-white/[0.08] p-6 hover:bg-white/[0.03] transition-all duration-300"
+            data-testid="budget-card"
           >
             <div className="flex items-center justify-between mb-4">
               <div className="flex items-center gap-3">

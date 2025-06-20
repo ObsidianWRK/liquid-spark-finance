@@ -100,7 +100,7 @@ const BudgetPlannerPage = () => {
       {/* Quick Stats */}
       {budget && (
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-          <div className="bg-white/[0.02] rounded-2xl border border-white/[0.08] p-6">
+          <div className="bg-white/[0.02] rounded-2xl border border-white/[0.08] p-6" data-testid="budget-card">
             <div className="flex items-center gap-3 mb-2">
               <BarChart3 className="w-5 h-5 text-blue-400" />
               <p className="text-white/60 text-sm">Monthly Budget</p>
@@ -108,7 +108,7 @@ const BudgetPlannerPage = () => {
             <p className="text-2xl font-bold text-white">{formatCurrency(budget.totalBudgeted)}</p>
           </div>
           
-          <div className="bg-white/[0.02] rounded-2xl border border-white/[0.08] p-6">
+          <div className="bg-white/[0.02] rounded-2xl border border-white/[0.08] p-6" data-testid="budget-card">
             <div className="flex items-center gap-3 mb-2">
               <TrendingUp className="w-5 h-5 text-red-400" />
               <p className="text-white/60 text-sm">Total Spent</p>
@@ -119,7 +119,7 @@ const BudgetPlannerPage = () => {
             </p>
           </div>
           
-          <div className="bg-white/[0.02] rounded-2xl border border-white/[0.08] p-6">
+          <div className="bg-white/[0.02] rounded-2xl border border-white/[0.08] p-6" data-testid="budget-card">
             <div className="flex items-center gap-3 mb-2">
               <Target className="w-5 h-5 text-green-400" />
               <p className="text-white/60 text-sm">Remaining</p>
@@ -130,7 +130,7 @@ const BudgetPlannerPage = () => {
             </p>
           </div>
           
-          <div className="bg-white/[0.02] rounded-2xl border border-white/[0.08] p-6">
+          <div className="bg-white/[0.02] rounded-2xl border border-white/[0.08] p-6" data-testid="budget-card">
             <div className="flex items-center gap-3 mb-2">
               <AlertCircle className="w-5 h-5 text-yellow-400" />
               <p className="text-white/60 text-sm">Active Goals</p>
