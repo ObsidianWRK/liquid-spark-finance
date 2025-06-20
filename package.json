@@ -128,6 +128,7 @@
     "autoprefixer": "^10.4.20",
     "axe-core": "^4.10.3",
     "critical": "^7.2.1",
+    "cssnano": "^6.1.2",
     "dompurify": "^3.2.6",
     "eslint": "^9.9.0",
     "eslint-plugin-import": "^2.31.0",

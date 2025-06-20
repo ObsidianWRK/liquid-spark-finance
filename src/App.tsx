@@ -20,7 +20,7 @@ const AccountOverview = React.lazy(() => import('./pages/AccountOverview'));
 
 // Loading component
 const LoadingSpinner = () => (
-  <div className="min-h-screen bg-gray-950 flex items-center justify-center">
+          <div className="min-h-screen bg-black flex items-center justify-center">
     <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-blue-400"></div>
   </div>
 );
@@ -126,7 +126,7 @@ function App() {
 
   return (
     <Router>
-      <div className="min-h-screen bg-gray-950 relative overflow-hidden">
+      <div className="min-h-screen bg-black relative overflow-hidden">
         {/* Global SVG Filters */}
         <LiquidGlassSVGFilters />
 
