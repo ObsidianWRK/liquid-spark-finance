@@ -1,0 +1,230 @@
+Unused files (193)
+accessibility-audit.js                                                   
+backups/20250617_181014/ConfigurableInsightsPage.tsx                     
+backups/20250617_181014/NewInsightsPage.tsx                              
+backups/20250617_181014/VueniUnifiedInsightsPage.tsx                     
+e2e/generate-ui-manifest.ts                                              
+scripts/generate-playwright-report.js                                    
+scripts/reproduce-analytics-crash.js                                     
+src/components/ai/ChatDrawer.tsx                                         
+src/components/ai/FinancialAIChat.tsx                                    
+src/components/examples/EnhancedEcoScore.tsx                             
+src/components/family/FamilyManagement.tsx                               
+src/components/layout/AppShell.tsx                                       
+src/components/QuickActions.tsx                                          
+src/components/shared/VueniConsolidationDemo.tsx                         
+src/components/TransactionList.tsx                                       
+src/components/wrapped/WrappedPage.tsx                                   
+src/context/index.ts                                                     
+src/features/accounts/components/AccountLinking.tsx                      
+src/features/accounts/components/AccountSkeleton.tsx                     
+src/features/accounts/components/AccountsOverview.tsx                    
+src/features/accounts/components/CleanAccountCard.tsx                    
+src/features/accounts/components/CompactAccountCard.tsx                  
+src/features/advisor-chat/api/aiFinancialService.ts                      
+src/features/biometric-intervention/components/BiometricMonitorCard.tsx  
+src/features/budget/components/SpendingBreakdownChart.tsx                
+src/features/credit/components/CreditEducation.tsx                       
+src/features/credit/components/CreditFactors.tsx                         
+src/features/credit/components/CreditScoreCard.tsx                       
+src/features/credit/components/CreditTips.tsx                            
+src/features/credit/components/ScoreHistory.tsx                          
+src/features/dashboard/components/health/index.ts                        
+src/features/dashboard/components/NetWorthSummary.tsx                    
+src/features/index.ts                                                    
+src/features/insights/components/BaseInsightsPage.tsx                    
+src/features/insights/components/components/EnhancedScoreCard.tsx        
+src/features/insights/components/components/RefinedMetricCard.tsx        
+src/features/insights/components/components/RefinedScoreCard.tsx         
+src/features/insights/components/components/RefinedTrendCard.tsx         
+src/features/insights/components/ConfigurableInsightsPage.tsx            
+src/features/insights/components/EcoScore.tsx                            
+src/features/insights/components/EnhancedInsightsPage.tsx                
+src/features/insights/components/HealthScore.tsx                         
+src/features/insights/components/InsightsPage.tsx                        
+src/features/insights/components/MetricCard.tsx                          
+src/features/insights/components/OptimizedRefinedInsightsPage.tsx        
+src/features/insights/components/RefinedInsightsPage.tsx                 
+src/features/insights/components/SimpleInsightsPage.tsx                  
+src/features/insights/components/UniversalScoreCard.tsx                  
+src/features/investments/components/PortfolioAllocationChart.tsx         
+src/features/planning/components/GoalTracker.tsx                         
+src/features/planning/components/RetirementPlanner.tsx                   
+src/features/savings/SavingsGoals.tsx                                    
+src/features/transactions/components/ScoreCircle.tsx                     
+src/features/transactions/components/ScoreCircles.tsx                    
+src/features/transactions/components/ShippingInfo.tsx                    
+src/features/transactions/components/TransactionAmount.tsx               
+src/features/transactions/components/TransactionMain.tsx                 
+src/features/transactions/components/TransactionManager.tsx              
+src/features/transactions/components/TransactionStatus.tsx               
+src/features/transactions/components/UnifiedTransactionList.tsx          
+src/pages/CalculatorsHub.tsx                                             
+src/pages/ChartDemo.tsx                                                  
+src/pages/CleanDashboard.tsx                                             
+src/pages/DropdownTestPage.tsx                                           
+src/pages/MenuBarDemo.tsx                                                
+src/services/mockAiService.ts                                            
+src/services/performanceService.ts                                       
+src/shared/components/ui/accordion.tsx                                   
+src/shared/components/ui/AccountTypeBadge.tsx                            
+src/shared/components/ui/alert-dialog.tsx                                
+src/shared/components/ui/alert.tsx                                       
+src/shared/components/ui/aspect-ratio.tsx                                
+src/shared/components/ui/avatar.tsx                                      
+src/shared/components/ui/BackHeader.tsx                                  
+src/shared/components/ui/badge.tsx                                       
+src/shared/components/ui/breadcrumb.tsx                                  
+src/shared/components/ui/button.tsx                                      
+src/shared/components/ui/calendar.tsx                                    
+src/shared/components/ui/card.tsx                                        
+src/shared/components/ui/CardShell.tsx                                   
+src/shared/components/ui/carousel.tsx                                    
+src/shared/components/ui/chart.tsx                                       
+src/shared/components/ui/checkbox.tsx                                    
+src/shared/components/ui/collapsible.tsx                                 
+src/shared/components/ui/command.tsx                                     
+src/shared/components/ui/context-menu.tsx                                
+src/shared/components/ui/dialog.tsx                                      
+src/shared/components/ui/drawer.tsx                                      
+src/shared/components/ui/dropdown-menu.tsx                               
+src/shared/components/ui/EnhancedGlassCard.tsx                           
+src/shared/components/ui/form.tsx                                        
+src/shared/components/ui/GlassSlider.tsx                                 
+src/shared/components/ui/GlobalGradientBackground.tsx                    
+src/shared/components/ui/hover-card.tsx                                  
+src/shared/components/ui/input-otp.tsx                                   
+src/shared/components/ui/input.tsx                                       
+src/shared/components/ui/label.tsx                                       
+src/shared/components/ui/lightweight-charts.tsx                          
+src/shared/components/ui/LiquidGlass.tsx                                 
+src/shared/components/ui/LiquidGlassSVGFilters.tsx                       
+src/shared/components/ui/menubar.tsx                                     
+src/shared/components/ui/navigation-menu.tsx                             
+src/shared/components/ui/NavPill.tsx                                     
+src/shared/components/ui/pagination.tsx                                  
+src/shared/components/ui/popover.tsx                                     
+src/shared/components/ui/progress.tsx                                    
+src/shared/components/ui/radio-group.tsx                                 
+src/shared/components/ui/resizable.tsx                                   
+src/shared/components/ui/scroll-area.tsx                                 
+src/shared/components/ui/select.tsx                                      
+src/shared/components/ui/separator.tsx                                   
+src/shared/components/ui/sheet.tsx                                       
+src/shared/components/ui/sidebar.tsx                                     
+src/shared/components/ui/SimpleGlassCard.tsx                             
+src/shared/components/ui/skeleton.tsx                                    
+src/shared/components/ui/slider.tsx                                      
+src/shared/components/ui/sonner.tsx                                      
+src/shared/components/ui/switch.tsx                                      
+src/shared/components/ui/table.tsx                                       
+src/shared/components/ui/tabs.tsx                                        
+src/shared/components/ui/textarea.tsx                                    
+src/shared/components/ui/toast.tsx                                       
+src/shared/components/ui/toaster.tsx                                     
+src/shared/components/ui/toggle-group.tsx                                
+src/shared/components/ui/toggle.tsx                                      
+src/shared/components/ui/tooltip.tsx                                     
+src/shared/components/ui/UnifiedCard.tsx                                 
+src/shared/components/ui/UniversalCard.original.tsx                      
+src/shared/components/ui/UniversalCard.tsx                               
+src/shared/components/ui/use-toast.ts                                    
+src/shared/config/security.ts                                            
+src/shared/hooks/index.ts                                                
+src/shared/hooks/use-main-thread-optimization.ts                         
+src/shared/hooks/useFinancialMetrics.ts                                  
+src/shared/hooks/usePerformanceOptimization.ts                           
+src/shared/index.ts                                                      
+src/shared/lib/chartLazyLoader.ts                                        
+src/shared/lib/VueniCacheManager.ts                                      
+src/shared/lib/VueniLazyImports.ts                                       
+src/shared/lib/VueniPerformanceMonitor.ts                                
+src/shared/lib/VueniSecureStorage.ts                                     
+src/shared/lib/VueniSessionManager.ts                                    
+src/shared/types/budget.ts                                               
+src/shared/types/budgets.ts                                              
+src/shared/types/family.ts                                               
+src/shared/types/savingsGoals.ts                                         
+src/shared/ui/accordion.tsx                                              
+src/shared/ui/AccountTypeBadge.tsx                                       
+src/shared/ui/alert-dialog.tsx                                           
+src/shared/ui/aspect-ratio.tsx                                           
+src/shared/ui/avatar.tsx                                                 
+src/shared/ui/breadcrumb.tsx                                             
+src/shared/ui/calendar.tsx                                               
+src/shared/ui/CardShell.tsx                                              
+src/shared/ui/carousel.tsx                                               
+src/shared/ui/charts/AreaChart.demo.tsx                                  
+src/shared/ui/charts/GraphBase.demo.tsx                                  
+src/shared/ui/charts/GraphBase.quicktest.tsx                             
+src/shared/ui/charts/LazyChartWrapper.tsx                                
+src/shared/ui/charts/StackedBarChart.demo.tsx                            
+src/shared/ui/charts/TimeRangeDemo.tsx                                   
+src/shared/ui/checkbox.tsx                                               
+src/shared/ui/collapsible.tsx                                            
+src/shared/ui/command.tsx                                                
+src/shared/ui/context-menu.tsx                                           
+src/shared/ui/drawer.tsx                                                 
+src/shared/ui/form.tsx                                                   
+src/shared/ui/hover-card.tsx                                             
+src/shared/ui/input-otp.tsx                                              
+src/shared/ui/navigation-menu.tsx                                        
+src/shared/ui/NavPill.tsx                                                
+src/shared/ui/pagination.tsx                                             
+src/shared/ui/popover.tsx                                                
+src/shared/ui/progress.tsx                                               
+src/shared/ui/radio-group.tsx                                            
+src/shared/ui/resizable.tsx                                              
+src/shared/ui/separator.tsx                                              
+src/shared/ui/sidebar.tsx                                                
+src/shared/ui/skeleton.tsx                                               
+src/shared/ui/table.tsx                                                  
+src/shared/ui/textarea.tsx                                               
+src/shared/ui/toggle-group.tsx                                           
+src/shared/ui/toggle.tsx                                                 
+src/shared/ui/UniversalCard.original.tsx                                 
+src/shared/ui/use-toast.ts                                               
+src/shared/utils/animation-performance.ts                                
+src/shared/utils/performanceOptimizer.ts                                 
+src/shared/utils/session.ts                                              
+src/shared/utils/sessionManager.ts                                       
+src/shared/utils/webCrypto.ts                                            
+src/test/setup.ts                                                        
+src/theme/breakpoints.ts                                                 
+vite.config.original.ts                                                  
+Unused dependencies (22)
+@hookform/resolvers              package.json:47:6
+@radix-ui/react-accordion        package.json:48:6
+@radix-ui/react-alert-dialog     package.json:49:6
+@radix-ui/react-aspect-ratio     package.json:50:6
+@radix-ui/react-avatar           package.json:51:6
+@radix-ui/react-checkbox         package.json:52:6
+@radix-ui/react-collapsible      package.json:53:6
+@radix-ui/react-context-menu     package.json:54:6
+@radix-ui/react-hover-card       package.json:57:6
+@radix-ui/react-navigation-menu  package.json:60:6
+@radix-ui/react-popover          package.json:61:6
+@radix-ui/react-progress         package.json:62:6
+@radix-ui/react-radio-group      package.json:63:6
+@radix-ui/react-separator        package.json:66:6
+@radix-ui/react-toggle           package.json:72:6
+cmdk                             package.json:79:6
+embla-carousel-react             package.json:81:6
+input-otp                        package.json:83:6
+react-day-picker                 package.json:87:6
+react-hook-form                  package.json:89:6
+react-resizable-panels           package.json:90:6
+vaul                             package.json:98:6
+Unused devDependencies (8)
+@axe-core/cli            package.json:104:6
+@axe-core/react          package.json:105:6
+@eslint/js               package.json:106:6
+@tailwindcss/typography  package.json:109:6
+@types/dompurify         package.json:112:6
+axe-core                 package.json:121:6
+dompurify                package.json:123:6
+vite-plugin-imagemin     package.json:138:6
+Unlisted dependencies (1)
+crypto-js  src/test/vueni-security.test.ts
+Configuration hints (1)
+Add to or refine in workspaces: . (root) (193 unused files)

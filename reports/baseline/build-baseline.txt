@@ -1,0 +1,136 @@
+
+> vite_react_shadcn_ts@0.0.0 build
+> vite build
+
+vite v5.4.19 building for production...
+transforming...
+✓ 3257 modules transformed.
+
+✨ [vite-plugin-compression]:algorithm=gzip - compressed file successfully: 
+dist//Users/damon/liquid-spark-finance/assets/CalculatorsPage-C-OpjdoG.js.gz                5.85kb / gzip: 1.38kb
+dist//Users/damon/liquid-spark-finance/assets/BudgetPlannerPage-CFoLKXvA.js.gz              47.94kb / gzip: 5.92kb
+dist//Users/damon/liquid-spark-finance/assets/BudgetReportsPage-CmxBAAHN.js.gz              14.38kb / gzip: 2.40kb
+dist//Users/damon/liquid-spark-finance/assets/CategoryTrendsChart-Da9Blfxt.js.gz            9.05kb / gzip: 2.34kb
+dist//Users/damon/liquid-spark-finance/assets/ComprehensiveEcoCard-L3FwgGLW.js.gz           30.79kb / gzip: 4.89kb
+dist//Users/damon/liquid-spark-finance/assets/AnalyticsPage-C549G9JE.js.gz                  112.92kb / gzip: 13.27kb
+dist//Users/damon/liquid-spark-finance/assets/CreditScorePage-DD7VT_V8.js.gz                31.89kb / gzip: 4.16kb
+dist//Users/damon/liquid-spark-finance/assets/CompoundInterestCalculator-C8xZd_r-.js.gz     49.63kb / gzip: 9.74kb
+dist//Users/damon/liquid-spark-finance/assets/ComprehensiveWellnessCard-KfLj-GxC.js.gz      26.76kb / gzip: 4.52kb
+dist//Users/damon/liquid-spark-finance/assets/ExchangeRateCalculator-BT9MqUph.js.gz         2.93kb / gzip: 0.74kb
+dist//Users/damon/liquid-spark-finance/assets/AnimatedCircularProgress-C_8g0HvG.js.gz       2.89kb / gzip: 1.16kb
+dist//Users/damon/liquid-spark-finance/assets/FinancialCard-lnIS9JaD.js.gz                  15.12kb / gzip: 3.32kb
+dist//Users/damon/liquid-spark-finance/assets/HomeAffordabilityCalculator-CE3x-wGs.js.gz    4.75kb / gzip: 0.90kb
+dist//Users/damon/liquid-spark-finance/assets/GlassCard-D_XVjyLd.js.gz                      1.09kb / gzip: 0.61kb
+dist//Users/damon/liquid-spark-finance/assets/InsightsPage-DURoXZuY.js.gz                   20.57kb / gzip: 4.42kb
+dist//Users/damon/liquid-spark-finance/assets/FinancialFreedomCalculator-BmMSBtlD.js.gz     10.60kb / gzip: 1.86kb
+dist//Users/damon/liquid-spark-finance/assets/InflationCalculator-3Yq31E9F.js.gz            3.45kb / gzip: 0.78kb
+dist//Users/damon/liquid-spark-finance/assets/MortgagePayoffCalculator-DIZdp7jY.js.gz       5.18kb / gzip: 0.91kb
+dist//Users/damon/liquid-spark-finance/assets/FinancialPlanningPage-BOecN4q0.js.gz          100.34kb / gzip: 14.36kb
+dist//Users/damon/liquid-spark-finance/assets/LoanCalculator-DjUqCawL.js.gz                 19.12kb / gzip: 2.84kb
+dist//Users/damon/liquid-spark-finance/assets/EnhancedMetricCard-DeA42TFK.js.gz             12.38kb / gzip: 3.66kb
+dist//Users/damon/liquid-spark-finance/assets/Profile-hKZFS1N_.js.gz                        26.57kb / gzip: 4.20kb
+dist//Users/damon/liquid-spark-finance/assets/ROICalculator-B-shmMqT.js.gz                  13.97kb / gzip: 2.10kb
+dist//Users/damon/liquid-spark-finance/assets/InvestmentTrackerPage-C00UU1Q1.js.gz          76.20kb / gzip: 6.96kb
+dist//Users/damon/liquid-spark-finance/assets/Retirement401kCalculator-Db2bjCgb.js.gz       23.42kb / gzip: 3.03kb
+dist//Users/damon/liquid-spark-finance/assets/StockBacktestCalculator-CDAlfXiW.js.gz        3.31kb / gzip: 0.90kb
+dist//Users/damon/liquid-spark-finance/assets/SpendingTrendsChart-Ba1FNyXI.js.gz            1.42kb / gzip: 0.75kb
+dist//Users/damon/liquid-spark-finance/assets/ThreeFundPortfolioCalculator-Dn9UphML.js.gz   4.47kb / gzip: 0.89kb
+dist//Users/damon/liquid-spark-finance/assets/SharedScoreCircle-D_8-ncXA.js.gz              4.54kb / gzip: 1.24kb
+dist//Users/damon/liquid-spark-finance/assets/UnifiedCard-DL7azYUL.js.gz                    8.43kb / gzip: 2.20kb
+dist//Users/damon/liquid-spark-finance/assets/SavingsGoals-QqqnHk3P.js.gz                   55.65kb / gzip: 8.37kb
+dist//Users/damon/liquid-spark-finance/assets/budgetService-CmzbIBdQ.js.gz                  7.71kb / gzip: 2.68kb
+dist//Users/damon/liquid-spark-finance/assets/calculators-Cu5eQgSO.js.gz                    1.40kb / gzip: 0.67kb
+dist//Users/damon/liquid-spark-finance/assets/creditScoreService-AU4euQGE.js.gz             5.06kb / gzip: 2.13kb
+dist//Users/damon/liquid-spark-finance/assets/index-CrGigCrP.js.gz                          39.23kb / gzip: 8.49kb
+dist//Users/damon/liquid-spark-finance/assets/TimeRangeToggle-DF0nBIuo.js.gz                65.91kb / gzip: 15.97kb
+dist//Users/damon/liquid-spark-finance/assets/TransactionDemo-25KStSMi.js.gz                43.31kb / gzip: 6.49kb
+dist//Users/damon/liquid-spark-finance/assets/investmentService-BsdeQuvo.js.gz              10.10kb / gzip: 3.72kb
+dist//Users/damon/liquid-spark-finance/assets/healthKitService-L1AlHfYC.js.gz               1.04kb / gzip: 0.57kb
+dist//Users/damon/liquid-spark-finance/assets/VueniUnifiedInsightsPage-BBIEj1PI.js.gz       83.27kb / gzip: 12.66kb
+dist//Users/damon/liquid-spark-finance/assets/mockData-5he-SQjZ.js.gz                       19.98kb / gzip: 4.40kb
+dist//Users/damon/liquid-spark-finance/assets/index-DSrUNPRL.js.gz                          2.55kb / gzip: 1.29kb
+dist//Users/damon/liquid-spark-finance/assets/switch-9Pm69paF.js.gz                         6.94kb / gzip: 2.47kb
+dist//Users/damon/liquid-spark-finance/assets/select-niddcPf2.js.gz                         50.67kb / gzip: 15.88kb
+dist//Users/damon/liquid-spark-finance/assets/vendor-router-D8-edBPm.js.gz                  30.48kb / gzip: 11.13kb
+dist//Users/damon/liquid-spark-finance/index.html.gz                                        3.01kb / gzip: 1.10kb
+dist//Users/damon/liquid-spark-finance/placeholder.svg.gz                                   3.18kb / gzip: 0.90kb
+dist//Users/damon/liquid-spark-finance/assets/vendor-utils-6gDWDllp.js.gz                   20.16kb / gzip: 6.82kb
+dist//Users/damon/liquid-spark-finance/assets/NotFound-D3xOaCpm.js.gz                       1.33kb / gzip: 0.53kb
+dist//Users/damon/liquid-spark-finance/assets/DashboardPage-DT_OIzhc.js.gz                  132.29kb / gzip: 21.06kb
+dist//Users/damon/liquid-spark-finance/assets/index-DOl6z2WE.css.gz                         162.88kb / gzip: 25.98kb
+dist//Users/damon/liquid-spark-finance/assets/vendor-ui-DlgH-lSj.js.gz                      100.54kb / gzip: 33.98kb
+dist//Users/damon/liquid-spark-finance/assets/Index-vng648FM.js.gz                          333.54kb / gzip: 77.22kb
+dist//Users/damon/liquid-spark-finance/assets/index-Dyj0E4vv.js.gz                          241.00kb / gzip: 69.24kb
+dist//Users/damon/liquid-spark-finance/assets/vendor-react-Bd7ql5om.js.gz                   307.18kb / gzip: 94.35kb
+dist//Users/damon/liquid-spark-finance/assets/vendor-charts-Ct_bA87I.js.gz                  425.81kb / gzip: 114.33kb
+
+
+
+✨ [vite-plugin-compression]:algorithm=brotliCompress - compressed file successfully: 
+dist//Users/damon/liquid-spark-finance/assets/AnalyticsPage-C549G9JE.js.br                  112.92kb / brotliCompress: 10.99kb
+dist//Users/damon/liquid-spark-finance/assets/AnimatedCircularProgress-C_8g0HvG.js.br       2.89kb / brotliCompress: 1.02kb
+dist//Users/damon/liquid-spark-finance/assets/CalculatorsPage-C-OpjdoG.js.br                5.85kb / brotliCompress: 1.24kb
+dist//Users/damon/liquid-spark-finance/assets/CompoundInterestCalculator-C8xZd_r-.js.br     49.63kb / brotliCompress: 8.48kb
+dist//Users/damon/liquid-spark-finance/assets/ComprehensiveEcoCard-L3FwgGLW.js.br           30.79kb / brotliCompress: 4.18kb
+dist//Users/damon/liquid-spark-finance/assets/BudgetReportsPage-CmxBAAHN.js.br              14.38kb / brotliCompress: 2.03kb
+dist//Users/damon/liquid-spark-finance/assets/EnhancedMetricCard-DeA42TFK.js.br             12.38kb / brotliCompress: 3.24kb
+dist//Users/damon/liquid-spark-finance/assets/CategoryTrendsChart-Da9Blfxt.js.br            9.05kb / brotliCompress: 2.12kb
+dist//Users/damon/liquid-spark-finance/assets/GlassCard-D_XVjyLd.js.br                      1.09kb / brotliCompress: 0.53kb
+dist//Users/damon/liquid-spark-finance/assets/FinancialFreedomCalculator-BmMSBtlD.js.br     10.60kb / brotliCompress: 1.60kb
+dist//Users/damon/liquid-spark-finance/assets/ComprehensiveWellnessCard-KfLj-GxC.js.br      26.76kb / brotliCompress: 3.92kb
+dist//Users/damon/liquid-spark-finance/assets/HomeAffordabilityCalculator-CE3x-wGs.js.br    4.75kb / brotliCompress: 0.76kb
+dist//Users/damon/liquid-spark-finance/assets/CreditScorePage-DD7VT_V8.js.br                31.89kb / brotliCompress: 3.55kb
+dist//Users/damon/liquid-spark-finance/assets/FinancialCard-lnIS9JaD.js.br                  15.12kb / brotliCompress: 2.95kb
+dist//Users/damon/liquid-spark-finance/assets/BudgetPlannerPage-CFoLKXvA.js.br              47.94kb / brotliCompress: 4.96kb
+dist//Users/damon/liquid-spark-finance/assets/InflationCalculator-3Yq31E9F.js.br            3.45kb / brotliCompress: 0.68kb
+dist//Users/damon/liquid-spark-finance/assets/ExchangeRateCalculator-BT9MqUph.js.br         2.93kb / brotliCompress: 0.64kb
+dist//Users/damon/liquid-spark-finance/assets/InsightsPage-DURoXZuY.js.br                   20.57kb / brotliCompress: 3.90kb
+dist//Users/damon/liquid-spark-finance/assets/MortgagePayoffCalculator-DIZdp7jY.js.br       5.18kb / brotliCompress: 0.77kb
+dist//Users/damon/liquid-spark-finance/assets/ROICalculator-B-shmMqT.js.br                  13.97kb / brotliCompress: 1.82kb
+dist//Users/damon/liquid-spark-finance/assets/Retirement401kCalculator-Db2bjCgb.js.br       23.42kb / brotliCompress: 2.63kb
+dist//Users/damon/liquid-spark-finance/assets/SharedScoreCircle-D_8-ncXA.js.br              4.54kb / brotliCompress: 1.12kb
+dist//Users/damon/liquid-spark-finance/assets/InvestmentTrackerPage-C00UU1Q1.js.br          76.20kb / brotliCompress: 5.68kb
+dist//Users/damon/liquid-spark-finance/assets/FinancialPlanningPage-BOecN4q0.js.br          100.34kb / brotliCompress: 12.21kb
+dist//Users/damon/liquid-spark-finance/assets/ThreeFundPortfolioCalculator-Dn9UphML.js.br   4.47kb / brotliCompress: 0.76kb
+dist//Users/damon/liquid-spark-finance/assets/StockBacktestCalculator-CDAlfXiW.js.br        3.31kb / brotliCompress: 0.77kb
+dist//Users/damon/liquid-spark-finance/assets/LoanCalculator-DjUqCawL.js.br                 19.12kb / brotliCompress: 2.46kb
+dist//Users/damon/liquid-spark-finance/assets/NotFound-D3xOaCpm.js.br                       1.33kb / brotliCompress: 0.44kb
+dist//Users/damon/liquid-spark-finance/assets/SpendingTrendsChart-Ba1FNyXI.js.br            1.42kb / brotliCompress: 0.67kb
+dist//Users/damon/liquid-spark-finance/assets/calculators-Cu5eQgSO.js.br                    1.40kb / brotliCompress: 0.60kb
+dist//Users/damon/liquid-spark-finance/assets/SavingsGoals-QqqnHk3P.js.br                   55.65kb / brotliCompress: 7.06kb
+dist//Users/damon/liquid-spark-finance/assets/UnifiedCard-DL7azYUL.js.br                    8.43kb / brotliCompress: 1.96kb
+dist//Users/damon/liquid-spark-finance/assets/creditScoreService-AU4euQGE.js.br             5.06kb / brotliCompress: 1.83kb
+dist//Users/damon/liquid-spark-finance/assets/healthKitService-L1AlHfYC.js.br               1.04kb / brotliCompress: 0.51kb
+dist//Users/damon/liquid-spark-finance/assets/index-DSrUNPRL.js.br                          2.55kb / brotliCompress: 1.13kb
+dist//Users/damon/liquid-spark-finance/assets/Profile-hKZFS1N_.js.br                        26.57kb / brotliCompress: 3.60kb
+dist//Users/damon/liquid-spark-finance/assets/TransactionDemo-25KStSMi.js.br                43.31kb / brotliCompress: 5.62kb
+dist//Users/damon/liquid-spark-finance/assets/investmentService-BsdeQuvo.js.br              10.10kb / brotliCompress: 3.22kb
+dist//Users/damon/liquid-spark-finance/assets/mockData-5he-SQjZ.js.br                       19.98kb / brotliCompress: 3.71kb
+dist//Users/damon/liquid-spark-finance/assets/switch-9Pm69paF.js.br                         6.94kb / brotliCompress: 2.18kb
+dist//Users/damon/liquid-spark-finance/assets/TimeRangeToggle-DF0nBIuo.js.br                65.91kb / brotliCompress: 13.36kb
+dist//Users/damon/liquid-spark-finance/index.html.br                                        3.01kb / brotliCompress: 0.88kb
+dist//Users/damon/liquid-spark-finance/assets/vendor-router-D8-edBPm.js.br                  30.48kb / brotliCompress: 9.91kb
+dist//Users/damon/liquid-spark-finance/assets/VueniUnifiedInsightsPage-BBIEj1PI.js.br       83.27kb / brotliCompress: 10.06kb
+dist//Users/damon/liquid-spark-finance/assets/vendor-utils-6gDWDllp.js.br                   20.16kb / brotliCompress: 5.99kb
+dist//Users/damon/liquid-spark-finance/assets/budgetService-CmzbIBdQ.js.br                  7.71kb / brotliCompress: 2.29kb
+dist//Users/damon/liquid-spark-finance/placeholder.svg.br                                   3.18kb / brotliCompress: 0.82kb
+dist//Users/damon/liquid-spark-finance/assets/select-niddcPf2.js.br                         50.67kb / brotliCompress: 14.04kb
+dist//Users/damon/liquid-spark-finance/assets/index-CrGigCrP.js.br                          39.23kb / brotliCompress: 7.45kb
+dist//Users/damon/liquid-spark-finance/assets/DashboardPage-DT_OIzhc.js.br                  132.29kb / brotliCompress: 17.91kb
+dist//Users/damon/liquid-spark-finance/assets/index-DOl6z2WE.css.br                         162.88kb / brotliCompress: 21.00kb
+dist//Users/damon/liquid-spark-finance/assets/vendor-ui-DlgH-lSj.js.br                      100.54kb / brotliCompress: 29.95kb
+dist//Users/damon/liquid-spark-finance/assets/index-Dyj0E4vv.js.br                          241.00kb / brotliCompress: 59.35kb
+dist//Users/damon/liquid-spark-finance/assets/vendor-react-Bd7ql5om.js.br                   307.18kb / brotliCompress: 79.39kb
+dist//Users/damon/liquid-spark-finance/assets/Index-vng648FM.js.br                          333.54kb / brotliCompress: 65.88kb
+dist//Users/damon/liquid-spark-finance/assets/vendor-charts-Ct_bA87I.js.br                  425.81kb / brotliCompress: 93.41kb
+
+
+x Build failed in 17.04s
+error during build:
+[vite:load-fallback] Could not load /Users/damon/liquid-spark-finance/src/theme/graph-tokens (imported by src/shared/ui/charts/LineChart.tsx): ENOENT: no such file or directory, open '/Users/damon/liquid-spark-finance/src/theme/graph-tokens'
+    at async open (node:internal/fs/promises:634:25)
+    at async Object.readFile (node:internal/fs/promises:1238:14)
+    at async Object.load (file:///Users/damon/liquid-spark-finance/node_modules/vite/dist/node/chunks/dep-C6uTJdX2.js:65341:25)
+    at async PluginDriver.hookFirstAndGetPlugin (file:///Users/damon/liquid-spark-finance/node_modules/rollup/dist/es/shared/node-entry.js:22166:28)
+    at async file:///Users/damon/liquid-spark-finance/node_modules/rollup/dist/es/shared/node-entry.js:21170:33
+    at async Queue.work (file:///Users/damon/liquid-spark-finance/node_modules/rollup/dist/es/shared/node-entry.js:22394:32)

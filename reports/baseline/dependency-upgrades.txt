@@ -1,0 +1,3 @@
+Upgrading /Users/damon/liquid-spark-finance/package.json
+
+No dependencies.

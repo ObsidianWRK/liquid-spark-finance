@@ -1,0 +1,186 @@
+name: 🚀 Vueni CI - Tech Debt Validation
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  # ==================== STAGE 1: CODE QUALITY ====================
+  lint-and-format:
+    name: 📝 Lint & Format Check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+      
+      - name: Install dependencies
+        run: npm ci
+      
+      - name: ESLint Check (STRICT)
+        run: npm run lint
+        
+      - name: Prettier Check
+        run: npx prettier --check "src/**/*.{ts,tsx,js,jsx}"
+      
+      - name: TypeScript Check (STRICT)
+        run: npx tsc --noEmit
+
+  # ==================== STAGE 2: DEAD CODE DETECTION ====================
+  dead-code-analysis:
+    name: 🔥 Dead Code Detection
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+      
+      - name: Install dependencies
+        run: npm ci
+      
+      - name: Knip Analysis (Zero Unused Code)
+        run: npx knip --production
+        
+      - name: Dependency Check
+        run: npx depcheck
+
+  # ==================== STAGE 3: TESTING ====================
+  test-coverage:
+    name: 🧪 Test Coverage (≥80%)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+      
+      - name: Install dependencies
+        run: npm ci
+      
+      - name: Unit Tests with Coverage
+        run: npm run test:coverage
+        
+      - name: Coverage Threshold Check
+        run: |
+          COVERAGE=$(npm run test:coverage -- --reporter=json | jq '.coverage.total.lines.pct')
+          if (( $(echo "$COVERAGE < 80" | bc -l) )); then
+            echo "❌ Coverage $COVERAGE% is below 80% threshold"
+            exit 1
+          fi
+          echo "✅ Coverage $COVERAGE% meets threshold"
+
+  # ==================== STAGE 4: E2E TESTING ====================
+  e2e-tests:
+    name: 🎭 E2E Tests (Playwright)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+      
+      - name: Install dependencies
+        run: npm ci
+      
+      - name: Install Playwright
+        run: npx playwright install --with-deps
+      
+      - name: Build application
+        run: npm run build
+        
+      - name: E2E Tests
+        run: npm run test:e2e
+
+  # ==================== STAGE 5: BUILD VALIDATION ====================
+  build-analysis:
+    name: 📦 Build Size Analysis
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+      
+      - name: Install dependencies
+        run: npm ci
+      
+      - name: Production Build
+        run: npm run build
+        
+      - name: Bundle Size Check (≤2MB)
+        run: |
+          BUNDLE_SIZE=$(du -sk dist | cut -f1)
+          MAX_SIZE=2048  # 2MB in KB
+          if [ $BUNDLE_SIZE -gt $MAX_SIZE ]; then
+            echo "❌ Bundle size ${BUNDLE_SIZE}KB exceeds ${MAX_SIZE}KB limit"
+            exit 1
+          fi
+          echo "✅ Bundle size ${BUNDLE_SIZE}KB is within limits"
+      
+      - name: Bundle Analysis
+        run: npm run build:analyze || true
+
+  # ==================== STAGE 6: TECH DEBT VALIDATION ====================
+  tech-debt-check:
+    name: 🔍 Tech Debt Validation
+    runs-on: ubuntu-latest
+    needs: [lint-and-format, dead-code-analysis, test-coverage]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+      
+      - name: Install dependencies
+        run: npm ci
+      
+      - name: Duplicate Component Check
+        run: |
+          echo "Checking for duplicate components..."
+          DUPLICATES=$(find src -name "*InsightsPage*.tsx" | grep -v BaseInsightsPage | wc -l)
+          if [ $DUPLICATES -gt 0 ]; then
+            echo "❌ Found $DUPLICATES duplicate InsightsPage components"
+            find src -name "*InsightsPage*.tsx" | grep -v BaseInsightsPage
+            exit 1
+          fi
+          echo "✅ No duplicate InsightsPage components found"
+      
+      - name: Import Consistency Check
+        run: |
+          echo "Checking for consistent imports..."
+          INCONSISTENT=$(grep -r "from.*components.*insights" src | grep -v BaseInsightsPage | wc -l)
+          if [ $INCONSISTENT -gt 5 ]; then
+            echo "❌ Found inconsistent import patterns"
+            exit 1
+          fi
+          echo "✅ Import patterns are consistent"
+
+  # ==================== FINAL VALIDATION ====================
+  tech-debt-eliminated:
+    name: ✅ TECH DEBT ELIMINATED
+    runs-on: ubuntu-latest
+    needs: [lint-and-format, dead-code-analysis, test-coverage, e2e-tests, build-analysis, tech-debt-check]
+    if: success()
+    steps:
+      - name: Success Banner
+        run: |
+          echo "🎉 =================================="
+          echo "🎉  TECH DEBT ELIMINATED SUCCESSFULLY"
+          echo "🎉 =================================="
+          echo "✅ Linting: PASSED"
+          echo "✅ Dead Code: ELIMINATED" 
+          echo "✅ Tests: ≥80% Coverage"
+          echo "✅ E2E: PASSING"
+          echo "✅ Bundle: ≤2MB"
+          echo "✅ Duplicates: ELIMINATED"
+          echo "🎉 ==================================" 
