@@ -4,6 +4,7 @@ import { LucideIcon } from 'lucide-react';
 import { formatFinancialScore } from '@/shared/utils/formatters';
 import { vueniTheme } from '@/theme/unified';
 import { getScoreColor, getTrendColor } from '@/shared/utils/theme-color-mapper';
+import AnimatedCircularProgress from './charts/AnimatedCircularProgress';
 
 // Universal Card Component - Consolidates:
 // - GlassCard.tsx
@@ -109,37 +110,14 @@ export const UniversalCard = React.memo<UniversalCardProps>(({
     
     const scoreColor = getScoreColor(score);
     
-    const displayScore = formatFinancialScore(score);
-    
     return (
-      <div className="flex flex-col items-center">
-        <div className="relative w-20 h-20">
-          <svg className="w-full h-full transform -rotate-90" viewBox="0 0 100 100">
-            <circle
-              cx="50"
-              cy="50"
-              r="40"
-              stroke="currentColor"
-              strokeWidth="8"
-              fill="none"
-              className="text-white/[0.05]"
-            />
-            <circle
-              cx="50"
-              cy="50"
-              r="40"
-              stroke={scoreColor}
-              strokeWidth="8"
-              fill="none"
-              strokeDasharray={`${2 * Math.PI * 40}`}
-              strokeDashoffset={`${2 * Math.PI * 40 * (1 - score / 100)}`}
-              className="transition-all duration-1000 ease-out"
-            />
-          </svg>
-          <div className="absolute inset-0 flex flex-col items-center justify-center">
-            <span className="text-2xl font-bold text-white">{displayScore}</span>
-          </div>
-        </div>
+      <div className="flex justify-center">
+        <AnimatedCircularProgress 
+          value={score} 
+          color={scoreColor} 
+          size={80}
+          showLabel={false}
+        />
       </div>
     );
   };

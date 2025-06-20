@@ -1,6 +1,6 @@
 import React, { memo, ReactNode } from 'react';
 import { TrendingUp, TrendingDown, Activity } from 'lucide-react';
-import EnhancedGlassCard from '../../ui/EnhancedGlassCard';
+import { UniversalCard as EnhancedGlassCard } from '@/shared/ui/UniversalCard';
 import AnimatedCircularProgress from './AnimatedCircularProgress';
 
 interface EnhancedScoreCardProps {
@@ -93,19 +93,14 @@ const EnhancedScoreCard = memo(({
 
   return (
     <EnhancedGlassCard 
+      variant="glass"
       className={`
         relative overflow-hidden rounded-3xl backdrop-blur-xl border border-white/20 
         hover:border-white/30 transition-all duration-500 group ${config.padding} ${onClick ? 'cursor-pointer' : ''}
+        animate-[slideInScale_0.8s_ease-out_${delay}ms_both]
       `}
-      liquid={true}
-      liquidIntensity={liquidIntensity}
-      liquidDistortion={0.4}
-      liquidAnimated={true}
-      liquidInteractive={interactive}
+      interactive={interactive}
       onClick={onClick}
-      style={{
-        animation: `slideInScale 0.8s ease-out ${delay}ms both`
-      }}
     >
       {/* Subtle moving gradient */}
       <div 

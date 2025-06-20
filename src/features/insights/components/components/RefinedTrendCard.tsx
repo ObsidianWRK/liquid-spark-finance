@@ -1,6 +1,6 @@
 import React, { memo } from 'react';
 import { ChevronRight, TrendingUp, BarChart3, Target } from 'lucide-react';
-import EnhancedGlassCard from '../../ui/EnhancedGlassCard';
+import { UniversalCard as EnhancedGlassCard } from '@/shared/ui/UniversalCard';
 
 interface RefinedTrendCardProps {
   title: string;
@@ -36,16 +36,10 @@ const RefinedTrendCard = memo(({
 
   return (
     <EnhancedGlassCard 
-      className="refined-trend-card relative overflow-hidden rounded-2xl backdrop-blur-xl border border-slate-700/40 hover:border-slate-600/60 transition-all duration-300 group cursor-pointer p-6 bg-slate-900/20 hover-lift"
-      liquid={true}
-      liquidIntensity={liquidIntensity}
-      liquidDistortion={0.1}
-      liquidAnimated={false}
-      liquidInteractive={interactive}
+      variant="glass"
+      className={`refined-trend-card relative overflow-hidden rounded-2xl backdrop-blur-xl border border-slate-700/40 hover:border-slate-600/60 transition-all duration-300 group cursor-pointer p-6 bg-slate-900/20 hover-lift animate-[slideInScale_0.6s_ease-out_${delay}ms_both]`}
+      interactive={interactive}
       onClick={onClick}
-      style={{
-        animation: `slideInScale 0.6s ease-out ${delay}ms both`
-      }}
     >
       {/* Subtle gradient overlay */}
       <div className="absolute inset-0 bg-gradient-to-br from-slate-800/5 via-transparent to-slate-900/10 rounded-2xl" />

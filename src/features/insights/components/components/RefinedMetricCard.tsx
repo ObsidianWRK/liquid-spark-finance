@@ -1,6 +1,6 @@
 import React, { memo, useState, useEffect } from 'react';
 import { TrendingUp, TrendingDown, Minus } from 'lucide-react';
-import EnhancedGlassCard from '../../ui/EnhancedGlassCard';
+import { UniversalCard as EnhancedGlassCard } from '@/shared/ui/UniversalCard';
 
 interface RefinedMetricCardProps {
   title: string;

@@ -7,9 +7,9 @@ import { Switch } from '@/shared/ui/switch';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/shared/ui/select';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/shared/ui/tabs';
 import { cn } from '@/shared/lib/utils';
-import { SharedScoreCircle, ScoreGroup } from '../shared/SharedScoreCircle';
+import { SharedScoreCircle, ScoreGroup } from '@/components/shared/SharedScoreCircle';
 import { formatPercentage, getScoreColor } from '@/shared/utils/formatters';
-import { UnifiedCard } from '../ui/UnifiedCard';
+import { UniversalCard as UnifiedCard } from '@/shared/ui/UniversalCard';
 import { UniversalMetricCard } from './UniversalMetricCard';
 import { UniversalScoreCard } from './UniversalScoreCard';
 

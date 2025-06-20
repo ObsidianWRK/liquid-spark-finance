@@ -1,7 +1,7 @@
 import React, { memo, ReactNode } from 'react';
 import { TrendingUp, TrendingDown, Activity } from 'lucide-react';
 import { UniversalCard } from '@/shared/ui/UniversalCard';
-import AnimatedCircularProgress from './components/AnimatedCircularProgress';
+import AnimatedCircularProgress from '@/shared/ui/charts/AnimatedCircularProgress';
 
 // Universal Score Card that consolidates:
 // - EnhancedScoreCard.tsx
@@ -159,14 +159,10 @@ const UniversalScoreCard = memo(({
       className={`
         relative overflow-hidden rounded-2xl md:rounded-3xl hover:border-white/30 transition-all duration-500 group 
         ${config.padding} ${onClick ? 'cursor-pointer' : ''} ${variantStyles.container}
+        ${animationsEnabled ? `animate-[slideInScale_0.8s_ease-out_${delay}ms_both]` : ''}
       `}
-      liquid={animationsEnabled}
-      liquidIntensity={liquidIntensity}
-      liquidInteractive={interactive}
+      interactive={interactive}
       onClick={onClick}
-      style={animationsEnabled ? {
-        animation: `slideInScale 0.8s ease-out ${delay}ms both`
-      } : {}}
     >
       {/* Subtle moving gradient background */}
       <div 
