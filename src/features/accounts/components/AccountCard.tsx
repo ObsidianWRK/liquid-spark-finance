@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { AccountCardDTO } from '@/types/accounts';
 import { cn } from '@/shared/lib/utils';
 import { formatCurrency, formatPercent, safeRatio } from '@/shared/utils/formatters';
@@ -19,6 +20,7 @@ const categoryColors: Record<string, string> = {
 };
 
 export const AccountCard: React.FC<Props> = ({ acct, onAction, showBalance = true }) => {
+  const navigate = useNavigate();
   const topGradient = categoryColors[acct.category || 'CHECKING'] || 'from-emerald-500 to-emerald-400';
   
   // Safely calculate percentage change and clamp extreme values
@@ -31,9 +33,21 @@ export const AccountCard: React.FC<Props> = ({ acct, onAction, showBalance = tru
   const utilRatio = acct.category === 'CREDIT' ? safeRatio(Math.abs(acct.currentBalance), acct.utilPercent || 100) : null;
   const clampedUtil = utilRatio ? Math.max(Math.min(utilRatio * 100, 999), 0) : (acct.utilPercent ? Math.max(Math.min(acct.utilPercent, 999), 0) : null);
 
+  // Handle card click to navigate to account overview
+  const handleCardClick = (e: React.MouseEvent) => {
+    // Don't navigate if clicking on action buttons
+    if ((e.target as HTMLElement).closest('button')) {
+      return;
+    }
+    navigate(`/accounts/${acct.id}`);
+  };
+
   return (
     <TooltipProvider>
-      <div className="relative rounded-2xl p-5 bg-black/40 backdrop-blur border border-white/10 flex flex-col h-72 w-full min-h-[18rem]">
+      <div 
+        className="relative rounded-2xl p-5 bg-black/40 backdrop-blur border border-white/10 flex flex-col h-72 w-full min-h-[18rem] cursor-pointer hover:bg-black/50 transition-all duration-200"
+        onClick={handleCardClick}
+      >
         {/* Gradient top border */}
         <div className={cn('absolute left-0 right-0 top-0 h-1 rounded-t-2xl bg-gradient-to-r', topGradient)} />
 

@@ -11,9 +11,80 @@ import { BiometricMonitor } from '@/features/biometric-intervention/components/B
 import { TransactionList } from '@/features/transactions/components/TransactionList';
 import { accountService } from '@/features/accounts/api/accountService';
 import { transactionService } from '@/features/transactions/api/transactionService';
-import { getDaysInWarning, mergeBiometricsWithTransactions, TransactionWithBiometrics } from '@/shared/utils/accountUtils';
 import { AccountCardDTO } from '@/shared/types/accounts';
 import { Transaction } from '@/shared/types/transactions';
+
+// Utility functions for account warnings and biometric integration
+function getDaysInWarning(balanceHistory: number[], threshold: number): number {
+  if (!balanceHistory.length) return 0;
+  
+  let daysInWarning = 0;
+  
+  // Count consecutive days below threshold starting from most recent
+  for (const balance of balanceHistory) {
+    if (balance < threshold) {
+      daysInWarning++;
+    } else {
+      break; // Stop at first day above threshold
+    }
+  }
+  
+  return daysInWarning;
+}
+
+interface TransactionWithBiometrics extends Transaction {
+  stressAtTime: number;
+  heartRateAtTime?: number;
+  riskLevel: 'low' | 'medium' | 'high';
+}
+
+function mergeBiometricsWithTransactions(
+  transactions: Transaction[], 
+  currentStressIndex: number
+): TransactionWithBiometrics[] {
+  return transactions.map((transaction) => {
+    const transactionDate = new Date(transaction.date);
+    const hour = transactionDate.getHours();
+    const dayOfWeek = transactionDate.getDay();
+    const transactionAmount = Math.abs(transaction.amount);
+    
+    // Base stress from current user state
+    let stressAtTime = currentStressIndex || 30;
+    
+    // Amount-based stress increase
+    if (transactionAmount > 500) stressAtTime += 20;
+    else if (transactionAmount > 200) stressAtTime += 10;
+    else if (transactionAmount > 100) stressAtTime += 5;
+    
+    // Time-based stress (work hours are more stressful)
+    if (hour >= 9 && hour <= 17) stressAtTime += 10;
+    if (hour >= 14 && hour <= 16) stressAtTime += 5; // Peak stress hours
+    
+    // Weekday stress
+    if (dayOfWeek >= 1 && dayOfWeek <= 5) stressAtTime += 5;
+    
+    // Add some randomness to make it realistic
+    stressAtTime += (Math.random() - 0.5) * 15;
+    
+    // Clamp to 0-100 range
+    stressAtTime = Math.max(0, Math.min(100, Math.round(stressAtTime)));
+    
+    // Calculate risk level based on stress
+    let riskLevel: 'low' | 'medium' | 'high' = 'low';
+    if (stressAtTime >= 70) riskLevel = 'high';
+    else if (stressAtTime >= 40) riskLevel = 'medium';
+    
+    // Estimate heart rate based on stress (rough correlation)
+    const heartRateAtTime = Math.round(70 + (stressAtTime / 100) * 30 + (Math.random() - 0.5) * 10);
+    
+    return {
+      ...transaction,
+      stressAtTime,
+      heartRateAtTime,
+      riskLevel
+    };
+  });
+}
 
 interface CollapsiblePaneProps {
   title: string;
@@ -92,6 +163,7 @@ const AccountOverview: React.FC = () => {
           id: accountId,
 
           accountType: 'Checking',
+          accountName: 'Main Checking',
           currentBalance: 8750.42,
           availableBalance: 8450.42,
           currency: 'USD',
@@ -102,7 +174,6 @@ const AccountOverview: React.FC = () => {
           },
           last4: '1234',
           interestApy: 0.01,
-          // minimumBalance: 25.00, // Not part of AccountCardDTO
           category: 'CHECKING',
           alerts: []
         };

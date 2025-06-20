@@ -151,14 +151,17 @@ export const formatLargeNumber = (value: number, decimals: number = 1): string =
  * @returns Compact formatted string
  */
 export const formatCompactNumber = (value: number): string => {
-  if (value >= 1e9) {
-    return `${(value / 1e9).toFixed(1)}B`;
+  const absValue = Math.abs(value);
+  const sign = value < 0 ? '-' : '';
+  
+  if (absValue >= 1e9) {
+    return `${sign}${(absValue / 1e9).toFixed(1)}B`;
   }
-  if (value >= 1e6) {
-    return `${(value / 1e6).toFixed(1)}M`;
+  if (absValue >= 1e6) {
+    return `${sign}${(absValue / 1e6).toFixed(1)}M`;
   }
-  if (value >= 1e3) {
-    return `${(value / 1e3).toFixed(1)}K`;
+  if (absValue >= 1e3) {
+    return `${sign}${(absValue / 1e3).toFixed(1)}K`;
   }
   return value.toFixed(0);
 };

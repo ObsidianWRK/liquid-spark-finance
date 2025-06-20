@@ -25,8 +25,8 @@ export default {
 		},
 		extend: {
 			fontFamily: {
-				'sans': ['SF Pro Rounded', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],
-				'sf-pro-rounded': ['SF Pro Rounded', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
+				'sans': ['SF Pro Display', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],
+				'sf-pro-display': ['SF Pro Display', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
 			},
 			colors: {
 				border: 'hsl(var(--border))',

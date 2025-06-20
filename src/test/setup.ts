@@ -1,38 +1,10 @@
 import '@testing-library/jest-dom';
-import { vi } from 'vitest';
+import { expect, afterEach, vi } from 'vitest';
+import { cleanup } from '@testing-library/react';
 
-// Mock crypto for Node.js environment
-Object.defineProperty(global, 'crypto', {
-  value: {
-    getRandomValues: vi.fn(() => new Uint8Array(16)),
-    subtle: {
-      encrypt: vi.fn(),
-      decrypt: vi.fn(),
-      digest: vi.fn(),
-    },
-  },
-});
-
-// Mock localStorage
-const localStorageMock = {
-  getItem: vi.fn(),
-  setItem: vi.fn(),
-  removeItem: vi.fn(),
-  clear: vi.fn(),
-};
-Object.defineProperty(window, 'localStorage', {
-  value: localStorageMock,
-});
-
-// Mock sessionStorage
-const sessionStorageMock = {
-  getItem: vi.fn(),
-  setItem: vi.fn(),
-  removeItem: vi.fn(),
-  clear: vi.fn(),
-};
-Object.defineProperty(window, 'sessionStorage', {
-  value: sessionStorageMock,
+// Cleanup after each test case (e.g. clearing jsdom)
+afterEach(() => {
+  cleanup();
 });
 
 // Mock ResizeObserver
@@ -62,6 +34,64 @@ Object.defineProperty(window, 'matchMedia', {
     removeEventListener: vi.fn(),
     dispatchEvent: vi.fn(),
   })),
+});
+
+// Mock window.scrollTo
+Object.defineProperty(window, 'scrollTo', {
+  writable: true,
+  value: vi.fn(),
+});
+
+// Mock console methods for cleaner test output
+global.console = {
+  ...console,
+  // Uncomment to ignore a specific log level
+  log: vi.fn(),
+  debug: vi.fn(),
+  info: vi.fn(),
+  warn: vi.fn(),
+  error: vi.fn(),
+};
+
+// Mock crypto for Node.js environment
+Object.defineProperty(global, 'crypto', {
+  value: {
+    randomUUID: () => 'test-uuid',
+    getRandomValues: (arr: any) => arr.map(() => Math.floor(Math.random() * 256)),
+  },
+});
+
+// Extend expect with custom matchers
+expect.extend({
+  toBeInTheDocument: (received: any) => {
+    const pass = received && received.nodeType === 1; // Element node
+    return {
+      message: () => `expected element to be in the document`,
+      pass,
+    };
+  },
+});
+
+// Mock localStorage
+const localStorageMock = {
+  getItem: vi.fn(),
+  setItem: vi.fn(),
+  removeItem: vi.fn(),
+  clear: vi.fn(),
+};
+Object.defineProperty(window, 'localStorage', {
+  value: localStorageMock,
+});
+
+// Mock sessionStorage
+const sessionStorageMock = {
+  getItem: vi.fn(),
+  setItem: vi.fn(),
+  removeItem: vi.fn(),
+  clear: vi.fn(),
+};
+Object.defineProperty(window, 'sessionStorage', {
+  value: sessionStorageMock,
 });
 
 // Setup global test utilities
