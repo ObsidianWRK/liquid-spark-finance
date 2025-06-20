@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { BrowserRouter, Routes, Route, useNavigate } from 'react-router-dom';
+import { ScrollControllerProvider } from '@/navigation/context/ScrollControllerContext';
 import iOS26NavBar from '../components/iOS26NavBar';
 import { 
   Home, 
@@ -158,16 +159,18 @@ const NavigationDemo: React.FC = () => {
  */
 const iOS26NavBarDemo: React.FC = () => {
   return (
-    <BrowserRouter>
-      <div className="min-h-screen bg-black">
-        {/* Import navigation styles */}
-        <style>
-          {`@import url('/src/app/styles/nav-styles.css');`}
-        </style>
-        
-        <NavigationDemo />
-      </div>
-    </BrowserRouter>
+    <ScrollControllerProvider>
+      <BrowserRouter>
+        <div className="min-h-screen bg-black">
+          {/* Import navigation styles */}
+          <style>
+            {`@import url('/src/app/styles/nav-styles.css');`}
+          </style>
+
+          <NavigationDemo />
+        </div>
+      </BrowserRouter>
+    </ScrollControllerProvider>
   );
 };
 
