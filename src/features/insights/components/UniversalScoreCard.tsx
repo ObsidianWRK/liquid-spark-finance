@@ -1,6 +1,6 @@
 import React, { memo, ReactNode } from 'react';
 import { TrendingUp, TrendingDown, Activity } from 'lucide-react';
-import { UniversalCard } from '../ui/UniversalCard';
+import { UniversalCard } from '@/shared/ui/UniversalCard';
 import AnimatedCircularProgress from './components/AnimatedCircularProgress';
 
 // Universal Score Card that consolidates:

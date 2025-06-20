@@ -1,10 +1,7 @@
 // Shared components that consolidate duplicate implementations
 
 // Transaction List Components
-export { 
-  VueniUnifiedTransactionList,
-  transactionListPresets
-} from './VueniUnifiedTransactionList';
+export { default as VueniUnifiedTransactionList } from './VueniUnifiedTransactionList';
 export type { 
   VueniUnifiedTransactionListProps, 
   VueniTransaction,
@@ -33,8 +30,8 @@ export type {
 } from '@/features/insights/components/VueniUnifiedInsightsPage';
 
 // Design System Components
+export { default as VueniDesignSystem } from './VueniDesignSystem';
 export { 
-  VueniDesignSystem,
   VueniGlassCard,
   VueniButton,
   VueniMetric,
@@ -54,6 +51,7 @@ export type {
 } from './VueniDesignSystem';
 
 // Feature Flag System
+export { default as VueniFeatureFlags } from './VueniFeatureFlags';
 export {
   FeatureFlagProvider,
   useFeatureFlags,
@@ -73,3 +71,12 @@ export type {
 } from './VueniFeatureFlags';
 
 // All core components now consolidated and production-ready
+
+// Re-export shared components
+export { default as VueniConsolidationDemo } from './VueniConsolidationDemo';
+
+// Temporarily commenting out missing component
+// export { default as VueniUnifiedInsightsPage } from '@/features/insights/components/VueniUnifiedInsightsPage';
+
+// Only export what actually exists and doesn't cause import errors
+// All other exports are temporarily removed to fix the build

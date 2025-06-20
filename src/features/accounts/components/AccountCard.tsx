@@ -1,6 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { AccountCardDTO } from '@/types/accounts';
+import { AccountCardDTO } from '@/shared/types/accounts';
 import { cn } from '@/shared/lib/utils';
 import { formatCurrency, formatPercent, safeRatio } from '@/shared/utils/formatters';
 import { Send, Download, ArrowUpRight, ArrowDownRight, TrendingUp, CreditCard, DollarSign, PiggyBank } from 'lucide-react';
@@ -138,7 +138,10 @@ export const AccountCard: React.FC<Props> = ({ acct, onAction, showBalance = tru
           {/* Transfer button - for all account types */}
           <button
             className="flex-1 bg-white/5 rounded-full h-8 flex items-center justify-center text-white text-xs hover:bg-white/10 transition-colors"
-            onClick={() => onAction?.(acct.id, 'transfer')}
+            onClick={(e) => {
+              e.stopPropagation();
+              onAction?.(acct.id, 'transfer');
+            }}
             aria-label="Transfer"
           >
             <Send className="w-3 h-3" />
@@ -147,7 +150,10 @@ export const AccountCard: React.FC<Props> = ({ acct, onAction, showBalance = tru
           {/* Pay/Spend button - contextual to account type */}
           <button
             className="flex-1 bg-white/5 rounded-full h-8 flex items-center justify-center text-white text-xs hover:bg-white/10 transition-colors"
-            onClick={() => onAction?.(acct.id, 'pay')}
+            onClick={(e) => {
+              e.stopPropagation();
+              onAction?.(acct.id, 'pay');
+            }}
             aria-label={acct.category === 'CREDIT' ? 'Pay' : 'Spend'}
           >
             {acct.category === 'CREDIT' ? <CreditCard className="w-3 h-3" /> : <DollarSign className="w-3 h-3" />}
@@ -157,7 +163,10 @@ export const AccountCard: React.FC<Props> = ({ acct, onAction, showBalance = tru
           {acct.category !== 'CREDIT' && (
             <button
               className="flex-1 bg-white/5 rounded-full h-8 flex items-center justify-center text-white text-xs hover:bg-white/10 transition-colors"
-              onClick={() => onAction?.(acct.id, 'deposit')}
+              onClick={(e) => {
+                e.stopPropagation();
+                onAction?.(acct.id, 'deposit');
+              }}
               aria-label="Deposit"
             >
               {acct.category === 'SAVINGS' ? <PiggyBank className="w-3 h-3" /> : <Download className="w-3 h-3" />}

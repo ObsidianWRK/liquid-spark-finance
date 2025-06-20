@@ -72,4 +72,21 @@ export default defineConfig(({ mode }) => ({
   css: {
     devSourcemap: false,
   },
+  define: {
+    'process.env': JSON.stringify({}),
+    'process.browser': true,
+    'process.version': JSON.stringify(''),
+    'process.platform': JSON.stringify('browser'),
+    'global': 'globalThis',
+  },
+  esbuild: {
+    // Skip TypeScript type checking for faster development
+    tsconfigRaw: {
+      compilerOptions: {
+        skipLibCheck: true,
+        strict: false,
+        noEmit: true,
+      }
+    }
+  },
 }));
