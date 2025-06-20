@@ -11,12 +11,18 @@ import {
   Clock,
   CheckCircle2,
   ArrowLeft,
+  Shield,
+  Plane,
+  Car,
+  GraduationCap,
+  Heart,
+  Home,
 } from 'lucide-react';
 import GoalCard from './GoalCard';
 import GoalCreator from './GoalCreator';
 import SavingsInsights from './SavingsInsights';
 import { savingsGoalsService } from '@/features/savings/api/savingsGoalsService';
-import { SavingsGoal, SavingsInsight } from '@/types/savingsGoals';
+import { SavingsGoal, SavingsInsight } from '@/shared/types/savingsGoals';
 import { cn } from '@/shared/lib/utils';
 import { useNavigate } from 'react-router-dom';
 import { UnifiedCard } from '@/shared/ui/UnifiedCard';
@@ -26,6 +32,32 @@ import { BackButton } from '@/shared/components/ui/BackButton';
 interface SavingsGoalsProps {
   compact?: boolean;
 }
+
+// Icon mapping for goal categories
+const getGoalIcon = (iconStr: string, category: string) => {
+  // If it's an emoji string, return it as-is
+  if (iconStr && typeof iconStr === 'string' && /[\u{1F300}-\u{1F9FF}]/u.test(iconStr)) {
+    return iconStr;
+  }
+  
+  // Map categories to Lucide icons
+  switch (category) {
+    case 'Emergency Fund':
+      return Shield;
+    case 'Vacation':
+      return Plane;
+    case 'Car':
+      return Car;
+    case 'Education':
+      return GraduationCap;
+    case 'Wedding':
+      return Heart;
+    case 'Home Down Payment':
+      return Home;
+    default:
+      return Target;
+  }
+};
 
 const SavingsGoals = ({ compact = false }: SavingsGoalsProps) => {
   const [goals, setGoals] = useState<SavingsGoal[]>([]);
@@ -75,11 +107,11 @@ const SavingsGoals = ({ compact = false }: SavingsGoalsProps) => {
   };
 
   const getProgressColor = (percentage: number) => {
-    if (percentage >= 100) return 'text-green-400';
-    if (percentage >= 75) return 'text-lime-400';
-    if (percentage >= 50) return 'text-yellow-400';
-    if (percentage >= 25) return 'text-orange-400';
-    return 'text-red-400';
+    if (percentage >= 100) return '#22c55e';
+    if (percentage >= 75) return '#84cc16';
+    if (percentage >= 50) return '#eab308';
+    if (percentage >= 25) return '#f97316';
+    return '#ef4444';
   };
 
   if (loading) {
@@ -106,10 +138,9 @@ const SavingsGoals = ({ compact = false }: SavingsGoalsProps) => {
       <UnifiedCard
         title="Savings Goals"
         icon={Target}
-        iconColor="text-green-400"
+        iconColor="#22c55e"
         variant="default"
         size="lg"
-        className="text-white"
       >
         {loading ? (
           <div className="space-y-3">
@@ -122,8 +153,8 @@ const SavingsGoals = ({ compact = false }: SavingsGoalsProps) => {
           </div>
         ) : goals.length === 0 ? (
           <div className="text-center py-6">
-            <Target className="w-8 h-8 text-gray-400 mx-auto mb-2 opacity-50" />
-            <p className="text-sm text-gray-400 mb-2">No goals yet</p>
+            <Target className="w-8 h-8 text-white/40 mx-auto mb-2" />
+            <p className="text-sm text-white/60 mb-2">No goals yet</p>
             <button
               onClick={() => navigate('/savings')}
               className="text-xs text-blue-400 hover:text-blue-300 transition-colors"
@@ -139,50 +170,61 @@ const SavingsGoals = ({ compact = false }: SavingsGoalsProps) => {
                 (new Date(goal.targetDate).getTime() - Date.now()) /
                   (1000 * 60 * 60 * 24)
               );
+              const goalIcon = getGoalIcon(goal.icon, goal.category);
 
               return (
-                <UnifiedCard
+                <div
                   key={goal.id}
-                  title={goal.name}
-                  subtitle={goal.category}
-                  metric={formatCurrency(goal.currentAmount, {
-                    currency: 'USD',
-                  })}
-                  delta={{
-                    value: Math.round(progress),
-                    format: 'percentage',
-                    label: 'complete',
-                  }}
-                  icon={goal.icon}
-                  progress={{
-                    value: goal.currentAmount,
-                    max: goal.targetAmount,
-                    color:
-                      progress >= 100
-                        ? '#22c55e'
-                        : progress >= 75
-                          ? '#84cc16'
-                          : progress >= 50
-                            ? '#eab308'
-                            : '#ef4444',
-                    showLabel: false,
-                  }}
-                  badge={
-                    daysLeft <= 0 && !goal.isCompleted
-                      ? {
-                          text: 'Overdue',
-                          variant: 'error',
-                        }
-                      : undefined
-                  }
-                  size="sm"
-                  className="hover:bg-white/[0.03] transition-all cursor-pointer"
+                  className="bg-white/[0.02] border border-white/[0.08] rounded-xl p-3 hover:bg-white/[0.03] transition-all cursor-pointer"
                   onClick={() => navigate('/savings')}
-                />
+                >
+                  <div className="flex items-center justify-between mb-2">
+                    <div className="flex items-center gap-3">
+                      <div className="w-8 h-8 rounded-lg bg-white/[0.05] flex items-center justify-center">
+                        {typeof goalIcon === 'string' ? (
+                          <span className="text-sm">{goalIcon}</span>
+                        ) : (
+                          React.createElement(goalIcon, { className: "w-4 h-4 text-white/80" })
+                        )}
+                      </div>
+                      <div>
+                        <h4 className="font-medium text-white/90 text-sm">
+                          {goal.name}
+                        </h4>
+                        <p className="text-xs text-white/60">{goal.category}</p>
+                      </div>
+                    </div>
+                    {daysLeft <= 0 && !goal.isCompleted && (
+                      <span className="px-2 py-1 bg-red-500/20 text-red-400 border border-red-500/30 rounded-full text-xs font-medium">
+                        Overdue
+                      </span>
+                    )}
+                  </div>
+
+                  <div className="mb-2">
+                    <div className="flex justify-between items-center text-xs mb-1">
+                      <span className="text-white/60">
+                        {formatCurrency(goal.currentAmount, { currency: 'USD' })}
+                      </span>
+                      <span className="text-white/80">
+                        {Math.round(progress)}% complete
+                      </span>
+                    </div>
+                    <div className="w-full bg-white/[0.05] rounded-full h-2">
+                      <div
+                        className="h-2 rounded-full transition-all duration-300"
+                        style={{
+                          width: `${Math.min(100, progress)}%`,
+                          backgroundColor: getProgressColor(progress),
+                        }}
+                      />
+                    </div>
+                  </div>
+                </div>
               );
             })}
 
-            <div className="pt-3 border-t border-white/[0.06]">
+            <div className="pt-3 border-t border-white/[0.08]">
               <button
                 onClick={() => navigate('/savings')}
                 className="w-full text-sm text-blue-400 hover:text-blue-300 transition-colors text-center"
@@ -380,20 +422,22 @@ const SavingsGoals = ({ compact = false }: SavingsGoalsProps) => {
                         format: 'currency',
                         label: 'remaining',
                       }}
-                      icon={goal.icon}
+                      icon={getGoalIcon(goal.icon, goal.category)}
+                      iconColor={
+                        progress >= 100
+                          ? '#22c55e'
+                          : progress >= 75
+                            ? '#84cc16'
+                            : progress >= 50
+                              ? '#eab308'
+                              : progress >= 25
+                                ? '#f97316'
+                                : '#ef4444'
+                      }
                       progress={{
                         value: goal.currentAmount,
                         max: goal.targetAmount,
-                        color:
-                          progress >= 100
-                            ? '#22c55e'
-                            : progress >= 75
-                              ? '#84cc16'
-                              : progress >= 50
-                                ? '#eab308'
-                                : progress >= 25
-                                  ? '#f97316'
-                                  : '#ef4444',
+                        color: getProgressColor(progress),
                         showLabel: true,
                       }}
                       badge={
@@ -451,7 +495,7 @@ const SavingsGoals = ({ compact = false }: SavingsGoalsProps) => {
 
                         {/* Action Button */}
                         {!goal.isCompleted && (
-                          <button className="w-full mt-4 py-2 bg-white/[0.05] border border-white/[0.12] rounded-lg text-white/80 hover:bg-white/[0.08] hover:text-white transition-all text-sm font-medium">
+                          <button className="w-full mt-4 py-2 bg-white/[0.05] border border-white/[0.08] rounded-lg text-white/80 hover:bg-white/[0.08] hover:text-white transition-all text-sm font-medium">
                             Add Contribution
                           </button>
                         )}

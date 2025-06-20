@@ -1,6 +1,18 @@
 import React, { useState } from 'react';
-import { Calendar, TrendingUp, Plus, Target, Clock } from 'lucide-react';
-import { SavingsGoal } from '@/types/savingsGoals';
+import { 
+  Calendar, 
+  TrendingUp, 
+  Plus, 
+  Target, 
+  Clock,
+  Shield,
+  Plane,
+  Car,
+  GraduationCap,
+  Heart,
+  Home,
+} from 'lucide-react';
+import { SavingsGoal } from '@/shared/types/savingsGoals';
 import { savingsGoalsService } from '@/features/savings/api/savingsGoalsService';
 import { UnifiedCard } from '@/shared/ui/UnifiedCard';
 import { formatCurrency } from '@/shared/utils/formatters';
@@ -9,6 +21,32 @@ interface GoalCardProps {
   goal: SavingsGoal;
   onGoalUpdate?: () => void;
 }
+
+// Icon mapping for goal categories
+const getGoalIcon = (iconStr: string, category: string) => {
+  // If it's an emoji string, return it as-is
+  if (iconStr && typeof iconStr === 'string' && /[\u{1F300}-\u{1F9FF}]/u.test(iconStr)) {
+    return iconStr;
+  }
+  
+  // Map categories to Lucide icons
+  switch (category) {
+    case 'Emergency Fund':
+      return Shield;
+    case 'Vacation':
+      return Plane;
+    case 'Car':
+      return Car;
+    case 'Education':
+      return GraduationCap;
+    case 'Wedding':
+      return Heart;
+    case 'Home Down Payment':
+      return Home;
+    default:
+      return Target;
+  }
+};
 
 const GoalCard = React.memo<GoalCardProps>(({ goal, onGoalUpdate }) => {
   const [showContribution, setShowContribution] = useState(false);
@@ -65,7 +103,7 @@ const GoalCard = React.memo<GoalCardProps>(({ goal, onGoalUpdate }) => {
         format: 'currency',
         label: 'remaining',
       }}
-      icon={goal.icon}
+      icon={getGoalIcon(goal.icon, goal.category)}
       progress={{
         value: goal.currentAmount,
         max: goal.targetAmount,
