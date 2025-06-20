@@ -4,16 +4,16 @@ import Navigation from '@/components/Navigation';
 import AccountCard from '@/features/accounts/components/AccountCard';
 import { Grid } from '@/features/accounts/components/Grid';
 import { QuickAccessRail } from '@/features/accounts/components/QuickAccessRail';
-import { OptimizedTransactionList } from '@/features/transactions/components/OptimizedTransactionList';
+import { default as UnifiedTransactionList } from '@/features/transactions/components/UnifiedTransactionList';
 import LiquidGlassTopMenuBar from '@/components/LiquidGlassTopMenuBar';
-import ConsolidatedInsightsPage from '@/features/insights/components/ConsolidatedInsightsPage';
+import BaseInsightsPage from '@/features/insights/components/BaseInsightsPage';
 import BudgetReportsPage from '@/features/budget/components/BudgetReportsPage';
 import SavingsGoals from '@/features/savings/components/SavingsGoals';
 import CalculatorList from '@/features/calculators/components/CalculatorList';
 import { useIsMobile } from '@/shared/hooks/use-mobile';
 import { PerformanceMonitor } from '@/components/performance/PerformanceMonitor';
 import { mockData, getCompactAccountCards } from '@/services/mockData';
-import { Transaction } from '@/types/shared';
+import { Transaction } from '@/shared/types/shared';
 // CC: New Feature Cloud and Smart Accounts Deck imports
 import FeatureCloud from '@/components/FeatureCloud';
 import { VirtualizedDeck } from '@/components/AccountDeck/VirtualizedDeck';
@@ -283,7 +283,7 @@ export default function Index() {
           </div>
         );
       case 'insights':
-        return <ConsolidatedInsightsPage />;
+        return <BaseInsightsPage transactions={mockData.transactions} accounts={mockData.accounts} />;
       case 'transactions':
         return (
           <div className="max-w-none w-full relative">
@@ -303,7 +303,7 @@ export default function Index() {
               </div>
               
               <div className="max-w-none">
-                <OptimizedTransactionList 
+                <UnifiedTransactionList 
                   transactions={adaptTransactions(mockData.transactions) || []}
                   variant="apple"
                   currency="USD"
@@ -418,7 +418,7 @@ export default function Index() {
               
               <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
                 <div className="lg:col-span-2">
-                  <OptimizedTransactionList 
+                  <UnifiedTransactionList 
                     transactions={adaptTransactions(mockData.transactions)?.slice(0, 10) || []}
                     variant="apple"
                     currency="USD"

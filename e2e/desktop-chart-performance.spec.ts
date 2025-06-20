@@ -41,7 +41,7 @@ async function measurePerformanceMetrics(page: Page, action: () => Promise<void>
     performance.mark('test-start');
     // Monitor memory usage
     if ('memory' in performance) {
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+       
       (window as any).initialMemory = (performance as any).memory.usedJSHeapSize;
     }
   });
@@ -65,9 +65,9 @@ async function measurePerformanceMetrics(page: Page, action: () => Promise<void>
       firstContentfulPaint: paintMetrics.find(m => m.name === 'first-contentful-paint')?.startTime || 0,
       domInteractive: navigationMetrics?.domInteractive || 0,
       loadComplete: navigationMetrics?.loadEventEnd || 0,
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+       
       memoryUsage: 'memory' in performance ? (performance as any).memory.usedJSHeapSize : 0,
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+       
       initialMemory: (window as any).initialMemory || 0
     };
   });
@@ -238,7 +238,7 @@ test.describe('Desktop Chart Performance Tests', () => {
 
     test('Multiple chart types load performance comparison', async ({ page }) => {
       const chartTypes = ['line', 'area', 'bar', 'stackedBar'];
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+       
       const performanceResults: { [key: string]: any } = {};
       
       for (const chartType of chartTypes) {
@@ -324,7 +324,7 @@ test.describe('Desktop Chart Performance Tests', () => {
       const chartArea = page.locator('.recharts-wrapper');
       
       // Monitor performance during hover interactions
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+       
       const frameMetrics: any = await page.evaluate(async () => {
         const frames: number[] = [];
         let frameCount = 0;
@@ -382,7 +382,7 @@ test.describe('Desktop Chart Performance Tests', () => {
 
     test('Memory usage remains stable', async ({ page }) => {
       const initialMemory = await page.evaluate(() => {
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+         
         return 'memory' in performance ? (performance as any).memory.usedJSHeapSize : 0;
       });
       
@@ -404,14 +404,14 @@ test.describe('Desktop Chart Performance Tests', () => {
         // Force garbage collection if available
         await page.evaluate(() => {
           if ('gc' in window) {
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+             
             (window as any).gc();
           }
         });
       }
       
       const finalMemory = await page.evaluate(() => {
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+         
         return 'memory' in performance ? (performance as any).memory.usedJSHeapSize : 0;
       });
       
@@ -436,7 +436,7 @@ test.describe('Desktop Chart Performance Tests', () => {
         let count = 0;
         
         events.forEach(eventType => {
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+           
           const listeners = (document as any).getEventListeners?.(document.body)?.[eventType] || [];
           count += listeners.length;
         });
@@ -456,7 +456,7 @@ test.describe('Desktop Chart Performance Tests', () => {
         let count = 0;
         
         events.forEach(eventType => {
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+           
           const listeners = (document as any).getEventListeners?.(document.body)?.[eventType] || [];
           count += listeners.length;
         });
@@ -477,7 +477,7 @@ test.describe('Desktop Chart Performance Tests', () => {
         { width: 2560, height: 1440, name: 'QHD' }
       ];
       
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+       
       const performanceResults: { [key: string]: any } = {};
       
       for (const viewport of viewports) {

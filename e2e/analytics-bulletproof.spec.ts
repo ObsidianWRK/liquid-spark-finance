@@ -15,7 +15,7 @@ test.describe('Analytics Tab - Bulletproof Implementation', () => {
     });
     
     // Store errors for access in tests
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+     
     (page as any).errors = errors;
   });
 
@@ -33,7 +33,7 @@ test.describe('Analytics Tab - Bulletproof Implementation', () => {
     await page.waitForTimeout(15000);
     
     // Check for any destructuring errors
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+     
     const errors = (page as any).errors as string[];
     const destructuringErrors = errors.filter(error => 
       error.includes('destructur') ||
@@ -77,7 +77,7 @@ test.describe('Analytics Tab - Bulletproof Implementation', () => {
     await page.waitForTimeout(20000);
     
     // Should still work without crashes
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+     
     const errors = (page as any).errors as string[];
     const criticalErrors = errors.filter(error => 
       error.includes('destructur') || error.includes('Cannot read property')
@@ -104,7 +104,7 @@ test.describe('Analytics Tab - Bulletproof Implementation', () => {
     await page.goto('http://localhost:8080/?tab=analytics');
     await page.waitForTimeout(5000);
     
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+     
     const errors = (page as any).errors as string[];
     const raceConditionErrors = errors.filter(error => 
       error.includes('destructur') || 
@@ -124,7 +124,7 @@ test.describe('Analytics Tab - Bulletproof Implementation', () => {
     
     await page.waitForTimeout(15000);
     
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+     
     const errors = (page as any).errors as string[];
     expect(errors.filter(e => e.includes('destructur'))).toHaveLength(0);
     
@@ -142,7 +142,7 @@ test.describe('Analytics Tab - Bulletproof Implementation', () => {
     
     await page.waitForTimeout(15000);
     
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+     
     const errors = (page as any).errors as string[];
     expect(errors.filter(e => e.includes('destructur'))).toHaveLength(0);
     
@@ -167,7 +167,7 @@ test.describe('Analytics Tab - Bulletproof Implementation', () => {
       const component = document.querySelector('[data-testid="financial-dashboard"]');
       if (component) {
         // This should trigger the error boundary
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+         
         (component as any).innerHTML = '';
         throw new Error('Test error for error boundary');
       }
@@ -203,7 +203,7 @@ test.describe('Analytics Tab - Bulletproof Implementation', () => {
     await page.goto('http://localhost:8080/?tab=analytics', { waitUntil: 'networkidle' });
     await page.waitForTimeout(10000);
     
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+     
     const errors = (page as any).errors as string[];
     const dataErrors = errors.filter(error => 
       error.includes('destructur') || 
@@ -238,7 +238,7 @@ test.describe('Analytics Tab - Bulletproof Implementation', () => {
     // Wait for our 15s timeout to kick in
     await page.waitForTimeout(18000);
     
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+     
     const errors = (page as any).errors as string[];
     const timeoutErrors = errors.filter(error => 
       error.includes('destructur') || error.includes('timeout')
@@ -271,7 +271,7 @@ test.describe('Analytics Tab - Bulletproof Implementation', () => {
     expect(performanceMetrics.loadTime).toBeLessThan(5000);
     console.log(`✅ Load time: ${performanceMetrics.loadTime}ms`);
     
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+     
     const errors = (page as any).errors as string[];
     expect(errors.filter(e => e.includes('destructur'))).toHaveLength(0);
   });
@@ -308,7 +308,7 @@ test.describe('Analytics Tab - Edge Cases', () => {
     await page.goto('http://localhost:8080/?tab=analytics', { waitUntil: 'networkidle' });
     await page.waitForTimeout(5000);
     
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+     
     const errors = (page as any).errors as string[];
     expect(errors.filter(e => e.includes('destructur'))).toHaveLength(0);
     console.log('✅ Mixed data handled safely');

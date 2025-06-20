@@ -1,10 +1,10 @@
 import React from 'react';
-import NewInsightsPage from '@/features/insights/components/NewInsightsPage';
+import BaseInsightsPage from '@/features/insights/components/BaseInsightsPage';
 import { mockData } from '@/services/mockData';
 
 const InsightsPage = () => {
   return (
-    <NewInsightsPage 
+    <BaseInsightsPage 
       transactions={mockData.transactions} 
       accounts={mockData.accounts} 
     />

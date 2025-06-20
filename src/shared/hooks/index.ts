@@ -22,3 +22,6 @@ export type {
   UseTimeRangeOptions,
   UseTimeRangeReturn
 } from './useTimeRange';
+
+// Download Hook
+export { useDownload } from './useDownload';

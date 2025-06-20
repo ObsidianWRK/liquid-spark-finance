@@ -18,6 +18,7 @@ import {
 import LiquidGlassSVGFilters from '@/shared/ui/LiquidGlassSVGFilters';
 import { cn } from '@/shared/lib/utils';
 import { useNavigate } from 'react-router-dom';
+import { VueniLogo } from '@/shared/ui/VueniLogo';
 import {
   Menubar,
   MenubarMenu,
@@ -157,15 +158,15 @@ const LiquidGlassTopMenuBar = ({ className, onMenuItemClick }: MenuBarProps) => 
             
             {/* Logo/Brand */}
             <div className="flex items-center space-x-2 sm:space-x-6 flex-shrink-0">
-              <button
+              <VueniLogo
+                size="lg"
+                variant="text-only"
                 onClick={() => navigate('/')}
-                aria-label="Home"
-                className="liquid-glass-button p-2 sm:p-3 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-400/50"
-              >
-                <span className="text-white font-bold text-lg sm:text-xl bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
-                  Vueni
-                </span>
-              </button>
+                className="liquid-glass-button p-2 sm:p-3 rounded-xl"
+                onDownloadComplete={(filename) => {
+                  console.log(`Downloaded: ${filename}`);
+                }}
+              />
 
               {/* Desktop Menu Items using Radix Menubar */}
               <div className="hidden lg:block">
