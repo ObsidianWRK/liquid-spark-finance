@@ -8,7 +8,6 @@
 import React from 'react';
 import * as ContextMenuPrimitive from '@radix-ui/react-context-menu';
 import { cn } from '@/shared/lib/utils';
-import { vueniTokens } from '@/components/shared/VueniDesignSystem';
 
 // Context Menu Root
 export const ContextMenu = ContextMenuPrimitive.Root;
