@@ -64,7 +64,6 @@ const TopBar: React.FC = () => {
         }}
         role="banner"
         aria-label="Top navigation bar"
-        aria-hidden={!navigationState.isVisible}
       >
         <div className="liquid-glass-nav w-full backdrop-blur-md saturate-[180%] border-b border-white/20">
           <div className="flex items-center justify-between h-full px-6">
