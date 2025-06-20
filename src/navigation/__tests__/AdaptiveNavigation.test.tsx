@@ -1,6 +1,6 @@
 import React from 'react';
-import { render, screen } from '@testing-library/react';
-import { BrowserRouter } from 'react-router-dom';
+import { render, screen, act } from '@testing-library/react';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import AdaptiveNavigation from '../components/AdaptiveNavigation';
 import { useBreakpoint } from '@/shared/hooks/useBreakpoint';
 
@@ -148,5 +148,33 @@ describe('AdaptiveNavigation', () => {
     expect(screen.getByTestId('sidebar')).toBeInTheDocument();
     expect(screen.getByTestId('top-bar')).toBeInTheDocument();
     expect(screen.queryByTestId('nav-rail')).not.toBeInTheDocument();
+  });
+
+  it('keeps TopBar mounted across route changes on desktop', () => {
+    mockUseBreakpoint.mockReturnValue({
+      breakpoint: 'desktop',
+      isMobile: false,
+      isTablet: false,
+      isDesktop: true,
+      isLargeDesktop: false,
+    });
+
+    render(
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<AdaptiveNavigation />} />
+          <Route path="/next" element={<AdaptiveNavigation />} />
+        </Routes>
+      </BrowserRouter>
+    );
+
+    expect(screen.getByTestId('top-bar')).toBeInTheDocument();
+
+    act(() => {
+      window.history.pushState({}, '', '/next');
+      window.dispatchEvent(new PopStateEvent('popstate'));
+    });
+
+    expect(screen.getByTestId('top-bar')).toBeInTheDocument();
   });
 }); 
