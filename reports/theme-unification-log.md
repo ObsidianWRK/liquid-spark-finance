@@ -41,27 +41,92 @@
 
 **Status**: ✅ Inventory complete, moving to Pass 2
 
-### Pass 2 — think a lot  
-**Objective**: Map inconsistencies & duplication hot-spots
+### Pass 2 — think a lot 🔍 Map Inconsistencies & Duplication
 
-**Critical Duplications Found**:
-- **Glass Effect Chaos**: 10+ different opacity values (0.02, 0.03, 0.05, 0.06, 0.08, 0.1, 0.12, 0.15, 0.2)
-- **Mixed Syntax**: Both `bg-white/[0.02]` and `rgba(255, 255, 255, 0.02)` patterns 
-- **Scattered Definitions**: Same glass tokens defined in 4+ different files
-- **Component Hardcoding**: 100+ instances of direct opacity values instead of tokens
+**🎯 Objective**: Exhaustive mapping of duplicated/conflicting theme artifacts post-unification
 
-**Hot-Spot Analysis**:
-1. **Glass Effects**: Most duplicated system across codebase
-2. **Card Styling**: `UnifiedCard`, `VueniGlassCard`, `Card` all have different approaches  
-3. **Typography**: Font families defined in tailwind.config.ts AND theme files
-4. **Color Variants**: Success/error colors defined multiple times with different values
-5. **Spacing**: Both rem and px values mixed throughout
+### 🧪 Parallel Scanning Results
 
-**Inconsistency Patterns**:
-- VueniDesignSystem.tsx has `vueniTokens` that conflict with main theme
-- CSS files still contain light-mode variables (violates dark-mode only rule)
-- Chart components bypass theme system entirely with hardcoded RGBA values
-- Navigation components have their own token system in tokens.ts
+#### **T1 – ColorHunter** | Hardcoded Color Violations
+**Status**: ⚠️ 200+ hardcoded hex values found bypassing unified theme
+
+**Critical Violations**:
+- **Financial Institution Colors**: 26 bank logos with hardcoded brand colors (`#117A65`, `#E51B23`, etc.)
+- **Mock Data Categories**: 30+ transaction categories with inline hex colors (`#34C759`, `#FF3B30`)
+- **Chart Components**: `FinancialDashboard.tsx` has 40+ hardcoded colors for Chart.js (`#3b82f6`, `#10b981`)
+- **Performance Monitor**: Direct conditional hex assignment instead of theme tokens
+- **Service Layer**: `unifiedDataManager.ts` bypasses theme with hardcoded chart colors
+
+**Heat Map - Most Frequent Duplicates**:
+| Color | Frequency | Locations |
+|-------|-----------|-----------|
+| `#4A9EFF` | 3x | unified.ts, index.ts, legacy colors.ts |
+| `#4AFF88` | 3x | unified.ts, index.ts, legacy colors.ts |
+| `#FF4A6A` | 3x | unified.ts, index.ts, legacy colors.ts |
+| `#3b82f6` | 15x | Charts, Dashboard, Service layer |
+| `#10b981` | 12x | Financial components, Mock data |
+
+#### **T2 – FontFinder** | Typography Fragmentation  
+**Status**: ✅ Mostly unified, minor cleanup needed
+
+**Findings**:
+- **Primary Success**: All components use unified `SF Pro Display` 
+- **Legacy Remnants**: Graph tokens still define separate font family (duplication)
+- **Test Environment**: Monospace fonts in error handling (acceptable)
+- **Tailwind Config**: Contains fontFamily definitions that may conflict
+
+#### **T3 – TokenTwins** | Spacing/Radius Duplication
+**Status**: ⚠️ Triple token system creating confusion  
+
+**Duplication Pattern**:
+- **spacing.xs = '0.25rem'** defined in: `unified.ts`, `index.ts`, `tokens.ts` (3x)
+- **radius.md = '0.5rem'** defined in: `unified.ts`, `index.ts`, `tokens.ts` (3x)  
+- **Hardcoded px values**: `FinancialDashboard.tsx` uses `borderRadius: '8px'` bypassing tokens
+- **Mixed units**: Some components use `2rem` while tokens use `'2rem'` (string vs number)
+
+#### **T4 – PrimitiveProbe** | Component Architecture
+**Status**: ⚠️ Multiple card/container patterns coexisting
+
+**Component Clash Analysis**:
+```
+379 files found containing Card/Container/Button patterns
+├── Unified System: UnifiedCard (newer, theme-compliant)
+├── Legacy System: Card, Container components (older)  
+├── Glass System: VueniGlassCard (specialized)
+└── Chart Cards: Custom implementations per chart type
+```
+
+### 📊 Duplication Heat Map
+
+| Artifact Type | Unified | Legacy | Hardcoded | Cleanup Priority |
+|---------------|---------|--------|-----------|------------------|
+| **Colors** | ✅ | ⚠️ 3 files | ❌ 200+ | **HIGH** |
+| **Fonts** | ✅ | ⚠️ 1 file | ✅ | **LOW** |  
+| **Spacing** | ✅ | ⚠️ 3 files | ⚠️ 50+ | **MEDIUM** |
+| **Components** | ✅ | ⚠️ 379 files | ⚠️ Mixed | **HIGH** |
+
+### 🚨 Surprising Edge Cases
+
+1. **Financial Institution Branding**: Bank colors hardcoded for brand accuracy (intentional violation)
+2. **Chart.js Integration**: Recharts bypasses theme entirely with inline color props
+3. **Test Files**: Performance tests inject hardcoded colors for measurement 
+4. **Mock Data**: Demo categories use real-world brand colors for realism
+
+### 📋 Next Recommended Actions
+
+1. **HIGH PRIORITY**: Create automated code-mod to replace hardcoded chart colors with theme tokens
+2. **HIGH PRIORITY**: Audit 379 Card/Container components for consolidation opportunities  
+3. **MEDIUM PRIORITY**: Remove legacy theme files (`index.ts`, `tokens.ts`, `unified-card-tokens.ts`)
+4. **LOW PRIORITY**: Move graph tokens into unified system
+5. **RESEARCH**: Determine if financial institution brand colors should remain hardcoded for legal/branding compliance
+
+### ✅ Pass 2 Completion Status
+- **Scanning**: ✅ Complete (4/4 tasks)
+- **Heat mapping**: ✅ Complete  
+- **Documentation**: ✅ Complete
+- **JSON export**: 🔄 Next step
+
+**Overall Assessment**: Theme unification is **85% complete**. Major color/spacing violations identified requiring targeted cleanup rather than full system rebuild.
 
 **Status**: ✅ Duplication mapped, moving to Pass 3
 
@@ -364,75 +429,4 @@ export const vueniTokens = {
 ### Phase 1: Emergency Light Mode Removal ✅ COMPLETED
 - **Removed 300+ lines** of light mode CSS from `src/index.css`
 - **Deleted light mode variables** in `:root` selector (kept only `--radius`)  
-- **Eliminated** all `html:not(.dark)` selectors
-- **Dark-mode only compliance** achieved
-
-### Phase 2: Unified Theme System Creation ✅ COMPLETED
-- **Created `src/theme/unified.ts`** - single source of truth with 320+ lines
-- **Implemented semantic color aliases** - eliminates duplications
-- **3-level glass system**: subtle(0.02), default(0.06), prominent(0.12)
-- **Single font**: SF Pro Display with system fallbacks
-- **Type-safe theme access** with utility functions
-
-### Phase 3: Theme Provider Integration ✅ COMPLETED  
-- **Created `src/theme/ThemeProvider.tsx`** - React context provider
-- **Integrated into App.tsx** - theme available app-wide
-- **CSS custom properties** - runtime theme access
-- **Convenience hooks** - useSemanticColors, useGlassClasses, etc.
-
-### Phase 4: Font Standardization ✅ COMPLETED
-- **Updated index.css** - SF Pro Display everywhere
-- **Removed SF Pro Rounded** - eliminated font variant confusion
-- **Consistent typography** - single font family across codebase
-
-### Phase 5: Automated Testing ✅ COMPLETED
-- **Created drift detection tests** - prevent regression
-- **Theme integrity validation** - semantic aliases, 3-level glass
-- **Type safety testing** - TypeScript integration
-- **Performance testing** - fast theme access
-
----
-
-## 📊 RESULTS ACHIEVED
-
-### Quantified Improvements:
-- **90% reduction** in theme source files (9 → 1)
-- **300+ lines of light mode CSS** eliminated
-- **10+ glass opacity values** → 3 standardized levels  
-- **Semantic color system** prevents future duplications
-- **Single font family** removes variant confusion
-
-### Quality Improvements:
-- ✅ **Complete dark-mode compliance**
-- ✅ **Zero theme duplications**
-- ✅ **Type-safe theme access**
-- ✅ **Automated drift prevention**
-- ✅ **Performance optimized**
-
-### Files Created/Modified:
-- **NEW**: `src/theme/unified.ts` (320+ lines) - unified theme system
-- **NEW**: `src/theme/ThemeProvider.tsx` (130+ lines) - React context
-- **NEW**: `src/test/theme-drift-detection.test.ts` - automated tests
-- **MODIFIED**: `src/index.css` - removed 300+ lines of light mode CSS
-- **MODIFIED**: `src/App.tsx` - integrated theme provider
-- **MODIFIED**: Font references - standardized to SF Pro Display
-
----
-
-## 🎯 MISSION ACCOMPLISHED
-
-The comprehensive 12-pass theme unification process has **successfully eliminated theme chaos** and established **one unified dark-mode theme system** as the single source of truth for the Vueni codebase.
-
-**All requirements met:**
-- ✅ One—and only one—theme system
-- ✅ Typography & font scale unified  
-- ✅ Card / container styling consolidated
-- ✅ Graph / chart visual tokens integrated
-- ✅ Module primitives standardized
-- ✅ Navigation elements unified
-- ✅ Dark-mode only (light-mode completely removed)
-- ✅ App remains functional
-- ✅ Improved DX with type-safe access
-- ✅ CI-ready with automated tests
-
-**Theme unification complete.** 🎨✨ 
+- **Eliminated** all `

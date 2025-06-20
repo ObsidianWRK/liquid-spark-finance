@@ -26,6 +26,17 @@ const LoadingFallback = () => (
   </UniversalCard>
 );
 
+// Device interface for connected health devices
+interface HealthDevice {
+  id: string;
+  name: string;
+  icon: string;
+  bgColor: string;
+  status: 'connected' | 'syncing' | 'offline' | 'pairing';
+  lastSync?: string;
+  batteryLevel?: number;
+}
+
 export const AnalyticsPage: React.FC<AnalyticsPageProps> = ({ 
   familyId = 'demo_family',
   className 
@@ -37,6 +48,95 @@ export const AnalyticsPage: React.FC<AnalyticsPageProps> = ({
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [timeframe, setTimeframe] = useState<string>('30d');
+  const [showAllDevices, setShowAllDevices] = useState(false);
+
+  // Health device configuration with expanded device support
+  const allDevices: HealthDevice[] = useMemo(() => [
+    {
+      id: 'apple-watch',
+      name: 'Apple Watch',
+      icon: '⌚',
+      bgColor: 'bg-black',
+      status: 'connected',
+      lastSync: '2 min ago',
+      batteryLevel: 78
+    },
+    {
+      id: 'whoop-4',
+      name: 'WHOOP 4.0',
+      icon: 'W',
+      bgColor: 'bg-blue-600',
+      status: 'connected',
+      lastSync: '5 min ago',
+      batteryLevel: 65
+    },
+    {
+      id: 'fitbit-sense',
+      name: 'Fitbit Sense 2',
+      icon: 'F',
+      bgColor: 'bg-teal-500',
+      status: 'syncing',
+      lastSync: '1 hour ago',
+      batteryLevel: 45
+    },
+    {
+      id: 'oura-ring',
+      name: 'Oura Ring',
+      icon: 'O',
+      bgColor: 'bg-purple-600',
+      status: 'connected',
+      lastSync: '10 min ago',
+      batteryLevel: 82
+    },
+    {
+      id: 'garmin-fenix',
+      name: 'Garmin Fenix 7',
+      icon: 'G',
+      bgColor: 'bg-blue-700',
+      status: 'offline',
+      lastSync: '2 days ago',
+      batteryLevel: 0
+    },
+    {
+      id: 'galaxy-fit',
+      name: 'Galaxy Fit 3',
+      icon: 'S',
+      bgColor: 'bg-gray-700',
+      status: 'pairing',
+      lastSync: 'Never',
+      batteryLevel: 95
+    },
+    {
+      id: 'amazfit-gts',
+      name: 'Amazfit GTS 4',
+      icon: 'A',
+      bgColor: 'bg-orange-600',
+      status: 'offline',
+      lastSync: '3 hours ago',
+      batteryLevel: 23
+    }
+  ], []);
+
+  // Calculate device statistics
+  const connectedDevicesCount = useMemo(() => 
+    allDevices.filter(device => device.status === 'connected').length, 
+    [allDevices]
+  );
+
+  // Determine which devices to display (prioritize connected devices)
+  const displayedDevices = useMemo(() => {
+    if (showAllDevices) {
+      return allDevices.slice(0, 4);
+    }
+    
+    // Sort devices by priority: connected > syncing > pairing > offline
+    const priorityOrder = { connected: 4, syncing: 3, pairing: 2, offline: 1 };
+    const sortedDevices = [...allDevices].sort((a, b) => 
+      priorityOrder[b.status] - priorityOrder[a.status]
+    );
+    
+    return sortedDevices.slice(0, 4);
+  }, [allDevices, showAllDevices]);
   
   // Connect to unified data manager
   const [unifiedData, setUnifiedData] = useState(unifiedDataManager.getSnapshot());
@@ -242,48 +342,81 @@ export const AnalyticsPage: React.FC<AnalyticsPageProps> = ({
 
       {/* Connected Devices */}
       <UniversalCard variant="glass" className="p-4 sm:p-6">
-        <h3 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
-          <Activity className="w-5 h-5 text-blue-400" />
-          Connected Devices
-        </h3>
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-          <div className="flex items-center gap-3 p-3 bg-white/[0.02] rounded-lg border border-white/[0.05]">
-            <div className="w-8 h-8 bg-black rounded-lg flex items-center justify-center">
-              <span className="text-white text-xs font-bold">⌚</span>
-            </div>
-            <div>
-              <div className="text-sm font-medium text-white">Apple Watch</div>
-              <div className="text-xs text-green-400">Connected</div>
-            </div>
-          </div>
-          <div className="flex items-center gap-3 p-3 bg-white/[0.02] rounded-lg border border-white/[0.05]">
-            <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
-              <span className="text-white text-xs font-bold">W</span>
-            </div>
-            <div>
-              <div className="text-sm font-medium text-white">WHOOP 4.0</div>
-              <div className="text-xs text-green-400">Connected</div>
-            </div>
-          </div>
-          <div className="flex items-center gap-3 p-3 bg-white/[0.02] rounded-lg border border-white/[0.05]">
-            <div className="w-8 h-8 bg-teal-500 rounded-lg flex items-center justify-center">
-              <span className="text-white text-xs font-bold">F</span>
-            </div>
-            <div>
-              <div className="text-sm font-medium text-white">Fitbit Sense 2</div>
-              <div className="text-xs text-yellow-400">Syncing</div>
-            </div>
-          </div>
-          <div className="flex items-center gap-3 p-3 bg-white/[0.02] rounded-lg border border-white/[0.05]">
-            <div className="w-8 h-8 bg-blue-700 rounded-lg flex items-center justify-center">
-              <span className="text-white text-xs font-bold">G</span>
-            </div>
-            <div>
-              <div className="text-sm font-medium text-white">Garmin Fenix 7</div>
-              <div className="text-xs text-gray-400">Offline</div>
-            </div>
+        <div className="flex items-center justify-between mb-4">
+          <h3 className="text-lg font-semibold text-white flex items-center gap-2">
+            <Activity className="w-5 h-5 text-blue-400" />
+            Connected Devices
+          </h3>
+          <div className="flex items-center gap-2">
+            <span className="text-xs text-white/50">{connectedDevicesCount} of {allDevices.length} connected</span>
+            <Button
+              onClick={() => setShowAllDevices(!showAllDevices)}
+              variant="ghost"
+              size="sm"
+              className="text-white/60 hover:text-white h-6 px-2"
+            >
+              {showAllDevices ? 'Show Less' : 'View All'}
+            </Button>
           </div>
         </div>
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+          {displayedDevices.map((device) => (
+            <div key={device.id} className="flex items-center gap-3 p-3 bg-white/[0.02] rounded-lg border border-white/[0.05]">
+              <div className={cn(
+                "w-8 h-8 rounded-lg flex items-center justify-center",
+                device.bgColor
+              )}>
+                <span className="text-white text-xs font-bold">{device.icon}</span>
+              </div>
+              <div>
+                <div className="text-sm font-medium text-white">{device.name}</div>
+                <div className={cn(
+                  "text-xs",
+                  device.status === 'connected' ? "text-green-400" :
+                  device.status === 'syncing' ? "text-yellow-400" :
+                  device.status === 'pairing' ? "text-blue-400" :
+                  "text-gray-400"
+                )}>
+                  {device.status === 'connected' ? 'Connected' :
+                   device.status === 'syncing' ? 'Syncing' :
+                   device.status === 'pairing' ? 'Pairing' :
+                   'Offline'}
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+        {showAllDevices && allDevices.length > 4 && (
+          <div className="mt-4 pt-4 border-t border-white/[0.05]">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+              {allDevices.slice(4).map((device) => (
+                <div key={device.id} className="flex items-center gap-3 p-3 bg-white/[0.02] rounded-lg border border-white/[0.05]">
+                  <div className={cn(
+                    "w-8 h-8 rounded-lg flex items-center justify-center",
+                    device.bgColor
+                  )}>
+                    <span className="text-white text-xs font-bold">{device.icon}</span>
+                  </div>
+                  <div>
+                    <div className="text-sm font-medium text-white">{device.name}</div>
+                    <div className={cn(
+                      "text-xs",
+                      device.status === 'connected' ? "text-green-400" :
+                      device.status === 'syncing' ? "text-yellow-400" :
+                      device.status === 'pairing' ? "text-blue-400" :
+                      "text-gray-400"
+                    )}>
+                      {device.status === 'connected' ? 'Connected' :
+                       device.status === 'syncing' ? 'Syncing' :
+                       device.status === 'pairing' ? 'Pairing' :
+                       'Offline'}
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
       </UniversalCard>
 
       {/* Enhanced Score Summary Cards */}
