@@ -10,6 +10,8 @@ import { analyticsService } from '../api/analyticsService';
 import { AnalyticsDashboardData, AnalyticsTimeframe } from '@/shared/types/analytics';
 import { unifiedDataManager, useUnifiedState } from '@/services/unifiedDataManager';
 
+const RestingHeartRateTrend = React.lazy(() => import('./health/RestingHeartRateTrend'));
+
 // Note: Chart components and specialized widgets will be implemented in Phase 3
 
 export interface AnalyticsPageProps {
@@ -1133,9 +1135,10 @@ export const AnalyticsPage: React.FC<AnalyticsPageProps> = ({
               </div>
             </div>
           </div>
-        </UniversalCard>
+          </UniversalCard>
+        </div>
+        <RestingHeartRateTrend />
       </div>
-    </div>
   );
 };
 
