@@ -9,6 +9,7 @@ import { useIsMobile } from '@/shared/hooks/use-mobile';
 import { analyticsService } from '../api/analyticsService';
 import { AnalyticsDashboardData, AnalyticsTimeframe } from '@/shared/types/analytics';
 import { unifiedDataManager, useUnifiedState } from '@/services/unifiedDataManager';
+import CaloricBalanceImpulseBuys from "./health/CaloricBalanceImpulseBuys";
 
 // Note: Chart components and specialized widgets will be implemented in Phase 3
 
@@ -849,6 +850,7 @@ export const AnalyticsPage: React.FC<AnalyticsPageProps> = ({
         </UniversalCard>
       </div>
 
+        <CaloricBalanceImpulseBuys />
       {/* Financial Health Correlation */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <UniversalCard variant="glass" interactive className="p-6">
