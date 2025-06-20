@@ -249,7 +249,7 @@ const OptimizedRefinedInsightsPage = memo(({ transactions, accounts }: InsightsP
       {/* Conditional decorative elements */}
       {!performance.isLowEnd && (
         <>
-          <div className="fixed top-1/4 left-1/4 w-32 h-32 bg-slate-700/5 rounded-full blur-3xl animate-pulse" />
+          <div className="fixed top-1/4 left-1/4 w-32 h-32 bg-white/[0.02] rounded-full blur-3xl animate-pulse" />
           <div className="fixed bottom-1/3 right-1/3 w-40 h-40 bg-indigo-900/5 rounded-full blur-3xl animate-pulse delay-1000" />
         </>
       )}

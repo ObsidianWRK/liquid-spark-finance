@@ -359,7 +359,8 @@ const ComprehensiveEcoCard: React.FC<EcoCardProps> = ({
         </div>
         <button
           onClick={() => setIsExpanded(false)}
-          className="p-2 rounded-lg bg-slate-800/50 hover:bg-slate-700/50 transition-colors"
+          className="p-2 rounded-lg bg-surface-900/70 hover:bg-white/[0.03] transition-colors"
+          data-testid="insights-card"
         >
           <ChevronUp className="w-5 h-5 text-slate-400" />
         </button>
@@ -372,7 +373,7 @@ const ComprehensiveEcoCard: React.FC<EcoCardProps> = ({
           className={`category-nav-button p-3 rounded-lg text-xs font-medium transition-all ${
             activeCategory === 'overview'
               ? 'bg-green-500/20 text-green-300 border border-green-500/30'
-              : 'bg-slate-800/30 text-slate-400 hover:bg-slate-700/30'
+              : 'bg-surface-900/70 text-white/60 hover:bg-white/[0.03]'
           }`}
         >
           <div className="icon-wrapper">
@@ -386,7 +387,7 @@ const ComprehensiveEcoCard: React.FC<EcoCardProps> = ({
             className={`category-nav-button p-3 rounded-lg text-xs font-medium transition-all ${
               activeCategory === category.id
                 ? 'bg-green-500/20 text-green-300 border border-green-500/30'
-                : 'bg-slate-800/30 text-slate-400 hover:bg-slate-700/30'
+                : 'bg-surface-900/70 text-white/60 hover:bg-white/[0.03]'
             }`}
             style={{
               backgroundColor: activeCategory === category.id ? `${category.color}20` : undefined,
@@ -442,7 +443,7 @@ const ComprehensiveEcoCard: React.FC<EcoCardProps> = ({
           </div>
 
           {/* Monthly Impact */}
-          <div className="bg-slate-800/30 p-4 rounded-lg">
+          <div className="bg-surface-900/70 p-4 rounded-lg shadow-lg" data-testid="insights-card">
             <h4 className="text-lg font-semibold text-white mb-4">Monthly Environmental Impact</h4>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
               <div className="text-center">
@@ -469,7 +470,7 @@ const ComprehensiveEcoCard: React.FC<EcoCardProps> = ({
             <h4 className="text-lg font-semibold text-white mb-4">Eco Spending This Month</h4>
             <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
               {Object.entries(spendingCategories).map(([key, value]) => (
-                <div key={key} className="bg-slate-800/30 p-4 rounded-lg">
+                <div key={key} className="bg-surface-900/70 p-4 rounded-lg shadow-lg" data-testid="insights-card">
                   <div className="text-sm text-slate-400 capitalize mb-1">
                     {key.replace(/([A-Z])/g, ' $1')}
                   </div>
@@ -514,7 +515,7 @@ const ComprehensiveEcoCard: React.FC<EcoCardProps> = ({
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   {category.metrics.map((metric) => (
-                    <div key={metric.key} className="bg-slate-800/30 p-4 rounded-lg">
+                    <div key={metric.key} className="bg-surface-900/70 p-4 rounded-lg shadow-lg" data-testid="insights-card">
                       <div className="flex justify-between items-start mb-3">
                         <div>
                           <div className="text-sm text-slate-400">{metric.label}</div>
@@ -529,7 +530,7 @@ const ComprehensiveEcoCard: React.FC<EcoCardProps> = ({
                       </div>
                       
                       {typeof metric.value === 'number' && typeof metric.target === 'number' && (
-                        <div className="w-full bg-slate-700/30 rounded-full h-2">
+                        <div className="w-full bg-white/[0.08] rounded-full h-2">
                           <div 
                             className="h-2 rounded-full transition-all duration-1000"
                             style={{

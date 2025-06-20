@@ -36,7 +36,8 @@ const RefinedTrendCard = memo(({
 
   return (
     <EnhancedGlassCard 
-      className="refined-trend-card relative overflow-hidden rounded-2xl backdrop-blur-xl border border-slate-700/40 hover:border-slate-600/60 transition-all duration-300 group cursor-pointer p-6 bg-slate-900/20 hover-lift"
+      className="refined-trend-card relative overflow-hidden rounded-2xl backdrop-blur-xl border border-white/[0.08] hover:border-white/[0.12] transition-all duration-300 group cursor-pointer p-6 bg-surface-900/70 hover-lift shadow-lg"
+      data-testid="insights-card"
       liquid={true}
       liquidIntensity={liquidIntensity}
       liquidDistortion={0.1}
@@ -54,7 +55,7 @@ const RefinedTrendCard = memo(({
         {/* Header */}
         <div className="flex items-start justify-between mb-4">
           <div className="flex items-start space-x-3">
-            <div className="p-2 rounded-xl bg-slate-800/30 border border-slate-700/40 backdrop-blur-sm">
+            <div className="p-2 rounded-xl bg-white/[0.05] border border-white/[0.08] backdrop-blur-sm">
               {React.cloneElement(displayIcon, { 
                 className: 'w-5 h-5 text-slate-300'
               })}
@@ -98,7 +99,7 @@ const RefinedTrendCard = memo(({
         
         {/* Trend status */}
         <div className="text-center">
-          <span className="text-sm font-medium text-slate-200 bg-slate-800/20 px-3 py-1 rounded-lg border border-slate-700/30">
+          <span className="text-sm font-medium text-white/80 bg-white/[0.03] px-3 py-1 rounded-lg border border-white/[0.08]">
             {trend}
           </span>
         </div>

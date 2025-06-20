@@ -94,7 +94,7 @@ const RefinedScoreCard = memo(({
     };
 
     return (
-      <div className="flex items-center space-x-1 px-3 py-1 rounded-full bg-slate-800/30 border border-slate-700/40 backdrop-blur-sm">
+      <div className="flex items-center space-x-1 px-3 py-1 rounded-full bg-white/[0.03] border border-white/[0.08] backdrop-blur-sm">
         {iconMap[trend]}
       </div>
     );
@@ -105,7 +105,8 @@ const RefinedScoreCard = memo(({
       className={`
         relative overflow-hidden rounded-3xl backdrop-blur-xl border border-slate-700/40 
         hover:border-slate-600/60 transition-all duration-500 group hover-lift ${config.padding}
-        bg-slate-900/20
+        bg-surface-900/70 shadow-lg"
+      data-testid="insights-card"
       `}
       liquid={true}
       liquidIntensity={liquidIntensity}
@@ -132,7 +133,7 @@ const RefinedScoreCard = memo(({
         <div className="flex items-center justify-between mb-6">
           <div className="flex items-center space-x-3">
             <div 
-              className={`${config.iconPadding} rounded-2xl backdrop-blur-sm border border-slate-700/30 bg-slate-800/20`}
+              className={`${config.iconPadding} rounded-2xl backdrop-blur-sm border border-white/[0.08] bg-white/[0.03]`}
               style={{ 
                 background: `linear-gradient(135deg, ${refinedColor}15, ${refinedColor}05)`,
                 borderColor: `${refinedColor}30`

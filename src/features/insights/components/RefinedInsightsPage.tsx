@@ -228,7 +228,7 @@ const RefinedInsightsPage = ({ transactions, accounts }: InsightsPageProps) => {
       <div className="fixed inset-0 bg-gradient-to-br from-slate-900/10 to-slate-800/5" />
       
       {/* Minimal floating orbs for consistency */}
-      <div className="fixed top-1/4 left-1/4 w-32 h-32 bg-slate-700/5 rounded-full blur-3xl animate-pulse" />
+      <div className="fixed top-1/4 left-1/4 w-32 h-32 bg-white/[0.02] rounded-full blur-3xl animate-pulse" />
       <div className="fixed bottom-1/3 right-1/3 w-40 h-40 bg-indigo-900/5 rounded-full blur-3xl animate-pulse delay-1000" />
       
       {/* Content */}

@@ -115,7 +115,7 @@ const RefinedMetricCard = memo(({
       stable: { 
         icon: <Minus className="w-4 h-4" />, 
         color: 'text-slate-400',
-        bg: 'bg-slate-500/10',
+        bg: 'bg-surface-900/70',
         border: 'border-slate-500/20'
       }
     };
@@ -146,11 +146,12 @@ const RefinedMetricCard = memo(({
       className={`
         relative overflow-hidden rounded-2xl backdrop-blur-xl border border-white/[0.08] 
         hover:border-white/[0.12] transition-all duration-300 group hover-lift ${config.padding}
-        bg-white/[0.02]
+        bg-white/[0.02] shadow-lg
       `}
       style={{
         animation: `slideInScale 0.6s ease-out ${delay}ms both`
       }}
+      data-testid="insights-card"
     >
       {/* Subtle gradient overlay */}
       <div 
