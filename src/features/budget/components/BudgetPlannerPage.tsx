@@ -66,7 +66,7 @@ const BudgetPlannerPage = () => {
   }
 
   return (
-    <div className="p-6 space-y-8">
+    <div className="p-4 sm:p-6 space-y-6 sm:space-y-8">
       {/* Back Button */}
       <button
         onClick={() => navigate('/')}
@@ -77,20 +77,20 @@ const BudgetPlannerPage = () => {
       </button>
 
       {/* Header */}
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-3xl font-bold text-white flex items-center gap-3">
-            <BarChart3 className="w-8 h-8 text-blue-400" />
-            Budget & Goals Manager
+          <h1 className="text-2xl sm:text-3xl font-bold text-white flex items-center gap-3">
+            <BarChart3 className="w-6 h-6 sm:w-8 sm:h-8 text-blue-400" />
+            <span className="truncate">Budget & Goals Manager</span>
           </h1>
           <p className="text-white/60 mt-2">Track spending, manage budgets, and achieve your financial goals</p>
         </div>
-        <div className="flex items-center gap-3">
-          <button className="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-xl transition-colors flex items-center gap-2">
+        <div className="flex items-center gap-3 flex-wrap">
+          <button className="bg-green-500 hover:bg-green-600 text-white px-3 sm:px-4 py-2 rounded-xl transition-colors flex items-center gap-2 text-sm sm:text-base whitespace-nowrap">
             <Target className="w-4 h-4" />
             New Goal
           </button>
-          <button className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-xl transition-colors flex items-center gap-2">
+          <button className="bg-blue-500 hover:bg-blue-600 text-white px-3 sm:px-4 py-2 rounded-xl transition-colors flex items-center gap-2 text-sm sm:text-base whitespace-nowrap">
             <Plus className="w-4 h-4" />
             New Budget
           </button>
@@ -99,8 +99,8 @@ const BudgetPlannerPage = () => {
 
       {/* Quick Stats */}
       {budget && (
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-          <div className="bg-white/[0.02] rounded-2xl border border-white/[0.08] p-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+          <div className="bg-white/[0.02] rounded-2xl border border-white/[0.08] p-4 sm:p-6">
             <div className="flex items-center gap-3 mb-2">
               <BarChart3 className="w-5 h-5 text-blue-400" />
               <p className="text-white/60 text-sm">Monthly Budget</p>
@@ -108,7 +108,7 @@ const BudgetPlannerPage = () => {
             <p className="text-2xl font-bold text-white">{formatCurrency(budget.totalBudgeted)}</p>
           </div>
           
-          <div className="bg-white/[0.02] rounded-2xl border border-white/[0.08] p-6">
+          <div className="bg-white/[0.02] rounded-2xl border border-white/[0.08] p-4 sm:p-6">
             <div className="flex items-center gap-3 mb-2">
               <TrendingUp className="w-5 h-5 text-red-400" />
               <p className="text-white/60 text-sm">Total Spent</p>
@@ -119,7 +119,7 @@ const BudgetPlannerPage = () => {
             </p>
           </div>
           
-          <div className="bg-white/[0.02] rounded-2xl border border-white/[0.08] p-6">
+          <div className="bg-white/[0.02] rounded-2xl border border-white/[0.08] p-4 sm:p-6">
             <div className="flex items-center gap-3 mb-2">
               <Target className="w-5 h-5 text-green-400" />
               <p className="text-white/60 text-sm">Remaining</p>
@@ -130,7 +130,7 @@ const BudgetPlannerPage = () => {
             </p>
           </div>
           
-          <div className="bg-white/[0.02] rounded-2xl border border-white/[0.08] p-6">
+          <div className="bg-white/[0.02] rounded-2xl border border-white/[0.08] p-4 sm:p-6">
             <div className="flex items-center gap-3 mb-2">
               <AlertCircle className="w-5 h-5 text-yellow-400" />
               <p className="text-white/60 text-sm">Active Goals</p>
