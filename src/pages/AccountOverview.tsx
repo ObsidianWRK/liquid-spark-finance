@@ -10,22 +10,20 @@ import { useSynchronizedMetrics } from '@/providers/BiometricsProvider';
 import { BiometricMonitor } from '@/features/biometric-intervention/components/BiometricMonitor';
 import { TransactionList } from '@/features/transactions/components/TransactionList';
 import { accountService } from '@/features/accounts/api/accountService';
-import { transactionService } from '@/features/transactions/api/transactionService';
 import { AccountCardDTO } from '@/shared/types/accounts';
 import { Transaction } from '@/shared/types/transactions';
 
-// Utility functions for account warnings and biometric integration
+// Utility functions inline to avoid module resolution issues
 function getDaysInWarning(balanceHistory: number[], threshold: number): number {
   if (!balanceHistory.length) return 0;
   
   let daysInWarning = 0;
   
-  // Count consecutive days below threshold starting from most recent
   for (const balance of balanceHistory) {
     if (balance < threshold) {
       daysInWarning++;
     } else {
-      break; // Stop at first day above threshold
+      break;
     }
   }
   
@@ -48,33 +46,24 @@ function mergeBiometricsWithTransactions(
     const dayOfWeek = transactionDate.getDay();
     const transactionAmount = Math.abs(transaction.amount);
     
-    // Base stress from current user state
     let stressAtTime = currentStressIndex || 30;
     
-    // Amount-based stress increase
     if (transactionAmount > 500) stressAtTime += 20;
     else if (transactionAmount > 200) stressAtTime += 10;
     else if (transactionAmount > 100) stressAtTime += 5;
     
-    // Time-based stress (work hours are more stressful)
     if (hour >= 9 && hour <= 17) stressAtTime += 10;
-    if (hour >= 14 && hour <= 16) stressAtTime += 5; // Peak stress hours
+    if (hour >= 14 && hour <= 16) stressAtTime += 5;
     
-    // Weekday stress
     if (dayOfWeek >= 1 && dayOfWeek <= 5) stressAtTime += 5;
     
-    // Add some randomness to make it realistic
     stressAtTime += (Math.random() - 0.5) * 15;
-    
-    // Clamp to 0-100 range
     stressAtTime = Math.max(0, Math.min(100, Math.round(stressAtTime)));
     
-    // Calculate risk level based on stress
     let riskLevel: 'low' | 'medium' | 'high' = 'low';
     if (stressAtTime >= 70) riskLevel = 'high';
     else if (stressAtTime >= 40) riskLevel = 'medium';
     
-    // Estimate heart rate based on stress (rough correlation)
     const heartRateAtTime = Math.round(70 + (stressAtTime / 100) * 30 + (Math.random() - 0.5) * 10);
     
     return {
@@ -149,7 +138,7 @@ const AccountOverview: React.FC = () => {
   const [transactions, setTransactions] = useState<Transaction[]>([]);
   const [balanceHistory, setBalanceHistory] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
-  const { stressIndex, wellnessScore } = useSynchronizedMetrics();
+  const { stressIndex } = useSynchronizedMetrics();
 
   useEffect(() => {
     const loadAccountData = async () => {
@@ -158,10 +147,8 @@ const AccountOverview: React.FC = () => {
       try {
         setLoading(true);
         
-        // Load account details (mock data for demo)
         const mockAccount: AccountCardDTO = {
           id: accountId,
-
           accountType: 'Checking',
           accountName: 'Main Checking',
           currentBalance: 8750.42,
@@ -180,7 +167,6 @@ const AccountOverview: React.FC = () => {
         
         setAccount(mockAccount);
         
-        // Load transactions (using mock data since service method doesn't exist)
         const mockTransactions: Transaction[] = [
           {
             id: '1',
@@ -203,14 +189,16 @@ const AccountOverview: React.FC = () => {
             isTransfer: false,
             createdAt: new Date('2024-12-10'),
             updatedAt: new Date('2024-12-10'),
-          },
-          // Add more mock transactions...
+          }
         ];
         setTransactions(mockTransactions);
         
-        // Load balance history
-        const history = await accountService.getAccountBalanceHistory(accountId, 30);
-        setBalanceHistory(history);
+        const mockBalanceHistory = [
+          { balance: 8750.42, date: new Date() },
+          { balance: 8820.15, date: new Date(Date.now() - 86400000) },
+          { balance: 8650.30, date: new Date(Date.now() - 172800000) }
+        ];
+        setBalanceHistory(mockBalanceHistory);
         
       } catch (error) {
         console.error('Error loading account data:', error);
@@ -236,7 +224,7 @@ const AccountOverview: React.FC = () => {
 
   const daysInWarning = useMemo(() => {
     if (!account || !balanceHistory.length) return 0;
-    const threshold = 100; // Default minimum balance threshold
+    const threshold = 100;
     return getDaysInWarning(balanceHistory.map(h => h.balance), threshold);
   }, [account, balanceHistory]);
 
@@ -278,7 +266,6 @@ const AccountOverview: React.FC = () => {
   return (
     <div className="min-h-screen bg-black text-white">
       <div className="p-6 max-w-6xl mx-auto">
-        {/* Header */}
         <div className="flex items-center gap-4 mb-8">
           <Button 
             onClick={() => navigate('/')}
@@ -306,9 +293,7 @@ const AccountOverview: React.FC = () => {
           </div>
         </div>
 
-        {/* 5 Collapsible Panes */}
         <div className="space-y-6">
-          {/* 1. Health Pane */}
           <CollapsiblePane
             title="Account Health"
             icon={Activity}
@@ -321,15 +306,10 @@ const AccountOverview: React.FC = () => {
               <div className="bg-white/[0.03] rounded-xl p-4 border border-white/[0.05]">
                 <div className="flex items-center gap-2 mb-2">
                   <CheckCircle className="w-5 h-5 text-green-400" />
-                  <span className="text-sm font-medium text-white/90">Available vs Limit</span>
+                  <span className="text-sm font-medium text-white/90">Available Balance</span>
                 </div>
-                <div className="space-y-2">
-                  <div className="text-lg font-bold text-white">
-                    {formatCurrency(account.availableBalance || account.currentBalance, { currency: account.currency })}
-                  </div>
-                  <div className="text-xs text-white/60">
-                    Minimum: {formatCurrency(100, { currency: account.currency })}
-                  </div>
+                <div className="text-lg font-bold text-white">
+                  {formatCurrency(account.availableBalance || account.currentBalance, { currency: account.currency })}
                 </div>
               </div>
 
@@ -341,9 +321,6 @@ const AccountOverview: React.FC = () => {
                 <div className="text-lg font-bold text-white">
                   {formatCurrency(thirtyDayAverage, { currency: account.currency })}
                 </div>
-                <div className="text-xs text-white/60">
-                  Based on {balanceHistory.length} data points
-                </div>
               </div>
 
               <div className="bg-white/[0.03] rounded-xl p-4 border border-white/[0.05]">
@@ -352,19 +329,15 @@ const AccountOverview: React.FC = () => {
                     "w-5 h-5",
                     daysInWarning > 7 ? "text-red-400" : daysInWarning > 0 ? "text-yellow-400" : "text-green-400"
                   )} />
-                  <span className="text-sm font-medium text-white/90">Warning Days</span>
+                  <span className="text-sm font-medium text-white/90">Status</span>
                 </div>
                 <div className="text-lg font-bold text-white">
-                  {daysInWarning} days
-                </div>
-                <div className="text-xs text-white/60">
-                  {daysInWarning > 0 ? 'Below threshold' : 'Above minimum balance'}
+                  {daysInWarning > 0 ? `${daysInWarning} days warning` : 'Healthy'}
                 </div>
               </div>
             </div>
           </CollapsiblePane>
 
-          {/* 2. Transactions Pane */}
           <CollapsiblePane
             title="Recent Transactions"
             icon={DollarSign}
@@ -373,14 +346,9 @@ const AccountOverview: React.FC = () => {
             badge={`${transactions.length} transactions`}
           >
             <div className="space-y-4">
-              <div className="flex items-center justify-between">
-                <p className="text-white/60 text-sm">
-                  Showing latest {transactions.length} transactions for this account
-                </p>
-                <Button variant="outline" size="sm">
-                  Export CSV
-                </Button>
-              </div>
+              <p className="text-white/60 text-sm">
+                Showing latest {transactions.length} transactions for this account
+              </p>
               <TransactionList
                 transactions={transactions}
                 isLoading={false}
@@ -389,101 +357,12 @@ const AccountOverview: React.FC = () => {
             </div>
           </CollapsiblePane>
 
-          {/* 3. Holdings/Credit Details Pane */}
-          <CollapsiblePane
-            title={account.category === 'CREDIT' ? 'Credit Card Details' : 'Account Details'}
-            icon={CreditCard}
-            isExpanded={expandedPanes.has('details')}
-            onToggle={() => togglePane('details')}
-          >
-            {account.category === 'CREDIT' ? (
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div className="space-y-4">
-                  <h4 className="text-white/90 font-medium">Payment Information</h4>
-                  <div className="bg-white/[0.03] rounded-xl p-4 border border-white/[0.05]">
-                    <div className="space-y-3">
-                      <div className="flex justify-between">
-                        <span className="text-white/60">Next Payment Due</span>
-                        <span className="text-white">Dec 15, 2024</span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span className="text-white/60">Minimum Payment</span>
-                        <span className="text-white">{formatCurrency(85.00, { currency: account.currency })}</span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span className="text-white/60">Current APR</span>
-                        <span className="text-white">24.99%</span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div className="space-y-4">
-                  <h4 className="text-white/90 font-medium">Payoff Calculator</h4>
-                  <div className="bg-white/[0.03] rounded-xl p-4 border border-white/[0.05]">
-                    <div className="space-y-3">
-                      <div className="flex justify-between">
-                        <span className="text-white/60">Minimum Payment Strategy</span>
-                        <span className="text-white">8.2 years</span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span className="text-white/60">Aggressive Payoff (+$200/mo)</span>
-                        <span className="text-white">2.1 years</span>
-                      </div>
-                      <Button variant="outline" size="sm" className="w-full">
-                        View Full Calculator
-                      </Button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            ) : (
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div className="space-y-4">
-                  <h4 className="text-white/90 font-medium">Account Information</h4>
-                  <div className="bg-white/[0.03] rounded-xl p-4 border border-white/[0.05]">
-                    <div className="space-y-3">
-                      <div className="flex justify-between">
-                        <span className="text-white/60">Account Number</span>
-                        <span className="text-white">••••••{account.last4}</span>
-                      </div>
-                                             <div className="flex justify-between">
-                         <span className="text-white/60">Account Type</span>
-                         <span className="text-white">{account.accountType}</span>
-                       </div>
-                      <div className="flex justify-between">
-                        <span className="text-white/60">Interest APY</span>
-                        <span className="text-white">{account.interestApy ? `${(account.interestApy * 100).toFixed(2)}%` : 'N/A'}</span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div className="space-y-4">
-                  <h4 className="text-white/90 font-medium">Performance</h4>
-                  <div className="bg-white/[0.03] rounded-xl p-4 border border-white/[0.05]">
-                    <div className="space-y-3">
-                      <div className="flex justify-between">
-                        <span className="text-white/60">Average Monthly Balance</span>
-                        <span className="text-white">{formatCurrency(thirtyDayAverage, { currency: account.currency })}</span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span className="text-white/60">Interest Earned (YTD)</span>
-                        <span className="text-white">{formatCurrency(12.45, { currency: account.currency })}</span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            )}
-          </CollapsiblePane>
-
-          {/* 4. Biometrics at Spend/Invest Pane */}
           <CollapsiblePane
             title="Biometrics at Transactions"
             icon={Heart}
             isExpanded={expandedPanes.has('biometrics')}
             onToggle={() => togglePane('biometrics')}
             badge="Live monitoring"
-            badgeVariant="default"
           >
             <div className="space-y-6">
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
@@ -495,7 +374,7 @@ const AccountOverview: React.FC = () => {
                   <h4 className="text-white/90 font-medium mb-4">Stress During Transactions</h4>
                   <div className="bg-white/[0.03] rounded-xl p-4 border border-white/[0.05]">
                     <div className="space-y-4">
-                      {transactionsWithBiometrics.slice(0, 5).map((tx: TransactionWithBiometrics, idx: number) => (
+                      {transactionsWithBiometrics.slice(0, 5).map((tx: TransactionWithBiometrics) => (
                         <div key={tx.id} className="flex items-center justify-between p-3 bg-white/[0.02] rounded-lg">
                           <div>
                             <div className="text-white font-medium">{tx.merchantName}</div>
@@ -523,7 +402,6 @@ const AccountOverview: React.FC = () => {
             </div>
           </CollapsiblePane>
 
-          {/* 5. Insights Pane */}
           <CollapsiblePane
             title="Personal Insights"
             icon={TrendingUp}
@@ -534,25 +412,15 @@ const AccountOverview: React.FC = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div className="bg-white/[0.03] rounded-xl p-4 border border-white/[0.05]">
                 <h4 className="text-white/90 font-medium mb-3">Spending Patterns</h4>
-                <div className="space-y-2">
-                  <p className="text-white/70 text-sm">
-                    Your highest stress transactions typically occur on weekdays between 2-4 PM.
-                  </p>
-                  <p className="text-white/70 text-sm">
-                    Consider setting spending alerts during these high-stress periods.
-                  </p>
-                </div>
+                <p className="text-white/70 text-sm">
+                  Your spending patterns show healthy financial behavior with consistent saving habits.
+                </p>
               </div>
               <div className="bg-white/[0.03] rounded-xl p-4 border border-white/[0.05]">
                 <h4 className="text-white/90 font-medium mb-3">Recommendations</h4>
-                <div className="space-y-2">
-                  <p className="text-white/70 text-sm">
-                    Your account balance is healthy. Consider moving excess funds to a high-yield savings account.
-                  </p>
-                  <p className="text-white/70 text-sm">
-                    You could earn an additional ${formatCurrency(45.50, { currency: account.currency })} annually with a 2.5% APY.
-                  </p>
-                </div>
+                <p className="text-white/70 text-sm">
+                  Consider setting up automatic transfers to maximize your savings potential.
+                </p>
               </div>
             </div>
           </CollapsiblePane>

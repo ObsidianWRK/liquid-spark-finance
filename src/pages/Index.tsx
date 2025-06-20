@@ -28,14 +28,7 @@ const DashboardPage = lazy(() => import('@/features/dashboard/components/Dashboa
 const FinancialPlanningPage = lazy(() => import('@/features/planning/components/FinancialPlanningPage'));
 const CreditScorePage = lazy(() => import('@/features/credit/components/CreditScorePage'));
 const AnalyticsPage = lazy(() => import('@/features/analytics/components/AnalyticsPage'));
-
-// Simple Insights component for now
-const SimpleInsights = () => (
-  <div className="p-6">
-    <h2 className="text-2xl font-bold text-white mb-4">Financial Insights</h2>
-    <p className="text-white/60">Insights functionality will be restored once import issues are resolved.</p>
-  </div>
-);
+const InsightsPage = lazy(() => import('./InsightsPage'));
 
 // Error Boundary Component
 class ErrorBoundary extends React.Component<
@@ -355,7 +348,11 @@ export default function Index() {
           </div>
         );
       case 'insights':
-        return <SimpleInsights />;
+        return (
+          <Suspense fallback={<div className="p-6 text-white">Loading insights...</div>}>
+            <InsightsPage />
+          </Suspense>
+        );
       case 'transactions':
         return (
           <div className="max-w-none w-full relative">

@@ -17,20 +17,20 @@ export { SharedScoreCircle } from './SharedScoreCircle';
 export type { SharedScoreCircleProps, ScoreGroupProps, ScoreType } from './SharedScoreCircle';
 
 // Insights Page Components
-export { ConfigurableInsightsPage } from './ConfigurableInsightsPage';
-export type { ConfigurableInsightsPageProps } from './ConfigurableInsightsPage';
+export { ConfigurableInsightsPage } from '@/features/insights/components/ConfigurableInsightsPage';
+export type { ConfigurableInsightsPageProps } from '@/features/insights/components/ConfigurableInsightsPage';
 
 export { 
   VueniUnifiedInsightsPage,
   insightsPresets
-} from './VueniUnifiedInsightsPage';
+} from '@/features/insights/components/VueniUnifiedInsightsPage';
 export type { 
   VueniUnifiedInsightsPageProps, 
   InsightsVariant, 
   ViewMode,
   Transaction as InsightsTransaction, 
   Account as InsightsAccount 
-} from './VueniUnifiedInsightsPage';
+} from '@/features/insights/components/VueniUnifiedInsightsPage';
 
 // Design System Components
 export { 
