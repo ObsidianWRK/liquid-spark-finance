@@ -198,9 +198,9 @@ const OptimizedProfile = React.memo(() => {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-5 md:gap-6">
           {/* Sidebar Navigation */}
-          <div className="lg:col-span-1">
+          <div className="md:col-span-1 lg:col-span-1">
             <UniversalCard variant="glass" className="p-4">
               {/* Quick Return to Dashboard */}
               <div className="mb-4 pb-4 border-b border-white/10">
@@ -227,7 +227,7 @@ const OptimizedProfile = React.memo(() => {
           </div>
 
           {/* Main Content */}
-          <div className="lg:col-span-3">
+          <div className="md:col-span-2 lg:col-span-3">
             <ActiveSectionComponent
               state={state}
               updateProfile={updateProfile}
