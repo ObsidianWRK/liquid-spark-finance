@@ -414,9 +414,9 @@ export default function Index() {
         );
       case 'transactions':
         return (
-          <div className="max-w-none w-full relative">
-            <div className="p-4 md:p-6 lg:p-8">
-              <div className="mb-6 flex items-start justify-between">
+          <div className="max-w-none w-full relative h-full">
+            <div className="p-4 md:p-6 lg:p-8 h-full flex flex-col">
+              <div className="mb-6 flex items-start justify-between flex-shrink-0">
                 <div>
                   <h1 className="text-2xl lg:text-3xl font-bold text-white mb-2">
                     Recent Transactions
@@ -434,14 +434,14 @@ export default function Index() {
                 </div>
               </div>
 
-              <div className="max-w-none">
+              <div className="max-w-none flex-1 lg:min-h-0">
                 <TransactionList
                   transactions={adaptTransactions(mockData.transactions) || []}
                   isLoading={false}
                   onTransactionClick={(transaction) =>
                     console.log('Transaction clicked:', transaction)
                   }
-                  className="w-full"
+                  className="w-full h-full"
                 />
               </div>
             </div>

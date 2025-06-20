@@ -1219,6 +1219,36 @@ main,
   .transaction-list {
     gap: 0.5rem;
   }
+
+  /* Transaction scroll container desktop optimizations */
+  .transaction-scroll-container {
+    /* Ensure smooth scrolling and proper height utilization */
+    width: 100%;
+    height: 100%;
+    overflow-y: auto;
+    overflow-x: hidden;
+    
+    /* Better scrollbar styling on desktop */
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255, 255, 255, 0.2) transparent;
+  }
+
+  .transaction-scroll-container::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  .transaction-scroll-container::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .transaction-scroll-container::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 4px;
+  }
+
+  .transaction-scroll-container::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.3);
+  }
 }
 
 /* Remove artificial container constraints on desktop */

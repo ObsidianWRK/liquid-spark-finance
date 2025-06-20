@@ -1,7 +1,7 @@
 // TransactionList Revamp – unified, responsive, virtualized list
 // IMPORTANT: This file has been completely rewritten to satisfy the TransactionList Revamp spec.
 
-import React, { memo, useMemo } from 'react';
+import React, { memo, useMemo, useEffect, useState } from 'react';
 import { FixedSizeList as List, ListChildComponentProps } from 'react-window';
 import { cn } from '@/shared/lib/utils';
 import TransactionRow from './TransactionRow';
@@ -31,6 +31,41 @@ type RowItem = RowItemSeparator | RowItemTransaction;
 
 const ROW_HEIGHT = 72; // px – consistent row & separator height
 const VIRTUALIZE_THRESHOLD = 500;
+
+// Hook to calculate available height for desktop transaction list
+const useAvailableHeight = () => {
+  const [availableHeight, setAvailableHeight] = useState<number | null>(null);
+
+  useEffect(() => {
+    const calculateHeight = () => {
+      // Check if we're on desktop (≥1024px)
+      const isDesktop = window.innerWidth >= 1024;
+      
+      if (!isDesktop) {
+        setAvailableHeight(null);
+        return;
+      }
+
+      // Calculate available height by subtracting:
+      // - Top navigation (96px for pt-24)
+      // - Page header with title (approximately 120px)
+      // - Bottom padding (64px for pb-16)
+      // - Some buffer space (40px)
+      const usedHeight = 96 + 120 + 64 + 40;
+      const available = Math.max(400, window.innerHeight - usedHeight);
+      setAvailableHeight(available);
+    };
+
+    calculateHeight();
+    
+    const handleResize = () => calculateHeight();
+    window.addEventListener('resize', handleResize);
+    
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  return availableHeight;
+};
 
 const SkeletonRow = () => (
   <div
@@ -99,6 +134,7 @@ const RowRenderer: React.FC<ListChildComponentProps<RowRendererData>> = ({
 export const TransactionList: React.FC<TransactionListProps> = memo(
   ({ transactions, isLoading = false, onTransactionClick, className }) => {
     const items = useMemo(() => buildRowItems(transactions), [transactions]);
+    const availableHeight = useAvailableHeight();
 
     // Loading state skeletons
     if (isLoading) {
@@ -126,11 +162,14 @@ export const TransactionList: React.FC<TransactionListProps> = memo(
       );
     }
 
-    // Decide whether to virtualize
-    const shouldVirtualize = transactions.length > VIRTUALIZE_THRESHOLD;
+    // Enhanced virtualization logic with desktop height optimization
+    const shouldVirtualize = transactions.length > VIRTUALIZE_THRESHOLD || 
+                           (availableHeight && transactions.length > 20);
 
-    if (shouldVirtualize) {
-      const height = Math.min(window.innerHeight * 0.7, ROW_HEIGHT * 12);
+    if (shouldVirtualize || availableHeight) {
+      // Use available height for desktop, fallback for smaller screens
+      const height = availableHeight || Math.min(window.innerHeight * 0.7, ROW_HEIGHT * 12);
+      
       return (
         <List
           height={height}
@@ -147,10 +186,18 @@ export const TransactionList: React.FC<TransactionListProps> = memo(
       );
     }
 
-    // Non-virtualized list
+    // Non-virtualized list with desktop height constraint
+    const listStyle = availableHeight 
+      ? { 
+          maxHeight: `${availableHeight}px`, 
+          overflowY: 'auto' as const 
+        }
+      : {};
+
     return (
       <div
         className={cn('space-y-1 transaction-scroll-container', className)}
+        style={listStyle}
         data-testid="transaction-list"
       >
         {items.map((item, idx) =>
