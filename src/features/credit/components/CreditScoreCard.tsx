@@ -124,7 +124,7 @@ const CreditScoreCard = React.memo(() => {
       {/* Optimized Action Button */}
       <UniversalCard
         variant="glass"
-        className="cursor-pointer hover:scale-105 transition-transform"
+                        className="card-hover-enhanced"
         interactive
         onClick={handleViewFullReport}
       >

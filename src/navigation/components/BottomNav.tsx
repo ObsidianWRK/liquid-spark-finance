@@ -100,7 +100,7 @@ const BottomNav: React.FC = () => {
       {/* Mobile Bottom Navigation - Accessible Implementation */}
       <nav 
         className={cn(
-          "fixed bottom-0 left-0 right-0 z-50 sm:hidden bottom-nav",
+          "fixed bottom-0 left-0 right-0 z-50 md:hidden bottom-nav",
           getAccessibilityClasses(),
           prefersReducedTransparency && "reduce-transparency"
         )}
@@ -124,7 +124,8 @@ const BottomNav: React.FC = () => {
               const IconComponent = route.icon;
               const isActive = location.pathname === route.path;
               const tabProps = getTabProps(route.id, isActive);
-              const touchProps = getTouchTargetProps();
+              const rawTouchProps = getTouchTargetProps();
+              const { className: touchClassName, style: touchStyle, ...restTouchProps } = rawTouchProps;
               
               return (
                 <button
@@ -138,15 +139,15 @@ const BottomNav: React.FC = () => {
                     isActive 
                       ? "liquid-glass-menu-item text-white bg-white/10 nav-item-active" 
                       : "text-white/70 hover:text-white hover:bg-white/5",
-                    touchProps.className
+                    touchClassName
                   )}
                   aria-label={`${route.label} navigation tab${isActive ? ', currently selected' : ''}`}
                   aria-current={isActive ? 'page' : undefined}
                   aria-describedby={route.badgeKey ? `${route.id}-badge` : undefined}
                   {...tabProps}
-                  {...touchProps}
+                  {...restTouchProps}
                   style={{
-                    ...touchProps.style,
+                    ...touchStyle,
                     transform: isActive && !prefersReducedMotion ? 'scale(1.05)' : 'scale(1)',
                   }}
                 >

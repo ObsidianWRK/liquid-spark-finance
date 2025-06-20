@@ -205,7 +205,7 @@ const LiquidGlassTopMenuBar = ({ className, onMenuItemClick }: MenuBarProps) => 
                           item.separator ? (
                             <MenubarSeparator key={idx} />
                           ) : (
-                            <MenubarItem key={idx} onSelect={() => handleItemSelect(item.label!)}>
+                            <MenubarItem key={idx} onSelect={() => handleItemSelect(item.label)}>
                               {item.label}
                               {item.shortcut && <MenubarShortcut>{item.shortcut}</MenubarShortcut>}
                             </MenubarItem>
@@ -222,7 +222,7 @@ const LiquidGlassTopMenuBar = ({ className, onMenuItemClick }: MenuBarProps) => 
                           item.separator ? (
                             <MenubarSeparator key={idx} />
                           ) : (
-                            <MenubarItem key={idx} onSelect={() => handleItemSelect(item.label!)}>
+                            <MenubarItem key={idx} onSelect={() => handleItemSelect(item.label)}>
                               {item.label}
                               {item.shortcut && <MenubarShortcut>{item.shortcut}</MenubarShortcut>}
                             </MenubarItem>
@@ -239,7 +239,7 @@ const LiquidGlassTopMenuBar = ({ className, onMenuItemClick }: MenuBarProps) => 
                           item.separator ? (
                             <MenubarSeparator key={idx} />
                           ) : (
-                            <MenubarItem key={idx} onSelect={() => handleItemSelect(item.label!)}>
+                            <MenubarItem key={idx} onSelect={() => handleItemSelect(item.label)}>
                               {item.label}
                             </MenubarItem>
                           )
@@ -255,7 +255,7 @@ const LiquidGlassTopMenuBar = ({ className, onMenuItemClick }: MenuBarProps) => 
                           item.separator ? (
                             <MenubarSeparator key={idx} />
                           ) : (
-                            <MenubarItem key={idx} onSelect={() => handleItemSelect(item.label!)}>
+                            <MenubarItem key={idx} onSelect={() => handleItemSelect(item.label)}>
                               {item.label}
                               {item.shortcut && <MenubarShortcut>{item.shortcut}</MenubarShortcut>}
                             </MenubarItem>
@@ -291,7 +291,7 @@ const LiquidGlassTopMenuBar = ({ className, onMenuItemClick }: MenuBarProps) => 
                             ) : (
                               <button
                                 key={idx}
-                                onClick={() => handleItemSelect(item.label!)}
+                                onClick={() => handleItemSelect(item.label)}
                                 className="w-full text-left px-3 py-2 rounded-lg text-white/70 hover:text-white hover:bg-white/5 transition-all flex items-center justify-between"
                               >
                                 <span>{item.label}</span>
@@ -312,7 +312,7 @@ const LiquidGlassTopMenuBar = ({ className, onMenuItemClick }: MenuBarProps) => 
                             ) : (
                               <button
                                 key={idx}
-                                onClick={() => handleItemSelect(item.label!)}
+                                onClick={() => handleItemSelect(item.label)}
                                 className="w-full text-left px-3 py-2 rounded-lg text-white/70 hover:text-white hover:bg-white/5 transition-all flex items-center justify-between"
                               >
                                 <span>{item.label}</span>
@@ -333,7 +333,7 @@ const LiquidGlassTopMenuBar = ({ className, onMenuItemClick }: MenuBarProps) => 
                             ) : (
                               <button
                                 key={idx}
-                                onClick={() => handleItemSelect(item.label!)}
+                                onClick={() => handleItemSelect(item.label)}
                                 className="w-full text-left px-3 py-2 rounded-lg text-white/70 hover:text-white hover:bg-white/5 transition-all"
                               >
                                 {item.label}

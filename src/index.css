@@ -5,6 +5,8 @@
 @import './app/styles/calculator-overrides.css';
 @import './app/styles/nav-styles.css'; /* iOS 26 Liquid Glass Navigation */
 @import './app/styles/viewport-guardian.css'; /* Viewport Guardian utilities */
+@import './app/styles/card-interactions.css';
+@import './app/styles/accessibility.css';
 
 @tailwind base;
 @tailwind components;

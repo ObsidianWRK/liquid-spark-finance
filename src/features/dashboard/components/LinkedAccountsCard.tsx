@@ -354,7 +354,7 @@ export const LinkedAccountsCard: React.FC<LinkedAccountsCardProps> = ({
 
   // Full view
   return (
-    <div className={cn("bg-white/[0.02] rounded-2xl border border-white/[0.08] p-6 hover:bg-white/[0.03] transition-all duration-300", className)}>
+    <div className={cn("bg-white/[0.02] rounded-2xl border border-white/[0.08] p-6 card-hover-subtle", className)}>
       <div className="flex items-center justify-between mb-6">
         <div className="flex items-center gap-3">
           <div className="w-10 h-10 rounded-xl bg-white/[0.05] flex items-center justify-center">

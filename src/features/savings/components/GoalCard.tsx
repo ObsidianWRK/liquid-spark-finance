@@ -83,7 +83,7 @@ const GoalCard = React.memo<GoalCardProps>(({ goal, onGoalUpdate }) => {
       variant="default"
       size="lg"
       interactive={true}
-      className="relative overflow-hidden hover:bg-white/[0.03] transition-all"
+      className="relative overflow-hidden card-hover-subtle"
     >
       {/* Goal Stats */}
       <div className="grid grid-cols-2 gap-4 mt-4 mb-4">

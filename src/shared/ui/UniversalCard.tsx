@@ -79,10 +79,10 @@ export const UniversalCard = React.memo<UniversalCardProps>(({
   ...props
 }) => {
   const baseClasses = cn(
-    'relative overflow-hidden transition-all duration-300',
+    'relative overflow-hidden',
     {
-      // Variants - Updated to use unified design tokens
-      'bg-white/[0.02] backdrop-blur-md border border-white/[0.08] hover:bg-white/[0.03]': variant === 'glass',
+      // Variants - Updated to use unified design tokens (no hover styles here as they're handled by card-hover class)
+      'bg-white/[0.02] backdrop-blur-md border border-white/[0.08]': variant === 'glass',
       'bg-black/80 border border-white/[0.08]': variant === 'solid',
       'bg-gradient-to-br from-green-500/10 to-emerald-600/10 border border-green-500/20 bg-white/[0.02]': variant === 'eco',
       'bg-gradient-to-br from-blue-500/10 to-cyan-600/10 border border-blue-500/20 bg-white/[0.02]': variant === 'wellness',
@@ -95,8 +95,8 @@ export const UniversalCard = React.memo<UniversalCardProps>(({
       'p-6 rounded-2xl text-lg': size === 'lg',
       'p-8 rounded-3xl text-xl': size === 'xl',
       
-      // Interactive
-      'cursor-pointer hover:scale-[1.02]': interactive,
+      // Interactive - Use standardized hover effect
+      'card-hover': interactive,
       
       // Orientation
       'flex flex-col': orientation === 'vertical',

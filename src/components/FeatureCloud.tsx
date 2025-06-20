@@ -132,7 +132,7 @@ const FeatureCloud: React.FC<FeatureCloudProps> = ({
               // CC: Liquid glass theme with 12px radius and surface.borderLight
               "rounded-xl border border-white/[0.08] bg-white/[0.02] backdrop-blur-md",
               "flex items-center gap-2 cursor-pointer transition-all duration-300",
-              "hover:bg-white/[0.05] hover:border-white/[0.12]",
+              "card-hover",
               "active:scale-95 select-none",
               "focus:outline-none focus:ring-2 focus:ring-blue-400/50 focus:ring-offset-2 focus:ring-offset-black/50",
               getSizeClasses(keyword.size || 'md')

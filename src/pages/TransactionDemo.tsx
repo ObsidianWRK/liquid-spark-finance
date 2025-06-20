@@ -230,7 +230,7 @@ const TransactionDemo: React.FC = () => {
         {/* Feature Highlights */}
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 md:gap-6 mt-8 sm:mt-10 md:mt-12">
           <div className="p-4 sm:p-5 md:p-6 bg-white/[0.02] rounded-xl border border-white/[0.08] 
-                          hover:bg-white/[0.03] hover:border-white/[0.12] transition-all duration-200">
+                          card-hover">
             <h3 className="text-base sm:text-lg font-semibold text-white mb-2">
               Clean Design
             </h3>
@@ -240,7 +240,7 @@ const TransactionDemo: React.FC = () => {
           </div>
           
           <div className="p-4 sm:p-5 md:p-6 bg-white/[0.02] rounded-xl border border-white/[0.08]
-                          hover:bg-white/[0.03] hover:border-white/[0.12] transition-all duration-200">
+                          card-hover">
             <h3 className="text-base sm:text-lg font-semibold text-white mb-2">
               Smart UX
             </h3>
@@ -250,7 +250,7 @@ const TransactionDemo: React.FC = () => {
           </div>
           
           <div className="p-4 sm:p-5 md:p-6 bg-white/[0.02] rounded-xl border border-white/[0.08]
-                          hover:bg-white/[0.03] hover:border-white/[0.12] transition-all duration-200
+                          card-hover
                           sm:col-span-2 lg:col-span-1">
             <h3 className="text-base sm:text-lg font-semibold text-white mb-2">
               Performance

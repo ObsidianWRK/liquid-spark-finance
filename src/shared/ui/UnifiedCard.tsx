@@ -100,7 +100,7 @@ export const UnifiedCard = React.memo<UnifiedCardProps>(({
   };
 
   const cardClasses = cn(
-    'p-6 rounded-2xl border transition-all duration-300',
+    'p-6 rounded-2xl border',
     {
         'bg-white/[0.02] border-white/[0.08]': variant === 'default',
         'bg-gradient-to-br from-green-500/10 to-emerald-600/10 border-green-500/20': variant === 'eco',
@@ -108,7 +108,7 @@ export const UnifiedCard = React.memo<UnifiedCardProps>(({
         'bg-gradient-to-br from-purple-500/10 to-indigo-600/10 border-purple-500/20': variant === 'financial',
     },
     {
-        'hover:bg-white/[0.03] hover:border-white/[0.12] cursor-pointer': interactive,
+        'card-hover': interactive,
     },
     className
   );

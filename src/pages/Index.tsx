@@ -89,7 +89,7 @@ const adaptTransactions = (transactions: typeof mockData.transactions): Transact
       date: new Date(t.date),
       merchantName: (t as any).merchantName ?? (t as any).merchant ?? 'Unknown',
       description: (t as any).description ?? ((t as any).merchant ? `Purchase at ${(t as any).merchant}` : 'Transaction'),
-      category: categoryName as any,
+      category: categoryName,
       paymentChannel: 'online',
       transactionType: t.amount < 0 ? 'purchase' : 'deposit',
       status: (() => {

@@ -412,7 +412,7 @@ export const AnalyticsPage: React.FC<AnalyticsPageProps> = ({
       </div>
 
       {/* Connected Devices */}
-      <UniversalCard variant="glass" className="p-4 sm:p-6">
+      <UniversalCard variant="glass" interactive className="p-4 sm:p-6">
         <div className="flex items-center justify-between mb-4">
           <h3 className="text-lg font-semibold text-white flex items-center gap-2">
             <Activity className="w-5 h-5 text-blue-400" />
@@ -495,7 +495,7 @@ export const AnalyticsPage: React.FC<AnalyticsPageProps> = ({
 
       {/* Enhanced Score Summary Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-        <UniversalCard variant="glass" className="p-4">
+        <UniversalCard variant="glass" interactive className="p-4">
           <div className="flex items-center justify-between mb-3">
             <div className="flex items-center gap-2">
               <Activity className="w-5 h-5 text-green-400" />
@@ -532,7 +532,7 @@ export const AnalyticsPage: React.FC<AnalyticsPageProps> = ({
           </div>
         </UniversalCard>
         
-        <UniversalCard variant="glass" className="p-4">
+        <UniversalCard variant="glass" interactive className="p-4">
           <div className="flex items-center justify-between mb-3">
             <div className="flex items-center gap-2">
               <TrendingUp className="w-5 h-5 text-blue-400" />
@@ -562,7 +562,7 @@ export const AnalyticsPage: React.FC<AnalyticsPageProps> = ({
           </div>
         </UniversalCard>
         
-        <UniversalCard variant="glass" className="p-4">
+        <UniversalCard variant="glass" interactive className="p-4">
           <div className="flex items-center justify-between mb-3">
             <div className="flex items-center gap-2">
               <Brain className="w-5 h-5 text-purple-400" />
@@ -592,7 +592,7 @@ export const AnalyticsPage: React.FC<AnalyticsPageProps> = ({
           </div>
         </UniversalCard>
         
-        <UniversalCard variant="glass" className="p-4">
+        <UniversalCard variant="glass" interactive className="p-4">
           <div className="flex items-center justify-between mb-3">
             <div className="flex items-center gap-2">
               <BarChart3 className="w-5 h-5 text-yellow-400" />
@@ -640,7 +640,7 @@ export const AnalyticsPage: React.FC<AnalyticsPageProps> = ({
 
       {/* Key Correlations */}
       {dashboardData.correlations.length > 0 && (
-        <UniversalCard variant="glass" className="p-4 sm:p-6">
+        <UniversalCard variant="glass" interactive className="p-4 sm:p-6">
           <h3 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
             <Brain className="w-5 h-5 text-purple-400" />
             Key Correlations
@@ -678,7 +678,7 @@ export const AnalyticsPage: React.FC<AnalyticsPageProps> = ({
 
       {/* Insights */}
       {dashboardData.insights.length > 0 && (
-        <UniversalCard variant="glass" className="p-4 sm:p-6">
+        <UniversalCard variant="glass" interactive className="p-4 sm:p-6">
           <h3 className="text-lg font-semibold text-white mb-4">Smart Insights</h3>
           <div className="space-y-3">
             {dashboardData.insights.slice(0, 5).map((insight) => (
@@ -711,7 +711,7 @@ export const AnalyticsPage: React.FC<AnalyticsPageProps> = ({
 
       {/* Device-Specific Health Metrics */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        <UniversalCard variant="glass" className="p-6">
+        <UniversalCard variant="glass" interactive className="p-6">
           <h3 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
             <Heart className="w-5 h-5 text-red-400" />
             Heart Rate Zones
@@ -762,7 +762,7 @@ export const AnalyticsPage: React.FC<AnalyticsPageProps> = ({
           </div>
         </UniversalCard>
 
-        <UniversalCard variant="glass" className="p-6">
+        <UniversalCard variant="glass" interactive className="p-6">
           <h3 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
             <Clock className="w-5 h-5 text-purple-400" />
             Sleep Analysis
@@ -812,7 +812,7 @@ export const AnalyticsPage: React.FC<AnalyticsPageProps> = ({
           </div>
         </UniversalCard>
 
-        <UniversalCard variant="glass" className="p-6">
+        <UniversalCard variant="glass" interactive className="p-6">
           <h3 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
             <Target className="w-5 h-5 text-yellow-400" />
             Daily Activity
@@ -851,7 +851,7 @@ export const AnalyticsPage: React.FC<AnalyticsPageProps> = ({
 
       {/* Financial Health Correlation */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <UniversalCard variant="glass" className="p-6">
+        <UniversalCard variant="glass" interactive className="p-6">
           <h3 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
             <Shield className="w-5 h-5 text-emerald-400" />
             Stress vs Spending Patterns
@@ -891,7 +891,7 @@ export const AnalyticsPage: React.FC<AnalyticsPageProps> = ({
           </div>
         </UniversalCard>
         
-        <UniversalCard variant="glass" className="p-6">
+        <UniversalCard variant="glass" interactive className="p-6">
           <h3 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
             <DollarSign className="w-5 h-5 text-blue-400" />
             Sleep Quality Impact on ROI
@@ -934,7 +934,7 @@ export const AnalyticsPage: React.FC<AnalyticsPageProps> = ({
 
       {/* Health Trends Data */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <UniversalCard variant="glass" className="p-6">
+        <UniversalCard variant="glass" interactive className="p-6">
           <h3 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
             <Activity className="w-5 h-5 text-green-400" />
             Health Trends (7 Days)
@@ -1020,7 +1020,7 @@ export const AnalyticsPage: React.FC<AnalyticsPageProps> = ({
           </div>
         </UniversalCard>
         
-        <UniversalCard variant="glass" className="p-6">
+        <UniversalCard variant="glass" interactive className="p-6">
           <h3 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
             <TrendingUp className="w-5 h-5 text-blue-400" />
             Wealth Performance (30 Days)

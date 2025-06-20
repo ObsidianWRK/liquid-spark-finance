@@ -110,7 +110,7 @@ const InvestmentTrackerPage = () => {
         {/* Quick Stats */}
         {portfolio && (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
-            <div className="bg-white/[0.02] rounded-2xl border border-white/[0.08] p-4 sm:p-6">
+            <div className="bg-white/[0.02] rounded-2xl border border-white/[0.08] p-4 sm:p-6 card-hover">
               <div className="flex items-center gap-3 mb-3 sm:mb-4">
                 <div className="w-10 h-10 sm:w-12 sm:h-12 bg-blue-500/20 rounded-lg flex items-center justify-center flex-shrink-0">
                   <DollarSign className="w-5 h-5 sm:w-6 sm:h-6 text-blue-400" />
@@ -122,7 +122,7 @@ const InvestmentTrackerPage = () => {
               </p>
             </div>
             
-            <div className="bg-white/[0.02] rounded-2xl border border-white/[0.08] p-4 sm:p-6">
+            <div className="bg-white/[0.02] rounded-2xl border border-white/[0.08] p-4 sm:p-6 card-hover">
               <div className="flex items-center gap-3 mb-3 sm:mb-4">
                 <div className="w-10 h-10 sm:w-12 sm:h-12 bg-green-500/20 rounded-lg flex items-center justify-center flex-shrink-0">
                   <TrendingUp className="w-5 h-5 sm:w-6 sm:h-6 text-green-400" />
@@ -139,7 +139,7 @@ const InvestmentTrackerPage = () => {
               </div>
             </div>
             
-            <div className="bg-white/[0.02] rounded-2xl border border-white/[0.08] p-4 sm:p-6">
+            <div className="bg-white/[0.02] rounded-2xl border border-white/[0.08] p-4 sm:p-6 card-hover">
               <div className="flex items-center gap-3 mb-3 sm:mb-4">
                 <div className="w-10 h-10 sm:w-12 sm:h-12 bg-purple-500/20 rounded-lg flex items-center justify-center flex-shrink-0">
                   <Target className="w-5 h-5 sm:w-6 sm:h-6 text-purple-400" />
@@ -154,7 +154,7 @@ const InvestmentTrackerPage = () => {
               </div>
             </div>
             
-            <div className="bg-white/[0.02] rounded-2xl border border-white/[0.08] p-4 sm:p-6 sm:col-span-2 lg:col-span-1">
+            <div className="bg-white/[0.02] rounded-2xl border border-white/[0.08] p-4 sm:p-6 sm:col-span-2 lg:col-span-1 card-hover">
               <div className="flex items-center gap-3 mb-3 sm:mb-4">
                 <div className="w-10 h-10 sm:w-12 sm:h-12 bg-yellow-500/20 rounded-lg flex items-center justify-center flex-shrink-0">
                   <AlertTriangle className="w-5 h-5 sm:w-6 sm:h-6 text-yellow-400" />
@@ -171,7 +171,7 @@ const InvestmentTrackerPage = () => {
 
         {/* Investment Recommendations */}
         {recommendations.length > 0 && (
-          <div className="bg-white/[0.02] rounded-2xl border border-white/[0.08] p-4 sm:p-6">
+          <div className="bg-white/[0.02] rounded-2xl border border-white/[0.08] p-4 sm:p-6 card-hover">
             <h2 className="text-lg sm:text-xl font-bold text-white mb-4 sm:mb-6 flex items-center gap-3">
               <Target className="w-5 h-5 sm:w-6 sm:h-6 text-blue-400" />
               Investment Recommendations

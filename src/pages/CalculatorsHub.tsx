@@ -120,10 +120,9 @@ const CalculatorsHub = () => {
                             <UnifiedCard
                                 key={calculator.id}
                                 onClick={() => openCalculator(calculator)}
-                                className="cursor-pointer group hover:scale-[1.02] transition-all duration-200
+                                className="group card-hover
                                           min-h-[120px] sm:min-h-[140px] md:min-h-[160px]
-                                          flex flex-col items-center justify-center
-                                          border border-white/[0.08] hover:border-white/[0.16]"
+                                          flex flex-col items-center justify-center"
                                 data-testid="calculator-card"
                             >
                                 <div className="p-3 sm:p-4 md:p-5 text-center w-full">

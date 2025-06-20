@@ -128,7 +128,7 @@ const InvestmentPortfolio = ({ familyId, className }: InvestmentPortfolioProps) 
   const renderOverview = () => (
     <div className="space-y-4 sm:space-y-6">
       {/* Portfolio Summary */}
-      <div className="bg-white/[0.02] rounded-2xl border border-white/[0.08] p-4 sm:p-6">
+      <div className="bg-white/[0.02] rounded-2xl border border-white/[0.08] p-4 sm:p-6 card-hover">
         <h3 className="text-lg sm:text-xl font-bold text-white mb-4 sm:mb-6 flex items-center gap-3">
           <PieChart className="w-5 h-5 sm:w-6 sm:h-6 text-blue-400" />
           Portfolio Summary
@@ -160,7 +160,7 @@ const InvestmentPortfolio = ({ familyId, className }: InvestmentPortfolioProps) 
       </div>
 
       {/* Performance Metrics */}
-      <div className="bg-white/[0.02] rounded-2xl border border-white/[0.08] p-4 sm:p-6">
+      <div className="bg-white/[0.02] rounded-2xl border border-white/[0.08] p-4 sm:p-6 card-hover">
         <h3 className="text-base sm:text-lg font-bold text-white mb-3 sm:mb-4 flex items-center gap-3">
           <BarChart3 className="w-4 h-4 sm:w-5 sm:h-5 text-blue-400" />
           Performance Metrics
@@ -194,7 +194,7 @@ const InvestmentPortfolio = ({ familyId, className }: InvestmentPortfolioProps) 
       </div>
 
       {/* Asset Allocation */}
-      <div className="bg-white/[0.02] rounded-2xl border border-white/[0.08] p-4 sm:p-6">
+      <div className="bg-white/[0.02] rounded-2xl border border-white/[0.08] p-4 sm:p-6 card-hover">
         <h3 className="text-base sm:text-lg font-bold text-white mb-3 sm:mb-4 flex items-center gap-3">
           <Target className="w-4 h-4 sm:w-5 sm:h-5 text-blue-400" />
           Asset Allocation
@@ -236,7 +236,7 @@ const InvestmentPortfolio = ({ familyId, className }: InvestmentPortfolioProps) 
       </div>
 
       {/* Risk Metrics */}
-      <div className="bg-white/[0.02] rounded-2xl border border-white/[0.08] p-4 sm:p-6">
+      <div className="bg-white/[0.02] rounded-2xl border border-white/[0.08] p-4 sm:p-6 card-hover">
         <h3 className="text-base sm:text-lg font-bold text-white mb-3 sm:mb-4 flex items-center gap-3">
           <AlertTriangle className="w-4 h-4 sm:w-5 sm:h-5 text-yellow-400" />
           Risk Analysis
@@ -462,7 +462,7 @@ const InvestmentPortfolio = ({ familyId, className }: InvestmentPortfolioProps) 
       {portfolio.holdings.map((holding) => (
         <div
           key={holding.id}
-          className="bg-white/[0.02] rounded-2xl border border-white/[0.08] p-4 hover:bg-white/[0.03] transition-all duration-300"
+          className="bg-white/[0.02] rounded-2xl border border-white/[0.08] p-4 card-hover"
         >
           <div className="flex items-center gap-4">
             {/* Symbol & Icon */}

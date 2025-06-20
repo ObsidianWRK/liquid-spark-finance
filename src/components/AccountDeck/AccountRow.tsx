@@ -80,7 +80,7 @@ export const AccountRow: React.FC<AccountRowProps> = ({ account, index, style })
         "h-14 px-4 flex items-center gap-3",
         // CC: R3 requirement - 12px radius, 1px surface.borderLight, Liquid-Glass theme
         "rounded-xl border border-white/[0.08] bg-white/[0.02] backdrop-blur-md",
-        "hover:bg-white/[0.05] hover:border-white/[0.12] transition-all duration-200",
+        "card-hover",
         "cursor-pointer group"
       )}
       whileHover={{ scale: 1.02 }}

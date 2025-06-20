@@ -32,7 +32,7 @@ export const CardSkeleton: React.FC<CardSkeletonProps> = ({
     
     // Interactive states
     {
-      'cursor-pointer hover:scale-[1.02] hover:bg-white/[0.04] hover:border-white/[0.12] hover:shadow-lg': interactive && !loading,
+              'card-hover': interactive && !loading,
       'cursor-not-allowed opacity-60': loading,
     },
     

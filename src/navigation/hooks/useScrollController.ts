@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-empty-function */
+ 
 /**
  * React Hook for Scroll Controller Integration
  * 

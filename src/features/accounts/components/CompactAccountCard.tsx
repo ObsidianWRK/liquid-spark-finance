@@ -82,7 +82,7 @@ const CompactAccountCard: React.FC<CompactAccountCardProps> = ({
       <UnifiedCard
         variant="default"
         size="lg"
-        className={cn("card w-full min-w-[18rem] sm:max-w-[20rem] lg:max-w-[22rem] xl:max-w-[24rem] hover:bg-white/[0.03] transition-all duration-200", className)}
+        className={cn("card w-full min-w-[18rem] sm:max-w-[20rem] lg:max-w-[22rem] xl:max-w-[24rem] card-hover", className)}
         interactive
         icon={getAccountIcon()}
         iconColor={account.institution.color || '#6366f1'}

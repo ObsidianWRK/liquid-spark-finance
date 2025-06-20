@@ -110,7 +110,7 @@ export const QuickAccessCard = React.memo<QuickAccessCardProps>(({
           ? 'min-w-[160px] max-w-[28vw] sm:max-w-72 snap-start' 
           : 'w-full',
         // Hover effects
-        'hover:bg-white/[0.05] hover:border-white/[0.12] transition-all duration-200',
+        'card-hover',
         // Focus accessibility
         'focus-visible:ring-2 focus-visible:ring-blue-400 focus-visible:ring-offset-2 focus-visible:ring-offset-black',
         className

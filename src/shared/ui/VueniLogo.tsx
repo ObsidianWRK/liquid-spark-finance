@@ -127,7 +127,7 @@ export const VueniLogo: React.FC<VueniLogoProps> = ({
     <div
       className={cn(
         'inline-flex items-center cursor-pointer transition-all duration-200',
-        'hover:scale-105 focus:outline-none focus:ring-2 focus:ring-blue-400/50 focus:ring-offset-2 focus:ring-offset-black',
+        'card-hover-enhanced focus:outline-none focus:ring-2 focus:ring-blue-400/50 focus:ring-offset-2 focus:ring-offset-black',
         'rounded-lg p-1',
         className
       )}

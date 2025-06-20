@@ -128,7 +128,7 @@ const FinancialCard: React.FC<FinancialCardProps> = ({ data }) => {
   return (
     <div className="w-full">
       {/* Header */}
-      <div className="bg-white/[0.02] rounded-2xl border border-white/[0.08] p-4 sm:p-6 mb-4 sm:mb-6 backdrop-blur-md shadow-md">
+      <div className="bg-white/[0.02] rounded-2xl border border-white/[0.08] p-4 sm:p-6 mb-4 sm:mb-6 backdrop-blur-md shadow-md card-hover-subtle">
         <div className="flex flex-col sm:flex-row items-center justify-between space-y-4 sm:space-y-0">
           <div className="text-center sm:text-left">
             <h3 className="text-xl sm:text-2xl font-bold text-white mb-2">Financial Health</h3>
@@ -165,7 +165,7 @@ const FinancialCard: React.FC<FinancialCardProps> = ({ data }) => {
       </div>
 
       {/* Financial Insights */}
-      <div className="bg-white/[0.02] rounded-2xl border border-white/[0.08] p-4 sm:p-6 backdrop-blur-md shadow-md">
+      <div className="bg-white/[0.02] rounded-2xl border border-white/[0.08] p-4 sm:p-6 backdrop-blur-md shadow-md card-hover-subtle">
         <h4 className="text-lg sm:text-xl font-bold text-white mb-4">Financial Insights</h4>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
           {insights.map((insight, index) => (

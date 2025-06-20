@@ -45,7 +45,7 @@ export const AccountCard: React.FC<Props> = ({ acct, onAction, showBalance = tru
   return (
     <TooltipProvider>
       <div 
-        className="relative rounded-2xl p-5 bg-black/40 backdrop-blur border border-white/10 flex flex-col h-72 w-full min-h-[18rem] cursor-pointer hover:bg-black/50 transition-all duration-200"
+        className="relative rounded-2xl p-5 bg-black/40 backdrop-blur border border-white/10 flex flex-col h-72 w-full min-h-[18rem] cursor-pointer card-hover"
         onClick={handleCardClick}
       >
         {/* Gradient top border */}

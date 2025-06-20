@@ -5,7 +5,7 @@
  */
 
 /* Import navigation-specific accessibility styles */
-@import '../../../navigation/styles/navigation-accessibility.css';
+@import '../../navigation/styles/navigation-accessibility.css';
 
 /* Reduced Motion Support - Critical for WCAG compliance */
 @media (prefers-reduced-motion: reduce) {

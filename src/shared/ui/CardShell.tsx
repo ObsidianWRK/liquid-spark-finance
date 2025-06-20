@@ -27,10 +27,8 @@ export const CardShell: FC<CardShellProps> = ({
     'ring-1 ring-zinc-700/60',
     'shadow-[inset_0_0_0_1px_rgba(255,255,255,.05)]',
     
-    // Hover states
-    hoverable && 'transition-all duration-300',
-    hoverable && onClick && 'cursor-pointer',
-    hoverable && 'hover:scale-[1.02] hover:ring-zinc-600/60',
+    // Hover states - Use standardized hover effect
+    hoverable && onClick && 'card-hover',
     
     // Custom classes
     className

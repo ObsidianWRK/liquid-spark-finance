@@ -88,7 +88,7 @@ const CleanCreditScoreCard = ({
   const strokeDashoffset = circumference - (scorePercentage / 100) * circumference;
 
   return (
-    <UniversalCard variant="glass" className={`p-6 ${className || ''}`}>
+    <UniversalCard variant="glass" className={`p-6 ${className || ''}`} interactive>
       {/* Header */}
       <div className="flex items-center justify-between mb-6">
         <div className="flex items-center gap-3">

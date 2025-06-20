@@ -289,7 +289,7 @@ const ComprehensiveEcoCard: React.FC<EcoCardProps> = ({
   if (!isExpanded) {
     return (
       <div 
-        className="liquid-glass-card p-6 cursor-pointer transition-all duration-300 hover:scale-105 score-card-container"
+        className="liquid-glass-card p-6 card-hover-enhanced score-card-container"
         onClick={() => setIsExpanded(true)}
       >
         <div className="score-card-content">

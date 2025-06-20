@@ -39,7 +39,7 @@ const StockBacktestCalculator = () => {
           />
         </label>
       </div>
-              <button onClick={handleCalculate} className="w-full py-3 px-6 rounded-xl bg-white/10 hover:bg-white/20 border border-white/20 hover:border-white/30 text-white font-semibold transition-all duration-200">
+              <button onClick={handleCalculate} className="w-full py-3 px-6 rounded-xl bg-white/10 border border-white/20 text-white font-semibold button-hover">
         Calculate
       </button>
       {finalValue !== null && (

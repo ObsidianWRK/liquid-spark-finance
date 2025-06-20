@@ -34,7 +34,7 @@ const NavRail: React.FC = () => {
       
       {/* Tablet Navigation Rail - Dark Mode Only */}
       <nav 
-        className="hidden sm:flex lg:hidden fixed left-0 top-0 bottom-0 z-40 flex-col"
+        className="hidden md:flex lg:hidden fixed left-0 top-0 bottom-0 z-40 flex-col"
         role="navigation"
         aria-label="Navigation rail"
         onMouseEnter={handleMouseEnter}

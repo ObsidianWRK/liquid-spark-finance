@@ -1,0 +1,132 @@
+/* Card Hover Interactions - Unified System */
+@layer components {
+  /* Standard card hover effect - combines scale + background brightening */
+  .card-hover {
+    @apply transition-all duration-300 ease-out;
+    @apply hover:scale-[1.02] hover:bg-white/[0.04] hover:border-white/[0.12];
+    @apply cursor-pointer;
+    @apply focus:outline-none focus:ring-2 focus:ring-blue-400/50 focus:ring-offset-2 focus:ring-offset-black;
+  }
+
+  /* Subtle hover for smaller cards or dense layouts */
+  .card-hover-subtle {
+    @apply transition-all duration-200 ease-out;
+    @apply hover:scale-[1.01] hover:bg-white/[0.02] hover:border-white/[0.08];
+    @apply cursor-pointer;
+    @apply focus:outline-none focus:ring-2 focus:ring-blue-400/50 focus:ring-offset-1 focus:ring-offset-black;
+  }
+
+  /* Enhanced hover for primary cards */
+  .card-hover-enhanced {
+    @apply transition-all duration-300 ease-out;
+    @apply hover:scale-[1.025] hover:bg-white/[0.06] hover:border-white/[0.16] hover:shadow-lg;
+    @apply cursor-pointer;
+    @apply focus:outline-none focus:ring-2 focus:ring-blue-400/60 focus:ring-offset-2 focus:ring-offset-black;
+  }
+
+  /* Button hover - for interactive buttons, not cards */
+  .button-hover {
+    @apply transition-all duration-200 ease-out;
+    @apply hover:bg-white/20 hover:border-white/30;
+    @apply cursor-pointer;
+    @apply focus:outline-none focus:ring-2 focus:ring-blue-400/50 focus:ring-offset-2 focus:ring-offset-black;
+  }
+
+  /* Accessibility: Respect reduced motion preferences */
+  @media (prefers-reduced-motion: reduce) {
+    .card-hover,
+    .card-hover-subtle,
+    .card-hover-enhanced,
+    .button-hover {
+      @apply hover:scale-100;
+      @apply transition-colors duration-200;
+    }
+  }
+
+  /* Responsive: Only apply hover effects on pointer-fine devices (desktop/laptop) */
+  @media (hover: none) {
+    .card-hover,
+    .card-hover-subtle,
+    .card-hover-enhanced,
+    .button-hover {
+      @apply hover:scale-100 hover:bg-transparent hover:border-transparent hover:shadow-none;
+    }
+
+    .button-hover {
+      /* Keep button background changes on touch devices but remove scale */
+      @apply hover:bg-white/20 hover:border-white/30;
+    }
+  }
+
+  /* High specificity overrides for existing conflicting hover effects */
+  .card-hover.card-hover,
+  .card-hover-subtle.card-hover-subtle,
+  .card-hover-enhanced.card-hover-enhanced {
+    /* Override any existing inline hover styles */
+    transition: all 0.3s ease-out !important;
+  }
+
+  /* Override any remaining non-standard hover effects */
+  .card-hover:hover {
+    transform: scale(1.02) !important;
+    background-color: rgba(255, 255, 255, 0.04) !important;
+    border-color: rgba(255, 255, 255, 0.12) !important;
+  }
+
+  .card-hover-subtle:hover {
+    transform: scale(1.01) !important;
+    background-color: rgba(255, 255, 255, 0.02) !important;
+    border-color: rgba(255, 255, 255, 0.08) !important;
+  }
+
+  .card-hover-enhanced:hover {
+    transform: scale(1.025) !important;
+    background-color: rgba(255, 255, 255, 0.06) !important;
+    border-color: rgba(255, 255, 255, 0.16) !important;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05) !important;
+  }
+
+  .button-hover:hover {
+    background-color: rgba(255, 255, 255, 0.2) !important;
+    border-color: rgba(255, 255, 255, 0.3) !important;
+  }
+
+  /* Performance optimization for card hover effects */
+  .card-hover,
+  .card-hover-subtle,
+  .card-hover-enhanced,
+  .button-hover {
+    will-change: transform, background-color, border-color, box-shadow;
+    contain: layout style paint;
+    backface-visibility: hidden;
+    transform: translateZ(0);
+  }
+}
+
+/* Console logging for debugging hover effect applications */
+.card-hover {
+  --card-hover-applied: true;
+}
+
+.card-hover-subtle {
+  --card-hover-subtle-applied: true;
+}
+
+.card-hover-enhanced {
+  --card-hover-enhanced-applied: true;
+}
+
+.button-hover {
+  --button-hover-applied: true;
+}
+
+/* Fallback for browsers that don't support backdrop-filter */
+@supports not (backdrop-filter: blur(1px)) {
+  .card-hover,
+  .card-hover-subtle,
+  .card-hover-enhanced,
+  .button-hover {
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+} 

@@ -34,7 +34,7 @@ const PlanningCard: React.FC<PlanningCardProps> = ({
   const cardClasses = cn(
     baseClasses,
     variantClasses[variant],
-    onClick && "cursor-pointer hover:scale-[1.01]",
+            onClick && "card-hover-subtle",
     className
   );
 

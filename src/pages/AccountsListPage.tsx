@@ -94,7 +94,7 @@ const AccountsListPage: React.FC = () => {
               key={account.id}
               variant="glass"
               className="p-6 hover:bg-white/[0.03] transition-colors cursor-pointer"
-              onClick={() => handleAccountClick(account.id!)}
+              onClick={() => handleAccountClick(account.id)}
             >
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-4">
