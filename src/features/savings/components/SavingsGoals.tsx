@@ -282,9 +282,10 @@ const SavingsGoals = ({ compact = false }: SavingsGoalsProps) => {
               label: 'of target',
             }}
             icon={DollarSign}
-            iconColor="text-green-400"
+            iconColor="#22c55e"
             variant="default"
             size="lg"
+            interactive={true}
           />
 
           <UnifiedCard
@@ -297,9 +298,10 @@ const SavingsGoals = ({ compact = false }: SavingsGoalsProps) => {
               label: 'active goals',
             }}
             icon={Target}
-            iconColor="text-blue-400"
+            iconColor="#3b82f6"
             variant="default"
             size="lg"
+            interactive={true}
           />
 
           <UnifiedCard
@@ -314,9 +316,10 @@ const SavingsGoals = ({ compact = false }: SavingsGoalsProps) => {
               label: 'success rate',
             }}
             icon={Award}
-            iconColor="text-purple-400"
+            iconColor="#a855f7"
             variant="default"
             size="lg"
+            interactive={true}
           />
 
           <UnifiedCard
@@ -339,9 +342,10 @@ const SavingsGoals = ({ compact = false }: SavingsGoalsProps) => {
               showLabel: false,
             }}
             icon={Percent}
-            iconColor="text-orange-400"
+            iconColor="#f97316"
             variant="default"
             size="lg"
+            interactive={true}
           />
         </div>
 
