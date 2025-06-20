@@ -16,7 +16,7 @@ import { wellnessEngine } from '@/features/biometric-intervention/api/WellnessEn
 import { fetchHealthMetrics } from '@/features/biometric-intervention/api/healthKitService';
 import { VisualizationService } from '@/features/dashboard/api/visualizationService';
 import { TransactionService } from '@/features/transactions/api/transactionService';
-import { InvestmentService } from '@/features/investments/api/investmentService';
+import { investmentService } from '@/features/investments/api/investmentService';
 
 /**
  * Comprehensive Analytics Service
@@ -31,7 +31,7 @@ export class AnalyticsService {
   // Service dependencies
   private visualizationService = VisualizationService.getInstance();
   private transactionService = TransactionService.getInstance();
-  private investmentService = InvestmentService.getInstance();
+  private investmentService = investmentService;
 
   private constructor() {
     this.initializeDataStream();
