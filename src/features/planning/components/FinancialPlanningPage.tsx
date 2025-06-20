@@ -220,7 +220,7 @@ const FinancialPlanningPage = ({ familyId = 'demo_family' }: FinancialPlanningPa
   }
 
   return (
-    <div className="p-6 space-y-8">
+    <div className="p-4 sm:p-6 space-y-6 sm:space-y-8">
       {/* Back Button */}
       <button
         onClick={() => navigate('/')}
@@ -231,49 +231,78 @@ const FinancialPlanningPage = ({ familyId = 'demo_family' }: FinancialPlanningPa
       </button>
 
       {/* Header */}
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-3xl font-bold text-white flex items-center gap-3">
-            <Target className="w-8 h-8 text-blue-400" />
-            Financial Planning
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+        <div className="flex-1 min-w-0">
+          <h1 className="text-2xl sm:text-3xl font-bold text-white flex items-center gap-3">
+            <Target className="w-6 h-6 sm:w-8 sm:h-8 text-blue-400" />
+            <span className="truncate">Financial Planning</span>
           </h1>
-          <p className="text-white/60 mt-2">
+          <p className="text-white/60 mt-2 text-sm sm:text-base">
             Set goals, track progress, and plan for your financial future
           </p>
         </div>
 
         <button
           onClick={() => setShowNewGoalModal(true)}
-          className="bg-blue-500 hover:bg-blue-600 text-white px-6 py-3 rounded-xl transition-colors flex items-center gap-2"
+          className="bg-blue-500 hover:bg-blue-600 text-white px-4 sm:px-6 py-2 sm:py-3 rounded-xl transition-colors flex items-center gap-2 text-sm sm:text-base whitespace-nowrap"
         >
-          <Plus className="w-5 h-5" />
-          New Goal
+          <Plus className="w-4 h-4 sm:w-5 sm:h-5" />
+          <span className="hidden sm:inline">New Goal</span>
+          <span className="sm:hidden">Goal</span>
         </button>
       </div>
 
       {/* Navigation Tabs */}
-      <div className="flex items-center gap-1 bg-white/[0.02] rounded-xl p-1 border border-white/[0.08]">
-        {[
-          { id: 'overview', label: 'Overview', icon: Target },
-          { id: 'goals', label: 'Goals', icon: PiggyBank },
-          { id: 'retirement', label: 'Retirement', icon: Briefcase },
-          { id: 'debt', label: 'Debt Payoff', icon: DollarSign },
-          { id: 'planning', label: 'Life Planning', icon: Calendar }
-        ].map(({ id, label, icon: Icon }) => (
-          <button
-            key={id}
-            onClick={() => setActiveTab(id as any)}
-            className={cn(
-              "flex items-center gap-2 px-4 py-2 rounded-lg transition-all text-sm",
-              activeTab === id
-                ? "bg-blue-500 text-white"
-                : "text-white/60 hover:text-white hover:bg-white/[0.05]"
-            )}
-          >
-            <Icon className="w-4 h-4" />
-            {label}
-          </button>
-        ))}
+      <div className="bg-white/[0.02] rounded-xl p-1 border border-white/[0.08]">
+        {/* Mobile: Scrollable tabs */}
+        <div className="flex sm:hidden overflow-x-auto gap-1 pb-1 scrollbar-hide">
+          {[
+            { id: 'overview', label: 'Overview', icon: Target },
+            { id: 'goals', label: 'Goals', icon: PiggyBank },
+            { id: 'retirement', label: 'Retirement', icon: Briefcase },
+            { id: 'debt', label: 'Debt', icon: DollarSign },
+            { id: 'planning', label: 'Planning', icon: Calendar }
+          ].map(({ id, label, icon: Icon }) => (
+            <button
+              key={id}
+              onClick={() => setActiveTab(id as any)}
+              className={cn(
+                "flex items-center gap-2 px-3 py-2 rounded-lg transition-all text-xs whitespace-nowrap flex-shrink-0",
+                activeTab === id
+                  ? "bg-blue-500 text-white"
+                  : "text-white/60 hover:text-white hover:bg-white/[0.05]"
+              )}
+            >
+              <Icon className="w-3 h-3" />
+              {label}
+            </button>
+          ))}
+        </div>
+        
+        {/* Desktop: Full width tabs */}
+        <div className="hidden sm:flex items-center gap-1">
+          {[
+            { id: 'overview', label: 'Overview', icon: Target },
+            { id: 'goals', label: 'Goals', icon: PiggyBank },
+            { id: 'retirement', label: 'Retirement', icon: Briefcase },
+            { id: 'debt', label: 'Debt Payoff', icon: DollarSign },
+            { id: 'planning', label: 'Life Planning', icon: Calendar }
+          ].map(({ id, label, icon: Icon }) => (
+            <button
+              key={id}
+              onClick={() => setActiveTab(id as any)}
+              className={cn(
+                "flex items-center gap-2 px-4 py-2 rounded-lg transition-all text-sm flex-1 justify-center",
+                activeTab === id
+                  ? "bg-blue-500 text-white"
+                  : "text-white/60 hover:text-white hover:bg-white/[0.05]"
+              )}
+            >
+              <Icon className="w-4 h-4" />
+              {label}
+            </button>
+          ))}
+        </div>
       </div>
 
       {/* Content based on active tab */}
@@ -304,10 +333,10 @@ const FinancialPlanningPage = ({ familyId = 'demo_family' }: FinancialPlanningPa
               </div>
 
               {/* Category Breakdown */}
-              <div className="grid grid-cols-5 gap-4 mt-6">
+              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 sm:gap-4 mt-6">
                 {Object.entries(healthScore.categoryScores).map(([category, score]) => (
                   <div key={category} className="text-center">
-                    <div className="text-2xl font-bold text-white">{score as number}</div>
+                    <div className="text-xl sm:text-2xl font-bold text-white">{score as number}</div>
                     <div className="text-xs text-white/60 capitalize">
                       {category.replace('_', ' ')}
                     </div>
@@ -324,50 +353,50 @@ const FinancialPlanningPage = ({ familyId = 'demo_family' }: FinancialPlanningPa
           )}
 
           {/* Quick Stats */}
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-            <div className="bg-white/[0.02] rounded-2xl border border-white/[0.08] p-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+            <div className="bg-white/[0.02] rounded-2xl border border-white/[0.08] p-4 sm:p-6">
               <div className="flex items-center justify-between">
-                <div>
+                <div className="min-w-0 flex-1">
                   <p className="text-white/60 text-sm">Active Goals</p>
-                  <p className="text-2xl font-bold text-white">{goals.length}</p>
+                  <p className="text-xl sm:text-2xl font-bold text-white">{goals.length}</p>
                 </div>
-                <Target className="w-8 h-8 text-blue-400" />
+                <Target className="w-6 h-6 sm:w-8 sm:h-8 text-blue-400 flex-shrink-0" />
               </div>
             </div>
 
-            <div className="bg-white/[0.02] rounded-2xl border border-white/[0.08] p-6">
+            <div className="bg-white/[0.02] rounded-2xl border border-white/[0.08] p-4 sm:p-6">
               <div className="flex items-center justify-between">
-                <div>
+                <div className="min-w-0 flex-1">
                   <p className="text-white/60 text-sm">Total Saved</p>
-                  <p className="text-2xl font-bold text-white">
+                  <p className="text-lg sm:text-2xl font-bold text-white truncate">
                     {formatCurrency(goals.reduce((sum, goal) => sum + goal.progress.currentAmount, 0))}
                   </p>
                 </div>
-                <PiggyBank className="w-8 h-8 text-green-400" />
+                <PiggyBank className="w-6 h-6 sm:w-8 sm:h-8 text-green-400 flex-shrink-0" />
               </div>
             </div>
 
-            <div className="bg-white/[0.02] rounded-2xl border border-white/[0.08] p-6">
+            <div className="bg-white/[0.02] rounded-2xl border border-white/[0.08] p-4 sm:p-6">
               <div className="flex items-center justify-between">
-                <div>
+                <div className="min-w-0 flex-1">
                   <p className="text-white/60 text-sm">Target Amount</p>
-                  <p className="text-2xl font-bold text-white">
+                  <p className="text-lg sm:text-2xl font-bold text-white truncate">
                     {formatCurrency(goals.reduce((sum, goal) => sum + goal.targetAmount, 0))}
                   </p>
                 </div>
-                <TrendingUp className="w-8 h-8 text-purple-400" />
+                <TrendingUp className="w-6 h-6 sm:w-8 sm:h-8 text-purple-400 flex-shrink-0" />
               </div>
             </div>
 
-            <div className="bg-white/[0.02] rounded-2xl border border-white/[0.08] p-6">
+            <div className="bg-white/[0.02] rounded-2xl border border-white/[0.08] p-4 sm:p-6">
               <div className="flex items-center justify-between">
-                <div>
+                <div className="min-w-0 flex-1">
                   <p className="text-white/60 text-sm">Monthly Contributions</p>
-                  <p className="text-2xl font-bold text-white">
+                  <p className="text-lg sm:text-2xl font-bold text-white truncate">
                     {formatCurrency(goals.reduce((sum, goal) => sum + (goal.monthlyContribution || 0), 0))}
                   </p>
                 </div>
-                <Calendar className="w-8 h-8 text-orange-400" />
+                <Calendar className="w-6 h-6 sm:w-8 sm:h-8 text-orange-400 flex-shrink-0" />
               </div>
             </div>
           </div>
@@ -482,7 +511,7 @@ const FinancialPlanningPage = ({ familyId = 'demo_family' }: FinancialPlanningPa
                     </div>
                     
                     {/* Goal Stats */}
-                    <div className="grid grid-cols-3 gap-4 text-sm">
+                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4 text-sm">
                       <div>
                         <p className="text-white/60">Monthly Contribution</p>
                         <p className="font-semibold text-white">

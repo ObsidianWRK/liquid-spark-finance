@@ -134,15 +134,15 @@ const InvestmentPortfolio = ({ familyId, className }: InvestmentPortfolioProps) 
           Portfolio Summary
         </h3>
         
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
           <div className="space-y-2">
             <p className="text-white/60 text-sm">Total Value</p>
-            <p className="text-3xl font-bold text-white">{formatCurrency(portfolio.totalValue)}</p>
+            <p className="text-2xl sm:text-3xl font-bold text-white">{formatCurrency(portfolio.totalValue)}</p>
           </div>
           
           <div className="space-y-2">
             <p className="text-white/60 text-sm">Total Gain/Loss</p>
-            <p className={cn("text-2xl font-bold", getPerformanceColor(portfolio.totalGainLoss))}>
+            <p className={cn("text-xl sm:text-2xl font-bold", getPerformanceColor(portfolio.totalGainLoss))}>
               {formatCurrency(portfolio.totalGainLoss)}
             </p>
             <p className={cn("text-sm", getPerformanceColor(portfolio.totalGainLossPercent))}>
@@ -150,7 +150,7 @@ const InvestmentPortfolio = ({ familyId, className }: InvestmentPortfolioProps) 
             </p>
           </div>
           
-          <div className="space-y-2">
+          <div className="space-y-2 sm:col-span-2 lg:col-span-1">
             <p className="text-white/60 text-sm">Cost Basis</p>
             <p className="text-xl font-bold text-white">{formatCurrency(portfolio.totalCostBasis)}</p>
           </div>
@@ -164,18 +164,18 @@ const InvestmentPortfolio = ({ familyId, className }: InvestmentPortfolioProps) 
           Performance Metrics
         </h3>
         
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
           {Object.entries(portfolio.performance.returns).map(([period, value]) => (
             <div key={period} className="text-center">
-              <p className="text-white/60 text-sm capitalize">{period.replace('d', ' Days')}</p>
-              <p className={cn("text-lg font-bold", getPerformanceColor(value))}>
+              <p className="text-white/60 text-xs sm:text-sm capitalize">{period.replace('d', ' Days')}</p>
+              <p className={cn("text-sm sm:text-lg font-bold", getPerformanceColor(value))}>
                 {formatPercentage(value)}
               </p>
             </div>
           ))}
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6 pt-6 border-t border-white/[0.08]">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-6 pt-6 border-t border-white/[0.08]">
           <div className="text-center">
             <p className="text-white/60 text-sm">Sharpe Ratio</p>
             <p className="text-lg font-bold text-white">{portfolio.performance.sharpeRatio.toFixed(2)}</p>
@@ -198,22 +198,22 @@ const InvestmentPortfolio = ({ familyId, className }: InvestmentPortfolioProps) 
           Asset Allocation
         </h3>
         
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
           <div className="text-center">
             <p className="text-white/60 text-sm">Stocks</p>
-            <p className="text-xl font-bold text-blue-400">{portfolio.allocation.stocks.toFixed(1)}%</p>
+            <p className="text-lg sm:text-xl font-bold text-blue-400">{portfolio.allocation.stocks.toFixed(1)}%</p>
           </div>
           <div className="text-center">
             <p className="text-white/60 text-sm">Bonds</p>
-            <p className="text-xl font-bold text-green-400">{portfolio.allocation.bonds.toFixed(1)}%</p>
+            <p className="text-lg sm:text-xl font-bold text-green-400">{portfolio.allocation.bonds.toFixed(1)}%</p>
           </div>
           <div className="text-center">
             <p className="text-white/60 text-sm">Cash</p>
-            <p className="text-xl font-bold text-yellow-400">{portfolio.allocation.cash.toFixed(1)}%</p>
+            <p className="text-lg sm:text-xl font-bold text-yellow-400">{portfolio.allocation.cash.toFixed(1)}%</p>
           </div>
           <div className="text-center">
             <p className="text-white/60 text-sm">Other</p>
-            <p className="text-xl font-bold text-white/60">{portfolio.allocation.other.toFixed(1)}%</p>
+            <p className="text-lg sm:text-xl font-bold text-white/60">{portfolio.allocation.other.toFixed(1)}%</p>
           </div>
         </div>
 
@@ -221,10 +221,10 @@ const InvestmentPortfolio = ({ familyId, className }: InvestmentPortfolioProps) 
         {Object.keys(portfolio.allocation.sectors).length > 0 && (
           <div className="mt-6 pt-6 border-t border-white/[0.08]">
             <p className="text-white/80 font-medium mb-3">Sector Breakdown</p>
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
               {Object.entries(portfolio.allocation.sectors).map(([sector, percentage]) => (
                 <div key={sector} className="flex justify-between">
-                  <span className="text-white/60 text-sm">{sector}</span>
+                  <span className="text-white/60 text-sm truncate">{sector}</span>
                   <span className="text-white text-sm font-medium">{percentage.toFixed(1)}%</span>
                 </div>
               ))}
@@ -296,50 +296,53 @@ const InvestmentPortfolio = ({ familyId, className }: InvestmentPortfolioProps) 
         </h3>
         
         {/* Main Allocation Grid */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-8">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mb-8">
           <div className="text-center">
-            <div className="w-16 h-16 mx-auto mb-3 rounded-full bg-blue-500/20 flex items-center justify-center">
-              <span className="text-2xl font-bold text-blue-400">{portfolio.allocation.stocks.toFixed(0)}%</span>
+            <div className="w-12 h-12 sm:w-16 sm:h-16 mx-auto mb-3 rounded-full bg-blue-500/20 flex items-center justify-center">
+              <span className="text-lg sm:text-2xl font-bold text-blue-400">{portfolio.allocation.stocks.toFixed(0)}%</span>
             </div>
             <p className="text-white/60 text-sm mb-1">Stocks</p>
-            <p className="text-blue-400 font-semibold">{formatCurrency(portfolio.totalValue * portfolio.allocation.stocks / 100)}</p>
+            <p className="text-blue-400 font-semibold text-xs sm:text-sm">{formatCurrency(portfolio.totalValue * portfolio.allocation.stocks / 100)}</p>
           </div>
           <div className="text-center">
-            <div className="w-16 h-16 mx-auto mb-3 rounded-full bg-green-500/20 flex items-center justify-center">
-              <span className="text-2xl font-bold text-green-400">{portfolio.allocation.bonds.toFixed(0)}%</span>
+            <div className="w-12 h-12 sm:w-16 sm:h-16 mx-auto mb-3 rounded-full bg-green-500/20 flex items-center justify-center">
+              <span className="text-lg sm:text-2xl font-bold text-green-400">{portfolio.allocation.bonds.toFixed(0)}%</span>
             </div>
             <p className="text-white/60 text-sm mb-1">Bonds</p>
-            <p className="text-green-400 font-semibold">{formatCurrency(portfolio.totalValue * portfolio.allocation.bonds / 100)}</p>
+            <p className="text-green-400 font-semibold text-xs sm:text-sm">{formatCurrency(portfolio.totalValue * portfolio.allocation.bonds / 100)}</p>
           </div>
           <div className="text-center">
-            <div className="w-16 h-16 mx-auto mb-3 rounded-full bg-yellow-500/20 flex items-center justify-center">
-              <span className="text-2xl font-bold text-yellow-400">{portfolio.allocation.cash.toFixed(0)}%</span>
+            <div className="w-12 h-12 sm:w-16 sm:h-16 mx-auto mb-3 rounded-full bg-yellow-500/20 flex items-center justify-center">
+              <span className="text-lg sm:text-2xl font-bold text-yellow-400">{portfolio.allocation.cash.toFixed(0)}%</span>
             </div>
             <p className="text-white/60 text-sm mb-1">Cash</p>
-            <p className="text-yellow-400 font-semibold">{formatCurrency(portfolio.totalValue * portfolio.allocation.cash / 100)}</p>
+            <p className="text-yellow-400 font-semibold text-xs sm:text-sm">{formatCurrency(portfolio.totalValue * portfolio.allocation.cash / 100)}</p>
           </div>
           <div className="text-center">
-            <div className="w-16 h-16 mx-auto mb-3 rounded-full bg-purple-500/20 flex items-center justify-center">
-              <span className="text-2xl font-bold text-purple-400">{portfolio.allocation.other.toFixed(0)}%</span>
+            <div className="w-12 h-12 sm:w-16 sm:h-16 mx-auto mb-3 rounded-full bg-purple-500/20 flex items-center justify-center">
+              <span className="text-lg sm:text-2xl font-bold text-purple-400">{portfolio.allocation.other.toFixed(0)}%</span>
             </div>
             <p className="text-white/60 text-sm mb-1">Other</p>
-            <p className="text-purple-400 font-semibold">{formatCurrency(portfolio.totalValue * portfolio.allocation.other / 100)}</p>
+            <p className="text-purple-400 font-semibold text-xs sm:text-sm">{formatCurrency(portfolio.totalValue * portfolio.allocation.other / 100)}</p>
           </div>
         </div>
 
         {/* Allocation Actions */}
-        <div className="flex flex-wrap gap-3 justify-center">
-          <button className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-xl transition-colors flex items-center gap-2">
+        <div className="flex flex-col sm:flex-row gap-3 justify-center">
+          <button className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-xl transition-colors flex items-center justify-center gap-2 text-sm">
             <Target className="w-4 h-4" />
-            Rebalance Portfolio
+            <span className="hidden sm:inline">Rebalance Portfolio</span>
+            <span className="sm:hidden">Rebalance</span>
           </button>
-          <button className="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-xl transition-colors flex items-center gap-2">
+          <button className="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-xl transition-colors flex items-center justify-center gap-2 text-sm">
             <Plus className="w-4 h-4" />
-            Add Asset Class
+            <span className="hidden sm:inline">Add Asset Class</span>
+            <span className="sm:hidden">Add Asset</span>
           </button>
-          <button className="bg-purple-500 hover:bg-purple-600 text-white px-4 py-2 rounded-xl transition-colors flex items-center gap-2">
+          <button className="bg-purple-500 hover:bg-purple-600 text-white px-4 py-2 rounded-xl transition-colors flex items-center justify-center gap-2 text-sm">
             <BarChart3 className="w-4 h-4" />
-            Optimize Allocation
+            <span className="hidden sm:inline">Optimize Allocation</span>
+            <span className="sm:hidden">Optimize</span>
           </button>
         </div>
       </div>
@@ -352,21 +355,21 @@ const InvestmentPortfolio = ({ familyId, className }: InvestmentPortfolioProps) 
             Sector Allocation
           </h3>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
             {Object.entries(portfolio.allocation.sectors).map(([sector, percentage]) => (
-              <div key={sector} className="flex items-center justify-between p-4 bg-white/[0.03] rounded-xl border border-white/[0.05]">
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-blue-500/20 to-purple-500/20 flex items-center justify-center">
-                    <Activity className="w-5 h-5 text-blue-400" />
+              <div key={sector} className="flex items-center justify-between p-3 sm:p-4 bg-white/[0.03] rounded-xl border border-white/[0.05]">
+                <div className="flex items-center gap-3 min-w-0 flex-1">
+                  <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-lg bg-gradient-to-br from-blue-500/20 to-purple-500/20 flex items-center justify-center flex-shrink-0">
+                    <Activity className="w-4 h-4 sm:w-5 sm:h-5 text-blue-400" />
                   </div>
-                  <div>
-                    <p className="font-medium text-white">{sector}</p>
-                    <p className="text-white/60 text-sm">{formatCurrency(portfolio.totalValue * percentage / 100)}</p>
+                  <div className="min-w-0 flex-1">
+                    <p className="font-medium text-white text-sm sm:text-base truncate">{sector}</p>
+                    <p className="text-white/60 text-xs sm:text-sm">{formatCurrency(portfolio.totalValue * percentage / 100)}</p>
                   </div>
                 </div>
-                <div className="text-right">
-                  <p className="text-lg font-bold text-white">{percentage.toFixed(1)}%</p>
-                  <div className="w-16 bg-white/[0.05] rounded-full h-2 mt-1">
+                <div className="text-right flex-shrink-0">
+                  <p className="text-sm sm:text-lg font-bold text-white">{percentage.toFixed(1)}%</p>
+                  <div className="w-12 sm:w-16 bg-white/[0.05] rounded-full h-2 mt-1">
                     <div 
                       className="bg-gradient-to-r from-blue-500 to-purple-500 h-2 rounded-full transition-all duration-300"
                       style={{ width: `${Math.min(percentage, 100)}%` }}
@@ -386,23 +389,23 @@ const InvestmentPortfolio = ({ familyId, className }: InvestmentPortfolioProps) 
           Risk vs Return Analysis
         </h3>
         
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6">
           <div className="text-center p-4 bg-white/[0.03] rounded-xl border border-white/[0.05]">
-            <Shield className="w-8 h-8 text-green-400 mx-auto mb-3" />
+            <Shield className="w-6 h-6 sm:w-8 sm:h-8 text-green-400 mx-auto mb-3" />
             <p className="text-white/60 text-sm mb-1">Conservative</p>
-            <p className="text-lg font-bold text-green-400">Low Risk</p>
+            <p className="text-base sm:text-lg font-bold text-green-400">Low Risk</p>
             <p className="text-white/60 text-xs">20% Stocks, 70% Bonds, 10% Cash</p>
           </div>
           <div className="text-center p-4 bg-blue-500/10 rounded-xl border border-blue-500/20">
-            <Target className="w-8 h-8 text-blue-400 mx-auto mb-3" />
+            <Target className="w-6 h-6 sm:w-8 sm:h-8 text-blue-400 mx-auto mb-3" />
             <p className="text-white/60 text-sm mb-1">Current Allocation</p>
-            <p className="text-lg font-bold text-blue-400">Moderate Risk</p>
+            <p className="text-base sm:text-lg font-bold text-blue-400">Moderate Risk</p>
             <p className="text-white/60 text-xs">{portfolio.allocation.stocks.toFixed(0)}% Stocks, {portfolio.allocation.bonds.toFixed(0)}% Bonds</p>
           </div>
           <div className="text-center p-4 bg-white/[0.03] rounded-xl border border-white/[0.05]">
-            <TrendingUp className="w-8 h-8 text-red-400 mx-auto mb-3" />
+            <TrendingUp className="w-6 h-6 sm:w-8 sm:h-8 text-red-400 mx-auto mb-3" />
             <p className="text-white/60 text-sm mb-1">Aggressive</p>
-            <p className="text-lg font-bold text-red-400">High Risk</p>
+            <p className="text-base sm:text-lg font-bold text-red-400">High Risk</p>
             <p className="text-white/60 text-xs">80% Stocks, 15% Bonds, 5% Cash</p>
           </div>
         </div>
@@ -472,11 +475,11 @@ const InvestmentPortfolio = ({ familyId, className }: InvestmentPortfolioProps) 
 
             {/* Holding Details */}
             <div className="flex-1 min-w-0">
-              <div className="flex items-center justify-between">
-                <div>
-                  <h4 className="font-semibold text-white">{holding.symbol}</h4>
-                  <p className="text-white/60 text-sm truncate">{holding.name}</p>
-                  <div className="flex items-center gap-3 mt-1">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                <div className="min-w-0 flex-1">
+                  <h4 className="font-semibold text-white text-sm sm:text-base">{holding.symbol}</h4>
+                  <p className="text-white/60 text-xs sm:text-sm truncate">{holding.name}</p>
+                  <div className="flex items-center gap-2 sm:gap-3 mt-1">
                     <span className={cn(
                       "text-xs px-2 py-1 rounded-lg border font-medium",
                       getAssetTypeColor(holding.assetType)
@@ -484,29 +487,31 @@ const InvestmentPortfolio = ({ familyId, className }: InvestmentPortfolioProps) 
                       {holding.assetType.toUpperCase()}
                     </span>
                     {holding.sector && (
-                      <span className="text-xs text-white/60">{holding.sector}</span>
+                      <span className="text-xs text-white/60 truncate">{holding.sector}</span>
                     )}
                   </div>
                 </div>
 
-                <div className="ml-auto text-right">
-                  <p className="font-bold text-white">{formatCurrency(holding.marketValue)}</p>
-                  <p className={cn("text-sm", getPerformanceColor(holding.unrealizedGainLoss))}>
-                    {formatCurrency(holding.unrealizedGainLoss)} ({formatPercentage(holding.unrealizedGainLossPercent)})
-                  </p>
-                  <div className="flex items-center gap-3 mt-1 text-xs text-white/60">
-                    <span>{holding.quantity} shares</span>
-                    <span>@{formatCurrency(holding.currentPrice)}</span>
+                <div className="flex items-center justify-between sm:block text-right">
+                  <div>
+                    <p className="font-bold text-white text-sm sm:text-base">{formatCurrency(holding.marketValue)}</p>
+                    <p className={cn("text-xs sm:text-sm", getPerformanceColor(holding.unrealizedGainLoss))}>
+                      {formatCurrency(holding.unrealizedGainLoss)} ({formatPercentage(holding.unrealizedGainLossPercent)})
+                    </p>
+                    <div className="flex sm:block items-center gap-1 sm:gap-0 mt-1 text-xs text-white/60">
+                      <span>{holding.quantity} shares</span>
+                      <span className="sm:block inline">@{formatCurrency(holding.currentPrice)}</span>
+                    </div>
                   </div>
-                </div>
 
-                {/* Action Menu */}
-                <div className="flex-shrink-0 ml-2">
-                  <button className="p-2 rounded-lg hover:bg-white/[0.05] transition-colors"
-                    onClick={(e: React.MouseEvent) => e.stopPropagation()}
-                  >
-                    <MoreHorizontal className="w-4 h-4 text-white/60" />
-                  </button>
+                  {/* Action Menu */}
+                  <div className="flex-shrink-0 ml-2">
+                    <button className="p-2 rounded-lg hover:bg-white/[0.05] transition-colors"
+                      onClick={(e: React.MouseEvent) => e.stopPropagation()}
+                    >
+                      <MoreHorizontal className="w-4 h-4 text-white/60" />
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>
@@ -519,27 +524,54 @@ const InvestmentPortfolio = ({ familyId, className }: InvestmentPortfolioProps) 
   return (
     <div className={cn("space-y-6", className)}>
       {/* Navigation Tabs */}
-      <div className="flex items-center gap-2 bg-white/[0.02] rounded-xl p-1 border border-white/[0.08]">
-        {[
-          { id: 'overview', label: 'Overview', icon: PieChart },
-          { id: 'holdings', label: 'Holdings', icon: TrendingUp },
-          { id: 'performance', label: 'Performance', icon: BarChart3 },
-          { id: 'allocation', label: 'Allocation', icon: Target }
-        ].map(({ id, label, icon: Icon }) => (
-          <button
-            key={id}
-            onClick={() => setSelectedView(id as any)}
-            className={cn(
-              "flex-1 flex items-center justify-center gap-2 px-4 py-2 rounded-lg transition-all",
-              selectedView === id
-                ? "bg-blue-500 text-white"
-                : "text-white/60 hover:text-white hover:bg-white/[0.05]"
-            )}
-          >
-            <Icon className="w-4 h-4" />
-            {label}
-          </button>
-        ))}
+      <div className="bg-white/[0.02] rounded-xl p-1 border border-white/[0.08]">
+        {/* Mobile: Scrollable tabs */}
+        <div className="flex sm:hidden overflow-x-auto gap-1 pb-1 scrollbar-hide">
+          {[
+            { id: 'overview', label: 'Overview', icon: PieChart },
+            { id: 'holdings', label: 'Holdings', icon: TrendingUp },
+            { id: 'performance', label: 'Performance', icon: BarChart3 },
+            { id: 'allocation', label: 'Allocation', icon: Target }
+          ].map(({ id, label, icon: Icon }) => (
+            <button
+              key={id}
+              onClick={() => setSelectedView(id as any)}
+              className={cn(
+                "flex items-center gap-2 px-3 py-2 rounded-lg transition-all text-xs whitespace-nowrap flex-shrink-0",
+                selectedView === id
+                  ? "bg-blue-500 text-white"
+                  : "text-white/60 hover:text-white hover:bg-white/[0.05]"
+              )}
+            >
+              <Icon className="w-3 h-3" />
+              {label}
+            </button>
+          ))}
+        </div>
+        
+        {/* Desktop: Grid tabs */}
+        <div className="hidden sm:grid grid-cols-4 gap-1">
+          {[
+            { id: 'overview', label: 'Overview', icon: PieChart },
+            { id: 'holdings', label: 'Holdings', icon: TrendingUp },
+            { id: 'performance', label: 'Performance', icon: BarChart3 },
+            { id: 'allocation', label: 'Allocation', icon: Target }
+          ].map(({ id, label, icon: Icon }) => (
+            <button
+              key={id}
+              onClick={() => setSelectedView(id as any)}
+              className={cn(
+                "flex items-center justify-center gap-2 px-4 py-2 rounded-lg transition-all text-sm",
+                selectedView === id
+                  ? "bg-blue-500 text-white"
+                  : "text-white/60 hover:text-white hover:bg-white/[0.05]"
+              )}
+            >
+              <Icon className="w-4 h-4" />
+              {label}
+            </button>
+          ))}
+        </div>
       </div>
 
       {/* Content */}

@@ -536,27 +536,54 @@ const BudgetTracker = ({ familyId, className }: BudgetTrackerProps) => {
   return (
     <div className={cn("space-y-6", className)}>
       {/* Navigation Tabs */}
-      <div className="flex items-center gap-2 bg-white/[0.02] rounded-xl p-1 border border-white/[0.08]">
-        {[
-          { id: 'overview', label: 'Overview', icon: PieChart },
-          { id: 'categories', label: 'Categories', icon: BarChart3 },
-          { id: 'goals', label: 'Goals', icon: Target },
-          { id: 'analytics', label: 'Analytics', icon: TrendingUp }
-        ].map(({ id, label, icon: Icon }) => (
-          <button
-            key={id}
-            onClick={() => setSelectedView(id as any)}
-            className={cn(
-              "flex-1 flex items-center justify-center gap-2 px-4 py-2 rounded-lg transition-all",
-              selectedView === id
-                ? "bg-blue-500 text-white"
-                : "text-white/60 hover:text-white hover:bg-white/[0.05]"
-            )}
-          >
-            <Icon className="w-4 h-4" />
-            {label}
-          </button>
-        ))}
+      <div className="bg-white/[0.02] rounded-xl p-1 border border-white/[0.08]">
+        {/* Mobile: Scrollable tabs */}
+        <div className="flex sm:hidden overflow-x-auto gap-1 pb-1 scrollbar-hide">
+          {[
+            { id: 'overview', label: 'Overview', icon: PieChart },
+            { id: 'categories', label: 'Categories', icon: BarChart3 },
+            { id: 'goals', label: 'Goals', icon: Target },
+            { id: 'analytics', label: 'Analytics', icon: TrendingUp }
+          ].map(({ id, label, icon: Icon }) => (
+            <button
+              key={id}
+              onClick={() => setSelectedView(id as any)}
+              className={cn(
+                "flex items-center gap-2 px-3 py-2 rounded-lg transition-all text-xs whitespace-nowrap flex-shrink-0",
+                selectedView === id
+                  ? "bg-blue-500 text-white"
+                  : "text-white/60 hover:text-white hover:bg-white/[0.05]"
+              )}
+            >
+              <Icon className="w-3 h-3" />
+              {label}
+            </button>
+          ))}
+        </div>
+        
+        {/* Desktop: Grid tabs */}
+        <div className="hidden sm:grid grid-cols-4 gap-1">
+          {[
+            { id: 'overview', label: 'Overview', icon: PieChart },
+            { id: 'categories', label: 'Categories', icon: BarChart3 },
+            { id: 'goals', label: 'Goals', icon: Target },
+            { id: 'analytics', label: 'Analytics', icon: TrendingUp }
+          ].map(({ id, label, icon: Icon }) => (
+            <button
+              key={id}
+              onClick={() => setSelectedView(id as any)}
+              className={cn(
+                "flex items-center justify-center gap-2 px-4 py-2 rounded-lg transition-all text-sm",
+                selectedView === id
+                  ? "bg-blue-500 text-white"
+                  : "text-white/60 hover:text-white hover:bg-white/[0.05]"
+              )}
+            >
+              <Icon className="w-4 h-4" />
+              {label}
+            </button>
+          ))}
+        </div>
       </div>
 
       {/* Content */}
