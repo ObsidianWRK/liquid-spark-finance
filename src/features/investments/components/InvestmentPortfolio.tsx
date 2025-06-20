@@ -204,7 +204,7 @@ const InvestmentPortfolio = ({
             ([period, value]) => (
               <div
                 key={period}
-                className="text-center p-2 sm:p-3 bg-white/[0.02] rounded-lg border border-white/[0.05]"
+                className="text-center p-2 sm:p-3 bg-white/[0.02] rounded-lg border border-white/[0.08]"
               >
                 <p className="text-white/60 text-xs sm:text-sm capitalize truncate">
                   {period.replace('d', ' Days')}
@@ -223,19 +223,19 @@ const InvestmentPortfolio = ({
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4 mt-4 sm:mt-6 pt-4 sm:pt-6 border-t border-white/[0.08]">
-          <div className="text-center p-3 bg-white/[0.02] rounded-lg border border-white/[0.05]">
+          <div className="text-center p-3 bg-white/[0.02] rounded-lg border border-white/[0.08]">
             <p className="text-white/60 text-xs sm:text-sm">Sharpe Ratio</p>
             <p className="text-base sm:text-lg font-bold text-white">
               {portfolio.performance.sharpeRatio.toFixed(2)}
             </p>
           </div>
-          <div className="text-center p-3 bg-white/[0.02] rounded-lg border border-white/[0.05]">
+          <div className="text-center p-3 bg-white/[0.02] rounded-lg border border-white/[0.08]">
             <p className="text-white/60 text-xs sm:text-sm">Volatility</p>
             <p className="text-base sm:text-lg font-bold text-white">
               {portfolio.performance.volatility.toFixed(1)}%
             </p>
           </div>
-          <div className="text-center p-3 bg-white/[0.02] rounded-lg border border-white/[0.05] sm:col-span-3 lg:col-span-1">
+          <div className="text-center p-3 bg-white/[0.02] rounded-lg border border-white/[0.08] sm:col-span-3 lg:col-span-1">
             <p className="text-white/60 text-xs sm:text-sm">Max Drawdown</p>
             <p className="text-base sm:text-lg font-bold text-red-400">
               {portfolio.performance.maxDrawdown.toFixed(1)}%
@@ -597,6 +597,176 @@ const InvestmentPortfolio = ({
     </div>
   );
 
+  const renderPerformance = () => (
+    <div className="space-y-6">
+      {/* Performance Overview */}
+      <div className="bg-white/[0.02] rounded-2xl border border-white/[0.08] p-4 sm:p-6 card-hover">
+        <h3 className="text-lg sm:text-xl font-bold text-white mb-4 sm:mb-6 flex items-center gap-3">
+          <BarChart3 className="w-5 h-5 sm:w-6 sm:h-6 text-blue-400" />
+          Performance Analysis
+        </h3>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mb-6">
+          <div className="text-center p-4 bg-white/[0.03] rounded-xl border border-white/[0.05]">
+            <p className="text-white/60 text-xs sm:text-sm mb-1">Total Return</p>
+            <p className={cn('text-lg sm:text-xl font-bold', getPerformanceColor(portfolio.totalGainLossPercent))}>
+              {formatPercentage(portfolio.totalGainLossPercent)}
+            </p>
+            <p className={cn('text-xs sm:text-sm', getPerformanceColor(portfolio.totalGainLoss))}>
+              {formatCurrency(portfolio.totalGainLoss)}
+            </p>
+          </div>
+          <div className="text-center p-4 bg-white/[0.03] rounded-xl border border-white/[0.05]">
+            <p className="text-white/60 text-xs sm:text-sm mb-1">Sharpe Ratio</p>
+            <p className="text-lg sm:text-xl font-bold text-white">
+              {portfolio.performance.sharpeRatio.toFixed(2)}
+            </p>
+            <p className="text-xs sm:text-sm text-white/60">Risk-adjusted</p>
+          </div>
+          <div className="text-center p-4 bg-white/[0.03] rounded-xl border border-white/[0.05]">
+            <p className="text-white/60 text-xs sm:text-sm mb-1">Volatility</p>
+            <p className="text-lg sm:text-xl font-bold text-yellow-400">
+              {portfolio.performance.volatility.toFixed(1)}%
+            </p>
+            <p className="text-xs sm:text-sm text-white/60">Annualized</p>
+          </div>
+          <div className="text-center p-4 bg-white/[0.03] rounded-xl border border-white/[0.05]">
+            <p className="text-white/60 text-xs sm:text-sm mb-1">Max Drawdown</p>
+            <p className="text-lg sm:text-xl font-bold text-red-400">
+              {portfolio.performance.maxDrawdown.toFixed(1)}%
+            </p>
+            <p className="text-xs sm:text-sm text-white/60">Peak to trough</p>
+          </div>
+        </div>
+      </div>
+
+      {/* Detailed Performance Metrics */}
+      <div className="bg-white/[0.02] rounded-2xl border border-white/[0.08] p-4 sm:p-6 card-hover">
+        <h3 className="text-base sm:text-lg font-bold text-white mb-3 sm:mb-4 flex items-center gap-3">
+          <TrendingUp className="w-4 h-4 sm:w-5 sm:h-5 text-green-400" />
+          Time Period Returns
+        </h3>
+
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 sm:gap-4">
+          {Object.entries(portfolio.performance.returns).map(([period, value]) => (
+            <div key={period} className="text-center p-3 sm:p-4 bg-white/[0.02] rounded-lg border border-white/[0.05]">
+              <p className="text-white/60 text-xs sm:text-sm capitalize mb-2">
+                {period.replace('d', ' Days')}
+              </p>
+              <p className={cn('text-sm sm:text-lg font-bold', getPerformanceColor(value))}>
+                {formatPercentage(value)}
+              </p>
+              <div className="w-full bg-white/[0.05] rounded-full h-1 mt-2">
+                <div 
+                  className={cn('h-1 rounded-full transition-all duration-300', 
+                    value > 0 ? 'bg-green-400' : 'bg-red-400'
+                  )}
+                  style={{ width: `${Math.min(Math.abs(value) * 2, 100)}%` }}
+                />
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Performance Attribution */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <div className="bg-white/[0.02] rounded-2xl border border-white/[0.08] p-4 sm:p-6 card-hover">
+          <h3 className="text-base sm:text-lg font-bold text-white mb-3 sm:mb-4 flex items-center gap-3">
+            <Target className="w-4 h-4 sm:w-5 sm:h-5 text-purple-400" />
+            Top Performers
+          </h3>
+          <div className="space-y-3">
+            {portfolio.holdings
+              .sort((a, b) => b.unrealizedGainLossPercent - a.unrealizedGainLossPercent)
+              .slice(0, 5)
+              .map((holding) => (
+                <div key={holding.id} className="flex items-center justify-between p-3 bg-white/[0.03] rounded-lg border border-white/[0.05]">
+                  <div className="flex items-center gap-3">
+                    <div className="w-8 h-8 bg-gradient-to-br from-green-500/20 to-blue-500/20 rounded-lg flex items-center justify-center">
+                      {getHoldingIcon(holding.assetType)}
+                    </div>
+                    <div>
+                      <p className="font-medium text-white text-sm">{holding.symbol}</p>
+                      <p className="text-white/60 text-xs">{holding.assetType}</p>
+                    </div>
+                  </div>
+                  <div className="text-right">
+                    <p className={cn('font-bold text-sm', getPerformanceColor(holding.unrealizedGainLoss))}>
+                      {formatPercentage(holding.unrealizedGainLossPercent)}
+                    </p>
+                    <p className="text-white/60 text-xs">{formatCurrency(holding.unrealizedGainLoss)}</p>
+                  </div>
+                </div>
+              ))}
+          </div>
+        </div>
+
+        <div className="bg-white/[0.02] rounded-2xl border border-white/[0.08] p-4 sm:p-6 card-hover">
+          <h3 className="text-base sm:text-lg font-bold text-white mb-3 sm:mb-4 flex items-center gap-3">
+            <AlertTriangle className="w-4 h-4 sm:w-5 sm:h-5 text-red-400" />
+            Underperformers
+          </h3>
+          <div className="space-y-3">
+            {portfolio.holdings
+              .sort((a, b) => a.unrealizedGainLossPercent - b.unrealizedGainLossPercent)
+              .slice(0, 5)
+              .map((holding) => (
+                <div key={holding.id} className="flex items-center justify-between p-3 bg-white/[0.03] rounded-lg border border-white/[0.05]">
+                  <div className="flex items-center gap-3">
+                    <div className="w-8 h-8 bg-gradient-to-br from-red-500/20 to-orange-500/20 rounded-lg flex items-center justify-center">
+                      {getHoldingIcon(holding.assetType)}
+                    </div>
+                    <div>
+                      <p className="font-medium text-white text-sm">{holding.symbol}</p>
+                      <p className="text-white/60 text-xs">{holding.assetType}</p>
+                    </div>
+                  </div>
+                  <div className="text-right">
+                    <p className={cn('font-bold text-sm', getPerformanceColor(holding.unrealizedGainLoss))}>
+                      {formatPercentage(holding.unrealizedGainLossPercent)}
+                    </p>
+                    <p className="text-white/60 text-xs">{formatCurrency(holding.unrealizedGainLoss)}</p>
+                  </div>
+                </div>
+              ))}
+          </div>
+        </div>
+      </div>
+
+      {/* Benchmark Comparison */}
+      <div className="bg-white/[0.02] rounded-2xl border border-white/[0.08] p-4 sm:p-6 card-hover">
+        <h3 className="text-base sm:text-lg font-bold text-white mb-3 sm:mb-4 flex items-center gap-3">
+          <Activity className="w-4 h-4 sm:w-5 sm:h-5 text-blue-400" />
+          Benchmark Comparison
+        </h3>
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6">
+          <div className="text-center p-4 bg-white/[0.03] rounded-xl border border-white/[0.05]">
+            <p className="text-white/60 text-sm mb-2">Portfolio</p>
+            <p className={cn('text-xl font-bold', getPerformanceColor(portfolio.totalGainLossPercent))}>
+              {formatPercentage(portfolio.totalGainLossPercent)}
+            </p>
+            <p className="text-white/60 text-xs">YTD Return</p>
+          </div>
+          <div className="text-center p-4 bg-white/[0.03] rounded-xl border border-white/[0.05]">
+            <p className="text-white/60 text-sm mb-2">S&P 500</p>
+            <p className="text-xl font-bold text-green-400">+12.8%</p>
+            <p className="text-white/60 text-xs">Benchmark</p>
+          </div>
+          <div className="text-center p-4 bg-white/[0.03] rounded-xl border border-white/[0.05]">
+            <p className="text-white/60 text-sm mb-2">Alpha</p>
+            <p className={cn('text-xl font-bold', 
+              portfolio.totalGainLossPercent > 12.8 ? 'text-green-400' : 'text-red-400'
+            )}>
+              {formatPercentage(portfolio.totalGainLossPercent - 12.8)}
+            </p>
+            <p className="text-white/60 text-xs">vs Benchmark</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+
   const renderHoldings = () => (
     <div className="space-y-4">
       <div className="flex items-center justify-between">
@@ -747,8 +917,7 @@ const InvestmentPortfolio = ({
       {/* Content */}
       {selectedView === 'overview' && renderOverview()}
       {selectedView === 'holdings' && renderHoldings()}
-      {selectedView === 'performance' && renderOverview()}{' '}
-      {/* Reuse overview for now */}
+      {selectedView === 'performance' && renderPerformance()}
       {selectedView === 'allocation' && renderAllocation()}
     </div>
   );

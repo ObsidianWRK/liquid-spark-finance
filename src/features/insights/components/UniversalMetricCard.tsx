@@ -94,22 +94,22 @@ const UniversalMetricCard = memo(
       switch (variant) {
         case 'clean':
           return {
-            container: 'bg-white/5 backdrop-blur-sm border border-white/10',
-            iconContainer: 'bg-white/5 border border-white/10',
-            progressBar: 'bg-white/10 border border-white/5',
+            container: 'bg-white/[0.02] backdrop-blur-sm border border-white/[0.08]',
+            iconContainer: 'bg-white/[0.05] border border-white/[0.08]',
+            progressBar: 'bg-white/[0.05] border border-white/[0.05]',
           };
         case 'enhanced':
           return {
             container:
-              'bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-xl border border-white/20 shadow-lg',
-            iconContainer: 'bg-white/10 border border-white/20 shadow-md',
-            progressBar: 'bg-white/10 border border-white/20',
+              'bg-gradient-to-br from-white/[0.05] to-white/[0.02] backdrop-blur-xl border border-white/[0.08] shadow-lg',
+            iconContainer: 'bg-white/[0.05] border border-white/[0.08] shadow-md',
+            progressBar: 'bg-white/[0.05] border border-white/[0.08]',
           };
         case 'refined':
           return {
-            container: 'bg-black/20 backdrop-blur-md border border-white/20',
-            iconContainer: 'bg-white/10 border border-white/20',
-            progressBar: 'bg-white/10 border border-white/20',
+            container: 'bg-white/[0.02] backdrop-blur-md border border-white/[0.08]',
+            iconContainer: 'bg-white/[0.05] border border-white/[0.08]',
+            progressBar: 'bg-white/[0.05] border border-white/[0.08]',
           };
         case 'financial':
           return {
@@ -141,9 +141,9 @@ const UniversalMetricCard = memo(
           };
         default:
           return {
-            container: 'bg-white/5 backdrop-blur-md border border-white/20',
-            iconContainer: 'bg-white/10 border border-white/20',
-            progressBar: 'bg-white/10 border border-white/20',
+            container: 'bg-white/[0.02] backdrop-blur-md border border-white/[0.08]',
+            iconContainer: 'bg-white/[0.05] border border-white/[0.08]',
+            progressBar: 'bg-white/[0.05] border border-white/[0.08]',
           };
       }
     };
@@ -183,21 +183,12 @@ const UniversalMetricCard = memo(
     return (
       <UniversalCard
         variant="glass"
+        interactive={interactive}
         className={`
-        relative overflow-hidden rounded-xl md:rounded-2xl hover:border-white/30 transition-all duration-300 group 
+        relative overflow-hidden rounded-xl md:rounded-2xl transition-all duration-300 group 
         ${onClick ? 'cursor-pointer' : ''} ${config.padding} ${variantStyles.container}
       `}
-        liquid={animationsEnabled}
-        liquidIntensity={liquidIntensity}
-        liquidInteractive={interactive}
         onClick={onClick}
-        style={
-          animationsEnabled
-            ? {
-                animation: `slideInScale 0.6s ease-out ${delay}ms both`,
-              }
-            : {}
-        }
       >
         <div className="relative z-10">
           {/* Header */}
