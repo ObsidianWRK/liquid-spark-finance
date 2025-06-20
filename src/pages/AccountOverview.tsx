@@ -12,6 +12,9 @@ import { TransactionList } from '@/features/transactions/components/TransactionL
 import { accountService } from '@/features/accounts/api/accountService';
 import { AccountCardDTO } from '@/shared/types/accounts';
 import { Transaction } from '@/shared/types/transactions';
+import { FullScreenSpinner } from '@/shared/ui/loading-spinner';
+import { ErrorState } from '@/shared/ui/error-state';
+import { AccountOverviewSkeleton } from '@/shared/ui/account-overview-skeleton';
 
 // Utility functions inline to avoid module resolution issues
 function getDaysInWarning(balanceHistory: number[], threshold: number): number {
@@ -138,14 +141,20 @@ const AccountOverview: React.FC = () => {
   const [transactions, setTransactions] = useState<Transaction[]>([]);
   const [balanceHistory, setBalanceHistory] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<Error | null>(null);
   const { stressIndex } = useSynchronizedMetrics();
 
   useEffect(() => {
     const loadAccountData = async () => {
-      if (!accountId) return;
+      if (!accountId) {
+        setError(new Error('Account ID is required'));
+        setLoading(false);
+        return;
+      }
       
       try {
         setLoading(true);
+        setError(null);
         
         const mockAccount: AccountCardDTO = {
           id: accountId,
@@ -200,8 +209,9 @@ const AccountOverview: React.FC = () => {
         ];
         setBalanceHistory(mockBalanceHistory);
         
-      } catch (error) {
-        console.error('Error loading account data:', error);
+      } catch (err) {
+        console.error('Error loading account data:', err);
+        setError(err instanceof Error ? err : new Error('Failed to load account data'));
       } finally {
         setLoading(false);
       }
@@ -238,28 +248,32 @@ const AccountOverview: React.FC = () => {
     return sum / balanceHistory.length;
   }, [balanceHistory]);
 
+  // Show skeleton loading state
   if (loading) {
+    return <AccountOverviewSkeleton />;
+  }
+
+  // Show error state
+  if (error) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500 mx-auto mb-4"></div>
-          <p className="text-white/70">Loading account details...</p>
-        </div>
-      </div>
+      <ErrorState
+        error={error}
+        title="Failed to Load Account"
+        onRetry={() => window.location.reload()}
+        onBack={() => navigate('/')}
+      />
     );
   }
 
+  // Show not found state (shouldn't happen with mock data, but good to have)
   if (!account) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="text-center">
-          <h2 className="text-2xl font-bold text-red-400 mb-4">Account Not Found</h2>
-          <p className="text-white/70 mb-4">The requested account could not be found.</p>
-          <Button onClick={() => navigate('/')} variant="outline">
-            Back to Dashboard
-          </Button>
-        </div>
-      </div>
+      <ErrorState
+        title="Account Not Found"
+        message="The requested account could not be found."
+        onBack={() => navigate('/')}
+        backText="Back to Dashboard"
+      />
     );
   }
 

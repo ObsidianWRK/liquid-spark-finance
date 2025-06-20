@@ -15,11 +15,22 @@ const BudgetPlannerPage = React.lazy(() => import('@/features/budget/components/
 const InvestmentTrackerPage = React.lazy(() => import('@/features/investments/components/InvestmentTrackerPage'));
 const BudgetReportsPage = React.lazy(() => import('@/features/budget/components/BudgetReportsPage'));
 const InsightsPage = React.lazy(() => import('./pages/InsightsPage'));
+const AccountOverview = React.lazy(() => import('./pages/AccountOverview'));
 
 // Loading component
 const LoadingSpinner = () => (
   <div className="min-h-screen bg-gray-950 flex items-center justify-center">
     <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-blue-400"></div>
+  </div>
+);
+
+// Account-specific loading fallback
+const AccountLoadingFallback = () => (
+  <div className="min-h-screen bg-black flex items-center justify-center">
+    <div className="text-center">
+      <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500 mx-auto mb-4"></div>
+      <p className="text-white/70">Loading account details...</p>
+    </div>
   </div>
 );
 
@@ -82,6 +93,16 @@ function App() {
               <Route path="/transactions" element={<TransactionDemo />} />
               <Route path="/insights" element={<InsightsPage />} />
               <Route path="/reports" element={<BudgetReportsPage />} />
+              
+              {/* Account Detail Route */}
+              <Route 
+                path="/accounts/:accountId" 
+                element={
+                  <Suspense fallback={<AccountLoadingFallback />}>
+                    <AccountOverview />
+                  </Suspense>
+                } 
+              />
               
               {/* Feature Pages */}
               <Route path="/calculators" element={<CalculatorsHub />} />

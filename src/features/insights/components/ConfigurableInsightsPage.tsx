@@ -20,7 +20,7 @@ const CategoryTrendsChart = lazy(() => import('@/features/insights/components/Ca
 const FinancialCard = lazy(() => import('@/features/insights/components/FinancialCard'));
 const WellnessCard = lazy(() => import('@/features/insights/components/WellnessCard'));
 const EcoCard = lazy(() => import('@/features/insights/components/EcoCard'));
-const AnimatedCircularProgress = lazy(() => import('@/features/insights/components/components/AnimatedCircularProgress'));
+const AnimatedCircularProgress = lazy(() => import('@/shared/ui/charts/AnimatedCircularProgress'));
 
 // Configurable Insights Page that consolidates:
 // - VueniUnifiedInsightsPage.tsx

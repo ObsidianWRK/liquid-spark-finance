@@ -1,7 +1,7 @@
 import React, { memo, ReactNode } from 'react';
 import { TrendingUp, TrendingDown, Activity } from 'lucide-react';
 import { UniversalCard as EnhancedGlassCard } from '@/shared/ui/UniversalCard';
-import AnimatedCircularProgress from './AnimatedCircularProgress';
+import AnimatedCircularProgress from '@/shared/ui/charts/AnimatedCircularProgress';
 
 interface EnhancedScoreCardProps {
   title: string;

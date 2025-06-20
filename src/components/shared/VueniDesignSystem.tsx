@@ -373,6 +373,9 @@ export const VueniDesignSystem = {
   Grid: VueniGrid,
 } as const;
 
+// Default export for backward compatibility
+export default VueniDesignSystem;
+
 // Design tokens for consistent styling
 export const vueniTokens = {
   colors: {

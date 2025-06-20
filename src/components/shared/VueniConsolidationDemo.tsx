@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
 import {
   VueniUnifiedTransactionList,
-  VueniUnifiedInsightsPage,
+  // VueniUnifiedInsightsPage, // Temporarily disabled during consolidation
   VueniDesignSystem,
   FeatureFlagProvider,
   useFeatureFlags,
-  transactionListPresets,
-  insightsPresets,
+  // transactionListPresets,
+  // insightsPresets,
   TransactionVariant,
-  InsightsVariant,
+  // InsightsVariant,
 } from './index';
 
 // Sample data for demonstration
@@ -65,7 +65,7 @@ const sampleAccounts = [
 const ConsolidationDemo: React.FC = () => {
   const { flags, updateFlag } = useFeatureFlags();
   const [selectedTransactionVariant, setSelectedTransactionVariant] = useState<TransactionVariant>('default');
-  const [selectedInsightsVariant, setSelectedInsightsVariant] = useState<InsightsVariant>('standard');
+  const [selectedInsightsVariant, setSelectedInsightsVariant] = useState<string>('standard');
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 p-6">
@@ -101,7 +101,7 @@ const ConsolidationDemo: React.FC = () => {
               <label className="text-white font-medium mb-2 block">Insights Page Variant:</label>
               <select
                 value={selectedInsightsVariant}
-                onChange={(e) => setSelectedInsightsVariant(e.target.value as InsightsVariant)}
+                onChange={(e) => setSelectedInsightsVariant(e.target.value)}
                 className="w-full p-2 bg-white/10 border border-white/20 rounded-lg text-white"
               >
                 <option value="standard">Standard</option>
@@ -200,7 +200,8 @@ const ConsolidationDemo: React.FC = () => {
             Unified Insights Page - {selectedInsightsVariant} variant
           </h2>
           
-          <VueniUnifiedInsightsPage
+          {/* Temporarily disabled during consolidation */}
+          {/* <VueniUnifiedInsightsPage
             variant={selectedInsightsVariant}
             transactions={sampleTransactions}
             accounts={sampleAccounts}
@@ -208,7 +209,10 @@ const ConsolidationDemo: React.FC = () => {
             onExportData={() => {
               console.log('Export data requested');
             }}
-          />
+          /> */}
+          <div className="p-8 text-center text-white/60 bg-white/5 rounded-lg border border-white/10">
+            VueniUnifiedInsightsPage temporarily disabled during consolidation refactor
+          </div>
         </VueniDesignSystem.Section>
 
         {/* Feature Flags Panel */}
