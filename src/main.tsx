@@ -1,25 +1,23 @@
 // Process polyfill for browser compatibility
-interface ProcessPolyfill {
-  env: Record<string, string | undefined>;
-  browser: boolean;
-  version: string;
-  platform: 'browser';
-  nextTick: (fn: (...args: unknown[]) => void) => void;
-}
-
 declare global {
   interface Window {
-    process?: ProcessPolyfill;
+    process?: {
+      env: Record<string, string | undefined>;
+      browser: boolean;
+      version: string;
+      platform: string;
+      nextTick: (fn: (...args: unknown[]) => void) => void;
+    };
     global?: typeof globalThis;
   }
 }
 
 if (typeof window !== "undefined" && typeof window.process === "undefined") {
-  window.process = {
+  (window as any).process = {
     env: {},
     browser: true,
     version: "",
-    platform: "browser" as string,
+    platform: "browser",
     nextTick: (fn: (...args: unknown[]) => void) => setTimeout(fn, 0)
   };
 }

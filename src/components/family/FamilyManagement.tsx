@@ -11,8 +11,8 @@ import {
   X,
   Edit3
 } from 'lucide-react';
-import { Family, FamilyMember, FamilyInvitation } from '@/types/family';
-import { familyService } from '@/features/familyService';
+import { Family, FamilyMember, FamilyInvitation } from '@/shared/types/family';
+import { familyService } from '@/features/shared-budgets/api/familyService';
 import { Switch } from '@/shared/ui/switch';
 import { cn } from '@/shared/lib/utils';
 

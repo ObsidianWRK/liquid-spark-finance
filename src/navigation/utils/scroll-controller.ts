@@ -1,453 +1,287 @@
 /**
- * Scroll Controller for Navigation Bar Visibility
- * 
- * Features:
- * - Throttled requestAnimationFrame-based scroll listener
- * - Hide navigation on 48px downward scroll with velocity > 0
- * - Reveal navigation on upward scroll
- * - Virtual keyboard awareness using visualViewport API
- * - Safe area padding synchronization
- * - Performance optimized to prevent scroll jank
- * - Respects reduced motion preferences
- * - Cross-browser compatible
- * - Clean API for React integration
+ * iOS 26-Style Navigation Scroll Controller
+ * Handles hide/reveal behavior with performance optimization
  */
 
-// Import menu bar height constants
-const MENU_BAR_HEIGHT = {
-  portrait: 44,
-  landscape: 48,
-} as const;
+import React from 'react';
 
-// Types
-export interface ScrollState {
-  scrollY: number;
-  previousScrollY: number;
-  velocity: number;
-  direction: 'up' | 'down' | 'none';
-  isScrolling: boolean;
-  timestamp: number;
-}
-
-export interface NavigationVisibilityState {
-  isVisible: boolean;
-  shouldAnimate: boolean;
-  transform: string;
-  safeAreaPadding: {
-    top: number;
-    bottom: number;
-  };
-}
-
-export interface ScrollControllerOptions {
-  hideThreshold: number; // Default: 48px
-  showThreshold: number; // Default: 4px
-  velocityThreshold: number; // Default: 0.1px/ms
-  debounceMs: number; // Default: 150ms
-  respectReducedMotion: boolean; // Default: true
-  enableVirtualKeyboardDetection: boolean; // Default: true
-  enableSafeAreaDetection: boolean; // Default: true
-}
-
-export interface ScrollControllerCallbacks {
+export interface ScrollControllerConfig {
+  hideThreshold: number; // Minimum scroll distance to trigger hide
+  hideVelocity: number; // Minimum velocity (px/ms) for hide
+  showVelocity: number; // Minimum velocity (px/ms) for show
+  debounce: number; // Debounce time in ms
+  alwaysShowTop: number; // Distance from top where nav is always visible
   onVisibilityChange?: (isVisible: boolean) => void;
-  onScrollStateChange?: (state: ScrollState) => void;
-  onVirtualKeyboardToggle?: (isVisible: boolean, height: number) => void;
 }
 
-// Default configuration
-const DEFAULT_OPTIONS: ScrollControllerOptions = {
-  hideThreshold: 48,
-  showThreshold: 4,
-  velocityThreshold: 0.1,
-  debounceMs: 150,
-  respectReducedMotion: true,
-  enableVirtualKeyboardDetection: true,
-  enableSafeAreaDetection: true,
-};
+export interface ScrollControllerState {
+  isVisible: boolean;
+  scrollY: number;
+  velocity: number;
+  isScrolling: boolean;
+  virtualKeyboardHeight: number;
+}
 
 export class ScrollController {
-  private options: ScrollControllerOptions;
-  private callbacks: ScrollControllerCallbacks;
-  
-  // State management
-  private scrollState: ScrollState = {
-    scrollY: 0,
-    previousScrollY: 0,
-    velocity: 0,
-    direction: 'none',
-    isScrolling: false,
-    timestamp: performance.now(),
-  };
-  
-  private visibilityState: NavigationVisibilityState = {
-    isVisible: true,
-    shouldAnimate: true,
-    transform: 'translateY(0px)',
-    safeAreaPadding: {
-      top: 0,
-      bottom: 0,
-    },
-  };
-
-  // Performance optimization
+  private config: ScrollControllerConfig;
+  private state: ScrollControllerState;
+  private lastScrollY: number = 0;
+  private lastScrollTime: number = 0;
+  private scrollTimeout: NodeJS.Timeout | null = null;
   private rafId: number | null = null;
-  private scrollTimeout: number | null = null;
-  private isThrottled = false;
-  private lastUpdate = 0;
-  private readonly THROTTLE_MS = 16; // ~60fps
+  private visualViewport: VisualViewport | null = null;
+  private listeners: Set<(state: ScrollControllerState) => void> = new Set();
 
-  // Browser capability detection
-  private supportsVisualViewport: boolean;
-  private supportsPassiveEvents: boolean;
-  private prefersReducedMotion: boolean;
-  
-  // Virtual keyboard detection
-  private initialViewportHeight: number;
-  private currentViewportHeight: number;
-  private virtualKeyboardHeight = 0;
+  constructor(config: Partial<ScrollControllerConfig> = {}) {
+    this.config = {
+      hideThreshold: 48,
+      hideVelocity: 0.5,
+      showVelocity: -0.3,
+      debounce: 16, // ~60fps
+      alwaysShowTop: 100,
+      ...config,
+    };
 
-  constructor(
-    options: Partial<ScrollControllerOptions> = {},
-    callbacks: ScrollControllerCallbacks = {}
-  ) {
-    this.options = { ...DEFAULT_OPTIONS, ...options };
-    this.callbacks = callbacks;
-    
-    // Detect browser capabilities
-    this.supportsVisualViewport = 'visualViewport' in window;
-    this.supportsPassiveEvents = this.detectPassiveEventSupport();
-    this.prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    
-    // Initialize viewport tracking
-    this.initialViewportHeight = window.innerHeight;
-    this.currentViewportHeight = window.innerHeight;
-    
-    // Update animation preference based on reduced motion
-    if (this.options.respectReducedMotion && this.prefersReducedMotion) {
-      this.visibilityState.shouldAnimate = false;
+    this.state = {
+      isVisible: true,
+      scrollY: 0,
+      velocity: 0,
+      isScrolling: false,
+      virtualKeyboardHeight: 0,
+    };
+
+    // Initialize visual viewport if available
+    if (typeof window !== 'undefined' && 'visualViewport' in window) {
+      this.visualViewport = window.visualViewport;
     }
-    
-    this.init();
   }
 
-  private detectPassiveEventSupport(): boolean {
-    let supportsPassive = false;
-    try {
-      const opts = Object.defineProperty({}, 'passive', {
-        get: () => {
-          supportsPassive = true;
-          return true;
-        },
-      });
-      window.addEventListener('testPassive', () => {}, opts);
-      window.removeEventListener('testPassive', () => {}, opts);
-    } catch {}
-    return supportsPassive;
-  }
+  /**
+   * Start monitoring scroll events
+   */
+  public start(): void {
+    if (typeof window === 'undefined') return;
 
-  private init(): void {
-    this.updateSafeAreaPadding();
-    this.bindEvents();
-    this.startVisualViewportTracking();
-  }
+    // Scroll event listener with passive flag for performance
+    window.addEventListener('scroll', this.handleScroll, { passive: true });
 
-  private bindEvents(): void {
-    const eventOptions = this.supportsPassiveEvents 
-      ? { passive: true } 
-      : false;
-    
-    // Main scroll listener
-    window.addEventListener('scroll', this.handleScroll, eventOptions);
-    
-    // Orientation change and resize
+    // Visual viewport listeners for virtual keyboard detection
+    if (this.visualViewport) {
+      this.visualViewport.addEventListener('resize', this.handleViewportResize);
+      this.visualViewport.addEventListener('scroll', this.handleViewportScroll);
+    }
+
+    // Orientation change listener
     window.addEventListener('orientationchange', this.handleOrientationChange);
-    window.addEventListener('resize', this.handleResize);
-    
-    // Reduced motion preference changes
-    const motionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
-    motionQuery.addEventListener('change', this.handleMotionPreferenceChange);
+
+    // Initial state
+    this.updateScrollState();
   }
 
-  private unbindEvents(): void {
+  /**
+   * Stop monitoring scroll events
+   */
+  public stop(): void {
+    if (typeof window === 'undefined') return;
+
     window.removeEventListener('scroll', this.handleScroll);
+
+    if (this.visualViewport) {
+      this.visualViewport.removeEventListener('resize', this.handleViewportResize);
+      this.visualViewport.removeEventListener('scroll', this.handleViewportScroll);
+    }
+
     window.removeEventListener('orientationchange', this.handleOrientationChange);
-    window.removeEventListener('resize', this.handleResize);
-    
-    const motionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
-    motionQuery.removeEventListener('change', this.handleMotionPreferenceChange);
-  }
 
-  private handleScroll = (): void => {
-    if (this.isThrottled) return;
-    
-    this.isThrottled = true;
-    
-    if (this.rafId) {
-      cancelAnimationFrame(this.rafId);
-    }
-    
-    this.rafId = requestAnimationFrame(() => {
-      this.updateScrollState();
-      this.updateNavigationVisibility();
-      this.isThrottled = false;
-    });
-  };
-
-  private updateScrollState(): void {
-    const now = performance.now();
-    const currentScrollY = Math.max(0, window.pageYOffset || document.documentElement.scrollTop);
-    
-    // Calculate velocity (pixels per millisecond)
-    const timeDelta = now - this.scrollState.timestamp;
-    const scrollDelta = currentScrollY - this.scrollState.scrollY;
-    const velocity = timeDelta > 0 ? scrollDelta / timeDelta : 0;
-    
-    // Determine scroll direction
-    let direction: 'up' | 'down' | 'none' = 'none';
-    if (scrollDelta > 0) direction = 'down';
-    else if (scrollDelta < 0) direction = 'up';
-    
-    // Update scroll state
-    this.scrollState = {
-      scrollY: currentScrollY,
-      previousScrollY: this.scrollState.scrollY,
-      velocity: Math.abs(velocity),
-      direction,
-      isScrolling: true,
-      timestamp: now,
-    };
-    
-    // Reset scrolling state after debounce period
-    if (this.scrollTimeout) {
-      clearTimeout(this.scrollTimeout);
-    }
-    
-    this.scrollTimeout = window.setTimeout(() => {
-      this.scrollState.isScrolling = false;
-      this.callbacks.onScrollStateChange?.(this.scrollState);
-    }, this.options.debounceMs);
-    
-    // Notify callback
-    this.callbacks.onScrollStateChange?.(this.scrollState);
-  }
-
-  private updateNavigationVisibility(): void {
-    const { scrollY, velocity, direction } = this.scrollState;
-    const { hideThreshold, showThreshold, velocityThreshold } = this.options;
-    
-    let shouldShow = this.visibilityState.isVisible;
-    
-    // Logic for hiding navigation
-    if (direction === 'down' && 
-        scrollY > hideThreshold && 
-        velocity > velocityThreshold) {
-      shouldShow = false;
-    }
-    
-    // Logic for showing navigation
-    if (direction === 'up' || scrollY <= showThreshold) {
-      shouldShow = true;
-    }
-    
-    // Special case: always show at top of page
-    if (scrollY === 0) {
-      shouldShow = true;
-    }
-    
-    // Update visibility state if changed
-    if (shouldShow !== this.visibilityState.isVisible) {
-      this.setNavigationVisibility(shouldShow);
-    }
-  }
-
-  private setNavigationVisibility(isVisible: boolean): void {
-    const orientation = window.matchMedia('(orientation: landscape)').matches 
-      ? 'landscape' 
-      : 'portrait';
-    
-    const menuBarHeight = MENU_BAR_HEIGHT[orientation];
-    const totalOffset = menuBarHeight + this.visibilityState.safeAreaPadding.top;
-    
-    this.visibilityState = {
-      ...this.visibilityState,
-      isVisible,
-      transform: isVisible 
-        ? 'translateY(0px)' 
-        : `translateY(-${totalOffset}px)`,
-    };
-    
-    // Notify callback
-    this.callbacks.onVisibilityChange?.(isVisible);
-  }
-
-  private startVisualViewportTracking(): void {
-    if (!this.options.enableVirtualKeyboardDetection || !this.supportsVisualViewport) {
-      return;
-    }
-    
-    const visualViewport = window.visualViewport!;
-    
-    const handleViewportChange = () => {
-      const newHeight = visualViewport.height;
-      const heightDiff = this.initialViewportHeight - newHeight;
-      
-      // Detect virtual keyboard (threshold: 150px height reduction)
-      if (heightDiff > 150) {
-        this.virtualKeyboardHeight = heightDiff;
-        this.callbacks.onVirtualKeyboardToggle?.(true, heightDiff);
-        
-        // Show navigation when virtual keyboard appears
-        this.setNavigationVisibility(true);
-      } else {
-        this.virtualKeyboardHeight = 0;
-        this.callbacks.onVirtualKeyboardToggle?.(false, 0);
-      }
-      
-      this.currentViewportHeight = newHeight;
-    };
-    
-    visualViewport.addEventListener('resize', handleViewportChange);
-    visualViewport.addEventListener('scroll', handleViewportChange);
-  }
-
-  private updateSafeAreaPadding(): void {
-    if (!this.options.enableSafeAreaDetection) return;
-    
-    const computedStyle = getComputedStyle(document.documentElement);
-    const safeAreaTop = computedStyle.getPropertyValue('env(safe-area-inset-top)');
-    const safeAreaBottom = computedStyle.getPropertyValue('env(safe-area-inset-bottom)');
-    
-    this.visibilityState.safeAreaPadding = {
-      top: parseInt(safeAreaTop) || 0,
-      bottom: parseInt(safeAreaBottom) || 0,
-    };
-  }
-
-  private handleOrientationChange = (): void => {
-    // Wait for orientation change to complete
-    setTimeout(() => {
-      this.updateSafeAreaPadding();
-      this.initialViewportHeight = window.innerHeight;
-      this.currentViewportHeight = window.innerHeight;
-      
-      // Recalculate visibility state for new orientation
-      this.setNavigationVisibility(this.visibilityState.isVisible);
-    }, 100);
-  };
-
-  private handleResize = (): void => {
-    // Throttle resize events
-    if (performance.now() - this.lastUpdate < this.THROTTLE_MS) return;
-    this.lastUpdate = performance.now();
-    
-    this.updateSafeAreaPadding();
-    
-    // Update viewport height if not caused by virtual keyboard
-    if (this.virtualKeyboardHeight === 0) {
-      this.initialViewportHeight = window.innerHeight;
-      this.currentViewportHeight = window.innerHeight;
-    }
-  };
-
-  private handleMotionPreferenceChange = (e: MediaQueryListEvent): void => {
-    this.prefersReducedMotion = e.matches;
-    
-    if (this.options.respectReducedMotion) {
-      this.visibilityState.shouldAnimate = !this.prefersReducedMotion;
-    }
-  };
-
-  // Public API
-  public getScrollState(): ScrollState {
-    return { ...this.scrollState };
-  }
-
-  public getVisibilityState(): NavigationVisibilityState {
-    return { ...this.visibilityState };
-  }
-
-  public setVisibility(isVisible: boolean, force = false): void {
-    if (force || isVisible !== this.visibilityState.isVisible) {
-      this.setNavigationVisibility(isVisible);
-    }
-  }
-
-  public updateOptions(newOptions: Partial<ScrollControllerOptions>): void {
-    this.options = { ...this.options, ...newOptions };
-    
-    // Update animation state if reduced motion setting changed
-    if (newOptions.respectReducedMotion !== undefined) {
-      this.visibilityState.shouldAnimate = 
-        !(newOptions.respectReducedMotion && this.prefersReducedMotion);
-    }
-  }
-
-  public destroy(): void {
-    // Cancel any pending animations
-    if (this.rafId) {
-      cancelAnimationFrame(this.rafId);
-      this.rafId = null;
-    }
-    
-    // Clear timeouts
+    // Cancel any pending updates
     if (this.scrollTimeout) {
       clearTimeout(this.scrollTimeout);
       this.scrollTimeout = null;
     }
-    
-    // Remove event listeners
-    this.unbindEvents();
-    
-    // Clean up visual viewport tracking
-    if (this.supportsVisualViewport) {
-      const visualViewport = window.visualViewport!;
-      visualViewport.removeEventListener('resize', () => {});
-      visualViewport.removeEventListener('scroll', () => {});
+
+    if (this.rafId) {
+      cancelAnimationFrame(this.rafId);
+      this.rafId = null;
     }
+  }
+
+  /**
+   * Subscribe to state changes
+   */
+  public subscribe(listener: (state: ScrollControllerState) => void): () => void {
+    this.listeners.add(listener);
+    return () => this.listeners.delete(listener);
+  }
+
+  /**
+   * Get current state
+   */
+  public getState(): ScrollControllerState {
+    return { ...this.state };
+  }
+
+  /**
+   * Force show navigation
+   */
+  public show(): void {
+    this.updateVisibility(true);
+  }
+
+  /**
+   * Force hide navigation
+   */
+  public hide(): void {
+    this.updateVisibility(false);
+  }
+
+  /**
+   * Handle scroll events with debouncing
+   */
+  private handleScroll = (): void => {
+    // Cancel existing RAF
+    if (this.rafId) {
+      cancelAnimationFrame(this.rafId);
+    }
+
+    // Use requestAnimationFrame for smooth updates
+    this.rafId = requestAnimationFrame(() => {
+      this.updateScrollState();
+    });
+
+    // Update scrolling state
+    if (!this.state.isScrolling) {
+      this.state.isScrolling = true;
+      this.notifyListeners();
+    }
+
+    // Debounce scroll end detection
+    if (this.scrollTimeout) {
+      clearTimeout(this.scrollTimeout);
+    }
+
+    this.scrollTimeout = setTimeout(() => {
+      this.state.isScrolling = false;
+      this.notifyListeners();
+    }, this.config.debounce * 10); // Longer timeout for scroll end
+  };
+
+  /**
+   * Update scroll state and determine visibility
+   */
+  private updateScrollState(): void {
+    const currentScrollY = window.scrollY;
+    const currentTime = performance.now();
+    const timeDelta = currentTime - this.lastScrollTime;
+    
+    // Calculate velocity only if enough time has passed
+    let velocity = 0;
+    if (timeDelta > 0) {
+      velocity = (currentScrollY - this.lastScrollY) / timeDelta;
+    }
+
+    // Update state
+    this.state.scrollY = currentScrollY;
+    this.state.velocity = velocity;
+
+    // Determine visibility
+    const scrollDelta = currentScrollY - this.lastScrollY;
+    const shouldUpdate = Math.abs(scrollDelta) >= this.config.hideThreshold;
+
+    if (shouldUpdate || currentScrollY < this.config.alwaysShowTop) {
+      let newVisibility = this.state.isVisible;
+
+      // Always show near top
+      if (currentScrollY < this.config.alwaysShowTop) {
+        newVisibility = true;
+      }
+      // Hide on fast downward scroll
+      else if (velocity > this.config.hideVelocity && scrollDelta > 0) {
+        newVisibility = false;
+      }
+      // Show on upward scroll
+      else if (velocity < this.config.showVelocity && scrollDelta < 0) {
+        newVisibility = true;
+      }
+
+      if (newVisibility !== this.state.isVisible) {
+        this.updateVisibility(newVisibility);
+      }
+    }
+
+    // Update tracking variables
+    this.lastScrollY = currentScrollY;
+    this.lastScrollTime = currentTime;
+  }
+
+  /**
+   * Handle visual viewport resize (virtual keyboard)
+   */
+  private handleViewportResize = (): void => {
+    if (!this.visualViewport) return;
+
+    const viewportHeight = this.visualViewport.height;
+    const windowHeight = window.innerHeight;
+    const keyboardHeight = windowHeight - viewportHeight;
+
+    // Update virtual keyboard height
+    this.state.virtualKeyboardHeight = Math.max(0, keyboardHeight);
+
+    // Show navigation when keyboard appears
+    if (keyboardHeight > 50) {
+      this.updateVisibility(true);
+    }
+
+    this.notifyListeners();
+  };
+
+  /**
+   * Handle visual viewport scroll
+   */
+  private handleViewportScroll = (): void => {
+    // Visual viewport scroll can happen independently of document scroll
+    // This is important for position: fixed elements
+    this.updateScrollState();
+  };
+
+  /**
+   * Handle orientation changes
+   */
+  private handleOrientationChange = (): void => {
+    // Reset state on orientation change
+    this.lastScrollY = window.scrollY;
+    this.lastScrollTime = performance.now();
+    
+    // Always show navigation after orientation change
+    this.updateVisibility(true);
+  };
+
+  /**
+   * Update visibility state
+   */
+  private updateVisibility(isVisible: boolean): void {
+    if (this.state.isVisible !== isVisible) {
+      this.state.isVisible = isVisible;
+      
+      // Call config callback
+      if (this.config.onVisibilityChange) {
+        this.config.onVisibilityChange(isVisible);
+      }
+
+      this.notifyListeners();
+    }
+  }
+
+  /**
+   * Notify all listeners of state change
+   */
+  private notifyListeners(): void {
+    const state = this.getState();
+    this.listeners.forEach(listener => listener(state));
   }
 }
 
-// Hook will be implemented in a separate file to maintain separation of concerns
-// This keeps the core controller logic separate from React-specific code
+// Export singleton instance for non-React usage
+export const scrollController = new ScrollController();
 
-// Utility functions for common use cases
-export const createScrollController = (
-  options?: Partial<ScrollControllerOptions>,
-  callbacks?: ScrollControllerCallbacks
-): ScrollController => {
-  return new ScrollController(options, callbacks);
-};
-
-export const getNavigationTransform = (
-  isVisible: boolean,
-  orientation: 'portrait' | 'landscape' = 'portrait',
-  safeAreaTop = 0
-): string => {
-  if (isVisible) return 'translateY(0px)';
-  
-  const menuBarHeight = MENU_BAR_HEIGHT[orientation];
-  const totalOffset = menuBarHeight + safeAreaTop;
-  
-  return `translateY(-${totalOffset}px)`;
-};
-
-export const detectVirtualKeyboard = (): {
-  isVisible: boolean;
-  height: number;
-} => {
-  if (!('visualViewport' in window)) {
-    return { isVisible: false, height: 0 };
-  }
-  
-  const viewport = window.visualViewport!;
-  const heightDiff = window.innerHeight - viewport.height;
-  
-  return {
-    isVisible: heightDiff > 150, // 150px threshold for virtual keyboard
-    height: Math.max(0, heightDiff),
-  };
-};
-
-// Export everything for clean API
-export default ScrollController;
+// Legacy alias for backward compatibility
+export { ScrollController as iOS26ScrollController };

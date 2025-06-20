@@ -12,8 +12,8 @@ import {
   Trash2,
   RotateCcw
 } from 'lucide-react';
-import { aiFinancialService } from '@/features/aiFinancialService';
-import { familyService } from '@/features/familyService';
+import { aiFinancialService } from '@/features/advisor-chat/api/aiFinancialService';
+import { familyService } from '@/features/shared-budgets/api/familyService';
 import { accountService } from '@/features/accounts/api/accountService';
 import { transactionService } from '@/features/transactions/api/transactionService';
 import { cn } from '@/shared/lib/utils';

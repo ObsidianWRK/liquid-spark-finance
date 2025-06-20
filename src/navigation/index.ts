@@ -14,22 +14,25 @@ export type { Route } from './routeConfig';
 export type { Tab, NavBarProps } from './components/NavBar';
 
 // Scroll Controller
-export { default as ScrollController } from './utils/scroll-controller';
+export { 
+  ScrollController, 
+  scrollController,
+  // Legacy alias
+  iOS26ScrollController,
+} from './utils/scroll-controller';
+
 export type {
-  ScrollState,
-  NavigationVisibilityState,
-  ScrollControllerOptions,
-  ScrollControllerCallbacks,
-  UseScrollControllerOptions,
-  UseScrollControllerReturn,
+  ScrollControllerConfig,
+  ScrollControllerState,
 } from './utils/scroll-controller';
 
 // Scroll Controller Hooks
 export {
-  default as useScrollController,
-  useNavigationVisibility,
-  useVirtualKeyboard,
-  useScrollPerformance,
+  useScrollController,
+  // FIXME: These hooks are temporarily disabled - see useScrollController.ts
+  // useNavigationVisibility,
+  // useVirtualKeyboard,
+  // useScrollPerformance,
 } from './hooks/useScrollController';
 
 // Scroll Controller Context

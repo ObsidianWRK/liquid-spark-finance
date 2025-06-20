@@ -1,7 +1,7 @@
 import React, { useState, useMemo, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ChevronDown, ChevronUp } from 'lucide-react';
-import { Account } from '@/types/shared';
+import { Account } from '@/shared/types/shared';
 import { UniversalCard } from '@/shared/ui/UniversalCard';
 
 interface AccountCardProps {
@@ -29,11 +29,7 @@ const AccountCard = React.memo<AccountCardProps>(({ account, recentTransactions 
   }, [account.currency]);
 
   // Handle card click to navigate to account overview
-  const handleCardClick = useCallback((e: React.MouseEvent) => {
-    // Don't navigate if clicking on action buttons or toggle
-    if ((e.target as HTMLElement).closest('button')) {
-      return;
-    }
+  const handleCardClick = useCallback(() => {
     navigate(`/accounts/${account.id}`);
   }, [navigate, account.id]);
 
@@ -42,7 +38,6 @@ const AccountCard = React.memo<AccountCardProps>(({ account, recentTransactions 
       variant="glass"
       className="card w-full min-w-[18rem] sm:max-w-[20rem] lg:max-w-[22rem] xl:max-w-[24rem] stagger-item cursor-pointer hover:bg-white/[0.03] transition-all duration-200"
       interactive
-      hover={{ scale: true, glow: true }}
       onClick={handleCardClick}
     >
       <div className="flex justify-between items-start mb-3">

@@ -51,7 +51,7 @@ A comprehensive personal finance management platform built with React, TypeScrip
 ## 🚀 Quick Start
 
 ### Prerequisites
-- **Node.js** 18+ (LTS recommended)
+- **Node.js** 20.12.2 (LTS recommended - see `.nvmrc`)
 - **npm** or **pnpm** package manager
 - **Git** for version control
 
@@ -62,11 +62,31 @@ A comprehensive personal finance management platform built with React, TypeScrip
 git clone https://github.com/ObsidianWRK/liquid-spark-finance.git
 cd liquid-spark-finance
 
+# Use the recommended Node.js version (if using nvm)
+nvm install
+nvm use
+
 # Install dependencies
 npm install
 
+# Set up environment variables
+cp .env.example .env
+# Edit .env and set VITE_VUENI_ENCRYPTION_KEY to a secure 32+ character string
+
 # Start development server
 npm run dev
+```
+
+### Required Environment Variables
+
+Create a `.env` file in the project root with the following variables:
+
+```bash
+# Required: 32+ character encryption key for security validation
+VITE_VUENI_ENCRYPTION_KEY=your-secure-32-character-or-longer-key-here
+
+# Optional: Development mode settings
+NODE_ENV=development
 ```
 
 ### Available Scripts

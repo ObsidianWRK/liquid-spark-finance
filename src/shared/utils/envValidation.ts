@@ -39,7 +39,7 @@ export class SecurityEnvValidator {
       }
 
       const errorMessage = [
-        'CRITICAL SECURITY ERROR: Environment validation failed',
+        'SECURITY WARNING: Environment validation failed',
         ...errors,
         '',
         'To fix this:',
@@ -51,6 +51,14 @@ export class SecurityEnvValidator {
         'For production, ensure these variables are set in your deployment environment.'
       ].join('\n');
 
+      // In development, log warning instead of throwing
+      if (!this.isProduction()) {
+        console.warn('⚠️ [SECURITY WARNING] Development mode detected - continuing without proper environment variables');
+        console.warn(errorMessage);
+        return;
+      }
+
+      // In production, still throw the error
       throw new Error(errorMessage);
     }
   }

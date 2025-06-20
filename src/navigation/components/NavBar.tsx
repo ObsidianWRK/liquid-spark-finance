@@ -3,6 +3,8 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { cn } from '@/shared/lib/utils';
 import { useBreakpoint } from '@/shared/hooks/useBreakpoint';
 import LiquidGlassSVGFilters from '@/shared/ui/LiquidGlassSVGFilters';
+import { useScrollController } from '@/navigation/hooks/useScrollController';
+import { useViewportGuardian } from '@/shared/utils/viewport-guardian';
 
 // TypeScript interfaces
 export interface Tab {
@@ -303,7 +305,7 @@ const NavBar: React.FC<NavBarProps> = ({
                         isTablet ? 'w-6 h-6' : '',
                         isActive ? 'scale-110' : ''
                       )}
-                      aria-hidden="true"
+                      aria-hidden={true}
                     />
                     
                     {/* Badge indicator */}
@@ -373,7 +375,7 @@ const NavBar: React.FC<NavBarProps> = ({
             >
               <fab.icon 
                 className="w-6 h-6 mx-auto" 
-                aria-hidden="true"
+                aria-hidden={true}
               />
             </button>
           )}

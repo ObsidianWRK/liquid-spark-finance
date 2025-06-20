@@ -233,3 +233,409 @@ export const getViewportGuardianConfig = (): ViewportGuardianConfig => {
 if (typeof window !== 'undefined' && guardianConfig.autoInit) {
   initializeViewportGuardian();
 }
+
+/**
+ * Viewport Guardian - iOS 26 Style
+ * Universal safe area and viewport management
+ */
+
+// Safe area CSS custom property names
+const SAFE_AREA_PROPERTIES = {
+  top: 'env(safe-area-inset-top)',
+  right: 'env(safe-area-inset-right)',
+  bottom: 'env(safe-area-inset-bottom)',
+  left: 'env(safe-area-inset-left)',
+} as const;
+
+// Fallback values for non-iOS browsers
+const SAFE_AREA_FALLBACKS = {
+  top: 0,
+  right: 0,
+  bottom: 0,
+  left: 0,
+} as const;
+
+export interface ViewportDimensions {
+  width: number;
+  height: number;
+  visualWidth: number;
+  visualHeight: number;
+  scale: number;
+  offsetTop: number;
+  offsetLeft: number;
+}
+
+export interface ViewportState {
+  dimensions: ViewportDimensions;
+  safeAreaInsets: SafeAreaInsets;
+  orientation: 'portrait' | 'landscape';
+  isVirtualKeyboardOpen: boolean;
+  virtualKeyboardHeight: number;
+  devicePixelRatio: number;
+}
+
+/**
+ * ViewportGuardian class
+ * Manages viewport state and provides polyfills for cross-browser compatibility
+ */
+export class ViewportGuardian {
+  private state: ViewportState;
+  private listeners: Set<(state: ViewportState) => void> = new Set();
+  private visualViewport: VisualViewport | null = null;
+  private rafId: number | null = null;
+  private resizeTimeout: NodeJS.Timeout | null = null;
+  private initialViewportHeight: number = 0;
+
+  constructor() {
+    // Initialize visual viewport if available
+    if (typeof window !== 'undefined' && 'visualViewport' in window) {
+      this.visualViewport = window.visualViewport;
+    }
+
+    // Initialize state
+    this.state = this.getInitialState();
+    this.initialViewportHeight = window.innerHeight;
+  }
+
+  /**
+   * Get initial viewport state
+   */
+  private getInitialState(): ViewportState {
+    const dimensions = this.getViewportDimensions();
+    const safeAreaInsets = this.getSafeAreaInsets();
+    const orientation = this.getOrientation();
+    
+    return {
+      dimensions,
+      safeAreaInsets,
+      orientation,
+      isVirtualKeyboardOpen: false,
+      virtualKeyboardHeight: 0,
+      devicePixelRatio: window.devicePixelRatio || 1,
+    };
+  }
+
+  /**
+   * Start monitoring viewport changes
+   */
+  public start(): void {
+    if (typeof window === 'undefined') return;
+
+    // Window events
+    window.addEventListener('resize', this.handleResize, { passive: true });
+    window.addEventListener('orientationchange', this.handleOrientationChange);
+
+    // Visual viewport events
+    if (this.visualViewport) {
+      this.visualViewport.addEventListener('resize', this.handleVisualViewportChange);
+      this.visualViewport.addEventListener('scroll', this.handleVisualViewportChange);
+    }
+
+    // Check for safe area changes periodically (for dynamic islands, notches, etc.)
+    this.startSafeAreaMonitoring();
+  }
+
+  /**
+   * Stop monitoring viewport changes
+   */
+  public stop(): void {
+    if (typeof window === 'undefined') return;
+
+    window.removeEventListener('resize', this.handleResize);
+    window.removeEventListener('orientationchange', this.handleOrientationChange);
+
+    if (this.visualViewport) {
+      this.visualViewport.removeEventListener('resize', this.handleVisualViewportChange);
+      this.visualViewport.removeEventListener('scroll', this.handleVisualViewportChange);
+    }
+
+    this.stopSafeAreaMonitoring();
+
+    if (this.resizeTimeout) {
+      clearTimeout(this.resizeTimeout);
+      this.resizeTimeout = null;
+    }
+  }
+
+  /**
+   * Subscribe to viewport state changes
+   */
+  public subscribe(listener: (state: ViewportState) => void): () => void {
+    this.listeners.add(listener);
+    listener(this.state); // Emit current state immediately
+    return () => this.listeners.delete(listener);
+  }
+
+  /**
+   * Get current viewport state
+   */
+  public getState(): ViewportState {
+    return { ...this.state };
+  }
+
+  /**
+   * Get viewport dimensions with visual viewport fallback
+   */
+  private getViewportDimensions(): ViewportDimensions {
+    const width = window.innerWidth;
+    const height = window.innerHeight;
+
+    if (this.visualViewport) {
+      return {
+        width,
+        height,
+        visualWidth: this.visualViewport.width,
+        visualHeight: this.visualViewport.height,
+        scale: this.visualViewport.scale,
+        offsetTop: this.visualViewport.offsetTop,
+        offsetLeft: this.visualViewport.offsetLeft,
+      };
+    }
+
+    // Polyfill for browsers without visualViewport
+    return {
+      width,
+      height,
+      visualWidth: width,
+      visualHeight: height,
+      scale: 1,
+      offsetTop: 0,
+      offsetLeft: 0,
+    };
+  }
+
+  /**
+   * Get safe area insets with fallbacks
+   */
+  public getSafeAreaInsets(): SafeAreaInsets {
+    if (typeof window === 'undefined') {
+      return { ...SAFE_AREA_FALLBACKS };
+    }
+
+    const computedStyle = getComputedStyle(document.documentElement);
+    
+    // Try to get safe area values from CSS
+    const getInsetValue = (property: string, fallback: number): number => {
+      const value = computedStyle.getPropertyValue(property);
+      if (value && value !== '0px') {
+        return parseInt(value, 10) || fallback;
+      }
+      return fallback;
+    };
+
+    return {
+      top: getInsetValue('--safe-area-inset-top', SAFE_AREA_FALLBACKS.top),
+      right: getInsetValue('--safe-area-inset-right', SAFE_AREA_FALLBACKS.right),
+      bottom: getInsetValue('--safe-area-inset-bottom', SAFE_AREA_FALLBACKS.bottom),
+      left: getInsetValue('--safe-area-inset-left', SAFE_AREA_FALLBACKS.left),
+    };
+  }
+
+  /**
+   * Get device orientation
+   */
+  private getOrientation(): 'portrait' | 'landscape' {
+    if (typeof window === 'undefined') return 'portrait';
+    
+    // Use multiple methods for better compatibility
+    if (window.screen && window.screen.orientation) {
+      return window.screen.orientation.type.includes('landscape') ? 'landscape' : 'portrait';
+    }
+    
+    if (window.matchMedia) {
+      return window.matchMedia('(orientation: landscape)').matches ? 'landscape' : 'portrait';
+    }
+    
+    return window.innerWidth > window.innerHeight ? 'landscape' : 'portrait';
+  }
+
+  /**
+   * Detect virtual keyboard presence
+   */
+  private detectVirtualKeyboard(): { isOpen: boolean; height: number } {
+    if (!this.visualViewport) {
+      // Fallback detection
+      const currentHeight = window.innerHeight;
+      const heightDiff = this.initialViewportHeight - currentHeight;
+      return {
+        isOpen: heightDiff > 100, // Threshold for keyboard detection
+        height: Math.max(0, heightDiff),
+      };
+    }
+
+    const viewportHeight = this.visualViewport.height;
+    const windowHeight = window.innerHeight;
+    const keyboardHeight = windowHeight - viewportHeight;
+
+    return {
+      isOpen: keyboardHeight > 50,
+      height: Math.max(0, keyboardHeight),
+    };
+  }
+
+  /**
+   * Handle resize events
+   */
+  private handleResize = (): void => {
+    // Debounce resize events
+    if (this.resizeTimeout) {
+      clearTimeout(this.resizeTimeout);
+    }
+
+    this.resizeTimeout = setTimeout(() => {
+      this.updateState();
+    }, 100);
+  };
+
+  /**
+   * Handle orientation change
+   */
+  private handleOrientationChange = (): void => {
+    // Wait for orientation change to complete
+    setTimeout(() => {
+      this.initialViewportHeight = window.innerHeight;
+      this.updateState();
+    }, 300);
+  };
+
+  /**
+   * Handle visual viewport changes
+   */
+  private handleVisualViewportChange = (): void => {
+    this.updateState();
+  };
+
+  /**
+   * Update viewport state
+   */
+  private updateState(): void {
+    const dimensions = this.getViewportDimensions();
+    const safeAreaInsets = this.getSafeAreaInsets();
+    const orientation = this.getOrientation();
+    const keyboard = this.detectVirtualKeyboard();
+
+    this.state = {
+      dimensions,
+      safeAreaInsets,
+      orientation,
+      isVirtualKeyboardOpen: keyboard.isOpen,
+      virtualKeyboardHeight: keyboard.height,
+      devicePixelRatio: window.devicePixelRatio || 1,
+    };
+
+    this.notifyListeners();
+  }
+
+  /**
+   * Notify all listeners of state change
+   */
+  private notifyListeners(): void {
+    const state = this.getState();
+    this.listeners.forEach(listener => listener(state));
+  }
+
+  /**
+   * Start monitoring safe area changes
+   */
+  private startSafeAreaMonitoring(): void {
+    // Use RAF for smooth updates
+    const checkSafeAreas = () => {
+      const currentInsets = this.getSafeAreaInsets();
+      const hasChanged = Object.keys(currentInsets).some(
+        key => currentInsets[key as keyof SafeAreaInsets] !== 
+               this.state.safeAreaInsets[key as keyof SafeAreaInsets]
+      );
+
+      if (hasChanged) {
+        this.updateState();
+      }
+
+      this.rafId = requestAnimationFrame(checkSafeAreas);
+    };
+
+    checkSafeAreas();
+  }
+
+  /**
+   * Stop monitoring safe area changes
+   */
+  private stopSafeAreaMonitoring(): void {
+    if (this.rafId) {
+      cancelAnimationFrame(this.rafId);
+      this.rafId = null;
+    }
+  }
+
+  /**
+   * Apply safe area CSS variables polyfill
+   */
+  public static applySafeAreaPolyfill(): void {
+    if (typeof window === 'undefined' || typeof document === 'undefined') return;
+
+    // Check if safe areas are already supported
+    const testEl = document.createElement('div');
+    testEl.style.paddingTop = 'env(safe-area-inset-top)';
+    document.body.appendChild(testEl);
+    const computedStyle = getComputedStyle(testEl);
+    const isSupported = computedStyle.paddingTop !== '';
+    document.body.removeChild(testEl);
+
+    if (!isSupported) {
+      // Apply CSS variables as fallback
+      const root = document.documentElement;
+      root.style.setProperty('--safe-area-inset-top', '0px');
+      root.style.setProperty('--safe-area-inset-right', '0px');
+      root.style.setProperty('--safe-area-inset-bottom', '0px');
+      root.style.setProperty('--safe-area-inset-left', '0px');
+
+      // For iOS devices in standalone mode, add some defaults
+      if (window.navigator.standalone) {
+        root.style.setProperty('--safe-area-inset-top', '20px');
+        root.style.setProperty('--safe-area-inset-bottom', '0px');
+      }
+    }
+  }
+}
+
+/**
+ * React Hook for Viewport Guardian
+ */
+export function useViewportGuardian(): ViewportState {
+  const [state, setState] = React.useState<ViewportState>(() => {
+    const guardian = new ViewportGuardian();
+    return guardian.getState();
+  });
+
+  React.useEffect(() => {
+    const guardian = new ViewportGuardian();
+    const unsubscribe = guardian.subscribe(setState);
+    guardian.start();
+
+    return () => {
+      unsubscribe();
+      guardian.stop();
+    };
+  }, []);
+
+  return state;
+}
+
+// Apply polyfill on module load
+if (typeof window !== 'undefined') {
+  ViewportGuardian.applySafeAreaPolyfill();
+}
+
+// Export singleton for non-React usage
+export const viewportGuardian = new ViewportGuardian();
+
+// Utility functions for common use cases are available from viewport-polyfills.ts
+
+export const isIOSDevice = (): boolean => {
+  return /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+};
+
+export const isStandaloneMode = (): boolean => {
+  return window.matchMedia('(display-mode: standalone)').matches ||
+         (window.navigator as any).standalone ||
+         document.referrer.includes('android-app://');
+};

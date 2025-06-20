@@ -1,0 +1,57 @@
+{
+  "scan_timestamp": "2024-01-01T00:00:00Z",
+  "export_analysis": {
+    "src/navigation/utils/scroll-controller.ts": {
+      "exports": ["iOS26ScrollController", "ScrollControllerConfig", "ScrollControllerState", "useScrollController"],
+      "missing_exports": ["ScrollController"],
+      "line_numbers": {
+        "iOS26ScrollController": 24,
+        "ScrollControllerConfig": 7,
+        "ScrollControllerState": 16,
+        "useScrollController": 285
+      }
+    }
+  },
+  "import_analysis": {
+    "src/navigation/__tests__/scroll-controller.test.ts": {
+      "imports": ["ScrollController", "createScrollController"],
+      "line": 6,
+      "status": "BROKEN - ScrollController not exported"
+    },
+    "src/navigation/index.ts": {
+      "imports": ["ScrollController"],
+      "line": 16,
+      "status": "BROKEN - ScrollController not exported"
+    },
+    "src/navigation/hooks/useScrollController.ts": {
+      "imports": ["iOS26ScrollController", "ScrollControllerState", "ScrollControllerConfig"],
+      "line": 12,
+      "status": "OK"
+    },
+    "src/navigation/components/NavBar.tsx": {
+      "imports": ["useScrollController"],
+      "from": "@/navigation/utils/scroll-controller",
+      "line": 5,
+      "status": "WRONG PATH - should be from hooks"
+    },
+    "src/navigation/components/iOS26NavBar.tsx": {
+      "imports": ["useScrollController"],
+      "from": "@/navigation/utils/scroll-controller",
+      "line": 3,
+      "status": "WRONG PATH - should be from hooks"
+    }
+  },
+  "issues_summary": {
+    "missing_exports": 1,
+    "wrong_import_paths": 2,
+    "duplicate_hooks": 1,
+    "total_broken_imports": 4
+  },
+  "fix_plan": {
+    "step1": "Rename iOS26ScrollController to ScrollController in utils/scroll-controller.ts",
+    "step2": "Add re-export alias for iOS26ScrollController for backward compatibility",
+    "step3": "Remove duplicate useScrollController from utils file",
+    "step4": "Fix import paths to use hooks/useScrollController for the hook",
+    "step5": "Update all broken imports to use correct symbol names"
+  }
+} 
