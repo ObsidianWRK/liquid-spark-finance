@@ -30,66 +30,137 @@ function formatSize(bytes) {
   return `${size.toFixed(1)}${units[unitIndex]}`;
 }
 
+// Function to enhance HTML with preload hints
+function enhanceHTMLWithPreloadHints() {
+  console.log('\n⚡ Adding performance preload hints...');
+  
+  const htmlPath = path.join(distDir, 'index.html');
+  if (!fs.existsSync(htmlPath)) {
+    console.error('❌ index.html not found');
+    return;
+  }
+
+  let html = fs.readFileSync(htmlPath, 'utf8');
+  
+  // Extract largest JS chunks for preloading
+  const jsFiles = fs.readdirSync(assetsDir)
+    .filter(file => file.endsWith('.js') && !file.includes('legacy'))
+    .map(file => {
+      const stats = fs.statSync(path.join(assetsDir, file));
+      return { name: file, size: stats.size };
+    })
+    .sort((a, b) => b.size - a.size)
+    .slice(0, 3); // Top 3 largest chunks
+
+  // Add critical resource hints before existing modulepreload links
+  const preloadHints = `
+    <!-- Critical resource hints for Core Web Vitals -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="dns-prefetch" href="https://fonts.googleapis.com">
+    
+    <!-- Preload critical fonts -->
+    <link rel="preload" href="https://fonts.gstatic.com/s/inter/v13/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuLyfAZ9hiA.woff2" as="font" type="font/woff2" crossorigin>
+    
+    <!-- Largest JS chunks preload for faster TTI -->
+    ${jsFiles.map(file => 
+      `<link rel="preload" href="/assets/${file.name}" as="script" crossorigin>`
+    ).join('\n    ')}
+    
+    <!-- Early hints for above-the-fold content -->
+    <link rel="prefetch" href="/assets/DashboardPage-PRpjDtR3.js">
+    <link rel="prefetch" href="/assets/vendor-charts-Ct_bA87I.js">
+  `;
+
+  // Insert preload hints after the existing style tag
+  html = html.replace(
+    /(<\/style>\s*)/,
+    `$1${preloadHints}\n    `
+  );
+
+  // Add performance optimization meta tags
+  const performanceMetaTags = `
+    <!-- Performance optimization meta tags -->
+    <meta name="theme-color" content="#000000">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    
+    <!-- Resource hints for better loading -->
+    <meta http-equiv="x-dns-prefetch-control" content="on">
+  `;
+
+  // Insert performance meta tags after viewport
+  html = html.replace(
+    /(<meta name="viewport"[^>]*>)/,
+    `$1${performanceMetaTags}`
+  );
+
+  fs.writeFileSync(htmlPath, html);
+  console.log('  ✅ Enhanced HTML with preload hints');
+}
+
 // Function to analyze bundle sizes
 function analyzeBundleSizes() {
   console.log('\n📊 Analyzing bundle sizes...');
   
   if (!fs.existsSync(assetsDir)) {
-    console.log('No assets directory found');
+    console.error('❌ Assets directory not found');
     return;
   }
 
   const files = fs.readdirSync(assetsDir);
   let totalSize = 0;
+  let jsSize = 0;
+  let cssSize = 0;
+  
   const jsFiles = [];
   const cssFiles = [];
   
   files.forEach(file => {
     const filePath = path.join(assetsDir, file);
     const stats = fs.statSync(filePath);
+    const sizeKB = (stats.size / 1024).toFixed(1);
+    
     totalSize += stats.size;
     
     if (file.endsWith('.js')) {
-      jsFiles.push({ name: file, size: stats.size });
+      jsSize += stats.size;
+      jsFiles.push({ name: file, size: stats.size, sizeKB });
     } else if (file.endsWith('.css')) {
-      cssFiles.push({ name: file, size: stats.size });
+      cssSize += stats.size;
+      cssFiles.push({ name: file, size: stats.size, sizeKB });
     }
   });
 
-  console.log(`📦 Total bundle size: ${formatSize(totalSize)}`);
+  console.log(`📦 Total bundle size: ${(totalSize / 1024 / 1024).toFixed(1)}MB`);
   
-  // Show JavaScript files
-  if (jsFiles.length > 0) {
-    console.log('\n🟨 JavaScript files:');
-    jsFiles
-      .sort((a, b) => b.size - a.size)
-      .forEach(file => {
-        const status = file.size > 500 * 1024 ? '⚠️' : '✅';
-        console.log(`  ${status} ${file.name}: ${formatSize(file.size)}`);
-      });
-    
-    const totalJSSize = jsFiles.reduce((sum, file) => sum + file.size, 0);
-    console.log(`  📊 Total JS: ${formatSize(totalJSSize)}`);
-    
-    // Warn about large bundles
-    if (totalJSSize > 1.5 * 1024 * 1024) {
-      console.log('  ⚠️  Consider code splitting to reduce bundle size');
-    }
+  // Sort and display JS files
+  console.log('\n🟨 JavaScript files:');
+  jsFiles
+    .sort((a, b) => b.size - a.size)
+    .forEach(file => {
+      const icon = file.size > 100 * 1024 ? '⚠️' : '✅';
+      console.log(`  ${icon} ${file.name}: ${file.sizeKB}KB`);
+    });
+
+  console.log(`  📊 Total JS: ${(jsSize / 1024 / 1024).toFixed(1)}MB`);
+  
+  if (jsSize > 2.2 * 1024 * 1024) {
+    console.log('  ⚠️  Consider code splitting to reduce bundle size');
   }
 
-  // Show CSS files
-  if (cssFiles.length > 0) {
-    console.log('\n🟦 CSS files:');
-    cssFiles
-      .sort((a, b) => b.size - a.size)
-      .forEach(file => {
-        const status = file.size > 100 * 1024 ? '⚠️' : '✅';
-        console.log(`  ${status} ${file.name}: ${formatSize(file.size)}`);
-      });
-    
-    const totalCSSSize = cssFiles.reduce((sum, file) => sum + file.size, 0);
-    console.log(`  📊 Total CSS: ${formatSize(totalCSSSize)}`);
-  }
+  // Display CSS files
+  console.log('\n🟦 CSS files:');
+  cssFiles
+    .sort((a, b) => b.size - a.size)
+    .forEach(file => {
+      const icon = file.size > 300 * 1024 ? '⚠️' : '✅';
+      console.log(`  ${icon} ${file.name}: ${file.sizeKB}KB`);
+    });
+
+  console.log(`  📊 Total CSS: ${(cssSize / 1024).toFixed(1)}KB`);
 }
 
 // Function to validate production build
@@ -267,6 +338,7 @@ function checkSecurityPractices() {
 
 // Main execution
 try {
+  enhanceHTMLWithPreloadHints();
   analyzeBundleSizes();
   
   const buildValid = validateProductionBuild();

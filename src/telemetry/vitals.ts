@@ -1,22 +1,24 @@
 /**
  * Web Vitals Telemetry System
- * Real-time performance monitoring with @web-vitals/attribution
- * Tracks LCP, CLS, FCP, FID, and TTFB for optimization insights
+ * Real-time performance monitoring for Vueni
+ * Tracks LCP, CLS, FCP, and TTFB for optimization insights
  */
 
-import { onCLS, onFCP, onFID, onLCP, onTTFB, Metric } from 'web-vitals';
+import { onCLS, onFCP, onLCP, onTTFB } from 'web-vitals';
 
 // Performance thresholds for alerts
 const THRESHOLDS = {
   LCP: { good: 2500, poor: 4000 },
   CLS: { good: 0.1, poor: 0.25 },
   FCP: { good: 1800, poor: 3000 },
-  FID: { good: 100, poor: 300 },
   TTFB: { good: 800, poor: 1800 }
 };
 
-// Performance data collection
-interface VitalData extends Metric {
+// Simple vital data interface
+interface VitalData {
+  name: string;
+  value: number;
+  rating: string;
   url: string;
   timestamp: number;
   deviceType: string;
@@ -36,9 +38,11 @@ class VitalsCollector {
   }
 
   private setupVitalsCollection(): void {
-    const collectMetric = (metric: Metric) => {
+    const collectMetric = (metric: any) => {
       const vitalData: VitalData = {
-        ...metric,
+        name: metric.name,
+        value: metric.value,
+        rating: metric.rating || 'good',
         url: window.location.href,
         timestamp: Date.now(),
         deviceType: this.getDeviceType(),
@@ -56,7 +60,6 @@ class VitalsCollector {
     onLCP(collectMetric);
     onCLS(collectMetric);
     onFCP(collectMetric);
-    onFID(collectMetric);
     onTTFB(collectMetric);
   }
 
@@ -65,7 +68,7 @@ class VitalsCollector {
 
     console.log(`
     🚀 Vueni Performance Monitor Active
-    📊 Tracking: LCP, CLS, FCP, FID, TTFB
+    📊 Tracking: LCP, CLS, FCP, TTFB
     🎯 Thresholds: LCP <2.5s, CLS <0.1, FCP <1.8s
     🔧 Dev Mode: Metrics logged to console
     `);
@@ -163,14 +166,11 @@ class VitalsCollector {
   }
 
   // Public API for manual metrics
-  public trackCustomMetric(name: string, value: number, attribution?: any): void {
+  public trackCustomMetric(name: string, value: number): void {
     const customMetric: VitalData = {
       name,
       value,
       rating: value > 1000 ? 'poor' : value > 500 ? 'needs-improvement' : 'good',
-      delta: value,
-      entries: [],
-      id: `custom_${Date.now()}`,
       url: window.location.href,
       timestamp: Date.now(),
       deviceType: this.getDeviceType(),
@@ -215,8 +215,8 @@ class VitalsCollector {
 const vitalsCollector = new VitalsCollector();
 
 // Export utilities
-export const trackCustomMetric = (name: string, value: number, attribution?: any) => {
-  vitalsCollector.trackCustomMetric(name, value, attribution);
+export const trackCustomMetric = (name: string, value: number) => {
+  vitalsCollector.trackCustomMetric(name, value);
 };
 
 export const getPerformanceSummary = () => {

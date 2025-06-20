@@ -23,7 +23,7 @@ import {
 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { financialPlanningService } from '@/features/planning/api/financialPlanningService';
-import { FinancialGoal, GoalCategory, PlanningRecommendation } from '@/types/financialPlanning';
+import { FinancialGoal, GoalCategory, PlanningRecommendation } from '@/shared/types/financialPlanning';
 import { cn } from '@/shared/lib/utils';
 // Import new tab components
 import RetirementTab from './tabs/RetirementTab';
@@ -227,109 +227,110 @@ const FinancialPlanningPage = ({ familyId = 'demo_family' }: FinancialPlanningPa
   }
 
   return (
-    <div className="p-4 sm:p-6 space-y-6 sm:space-y-8">
-      {/* Back Button */}
-      <button
-        onClick={() => navigate('/')}
-        className="flex items-center gap-2 px-3 py-2 rounded-xl text-white/80 hover:text-white hover:bg-white/[0.05] transition-colors"
-      >
-        <ArrowLeft className="w-4 h-4" />
-        <span className="text-sm">Dashboard</span>
-      </button>
-
-      {/* Header */}
-      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-        <div className="flex-1 min-w-0">
-          <h1 className="text-2xl sm:text-3xl font-bold text-white flex items-center gap-3">
-            <Target className="w-6 h-6 sm:w-8 sm:h-8 text-blue-400" />
-            <span className="truncate">Financial Planning</span>
-          </h1>
-          <p className="text-white/60 mt-2 text-sm sm:text-base">
-            Set goals, track progress, and plan for your financial future
-          </p>
-        </div>
-
+    <div className="min-h-screen bg-black text-white">
+      <div className="responsive-padding-md space-y-6 sm:space-y-8">
+        {/* Back Button */}
         <button
-          onClick={() => setShowNewGoalModal(true)}
-          className="bg-blue-500 hover:bg-blue-600 text-white px-4 sm:px-6 py-2 sm:py-3 rounded-xl transition-colors flex items-center gap-2 text-sm sm:text-base whitespace-nowrap"
+          onClick={() => navigate('/')}
+          className="flex items-center gap-2 px-3 py-2 rounded-xl text-white/80 hover:text-white hover:bg-white/[0.05] transition-colors min-h-[44px]"
         >
-          <Plus className="w-4 h-4 sm:w-5 sm:h-5" />
-          <span className="hidden sm:inline">New Goal</span>
-          <span className="sm:hidden">Goal</span>
+          <ArrowLeft className="w-4 h-4 sm:w-5 sm:h-5" />
+          <span className="text-sm sm:text-base">Dashboard</span>
         </button>
-      </div>
 
-      {/* Navigation Tabs */}
-      <div className="bg-white/[0.02] rounded-xl p-1 border border-white/[0.08]">
-        {/* Mobile: Scrollable tabs */}
-        <div className="flex sm:hidden overflow-x-auto gap-1 pb-1 scrollbar-hide">
-          {[
-            { id: 'overview', label: 'Overview', icon: Target },
-            { id: 'goals', label: 'Goals', icon: PiggyBank },
-            { id: 'retirement', label: 'Retirement', icon: Briefcase },
-            { id: 'debt', label: 'Debt', icon: DollarSign },
-            { id: 'planning', label: 'Planning', icon: Calendar }
-          ].map(({ id, label, icon: Icon }) => (
-            <button
-              key={id}
-              onClick={() => setActiveTab(id as any)}
-              className={cn(
-                "flex items-center gap-2 px-3 py-2 rounded-lg transition-all text-xs whitespace-nowrap flex-shrink-0",
-                activeTab === id
-                  ? "bg-blue-500 text-white"
-                  : "text-white/60 hover:text-white hover:bg-white/[0.05]"
-              )}
-            >
-              <Icon className="w-3 h-3" />
-              {label}
-            </button>
-          ))}
+        {/* Header */}
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+          <div className="flex-1 min-w-0">
+            <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white flex items-center gap-3">
+              <Target className="w-6 h-6 sm:w-8 sm:h-8 text-blue-400 flex-shrink-0" />
+              <span className="truncate">Financial Planning</span>
+            </h1>
+            <p className="text-white/60 mt-2 text-sm sm:text-base leading-relaxed">
+              Set goals, track progress, and plan for your financial future
+            </p>
+          </div>
+
+          <button
+            onClick={() => setShowNewGoalModal(true)}
+            className="w-full sm:w-auto bg-blue-500 hover:bg-blue-600 text-white px-4 sm:px-6 py-3 rounded-xl transition-colors flex items-center justify-center gap-2 text-sm sm:text-base min-h-[48px]"
+          >
+            <Plus className="w-4 h-4 sm:w-5 sm:h-5" />
+            <span className="hidden sm:inline">New Goal</span>
+            <span className="sm:hidden">Goal</span>
+          </button>
         </div>
-        
-        {/* Desktop: Full width tabs */}
-        <div className="hidden sm:flex items-center gap-1">
-          {[
-            { id: 'overview', label: 'Overview', icon: Target },
-            { id: 'goals', label: 'Goals', icon: PiggyBank },
-            { id: 'retirement', label: 'Retirement', icon: Briefcase },
-            { id: 'debt', label: 'Debt Payoff', icon: DollarSign },
-            { id: 'planning', label: 'Life Planning', icon: Calendar }
-          ].map(({ id, label, icon: Icon }) => (
-            <button
-              key={id}
-              onClick={() => setActiveTab(id as any)}
-              className={cn(
-                "flex items-center gap-2 px-4 py-2 rounded-lg transition-all text-sm flex-1 justify-center",
-                activeTab === id
-                  ? "bg-blue-500 text-white"
-                  : "text-white/60 hover:text-white hover:bg-white/[0.05]"
-              )}
-            >
-              <Icon className="w-4 h-4" />
-              {label}
-            </button>
-          ))}
+
+        {/* Navigation Tabs */}
+        <div className="bg-white/[0.02] rounded-xl p-1 border border-white/[0.08]">
+          {/* Mobile: Scrollable tabs */}
+          <div className="flex sm:hidden overflow-x-auto gap-1 pb-1 scrollbar-hide">
+            {[
+              { id: 'overview', label: 'Overview', icon: Target },
+              { id: 'goals', label: 'Goals', icon: PiggyBank },
+              { id: 'retirement', label: 'Retirement', icon: Briefcase },
+              { id: 'debt', label: 'Debt', icon: DollarSign },
+              { id: 'planning', label: 'Planning', icon: Calendar }
+            ].map(({ id, label, icon: Icon }) => (
+              <button
+                key={id}
+                onClick={() => setActiveTab(id as any)}
+                className={cn(
+                  "flex items-center gap-2 px-3 py-2 rounded-lg transition-all text-xs whitespace-nowrap flex-shrink-0 min-h-[44px] min-w-[80px]",
+                  activeTab === id
+                    ? "bg-blue-500 text-white"
+                    : "text-white/60 hover:text-white hover:bg-white/[0.05]"
+                )}
+              >
+                <Icon className="w-3 h-3" />
+                {label}
+              </button>
+            ))}
+          </div>
+          
+          {/* Desktop: Full width tabs */}
+          <div className="hidden sm:flex items-center gap-1">
+            {[
+              { id: 'overview', label: 'Overview', icon: Target },
+              { id: 'goals', label: 'Goals', icon: PiggyBank },
+              { id: 'retirement', label: 'Retirement', icon: Briefcase },
+              { id: 'debt', label: 'Debt Payoff', icon: DollarSign },
+              { id: 'planning', label: 'Life Planning', icon: Calendar }
+            ].map(({ id, label, icon: Icon }) => (
+              <button
+                key={id}
+                onClick={() => setActiveTab(id as any)}
+                className={cn(
+                  "flex items-center gap-2 px-4 py-3 rounded-lg transition-all text-sm flex-1 justify-center min-h-[48px]",
+                  activeTab === id
+                    ? "bg-blue-500 text-white"
+                    : "text-white/60 hover:text-white hover:bg-white/[0.05]"
+                )}
+              >
+                <Icon className="w-4 h-4" />
+                {label}
+              </button>
+            ))}
+          </div>
         </div>
-      </div>
 
       {/* Content based on active tab */}
       {activeTab === 'overview' && (
         <>
           {/* Financial Health Score */}
           {healthScore && (
-            <div className="bg-gradient-to-r from-blue-500/10 to-purple-500/10 border border-blue-500/20 rounded-2xl p-6">
-              <div className="flex items-center justify-between">
-                <div>
-                  <h2 className="text-xl font-bold text-white mb-2 flex items-center gap-3">
-                    <Brain className="w-6 h-6 text-blue-400" />
-                    Financial Health Score
+            <div className="bg-gradient-to-r from-blue-500/10 to-purple-500/10 border border-blue-500/20 rounded-2xl p-4 sm:p-6">
+              <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 sm:gap-0">
+                <div className="min-w-0 flex-1">
+                  <h2 className="text-lg sm:text-xl font-bold text-white mb-2 flex items-center gap-3">
+                    <Brain className="w-5 h-5 sm:w-6 sm:h-6 text-blue-400 flex-shrink-0" />
+                    <span className="truncate">Financial Health Score</span>
                   </h2>
-                  <p className="text-white/70">
+                  <p className="text-white/70 text-sm sm:text-base">
                     Your overall financial wellness assessment
                   </p>
                 </div>
-                <div className="text-right">
-                  <div className="text-4xl font-bold text-white mb-1">
+                <div className="text-left sm:text-right w-full sm:w-auto">
+                  <div className="text-3xl sm:text-4xl font-bold text-white mb-1">
                     {Math.round(healthScore.overallScore)}/100
                   </div>
                   <div className="text-blue-400 text-sm font-medium">
@@ -340,11 +341,11 @@ const FinancialPlanningPage = ({ familyId = 'demo_family' }: FinancialPlanningPa
               </div>
 
               {/* Category Breakdown */}
-              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 sm:gap-4 mt-6">
+              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 sm:gap-4 mt-4 sm:mt-6">
                 {Object.entries(healthScore.categoryScores).map(([category, score]) => (
-                  <div key={category} className="text-center">
-                    <div className="text-xl sm:text-2xl font-bold text-white">{score as number}</div>
-                    <div className="text-xs text-white/60 capitalize">
+                  <div key={category} className="text-center p-3 bg-white/[0.03] rounded-lg border border-white/[0.05]">
+                    <div className="text-lg sm:text-xl lg:text-2xl font-bold text-white">{score as number}</div>
+                    <div className="text-xs sm:text-sm text-white/60 capitalize truncate">
                       {category.replace('_', ' ')}
                     </div>
                     <div className="w-full bg-white/[0.05] rounded-full h-2 mt-2">
@@ -457,33 +458,33 @@ const FinancialPlanningPage = ({ familyId = 'demo_family' }: FinancialPlanningPa
       )}
 
       {activeTab === 'goals' && (
-        <div className="space-y-6">
+        <div className="space-y-4 sm:space-y-6">
           {/* Goals List */}
           {goals.map((goal) => {
             const IconComponent = getGoalIcon(goal.category);
             const StatusIcon = getStatusIcon(goal);
             
             return (
-              <div key={goal.id} className="bg-white/[0.02] rounded-2xl border border-white/[0.08] p-6 hover:bg-white/[0.03] transition-all">
-                <div className="flex items-start gap-4">
+              <div key={goal.id} className="bg-white/[0.02] rounded-2xl border border-white/[0.08] p-4 sm:p-6 hover:bg-white/[0.03] transition-all">
+                <div className="flex flex-col sm:flex-row items-start gap-4">
                   {/* Goal Icon */}
                   <div className={cn(
-                    "w-12 h-12 rounded-2xl flex items-center justify-center bg-gradient-to-br",
+                    "w-10 h-10 sm:w-12 sm:h-12 rounded-2xl flex items-center justify-center bg-gradient-to-br flex-shrink-0",
                     getGoalColor(goal.category)
                   )}>
-                    <IconComponent className="w-6 h-6 text-white" />
+                    <IconComponent className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
                   </div>
                   
                   {/* Goal Details */}
-                  <div className="flex-1">
-                    <div className="flex items-start justify-between mb-3">
-                      <div>
-                        <h3 className="text-lg font-bold text-white">{goal.title}</h3>
-                        <p className="text-white/60 text-sm">{goal.description}</p>
+                  <div className="flex-1 min-w-0">
+                    <div className="flex flex-col sm:flex-row items-start justify-between mb-3 gap-2 sm:gap-0">
+                      <div className="min-w-0 flex-1">
+                        <h3 className="text-lg font-bold text-white truncate">{goal.title}</h3>
+                        <p className="text-white/60 text-sm leading-relaxed">{goal.description}</p>
                       </div>
                       
-                      <div className="text-right">
-                        <div className="flex items-center gap-2 text-sm">
+                      <div className="text-left sm:text-right w-full sm:w-auto">
+                        <div className="flex sm:items-center gap-2 text-sm">
                           <StatusIcon className={cn("w-4 h-4", getStatusColor(goal))} />
                           <span className={getStatusColor(goal)}>
                             {goal.progress.percentComplete >= 100 ? 'Completed' :
@@ -498,18 +499,18 @@ const FinancialPlanningPage = ({ familyId = 'demo_family' }: FinancialPlanningPa
                     
                     {/* Progress Bar */}
                     <div className="mb-4">
-                      <div className="flex items-center justify-between text-sm mb-2">
-                        <span className="text-white/80">
+                      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between text-sm mb-2 gap-1 sm:gap-0">
+                        <span className="text-white/80 truncate">
                           {formatCurrency(goal.progress.currentAmount)} of {formatCurrency(goal.targetAmount)}
                         </span>
-                        <span className="text-white/60">
+                        <span className="text-white/60 text-lg sm:text-sm font-bold sm:font-normal">
                           {Math.round(goal.progress.percentComplete)}%
                         </span>
                       </div>
-                      <div className="w-full bg-white/[0.05] rounded-full h-2">
+                      <div className="w-full bg-white/[0.05] rounded-full h-3 sm:h-2">
                         <div 
                           className={cn(
-                            "h-2 rounded-full transition-all duration-500 bg-gradient-to-r",
+                            "h-3 sm:h-2 rounded-full transition-all duration-500 bg-gradient-to-r",
                             getGoalColor(goal.category)
                           )}
                           style={{ width: `${Math.min(goal.progress.percentComplete, 100)}%` }}
@@ -519,19 +520,19 @@ const FinancialPlanningPage = ({ familyId = 'demo_family' }: FinancialPlanningPa
                     
                     {/* Goal Stats */}
                     <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4 text-sm">
-                      <div>
+                      <div className="p-3 sm:p-0 bg-white/[0.03] sm:bg-transparent rounded-lg sm:rounded-none border sm:border-0 border-white/[0.05]">
                         <p className="text-white/60">Monthly Contribution</p>
-                        <p className="font-semibold text-white">
+                        <p className="font-semibold text-white truncate">
                           {formatCurrency(goal.monthlyContribution || 0)}
                         </p>
                       </div>
-                      <div>
+                      <div className="p-3 sm:p-0 bg-white/[0.03] sm:bg-transparent rounded-lg sm:rounded-none border sm:border-0 border-white/[0.05]">
                         <p className="text-white/60">Projected Completion</p>
                         <p className="font-semibold text-white">
                           {formatDate(goal.progress.projectedCompletionDate)}
                         </p>
                       </div>
-                      <div>
+                      <div className="p-3 sm:p-0 bg-white/[0.03] sm:bg-transparent rounded-lg sm:rounded-none border sm:border-0 border-white/[0.05]">
                         <p className="text-white/60">Priority</p>
                         <p className="font-semibold text-white">
                           {goal.priority === 1 ? 'High' : goal.priority === 2 ? 'Medium' : 'Low'}
@@ -558,6 +559,7 @@ const FinancialPlanningPage = ({ familyId = 'demo_family' }: FinancialPlanningPa
       {activeTab === 'planning' && (
         <LifePlanningTab familyId={familyId} />
       )}
+      </div>
     </div>
   );
 };

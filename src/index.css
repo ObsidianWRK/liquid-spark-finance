@@ -103,12 +103,22 @@
     @apply border-border;
   }
 
+  /* CLS Prevention: Font loading optimization */
+  @font-face {
+    font-family: 'SF Pro Rounded';
+    font-display: swap;
+    font-weight: 400 700;
+  }
+
   body {
     @apply bg-background text-foreground;
     font-family: 'SF Pro Rounded', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;
+    /* Prevent layout shift during font loading */
+    font-synthesis: none;
+    font-kerning: auto;
   }
   
   /* Apply SF Pro Rounded to headings */
@@ -128,6 +138,38 @@
     font-family: 'SF Pro Rounded', -apple-system, BlinkMacSystemFont, sans-serif;
     font-weight: 500;
     letter-spacing: -0.01em;
+  }
+}
+
+/* CLS Prevention: Chart loading skeletons */
+@layer components {
+  .chart-skeleton {
+    @apply bg-white/[0.02] rounded-lg border border-white/[0.08] animate-pulse;
+    min-height: 180px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+  }
+  
+  .chart-skeleton-bar {
+    @apply bg-white/[0.05] rounded-sm;
+    animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+  
+  /* Prevent layout shift during image loading */
+  img {
+    @apply block;
+    height: auto;
+    max-width: 100%;
+  }
+  
+  /* Async component loading container to prevent CLS */
+  .async-container {
+    min-height: inherit;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 }
 
