@@ -26,10 +26,29 @@ const LoadingFallback = () => (
   </UniversalCard>
 );
 
-// Device interface for connected health devices
-interface HealthDevice {
+// Device interfaces for company-based health device system
+interface DeviceModel {
   id: string;
   name: string;
+  status: 'connected' | 'syncing' | 'offline' | 'pairing';
+  lastSync?: string;
+  batteryLevel?: number;
+  isUserDevice?: boolean; // Whether user actually owns this device
+}
+
+interface DeviceCompany {
+  id: string;
+  name: string;
+  icon: string;
+  bgColor: string;
+  models: DeviceModel[];
+}
+
+interface ConnectedDevice {
+  companyId: string;
+  companyName: string;
+  modelId: string;
+  modelName: string;
   icon: string;
   bgColor: string;
   status: 'connected' | 'syncing' | 'offline' | 'pairing';
@@ -50,93 +69,145 @@ export const AnalyticsPage: React.FC<AnalyticsPageProps> = ({
   const [timeframe, setTimeframe] = useState<string>('30d');
   const [showAllDevices, setShowAllDevices] = useState(false);
 
-  // Health device configuration with expanded device support
-  const allDevices: HealthDevice[] = useMemo(() => [
+  // Company-based device ecosystem with model lineups
+  // 🚀 Adding new devices is simple:
+  // 1. Add new models to existing company arrays
+  // 2. Add new companies with their model lineups  
+  // 3. Set isUserDevice: true for devices the user owns
+  // 4. System automatically handles prioritization and display
+  const deviceCompanies: DeviceCompany[] = useMemo(() => [
     {
-      id: 'apple-watch',
-      name: 'Apple Watch',
-      icon: '⌚',
-      bgColor: 'bg-black',
-      status: 'connected',
-      lastSync: '2 min ago',
-      batteryLevel: 78
+      id: 'apple',
+      name: 'Apple',
+      icon: '🍎',
+      bgColor: 'bg-gray-800',
+      models: [
+        { id: 'watch-series-9', name: 'Apple Watch Series 9', status: 'connected', lastSync: '2 min ago', batteryLevel: 78, isUserDevice: true },
+        { id: 'watch-ultra-2', name: 'Apple Watch Ultra 2', status: 'offline', lastSync: 'Never', isUserDevice: false },
+        { id: 'watch-se', name: 'Apple Watch SE', status: 'offline', lastSync: 'Never', isUserDevice: false }
+      ]
     },
     {
-      id: 'whoop-4',
-      name: 'WHOOP 4.0',
-      icon: 'W',
+      id: 'whoop',
+      name: 'WHOOP',
+      icon: '💪',
       bgColor: 'bg-blue-600',
-      status: 'connected',
-      lastSync: '5 min ago',
-      batteryLevel: 65
+      models: [
+        { id: 'whoop-4', name: 'WHOOP 4.0', status: 'connected', lastSync: '5 min ago', batteryLevel: 65, isUserDevice: true },
+        { id: 'whoop-3', name: 'WHOOP 3.0', status: 'offline', lastSync: 'Never', isUserDevice: false }
+      ]
     },
     {
-      id: 'fitbit-sense',
-      name: 'Fitbit Sense 2',
-      icon: 'F',
+      id: 'fitbit',
+      name: 'Fitbit',
+      icon: '⚡',
       bgColor: 'bg-teal-500',
-      status: 'syncing',
-      lastSync: '1 hour ago',
-      batteryLevel: 45
+      models: [
+        { id: 'sense-2', name: 'Fitbit Sense 2', status: 'syncing', lastSync: '1 hour ago', batteryLevel: 45, isUserDevice: true },
+        { id: 'versa-4', name: 'Fitbit Versa 4', status: 'offline', lastSync: 'Never', isUserDevice: false },
+        { id: 'charge-5', name: 'Fitbit Charge 5', status: 'offline', lastSync: 'Never', isUserDevice: false },
+        { id: 'inspire-3', name: 'Fitbit Inspire 3', status: 'offline', lastSync: 'Never', isUserDevice: false }
+      ]
     },
     {
-      id: 'oura-ring',
-      name: 'Oura Ring',
-      icon: 'O',
+      id: 'oura',
+      name: 'Oura',
+      icon: '💍',
       bgColor: 'bg-purple-600',
-      status: 'connected',
-      lastSync: '10 min ago',
-      batteryLevel: 82
+      models: [
+        { id: 'ring-gen-3', name: 'Oura Ring Gen 3', status: 'connected', lastSync: '10 min ago', batteryLevel: 82, isUserDevice: true },
+        { id: 'ring-gen-2', name: 'Oura Ring Gen 2', status: 'offline', lastSync: 'Never', isUserDevice: false }
+      ]
     },
     {
-      id: 'garmin-fenix',
-      name: 'Garmin Fenix 7',
-      icon: 'G',
+      id: 'garmin',
+      name: 'Garmin',
+      icon: '🏃',
       bgColor: 'bg-blue-700',
-      status: 'offline',
-      lastSync: '2 days ago',
-      batteryLevel: 0
+      models: [
+        { id: 'fenix-7', name: 'Garmin Fenix 7', status: 'offline', lastSync: '2 days ago', batteryLevel: 0, isUserDevice: true },
+        { id: 'vivoactive-5', name: 'Garmin Vivoactive 5', status: 'offline', lastSync: 'Never', isUserDevice: false },
+        { id: 'forerunner-965', name: 'Garmin Forerunner 965', status: 'offline', lastSync: 'Never', isUserDevice: false },
+        { id: 'venu-3', name: 'Garmin Venu 3', status: 'offline', lastSync: 'Never', isUserDevice: false }
+      ]
     },
     {
-      id: 'galaxy-fit',
-      name: 'Galaxy Fit 3',
-      icon: 'S',
+      id: 'samsung',
+      name: 'Samsung',
+      icon: '⌚',
       bgColor: 'bg-gray-700',
-      status: 'pairing',
-      lastSync: 'Never',
-      batteryLevel: 95
+      models: [
+        { id: 'galaxy-watch-6', name: 'Galaxy Watch 6', status: 'offline', lastSync: 'Never', isUserDevice: false },
+        { id: 'galaxy-fit-3', name: 'Galaxy Fit 3', status: 'pairing', lastSync: 'Never', batteryLevel: 95, isUserDevice: true },
+        { id: 'galaxy-watch-active-2', name: 'Galaxy Watch Active 2', status: 'offline', lastSync: 'Never', isUserDevice: false }
+      ]
     },
     {
-      id: 'amazfit-gts',
-      name: 'Amazfit GTS 4',
-      icon: 'A',
+      id: 'amazfit',
+      name: 'Amazfit',
+      icon: '⚡',
       bgColor: 'bg-orange-600',
-      status: 'offline',
-      lastSync: '3 hours ago',
-      batteryLevel: 23
+      models: [
+        { id: 'gts-4', name: 'Amazfit GTS 4', status: 'offline', lastSync: '3 hours ago', batteryLevel: 23, isUserDevice: true },
+        { id: 'gtr-4', name: 'Amazfit GTR 4', status: 'offline', lastSync: 'Never', isUserDevice: false },
+        { id: 'band-7', name: 'Amazfit Band 7', status: 'offline', lastSync: 'Never', isUserDevice: false },
+        { id: 't-rex-2', name: 'Amazfit T-Rex 2', status: 'offline', lastSync: 'Never', isUserDevice: false }
+      ]
     }
   ], []);
 
+  // Flatten user devices into connected device list
+  const allConnectedDevices: ConnectedDevice[] = useMemo(() => {
+    return deviceCompanies.flatMap(company => 
+      company.models
+        .filter(model => model.isUserDevice)
+        .map(model => ({
+          companyId: company.id,
+          companyName: company.name,
+          modelId: model.id,
+          modelName: model.name,
+          icon: company.icon,
+          bgColor: company.bgColor,
+          status: model.status,
+          lastSync: model.lastSync,
+          batteryLevel: model.batteryLevel
+        }))
+    );
+  }, [deviceCompanies]);
+
+  // Utility functions for device management
+  const getDevicesByCompany = (companyId: string) => {
+    return deviceCompanies.find(company => company.id === companyId)?.models || [];
+  };
+
+  const getConnectedDevicesByCompany = (companyId: string) => {
+    return allConnectedDevices.filter(device => device.companyId === companyId);
+  };
+
+  const getTotalAvailableModels = () => {
+    return deviceCompanies.reduce((total, company) => total + company.models.length, 0);
+  };
+
   // Calculate device statistics
   const connectedDevicesCount = useMemo(() => 
-    allDevices.filter(device => device.status === 'connected').length, 
-    [allDevices]
+    allConnectedDevices.filter(device => device.status === 'connected').length, 
+    [allConnectedDevices]
   );
 
   // Determine which devices to display (prioritize connected devices)
   const displayedDevices = useMemo(() => {
     if (showAllDevices) {
-      return allDevices.slice(0, 4);
+      return allConnectedDevices.slice(0, 4);
     }
     
     // Sort devices by priority: connected > syncing > pairing > offline
     const priorityOrder = { connected: 4, syncing: 3, pairing: 2, offline: 1 };
-    const sortedDevices = [...allDevices].sort((a, b) => 
+    const sortedDevices = [...allConnectedDevices].sort((a, b) => 
       priorityOrder[b.status] - priorityOrder[a.status]
     );
     
     return sortedDevices.slice(0, 4);
-  }, [allDevices, showAllDevices]);
+  }, [allConnectedDevices, showAllDevices]);
   
   // Connect to unified data manager
   const [unifiedData, setUnifiedData] = useState(unifiedDataManager.getSnapshot());
@@ -347,8 +418,11 @@ export const AnalyticsPage: React.FC<AnalyticsPageProps> = ({
             <Activity className="w-5 h-5 text-blue-400" />
             Connected Devices
           </h3>
-          <div className="flex items-center gap-2">
-            <span className="text-xs text-white/50">{connectedDevicesCount} of {allDevices.length} connected</span>
+          <div className="flex items-center gap-3">
+            <div className="flex flex-col text-xs text-white/50">
+              <span>{connectedDevicesCount} of {allConnectedDevices.length} user devices connected</span>
+              <span>{deviceCompanies.length} brands • {getTotalAvailableModels()} models available</span>
+            </div>
             <Button
               onClick={() => setShowAllDevices(!showAllDevices)}
               variant="ghost"
@@ -361,7 +435,7 @@ export const AnalyticsPage: React.FC<AnalyticsPageProps> = ({
         </div>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
           {displayedDevices.map((device) => (
-            <div key={device.id} className="flex items-center gap-3 p-3 bg-white/[0.02] rounded-lg border border-white/[0.05]">
+            <div key={device.modelId} className="flex items-center gap-3 p-3 bg-white/[0.02] rounded-lg border border-white/[0.05]">
               <div className={cn(
                 "w-8 h-8 rounded-lg flex items-center justify-center",
                 device.bgColor
@@ -369,7 +443,7 @@ export const AnalyticsPage: React.FC<AnalyticsPageProps> = ({
                 <span className="text-white text-xs font-bold">{device.icon}</span>
               </div>
               <div>
-                <div className="text-sm font-medium text-white">{device.name}</div>
+                <div className="text-sm font-medium text-white">{device.modelName}</div>
                 <div className={cn(
                   "text-xs",
                   device.status === 'connected' ? "text-green-400" :
@@ -386,11 +460,11 @@ export const AnalyticsPage: React.FC<AnalyticsPageProps> = ({
             </div>
           ))}
         </div>
-        {showAllDevices && allDevices.length > 4 && (
+        {showAllDevices && allConnectedDevices.length > 4 && (
           <div className="mt-4 pt-4 border-t border-white/[0.05]">
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-              {allDevices.slice(4).map((device) => (
-                <div key={device.id} className="flex items-center gap-3 p-3 bg-white/[0.02] rounded-lg border border-white/[0.05]">
+              {allConnectedDevices.slice(4).map((device) => (
+                <div key={device.modelId} className="flex items-center gap-3 p-3 bg-white/[0.02] rounded-lg border border-white/[0.05]">
                   <div className={cn(
                     "w-8 h-8 rounded-lg flex items-center justify-center",
                     device.bgColor
@@ -398,7 +472,7 @@ export const AnalyticsPage: React.FC<AnalyticsPageProps> = ({
                     <span className="text-white text-xs font-bold">{device.icon}</span>
                   </div>
                   <div>
-                    <div className="text-sm font-medium text-white">{device.name}</div>
+                    <div className="text-sm font-medium text-white">{device.modelName}</div>
                     <div className={cn(
                       "text-xs",
                       device.status === 'connected' ? "text-green-400" :
