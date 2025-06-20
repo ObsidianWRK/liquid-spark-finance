@@ -118,9 +118,9 @@ export class SecurityEnvValidator {
     };
 
     if (this.isProduction()) {
-      console.log('[SECURITY] Environment validation passed for production');
+      // Production environment validation passed
     } else {
-      console.log('[SECURITY] Environment validation status:', status);
+      // Environment validation status available in development
     }
   }
 }

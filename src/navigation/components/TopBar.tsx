@@ -39,13 +39,11 @@ const TopBar: React.FC = () => {
     e.preventDefault();
     if (searchQuery.trim()) {
       // Handle search functionality
-      console.log('Search:', searchQuery);
     }
   };
 
   const handleNotifications = () => {
     // Handle notifications
-    console.log('Open notifications');
   };
 
   const handleProfile = () => {

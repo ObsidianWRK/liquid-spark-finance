@@ -65,7 +65,6 @@ const NavBarDemo: React.FC = () => {
       label: 'Insights',
       icon: TrendingUp,
       action: () => {
-        console.log('Navigate to Insights');
         setActiveTabId('insights');
       },
       isActive: activeTabId === 'insights',
@@ -75,7 +74,6 @@ const NavBarDemo: React.FC = () => {
       label: 'Reports',
       icon: BarChart3,
       action: () => {
-        console.log('Navigate to Reports');
         setActiveTabId('reports');
       },
       isActive: activeTabId === 'reports',
@@ -90,7 +88,6 @@ const NavBarDemo: React.FC = () => {
       label: 'Profile',
       icon: User,
       action: () => {
-        console.log('Navigate to Profile');
         setActiveTabId('profile');
       },
       isActive: activeTabId === 'profile',
@@ -100,7 +97,6 @@ const NavBarDemo: React.FC = () => {
       label: 'Notifications',
       icon: Bell,
       action: () => {
-        console.log('Navigate to Notifications');
         setActiveTabId('notifications');
       },
       isActive: activeTabId === 'notifications',
@@ -111,7 +107,6 @@ const NavBarDemo: React.FC = () => {
       label: 'Messages',
       icon: MessageCircle,
       action: () => {
-        console.log('Navigate to Messages');
         setActiveTabId('messages');
       },
       isActive: activeTabId === 'messages',
@@ -122,7 +117,6 @@ const NavBarDemo: React.FC = () => {
       label: 'Settings',
       icon: Settings,
       action: () => {
-        console.log('Navigate to Settings');
         setActiveTabId('settings');
       },
       isActive: activeTabId === 'settings',
@@ -133,7 +127,6 @@ const NavBarDemo: React.FC = () => {
   const fabConfig = {
     icon: Plus,
     action: () => {
-      console.log('FAB pressed - Add new item');
       // Simulate adding notification
       setNotificationCount(prev => prev + 1);
     },
@@ -144,7 +137,7 @@ const NavBarDemo: React.FC = () => {
   const secondaryFabConfig = {
     icon: MessageCircle,
     action: () => {
-      console.log('FAB pressed - New message');
+      /* New message */
     },
     ariaLabel: 'Compose new message',
     variant: 'secondary' as const,
@@ -277,7 +270,6 @@ const NavBarDemo: React.FC = () => {
         showLabels={true}
         maxTabs={5}
         onActiveTabChange={(tabId) => {
-          console.log(`Active tab changed to: ${tabId}`);
           setActiveTabId(tabId);
         }}
         className="z-50"
@@ -292,8 +284,8 @@ const NavBarDemo: React.FC = () => {
         position="top"
         showLabels={true}
         maxTabs={4}
-        onActiveTabChange={(tabId) => {
-          console.log(`Top nav active tab: ${tabId}`);
+        onActiveTabChange={() => {
+          /* Top nav active tab changed */
         }}
         className="z-40"
       />

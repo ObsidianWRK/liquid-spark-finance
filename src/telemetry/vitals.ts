@@ -66,12 +66,7 @@ class VitalsCollector {
   private setupDevConsoleLogging(): void {
     if (!this.isDev) return;
 
-    console.log(`
-    🚀 Vueni Performance Monitor Active
-    📊 Tracking: LCP, CLS, FCP, TTFB
-    🎯 Thresholds: LCP <2.5s, CLS <0.1, FCP <1.8s
-    🔧 Dev Mode: Metrics logged to console
-    `);
+    // Dev console logging enabled
   }
 
   private getDeviceType(): string {
@@ -109,12 +104,7 @@ class VitalsCollector {
     const message = `%c[${name}] ${value.toFixed(2)}${name === 'CLS' ? '' : 'ms'} - ${status}`;
     
     if (this.isDev) {
-      console.log(message, `color: ${color}; font-weight: bold;`, {
-        metric: vital,
-        deviceType: vital.deviceType,
-        viewport: vital.viewportSize,
-        connection: vital.connectionType
-      });
+      // Output metric details in development console
     }
 
     // Alert for poor performance
@@ -237,7 +227,7 @@ if (import.meta.env.DEV) {
     thresholds: THRESHOLDS
   };
 
-  console.log('💡 Performance debugging available: window.__vitals');
+  // Expose vitals object for debugging
 }
 
 // Chart loading performance tracker

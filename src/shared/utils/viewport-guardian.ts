@@ -103,7 +103,7 @@ export const initializeViewportGuardian = (): void => {
   // Run feature detection
   runFeatureDetection();
   
-  console.log('🛡️ Viewport Guardian initialized with cross-browser safe area support');
+  // Initialization complete with cross-browser safe area support
 };
 
 /**
@@ -236,7 +236,7 @@ export const configureViewportGuardian = (config: ViewportGuardianConfig): void 
   guardianConfig = { ...guardianConfig, ...config };
   
   if (config.debug) {
-    console.log('🛡️ Viewport Guardian Debug Info:', getViewportDebugInfo());
+    getViewportDebugInfo();
   }
 };
 

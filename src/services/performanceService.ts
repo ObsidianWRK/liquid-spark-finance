@@ -65,10 +65,10 @@ class PerformanceService {
           const entries = list.getEntries();
           entries.forEach((entry) => {
             if (entry.name === 'first-contentful-paint') {
-              console.log(`First Contentful Paint: ${entry.startTime}ms`);
+              // First contentful paint timing available
             }
             if (entry.name === 'largest-contentful-paint') {
-              console.log(`Largest Contentful Paint: ${entry.startTime}ms`);
+              // Largest contentful paint timing available
             }
           });
         });
@@ -271,7 +271,7 @@ class PerformanceService {
           }
         });
 
-        console.log(`Total JavaScript bundle size: ${(totalSize / 1024).toFixed(2)}KB`);
+        // Bundle size output available during development
         
         if (totalSize > 1024 * 1024) { // 1MB
           console.warn('Large bundle size detected. Consider code splitting.');

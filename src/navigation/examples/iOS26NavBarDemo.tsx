@@ -132,8 +132,8 @@ const NavigationDemo: React.FC = () => {
         showLabels={true}
         maxTabs={5}
         enableSideRail={true}
-        onActiveTabChange={(tabId: string) => {
-          console.log('Active tab changed to:', tabId);
+        onActiveTabChange={() => {
+          /* Tab changed */
         }}
       />
 
@@ -193,7 +193,7 @@ export const iOS26NavBarExamples = {
       ]}
       fab={{
         icon: Plus,
-        action: () => console.log('FAB clicked'),
+        action: () => {},
         variant: 'primary',
       }}
     />

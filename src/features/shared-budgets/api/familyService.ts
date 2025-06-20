@@ -288,7 +288,6 @@ export class FamilyService {
 
   private async sendInvitationEmail(invitation: FamilyInvitation): Promise<void> {
     // TODO: Implement email service integration
-    console.log(`Sending invitation email to ${invitation.email}`);
   }
 
   private async getFamilyAccounts(familyId: string): Promise<Account[]> {

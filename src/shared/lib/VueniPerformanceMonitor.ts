@@ -55,7 +55,7 @@ export class VueniPerformanceMonitor {
     // Initialize bundle analysis
     this.initBundleAnalysis();
 
-    console.log('[Vueni Performance] Performance monitoring initialized');
+    // Performance monitoring initialized
   }
 
   private static initWebVitals(): void {
@@ -96,7 +96,7 @@ export class VueniPerformanceMonitor {
     const threshold = this.thresholds[name.toLowerCase() as keyof typeof this.thresholds];
     const status = value <= threshold ? '✅' : '⚠️';
     
-    console.log(`[Vueni Performance] ${status} ${name}: ${value.toFixed(2)}${name === 'CLS' ? '' : 'ms'}`);
+    // Metric log for development visibility
   }
 
   private static evaluateMetric(name: string, value: number): void {
@@ -141,9 +141,7 @@ export class VueniPerformanceMonitor {
 
     const metricRecommendations = recommendations[metric];
     if (metricRecommendations) {
-      console.group(`[Vueni Performance] Optimization recommendations for ${metric}:`);
-      metricRecommendations.forEach(rec => console.log(`• ${rec}`));
-      console.groupEnd();
+      // Optimization recommendations available for development
     }
   }
 
@@ -186,7 +184,7 @@ export class VueniPerformanceMonitor {
           this.suggestMemoryOptimizations();
         }
 
-        console.log(`[Vueni Performance] Memory usage: ${usedMB.toFixed(2)}MB`);
+        // Memory usage metric available for debugging
       }
     };
 
@@ -195,13 +193,7 @@ export class VueniPerformanceMonitor {
   }
 
   private static suggestMemoryOptimizations(): void {
-    console.group('[Vueni Performance] Memory optimization suggestions:');
-    console.log('• Use React.memo() for components that re-render frequently');
-    console.log('• Implement proper cleanup in useEffect hooks');
-    console.log('• Consider virtualization for large transaction lists');
-    console.log('• Clear unused data from state management');
-    console.log('• Use lazy loading for heavy components');
-    console.groupEnd();
+    // Memory optimization suggestions emitted during development
   }
 
   private static initBundleAnalysis(): void {
@@ -222,7 +214,7 @@ export class VueniPerformanceMonitor {
           this.metrics.bundleSize = totalJSSize;
           const sizeMB = totalJSSize / 1024 / 1024;
           
-          console.log(`[Vueni Performance] Total JS bundle size: ${sizeMB.toFixed(2)}MB`);
+          // JS bundle size metric available for debugging
           
           if (sizeMB > 1.5) { // Warn if bundle is larger than 1.5MB
             console.warn('[Vueni Performance] Large bundle size detected. Consider code splitting.');
@@ -243,7 +235,6 @@ export class VueniPerformanceMonitor {
     this.metrics.componentLoadTimes[componentName] = loadTime;
     
     const status = loadTime <= this.thresholds.componentLoad ? '✅' : '⚠️';
-    console.log(`[Vueni Performance] ${status} Component ${componentName} loaded in ${loadTime.toFixed(2)}ms`);
 
     if (loadTime > this.thresholds.componentLoad) {
       console.warn(`[Vueni Performance] Slow component load: ${componentName} (${loadTime.toFixed(2)}ms)`);
@@ -255,13 +246,7 @@ export class VueniPerformanceMonitor {
   }
 
   private static suggestComponentOptimizations(componentName: string): void {
-    console.group(`[Vueni Performance] Optimization suggestions for ${componentName}:`);
-    console.log('• Use React.memo() to prevent unnecessary re-renders');
-    console.log('• Implement code splitting with React.lazy()');
-    console.log('• Consider memoizing expensive calculations with useMemo()');
-    console.log('• Use useCallback() for event handlers');
-    console.log('• Implement virtualization for large lists');
-    console.groupEnd();
+    // Component optimization suggestions available during development
   }
 
   private static sendMetricToAnalytics(metric: Metric): void {
@@ -377,7 +362,7 @@ export class VueniPerformanceMonitor {
     });
     this.observers = [];
     
-    console.log('[Vueni Performance] Performance monitoring cleanup completed');
+    // Performance monitoring cleanup completed
   }
 }
 

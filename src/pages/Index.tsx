@@ -217,11 +217,9 @@ const DemoInterventionNudge: React.FC = () => {
       event={mockEvent}
       onDismiss={() => setShowDemo(false)}
       onProceedAnyway={() => {
-        console.log('User proceeded with purchase despite stress intervention');
         setShowDemo(false);
       }}
       onTakeBreathing={() => {
-        console.log('User started breathing exercise');
         setShowDemo(false);
       }}
     />
@@ -375,7 +373,9 @@ export default function Index() {
                 <TransactionList 
                   transactions={adaptTransactions(mockData.transactions) || []}
                   isLoading={false}
-                  onTransactionClick={(transaction) => console.log('Transaction clicked:', transaction)}
+                  onTransactionClick={() => {
+                    /* Transaction clicked */
+                  }}
                   className="w-full"
                 />
               </div>
@@ -467,8 +467,7 @@ export default function Index() {
                       });
                       setBalanceVisibility(newVisibility);
                     }}
-                    onAccountSelect={(accountId) => {
-                      console.log('Selected account:', accountId);
+                    onAccountSelect={() => {
                       // TODO: Navigate to account details
                     }}
                     onViewAll={() => handleViewChange('accounts')}
@@ -482,7 +481,9 @@ export default function Index() {
                   <TransactionList 
                     transactions={adaptTransactions(mockData.transactions)?.slice(0, 10) || []}
                     isLoading={false}
-                    onTransactionClick={(transaction) => console.log('Transaction clicked:', transaction)}
+                    onTransactionClick={() => {
+                      /* Transaction clicked */
+                    }}
                   />
                 </div>
                 <div className="space-y-6">

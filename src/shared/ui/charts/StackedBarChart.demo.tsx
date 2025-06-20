@@ -387,14 +387,14 @@ export const StackedBarChartDemo: React.FC = () => {
                   </Button>
                 </div>
               }
-              onBarClick={(data, categoryKey, value) => {
-                console.log('Bar clicked:', { data, categoryKey, value });
+              onBarClick={() => {
+                /* Bar click */
               }}
-              onBarHover={(data, categoryKey) => {
-                console.log('Bar hovered:', { data, categoryKey });
+              onBarHover={() => {
+                /* Bar hover */
               }}
               onChartReady={() => {
-                console.log('Chart ready');
+                /* Chart ready */
               }}
             />
           </CardContent>

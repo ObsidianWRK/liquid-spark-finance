@@ -198,8 +198,7 @@ export const VueniPerformanceMonitor = {
     const endTime = performance.now();
     const loadTime = endTime - startTime;
     
-    // Log performance metrics
-    console.log(`[Vueni Performance] ${componentName} loaded in ${loadTime.toFixed(2)}ms`);
+    // Log performance metrics in development
     
     // Send to analytics in production
     if (import.meta.env.PROD && 'sendBeacon' in navigator) {
@@ -215,7 +214,6 @@ export const VueniPerformanceMonitor = {
   trackMemoryUsage: (componentName: string) => {
     if ('memory' in performance) {
       const memory = performance.memory;
-      console.log(`[Vueni Memory] ${componentName} - Used: ${(memory.usedJSHeapSize / 1024 / 1024).toFixed(2)}MB`);
       
       // Warn if memory usage is high
       if (memory.usedJSHeapSize > 100 * 1024 * 1024) { // 100MB
@@ -232,7 +230,6 @@ export const VueniPerformanceMonitor = {
         list.getEntries().forEach((entry) => {
           if (entry.entryType === 'navigation') {
             const navEntry = entry as PerformanceNavigationTiming;
-            console.log(`[Vueni Performance] Page load: ${navEntry.loadEventEnd - navEntry.loadEventStart}ms`);
           }
         });
       });

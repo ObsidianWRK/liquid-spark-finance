@@ -103,11 +103,12 @@ export const useAnimationDelay = () => {
 export const useLayoutDebug = (componentName: string) => {
   useEffect(() => {
     if (import.meta.env.DEV) {
-      console.log(`${componentName} mounted:`, {
+      // Component mount debug data
+      const debugData = {
         viewport: { width: window.innerWidth, height: window.innerHeight },
         userAgent: navigator.userAgent,
-        timestamp: new Date().toISOString()
-      });
+        timestamp: new Date().toISOString(),
+      };
     }
   }, [componentName]);
 };
