@@ -11,8 +11,8 @@ import {
   Eye,
   EyeOff
 } from 'lucide-react';
-import { UniversalCard } from '../ui/UniversalCard';
-import { UniversalScoreCircle } from './UniversalScoreCircle';
+import { UniversalCard } from '@/shared/ui/UniversalCard';
+import { SharedScoreCircle } from '@/components/shared/SharedScoreCircle';
 import { cn } from '@/shared/lib/utils';
 import { vueniTheme } from '@/theme/unified';
 

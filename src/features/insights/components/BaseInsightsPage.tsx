@@ -1,19 +1,10 @@
 import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import { Heart, Leaf, TrendingUp, TrendingDown, DollarSign, Shield, PiggyBank, Calendar, ChevronRight, Activity, Recycle } from 'lucide-react';
-import { UniversalCard } from '../ui/UniversalCard';
+import { UniversalCard } from '@/shared/ui/UniversalCard';
 import { UniversalMetricCard } from './UniversalMetricCard';
 import { UniversalScoreCard } from './UniversalScoreCard';
-import ComprehensiveWellnessCard from './ComprehensiveWellnessCard';
-import ComprehensiveEcoCard from './ComprehensiveEcoCard';
-import { generateScoreSummary } from '@/features/scoringModel';
 import { formatPercentage, getScoreColor } from '@/shared/utils/formatters';
-import { 
-  usePerformanceOptimization, 
-  useResponsiveBreakpoint, 
-  useAnimationDelay,
-  useLayoutDebug,
-  usePerformanceTracking 
-} from '@/hooks/usePerformanceOptimization';
+import { generateScoreSummary } from '@/services/scoringModel';
 
 // Enhanced TypeScript interfaces
 interface Transaction {
