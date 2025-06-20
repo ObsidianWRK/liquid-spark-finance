@@ -6,6 +6,7 @@ import { Badge } from '@/shared/ui/badge';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/shared/ui/select';
 import { cn } from '@/shared/lib/utils';
 import { useIsMobile } from '@/shared/hooks/use-mobile';
+import HydrationTracker from './health/HydrationTracker';
 import { analyticsService } from '../api/analyticsService';
 import { AnalyticsDashboardData, AnalyticsTimeframe } from '@/shared/types/analytics';
 import { unifiedDataManager, useUnifiedState } from '@/services/unifiedDataManager';
@@ -410,6 +411,12 @@ export const AnalyticsPage: React.FC<AnalyticsPageProps> = ({
           Last updated: {new Date(dashboardData.lastUpdated).toLocaleString()}
         </span>
       </div>
+
+      {isMobile && (
+        <div className="py-2">
+          <HydrationTracker />
+        </div>
+      )}
 
       {/* Connected Devices */}
       <UniversalCard variant="glass" interactive className="p-4 sm:p-6">
