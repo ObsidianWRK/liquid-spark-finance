@@ -7,7 +7,7 @@
 import React, { memo, forwardRef, useImperativeHandle, useRef } from 'react';
 import * as ToggleGroup from '@radix-ui/react-toggle-group';
 import { cn } from '@/shared/lib/utils';
-import { appleGraphTokens } from '@/theme/graph-tokens';
+import { vueniTheme } from '@/theme/unified';
 import { TimeRangeOption } from './types';
 
 // Apple-style segmented control props
@@ -135,7 +135,7 @@ export const TimeRangeToggleRadix = forwardRef<TimeRangeToggleRadixRef, TimeRang
       style={{
         height: sizeConfig.height,
         padding: sizeConfig.padding,
-        borderRadius: appleGraphTokens.borderRadius.md,
+        borderRadius: vueniTheme.charts.borderRadius.md,
       }}
       {...rest}
     >
@@ -162,7 +162,7 @@ export const TimeRangeToggleRadix = forwardRef<TimeRangeToggleRadixRef, TimeRang
             style={{
               fontSize: sizeConfig.fontSize,
               minHeight: sizeConfig.minTouchTarget, // iOS accessibility
-              fontFamily: appleGraphTokens.typography.fontFamily.primary,
+              fontFamily: vueniTheme.charts.typography.fontFamily,
               fontWeight: isSelected ? 500 : 400,
             }}
             aria-label={showLabels ? OPTION_LABELS[option] : option}
