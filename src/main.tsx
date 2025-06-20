@@ -32,6 +32,7 @@ import App from './App.tsx'
 import './index.css'
 import './app/styles/scroll-fix.css' // WHY: Critical fix for double scroll issue - must load after index.css
 import { SecurityEnvValidator } from './shared/utils/envValidation'
+import './telemetry/vitals.ts' // Initialize performance monitoring
 
 // Validate security environment before app startup
 try {

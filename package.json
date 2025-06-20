@@ -38,7 +38,10 @@
     "test:all": "npm run test:coverage && npm run test:e2e && npm run test:security && npm run test:hook-validation",
     "deploy:vercel": "vercel --prod",
     "deploy:preview": "vercel",
-    "postbuild": "node scripts/post-build.js"
+    "postbuild": "node scripts/post-build.js",
+    "lighthouse": "lhci autorun",
+    "lighthouse:ci": "lhci autorun --config=lighthouserc.json",
+    "perf:critical-css": "node scripts/extract-critical-css.js"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.9.0",
@@ -101,6 +104,7 @@
     "@axe-core/cli": "^4.10.2",
     "@axe-core/react": "^4.10.2",
     "@eslint/js": "^9.9.0",
+    "@lhci/cli": "^0.15.0",
     "@playwright/test": "^1.53.0",
     "@tailwindcss/typography": "^0.5.15",
     "@testing-library/jest-dom": "^6.6.3",
@@ -125,6 +129,8 @@
     "typescript": "^5.5.3",
     "typescript-eslint": "^8.0.1",
     "vite": "^5.4.1",
+    "vite-plugin-compression": "^0.5.1",
+    "vite-plugin-imagemin": "^0.6.1",
     "vitest": "^3.2.4"
   }
 }

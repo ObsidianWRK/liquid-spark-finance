@@ -96,10 +96,10 @@ const DebtPayoffTab: React.FC<DebtPayoffTabProps> = ({ familyId }) => {
             <DollarSign className="w-7 h-7 text-red-400" />
             Debt Payoff Strategy
           </h2>
-                     <p className="text-white/60 mt-1">
-             {plan.strategy === 'avalanche' ? 'Avalanche Method' : 'Snowball Method'} • 
-             {plan.projections.monthsToPayoff} months to debt-free
-           </p>
+          <p className="text-white/60 mt-1">
+            {plan.strategy === 'avalanche' ? 'Avalanche Method' : 'Snowball Method'} • 
+            {plan.projections.monthsToPayoff} months to debt-free
+          </p>
         </div>
       </div>
 

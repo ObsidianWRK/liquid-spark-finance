@@ -25,6 +25,10 @@ import { useNavigate } from 'react-router-dom';
 import { financialPlanningService } from '@/features/planning/api/financialPlanningService';
 import { FinancialGoal, GoalCategory, PlanningRecommendation } from '@/types/financialPlanning';
 import { cn } from '@/shared/lib/utils';
+// Import new tab components
+import RetirementTab from './tabs/RetirementTab';
+import DebtPayoffTab from './tabs/DebtPayoffTab';
+import LifePlanningTab from './tabs/LifePlanningTab';
 
 interface FinancialPlanningPageProps {
   familyId?: string;
@@ -202,19 +206,22 @@ const FinancialPlanningPage = ({ familyId = 'demo_family' }: FinancialPlanningPa
 
   if (loading) {
     return (
-      <div className="p-6 space-y-6">
-        {[...Array(4)].map((_, i) => (
-          <div key={i} className="bg-white/[0.02] rounded-2xl border border-white/[0.08] p-6 animate-pulse">
-            <div className="flex items-center justify-between mb-4">
-              <div className="h-6 bg-white/[0.05] rounded w-48"></div>
-              <div className="h-6 bg-white/[0.05] rounded w-24"></div>
+      <div className="min-h-screen bg-black text-white">
+        <div className="responsive-padding-md space-y-4 sm:space-y-6 animate-pulse">
+          <div className="h-6 sm:h-8 bg-white/[0.05] rounded w-32 sm:w-48 mb-4"></div>
+          {[...Array(4)].map((_, i) => (
+            <div key={i} className="bg-white/[0.02] rounded-2xl border border-white/[0.08] p-4 sm:p-6">
+              <div className="flex items-center justify-between mb-4">
+                <div className="h-5 sm:h-6 bg-white/[0.05] rounded w-32 sm:w-48"></div>
+                <div className="h-5 sm:h-6 bg-white/[0.05] rounded w-16 sm:w-24"></div>
+              </div>
+              <div className="space-y-3">
+                <div className="h-4 bg-white/[0.05] rounded w-full"></div>
+                <div className="h-4 bg-white/[0.05] rounded w-3/4"></div>
+              </div>
             </div>
-            <div className="space-y-3">
-              <div className="h-4 bg-white/[0.05] rounded w-full"></div>
-              <div className="h-4 bg-white/[0.05] rounded w-3/4"></div>
-            </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
     );
   }
@@ -539,26 +546,17 @@ const FinancialPlanningPage = ({ familyId = 'demo_family' }: FinancialPlanningPa
         </div>
       )}
 
-      {/* Other tabs would have similar detailed content */}
+      {/* Enhanced tab content with dedicated components */}
       {activeTab === 'retirement' && (
-        <div className="bg-white/[0.02] rounded-2xl border border-white/[0.08] p-6">
-          <h2 className="text-xl font-bold text-white mb-4">Retirement Planning</h2>
-          <p className="text-white/60">Comprehensive retirement planning tools coming soon...</p>
-        </div>
+        <RetirementTab familyId={familyId} />
       )}
 
       {activeTab === 'debt' && (
-        <div className="bg-white/[0.02] rounded-2xl border border-white/[0.08] p-6">
-          <h2 className="text-xl font-bold text-white mb-4">Debt Payoff Strategy</h2>
-          <p className="text-white/60">Intelligent debt payoff planning tools coming soon...</p>
-        </div>
+        <DebtPayoffTab familyId={familyId} />
       )}
 
       {activeTab === 'planning' && (
-        <div className="bg-white/[0.02] rounded-2xl border border-white/[0.08] p-6">
-          <h2 className="text-xl font-bold text-white mb-4">Life Event Planning</h2>
-          <p className="text-white/60">Plan for major life events and milestones...</p>
-        </div>
+        <LifePlanningTab familyId={familyId} />
       )}
     </div>
   );

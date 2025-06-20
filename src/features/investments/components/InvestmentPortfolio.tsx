@@ -126,106 +126,108 @@ const InvestmentPortfolio = ({ familyId, className }: InvestmentPortfolioProps) 
   }
 
   const renderOverview = () => (
-    <div className="space-y-6">
+    <div className="space-y-4 sm:space-y-6">
       {/* Portfolio Summary */}
-      <div className="bg-white/[0.02] rounded-2xl border border-white/[0.08] p-6">
-        <h3 className="text-xl font-bold text-white mb-6 flex items-center gap-3">
-          <PieChart className="w-6 h-6 text-blue-400" />
+      <div className="bg-white/[0.02] rounded-2xl border border-white/[0.08] p-4 sm:p-6">
+        <h3 className="text-lg sm:text-xl font-bold text-white mb-4 sm:mb-6 flex items-center gap-3">
+          <PieChart className="w-5 h-5 sm:w-6 sm:h-6 text-blue-400" />
           Portfolio Summary
         </h3>
         
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
           <div className="space-y-2">
-            <p className="text-white/60 text-sm">Total Value</p>
-            <p className="text-2xl sm:text-3xl font-bold text-white">{formatCurrency(portfolio.totalValue)}</p>
+            <p className="text-white/60 text-xs sm:text-sm">Total Value</p>
+            <p className="text-xl sm:text-2xl lg:text-3xl font-bold text-white truncate">{formatCurrency(portfolio.totalValue)}</p>
           </div>
           
           <div className="space-y-2">
-            <p className="text-white/60 text-sm">Total Gain/Loss</p>
-            <p className={cn("text-xl sm:text-2xl font-bold", getPerformanceColor(portfolio.totalGainLoss))}>
-              {formatCurrency(portfolio.totalGainLoss)}
-            </p>
-            <p className={cn("text-sm", getPerformanceColor(portfolio.totalGainLossPercent))}>
-              {formatPercentage(portfolio.totalGainLossPercent)}
-            </p>
+            <p className="text-white/60 text-xs sm:text-sm">Total Gain/Loss</p>
+            <div className="space-y-1">
+              <p className={cn("text-lg sm:text-xl lg:text-2xl font-bold truncate", getPerformanceColor(portfolio.totalGainLoss))}>
+                {formatCurrency(portfolio.totalGainLoss)}
+              </p>
+              <p className={cn("text-xs sm:text-sm", getPerformanceColor(portfolio.totalGainLossPercent))}>
+                {formatPercentage(portfolio.totalGainLossPercent)}
+              </p>
+            </div>
           </div>
           
           <div className="space-y-2 sm:col-span-2 lg:col-span-1">
-            <p className="text-white/60 text-sm">Cost Basis</p>
-            <p className="text-xl font-bold text-white">{formatCurrency(portfolio.totalCostBasis)}</p>
+            <p className="text-white/60 text-xs sm:text-sm">Cost Basis</p>
+            <p className="text-lg sm:text-xl font-bold text-white truncate">{formatCurrency(portfolio.totalCostBasis)}</p>
           </div>
         </div>
       </div>
 
       {/* Performance Metrics */}
-      <div className="bg-white/[0.02] rounded-2xl border border-white/[0.08] p-6">
-        <h3 className="text-lg font-bold text-white mb-4 flex items-center gap-3">
-          <BarChart3 className="w-5 h-5 text-blue-400" />
+      <div className="bg-white/[0.02] rounded-2xl border border-white/[0.08] p-4 sm:p-6">
+        <h3 className="text-base sm:text-lg font-bold text-white mb-3 sm:mb-4 flex items-center gap-3">
+          <BarChart3 className="w-4 h-4 sm:w-5 sm:h-5 text-blue-400" />
           Performance Metrics
         </h3>
         
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4">
           {Object.entries(portfolio.performance.returns).map(([period, value]) => (
-            <div key={period} className="text-center">
-              <p className="text-white/60 text-xs sm:text-sm capitalize">{period.replace('d', ' Days')}</p>
-              <p className={cn("text-sm sm:text-lg font-bold", getPerformanceColor(value))}>
+            <div key={period} className="text-center p-2 sm:p-3 bg-white/[0.02] rounded-lg border border-white/[0.05]">
+              <p className="text-white/60 text-xs sm:text-sm capitalize truncate">{period.replace('d', ' Days')}</p>
+              <p className={cn("text-sm sm:text-base lg:text-lg font-bold truncate", getPerformanceColor(value))}>
                 {formatPercentage(value)}
               </p>
             </div>
           ))}
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-6 pt-6 border-t border-white/[0.08]">
-          <div className="text-center">
-            <p className="text-white/60 text-sm">Sharpe Ratio</p>
-            <p className="text-lg font-bold text-white">{portfolio.performance.sharpeRatio.toFixed(2)}</p>
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4 mt-4 sm:mt-6 pt-4 sm:pt-6 border-t border-white/[0.08]">
+          <div className="text-center p-3 bg-white/[0.02] rounded-lg border border-white/[0.05]">
+            <p className="text-white/60 text-xs sm:text-sm">Sharpe Ratio</p>
+            <p className="text-base sm:text-lg font-bold text-white">{portfolio.performance.sharpeRatio.toFixed(2)}</p>
           </div>
-          <div className="text-center">
-            <p className="text-white/60 text-sm">Volatility</p>
-            <p className="text-lg font-bold text-white">{portfolio.performance.volatility.toFixed(1)}%</p>
+          <div className="text-center p-3 bg-white/[0.02] rounded-lg border border-white/[0.05]">
+            <p className="text-white/60 text-xs sm:text-sm">Volatility</p>
+            <p className="text-base sm:text-lg font-bold text-white">{portfolio.performance.volatility.toFixed(1)}%</p>
           </div>
-          <div className="text-center">
-            <p className="text-white/60 text-sm">Max Drawdown</p>
-            <p className="text-lg font-bold text-red-400">{portfolio.performance.maxDrawdown.toFixed(1)}%</p>
+          <div className="text-center p-3 bg-white/[0.02] rounded-lg border border-white/[0.05] sm:col-span-3 lg:col-span-1">
+            <p className="text-white/60 text-xs sm:text-sm">Max Drawdown</p>
+            <p className="text-base sm:text-lg font-bold text-red-400">{portfolio.performance.maxDrawdown.toFixed(1)}%</p>
           </div>
         </div>
       </div>
 
       {/* Asset Allocation */}
-      <div className="bg-white/[0.02] rounded-2xl border border-white/[0.08] p-6">
-        <h3 className="text-lg font-bold text-white mb-4 flex items-center gap-3">
-          <Target className="w-5 h-5 text-blue-400" />
+      <div className="bg-white/[0.02] rounded-2xl border border-white/[0.08] p-4 sm:p-6">
+        <h3 className="text-base sm:text-lg font-bold text-white mb-3 sm:mb-4 flex items-center gap-3">
+          <Target className="w-4 h-4 sm:w-5 sm:h-5 text-blue-400" />
           Asset Allocation
         </h3>
         
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
-          <div className="text-center">
-            <p className="text-white/60 text-sm">Stocks</p>
-            <p className="text-lg sm:text-xl font-bold text-blue-400">{portfolio.allocation.stocks.toFixed(1)}%</p>
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4">
+          <div className="text-center p-3 bg-white/[0.02] rounded-lg border border-white/[0.05]">
+            <p className="text-white/60 text-xs sm:text-sm">Stocks</p>
+            <p className="text-base sm:text-lg lg:text-xl font-bold text-blue-400">{portfolio.allocation.stocks.toFixed(1)}%</p>
           </div>
-          <div className="text-center">
-            <p className="text-white/60 text-sm">Bonds</p>
-            <p className="text-lg sm:text-xl font-bold text-green-400">{portfolio.allocation.bonds.toFixed(1)}%</p>
+          <div className="text-center p-3 bg-white/[0.02] rounded-lg border border-white/[0.05]">
+            <p className="text-white/60 text-xs sm:text-sm">Bonds</p>
+            <p className="text-base sm:text-lg lg:text-xl font-bold text-green-400">{portfolio.allocation.bonds.toFixed(1)}%</p>
           </div>
-          <div className="text-center">
-            <p className="text-white/60 text-sm">Cash</p>
-            <p className="text-lg sm:text-xl font-bold text-yellow-400">{portfolio.allocation.cash.toFixed(1)}%</p>
+          <div className="text-center p-3 bg-white/[0.02] rounded-lg border border-white/[0.05]">
+            <p className="text-white/60 text-xs sm:text-sm">Cash</p>
+            <p className="text-base sm:text-lg lg:text-xl font-bold text-yellow-400">{portfolio.allocation.cash.toFixed(1)}%</p>
           </div>
-          <div className="text-center">
-            <p className="text-white/60 text-sm">Other</p>
-            <p className="text-lg sm:text-xl font-bold text-white/60">{portfolio.allocation.other.toFixed(1)}%</p>
+          <div className="text-center p-3 bg-white/[0.02] rounded-lg border border-white/[0.05]">
+            <p className="text-white/60 text-xs sm:text-sm">Other</p>
+            <p className="text-base sm:text-lg lg:text-xl font-bold text-white/60">{portfolio.allocation.other.toFixed(1)}%</p>
           </div>
         </div>
 
         {/* Sector Breakdown */}
         {Object.keys(portfolio.allocation.sectors).length > 0 && (
-          <div className="mt-6 pt-6 border-t border-white/[0.08]">
-            <p className="text-white/80 font-medium mb-3">Sector Breakdown</p>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+          <div className="mt-4 sm:mt-6 pt-4 sm:pt-6 border-t border-white/[0.08]">
+            <p className="text-white/80 font-medium mb-3 text-sm sm:text-base">Sector Breakdown</p>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2 sm:gap-3">
               {Object.entries(portfolio.allocation.sectors).map(([sector, percentage]) => (
-                <div key={sector} className="flex justify-between">
-                  <span className="text-white/60 text-sm truncate">{sector}</span>
-                  <span className="text-white text-sm font-medium">{percentage.toFixed(1)}%</span>
+                <div key={sector} className="flex justify-between p-2 sm:p-3 bg-white/[0.02] rounded-lg border border-white/[0.05]">
+                  <span className="text-white/60 text-xs sm:text-sm truncate flex-1">{sector}</span>
+                  <span className="text-white text-xs sm:text-sm font-medium ml-2">{percentage.toFixed(1)}%</span>
                 </div>
               ))}
             </div>
@@ -234,52 +236,52 @@ const InvestmentPortfolio = ({ familyId, className }: InvestmentPortfolioProps) 
       </div>
 
       {/* Risk Metrics */}
-      <div className="bg-white/[0.02] rounded-2xl border border-white/[0.08] p-6">
-        <h3 className="text-lg font-bold text-white mb-4 flex items-center gap-3">
-          <AlertTriangle className="w-5 h-5 text-yellow-400" />
+      <div className="bg-white/[0.02] rounded-2xl border border-white/[0.08] p-4 sm:p-6">
+        <h3 className="text-base sm:text-lg font-bold text-white mb-3 sm:mb-4 flex items-center gap-3">
+          <AlertTriangle className="w-4 h-4 sm:w-5 sm:h-5 text-yellow-400" />
           Risk Analysis
         </h3>
         
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div>
-            <p className="text-white/60 text-sm mb-2">Concentration Risk</p>
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
+          <div className="space-y-3">
+            <p className="text-white/60 text-xs sm:text-sm mb-2">Concentration Risk</p>
             <div className="flex items-center gap-3">
-              <div className="flex-1 bg-white/[0.05] rounded-full h-2">
+              <div className="flex-1 bg-white/[0.05] rounded-full h-2 sm:h-3">
                 <div 
-                  className="bg-red-400 h-2 rounded-full" 
+                  className="bg-red-400 h-2 sm:h-3 rounded-full transition-all duration-300" 
                   style={{ width: `${Math.min(portfolio.riskMetrics.concentrationRisk, 100)}%` }}
                 ></div>
               </div>
-              <span className="text-white text-sm font-medium">{portfolio.riskMetrics.concentrationRisk.toFixed(1)}%</span>
+              <span className="text-white text-xs sm:text-sm font-medium min-w-[3rem]">{portfolio.riskMetrics.concentrationRisk.toFixed(1)}%</span>
             </div>
           </div>
           
-          <div>
-            <p className="text-white/60 text-sm mb-2">Sector Concentration</p>
+          <div className="space-y-3">
+            <p className="text-white/60 text-xs sm:text-sm mb-2">Sector Concentration</p>
             <div className="flex items-center gap-3">
-              <div className="flex-1 bg-white/[0.05] rounded-full h-2">
+              <div className="flex-1 bg-white/[0.05] rounded-full h-2 sm:h-3">
                 <div 
-                  className="bg-orange-400 h-2 rounded-full" 
+                  className="bg-orange-400 h-2 sm:h-3 rounded-full transition-all duration-300" 
                   style={{ width: `${Math.min(portfolio.riskMetrics.sectorConcentration, 100)}%` }}
                 ></div>
               </div>
-              <span className="text-white text-sm font-medium">{portfolio.riskMetrics.sectorConcentration.toFixed(1)}%</span>
+              <span className="text-white text-xs sm:text-sm font-medium min-w-[3rem]">{portfolio.riskMetrics.sectorConcentration.toFixed(1)}%</span>
             </div>
           </div>
         </div>
         
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6">
-          <div className="text-center">
-            <p className="text-white/60 text-sm">Value at Risk (95%)</p>
-            <p className="text-lg font-bold text-red-400">{formatCurrency(portfolio.riskMetrics.var95)}</p>
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4 mt-4 sm:mt-6">
+          <div className="text-center p-3 bg-white/[0.02] rounded-lg border border-white/[0.05]">
+            <p className="text-white/60 text-xs sm:text-sm">Value at Risk (95%)</p>
+            <p className="text-sm sm:text-base lg:text-lg font-bold text-red-400 truncate">{formatCurrency(portfolio.riskMetrics.var95)}</p>
           </div>
-          <div className="text-center">
-            <p className="text-white/60 text-sm">Value at Risk (99%)</p>
-            <p className="text-lg font-bold text-red-400">{formatCurrency(portfolio.riskMetrics.var99)}</p>
+          <div className="text-center p-3 bg-white/[0.02] rounded-lg border border-white/[0.05]">
+            <p className="text-white/60 text-xs sm:text-sm">Value at Risk (99%)</p>
+            <p className="text-sm sm:text-base lg:text-lg font-bold text-red-400 truncate">{formatCurrency(portfolio.riskMetrics.var99)}</p>
           </div>
-          <div className="text-center">
-            <p className="text-white/60 text-sm">Correlation</p>
-            <p className="text-lg font-bold text-white">{portfolio.riskMetrics.correlation.toFixed(2)}</p>
+          <div className="text-center p-3 bg-white/[0.02] rounded-lg border border-white/[0.05] sm:col-span-3 lg:col-span-1">
+            <p className="text-white/60 text-xs sm:text-sm">Correlation</p>
+            <p className="text-base sm:text-lg font-bold text-white">{portfolio.riskMetrics.correlation.toFixed(2)}</p>
           </div>
         </div>
       </div>
