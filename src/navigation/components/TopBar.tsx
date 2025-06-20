@@ -23,12 +23,16 @@ const TopBar: React.FC = () => {
   const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState('');
   
+  // Check for debug override from URL params
+  const urlParams = new URLSearchParams(window.location.search);
+  const isDebugMode = urlParams.get('navDebug') === '1';
+  
   // Get navigation state with fallback values
   const rawNavigationState = useNavigationState();
   const navigationState = {
     shouldAnimate: rawNavigationState?.shouldAnimate ?? false,
     safeAreaTop: rawNavigationState?.safeAreaTop ?? 0,
-    transform: rawNavigationState?.transform ?? 'translateY(0)',
+    transform: isDebugMode ? 'translateY(0)' : (rawNavigationState?.transform ?? 'translateY(0)'),
   };
 
   const handleSearch = (e: React.FormEvent) => {
