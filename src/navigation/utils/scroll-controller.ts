@@ -283,5 +283,52 @@ export class ScrollController {
 // Export singleton instance for non-React usage
 export const scrollController = new ScrollController();
 
+// Factory function for creating new controller instances
+export function createScrollController(config?: Partial<ScrollControllerConfig>): ScrollController {
+  return new ScrollController(config);
+}
+
+// Utility function to get navigation transform based on visibility state
+export function getNavigationTransform(
+  isVisible: boolean,
+  orientation: 'portrait' | 'landscape' = 'portrait',
+  safeAreaTop: number = 0
+): string {
+  if (isVisible) {
+    return `translateY(${safeAreaTop}px)`;
+  }
+  
+  // Hide by moving up beyond the safe area
+  const hideDistance = orientation === 'landscape' ? -80 : -100; // Adjust for nav height
+  return `translateY(${hideDistance - safeAreaTop}px)`;
+}
+
+// Utility function to detect virtual keyboard
+export function detectVirtualKeyboard(): { isVisible: boolean; height: number } {
+  if (typeof window === 'undefined') {
+    return { isVisible: false, height: 0 };
+  }
+
+  // Use Visual Viewport API if available
+  if ('visualViewport' in window && window.visualViewport) {
+    const viewport = window.visualViewport;
+    const keyboardHeight = window.innerHeight - viewport.height;
+    return {
+      isVisible: keyboardHeight > 50, // Threshold for keyboard detection
+      height: Math.max(0, keyboardHeight)
+    };
+  }
+
+  // Fallback: Use window height comparison
+  const originalHeight = window.screen.height;
+  const currentHeight = window.innerHeight;
+  const heightDiff = originalHeight - currentHeight;
+  
+  return {
+    isVisible: heightDiff > 150, // Conservative threshold
+    height: Math.max(0, heightDiff)
+  };
+}
+
 // Legacy alias for backward compatibility
 export { ScrollController as iOS26ScrollController };

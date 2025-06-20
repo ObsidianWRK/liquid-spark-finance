@@ -114,9 +114,14 @@ class ErrorBoundary extends React.Component<
 }
 
 function App() {
-  // Initialize Viewport Guardian on app startup
+  // Initialize Viewport Guardian on app startup (temporarily disabled for debugging)
   useEffect(() => {
-    initializeForReactApp();
+    try {
+      // initializeForReactApp(); // Disabled to prevent viewport crashes
+      console.log('Viewport Guardian initialization skipped for debugging');
+    } catch (error) {
+      console.warn('App initialization error:', error);
+    }
   }, []);
 
   return (

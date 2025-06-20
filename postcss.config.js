@@ -1,9 +1,21 @@
 export default {
   plugins: {
     tailwindcss: {},
-    autoprefixer: {
-      // Enhanced browser support for liquid glass effects
-      overrideBrowserslist: [
+    'postcss-preset-env': {
+      stage: 3, // Use stage 3 to include more modern features by default
+      features: {
+        // Correctly enable backdrop-filter
+        'backdrop-filter-property': true,
+        // Keep other useful features enabled
+        'custom-properties': {
+          preserve: true,
+        },
+        'custom-media-queries': true,
+        'media-query-ranges': true,
+      },
+      // Consolidate browser targets here
+      browsers: [
+        'last 2 versions',
         'iOS >= 12',
         'Safari >= 12',
         'Chrome >= 80',
@@ -11,22 +23,6 @@ export default {
         'Edge >= 80',
         'Samsung >= 10'
       ],
-      // Add vendor prefixes for backdrop-filter
-      grid: 'autoplace',
-      flexbox: 'no-2009'
-    },
-    // Add browser-specific prefixes for glass effects
-    'postcss-preset-env': {
-      stage: 2,
-      features: {
-        'custom-properties': {
-          preserve: true
-        },
-        'custom-media-queries': true,
-        'media-query-ranges': true,
-        'backdrop-filter': true,
-      },
-      browsers: 'last 2 versions, iOS >= 12, Safari >= 12'
     },
     // Optimize CSS for production
     ...(process.env.NODE_ENV === 'production' && {
@@ -35,11 +31,8 @@ export default {
           discardComments: {
             removeAll: true,
           },
-          // Preserve backdrop-filter properties
-          reduceIdents: false,
-          zindex: false,
         }]
       }
     })
   }
-}
+};

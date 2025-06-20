@@ -142,7 +142,7 @@ class VisualViewportManager {
 
   private updateState(type: 'resize' | 'scroll' | 'keyboard'): void {
     this.previousState = { ...this.currentState };
-    const newState = this.getCurrentState();
+    const newState = this._computeCurrentState();
     
     // Detect virtual keyboard
     this.detectVirtualKeyboard(newState, this.previousState);
@@ -165,7 +165,14 @@ class VisualViewportManager {
     });
   }
 
-  private getCurrentState(): VisualViewportState {
+  /**
+   * Compute the latest visual viewport state using the Visual Viewport API
+   * when available. This is an internal helper and should not be exposed
+   * publicly – callers should use the public getCurrentState method that
+   * returns a *copy* of the internally stored state to avoid accidental
+   * mutation.
+   */
+  private _computeCurrentState(): VisualViewportState {
     const capabilities = getViewportCapabilities();
     let width = window.innerWidth;
     let height = window.innerHeight;
@@ -261,6 +268,10 @@ class VisualViewportManager {
     this.listeners.delete(listener);
   }
 
+  /**
+   * Public accessor that returns an immutable snapshot of the most recent
+   * visual viewport state.
+   */
   public getCurrentState(): VisualViewportState {
     return { ...this.currentState };
   }

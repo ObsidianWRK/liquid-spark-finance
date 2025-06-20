@@ -206,7 +206,7 @@ export interface ViewportGuardianConfig {
 
 let guardianConfig: ViewportGuardianConfig = {
   debug: false,
-  autoInit: true,
+  autoInit: false, // Disabled auto-init to prevent startup crashes
   keyboardThreshold: 150,
   orientationDebounce: 100,
 };
@@ -229,9 +229,13 @@ export const getViewportGuardianConfig = (): ViewportGuardianConfig => {
   return { ...guardianConfig };
 };
 
-// Auto-initialize if enabled
+// Auto-initialize if enabled (wrapped in try-catch for safety)
 if (typeof window !== 'undefined' && guardianConfig.autoInit) {
-  initializeViewportGuardian();
+  try {
+    initializeViewportGuardian();
+  } catch (error) {
+    console.warn('Viewport Guardian auto-initialization failed:', error);
+  }
 }
 
 /**
