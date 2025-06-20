@@ -22,10 +22,166 @@ export const useAccountOverview = (accountId: string | undefined) => {
         setLoading(true);
         setError(null);
 
-        // Create realistic mock data based on actual account IDs from fixture
+        // Create realistic mock data based on actual account IDs from mockData
         let mockAccount: AccountCardDTO;
         
         switch (accountId) {
+          case 'acc_001':
+            mockAccount = {
+              id: accountId,
+              accountType: 'Checking',
+              accountName: 'Main Checking',
+              currentBalance: 12450.00,
+              availableBalance: 11200.00,
+              currency: 'USD',
+              institution: {
+                name: 'Chase Bank',
+                logo: 'https://logos.clearbit.com/chase.com',
+                color: '#117A65'
+              },
+              last4: '1234',
+              interestApy: 0.01,
+              category: 'CHECKING',
+              alerts: []
+            };
+            break;
+            
+          case 'acc_002':
+            mockAccount = {
+              id: accountId,
+              accountType: 'Savings',
+              accountName: 'Emergency Fund',
+              currentBalance: 25780.50,
+              availableBalance: 25780.50,
+              currency: 'USD',
+              institution: {
+                name: 'Bank of America',
+                logo: 'https://logos.clearbit.com/bankofamerica.com',
+                color: '#E51B23'
+              },
+              last4: '5678',
+              interestApy: 2.15,
+              category: 'SAVINGS',
+              alerts: []
+            };
+            break;
+            
+          case 'acc_003':
+            mockAccount = {
+              id: accountId,
+              accountType: 'Credit Card',
+              accountName: 'Rewards Card',
+              currentBalance: -1245.30,
+              availableBalance: 8754.70,
+              currency: 'USD',
+              institution: {
+                name: 'Wells Fargo',
+                logo: 'https://logos.clearbit.com/wellsfargo.com',
+                color: '#D71E2B'
+              },
+              last4: '9012',
+              category: 'CREDIT',
+              creditLimit: 10000,
+              alerts: []
+            };
+            break;
+            
+          case 'acc_004':
+            mockAccount = {
+              id: accountId,
+              accountType: 'Investment',
+              accountName: 'Investment Portfolio',
+              currentBalance: 45600.25,
+              availableBalance: 45600.25,
+              currency: 'USD',
+              institution: {
+                name: 'Schwab',
+                logo: 'https://logos.clearbit.com/schwab.com',
+                color: '#00A0DF'
+              },
+              last4: '3456',
+              category: 'INVESTMENT',
+              alerts: []
+            };
+            break;
+            
+          case 'acc_005':
+            mockAccount = {
+              id: accountId,
+              accountType: 'Checking',
+              accountName: 'Business Checking',
+              currentBalance: 8920.14,
+              availableBalance: 8920.14,
+              currency: 'USD',
+              institution: {
+                name: 'JPMorgan Chase',
+                logo: 'https://logos.clearbit.com/chase.com',
+                color: '#117A65'
+              },
+              last4: '7890',
+              category: 'CHECKING',
+              alerts: []
+            };
+            break;
+
+          case 'acc_006':
+            mockAccount = {
+              id: accountId,
+              accountType: 'Investment',
+              accountName: '401(k) Retirement',
+              currentBalance: 174250.67,
+              availableBalance: 174250.67,
+              currency: 'USD',
+              institution: {
+                name: 'Fidelity',
+                logo: 'https://logos.clearbit.com/fidelity.com',
+                color: '#00653A'
+              },
+              last4: '4567',
+              category: 'INVESTMENT',
+              alerts: []
+            };
+            break;
+
+          case 'acc_007':
+            mockAccount = {
+              id: accountId,
+              accountType: 'Investment',
+              accountName: 'Traditional IRA',
+              currentBalance: 62340.22,
+              availableBalance: 62340.22,
+              currency: 'USD',
+              institution: {
+                name: 'Vanguard',
+                logo: 'https://logos.clearbit.com/vanguard.com',
+                color: '#B41E3B'
+              },
+              last4: '8901',
+              category: 'INVESTMENT',
+              alerts: []
+            };
+            break;
+
+          case 'acc_008':
+            mockAccount = {
+              id: accountId,
+              accountType: 'Savings',
+              accountName: 'Health Savings',
+              currentBalance: 12450.11,
+              availableBalance: 12450.11,
+              currency: 'USD',
+              institution: {
+                name: 'HSA Bank',
+                logo: 'https://logos.clearbit.com/hsabank.com',
+                color: '#4A90E2'
+              },
+              last4: '2345',
+              category: 'SAVINGS',
+              alerts: []
+            };
+            break;
+
+          // Add support for the original fixture IDs as well
           case 'acc_chase_checking_001':
             mockAccount = {
               id: accountId,

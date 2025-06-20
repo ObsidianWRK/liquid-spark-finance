@@ -3,6 +3,8 @@
 @import './app/styles/performance-optimized.css';
 @import './app/styles/account-card.css';
 @import './app/styles/calculator-overrides.css';
+@import './app/styles/nav-styles.css'; /* iOS 26 Liquid Glass Navigation */
+@import './app/styles/viewport-guardian.css'; /* Viewport Guardian utilities */
 
 @tailwind base;
 @tailwind components;

@@ -102,5 +102,8 @@ export default {
 			}
 		}
 	},
-	plugins: [tailwindcssAnimate],
+	plugins: [
+		tailwindcssAnimate,
+		require('./src/plugins/liquid-glass-nav-plugin.js'),
+	],
 } satisfies Config;

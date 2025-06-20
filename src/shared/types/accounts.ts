@@ -215,6 +215,12 @@ export interface AccountCardDTO {
   category?: 'CHECKING' | 'SAVINGS' | 'CREDIT' | 'INVESTMENT';
   percentChange30d?: number;
   utilPercent?: number;
+
+  // Credit-specific fields
+  creditLimit?: number;
+
+  // Investment-specific fields
+  holdingCount?: number;
 }
 
 // Helper function to transform Account to AccountCardDTO
@@ -271,7 +277,9 @@ export function accountToCardDTO(
       if (!delta) return undefined;
       return delta.trend === 'up' ? -delta.percentage : delta.percentage;
     })(),
-    utilPercent: account.accountType === 'credit' ? calculateCreditUtilization(account) : undefined
+    utilPercent: account.accountType === 'credit' ? calculateCreditUtilization(account) : undefined,
+    creditLimit: account.metadata?.creditLimit,
+    holdingCount: account.accountType === 'investment' ? 0 : undefined
   };
 }
 

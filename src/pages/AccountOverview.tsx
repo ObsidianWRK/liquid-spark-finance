@@ -1,6 +1,6 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useMemo } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { ChevronDown, ChevronUp, Activity, CreditCard, TrendingUp, Heart, ArrowLeft, AlertTriangle, CheckCircle, Calendar, DollarSign } from 'lucide-react';
+import { ChevronDown, ChevronUp, Activity, TrendingUp, Heart, ArrowLeft, CheckCircle, Calendar, DollarSign, AlertTriangle } from 'lucide-react';
 import { cn } from '@/shared/lib/utils';
 import { UniversalCard } from '@/shared/ui/UniversalCard';
 import { Button } from '@/shared/ui/button';
@@ -9,29 +9,12 @@ import { formatCurrency } from '@/shared/utils/formatters';
 import { useSynchronizedMetrics } from '@/providers/BiometricsProvider';
 import { BiometricMonitor } from '@/features/biometric-intervention/components/BiometricMonitor';
 import { TransactionList } from '@/features/transactions/components/TransactionList';
-import { accountService } from '@/features/accounts/api/accountService';
-import { AccountCardDTO } from '@/shared/types/accounts';
-import { Transaction } from '@/shared/types/transactions';
-import { FullScreenSpinner } from '@/shared/ui/loading-spinner';
-import { ErrorState } from '@/shared/ui/error-state';
 import { AccountOverviewSkeleton } from '@/shared/ui/account-overview-skeleton';
+import { ErrorState } from '@/shared/ui/error-state';
+import { useAccountOverview } from '@/features/accounts/hooks/useAccountOverview';
+import { Transaction } from '@/shared/types/transactions';
 
-// Utility functions inline to avoid module resolution issues
-function getDaysInWarning(balanceHistory: number[], threshold: number): number {
-  if (!balanceHistory.length) return 0;
-  
-  let daysInWarning = 0;
-  
-  for (const balance of balanceHistory) {
-    if (balance < threshold) {
-      daysInWarning++;
-    } else {
-      break;
-    }
-  }
-  
-  return daysInWarning;
-}
+// Utility functions can be moved to a shared utils file if used elsewhere
 
 interface TransactionWithBiometrics extends Transaction {
   stressAtTime: number;
@@ -40,41 +23,16 @@ interface TransactionWithBiometrics extends Transaction {
 }
 
 function mergeBiometricsWithTransactions(
-  transactions: Transaction[], 
+  transactions: Transaction[],
   currentStressIndex: number
 ): TransactionWithBiometrics[] {
   return transactions.map((transaction) => {
-    const transactionDate = new Date(transaction.date);
-    const hour = transactionDate.getHours();
-    const dayOfWeek = transactionDate.getDay();
-    const transactionAmount = Math.abs(transaction.amount);
-    
-    let stressAtTime = currentStressIndex || 30;
-    
-    if (transactionAmount > 500) stressAtTime += 20;
-    else if (transactionAmount > 200) stressAtTime += 10;
-    else if (transactionAmount > 100) stressAtTime += 5;
-    
-    if (hour >= 9 && hour <= 17) stressAtTime += 10;
-    if (hour >= 14 && hour <= 16) stressAtTime += 5;
-    
-    if (dayOfWeek >= 1 && dayOfWeek <= 5) stressAtTime += 5;
-    
-    stressAtTime += (Math.random() - 0.5) * 15;
-    stressAtTime = Math.max(0, Math.min(100, Math.round(stressAtTime)));
-    
-    let riskLevel: 'low' | 'medium' | 'high' = 'low';
-    if (stressAtTime >= 70) riskLevel = 'high';
-    else if (stressAtTime >= 40) riskLevel = 'medium';
-    
+    // This logic can be made more sophisticated
+    const stressAtTime = Math.min(100, Math.round((currentStressIndex || 30) + (Math.random() - 0.5) * 15 + (Math.abs(transaction.amount) / 50)));
+    const riskLevel = stressAtTime >= 70 ? 'high' : stressAtTime >= 40 ? 'medium' : 'low';
     const heartRateAtTime = Math.round(70 + (stressAtTime / 100) * 30 + (Math.random() - 0.5) * 10);
     
-    return {
-      ...transaction,
-      stressAtTime,
-      heartRateAtTime,
-      riskLevel
-    };
+    return { ...transaction, stressAtTime, heartRateAtTime, riskLevel };
   });
 }
 
@@ -88,47 +46,20 @@ interface CollapsiblePaneProps {
   badgeVariant?: 'default' | 'destructive' | 'outline' | 'secondary';
 }
 
-const CollapsiblePane: React.FC<CollapsiblePaneProps> = ({
-  title,
-  icon: Icon,
-  isExpanded,
-  onToggle,
-  children,
-  badge,
-  badgeVariant = 'default'
-}) => (
+const CollapsiblePane: React.FC<CollapsiblePaneProps> = ({ title, icon: Icon, isExpanded, onToggle, children, badge, badgeVariant = 'default' }) => (
   <UniversalCard variant="glass" className="w-full">
-    <button
-      onClick={onToggle}
-      className="w-full flex items-center justify-between p-6 text-left hover:bg-white/[0.02] transition-colors rounded-2xl"
-    >
+    <button onClick={onToggle} className="w-full flex items-center justify-between p-6 text-left hover:bg-white/[0.02] transition-colors rounded-2xl">
       <div className="flex items-center gap-3">
         <div className="w-10 h-10 rounded-xl bg-white/[0.05] flex items-center justify-center">
           <Icon className="w-5 h-5 text-blue-400" />
         </div>
         <h3 className="text-lg font-semibold text-white">{title}</h3>
-        {badge && (
-          <Badge variant={badgeVariant} className="text-xs">
-            {badge}
-          </Badge>
-        )}
+        {badge && <Badge variant={badgeVariant} className="text-xs">{badge}</Badge>}
       </div>
-      {isExpanded ? (
-        <ChevronUp className="w-5 h-5 text-white/50" />
-      ) : (
-        <ChevronDown className="w-5 h-5 text-white/50" />
-      )}
+      {isExpanded ? <ChevronUp className="w-5 h-5 text-white/50" /> : <ChevronDown className="w-5 h-5 text-white/50" />}
     </button>
-    
-    <div className={cn(
-      "transition-all duration-300 overflow-hidden",
-      isExpanded ? "max-h-[2000px] opacity-100" : "max-h-0 opacity-0"
-    )}>
-      <div className="px-6 pb-6">
-        <div className="border-t border-white/[0.08] pt-6">
-          {children}
-        </div>
-      </div>
+    <div className={cn("transition-all duration-300 overflow-hidden", isExpanded ? "max-h-[2000px] opacity-100" : "max-h-0 opacity-0")}>
+      <div className="px-6 pb-6"><div className="border-t border-white/[0.08] pt-6">{children}</div></div>
     </div>
   </UniversalCard>
 );
@@ -137,105 +68,23 @@ const AccountOverview: React.FC = () => {
   const { accountId } = useParams<{ accountId: string }>();
   const navigate = useNavigate();
   const [expandedPanes, setExpandedPanes] = useState<Set<string>>(new Set(['health']));
-  const [account, setAccount] = useState<AccountCardDTO | null>(null);
-  const [transactions, setTransactions] = useState<Transaction[]>([]);
-  const [balanceHistory, setBalanceHistory] = useState<any[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<Error | null>(null);
   const { stressIndex } = useSynchronizedMetrics();
 
-  useEffect(() => {
-    const loadAccountData = async () => {
-      if (!accountId) {
-        setError(new Error('Account ID is required'));
-        setLoading(false);
-        return;
-      }
-      
-      try {
-        setLoading(true);
-        setError(null);
-        
-        const mockAccount: AccountCardDTO = {
-          id: accountId,
-          accountType: 'Checking',
-          accountName: 'Main Checking',
-          currentBalance: 8750.42,
-          availableBalance: 8450.42,
-          currency: 'USD',
-          institution: {
-            name: 'Chase Bank',
-            logo: '/api/placeholder/32/32',
-            color: '#0066CC'
-          },
-          last4: '1234',
-          interestApy: 0.01,
-          category: 'CHECKING',
-          alerts: []
-        };
-        
-        setAccount(mockAccount);
-        
-        const mockTransactions: Transaction[] = [
-          {
-            id: '1',
-            accountId: accountId,
-            familyId: 'demo_family',
-            amount: -85.32,
-            currency: 'USD',
-            date: new Date('2024-12-10'),
-            merchantName: 'Starbucks',
-            description: 'Coffee purchase',
-            category: 'food',
-            paymentChannel: 'online',
-            transactionType: 'purchase',
-            status: 'completed',
-            isPending: false,
-            isRecurring: false,
-            metadata: {},
-            tags: [],
-            excludeFromBudget: false,
-            isTransfer: false,
-            createdAt: new Date('2024-12-10'),
-            updatedAt: new Date('2024-12-10'),
-          }
-        ];
-        setTransactions(mockTransactions);
-        
-        const mockBalanceHistory = [
-          { balance: 8750.42, date: new Date() },
-          { balance: 8820.15, date: new Date(Date.now() - 86400000) },
-          { balance: 8650.30, date: new Date(Date.now() - 172800000) }
-        ];
-        setBalanceHistory(mockBalanceHistory);
-        
-      } catch (err) {
-        console.error('Error loading account data:', err);
-        setError(err instanceof Error ? err : new Error('Failed to load account data'));
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    loadAccountData();
-  }, [accountId]);
+  const { account, transactions, balanceHistory, loading, error } = useAccountOverview(accountId);
 
   const togglePane = (paneId: string) => {
     setExpandedPanes(prev => {
       const newSet = new Set(prev);
-      if (newSet.has(paneId)) {
-        newSet.delete(paneId);
-      } else {
-        newSet.add(paneId);
-      }
+      if (newSet.has(paneId)) newSet.delete(paneId);
+      else newSet.add(paneId);
       return newSet;
     });
   };
 
   const daysInWarning = useMemo(() => {
     if (!account || !balanceHistory.length) return 0;
-    const threshold = 100;
-    return getDaysInWarning(balanceHistory.map(h => h.balance), threshold);
+    const threshold = account.category === 'CREDIT' ? (account.creditLimit || 0) * 0.9 : 100;
+    return balanceHistory.filter(h => h.balance < threshold).length;
   }, [account, balanceHistory]);
 
   const transactionsWithBiometrics = useMemo(() => {
@@ -248,12 +97,10 @@ const AccountOverview: React.FC = () => {
     return sum / balanceHistory.length;
   }, [balanceHistory]);
 
-  // Show skeleton loading state
   if (loading) {
     return <AccountOverviewSkeleton />;
   }
 
-  // Show error state
   if (error) {
     return (
       <ErrorState
@@ -265,7 +112,6 @@ const AccountOverview: React.FC = () => {
     );
   }
 
-  // Show not found state (shouldn't happen with mock data, but good to have)
   if (!account) {
     return (
       <ErrorState
@@ -279,26 +125,20 @@ const AccountOverview: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-black text-white">
-      <div className="p-6 max-w-6xl mx-auto">
+      <div className="p-4 md:p-6 max-w-7xl mx-auto">
+        {/* Header */}
         <div className="flex items-center gap-4 mb-8">
-          <Button 
-            onClick={() => navigate('/')}
-            variant="ghost"
-            size="sm"
-            className="p-2 hover:bg-white/[0.05]"
-          >
+          <Button onClick={() => navigate('/')} variant="ghost" size="sm" className="p-2 hover:bg-white/[0.05]">
             <ArrowLeft className="w-5 h-5" />
           </Button>
           <div className="flex-1">
-            <h1 className="text-3xl font-bold text-white mb-2">
-              {account.accountType} ••••{account.last4}
+            <h1 className="text-2xl md:text-3xl font-bold text-white mb-1">
+              {account.accountName} ••••{account.last4}
             </h1>
-            <p className="text-white/60">
-              {account.institution.name} • Last updated {new Date().toLocaleDateString()}
-            </p>
+            <p className="text-white/60 text-sm">{account.institution.name}</p>
           </div>
           <div className="text-right">
-            <div className="text-2xl font-bold text-white">
+            <div className="text-2xl md:text-3xl font-bold text-white">
               {formatCurrency(account.currentBalance, { currency: account.currency })}
             </div>
             <div className="text-white/60 text-sm">
@@ -307,6 +147,7 @@ const AccountOverview: React.FC = () => {
           </div>
         </div>
 
+        {/* Panes */}
         <div className="space-y-6">
           <CollapsiblePane
             title="Account Health"
@@ -316,6 +157,7 @@ const AccountOverview: React.FC = () => {
             badge={daysInWarning > 0 ? `${daysInWarning} days warning` : 'Healthy'}
             badgeVariant={daysInWarning > 7 ? 'destructive' : daysInWarning > 0 ? 'outline' : 'default'}
           >
+            {/* Health content */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               <div className="bg-white/[0.03] rounded-xl p-4 border border-white/[0.05]">
                 <div className="flex items-center gap-2 mb-2">
@@ -359,16 +201,11 @@ const AccountOverview: React.FC = () => {
             onToggle={() => togglePane('transactions')}
             badge={`${transactions.length} transactions`}
           >
-            <div className="space-y-4">
-              <p className="text-white/60 text-sm">
-                Showing latest {transactions.length} transactions for this account
-              </p>
-              <TransactionList
-                transactions={transactions}
-                isLoading={false}
-                onTransactionClick={(transaction) => console.log('Transaction clicked:', transaction)}
-              />
-            </div>
+            <TransactionList
+              transactions={transactions}
+              isLoading={false}
+              onTransactionClick={(transaction) => console.log('Transaction clicked:', transaction)}
+            />
           </CollapsiblePane>
 
           <CollapsiblePane

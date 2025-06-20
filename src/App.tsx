@@ -1,7 +1,8 @@
-import React, { Suspense } from 'react';
+import React, { Suspense, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { AdaptiveNavigation } from '@/navigation';
 import LiquidGlassSVGFilters from '@/shared/ui/LiquidGlassSVGFilters';
+import { initializeForReactApp } from '@/shared/utils/viewport-init';
 
 // Use existing working components
 const Index = React.lazy(() => import('./pages/Index'));
@@ -74,6 +75,11 @@ class ErrorBoundary extends React.Component<
 }
 
 function App() {
+  // Initialize Viewport Guardian on app startup
+  useEffect(() => {
+    initializeForReactApp();
+  }, []);
+
   return (
     <Router>
       <div className="min-h-screen bg-gray-950 relative overflow-hidden">

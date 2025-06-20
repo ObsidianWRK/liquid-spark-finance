@@ -1,7 +1,11 @@
 /**
- * Accessibility enhancements for chart components
+ * Accessibility enhancements for all components
  * Implements WCAG 2.1 AA compliance and Apple accessibility standards
+ * Includes: Charts, Navigation, Forms, and Interactive Elements
  */
+
+/* Import navigation-specific accessibility styles */
+@import '../../../navigation/styles/navigation-accessibility.css';
 
 /* Reduced Motion Support - Critical for WCAG compliance */
 @media (prefers-reduced-motion: reduce) {

@@ -1,0 +1,450 @@
+/**
+ * Navigation Accessibility Styles
+ * Implements WCAG 2.1 AA compliance for navigation components
+ * Supports: BottomNav, NavRail, TopBar, and adaptive navigation
+ */
+
+/* =============================================================================
+   REDUCED MOTION SUPPORT
+   ============================================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+  /* Disable all navigation animations and transitions */
+  .bottom-nav,
+  .nav-rail,
+  .top-bar,
+  [class*="nav-"],
+  [class*="navigation-"] {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    transform: none !important;
+  }
+
+  /* Keep essential focus transitions but make them instant */
+  .nav-item:focus,
+  .nav-item:focus-visible,
+  .bottom-nav button:focus,
+  .bottom-nav button:focus-visible {
+    transition: outline 0.01ms, background-color 0.01ms, border-color 0.01ms !important;
+  }
+
+  /* Disable glass effect animations */
+  .liquid-glass-nav {
+    backdrop-filter: blur(20px) !important;
+    transition: none !important;
+  }
+
+  /* Static states for interactive elements */
+  .nav-item:hover {
+    transform: none !important;
+  }
+
+  /* Disable badge animations */
+  .nav-badge {
+    animation: none !important;
+  }
+}
+
+/* =============================================================================
+   REDUCED TRANSPARENCY SUPPORT
+   ============================================================================= */
+
+@media (prefers-reduced-transparency: reduce) {
+  /* Replace glass/transparent backgrounds with solid ones */
+  .liquid-glass-nav {
+    background: rgba(0, 0, 0, 0.95) !important;
+    backdrop-filter: none !important;
+  }
+
+  .nav-item {
+    background: rgba(255, 255, 255, 0.1) !important;
+  }
+
+  .nav-item:hover,
+  .nav-item[aria-selected="true"] {
+    background: rgba(255, 255, 255, 0.2) !important;
+  }
+
+  /* Solid focus indicators */
+  .nav-item:focus,
+  .nav-item:focus-visible {
+    background: rgba(0, 122, 255, 0.8) !important;
+  }
+}
+
+/* =============================================================================
+   HIGH CONTRAST MODE SUPPORT
+   ============================================================================= */
+
+@media (prefers-contrast: high) {
+  /* Enhanced borders and outlines */
+  .bottom-nav,
+  .nav-rail,
+  .top-bar {
+    border: 2px solid currentColor !important;
+  }
+
+  .nav-item {
+    border: 1px solid currentColor !important;
+    margin: 2px;
+  }
+
+  /* Strong focus indicators */
+  .nav-item:focus,
+  .nav-item:focus-visible {
+    outline: 4px solid currentColor !important;
+    outline-offset: 2px !important;
+    border: 2px solid currentColor !important;
+  }
+
+  /* Enhanced text contrast */
+  .nav-item-label,
+  .nav-item-text {
+    font-weight: 600 !important;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5) !important;
+  }
+
+  /* Icon enhancement */
+  .nav-item-icon {
+    stroke-width: 2.5px !important;
+    filter: drop-shadow(1px 1px 1px rgba(0, 0, 0, 0.5)) !important;
+  }
+
+  /* Badge contrast */
+  .nav-badge {
+    border: 2px solid currentColor !important;
+    font-weight: 700 !important;
+  }
+}
+
+/* =============================================================================
+   FOCUS MANAGEMENT
+   ============================================================================= */
+
+/* Enhanced focus indicators for all navigation items */
+.nav-item:focus,
+.nav-item:focus-visible,
+.bottom-nav button:focus,
+.bottom-nav button:focus-visible {
+  outline: 3px solid #007AFF;
+  outline-offset: 2px;
+  background: rgba(0, 122, 255, 0.15) !important;
+  border: 2px solid rgba(0, 122, 255, 0.4) !important;
+  position: relative;
+  z-index: 10;
+}
+
+/* Remove default focus outlines when using custom ones */
+.nav-item:focus:not(:focus-visible) {
+  outline: none;
+}
+
+/* Focus ring for keyboard navigation */
+.nav-item[data-focus-visible] {
+  outline: 3px solid #007AFF;
+  outline-offset: 2px;
+}
+
+/* Skip focus on mouse interactions */
+.nav-item:focus:not([data-focus-visible]) {
+  outline: none;
+}
+
+/* =============================================================================
+   TOUCH TARGET ENHANCEMENTS
+   ============================================================================= */
+
+@media (pointer: coarse) {
+  /* Ensure minimum 44x44px touch targets */
+  .bottom-nav button,
+  .nav-rail button,
+  .nav-item {
+    min-height: 44px !important;
+    min-width: 44px !important;
+    padding: 12px !important;
+  }
+
+  /* Increase spacing between touch targets */
+  .bottom-nav .nav-items-container {
+    gap: 8px !important;
+  }
+
+  .nav-rail .nav-items-container {
+    gap: 12px !important;
+  }
+
+  /* Enhanced touch feedback */
+  .nav-item:active {
+    transform: scale(0.98);
+    transition: transform 0.1s ease;
+  }
+}
+
+/* =============================================================================
+   KEYBOARD NAVIGATION INDICATORS
+   ============================================================================= */
+
+/* Visual indicator for keyboard navigation mode */
+.navigation-keyboard-active {
+  position: relative;
+}
+
+.navigation-keyboard-active::before {
+  content: "Use arrow keys to navigate, Enter to select";
+  position: absolute;
+  top: -35px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0, 0, 0, 0.9);
+  color: #FFFFFF;
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 12px;
+  white-space: nowrap;
+  z-index: 1000;
+  pointer-events: none;
+  opacity: 0;
+  animation: fadeInOut 3s ease-in-out;
+}
+
+@keyframes fadeInOut {
+  0%, 100% { opacity: 0; }
+  20%, 80% { opacity: 1; }
+}
+
+/* Roving tabindex pattern support */
+.nav-item[tabindex="0"] {
+  /* Currently focusable item in tablist */
+}
+
+.nav-item[tabindex="-1"] {
+  /* Non-focusable items in tablist */
+}
+
+/* =============================================================================
+   SCREEN READER SUPPORT
+   ============================================================================= */
+
+/* Screen reader only content */
+.sr-only {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+}
+
+/* Live region for navigation announcements */
+.nav-live-region {
+  position: absolute;
+  left: -10000px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+/* Skip links for navigation */
+.nav-skip-link {
+  position: absolute;
+  top: -40px;
+  left: 6px;
+  background: #000000;
+  color: #FFFFFF;
+  padding: 8px 16px;
+  text-decoration: none;
+  border-radius: 4px;
+  z-index: 2000;
+  font-size: 14px;
+  font-weight: 500;
+  border: 2px solid #007AFF;
+  transition: top 0.2s ease;
+}
+
+.nav-skip-link:focus {
+  top: 6px;
+}
+
+/* =============================================================================
+   BOTTOM NAVIGATION SPECIFIC
+   ============================================================================= */
+
+/* Tab role implementation for bottom nav */
+.bottom-nav[role="tablist"] {
+  /* Container styles already defined */
+}
+
+.bottom-nav button[role="tab"] {
+  position: relative;
+}
+
+/* Selected state indicator */
+.bottom-nav button[role="tab"][aria-selected="true"]::after {
+  content: "";
+  position: absolute;
+  top: -2px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 24px;
+  height: 3px;
+  background: #007AFF;
+  border-radius: 2px;
+}
+
+/* Badge notifications accessibility */
+.nav-badge {
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  min-width: 18px;
+  height: 18px;
+  background: #FF453A;
+  color: #FFFFFF;
+  border-radius: 50%;
+  font-size: 11px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid rgba(0, 0, 0, 0.2);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.nav-badge[aria-label] {
+  /* Ensure badges have proper labels for screen readers */
+}
+
+/* =============================================================================
+   ERROR AND LOADING STATES
+   ============================================================================= */
+
+.nav-error-state,
+.nav-loading-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  text-align: center;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.nav-error-state [role="img"],
+.nav-loading-state [role="img"] {
+  width: 24px;
+  height: 24px;
+  margin-bottom: 0.5rem;
+}
+
+/* =============================================================================
+   DARK/LIGHT MODE ADJUSTMENTS
+   ============================================================================= */
+
+@media (prefers-color-scheme: dark) {
+  .nav-item:focus,
+  .nav-item:focus-visible {
+    outline-color: #0A84FF;
+    background: rgba(10, 132, 255, 0.15) !important;
+    border-color: rgba(10, 132, 255, 0.4) !important;
+  }
+
+  .nav-skip-link {
+    background: #1C1C1E;
+    border-color: #0A84FF;
+  }
+}
+
+@media (prefers-color-scheme: light) {
+  .nav-item:focus,
+  .nav-item:focus-visible {
+    outline-color: #007AFF;
+    background: rgba(0, 122, 255, 0.1) !important;
+    border-color: rgba(0, 122, 255, 0.3) !important;
+  }
+
+  .nav-skip-link {
+    background: #FFFFFF;
+    color: #000000;
+    border-color: #007AFF;
+  }
+
+  .bottom-nav,
+  .nav-rail {
+    border-color: rgba(0, 0, 0, 0.1);
+  }
+}
+
+/* =============================================================================
+   RESPONSIVE ACCESSIBILITY
+   ============================================================================= */
+
+/* Ensure accessibility features work across all breakpoints */
+@media (min-width: 640px) {
+  .bottom-nav {
+    display: none; /* Hidden on larger screens */
+  }
+
+  /* Focus management for nav rail on larger screens */
+  .nav-rail button:focus,
+  .nav-rail button:focus-visible {
+    outline: 3px solid #007AFF;
+    outline-offset: 2px;
+  }
+}
+
+@media (max-width: 639px) {
+  /* Ensure bottom nav is properly accessible on mobile */
+  .bottom-nav {
+    /* Accessibility styles already applied above */
+  }
+
+  /* Mobile-specific touch enhancements */
+  .bottom-nav button {
+    -webkit-tap-highlight-color: rgba(0, 122, 255, 0.2);
+  }
+}
+
+/* =============================================================================
+   UTILITY CLASSES
+   ============================================================================= */
+
+/* Force visibility for screen readers only */
+.sr-only-focusable:not(:focus):not(:focus-within) {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+}
+
+/* High contrast text */
+.text-high-contrast {
+  font-weight: 600;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+/* Accessibility-enhanced interactive elements */
+.interactive-enhanced {
+  cursor: pointer;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.interactive-enhanced:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+/* Focus trap for modal navigation */
+.nav-focus-trap {
+  /* Used when navigation is in a focus-trapped state */
+}

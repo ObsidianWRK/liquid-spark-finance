@@ -11,15 +11,20 @@ import {
 import { cn } from '@/shared/lib/utils';
 import LiquidGlassSVGFilters from '@/shared/ui/LiquidGlassSVGFilters';
 import { MENU_BAR_HEIGHT } from '@/shared/tokens/menuBar.tokens';
+import { useNavigationState } from '../context/ScrollControllerContext';
 
 /**
  * TopBar Component
  * Desktop top bar (≥1024px) - hosts search, profile, quick actions
  * Features: Search bar, notifications, profile access, quick actions
+ * Now with scroll-aware visibility using ScrollController
  */
 const TopBar: React.FC = () => {
   const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState('');
+  
+  // Get navigation state from scroll controller
+  const navigationState = useNavigationState();
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
@@ -48,12 +53,18 @@ const TopBar: React.FC = () => {
       
       {/* Desktop Top Bar - Dark Mode Only */}
       <header 
-        className="hidden lg:flex fixed top-0 left-0 right-0 z-50 items-center"
+        className={cn(
+          "hidden lg:flex fixed top-0 left-0 right-0 z-50 items-center",
+          navigationState.shouldAnimate && "transition-transform duration-300 ease-out"
+        )}
         style={{
           height: `${MENU_BAR_HEIGHT.landscape}px`,
+          paddingTop: `${navigationState.safeAreaTop}px`,
+          transform: navigationState.transform,
         }}
         role="banner"
         aria-label="Top navigation bar"
+        aria-hidden={!navigationState.isVisible}
       >
         <div className="liquid-glass-nav w-full backdrop-blur-md saturate-[180%] border-b border-white/20">
           <div className="flex items-center justify-between h-full px-6">
