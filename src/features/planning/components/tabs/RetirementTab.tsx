@@ -56,7 +56,11 @@ const RetirementTab: React.FC<RetirementTabProps> = ({ familyId }) => {
   const generateProjectionData = () => {
     if (!plan) return [];
     
-    const data = [];
+    const data: Array<{
+      date: Date;
+      value: number;
+      label: string;
+    }> = [];
     const yearsToRetirement = plan.yearsToRetirement;
     const monthlyContribution = plan.monthlyContribution;
     const expectedReturn = plan.projections.expectedReturn;

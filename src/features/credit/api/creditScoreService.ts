@@ -198,6 +198,103 @@ export class CreditScoreService {
     
     return history;
   }
+
+  /**
+   * Generate extended credit score history for trends analysis
+   */
+  getExtendedHistory(): ScoreHistoryPoint[] {
+    const history: ScoreHistoryPoint[] = [];
+    const currentScore = 750;
+    const startingScore = 620; // 24 months ago
+    
+    // Major credit events over 24 months
+    const majorEvents = [
+      { month: 23, event: 'late_payment', impact: -35 },
+      { month: 22, event: 'high_utilization', impact: -15 },
+      { month: 20, event: 'payment_plan', impact: 10 },
+      { month: 18, event: 'debt_consolidation', impact: 20 },
+      { month: 15, event: 'credit_line_increase', impact: 18 },
+      { month: 12, event: 'consistent_payments', impact: 12 },
+      { month: 10, event: 'new_account', impact: -5 },
+      { month: 8, event: 'utilization_drop', impact: 25 },
+      { month: 6, event: 'old_debt_paid', impact: 15 },
+      { month: 4, event: 'credit_mix_improvement', impact: 8 },
+      { month: 2, event: 'length_bonus', impact: 6 },
+      { month: 0, event: 'final_optimization', impact: 12 }
+    ];
+    
+    for (let i = 23; i >= 0; i--) {
+      const date = new Date();
+      date.setMonth(date.getMonth() - i);
+      
+      // Calculate progressive improvement
+      const monthsProgressed = 23 - i;
+      const baseProgressScore = startingScore + (currentScore - startingScore) * (monthsProgressed / 23);
+      
+      // Apply major events
+      let eventImpact = 0;
+      majorEvents.forEach(event => {
+        if (i <= event.month) {
+          eventImpact += event.impact;
+        }
+      });
+      
+      // Add seasonal and market variations
+      const seasonalVariation = Math.sin((date.getMonth() / 12) * 2 * Math.PI) * 8;
+      const marketVariation = Math.cos((monthsProgressed / 6) * Math.PI) * 5;
+      
+      // Random variance decreases over time (better stability)
+      const varianceRange = Math.max(3, 12 - (monthsProgressed * 0.4));
+      const randomVariance = (Math.random() - 0.5) * varianceRange;
+      
+      let score = Math.round(baseProgressScore + eventImpact + seasonalVariation + marketVariation + randomVariance);
+      score = Math.max(300, Math.min(850, score)); // FICO bounds
+      
+      const change = i === 23 ? 0 : score - (history[history.length - 1]?.score || startingScore);
+      
+      history.push({
+        date: date.toISOString().split('T')[0],
+        score,
+        change
+      });
+    }
+    
+    return history;
+  }
+
+  /**
+   * Get credit score insights and recommendations
+   */
+  getCreditInsights(): {
+    trajectory: 'improving' | 'declining' | 'stable';
+    monthlyChange: number;
+    projectedScore: number;
+    keyFactors: string[];
+  } {
+    const history = this.generateMockHistory();
+    const recentScores = history.slice(-3);
+    const averageChange = recentScores.reduce((sum, point) => sum + point.change, 0) / recentScores.length;
+    
+    let trajectory: 'improving' | 'declining' | 'stable' = 'stable';
+    if (averageChange > 2) trajectory = 'improving';
+    else if (averageChange < -2) trajectory = 'declining';
+    
+    const currentScore = history[history.length - 1]?.score || 750;
+    const projectedScore = Math.min(850, Math.max(300, currentScore + (averageChange * 3)));
+    
+    return {
+      trajectory,
+      monthlyChange: Math.round(averageChange),
+      projectedScore: Math.round(projectedScore),
+      keyFactors: [
+        'Payment history (35% impact)',
+        'Credit utilization (30% impact)', 
+        'Length of credit history (15% impact)',
+        'Credit mix (10% impact)',
+        'New credit inquiries (10% impact)'
+      ]
+    };
+  }
 }
 
 export const creditScoreService = CreditScoreService.getInstance(); 
