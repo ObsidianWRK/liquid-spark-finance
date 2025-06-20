@@ -10,6 +10,7 @@ export { default as GraphBase } from './GraphBase';
 export { default as LineChart } from './LineChart';
 export { default as AreaChart } from './AreaChart';
 export { default as StackedBarChart } from './StackedBarChart';
+export { default as ScatterPlot } from './ScatterPlot';
 
 // Time range components
 export { default as TimeRangeToggle } from './TimeRangeToggle';
@@ -61,6 +62,11 @@ export type {
   StackedBarDataPoint
 } from './StackedBarChart';
 
+// ScatterPlot-specific types
+export type {
+  ScatterPlotProps
+} from './ScatterPlot';
+
 // TimeRangeToggle-specific types
 export type {
   TimeRangeToggleProps,
@@ -76,7 +82,7 @@ export type {
 export type { ChartConfig } from '@/shared/ui/chart';
 
 // Utility constants
-export const CHART_TYPES = ['line', 'area', 'bar', 'stackedBar'] as const;
+export const CHART_TYPES = ['line', 'area', 'bar', 'stackedBar', 'scatter'] as const;
 export const TIME_RANGES = ['1W', '1M', '3M', '6M', '1Y', 'ALL'] as const;
 
 // Default configurations

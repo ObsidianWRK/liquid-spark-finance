@@ -10,6 +10,7 @@ import HydrationTracker from './health/HydrationTracker';
 import { analyticsService } from '../api/analyticsService';
 import { AnalyticsDashboardData, AnalyticsTimeframe } from '@/shared/types/analytics';
 import { unifiedDataManager, useUnifiedState } from '@/services/unifiedDataManager';
+import MindfulnessVsSpending from './health/MindfulnessVsSpending';
 
 // Note: Chart components and specialized widgets will be implemented in Phase 3
 
@@ -768,6 +769,8 @@ export const AnalyticsPage: React.FC<AnalyticsPageProps> = ({
             </div>
           </div>
         </UniversalCard>
+
+        <MindfulnessVsSpending />
 
         <UniversalCard variant="glass" interactive className="p-6">
           <h3 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">

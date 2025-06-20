@@ -6,7 +6,7 @@
 import { ComponentProps } from 'react';
 
 // Core chart types supported by GraphBase
-export type ChartType = 'line' | 'area' | 'bar' | 'stackedBar';
+export type ChartType = 'line' | 'area' | 'bar' | 'stackedBar' | 'scatter';
 
 // Time range options for financial charts
 export type TimeRangeOption = '1W' | '1M' | '3M' | '6M' | '1Y' | 'ALL';
@@ -118,6 +118,7 @@ export interface GridConfig {
 // Axis configuration
 export interface AxisConfig {
   show?: boolean;
+  dataKey?: string;
   tickCount?: number;
   tickSize?: number;
   tickFormatter?: (value: any) => string;
