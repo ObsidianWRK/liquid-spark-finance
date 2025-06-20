@@ -29,6 +29,7 @@ import { cn } from '@/shared/lib/utils';
 import RetirementTab from './tabs/RetirementTab';
 import DebtPayoffTab from './tabs/DebtPayoffTab';
 import LifePlanningTab from './tabs/LifePlanningTab';
+import { BackButton } from '@/shared/components/ui/BackButton';
 
 interface FinancialPlanningPageProps {
   familyId?: string;
@@ -230,13 +231,12 @@ const FinancialPlanningPage = ({ familyId = 'demo_family' }: FinancialPlanningPa
     <div className="min-h-screen bg-black text-white">
       <div className="responsive-padding-md space-y-6 sm:space-y-8">
         {/* Back Button */}
-        <button
-          onClick={() => navigate('/')}
-          className="flex items-center gap-2 px-3 py-2 rounded-xl text-white/80 hover:text-white hover:bg-white/[0.05] transition-colors min-h-[44px]"
-        >
-          <ArrowLeft className="w-4 h-4 sm:w-5 sm:h-5" />
-          <span className="text-sm sm:text-base">Dashboard</span>
-        </button>
+        <BackButton 
+          fallbackPath="/"
+          variant="default"
+          label="Back to Dashboard"
+          className="mb-6"
+        />
 
         {/* Header */}
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">

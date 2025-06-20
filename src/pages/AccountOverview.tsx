@@ -1,9 +1,8 @@
 import React, { useState, useMemo } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { ChevronDown, ChevronUp, Activity, TrendingUp, Heart, ArrowLeft, CheckCircle, Calendar, DollarSign, AlertTriangle } from 'lucide-react';
+import { ChevronDown, ChevronUp, Activity, TrendingUp, Heart, CheckCircle, Calendar, DollarSign, AlertTriangle } from 'lucide-react';
 import { cn } from '@/shared/lib/utils';
 import { UniversalCard } from '@/shared/ui/UniversalCard';
-import { Button } from '@/shared/ui/button';
 import { Badge } from '@/shared/ui/badge';
 import { formatCurrency } from '@/shared/utils/formatters';
 import { useSynchronizedMetrics } from '@/providers/BiometricsProvider';
@@ -13,6 +12,7 @@ import { AccountOverviewSkeleton } from '@/shared/ui/account-overview-skeleton';
 import { ErrorState } from '@/shared/ui/error-state';
 import { useAccountOverview } from '@/features/accounts/hooks/useAccountOverview';
 import { Transaction } from '@/shared/types/transactions';
+import { BackButton } from '@/shared/components/ui/BackButton';
 
 // Utility functions can be moved to a shared utils file if used elsewhere
 
@@ -107,7 +107,13 @@ const AccountOverview: React.FC = () => {
         error={error}
         title="Failed to Load Account"
         onRetry={() => window.location.reload()}
-        onBack={() => navigate('/')}
+        onBack={() => {
+          if (window.history.length > 2) {
+            navigate(-1);
+          } else {
+            navigate('/accounts');
+          }
+        }}
       />
     );
   }
@@ -117,8 +123,14 @@ const AccountOverview: React.FC = () => {
       <ErrorState
         title="Account Not Found"
         message="The requested account could not be found."
-        onBack={() => navigate('/')}
-        backText="Back to Dashboard"
+        onBack={() => {
+          if (window.history.length > 2) {
+            navigate(-1);
+          } else {
+            navigate('/accounts');
+          }
+        }}
+        backText="Back to Accounts"
       />
     );
   }
@@ -128,9 +140,13 @@ const AccountOverview: React.FC = () => {
       <div className="p-4 md:p-6 max-w-7xl mx-auto">
         {/* Header */}
         <div className="flex items-center gap-4 mb-8">
-          <Button onClick={() => navigate('/')} variant="ghost" size="sm" className="p-2 hover:bg-white/[0.05]">
-            <ArrowLeft className="w-5 h-5" />
-          </Button>
+          <BackButton 
+            fallbackPath="/accounts"
+            variant="ghost"
+            size="sm"
+            label="Back"
+            className="p-2 hover:bg-white/[0.05]"
+          />
           <div className="flex-1">
             <h1 className="text-2xl md:text-3xl font-bold text-white mb-1">
               {account.accountName} ••••{account.last4}

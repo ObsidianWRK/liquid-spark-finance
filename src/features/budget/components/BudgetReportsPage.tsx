@@ -10,6 +10,7 @@ import {
   SelectContent,
   SelectItem
 } from '@/shared/components/ui/select';
+import { BackButton } from '@/shared/components/ui/BackButton';
 
 const BudgetReportsPage = () => {
   const navigate = useNavigate();
@@ -51,13 +52,12 @@ const BudgetReportsPage = () => {
   return (
     <div className="space-y-6">
       {/* Back Button */}
-      <button
-        onClick={() => navigate('/')}
-        className="flex items-center gap-2 px-3 py-2 rounded-xl text-white/80 hover:text-white hover:bg-white/[0.05] transition-colors"
-      >
-        <ArrowLeft className="w-4 h-4" />
-        <span className="text-sm">Dashboard</span>
-      </button>
+      <BackButton 
+        fallbackPath="/"
+        variant="default"
+        label="Back to Dashboard"
+        className="mb-6"
+      />
 
       {/* Header Controls */}
       <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between">

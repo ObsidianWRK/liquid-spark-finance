@@ -14,6 +14,7 @@ import {
 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { cn } from '@/shared/lib/utils';
+import { BackButton } from '@/shared/components/ui/BackButton';
 
 const BudgetPlannerPage = () => {
   const navigate = useNavigate();
@@ -68,13 +69,12 @@ const BudgetPlannerPage = () => {
   return (
     <div className="p-4 sm:p-6 space-y-6 sm:space-y-8">
       {/* Back Button */}
-      <button
-        onClick={() => navigate('/')}
-        className="flex items-center gap-2 px-3 py-2 rounded-xl text-white/80 hover:text-white hover:bg-white/[0.05] transition-colors"
-      >
-        <ArrowLeft className="w-4 h-4" />
-        <span className="text-sm">Dashboard</span>
-      </button>
+      <BackButton 
+        fallbackPath="/"
+        variant="default"
+        label="Back to Dashboard"
+        className="mb-6"
+      />
 
       {/* Header */}
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">

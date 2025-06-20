@@ -2,6 +2,7 @@ import React, { Suspense, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { AdaptiveNavigation } from '@/navigation';
 import { ScrollControllerProvider } from '@/navigation/context/ScrollControllerContext';
+import { BiometricsProvider } from '@/providers/BiometricsProvider';
 import LiquidGlassSVGFilters from '@/shared/ui/LiquidGlassSVGFilters';
 import { initializeForReactApp } from '@/shared/utils/viewport-init';
 
@@ -18,6 +19,7 @@ const InvestmentTrackerPage = React.lazy(() => import('@/features/investments/co
 const BudgetReportsPage = React.lazy(() => import('@/features/budget/components/BudgetReportsPage'));
 const InsightsPage = React.lazy(() => import('./pages/InsightsPage'));
 const AccountOverview = React.lazy(() => import('./pages/AccountOverview'));
+const AccountsListPage = React.lazy(() => import('./pages/AccountsListPage'));
 
 // Loading component
 const LoadingSpinner = () => (
@@ -77,7 +79,7 @@ class ErrorBoundary extends React.Component<
             <div className="space-y-2">
               <h1 className="text-2xl font-bold text-white">Oops! Something went wrong</h1>
               <p className="text-white/70">
-                Don't worry, this happens sometimes. We've logged the error and will look into it.
+                Don&apos;t worry, this happens sometimes. We&apos;ve logged the error and will look into it.
               </p>
               {import.meta.env.DEV && this.state.errorMessage && (
                 <details className="mt-4 p-3 bg-red-900/20 border border-red-500/30 rounded-lg text-left">
@@ -137,42 +139,43 @@ function App() {
 
           {/* Main Content Area */}
           <main className="relative">
-            <ErrorBoundary>
-              <Suspense fallback={<LoadingSpinner />}>
-                <Routes>
-                  {/* Main Routes */}
-                  <Route path="/" element={<Index />} />
-                  <Route path="/profile" element={<Profile />} />
-                  <Route path="/transactions" element={<TransactionDemo />} />
-                  <Route path="/insights" element={<InsightsPage />} />
-                  <Route path="/reports" element={<BudgetReportsPage />} />
-                  
-                  {/* Account Detail Route */}
-                  <Route 
-                    path="/accounts/:accountId" 
-                    element={
-                      <Suspense fallback={<AccountLoadingFallback />}>
-                        <AccountOverview />
-                      </Suspense>
-                    } 
-                  />
-                  
-                  {/* Feature Pages */}
-                  <Route path="/calculators" element={<CalculatorsHub />} />
-                  <Route path="/calculators/:id" element={<CalculatorsPage />} />
-                  <Route path="/budget-planner" element={<BudgetPlannerPage />} />
-                  <Route path="/investment-tracker" element={<InvestmentTrackerPage />} />
-                  <Route path="/goal-setting" element={<SavingsGoals />} />
-                  <Route path="/credit" element={<CreditScorePage />} />
-                  <Route path="/savings" element={<SavingsGoals />} />
-                  
-                  {/* Legacy Route Redirects */}
-                  <Route path="/credit-score" element={<CreditScorePage />} />
-                  <Route path="/settings" element={<Profile />} />
-                  <Route path="/accounts" element={<Index />} />
-                </Routes>
-              </Suspense>
-            </ErrorBoundary>
+            <BiometricsProvider autoStart={true} debugMode={import.meta.env.DEV}>
+              <ErrorBoundary>
+                <Suspense fallback={<LoadingSpinner />}>
+                  <Routes>
+                    {/* Main Routes */}
+                    <Route path="/" element={<Index />} />
+                    <Route path="/profile" element={<Profile />} />
+                    <Route path="/transactions" element={<TransactionDemo />} />
+                    <Route path="/insights" element={<InsightsPage />} />
+                    <Route path="/reports" element={<BudgetReportsPage />} />
+                    
+                    {/* Accounts Routes */}
+                    <Route path="/accounts" element={<AccountsListPage />} />
+                    <Route 
+                      path="/accounts/:accountId" 
+                      element={
+                        <Suspense fallback={<AccountLoadingFallback />}>
+                          <AccountOverview />
+                        </Suspense>
+                      } 
+                    />
+                    
+                    {/* Feature Pages */}
+                    <Route path="/calculators" element={<CalculatorsHub />} />
+                    <Route path="/calculators/:id" element={<CalculatorsPage />} />
+                    <Route path="/budget-planner" element={<BudgetPlannerPage />} />
+                    <Route path="/investment-tracker" element={<InvestmentTrackerPage />} />
+                    <Route path="/goal-setting" element={<SavingsGoals />} />
+                    <Route path="/credit" element={<CreditScorePage />} />
+                    <Route path="/savings" element={<SavingsGoals />} />
+                    
+                    {/* Legacy Route Redirects */}
+                    <Route path="/credit-score" element={<CreditScorePage />} />
+                  </Routes>
+                </Suspense>
+              </ErrorBoundary>
+            </BiometricsProvider>
           </main>
         </div>
       </Router>

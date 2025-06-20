@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { creditScoreService } from '@/features/credit/api/creditScoreService';
 import { CreditScore, CreditTip } from '@/types/creditScore';
 import { cn } from '@/shared/lib/utils';
+import { BackButton } from '@/shared/components/ui/BackButton';
 
 const CreditScorePage = () => {
   const navigate = useNavigate();
@@ -122,13 +123,11 @@ const CreditScorePage = () => {
     return (
       <div className="min-h-screen bg-black text-white">
         <div className="responsive-padding-md space-y-6 sm:space-y-8">
-          <button
-            onClick={() => navigate('/')}
-            className="flex items-center gap-2 px-3 py-2 rounded-xl text-white/80 hover:text-white hover:bg-white/[0.05] transition-colors min-h-[44px]"
-          >
-            <ArrowLeft className="w-4 h-4 sm:w-5 sm:h-5" />
-            <span className="text-sm sm:text-base">Dashboard</span>
-          </button>
+          <BackButton 
+            fallbackPath="/"
+            variant="default"
+            label="Back to Dashboard"
+          />
 
           <div className="bg-white/[0.02] rounded-2xl sm:rounded-3xl border border-white/[0.08] p-6 sm:p-8 text-center">
             <AlertCircle className="w-12 h-12 sm:w-16 sm:h-16 text-orange-400 mx-auto mb-4" />
@@ -143,14 +142,11 @@ const CreditScorePage = () => {
   return (
     <div className="min-h-screen bg-black text-white">
       <div className="responsive-padding-md space-y-6 sm:space-y-8">
-        {/* Back to Dashboard */}
-        <button
-          onClick={() => navigate('/')}
-          className="flex items-center gap-2 px-3 py-2 rounded-xl text-white/80 hover:text-white hover:bg-white/[0.05] transition-colors min-h-[44px]"
-        >
-          <ArrowLeft className="w-4 h-4 sm:w-5 sm:h-5" />
-          <span className="text-sm sm:text-base">Dashboard</span>
-        </button>
+        <BackButton 
+          fallbackPath="/"
+          variant="default"
+          label="Back to Dashboard"
+        />
 
         {/* Header */}
         <div className="text-center space-y-1 sm:space-y-2">

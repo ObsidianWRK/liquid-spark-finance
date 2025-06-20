@@ -17,14 +17,19 @@ import { useNavigationState } from '@/navigation/context/ScrollControllerContext
  * TopBar Component
  * Desktop top bar (≥1024px) - hosts search, profile, quick actions
  * Features: Search bar, notifications, profile access, quick actions
- * Now with scroll-aware visibility using ScrollController
+ * Now with fallback rendering to ensure visibility
  */
 const TopBar: React.FC = () => {
   const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState('');
   
-  // Get navigation state from scroll controller
-  const navigationState = useNavigationState();
+  // Get navigation state with fallback values
+  const rawNavigationState = useNavigationState();
+  const navigationState = {
+    shouldAnimate: rawNavigationState?.shouldAnimate ?? false,
+    safeAreaTop: rawNavigationState?.safeAreaTop ?? 0,
+    transform: rawNavigationState?.transform ?? 'translateY(0)',
+  };
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
@@ -54,13 +59,16 @@ const TopBar: React.FC = () => {
       {/* Desktop Top Bar - Dark Mode Only */}
       <header 
         className={cn(
-          "hidden lg:flex fixed top-0 left-0 right-0 z-50 items-center",
+          "flex fixed top-0 left-0 right-0 z-50 items-center",
+          "hidden lg:flex",
           navigationState.shouldAnimate && "transition-transform duration-300 ease-out"
         )}
         style={{
           height: `${MENU_BAR_HEIGHT.landscape}px`,
-          paddingTop: `${navigationState.safeAreaTop}px`,
-          transform: navigationState.transform,
+          paddingTop: `${navigationState.safeAreaTop || 0}px`,
+          transform: navigationState.transform || 'translateY(0)',
+          background: 'rgba(0, 0, 0, 0.7)',
+          backdropFilter: 'blur(20px)',
         }}
         role="banner"
         aria-label="Top navigation bar"

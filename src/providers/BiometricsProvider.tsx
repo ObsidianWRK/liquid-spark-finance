@@ -32,9 +32,33 @@ export function useBiometricsSelector<T>(
   }
 
   const { state } = context;
-  const [selectedValue, setSelectedValue] = useState<T>(() => 
-    state ? selector(state) : null as T
-  );
+  
+  // Provide safer default initialization with proper fallback
+  const [selectedValue, setSelectedValue] = useState<T>(() => {
+    if (!state) {
+      // Create a safe default state for initial render
+      const defaultState: BiometricsState = {
+        stressIndex: 30,
+        wellnessScore: 75,
+        heartRate: 72,
+        shouldIntervene: false,
+        stressTrend: 'stable',
+        wellnessTrend: 'stable',
+        interventionLevel: 'none',
+        connectedDevices: [],
+        timestamp: new Date().toISOString(),
+        lastReading: new Date().toISOString()
+      };
+      try {
+        return selector(defaultState);
+      } catch {
+        // If selector fails with default state, return null as last resort
+        return null as T;
+      }
+    }
+    return selector(state);
+  });
+  
   const selectorRef = useRef(selector);
   const equalityFnRef = useRef(equalityFn);
   const lastSelectedRef = useRef(selectedValue);
@@ -46,14 +70,18 @@ export function useBiometricsSelector<T>(
   useEffect(() => {
     if (!state) return;
 
-    const newValue = selectorRef.current(state);
-    const isEqual = equalityFnRef.current 
-      ? equalityFnRef.current(lastSelectedRef.current, newValue)
-      : lastSelectedRef.current === newValue;
+    try {
+      const newValue = selectorRef.current(state);
+      const isEqual = equalityFnRef.current 
+        ? equalityFnRef.current(lastSelectedRef.current, newValue)
+        : lastSelectedRef.current === newValue;
 
-    if (!isEqual) {
-      lastSelectedRef.current = newValue;
-      setSelectedValue(newValue);
+      if (!isEqual) {
+        lastSelectedRef.current = newValue;
+        setSelectedValue(newValue);
+      }
+    } catch (error) {
+      console.warn('BiometricsSelector error:', error);
     }
   }, [state]);
 
