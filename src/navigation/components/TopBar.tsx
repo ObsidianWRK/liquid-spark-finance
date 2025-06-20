@@ -59,7 +59,7 @@ const TopBar: React.FC = () => {
       {/* Desktop Top Bar - Dark Mode Only */}
       <header 
         className={cn(
-          "flex fixed top-0 left-0 right-0 z-50 items-center",
+          "flex fixed top-0 left-0 right-0 z-60 items-center",
           "hidden lg:flex",
           navigationState.shouldAnimate && "transition-transform duration-300 ease-out"
         )}

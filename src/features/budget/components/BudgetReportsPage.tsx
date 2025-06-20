@@ -99,7 +99,7 @@ const BudgetReportsPage = () => {
 
       {/* Summary Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-        <GlassCard className="p-4 glass-primary">
+        <GlassCard className="p-4 glass-primary card-hover">
           <div className="flex items-center justify-between">
             <div>
               <p className="text-white/70 text-sm">Total Spent</p>
@@ -109,7 +109,7 @@ const BudgetReportsPage = () => {
           </div>
         </GlassCard>
 
-        <GlassCard className="p-4 glass-primary">
+        <GlassCard className="p-4 glass-primary card-hover">
           <div className="flex items-center justify-between">
             <div>
               <p className="text-white/70 text-sm">Budget</p>
@@ -119,7 +119,7 @@ const BudgetReportsPage = () => {
           </div>
         </GlassCard>
 
-        <GlassCard className="p-4 glass-primary">
+        <GlassCard className="p-4 glass-primary card-hover">
           <div className="flex items-center justify-between">
             <div>
               <p className="text-white/70 text-sm">Remaining</p>
@@ -135,7 +135,7 @@ const BudgetReportsPage = () => {
       </div>
 
       {/* Category Breakdown */}
-      <GlassCard className="p-6">
+      <GlassCard className="p-6 card-hover">
         <div className="flex items-center justify-between mb-6">
           <h2 className="text-xl font-bold text-white">Category Breakdown</h2>
           <button className="flex items-center gap-2 text-blue-400 hover:text-blue-300 transition-colors">
@@ -174,7 +174,7 @@ const BudgetReportsPage = () => {
       </GlassCard>
 
       {/* Insights */}
-      <GlassCard className="p-6">
+      <GlassCard className="p-6 card-hover">
         <div className="flex items-center gap-2 mb-4">
           <AlertCircle className="w-5 h-5 text-blue-400" />
           <h2 className="text-xl font-bold text-white">Monthly Insights</h2>

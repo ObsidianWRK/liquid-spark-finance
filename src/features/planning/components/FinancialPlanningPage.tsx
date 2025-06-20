@@ -362,7 +362,7 @@ const FinancialPlanningPage = ({ familyId = 'demo_family' }: FinancialPlanningPa
 
           {/* Quick Stats */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
-            <div className="bg-white/[0.02] rounded-2xl border border-white/[0.08] p-4 sm:p-6">
+            <div className="bg-white/[0.02] rounded-2xl border border-white/[0.08] p-4 sm:p-6 card-hover">
               <div className="flex items-center justify-between">
                 <div className="min-w-0 flex-1">
                   <p className="text-white/60 text-sm">Active Goals</p>
@@ -372,7 +372,7 @@ const FinancialPlanningPage = ({ familyId = 'demo_family' }: FinancialPlanningPa
               </div>
             </div>
 
-            <div className="bg-white/[0.02] rounded-2xl border border-white/[0.08] p-4 sm:p-6">
+            <div className="bg-white/[0.02] rounded-2xl border border-white/[0.08] p-4 sm:p-6 card-hover">
               <div className="flex items-center justify-between">
                 <div className="min-w-0 flex-1">
                   <p className="text-white/60 text-sm">Total Saved</p>
@@ -384,7 +384,7 @@ const FinancialPlanningPage = ({ familyId = 'demo_family' }: FinancialPlanningPa
               </div>
             </div>
 
-            <div className="bg-white/[0.02] rounded-2xl border border-white/[0.08] p-4 sm:p-6">
+            <div className="bg-white/[0.02] rounded-2xl border border-white/[0.08] p-4 sm:p-6 card-hover">
               <div className="flex items-center justify-between">
                 <div className="min-w-0 flex-1">
                   <p className="text-white/60 text-sm">Target Amount</p>
@@ -396,7 +396,7 @@ const FinancialPlanningPage = ({ familyId = 'demo_family' }: FinancialPlanningPa
               </div>
             </div>
 
-            <div className="bg-white/[0.02] rounded-2xl border border-white/[0.08] p-4 sm:p-6">
+            <div className="bg-white/[0.02] rounded-2xl border border-white/[0.08] p-4 sm:p-6 card-hover">
               <div className="flex items-center justify-between">
                 <div className="min-w-0 flex-1">
                   <p className="text-white/60 text-sm">Monthly Contributions</p>
@@ -411,7 +411,7 @@ const FinancialPlanningPage = ({ familyId = 'demo_family' }: FinancialPlanningPa
 
           {/* AI Recommendations */}
           {recommendations.length > 0 && (
-            <div className="bg-white/[0.02] rounded-2xl border border-white/[0.08] p-6">
+            <div className="bg-white/[0.02] rounded-2xl border border-white/[0.08] p-6 card-hover">
               <h2 className="text-xl font-bold text-white mb-6 flex items-center gap-3">
                 <Zap className="w-6 h-6 text-yellow-400" />
                 AI-Powered Recommendations
@@ -465,7 +465,7 @@ const FinancialPlanningPage = ({ familyId = 'demo_family' }: FinancialPlanningPa
             const StatusIcon = getStatusIcon(goal);
             
             return (
-              <div key={goal.id} className="bg-white/[0.02] rounded-2xl border border-white/[0.08] p-4 sm:p-6 hover:bg-white/[0.03] transition-all">
+              <div key={goal.id} className="bg-white/[0.02] rounded-2xl border border-white/[0.08] p-4 sm:p-6 card-hover">
                 <div className="flex flex-col sm:flex-row items-start gap-4">
                   {/* Goal Icon */}
                   <div className={cn(

@@ -15,7 +15,7 @@ const AdaptiveNavigation: React.FC = () => {
   const { isMobile, isTablet, isDesktop } = useBreakpoint();
 
   return (
-    <>
+    <div data-testid="adaptive-navigation">
       {/* Mobile Navigation */}
       {isMobile && <BottomNav />}
       
@@ -24,7 +24,7 @@ const AdaptiveNavigation: React.FC = () => {
       
       {/* Desktop Navigation - TopBar only */}
       {isDesktop && <TopBar />}
-    </>
+    </div>
   );
 };
 
