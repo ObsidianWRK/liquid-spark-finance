@@ -40,8 +40,7 @@ export {
   VueniSkeleton,
   VueniContainer,
   VueniSection,
-  VueniGrid,
-  vueniTokens
+  VueniGrid
 } from './VueniDesignSystem';
 export type {
   VueniGlassCardProps,

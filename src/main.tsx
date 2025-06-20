@@ -31,6 +31,7 @@ import './index.css'
 import './app/styles/scroll-fix.css' // WHY: Critical fix for double scroll issue - must load after index.css
 import { SecurityEnvValidator } from './shared/utils/envValidation'
 import './telemetry/vitals.ts' // Initialize performance monitoring
+import { VueniThemeProvider } from './theme/ThemeProvider'
 
 // Validate security environment before app startup
 try {
@@ -56,9 +57,8 @@ ${errorMessage}
   throw new Error('Security configuration error');
 }
 
-// Add dark mode class to document by default
-document.documentElement.classList.add('dark');
-
 createRoot(document.getElementById("root")!).render(
-  <App />
+  <VueniThemeProvider>
+    <App />
+  </VueniThemeProvider>
 );
