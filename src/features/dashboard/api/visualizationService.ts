@@ -4,6 +4,8 @@ import { transactionService } from '@/features/transactions/api/transactionServi
 import { investmentService } from '@/features/investments/api/investmentService';
 import { budgetService } from '@/features/budget/api/budgetService';
 import { Transaction } from '@/shared/types/accounts';
+import { vueniTheme } from '@/theme/unified';
+import { getFinancialChartColor } from '@/shared/utils/theme-color-mapper';
 
 export interface ChartDataPoint {
   date: string;
@@ -249,7 +251,7 @@ export class VisualizationService {
         change: 70,
         changePercent: 2.5,
         trend: 'up',
-        color: '#3b82f6'
+        color: getFinancialChartColor('neutral')
       },
       {
         category: 'Food & Dining',
@@ -258,7 +260,7 @@ export class VisualizationService {
         change: 275,
         changePercent: 23.9,
         trend: 'up',
-        color: '#ef4444'
+        color: getFinancialChartColor('spending')
       },
       {
         category: 'Transportation',
@@ -267,7 +269,7 @@ export class VisualizationService {
         change: -140,
         changePercent: -17.1,
         trend: 'down',
-        color: '#10b981'
+        color: getFinancialChartColor('income')
       },
       {
         category: 'Healthcare & Insurance',
@@ -276,7 +278,7 @@ export class VisualizationService {
         change: 30,
         changePercent: 4.2,
         trend: 'stable',
-        color: '#06b6d4'
+        color: vueniTheme.colors.semantic.status.info
       },
       {
         category: 'Entertainment & Recreation',
@@ -285,7 +287,7 @@ export class VisualizationService {
         change: -155,
         changePercent: -22.8,
         trend: 'down',
-        color: '#8b5cf6'
+        color: getFinancialChartColor('investments')
       },
       {
         category: 'Shopping & Personal',
@@ -294,7 +296,7 @@ export class VisualizationService {
         change: 145,
         changePercent: 19.5,
         trend: 'up',
-        color: '#f59e0b'
+        color: getFinancialChartColor('debt')
       },
       {
         category: 'Education & Development',
@@ -303,7 +305,7 @@ export class VisualizationService {
         change: -30,
         changePercent: -8.6,
         trend: 'down',
-        color: '#6366f1'
+        color: vueniTheme.colors.palette.primary
       },
       {
         category: 'Savings & Investments',
@@ -312,7 +314,7 @@ export class VisualizationService {
         change: 150,
         changePercent: 10.0,
         trend: 'up',
-        color: '#10b981'
+        color: getFinancialChartColor('savings')
       }
     ];
 
@@ -321,7 +323,7 @@ export class VisualizationService {
         name: 'Stocks',
         value: 68200,
         percentage: 65,
-        color: '#3b82f6',
+        color: getFinancialChartColor('savings'),
         change: 2340,
         changePercent: 3.6
       },
@@ -329,7 +331,7 @@ export class VisualizationService {
         name: 'Bonds',
         value: 21070,
         percentage: 20,
-        color: '#10b981',
+        color: getFinancialChartColor('income'),
         change: 156,
         changePercent: 0.7
       },
@@ -337,7 +339,7 @@ export class VisualizationService {
         name: 'Cash',
         value: 10535,
         percentage: 10,
-        color: '#f59e0b',
+        color: getFinancialChartColor('debt'),
         change: -45,
         changePercent: -0.4
       },
@@ -345,7 +347,7 @@ export class VisualizationService {
         name: 'REITs',
         value: 5268,
         percentage: 5,
-        color: '#8b5cf6',
+        color: getFinancialChartColor('investments'),
         change: 89,
         changePercent: 1.7
       }
@@ -359,7 +361,7 @@ export class VisualizationService {
         remaining: 0,
         progress: 100,
         status: 'on-track',
-        color: '#10b981'
+        color: getFinancialChartColor('income')
       },
       {
         category: 'Food',
@@ -368,7 +370,7 @@ export class VisualizationService {
         remaining: -450,
         progress: 156,
         status: 'over-budget',
-        color: '#ef4444'
+        color: getFinancialChartColor('spending')
       },
       {
         category: 'Transportation',
@@ -377,7 +379,7 @@ export class VisualizationService {
         remaining: 180,
         progress: 64,
         status: 'on-track',
-        color: '#10b981'
+        color: getFinancialChartColor('income')
       }
     ];
 
@@ -390,7 +392,7 @@ export class VisualizationService {
         changePercent: 1.9,
         trend: 'up',
         format: 'currency',
-        color: '#10b981',
+        color: getFinancialChartColor('income'),
         icon: 'trending-up'
       },
       {
@@ -401,7 +403,7 @@ export class VisualizationService {
         changePercent: 4.0,
         trend: 'up',
         format: 'currency',
-        color: '#3b82f6',
+        color: getFinancialChartColor('savings'),
         icon: 'trending-up'
       },
       {
@@ -412,7 +414,7 @@ export class VisualizationService {
         changePercent: 3.8,
         trend: 'up',
         format: 'percentage',
-        color: '#8b5cf6',
+        color: getFinancialChartColor('investments'),
         icon: 'trending-up'
       },
       {
@@ -423,7 +425,7 @@ export class VisualizationService {
         changePercent: 7.3,
         trend: 'up',
         format: 'percentage',
-        color: '#f59e0b',
+        color: getFinancialChartColor('debt'),
         icon: 'piggy-bank'
       },
       {
@@ -434,7 +436,7 @@ export class VisualizationService {
         changePercent: -10,
         trend: 'down',
         format: 'percentage',
-        color: '#10b981',
+        color: getFinancialChartColor('income'),
         icon: 'credit-card'
       },
       {
@@ -445,7 +447,7 @@ export class VisualizationService {
         changePercent: 7.7,
         trend: 'up',
         format: 'number',
-        color: '#06b6d4',
+        color: vueniTheme.colors.semantic.status.info,
         icon: 'shield'
       }
     ];
@@ -639,7 +641,7 @@ export class VisualizationService {
           name: 'Stocks',
           value: (allocation.stocks / 100) * portfolio.totalValue,
           percentage: allocation.stocks,
-          color: '#3b82f6',
+          color: getFinancialChartColor('savings'),
           change: Math.random() * 1000 - 500,
           changePercent: (Math.random() - 0.5) * 10
         },
@@ -647,7 +649,7 @@ export class VisualizationService {
           name: 'Bonds',
           value: (allocation.bonds / 100) * portfolio.totalValue,
           percentage: allocation.bonds,
-          color: '#10b981',
+          color: getFinancialChartColor('income'),
           change: Math.random() * 500 - 250,
           changePercent: (Math.random() - 0.5) * 5
         },
@@ -655,7 +657,7 @@ export class VisualizationService {
           name: 'Cash',
           value: (allocation.cash / 100) * portfolio.totalValue,
           percentage: allocation.cash,
-          color: '#f59e0b',
+          color: getFinancialChartColor('debt'),
           change: Math.random() * 200 - 100,
           changePercent: (Math.random() - 0.5) * 2
         },
@@ -663,7 +665,7 @@ export class VisualizationService {
           name: 'REITs',
           value: (allocation.reits / 100) * portfolio.totalValue,
           percentage: allocation.reits,
-          color: '#8b5cf6',
+          color: getFinancialChartColor('investments'),
           change: Math.random() * 300 - 150,
           changePercent: (Math.random() - 0.5) * 8
         },
@@ -671,7 +673,7 @@ export class VisualizationService {
           name: 'Crypto',
           value: (allocation.crypto / 100) * portfolio.totalValue,
           percentage: allocation.crypto,
-          color: '#f97316',
+          color: vueniTheme.colors.semantic.status.warning,
           change: Math.random() * 1000 - 500,
           changePercent: (Math.random() - 0.5) * 20
         },
@@ -679,7 +681,7 @@ export class VisualizationService {
           name: 'Other',
           value: (allocation.other / 100) * portfolio.totalValue,
           percentage: allocation.other,
-          color: '#6b7280',
+          color: vueniTheme.colors.palette.neutral,
           change: Math.random() * 100 - 50,
           changePercent: (Math.random() - 0.5) * 3
         }
@@ -706,14 +708,14 @@ export class VisualizationService {
         const progress = category.budgetedAmount > 0 ? (category.spentAmount / category.budgetedAmount) * 100 : 0;
         
         let status: 'on-track' | 'warning' | 'over-budget' = 'on-track';
-        let color = '#10b981'; // green
+        let color = getFinancialChartColor('income');
         
         if (progress >= 100) {
           status = 'over-budget';
-          color = '#ef4444'; // red
+          color = getFinancialChartColor('spending');
         } else if (progress >= 80) {
           status = 'warning';
-          color = '#f59e0b'; // yellow
+          color = getFinancialChartColor('debt');
         }
 
         return {
@@ -806,22 +808,22 @@ export class VisualizationService {
 
   private getCategoryColor(category: string): string {
     const colors: Record<string, string> = {
-      housing: '#3b82f6',
-      transportation: '#f97316',
-      food: '#10b981',
-      utilities: '#8b5cf6',
-      insurance: '#06b6d4',
-      healthcare: '#ef4444',
-      debt_payments: '#dc2626',
-      savings: '#22c55e',
-      entertainment: '#a855f7',
-      personal_care: '#ec4899',
-      shopping: '#f59e0b',
-      education: '#6366f1',
-      gifts_donations: '#84cc16',
-      other: '#6b7280'
+      housing: getFinancialChartColor('savings'),
+      transportation: vueniTheme.colors.semantic.status.warning,
+      food: getFinancialChartColor('income'),
+      utilities: getFinancialChartColor('investments'),
+      insurance: vueniTheme.colors.semantic.status.info,
+      healthcare: getFinancialChartColor('spending'),
+      debt_payments: vueniTheme.colors.palette.danger,
+      savings: vueniTheme.colors.semantic.financial.positive,
+      entertainment: vueniTheme.colors.semantic.chart.investments,
+      personal_care: vueniTheme.colors.semantic.status.info,
+      shopping: vueniTheme.colors.palette.warning,
+      education: vueniTheme.colors.palette.primary,
+      gifts_donations: vueniTheme.colors.semantic.financial.positive,
+      other: vueniTheme.colors.palette.neutral
     };
-    return colors[category] || '#6b7280';
+    return colors[category] || vueniTheme.colors.palette.neutral;
   }
 }
 

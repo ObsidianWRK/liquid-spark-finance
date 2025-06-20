@@ -77,7 +77,7 @@ async function captureWebVitals(page: Page) {
 // Get performance navigation metrics
 async function getNavigationMetrics(page: Page) {
   return await page.evaluate(() => {
-    const navigation = performance.getEntriesByType('navigation')[0] as PerformanceNavigationTiming;
+    const navigation = performance.getEntriesByType('navigation')[0];
     const paint = performance.getEntriesByType('paint');
     
     return {

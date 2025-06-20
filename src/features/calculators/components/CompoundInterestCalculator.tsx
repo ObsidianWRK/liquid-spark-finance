@@ -5,6 +5,8 @@ import { LineChart } from '@/shared/ui/charts';
 import { SecureCalculatorWrapper, useSecureCalculator } from './SecureCalculatorWrapper';
 import { Alert, AlertDescription } from '@/shared/ui/alert';
 import { AlertTriangle } from 'lucide-react';
+import { getFinancialChartColor } from '@/shared/utils/theme-color-mapper';
+import { vueniTheme } from '@/theme/unified';
 
 interface CompoundData {
   year: number;
@@ -87,16 +89,11 @@ const CompoundInterestCalculator = React.memo<SecureCalculatorProps>(({ security
     return data;
   }, [principal, rate, years, compoundFreq, monthlyContribution]);
 
-  const handleSecureInput = useCallback((field: string, value: string, type: string) => {
+  const handleSecureInput = useCallback((field: string, value: string, type: 'amount' | 'interestRate' | 'timePeriod') => {
     setInputErrors(prev => ({ ...prev, [field]: '' }));
     
     try {
-      let sanitizedValue;
-      if (securityContext) {
-        sanitizedValue = securityContext.validateInput(type, value);
-      } else {
-        sanitizedValue = validateAndSanitizeInput(type, value);
-      }
+      const sanitizedValue = validateAndSanitizeInput(type, value) as number;
 
       switch (field) {
         case 'principal':
@@ -117,7 +114,7 @@ const CompoundInterestCalculator = React.memo<SecureCalculatorProps>(({ security
       setInputErrors(prev => ({ ...prev, [field]: errorMessage }));
       onSecurityEvent?.('invalid_input', { field, value, error: errorMessage });
     }
-  }, [securityContext, validateAndSanitizeInput, onSecurityEvent]);
+  }, [validateAndSanitizeInput, onSecurityEvent]);
 
   const handleCalculate = useCallback(async () => {
     try {
@@ -129,19 +126,13 @@ const CompoundInterestCalculator = React.memo<SecureCalculatorProps>(({ security
         return result;
       };
 
-      if (securityContext) {
-        await calculationFunction();
-        securityContext.onCalculationSuccess();
-      } else {
-        await performSecureCalculation(calculationFunction);
-      }
+      await performSecureCalculation(calculationFunction);
+
     } catch (error) {
-      if (securityContext) {
-        securityContext.onCalculationError(error);
-      }
-      setInputErrors(prev => ({ ...prev, calculation: error.message }));
+      const e = error as Error;
+      setInputErrors(prev => ({ ...prev, calculation: e.message }));
     }
-  }, [principal, rate, years, compoundFreq, monthlyContribution, securityContext, performSecureCalculation, compoundData]);
+  }, [principal, rate, years, compoundFreq, monthlyContribution, performSecureCalculation, compoundData]);
 
   // Auto-calculate on component mount and when inputs change
   useEffect(() => {
@@ -382,17 +373,17 @@ const CompoundInterestCalculator = React.memo<SecureCalculatorProps>(({ security
               {
                 dataKey: 'total',
                 label: 'Total Value',
-                color: '#007AFF', // Apple system blue
+                color: getFinancialChartColor('savings'),
               },
               {
                 dataKey: 'principal',
                 label: 'Contributions',
-                color: '#32D74B', // Apple system green
+                color: getFinancialChartColor('income'),
               },
               {
                 dataKey: 'interest',
                 label: 'Interest Earned',
-                color: '#FF9F0A', // Apple system orange
+                color: getFinancialChartColor('debt'),
               }
             ]}
             title="Growth Projection Over Time"
@@ -421,36 +412,36 @@ const CompoundInterestCalculator = React.memo<SecureCalculatorProps>(({ security
                   <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.1)" />
                   <XAxis 
                     dataKey="year" 
-                    stroke="#fff" 
+                    stroke={vueniTheme.colors.text.primary} 
                     fontSize={12}
                     tickFormatter={(value) => `Year ${value}`}
                   />
                   <YAxis 
-                    stroke="#fff" 
+                    stroke={vueniTheme.colors.text.primary}
                     fontSize={12}
                     tickFormatter={(value) => formatCurrency(value)}
                   />
                   <Tooltip 
                     formatter={(value: number) => [formatCurrency(value), 'Amount']}
                     contentStyle={{
-                      backgroundColor: 'rgba(0,0,0,0.8)',
-                      border: '1px solid rgba(255,255,255,0.2)',
+                      backgroundColor: vueniTheme.colors.surface.overlay,
+                      border: `1px solid ${vueniTheme.colors.surface.glass.border}`,
                       borderRadius: '12px',
-                      color: '#fff'
+                      color: vueniTheme.colors.text.primary
                     }}
                   />
-                  <Bar dataKey="principal" fill="#3B82F6" radius={[4, 4, 0, 0]} />
-                  <Bar dataKey="interest" fill="#10B981" radius={[4, 4, 0, 0]} />
+                  <Bar dataKey="principal" fill={getFinancialChartColor('savings')} radius={[4, 4, 0, 0]} />
+                  <Bar dataKey="interest" fill={getFinancialChartColor('income')} radius={[4, 4, 0, 0]} />
                 </BarChart>
               </ResponsiveContainer>
             </div>
             <div className="flex justify-center space-x-8 mt-4">
               <div className="flex items-center space-x-2">
-                <div className="w-4 h-4 bg-blue-500 rounded"></div>
+                <div className="w-4 h-4 rounded" style={{ backgroundColor: getFinancialChartColor('savings') }}></div>
                 <span className="text-white/80 text-sm">Principal</span>
               </div>
               <div className="flex items-center space-x-2">
-                <div className="w-4 h-4 bg-green-500 rounded"></div>
+                <div className="w-4 h-4 rounded" style={{ backgroundColor: getFinancialChartColor('income') }}></div>
                 <span className="text-white/80 text-sm">Interest</span>
               </div>
             </div>

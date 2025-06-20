@@ -1,15 +1,26 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import AppShell from '@/components/layout/AppShell';
-import CleanAccountCard from '@/features/accounts/components/CleanAccountCard';
-import CleanCreditScoreCard from '@/features/credit/components/CleanCreditScoreCard';
+import { CleanAccountCard, AccountData } from '@/features/accounts/components/CleanAccountCard';
+import { CleanCreditScoreCard, CreditScoreData } from '@/features/credit/components/CleanCreditScoreCard';
 import { VueniUnifiedTransactionList } from '@/components/shared/VueniUnifiedTransactionList';
 import SimpleGlassCard from '@/shared/ui/SimpleGlassCard';
-import { colors } from '@/theme/colors';
+import { vueniTheme } from '@/theme/unified';
+import { cn } from '@/shared/lib/utils';
 import { 
   DollarSign, 
-  TrendingUp, 
+  Heart, 
+  Leaf, 
   CreditCard, 
-  PiggyBank,
+  Building2, 
+  TrendingUp, 
+  TrendingDown, 
+  ChevronRight, 
+  Landmark, 
+  PiggyBank, 
+  Wallet, 
+  AreaChart as AreaChartIcon, 
+  BarChart2, 
+  PieChart as PieChartIcon, 
   Eye,
   EyeOff 
 } from 'lucide-react';
@@ -100,64 +111,34 @@ const mockTransactions = [
   }
 ];
 
-const OverviewCard = ({ 
+const DashboardMetric = ({ 
   title, 
   value, 
   change, 
   icon: Icon, 
-  color 
+  iconColor 
 }: { 
   title: string; 
   value: string; 
-  change: { amount: number; percentage: number };
+  change: string; 
   icon: React.ComponentType<{ className?: string }>; 
-  color: string;
+  iconColor: string;
 }) => {
   const [isVisible, setIsVisible] = useState(true);
 
   return (
     <SimpleGlassCard className="p-6">
-      <div className="flex items-start justify-between mb-4">
-        <div className="flex items-center gap-3">
-          <div className="p-2 rounded-xl bg-white/[0.06]">
-            <Icon className="w-5 h-5" style={{ color }} />
-          </div>
-          <div>
-            <h3 className="font-bold text-white text-sm tracking-wide">***{title}***</h3>
-          </div>
+      <div className="flex items-center gap-3">
+        <div className="p-3 rounded-full" style={{ backgroundColor: vueniTheme.colors.surface.overlay }}>
+          <Icon className="w-5 h-5" style={{ color: iconColor }} />
         </div>
-        
-        <button
-          onClick={() => setIsVisible(!isVisible)}
-                      className="p-2 rounded-xl bg-white/[0.06] hover:bg-white/[0.08] transition-colors"
-        >
-          {isVisible ? (
-            <EyeOff className="w-4 h-4 text-white/70" />
-          ) : (
-            <Eye className="w-4 h-4 text-white/70" />
-          )}
-        </button>
+        <h2 className="text-xl font-bold text-white">{title}</h2>
       </div>
-
+      <p className="text-sm text-white/70">{change}</p>
       <div className={`mb-3 transition-all duration-300 ${isVisible ? '' : 'blur-sm'}`}>
         <div className="text-3xl font-black text-white mb-1 tracking-wide">
           {isVisible ? value : '••••••'}
         </div>
-      </div>
-
-      <div className="flex items-center gap-2">
-        <div 
-          className="flex items-center gap-1"
-          style={{ 
-            color: change.amount >= 0 ? colors.status.success : colors.status.error 
-          }}
-        >
-          <TrendingUp className={`w-4 h-4 ${change.amount < 0 ? 'rotate-180' : ''}`} />
-          <span className="text-sm font-medium">
-            {change.percentage >= 0 ? '+' : ''}{change.percentage.toFixed(1)}%
-          </span>
-        </div>
-        <span className="text-white/50 text-sm">vs last month</span>
       </div>
     </SimpleGlassCard>
   );
@@ -241,45 +222,39 @@ const CleanDashboard = () => {
 
         {/* Overview Cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          <OverviewCard
-            title="Total Assets"
+          <DashboardMetric 
+            title="Total Balance"
             value={new Intl.NumberFormat('en-US', {
               style: 'currency',
               currency: 'USD'
             }).format(totalBalance)}
-            change={{ amount: 2500, percentage: 8.2 }}
+            change="+5.2%"
             icon={DollarSign}
-            color={colors.accent.green}
+            iconColor={vueniTheme.colors.accent.blue}
           />
           
-          <OverviewCard
-            title="Monthly Income"
-            value={new Intl.NumberFormat('en-US', {
-              style: 'currency',
-              currency: 'USD'
-            }).format(monthlyIncome)}
-            change={{ amount: 250, percentage: 4.1 }}
-            icon={TrendingUp}
-            color={colors.accent.blue}
-          />
-          
-          <OverviewCard
-            title="Total Debt"
-            value={new Intl.NumberFormat('en-US', {
-              style: 'currency',
-              currency: 'USD'
-            }).format(totalDebt)}
-            change={{ amount: -125, percentage: -2.5 }}
+          <DashboardMetric 
+            title="Credit Score"
+            value="750"
+            change="+12 pts"
             icon={CreditCard}
-            color={colors.status.error}
+            iconColor={vueniTheme.colors.accent.purple}
           />
           
-          <OverviewCard
-            title="Savings Rate"
-            value="23.5%"
-            change={{ amount: 1.2, percentage: 5.4 }}
-            icon={PiggyBank}
-            color={colors.accent.purple}
+          <DashboardMetric 
+            title="Wellness Score"
+            value="85/100"
+            change="+3 pts"
+            icon={Heart}
+            iconColor={vueniTheme.colors.accent.pink}
+          />
+          
+          <DashboardMetric 
+            title="Eco Score"
+            value="92/100"
+            change="-1 pt"
+            icon={Leaf}
+            iconColor={vueniTheme.colors.accent.green}
           />
         </div>
 

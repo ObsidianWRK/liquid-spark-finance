@@ -2,6 +2,8 @@ import React from 'react';
 import { cn } from '@/shared/lib/utils';
 import { LucideIcon } from 'lucide-react';
 import { formatFinancialScore } from '@/shared/utils/formatters';
+import { vueniTheme } from '@/theme/unified';
+import { getScoreColor, getTrendColor } from '@/shared/utils/theme-color-mapper';
 
 // Universal Card Component - Consolidates:
 // - GlassCard.tsx
@@ -105,7 +107,7 @@ export const UniversalCard = React.memo<UniversalCardProps>(({
   const renderScore = () => {
     if (typeof score !== 'number') return null;
     
-    const scoreColor = score >= 80 ? '#10b981' : score >= 60 ? '#f59e0b' : '#ef4444';
+    const scoreColor = getScoreColor(score);
     
     const displayScore = formatFinancialScore(score);
     
@@ -178,10 +180,7 @@ export const UniversalCard = React.memo<UniversalCardProps>(({
             <div className="flex items-center space-x-1">
               <span 
                 className="text-sm font-bold"
-                style={{ 
-                  color: trend.trend === 'up' ? '#10b981' : 
-                         trend.trend === 'down' ? '#ef4444' : '#6b7280'
-                }}
+                style={{ color: getTrendColor(trend.trend) }}
               >
                 {trend.trend === 'up' ? '↗' : trend.trend === 'down' ? '↘' : '—'}
               </span>
@@ -243,10 +242,7 @@ export const UniversalCard = React.memo<UniversalCardProps>(({
               <div className="flex items-center space-x-1">
                 <span 
                   className="text-sm font-bold"
-                  style={{ 
-                    color: trend === 'up' ? '#10b981' : 
-                           trend === 'down' ? '#ef4444' : '#6b7280'
-                  }}
+                  style={{ color: getTrendColor(trend) }}
                 >
                   {trend === 'up' ? '↗' : trend === 'down' ? '↘' : '—'}
                 </span>

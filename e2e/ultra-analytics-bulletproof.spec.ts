@@ -207,7 +207,7 @@ test.describe('🔥 Ultra-Deep Analytics Bulletproof Tests', () => {
 
         // Measure performance metrics
         const metrics = await page.evaluate(() => {
-          const navigation = performance.getEntriesByType('navigation')[0] as PerformanceNavigationTiming;
+          const navigation = performance.getEntriesByType('navigation')[0];
           return {
             loadTime: navigation.loadEventEnd - navigation.loadEventStart,
             domContentLoaded: navigation.domContentLoadedEventEnd - navigation.domContentLoadedEventStart,

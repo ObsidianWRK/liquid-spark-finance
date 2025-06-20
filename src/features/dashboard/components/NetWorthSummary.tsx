@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import SimpleGlassCard from '@/shared/ui/SimpleGlassCard';
-import { colors } from '@/theme/colors';
+import { vueniTheme } from '@/theme/unified';
 import { 
   TrendingUp, 
   TrendingDown, 

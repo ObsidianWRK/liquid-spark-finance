@@ -124,7 +124,7 @@ const parseDate = (
   
   switch (format) {
     case 'timestamp':
-      return new Date(typeof date === 'number' ? date : parseInt(date as string));
+      return new Date(typeof date === 'number' ? date : parseInt(date));
     case 'date':
       return new Date(date);
     case 'iso':

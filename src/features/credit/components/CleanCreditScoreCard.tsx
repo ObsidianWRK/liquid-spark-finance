@@ -1,15 +1,23 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import SimpleGlassCard from '@/shared/ui/SimpleGlassCard';
-import { colors } from '@/theme/colors';
+import { vueniTheme } from '@/theme/unified';
 import { 
   CreditCard, 
   TrendingUp, 
   TrendingDown,
   ArrowRight,
-  Info
+  Info,
+  Bar,
+  Tooltip,
 } from 'lucide-react';
 import { creditScoreService } from '@/features/credit/api/creditScoreService';
+import { getScoreColor, getScoreGrade } from '@/shared/utils/formatters';
+import { 
+  AreaChart,
+  Area,
+  ResponsiveContainer,
+} from 'recharts';
 
 interface CreditScoreData {
   score: number;
@@ -85,6 +93,73 @@ const CleanCreditScoreCard = ({
     if (score >= 670) return 'Good';
     if (score >= 580) return 'Fair';
     return 'Poor';
+  };
+
+  const renderFactors = (factors: any[]) => {
+    if (!factors?.length) return null;
+    return (
+      <div className="space-y-4">
+        {factors.map((factor, index) => {
+          const progress = factor.score;
+          const statusColor = getScoreColor(progress);
+
+          return (
+            <div className="flex items-center justify-between">
+              <span className="text-sm text-white/70">{factor.factor}</span>
+              <div className="w-16 h-2 bg-white/[0.06] rounded-full">
+                <div 
+                  className="absolute top-0 left-0 h-full rounded-full"
+                  style={{ 
+                    width: `${progress}%`,
+                    backgroundColor: statusColor,
+                    transition: `width ${500 + index * 100}ms ease-out`
+                  }}
+                />
+              </div>
+            </div>
+          );
+        })}
+      </div>
+    );
+  };
+
+  const renderHistoryChart = () => {
+    if (!history?.length) return null;
+
+    return (
+      <ResponsiveContainer width="100%" height={120}>
+        <AreaChart 
+          data={history}
+          margin={{ top: 5, right: 20, left: -10, bottom: 0 }}
+        >
+          <defs>
+            <linearGradient id="scoreGradient" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="5%" stopColor={vueniTheme.colors.palette.primary} stopOpacity={0.3}/>
+              <stop offset="95%" stopColor={vueniTheme.colors.palette.primary} stopOpacity={0}/>
+            </linearGradient>
+          </defs>
+          <Tooltip 
+            contentStyle={{ 
+              backgroundColor: 'rgba(26, 26, 36, 0.8)', 
+              borderColor: 'rgba(255, 255, 255, 0.1)',
+              borderRadius: '0.75rem',
+              backdropFilter: 'blur(4px)',
+            }}
+            labelFormatter={(label) => new Date(label).toLocaleDateString('en-US', { month: 'short', year: 'numeric' })}
+            formatter={(value: number) => [value, 'Score']}
+          />
+          <Area 
+            type="monotone" 
+            dataKey="score" 
+            stroke={vueniTheme.colors.palette.primary}
+            strokeWidth={2} 
+            fill="url(#scoreGradient)" 
+            dot={false}
+            activeDot={{ r: 6, strokeWidth: 2, stroke: vueniTheme.colors.text.primary, fill: vueniTheme.colors.palette.primary }}
+          />
+        </AreaChart>
+      </ResponsiveContainer>
+    );
   };
 
   if (!data) {
@@ -236,6 +311,11 @@ const CleanCreditScoreCard = ({
         <p className="text-xs text-white/50 text-center">
           Next review: {new Date(data.nextReviewDate).toLocaleDateString()}
         </p>
+      </div>
+
+      <div className="space-y-6">
+        {renderFactors(creditFactors.breakdown)}
+        {renderHistoryChart()}
       </div>
     </SimpleGlassCard>
   );

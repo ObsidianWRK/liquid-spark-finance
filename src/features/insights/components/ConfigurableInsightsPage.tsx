@@ -220,7 +220,7 @@ const EnhancedScoreDisplay = ({ scores, layout, animationsEnabled }: {
       {Object.entries(scores).map(([type, score]) => (
         <div key={type} className="text-center">
           <SharedScoreCircle 
-            score={score as number}
+            score={score}
             type={type as any}
             size="lg"
             label={type === 'wellness' ? 'Wellness Score' : type === 'eco' ? 'Eco Impact' : 'Financial Health'}

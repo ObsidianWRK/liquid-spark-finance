@@ -9,7 +9,6 @@ if (!fs.existsSync(manifestPath)) {
     'UI interaction manifest not found – make sure globalSetup generated ui-map.json before running this test.'
   );
 }
-// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
 const manifest: Array<{
   selector: string;
   type: string;

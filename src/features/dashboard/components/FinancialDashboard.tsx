@@ -243,7 +243,7 @@ const FinancialDashboard = ({ familyId, timeframe = '3m', className }: Financial
       
       return {
         label: safeString(safeTrend.category) || 'Unknown',
-        trend: (change >= 0 ? 'up' : 'down') as 'up' | 'down',
+        trend: (change >= 0 ? 'up' : 'down'),
         value: `${Math.round(percentChange)}%`,
       };
     })

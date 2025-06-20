@@ -404,7 +404,7 @@ export const StackedBarChart = forwardRef<ChartRef, StackedBarChartProps>(({
       // In a real implementation, you'd determine which segment was clicked
       const firstSeries = computedSeries[0];
       if (firstSeries) {
-        onBarClick(point as StackedBarDataPoint, firstSeries.dataKey, point[firstSeries.dataKey] as number);
+        onBarClick(point, firstSeries.dataKey, point[firstSeries.dataKey] as number);
       }
     }
   }, [clickableSegments, onBarClick, processedData, computedSeries]);

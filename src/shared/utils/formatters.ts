@@ -3,6 +3,7 @@
  */
 
 import { usePrivacyStore } from "@/features/privacy-hide-amounts/store";
+import { vueniTheme } from '@/theme/unified';
 
 /**
  * Safe ratio calculation that handles division by zero
@@ -204,9 +205,9 @@ export const getScoreColorClass = (score: number): string => {
  * @returns Color hex string
  */
 export const getScoreColor = (score: number): string => {
-  if (score >= 80) return '#10B981'; // Green
-  if (score >= 70) return '#3B82F6'; // Blue
-  if (score >= 60) return '#F59E0B'; // Yellow
-  if (score >= 40) return '#F97316'; // Orange
-  return '#EF4444'; // Red
+  if (score >= 80) return vueniTheme.colors.palette.success; // Green
+  if (score >= 70) return vueniTheme.colors.palette.primary; // Blue  
+  if (score >= 60) return vueniTheme.colors.palette.warning; // Yellow
+  if (score >= 40) return vueniTheme.colors.palette.warning; // Orange (map to warning)
+  return vueniTheme.colors.palette.danger; // Red
 }; 

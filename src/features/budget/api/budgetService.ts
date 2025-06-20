@@ -78,7 +78,7 @@ class BudgetService {
       const data = secureStorage.getItem(this.storageKey);
       if (data) {
         // Load new budget data
-        const budgetData = data as any;
+        const budgetData = data;
         if (budgetData.budgets) {
           budgetData.budgets.forEach((budget: any) => {
             // Convert date strings back to Date objects

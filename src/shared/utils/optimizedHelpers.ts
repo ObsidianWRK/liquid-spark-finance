@@ -1,4 +1,5 @@
 import { Transaction, Account, InsightMetric } from '@/types/shared';
+import { vueniTheme } from '@/theme/unified';
 
 // Optimized utility functions with memoization and performance improvements
 // Consolidates helper functions scattered across multiple files
@@ -205,14 +206,18 @@ export const sortTransactions = memoize((
 
 // Color utilities
 export const getTransactionColor = memoize((amount: number) => {
-  return amount < 0 ? '#ef4444' : '#22c55e'; // red for expenses, green for income
+  return amount < 0 ? vueniTheme.colors.palette.danger : vueniTheme.colors.palette.success; // red for expenses, green for income
 });
 
 export const getCategoryColor = memoize((category: string) => {
-  // Generate consistent colors for categories
+  // Generate consistent colors for categories using unified theme
   const colors = [
-    '#3b82f6', '#ef4444', '#22c55e', '#f59e0b', '#8b5cf6',
-    '#ec4899', '#06b6d4', '#84cc16', '#f97316', '#6366f1'
+    vueniTheme.colors.palette.primary, 
+    vueniTheme.colors.palette.danger, 
+    vueniTheme.colors.palette.success, 
+    vueniTheme.colors.palette.warning, 
+    vueniTheme.colors.semantic.chart.investments,
+    vueniTheme.colors.palette.neutral
   ];
   
   let hash = 0;

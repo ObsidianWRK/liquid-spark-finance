@@ -39,7 +39,7 @@ export default async function globalSetup(_: FullConfig) {
       await page.goto(`${baseURL}${currentPath}`, { waitUntil: 'domcontentloaded' });
     } catch (err) {
       // If navigation fails, skip this route and continue.
-      /* eslint-disable no-console */
+       
       console.warn(`[playwright-audit] Failed to load ${currentPath}:`, err);
       continue;
     }

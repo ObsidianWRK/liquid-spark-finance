@@ -49,7 +49,7 @@ export class HookValidationMonitor {
   // Get performance metrics
   async getPerformanceMetrics() {
     return await this.page.evaluate(() => {
-      const navigationTiming = performance.getEntriesByType('navigation')[0] as PerformanceNavigationTiming;
+      const navigationTiming = performance.getEntriesByType('navigation')[0];
       return {
         loadTime: navigationTiming.loadEventEnd - navigationTiming.loadEventStart,
         domContentLoaded: navigationTiming.domContentLoadedEventEnd - navigationTiming.domContentLoadedEventStart,

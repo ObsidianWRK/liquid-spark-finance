@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import { calculate401kBalance } from '@/shared/utils/calculators';
-import { PieChart, Pie, Cell, BarChart, Bar, ResponsiveContainer } from 'recharts';
+import { PieChart, Pie, Cell, BarChart, Bar, ResponsiveContainer, Tooltip, Legend, CartesianGrid, XAxis, YAxis } from 'recharts';
 import { AreaChart } from '@/shared/ui/charts';
+import { getFinancialChartColor } from '@/shared/utils/theme-color-mapper';
+import { vueniTheme } from '@/theme/unified';
 
 interface RetirementData {
   year: number;
@@ -91,10 +93,10 @@ const Retirement401kCalculator = () => {
 
   const finalProjection = projectionData[projectionData.length - 1];
   const contributionBreakdown = finalProjection ? [
-    { name: 'Initial Balance', value: balance, color: '#8B5CF6' },
-    { name: 'Employee Contributions', value: finalProjection.employeeContribution, color: '#3B82F6' },
-    { name: 'Employer Match', value: finalProjection.employerMatch, color: '#10B981' },
-    { name: 'Investment Growth', value: finalProjection.investmentGrowth, color: '#F59E0B' }
+    { name: 'Initial Balance', value: balance, color: getFinancialChartColor('investments') },
+    { name: 'Employee Contributions', value: finalProjection.employeeContribution, color: getFinancialChartColor('savings') },
+    { name: 'Employer Match', value: finalProjection.employerMatch, color: getFinancialChartColor('income') },
+    { name: 'Investment Growth', value: finalProjection.investmentGrowth, color: getFinancialChartColor('debt') }
   ] : [];
 
   // Calculate monthly income in retirement (using 4% rule)
@@ -290,17 +292,17 @@ const Retirement401kCalculator = () => {
                   {
                     dataKey: 'employeeContribution',
                     label: 'Employee Contributions',
-                    color: '#3B82F6',
+                    color: getFinancialChartColor('savings'),
                   },
                   {
                     dataKey: 'employerMatch',
                     label: 'Employer Match', 
-                    color: '#10B981',
+                    color: getFinancialChartColor('income'),
                   },
                   {
                     dataKey: 'investmentGrowth',
                     label: 'Investment Growth',
-                    color: '#F59E0B',
+                    color: getFinancialChartColor('debt'),
                   },
                 ]}
                 financialType="currency"
@@ -364,10 +366,10 @@ const Retirement401kCalculator = () => {
                   <Tooltip 
                     formatter={(value: number) => [formatCurrency(value), 'Amount']}
                     contentStyle={{
-                      backgroundColor: 'rgba(0,0,0,0.8)',
-                      border: '1px solid rgba(255,255,255,0.2)',
+                      backgroundColor: vueniTheme.colors.surface.overlay,
+                      border: `1px solid ${vueniTheme.colors.surface.glass.border}`,
                       borderRadius: '12px',
-                      color: '#fff'
+                      color: vueniTheme.colors.text.primary
                     }}
                   />
                 </PieChart>
@@ -395,25 +397,25 @@ const Retirement401kCalculator = () => {
                 <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.1)" />
                 <XAxis 
                   dataKey="category" 
-                  stroke="#fff" 
+                  stroke={vueniTheme.colors.text.primary} 
                   fontSize={12}
                 />
                 <YAxis 
-                  stroke="#fff" 
+                  stroke={vueniTheme.colors.text.primary}
                   fontSize={12}
                   tickFormatter={(value) => formatCurrency(value)}
                 />
                 <Tooltip 
                   formatter={(value: number, name: string) => [formatCurrency(value), name === 'amount' ? 'Current' : 'Limit']}
                   contentStyle={{
-                    backgroundColor: 'rgba(0,0,0,0.8)',
-                    border: '1px solid rgba(255,255,255,0.2)',
+                    backgroundColor: vueniTheme.colors.surface.overlay,
+                    border: `1px solid ${vueniTheme.colors.surface.glass.border}`,
                     borderRadius: '12px',
-                    color: '#fff'
+                    color: vueniTheme.colors.text.primary
                   }}
                 />
-                <Bar dataKey="amount" fill="#3B82F6" radius={[4, 4, 0, 0]} />
-                <Bar dataKey="limit" fill="#6B7280" radius={[4, 4, 0, 0]} />
+                <Bar dataKey="amount" fill={getFinancialChartColor('savings')} radius={[4, 4, 0, 0]} />
+                <Bar dataKey="limit" fill={vueniTheme.colors.palette.neutral} radius={[4, 4, 0, 0]} />
               </BarChart>
             </ResponsiveContainer>
           </div>

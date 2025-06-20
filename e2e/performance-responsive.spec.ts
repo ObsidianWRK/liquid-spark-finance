@@ -128,7 +128,7 @@ for (const viewport of VIEWPORTS) {
         
         // Get additional metrics
         const navigationTiming = await page.evaluate(() => {
-          const timing = performance.getEntriesByType('navigation')[0] as PerformanceNavigationTiming;
+          const timing = performance.getEntriesByType('navigation')[0];
           return {
             domContentLoaded: timing.domContentLoadedEventEnd - timing.domContentLoadedEventStart,
             loadComplete: timing.loadEventEnd - timing.loadEventStart,

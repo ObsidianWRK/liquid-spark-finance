@@ -118,7 +118,7 @@ export const UnifiedCard = React.memo<UnifiedCardProps>(({
     
     // Check if it's a Lucide icon component (function)
     if (typeof icon === 'function') {
-      const IconComponent = icon as LucideIcon;
+      const IconComponent = icon;
       return <IconComponent className={unifiedCardTokens.iconChip.icon} />;
     }
     

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import SimpleGlassCard from '@/shared/ui/SimpleGlassCard';
-import { colors } from '@/theme/colors';
+import { vueniTheme } from '@/theme/unified';
 import { 
   Eye, 
   EyeOff, 
@@ -11,6 +11,8 @@ import {
   Wallet,
   Building
 } from 'lucide-react';
+import { cn } from '@/shared/lib/utils';
+import { formatFinancialScore } from '@/shared/utils/formatters';
 
 export interface AccountData {
   id: string;
@@ -60,9 +62,9 @@ const CleanAccountCard = ({ account, onClick, className }: CleanAccountCardProps
 
   const getBalanceColor = (balance: number, type: string) => {
     if (type.toLowerCase() === 'credit card') {
-      return balance < 0 ? colors.status.error : colors.status.success;
+      return balance < 0 ? vueniTheme.colors.palette.danger : vueniTheme.colors.palette.success;
     }
-    return balance >= 0 ? colors.text.primary : colors.status.error;
+    return balance >= 0 ? vueniTheme.colors.text.primary : vueniTheme.colors.palette.danger;
   };
 
   const toggleBalanceVisibility = () => {
@@ -130,7 +132,7 @@ const CleanAccountCard = ({ account, onClick, className }: CleanAccountCardProps
           <div 
             className="flex items-center gap-1"
             style={{ 
-              color: account.change.amount >= 0 ? colors.status.success : colors.status.error 
+              color: account.change.amount >= 0 ? vueniTheme.colors.palette.success : vueniTheme.colors.palette.danger 
             }}
           >
             {account.change.amount >= 0 ? (

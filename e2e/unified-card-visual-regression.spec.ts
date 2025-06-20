@@ -471,7 +471,7 @@ test('UnifiedCard performance', async ({ page }) => {
   // Measure card rendering performance
   const metrics = await page.evaluate(() => {
     const paintTiming = performance.getEntriesByType('paint');
-    const navigationTiming = performance.getEntriesByType('navigation')[0] as PerformanceNavigationTiming;
+    const navigationTiming = performance.getEntriesByType('navigation')[0];
     
     return {
       firstPaint: paintTiming.find(p => p.name === 'first-paint')?.startTime || 0,

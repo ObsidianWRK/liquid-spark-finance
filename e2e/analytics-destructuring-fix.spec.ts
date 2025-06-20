@@ -97,10 +97,10 @@ test.describe('Analytics Tab - Destructuring Fix Validation', () => {
         await page.goto('/?view=analytics');
 
         // Check for loading skeleton or spinner (if implemented)
-        const loadingIndicators = page.locator('.animate-pulse, .animate-spin, [data-testid="loading"]');
+        page.locator('.animate-pulse, .animate-spin, [data-testid=\"loading\"]');
         
         // Wait for content to eventually load
-        await page.waitForSelector('h1:has-text("Financial Analytics Dashboard")', { timeout: 15000 });
+        await page.waitForSelector('h1:has-text(\"Financial Analytics Dashboard\")', { timeout: 15000 });
         
         // Verify final state is properly rendered
         await expect(page.locator('.recharts-wrapper')).toBeVisible();

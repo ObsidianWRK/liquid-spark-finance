@@ -14,7 +14,7 @@ import {
 import { UniversalCard } from '../ui/UniversalCard';
 import { UniversalScoreCircle } from './UniversalScoreCircle';
 import { cn } from '@/shared/lib/utils';
-import { colors } from '@/theme/colors';
+import { vueniTheme } from '@/theme/unified';
 
 // Unified Transaction List that consolidates:
 // - TransactionList.tsx

@@ -115,7 +115,7 @@ test.describe('Responsive Overhaul Validation - More Drawer Priority', () => {
       const performanceMetrics = await page.evaluate(() => {
         return new Promise(resolve => {
           // Simplified performance measurement
-          const navigation = performance.getEntriesByType('navigation')[0] as PerformanceNavigationTiming;
+          const navigation = performance.getEntriesByType('navigation')[0];
           
           setTimeout(() => {
             resolve({
