@@ -185,6 +185,75 @@ const cardSystem = {
   },
 } as const;
 
+// Chart & Graph System (from graph-tokens.ts)
+const chartSystem = {
+  // Apple HIG-compliant colors
+  colors: {
+    positive: '#32D74B',  // systemGreen dark
+    negative: '#FF453A',  // systemRed dark
+    neutral: '#0A84FF',  // systemBlue dark
+    warning: '#FF9F0A',  // systemOrange dark
+    
+    // Extended palette for complex charts
+    extended: {
+      teal: '#64D2FF',
+      mint: '#63E6E2',
+      pink: '#FF375F',
+      yellow: '#FFD60A',
+      purple: '#BF5AF2'
+    },
+  },
+  
+  // Apple Spacing System
+  spacing: {
+    xs: '4px',
+    sm: '8px',
+    md: '12px',
+    lg: '16px',
+    xl: '24px',
+    xxl: '32px',
+  },
+  
+  // Apple Corner Radius System
+  borderRadius: {
+    sm: '8px',
+    md: '12px',
+    lg: '16px',
+    tooltip: '8px',
+    legendDot: '2px',
+  },
+  
+  // Apple Animation System
+  animation: {
+    standard: 'cubic-bezier(0.25, 0.46, 0.45, 0.94)',
+    ios: 'cubic-bezier(0.4, 0.0, 0.2, 1.0)',
+    duration: {
+      fast: '150ms',
+      standard: '300ms',
+      chartDrawing: '800ms',
+    },
+  },
+  
+  // Apple Typography System
+  typography: {
+    fontFamily: '"SF Pro Display", -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif',
+    fontSize: {
+      chartTitle: '20px',
+      axisLabel: '12px',
+      dataLabel: '11px',
+      legend: '11px',
+      tooltip: '11px',
+    },
+    fontWeight: {
+      chartTitle: 600,
+      axisLabel: 400,
+      dataLabel: 500,
+      legend: 400,
+      tooltip: 500,
+    },
+  },
+};
+
 // Main unified theme export
 export const vueniTheme = {
   // Color system
@@ -205,6 +274,7 @@ export const vueniTheme = {
   cards: cardSystem,
   animation: animationSystem,
   zIndex: zIndexSystem,
+  charts: chartSystem,
 } as const;
 
 // Theme provider context value
