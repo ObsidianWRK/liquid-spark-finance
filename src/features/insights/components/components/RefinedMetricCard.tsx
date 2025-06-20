@@ -144,14 +144,14 @@ const RefinedMetricCard = memo(({
   return (
     <div
       className={`
-        relative overflow-hidden rounded-2xl backdrop-blur-xl border border-white/[0.08] 
-        hover:border-white/[0.12] transition-all duration-300 group hover-lift ${config.padding}
-        bg-white/[0.02] shadow-lg
+        relative overflow-hidden rounded-2xl backdrop-blur-xl border border-slate-700/40 
+        hover:border-slate-600/60 transition-all duration-300 group hover-lift ${config.padding}
+        bg-surface-900/70 shadow-lg
       `}
+      data-testid="insights-card"
       style={{
         animation: `slideInScale 0.6s ease-out ${delay}ms both`
       }}
-      data-testid="insights-card"
     >
       {/* Subtle gradient overlay */}
       <div 

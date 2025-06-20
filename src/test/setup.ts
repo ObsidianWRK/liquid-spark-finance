@@ -1,5 +1,5 @@
 import '@testing-library/jest-dom';
-import { vi } from 'vitest';
+import { vi, afterEach } from 'vitest';
 
 // Mock crypto for Node.js environment
 Object.defineProperty(global, 'crypto', {
@@ -62,6 +62,26 @@ Object.defineProperty(window, 'matchMedia', {
     removeEventListener: vi.fn(),
     dispatchEvent: vi.fn(),
   })),
+});
+
+// Mock performance.now()
+Object.defineProperty(global, 'performance', {
+  value: {
+    ...global.performance,
+    now: vi.fn(() => Date.now()),
+  },
+  writable: true,
+  configurable: true,
+});
+
+// Mock crypto.randomUUID
+Object.defineProperty(global, 'crypto', {
+  value: {
+    ...global.crypto,
+    randomUUID: () => `${Math.random().toString(36).substr(2, 9)}-${Math.random().toString(36).substr(2, 4)}-${Math.random().toString(36).substr(2, 4)}-${Math.random().toString(36).substr(2, 4)}-${Math.random().toString(36).substr(2, 12)}` as const,
+  },
+  writable: true,
+  configurable: true,
 });
 
 // Setup global test utilities

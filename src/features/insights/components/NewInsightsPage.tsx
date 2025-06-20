@@ -112,7 +112,7 @@ const NewInsightsPage: React.FC<NewInsightsPageProps> = ({ transactions, account
         {/* Back Button */}
         <button
           onClick={() => navigate('/')}
-          className="flex items-center gap-2 px-3 py-2 rounded-xl text-white/80 hover:text-white hover:bg-white/[0.05] transition-colors mb-6"
+          className="flex items-center gap-2 px-3 py-2 rounded-xl text-white/80 hover:text-white hover:bg-surface-900/40 transition-colors mb-6"
         >
           <ArrowLeft className="w-4 h-4" />
           <span className="text-sm">Dashboard</span>
@@ -231,7 +231,7 @@ const NewInsightsPage: React.FC<NewInsightsPageProps> = ({ transactions, account
                 <p className="text-white/70 mb-4">Your wellness score: {Math.round(scores.health)}/100</p>
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                   {wellnessData.breakdown && Object.entries(wellnessData.breakdown).map(([category, amount]) => (
-                    <div key={category} className="p-3 bg-white/[0.03] rounded-lg">
+                    <div key={category} className="p-3 bg-surface-900/50 rounded-lg">
                       <p className="text-white/60 text-xs capitalize">{category.replace(/([A-Z])/g, ' $1')}</p>
                       <p className="text-white font-bold">${typeof amount === 'number' ? amount.toLocaleString() : '0'}</p>
                     </div>
@@ -250,7 +250,7 @@ const NewInsightsPage: React.FC<NewInsightsPageProps> = ({ transactions, account
                 <p className="text-white/70 mb-4">Your eco score: {Math.round(scores.eco)}/100</p>
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                   {ecoData.breakdown && Object.entries(ecoData.breakdown).map(([category, amount]) => (
-                    <div key={category} className="p-3 bg-white/[0.03] rounded-lg">
+                    <div key={category} className="p-3 bg-surface-900/50 rounded-lg">
                       <p className="text-white/60 text-xs capitalize">{category.replace(/([A-Z])/g, ' $1')}</p>
                       <p className="text-white font-bold">${typeof amount === 'number' ? amount.toLocaleString() : '0'}</p>
                     </div>

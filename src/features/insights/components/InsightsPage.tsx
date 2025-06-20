@@ -85,7 +85,7 @@ const InsightsPage: React.FC<InsightsPageProps> = ({ transactions, accounts }) =
       <h1 className="text-3xl font-bold text-white mb-8">Financial Insights</h1>
       
       <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-        <TabsList className="grid w-full grid-cols-3 mb-6 p-1 rounded-2xl bg-white/[0.02] border border-white/[0.08]">
+        <TabsList className="grid w-full grid-cols-3 mb-6 p-1 rounded-2xl bg-surface-900/70 border border-slate-700/40" data-testid="insights-card">
           <TabsTrigger 
             value="overview" 
             className="text-white font-medium py-3 px-6 rounded-xl transition-all duration-200 data-[state=active]:bg-white/20 data-[state=active]:text-white"
@@ -183,7 +183,7 @@ const InsightsPage: React.FC<InsightsPageProps> = ({ transactions, accounts }) =
               <p className="text-white/70 mb-4">Your wellness score: {Math.round(scores.health)}/100</p>
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                 {wellnessData.breakdown && Object.entries(wellnessData.breakdown).map(([category, amount]) => (
-                  <div key={category} className="p-3 bg-white/[0.03] rounded-lg">
+                  <div key={category} className="p-3 bg-surface-900/50 rounded-lg">
                     <p className="text-white/60 text-xs capitalize">{category.replace(/([A-Z])/g, ' $1')}</p>
                     <p className="text-white font-bold">${typeof amount === 'number' ? amount.toLocaleString() : '0'}</p>
                   </div>
@@ -200,7 +200,7 @@ const InsightsPage: React.FC<InsightsPageProps> = ({ transactions, accounts }) =
               <p className="text-white/70 mb-4">Your eco score: {Math.round(scores.eco)}/100</p>
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                 {ecoData.breakdown && Object.entries(ecoData.breakdown).map(([category, amount]) => (
-                  <div key={category} className="p-3 bg-white/[0.03] rounded-lg">
+                  <div key={category} className="p-3 bg-surface-900/50 rounded-lg">
                     <p className="text-white/60 text-xs capitalize">{category.replace(/([A-Z])/g, ' $1')}</p>
                     <p className="text-white font-bold">${typeof amount === 'number' ? amount.toLocaleString() : '0'}</p>
                   </div>

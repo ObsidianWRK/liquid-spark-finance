@@ -290,6 +290,7 @@ const ComprehensiveEcoCard: React.FC<EcoCardProps> = ({
     return (
       <div 
         className="liquid-glass-card p-6 cursor-pointer transition-all duration-300 hover:scale-105 score-card-container"
+        data-testid="insights-card"
         onClick={() => setIsExpanded(true)}
       >
         <div className="score-card-content">
@@ -349,7 +350,7 @@ const ComprehensiveEcoCard: React.FC<EcoCardProps> = ({
   }
 
   return (
-    <div className="liquid-glass-card p-6 equal-height-cards">
+    <div className="liquid-glass-card p-6 equal-height-cards" data-testid="insights-card">
       <div className="flex items-center justify-between mb-6">
         <div className="icon-text-row">
           <div className="icon">
@@ -359,7 +360,7 @@ const ComprehensiveEcoCard: React.FC<EcoCardProps> = ({
         </div>
         <button
           onClick={() => setIsExpanded(false)}
-          className="p-2 rounded-lg bg-surface-900/70 hover:bg-white/[0.03] transition-colors"
+          className="p-2 rounded-lg bg-surface-900/70 hover:bg-surface-900/90 transition-colors"
           data-testid="insights-card"
         >
           <ChevronUp className="w-5 h-5 text-slate-400" />
@@ -373,7 +374,7 @@ const ComprehensiveEcoCard: React.FC<EcoCardProps> = ({
           className={`category-nav-button p-3 rounded-lg text-xs font-medium transition-all ${
             activeCategory === 'overview'
               ? 'bg-green-500/20 text-green-300 border border-green-500/30'
-              : 'bg-surface-900/70 text-white/60 hover:bg-white/[0.03]'
+              : 'bg-surface-900/70 text-white/60 hover:bg-surface-900/90'
           }`}
         >
           <div className="icon-wrapper">
@@ -387,7 +388,7 @@ const ComprehensiveEcoCard: React.FC<EcoCardProps> = ({
             className={`category-nav-button p-3 rounded-lg text-xs font-medium transition-all ${
               activeCategory === category.id
                 ? 'bg-green-500/20 text-green-300 border border-green-500/30'
-                : 'bg-surface-900/70 text-white/60 hover:bg-white/[0.03]'
+                : 'bg-surface-900/70 text-white/60 hover:bg-surface-900/90'
             }`}
             style={{
               backgroundColor: activeCategory === category.id ? `${category.color}20` : undefined,
@@ -530,7 +531,7 @@ const ComprehensiveEcoCard: React.FC<EcoCardProps> = ({
                       </div>
                       
                       {typeof metric.value === 'number' && typeof metric.target === 'number' && (
-                        <div className="w-full bg-white/[0.08] rounded-full h-2">
+                        <div className="w-full bg-surface-900/40 rounded-full h-2">
                           <div 
                             className="h-2 rounded-full transition-all duration-1000"
                             style={{
