@@ -1,6 +1,6 @@
-import { describe, it, expect, beforeEach, vi } from 'vitest';
-import { VueniSecureStorage } from '../lib/VueniSecureStorage';
-import { VueniSessionManager } from '../lib/VueniSessionManager';
+import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
+import { VueniSecureStorage } from '../shared/lib/VueniSecureStorage';
+import { VueniSessionManager } from '../shared/lib/VueniSessionManager';
 
 // Mock crypto-js for testing
 vi.mock('crypto-js', () => ({
@@ -231,7 +231,7 @@ describe('Security Validation', () => {
     console.error = originalConsoleError;
   });
 
-  it('should handle decryption errors gracefully', () => {
+  it('should handle decryption errors gracefully', async () => {
     const originalConsoleError = console.error;
     console.error = vi.fn();
     

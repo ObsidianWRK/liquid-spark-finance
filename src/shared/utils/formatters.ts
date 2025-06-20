@@ -46,20 +46,23 @@ export const formatPercent = (
 /**
  * Format score with configurable precision (0-2 decimal places)
  * @param value - The score value to format
- * @param precision - Number of decimal places (0, 1, or 2). Default is 1 for score display
+ * @param precision - Number of decimal places (0, 1, or 2). Default is 0 for integer display
  * @param locale - Locale for formatting. Default is 'en-US'
  * @returns Formatted score string (e.g., "79", "79.4", "79.37")
  */
-export const formatScore = (value: number, precision: 0 | 1 | 2 = 1, locale: string = 'en-US'): string => {
+export const formatScore = (value: number, precision: 0 | 1 | 2 = 0, locale: string = 'en-US'): string => {
   // Clamp precision to valid range
   const validPrecision = Math.max(0, Math.min(2, precision)) as 0 | 1 | 2;
+  
+  // Round the value appropriately for the precision
+  const roundedValue = validPrecision === 0 ? Math.round(value) : value;
   
   // Use Intl.NumberFormat for locale-safe formatting
   return new Intl.NumberFormat(locale, {
     minimumFractionDigits: validPrecision,
     maximumFractionDigits: validPrecision,
     useGrouping: false // No thousands separators for scores
-  }).format(value);
+  }).format(roundedValue);
 };
 
 /**
@@ -101,8 +104,11 @@ export const formatCurrency = (
     locale = 'en-US' 
   } = options || {};
   
+  // Round the value when decimals is explicitly set to 0
+  const processedValue = decimals === 0 ? Math.round(value) : value;
+  
   // Determine decimal places
-  const shouldShowDecimals = decimals !== undefined ? decimals > 0 : value % 1 !== 0;
+  const shouldShowDecimals = decimals !== undefined ? decimals > 0 : processedValue % 1 !== 0;
   
   const hide = (usePrivacyStore as any)?.getState?.()?.setting?.hideAmounts;
 
@@ -111,7 +117,7 @@ export const formatCurrency = (
     currency: currency,
     minimumFractionDigits: shouldShowDecimals ? (decimals ?? 2) : 0,
     maximumFractionDigits: shouldShowDecimals ? (decimals ?? 2) : 0,
-  }).format(value);
+  }).format(processedValue);
 
   if (hide) {
     return formatted.replace(/\d/g, '•');

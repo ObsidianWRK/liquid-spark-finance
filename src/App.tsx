@@ -1,92 +1,107 @@
-import { Toaster } from "@/shared/ui/toaster";
-import { Toaster as Sonner } from "@/shared/ui/sonner";
-import { TooltipProvider } from "@/shared/ui/tooltip";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { lazy, Suspense } from 'react';
-import { UniversalCard } from '@/shared/ui/UniversalCard';
-import { LiquidGlassProvider } from '@/shared/hooks/useLiquidGlass';
-import { FeatureFlagProvider } from '@/components/shared/VueniFeatureFlags';
-import GlobalGradientBackground from '@/shared/ui/GlobalGradientBackground';
-import { BiometricsProvider } from '@/providers/BiometricsProvider';
-import { VueniThemeProvider } from '@/theme/ThemeProvider';
-import '@/app/styles/accessibility.css';
+import React, { Suspense } from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { AdaptiveNavigation } from '@/navigation';
+import LiquidGlassSVGFilters from '@/shared/ui/LiquidGlassSVGFilters';
 
-const queryClient = new QueryClient();
+// Use existing working components
+const Index = React.lazy(() => import('./pages/Index'));
+const Profile = React.lazy(() => import('./pages/Profile'));
+const TransactionDemo = React.lazy(() => import('./pages/TransactionDemo'));
+const CalculatorsPage = React.lazy(() => import('./pages/CalculatorsPage'));
+const CalculatorsHub = React.lazy(() => import('./pages/CalculatorsHub'));
+const CreditScorePage = React.lazy(() => import('@/features/credit/components/CreditScorePage'));
+const SavingsGoals = React.lazy(() => import('@/features/savings/components/SavingsGoals'));
+const BudgetPlannerPage = React.lazy(() => import('@/features/budget/components/BudgetPlannerPage'));
+const InvestmentTrackerPage = React.lazy(() => import('@/features/investments/components/InvestmentTrackerPage'));
+const BudgetReportsPage = React.lazy(() => import('@/features/budget/components/BudgetReportsPage'));
+const InsightsPage = React.lazy(() => import('./pages/InsightsPage'));
 
-// Vite-Compatible Lazy Loading (NO Webpack chunks) - Fixed for Vercel
-const Index = lazy(() => import('./pages/Index'));
-const Profile = lazy(() => import('./pages/Profile'));
-const NotFound = lazy(() => import('./pages/NotFound'));
-
-// Financial Components
-const CreditScorePage = lazy(() => import('@/features/credit/components/CreditScorePage'));
-const SavingsGoals = lazy(() => import('@/features/savings/components/SavingsGoals'));
-const BudgetPlannerPage = lazy(() => import('@/features/budget/components/BudgetPlannerPage'));
-const InvestmentTrackerPage = lazy(() => import('@/features/investments/components/InvestmentTrackerPage'));
-const BudgetReportsPage = lazy(() => import('@/features/budget/components/BudgetReportsPage'));
-
-// Tools & Utilities
-const TransactionDemo = lazy(() => import('./pages/TransactionDemo'));
-const CalculatorsPage = lazy(() => import('./pages/CalculatorsPage'));
-
-// Insights (Fixed for Vercel)
-const InsightsPage = lazy(() => import('./pages/InsightsPage'));
-
-// Enhanced Loading Fallback Component
-const OptimizedLoadingFallback = () => (
-  <div className="min-h-screen bg-black text-white flex items-center justify-center">
-    <UniversalCard variant="glass" className="p-8">
-      <div className="text-center space-y-4">
-        <div className="w-12 h-12 border-4 border-blue-500/30 border-t-blue-500 rounded-full animate-spin mx-auto"></div>
-        <div className="space-y-2">
-          <div className="text-lg font-semibold">Loading Vueni</div>
-          <div className="text-sm text-white/60">Optimized components loading...</div>
-        </div>
-      </div>
-    </UniversalCard>
+// Loading component
+const LoadingSpinner = () => (
+  <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 flex items-center justify-center">
+    <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-blue-400"></div>
   </div>
 );
 
-const AccountOverview = lazy(() => import('./pages/AccountOverview'));
+// Error Boundary
+class ErrorBoundary extends React.Component<
+  { children: React.ReactNode },
+  { hasError: boolean }
+> {
+  constructor(props: { children: React.ReactNode }) {
+    super(props);
+    this.state = { hasError: false };
+  }
 
-const App = () => (
-  <VueniThemeProvider>
-    <QueryClientProvider client={queryClient}>
-      <FeatureFlagProvider preset="production">
-        <LiquidGlassProvider>
-          <BiometricsProvider autoStart={true} debugMode={import.meta.env.DEV}>
-            <TooltipProvider>
-              <GlobalGradientBackground />
-              <Toaster />
-              <Sonner />
-              <BrowserRouter>
-                <Suspense fallback={<OptimizedLoadingFallback />}>
-                  <Routes>
-                    <Route path="/" element={<Index />} />
-                    <Route path="/profile" element={<Profile />} />
-                    <Route path="/credit-score" element={<CreditScorePage />} />
-                    <Route path="/savings" element={<SavingsGoals />} />
-                    <Route path="/transactions" element={<TransactionDemo />} />
-                    <Route path="/budget-planner" element={<BudgetPlannerPage />} />
-                    <Route path="/goal-setting" element={<SavingsGoals />} />
-                    <Route path="/investment-tracker" element={<InvestmentTrackerPage />} />
-                    <Route path="/calculators" element={<CalculatorsPage />} />
-                    <Route path="/calculators/:id" element={<CalculatorsPage />} />
-                    <Route path="/reports" element={<BudgetReportsPage />} />
-                    <Route path="/insights" element={<InsightsPage />} />
-                    <Route path="/accounts/:accountId" element={<AccountOverview />} />
-                    {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-                    <Route path="*" element={<NotFound />} />
-                  </Routes>
-                </Suspense>
-              </BrowserRouter>
-            </TooltipProvider>
-          </BiometricsProvider>
-        </LiquidGlassProvider>
-      </FeatureFlagProvider>
-    </QueryClientProvider>
-  </VueniThemeProvider>
-);
+  static getDerivedStateFromError(error: Error) {
+    return { hasError: true };
+  }
+
+  componentDidCatch(error: Error, errorInfo: React.ErrorInfo) {
+    console.error('Navigation Error:', error, errorInfo);
+  }
+
+  render() {
+    if (this.state.hasError) {
+      return (
+        <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 flex items-center justify-center">
+          <div className="text-center">
+            <h1 className="text-2xl font-bold text-white mb-4">Something went wrong.</h1>
+            <button
+              className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+              onClick={() => this.setState({ hasError: false })}
+            >
+              Try again
+            </button>
+          </div>
+        </div>
+      );
+    }
+
+    return this.props.children;
+  }
+}
+
+function App() {
+  return (
+    <Router>
+      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 relative overflow-hidden">
+        {/* Global SVG Filters */}
+        <LiquidGlassSVGFilters />
+
+        {/* Adaptive Navigation System */}
+        <AdaptiveNavigation />
+
+        {/* Main Content Area */}
+        <main className="relative">
+          <Suspense fallback={<LoadingSpinner />}>
+            <Routes>
+              {/* Main Routes */}
+              <Route path="/" element={<Index />} />
+              <Route path="/profile" element={<Profile />} />
+              <Route path="/transactions" element={<TransactionDemo />} />
+              <Route path="/insights" element={<InsightsPage />} />
+              <Route path="/reports" element={<BudgetReportsPage />} />
+              
+              {/* Feature Pages */}
+              <Route path="/calculators" element={<CalculatorsHub />} />
+              <Route path="/calculators/:id" element={<CalculatorsPage />} />
+              <Route path="/budget-planner" element={<BudgetPlannerPage />} />
+              <Route path="/investment-tracker" element={<InvestmentTrackerPage />} />
+              <Route path="/goal-setting" element={<SavingsGoals />} />
+              <Route path="/credit" element={<CreditScorePage />} />
+              <Route path="/savings" element={<SavingsGoals />} />
+              
+              {/* Legacy Route Redirects */}
+              <Route path="/credit-score" element={<CreditScorePage />} />
+              <Route path="/settings" element={<Profile />} />
+              <Route path="/accounts" element={<Index />} />
+            </Routes>
+          </Suspense>
+        </main>
+      </div>
+    </Router>
+  );
+}
 
 export default App;
