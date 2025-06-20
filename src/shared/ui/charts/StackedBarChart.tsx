@@ -17,16 +17,16 @@ import {
   Cell
 } from 'recharts';
 import { cn } from '@/shared/lib/utils';
-import { 
-  appleGraphTokens,
+import { vueniTheme } from '@/theme/unified';
+import {
   getGraphColor,
   getTextColor,
   getBackgroundColor,
   generateGraphCSSProperties,
   getChartAnimationPreset,
   shouldReduceMotion,
-  getOptimalAnimationDuration 
-} from '@/theme/graph-tokens';
+  getOptimalAnimationDuration
+} from '@/shared/utils/graph-utils';
 import { GraphBase } from './GraphBase';
 import { 
   ChartDataPoint, 

@@ -4,11 +4,11 @@
  * Based on Apple Human Interface Guidelines 2025
  */
 
-import { 
-  appleGraphTokens, 
-  shouldReduceMotion, 
-  getChartAnimationPreset 
-} from '@/theme/graph-tokens';
+import { vueniTheme } from '@/theme/unified';
+import {
+  shouldReduceMotion,
+  getChartAnimationPreset
+} from '@/shared/utils/graph-utils';
 
 // Performance monitoring state
 interface AnimationMetrics {
@@ -138,7 +138,7 @@ class AnimationScheduler {
   private maxConcurrent: number;
   
   constructor() {
-    this.maxConcurrent = appleGraphTokens.animation.performance.maxConcurrentAnimations;
+    this.maxConcurrent = vueniTheme.charts.animation.performance.maxConcurrentAnimations;
   }
   
   /**
@@ -231,7 +231,7 @@ export const createPerformantAnimation = (
   }
   
   // Add will-change for GPU acceleration
-  if (appleGraphTokens.animation.performance.enableWillChange) {
+  if (vueniTheme.charts.animation.performance.enableWillChange) {
     element.style.willChange = 'transform, opacity';
   }
   

@@ -14,12 +14,12 @@ import React, {
   useImperativeHandle 
 } from 'react';
 import { cn } from '@/shared/lib/utils';
-import { 
-  appleGraphTokens,
+import { vueniTheme } from '@/theme/unified';
+import {
   getChartAnimationPreset,
   shouldReduceMotion,
-  getOptimalAnimationDuration 
-} from '@/theme/graph-tokens';
+  getOptimalAnimationDuration
+} from '@/shared/utils/graph-utils';
 import { TimeRangeOption } from './types';
 import * as ToggleGroup from '@radix-ui/react-toggle-group';
 
@@ -265,7 +265,7 @@ export const TimeRangeToggle = forwardRef<TimeRangeToggleRef, TimeRangeTogglePro
       style={{
         height: sizeConfig.height,
         padding: sizeConfig.padding,
-        borderRadius: appleGraphTokens.borderRadius.md,
+        borderRadius: vueniTheme.charts.borderRadius.md,
       }}
       role="tablist"
       aria-label={ariaLabel}
@@ -316,7 +316,7 @@ export const TimeRangeToggle = forwardRef<TimeRangeToggleRef, TimeRangeTogglePro
             style={{
               fontSize: sizeConfig.fontSize,
               minHeight: sizeConfig.minTouchTarget, // iOS accessibility
-              fontFamily: appleGraphTokens.typography.fontFamily.primary,
+              fontFamily: vueniTheme.charts.typography.fontFamily,
               fontWeight: isSelected ? 500 : 400,
               transition: reducedMotion 
                 ? 'none' 

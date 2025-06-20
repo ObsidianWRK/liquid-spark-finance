@@ -15,14 +15,14 @@ import React, {
 } from 'react';
 import { cn } from '@/shared/lib/utils';
 import { GraphBase } from './GraphBase';
-import { 
-  appleGraphTokens,
+import { vueniTheme } from '@/theme/unified';
+import {
   getGraphColor,
   getTextColor,
   getChartAnimationPreset,
   shouldReduceMotion,
-  getOptimalAnimationDuration 
-} from '@/theme/graph-tokens';
+  getOptimalAnimationDuration
+} from '@/shared/utils/graph-utils';
 import {
   GraphBaseProps,
   ChartDataPoint,

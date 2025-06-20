@@ -30,15 +30,15 @@ import {
   Cell
 } from 'recharts';
 import { cn } from '@/shared/lib/utils';
-import { 
-  appleGraphTokens,
+import { vueniTheme } from '@/theme/unified';
+import {
   getGraphColor,
   getTextColor,
   getBackgroundColor,
   generateGraphCSSProperties,
   shouldReduceMotion,
-  getOptimalAnimationDuration 
-} from '@/theme/graph-tokens';
+  getOptimalAnimationDuration
+} from '@/shared/utils/graph-utils';
 import {
   GraphBaseProps,
   ChartType,
@@ -109,9 +109,9 @@ const ChartHeader: React.FC<{
           <h2 
             className="text-xl font-semibold text-white leading-tight"
             style={{ 
-              fontFamily: appleGraphTokens.typography.fontFamily.primary,
-              fontSize: appleGraphTokens.typography.fontSize.chartTitle,
-              fontWeight: appleGraphTokens.typography.fontWeight.chartTitle
+              fontFamily: vueniTheme.charts.typography.fontFamily,
+              fontSize: vueniTheme.charts.typography.fontSize.chartTitle,
+              fontWeight: vueniTheme.charts.typography.fontWeight.chartTitle
             }}
           >
             {title}
@@ -121,8 +121,8 @@ const ChartHeader: React.FC<{
           <p 
             className="text-sm text-white/60 leading-normal"
             style={{
-              fontFamily: appleGraphTokens.typography.fontFamily.primary,
-              fontSize: appleGraphTokens.typography.fontSize.axisLabel
+              fontFamily: vueniTheme.charts.typography.fontFamily,
+              fontSize: vueniTheme.charts.typography.fontSize.axisLabel
             }}
           >
             {subtitle}
@@ -546,7 +546,7 @@ export const GraphBase = forwardRef<ChartRef, GraphBaseProps>(({
             axisLine={false}
             tickLine={false}
             tick={{ 
-              fontSize: appleGraphTokens.typography.fontSize.axisLabel,
+              fontSize: vueniTheme.charts.typography.fontSize.axisLabel,
               fill: getTextColor('secondary', currentTheme)
             }}
             tickFormatter={xAxis.tickFormatter}
@@ -560,7 +560,7 @@ export const GraphBase = forwardRef<ChartRef, GraphBaseProps>(({
             axisLine={false}
             tickLine={false}
             tick={{ 
-              fontSize: appleGraphTokens.typography.fontSize.axisLabel,
+              fontSize: vueniTheme.charts.typography.fontSize.axisLabel,
               fill: getTextColor('secondary', currentTheme)
             }}
             tickFormatter={yAxis.tickFormatter}
@@ -578,7 +578,7 @@ export const GraphBase = forwardRef<ChartRef, GraphBaseProps>(({
           strokeDasharray={grid.strokeDasharray || "3 3"}
           horizontal={grid.horizontal}
           vertical={grid.vertical}
-          stroke={appleGraphTokens.colors.separator[currentTheme]}
+          stroke={vueniTheme.charts.colors.separator[currentTheme]}
           strokeWidth={grid.strokeWidth || 1}
           opacity={grid.opacity || 0.5}
         />
@@ -593,9 +593,9 @@ export const GraphBase = forwardRef<ChartRef, GraphBaseProps>(({
           labelFormatter={tooltip.labelFormatter}
           contentStyle={{
             backgroundColor: getBackgroundColor('system', 'secondary', currentTheme),
-            border: `1px solid ${appleGraphTokens.colors.separator[currentTheme]}`,
-            borderRadius: appleGraphTokens.borderRadius.tooltip,
-            fontSize: appleGraphTokens.typography.fontSize.tooltip,
+            border: `1px solid ${vueniTheme.charts.colors.separator[currentTheme]}`,
+            borderRadius: vueniTheme.charts.borderRadius.tooltip,
+            fontSize: vueniTheme.charts.typography.fontSize.tooltip,
             color: getTextColor('primary', currentTheme),
             ...tooltip.contentStyle
           }}
@@ -621,7 +621,7 @@ export const GraphBase = forwardRef<ChartRef, GraphBaseProps>(({
           align={legend.align}
           layout={legend.layout}
           wrapperStyle={{
-            fontSize: appleGraphTokens.typography.fontSize.legend,
+            fontSize: vueniTheme.charts.typography.fontSize.legend,
             color: getTextColor('secondary', currentTheme)
           }}
         />
@@ -642,7 +642,7 @@ export const GraphBase = forwardRef<ChartRef, GraphBaseProps>(({
                 type="monotone"
                 dataKey={serie.dataKey}
                 stroke={serie.color}
-                strokeWidth={serie.strokeWidth || appleGraphTokens.dimensions.strokeWidth.medium}
+                strokeWidth={serie.strokeWidth || vueniTheme.charts.dimensions.strokeWidth.medium}
                 dot={false}
                 connectNulls={serie.connectNulls}
                 hide={serie.hide}
@@ -668,7 +668,7 @@ export const GraphBase = forwardRef<ChartRef, GraphBaseProps>(({
                 stroke={serie.color}
                 fill={serie.color}
                 fillOpacity={serie.fillOpacity || 0.2}
-                strokeWidth={serie.strokeWidth || appleGraphTokens.dimensions.strokeWidth.thin}
+                strokeWidth={serie.strokeWidth || vueniTheme.charts.dimensions.strokeWidth.thin}
                 connectNulls={serie.connectNulls}
                 hide={serie.hide}
                 animationDuration={animation.enable && !shouldReduceMotion() ? animation.duration : 0}
