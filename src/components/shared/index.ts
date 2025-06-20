@@ -52,7 +52,6 @@ export type {
 } from './VueniDesignSystem';
 
 // Feature Flag System
-export { default as VueniFeatureFlags } from './VueniFeatureFlags';
 export {
   FeatureFlagProvider,
   useFeatureFlags,

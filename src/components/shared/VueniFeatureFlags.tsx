@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
-import { TransactionVariant } from './UnifiedTransactionList';
-import { InsightsVariant } from './VueniUnifiedInsightsPage';
+import { TransactionVariant } from './VueniUnifiedTransactionList';
+import { InsightsVariant } from '@/features/insights/components/UnifiedInsightsPage';
 
 // Feature flag configuration interface
 export interface FeatureFlags {

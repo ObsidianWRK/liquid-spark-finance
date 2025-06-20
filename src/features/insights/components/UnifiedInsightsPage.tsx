@@ -32,7 +32,7 @@ export interface Account {
   accountType?: string;
 }
 
-export type InsightsVariant = 'comprehensive' | 'simple' | 'standard' | 'minimal';
+export type InsightsVariant = 'comprehensive' | 'simple' | 'standard' | 'minimal' | 'mobile';
 export type TimeFrameType = '7d' | '30d' | '90d' | '1y';
 
 export interface UnifiedInsightsConfig {

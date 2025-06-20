@@ -18,7 +18,7 @@ import {
   useVirtualKeyboard,
   useScrollPerformance,
   ScrollControllerDebugger,
-} from '../context/ScrollControllerContext';
+} from '@/navigation/context/ScrollControllerContext';
 import {
   useNavigationVisibility,
   useScrollController,

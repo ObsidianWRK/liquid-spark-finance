@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { UniversalCard } from '@/shared/ui/UniversalCard';
-import { vueniTheme } from '@/theme/unified';
 import { 
   Home,
   CreditCard,
@@ -46,7 +45,7 @@ const AppShell = ({ children, activeTab = 'dashboard', onTabChange }: AppShellPr
     <div className="min-h-screen bg-gray-950">
       {/* Top Header */}
       <header className="fixed top-0 left-0 right-0 z-50">
-        <SimpleGlassCard className="m-4 p-4 rounded-xl backdrop-blur-xl">
+        <UniversalCard variant="glass" className="m-4 p-4 rounded-xl backdrop-blur-xl">
           <div className="flex items-center justify-between">
             {/* Left side */}
             <div className="flex items-center gap-4">
@@ -93,7 +92,7 @@ const AppShell = ({ children, activeTab = 'dashboard', onTabChange }: AppShellPr
               </div>
             </div>
           </div>
-        </SimpleGlassCard>
+        </UniversalCard>
       </header>
 
       {/* Sidebar */}
@@ -102,7 +101,7 @@ const AppShell = ({ children, activeTab = 'dashboard', onTabChange }: AppShellPr
         ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full'}
         lg:translate-x-0
       `}>
-        <SimpleGlassCard className="h-full p-4 rounded-xl">
+        <UniversalCard variant="glass" className="h-full p-4 rounded-xl">
           {/* Main Navigation */}
           <nav className="space-y-2">
             <div className="mb-6">
@@ -171,7 +170,7 @@ const AppShell = ({ children, activeTab = 'dashboard', onTabChange }: AppShellPr
               </button>
             </div>
           </div>
-        </SimpleGlassCard>
+        </UniversalCard>
       </aside>
 
       {/* Overlay for mobile */}

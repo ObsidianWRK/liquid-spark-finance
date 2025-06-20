@@ -48,21 +48,47 @@ const useScrollController = (
 
 export { useScrollController };
 
-// FIXME: The hooks below were part of an older implementation and have been
-// removed to fix critical build errors. They need to be refactored and
-// re-implemented based on the current ScrollController class.
-//
-// export const useNavigationVisibility = () => {
-//   // FIXME: Implement based on ScrollController.subscribe() API
-//   return { isVisible: true };
-// };
-//
-// export const useVirtualKeyboard = () => {
-//   // FIXME: Implement based on ScrollController.getState().virtualKeyboardHeight
-//   return { height: 0, isOpen: false };
-// };
-//
-// export const useScrollPerformance = () => {
-//   // FIXME: Implement performance monitoring based on ScrollController velocity tracking
-//   return { velocity: 0, isScrolling: false };
-// };
+// -----------------------------------------------------------------------------
+// Legacy stub hooks – kept so that demo components compile until the full
+// feature-rich implementation is restored.  These all return minimal yet safe
+// defaults and should NOT be used for production behaviour.
+// -----------------------------------------------------------------------------
+
+export const useNavigationVisibility = (
+  _config: Partial<ScrollControllerConfig> = {}
+) => {
+  return {
+    isVisible: true,
+    transform: 'translateY(0px)',
+    shouldAnimate: false,
+    isScrolling: false,
+    scrollDirection: 'none' as const,
+    safeAreaTop: 0,
+    safeAreaBottom: 0,
+    setVisibility: () => {},
+  };
+};
+
+export const useVirtualKeyboard = () => {
+  if (typeof window !== 'undefined' && 'visualViewport' in window && window.visualViewport) {
+    const vv = window.visualViewport;
+    const heightDiff = window.innerHeight - vv.height;
+    return {
+      isVisible: heightDiff > 50,
+      height: Math.max(0, heightDiff),
+      viewportHeight: vv.height,
+    } as const;
+  }
+  return { isVisible: false, height: 0, viewportHeight: 0 } as const;
+};
+
+export const useScrollPerformance = () => {
+  return {
+    fps: 60,
+    isSmooth: true,
+    isOptimal: true,
+    averageVelocity: 0,
+    maxVelocity: 0,
+    scrollEvents: 0,
+  } as const;
+};

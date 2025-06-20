@@ -1,5 +1,6 @@
-import { securityConfig } from '@/config/security';
+import { securityConfig } from '@/shared/config/security';
 import { secureStorage } from './crypto';
+import { VueniSecurityMonitor } from './security';
 
 interface SessionData {
   userId?: string;

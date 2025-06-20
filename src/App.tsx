@@ -1,6 +1,7 @@
 import React, { Suspense, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { AdaptiveNavigation } from '@/navigation';
+import { ScrollControllerProvider } from '@/navigation/context/ScrollControllerContext';
 import LiquidGlassSVGFilters from '@/shared/ui/LiquidGlassSVGFilters';
 import { initializeForReactApp } from '@/shared/utils/viewport-init';
 
@@ -125,55 +126,57 @@ function App() {
   }, []);
 
   return (
-    <Router>
-      <div className="min-h-screen bg-black relative overflow-hidden">
-        {/* Global SVG Filters */}
-        <LiquidGlassSVGFilters />
+    <ScrollControllerProvider>
+      <Router>
+        <div className="min-h-screen bg-black relative overflow-hidden">
+          {/* Global SVG Filters */}
+          <LiquidGlassSVGFilters />
 
-        {/* Adaptive Navigation System */}
-        <AdaptiveNavigation />
+          {/* Adaptive Navigation System */}
+          <AdaptiveNavigation />
 
-        {/* Main Content Area */}
-        <main className="relative">
-          <ErrorBoundary>
-            <Suspense fallback={<LoadingSpinner />}>
-              <Routes>
-                {/* Main Routes */}
-                <Route path="/" element={<Index />} />
-                <Route path="/profile" element={<Profile />} />
-                <Route path="/transactions" element={<TransactionDemo />} />
-                <Route path="/insights" element={<InsightsPage />} />
-                <Route path="/reports" element={<BudgetReportsPage />} />
-                
-                {/* Account Detail Route */}
-                <Route 
-                  path="/accounts/:accountId" 
-                  element={
-                    <Suspense fallback={<AccountLoadingFallback />}>
-                      <AccountOverview />
-                    </Suspense>
-                  } 
-                />
-                
-                {/* Feature Pages */}
-                <Route path="/calculators" element={<CalculatorsHub />} />
-                <Route path="/calculators/:id" element={<CalculatorsPage />} />
-                <Route path="/budget-planner" element={<BudgetPlannerPage />} />
-                <Route path="/investment-tracker" element={<InvestmentTrackerPage />} />
-                <Route path="/goal-setting" element={<SavingsGoals />} />
-                <Route path="/credit" element={<CreditScorePage />} />
-                <Route path="/savings" element={<SavingsGoals />} />
-                
-                {/* Legacy Route Redirects */}
-                <Route path="/credit-score" element={<CreditScorePage />} />
-                <Route path="/settings" element={<Profile />} />
-                <Route path="/accounts" element={<Index />} />
-              </Routes>
-            </Suspense>
-          </ErrorBoundary>
-        </main>
-      </div>
-    </Router>
+          {/* Main Content Area */}
+          <main className="relative">
+            <ErrorBoundary>
+              <Suspense fallback={<LoadingSpinner />}>
+                <Routes>
+                  {/* Main Routes */}
+                  <Route path="/" element={<Index />} />
+                  <Route path="/profile" element={<Profile />} />
+                  <Route path="/transactions" element={<TransactionDemo />} />
+                  <Route path="/insights" element={<InsightsPage />} />
+                  <Route path="/reports" element={<BudgetReportsPage />} />
+                  
+                  {/* Account Detail Route */}
+                  <Route 
+                    path="/accounts/:accountId" 
+                    element={
+                      <Suspense fallback={<AccountLoadingFallback />}>
+                        <AccountOverview />
+                      </Suspense>
+                    } 
+                  />
+                  
+                  {/* Feature Pages */}
+                  <Route path="/calculators" element={<CalculatorsHub />} />
+                  <Route path="/calculators/:id" element={<CalculatorsPage />} />
+                  <Route path="/budget-planner" element={<BudgetPlannerPage />} />
+                  <Route path="/investment-tracker" element={<InvestmentTrackerPage />} />
+                  <Route path="/goal-setting" element={<SavingsGoals />} />
+                  <Route path="/credit" element={<CreditScorePage />} />
+                  <Route path="/savings" element={<SavingsGoals />} />
+                  
+                  {/* Legacy Route Redirects */}
+                  <Route path="/credit-score" element={<CreditScorePage />} />
+                  <Route path="/settings" element={<Profile />} />
+                  <Route path="/accounts" element={<Index />} />
+                </Routes>
+              </Suspense>
+            </ErrorBoundary>
+          </main>
+        </div>
+      </Router>
+    </ScrollControllerProvider>
   );
 }
 

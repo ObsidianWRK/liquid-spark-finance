@@ -11,7 +11,7 @@ import {
 import { cn } from '@/shared/lib/utils';
 import LiquidGlassSVGFilters from '@/shared/ui/LiquidGlassSVGFilters';
 import { MENU_BAR_HEIGHT } from '@/shared/tokens/menuBar.tokens';
-import { useNavigationState } from '../context/ScrollControllerContext';
+import { useNavigationState } from '@/navigation/context/ScrollControllerContext';
 
 /**
  * TopBar Component

@@ -10,20 +10,38 @@
  * - Performance-optimized React hooks
  */
 
+import React from 'react';
+
+import {
+  initializeViewportPolyfills,
+  getViewportCapabilities,
+  getSafeAreaInsets,
+  SafeAreaInsets,
+} from './viewport-polyfills';
+import {
+  getVisualViewportState,
+} from './visual-viewport-utils';
+import {
+  getCurrentOrientation,
+} from './orientation-utils';
+import {
+  runFeatureDetection,
+  getBrowserInfo,
+  getFeatureSupport,
+} from './viewport-feature-detection';
+
 // Core polyfills and utilities
 export {
   // Safe area polyfills
-  getSafeAreaInsets,
+  getSafeAreaInsetsPolyfill,
   applySafeAreaInsets,
   initializeViewportPolyfills,
   getViewportCapabilities,
   getOrientation,
   isFullscreen,
   getViewportDimensions,
-  type SafeAreaInsets,
   type ViewportCapabilities,
   type Orientation,
-  type ViewportDimensions,
 } from './viewport-polyfills';
 
 // Visual viewport utilities
@@ -441,16 +459,7 @@ export class ViewportGuardian {
   private getOrientation(): 'portrait' | 'landscape' {
     if (typeof window === 'undefined') return 'portrait';
     
-    // Use multiple methods for better compatibility
-    if (window.screen && window.screen.orientation) {
-      return window.screen.orientation.type.includes('landscape') ? 'landscape' : 'portrait';
-    }
-    
-    if (window.matchMedia) {
-      return window.matchMedia('(orientation: landscape)').matches ? 'landscape' : 'portrait';
-    }
-    
-    return window.innerWidth > window.innerHeight ? 'landscape' : 'portrait';
+    return getCurrentOrientation();
   }
 
   /**
