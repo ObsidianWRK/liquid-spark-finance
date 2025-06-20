@@ -1,7 +1,7 @@
 import React from 'react';
 import TransactionItem from './TransactionItem';
 import TransactionWithScores from './TransactionWithScores';
-import { calculateTransactionScores } from '@/utils/transactionScoring';
+import { calculateTransactionScores } from '@/shared/utils/transactionScoring';
 import { Transaction } from '@/types/shared';
 
 interface TransactionListProps {

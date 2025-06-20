@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import GlassCard from '@/components/GlassCard';
 import { Trophy, TrendingUp, Star, Share, Award, Sparkles } from 'lucide-react';
-import { mockReportService, WrappedData } from '@/services/mockReportService';
+import { mockReportService, WrappedData } from '@/features/mockReportService';
 
 const WrappedPage = () => {
   const [currentSlide, setCurrentSlide] = useState(0);

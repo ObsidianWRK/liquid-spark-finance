@@ -1,5 +1,5 @@
 import React from "react";
-import { UniversalCard } from "@/components/ui/UniversalCard";
+import { UniversalCard } from "@/shared/ui/UniversalCard";
 import { RecurringChargesList } from "./RecurringChargesList";
 import { Repeat } from "lucide-react";
 

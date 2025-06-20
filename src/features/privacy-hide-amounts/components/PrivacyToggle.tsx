@@ -1,7 +1,7 @@
 import React from "react";
-import { Switch } from "@/components/ui/switch";
+import { Switch } from "@/shared/ui/switch";
 import { usePrivacyStore } from "../store";
-import { UniversalCard } from "@/components/ui/UniversalCard";
+import { UniversalCard } from "@/shared/ui/UniversalCard";
 import { EyeOff } from "lucide-react";
 
 export const PrivacyToggle: React.FC = () => {

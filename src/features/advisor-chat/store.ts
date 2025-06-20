@@ -1,6 +1,6 @@
 import { create } from "zustand";
-import { advisorService } from "@/services/advisorService";
-import { AdvisorThread, AdvisorMessage } from "@/types";
+import { advisorService } from "@/features/advisor-chat/api/advisorService";
+import { AdvisorThread, AdvisorMessage } from "@/shared/types/shared";
 
 interface AdvisorChatState {
   thread?: AdvisorThread;

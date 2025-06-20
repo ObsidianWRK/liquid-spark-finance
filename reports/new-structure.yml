@@ -1,0 +1,119 @@
+# Vueni Financial Platform - File Structure Refactoring Plan
+
+#
+# Agent: StructureArchitect
+# Date: $(date)
+#
+# Rationale:
+# The current file structure suffers from significant duplication (e.g., `src/components` vs. `src/domains`),
+# scattered shared logic, and a monolithic `components` directory. This plan adopts a pragmatic,
+# feature-centric approach inspired by Feature-Sliced Design to improve scalability,
+# maintainability, and developer experience.
+#
+
+# --- High-Level Plan ---
+# 1. Consolidate all shared code into a single, well-defined `src/shared` directory.
+# 2. Eliminate the redundant `src/domains` directory, merging its contents into `src/features`.
+# 3. Restructure the monolithic `src/components` directory, separating true UI components from feature components.
+# 4. Establish `src/features` as the primary organizational unit for business logic.
+# 5. Co-locate test files with their corresponding source code.
+#
+
+# --- Execution Steps ---
+
+plan:
+  # Step 1: Consolidate all shared utilities, hooks, types, and libraries
+  - action: CONSOLIDATE_SHARED
+    description: "Move all scattered shared code into a unified `src/shared` directory."
+    moves:
+      - from: "src/utils"
+        to: "src/shared/utils"
+      - from: "src/hooks"
+        to: "src/shared/hooks"
+      - from: "src/types"
+        to: "src/shared/types"
+      - from: "src/lib"
+        to: "src/shared/lib"
+      - from: "src/config"
+        to: "src/shared/config"
+      - from: "src/styles"
+        to: "src/app/styles" # Global styles belong to the app layer
+      - from: "src/components/ui"
+        to: "src/shared/ui"
+
+  # Step 2: Decommission the redundant `src/domains` directory
+  - action: DECOMMISSION_DOMAINS
+    description: "Delete the `src/domains` directory. Its functionality is already covered by `src/features` and `src/components`."
+    deletions:
+      - "src/domains"
+
+  # Step 3: Reorganize the `src/components` directory into features
+  - action: REORGANIZE_COMPONENTS_TO_FEATURES
+    description: "Move domain-specific components into their respective feature folders."
+    moves:
+      - from: "src/components/accounts"
+        to: "src/features/accounts/components"
+      - from: "src/components/budget"
+        to: "src/features/budget/components"
+      - from: "src/components/credit"
+        to: "src/features/credit/components"
+      - from: "src/components/dashboard"
+        to: "src/features/dashboard/components"
+      - from: "src/components/insights"
+        to: "src/features/insights/components"
+      - from: "src/components/investments"
+        to: "src/features/investments/components"
+      - from: "src/components/planning"
+        to: "src/features/planning/components"
+      - from: "src/components/savings"
+        to: "src/features/savings/components"
+      - from: "src/components/transactions"
+        to: "src/features/transactions/components"
+      # Note: The existing `src/features` directory will be augmented with these components.
+
+  # Step 4: Move services into their respective feature folders
+  - action: REORGANIZE_SERVICES_TO_FEATURES
+    description: "Move service files into the feature they exclusively serve."
+    # This will require manual analysis for each service file.
+    # Example moves:
+    - from: "src/services/accountService.ts"
+      to: "src/features/accounts/api/accountService.ts"
+    - from: "src/services/budgetService.ts"
+      to: "src/features/budget/api/budgetService.ts"
+    - from: "src/services/creditScoreService.ts"
+      to: "src/features/credit/api/creditScoreService.ts"
+
+  # Step 5: Co-locate test files
+  - action: COLOCATE_TESTS
+    description: "Move test files from `src/test` to be adjacent to their source files."
+    # This will be a scripted move based on file names.
+    # Example: `src/test/utils/formatters.test.ts` -> `src/shared/utils/formatters.test.ts`
+
+# --- Target Directory Structure (Illustrative) ---
+#
+# src/
+# ├── app/
+# │   ├── providers/
+# │   ├── styles/
+# │   └── main.tsx
+# │
+# ├── pages/
+# │   ├── DashboardPage.tsx
+# │   └── ...
+# │
+# ├── features/
+# │   ├── accounts/
+# │   │   ├── api/
+# │   │   ├── components/
+# │   │   └── hooks/
+# │   └── ... (budget, credit, etc.)
+# │
+# └── shared/
+#     ├── api/
+#     ├── config/
+#     ├── hooks/
+#     ├── lib/
+#     ├── types/
+#     ├── ui/ (Button.tsx, Input.tsx, ...)
+#     └── utils/
+#

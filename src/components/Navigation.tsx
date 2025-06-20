@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import LiquidGlassSVGFilters from '@/components/ui/LiquidGlassSVGFilters';
+import LiquidGlassSVGFilters from '@/shared/ui/LiquidGlassSVGFilters';
 import { 
   Home, 
   CreditCard, 
@@ -13,7 +13,7 @@ import {
   Shield,
   Target
 } from 'lucide-react';
-import { cn } from '@/lib/utils';
+import { cn } from '@/shared/lib/utils';
 
 interface NavigationProps {
   activeTab: string;

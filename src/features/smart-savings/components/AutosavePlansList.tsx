@@ -1,9 +1,9 @@
 import React, { useEffect } from "react";
 import { useSmartSavingsStore } from "../store";
-import { Card, CardHeader, CardTitle, CardContent, CardFooter } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
+import { Card, CardHeader, CardTitle, CardContent, CardFooter } from "@/shared/ui/card";
+import { Button } from "@/shared/ui/button";
 import { PiggyBank, Pause, Play } from "lucide-react";
-import { cn } from "@/lib/utils";
+import { cn } from "@/shared/lib/utils";
 
 export const AutosavePlansList: React.FC<{ className?: string }> = ({ className }) => {
   const { plans, loading, refresh, pause, resume } = useSmartSavingsStore((s) => ({

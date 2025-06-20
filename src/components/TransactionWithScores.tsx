@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import GlassCard from './GlassCard';
-import { TransactionScores } from '@/utils/transactionScoring';
+import { TransactionScores } from '@/shared/utils/transactionScoring';
 import { Package, Truck, Plane } from 'lucide-react';
 import { Transaction } from '@/types/shared';
 

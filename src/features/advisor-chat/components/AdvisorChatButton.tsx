@@ -1,5 +1,5 @@
 import React from "react";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/shared/ui/button";
 import { useAdvisorChatStore } from "../store";
 import { MessageCircle } from "lucide-react";
 

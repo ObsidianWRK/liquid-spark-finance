@@ -1,5 +1,5 @@
 import { create } from "zustand";
-// import { biometricInterventionService } from "@/services/biometricInterventionService";
+// import { biometricInterventionService } from "@/features/biometricInterventionService";
 import { 
   InterventionState, 
   InterventionPolicy, 
@@ -8,8 +8,8 @@ import {
   InterventionEvent,
   BiometricPreferences
 } from "./types";
-import { biometricService } from "@/services/biometricService";
-import { BiometricReading, InterventionAlert } from "@/types";
+import { biometricService } from "@/features/biometric-intervention/api/biometricService";
+import { BiometricReading, InterventionAlert } from "./types";
 
 // Temporary mock service until real service is implemented
 const mockBiometricInterventionService = {

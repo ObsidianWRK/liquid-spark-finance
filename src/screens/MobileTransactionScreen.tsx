@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Search, ArrowLeft, MoreHorizontal, ChevronRight, Truck, Package, CheckCircle } from 'lucide-react';
-import { cn } from '@/lib/utils';
+import { cn } from '@/shared/lib/utils';
 
 const MobileTransactionScreen: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState('');

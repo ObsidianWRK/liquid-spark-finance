@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useMemo } from 'react';
-import { UniversalCard } from '@/components/ui/UniversalCard';
+import { UniversalCard } from '@/shared/ui/UniversalCard';
 import { Activity, Zap, Clock, TrendingUp } from 'lucide-react';
 
 interface PerformanceMetrics {

@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useAgeOfMoneyStore } from "../store";
-import { UniversalCard } from "@/components/ui/UniversalCard";
+import { UniversalCard } from "@/shared/ui/UniversalCard";
 import { Clock } from "lucide-react";
 
 export const AgeOfMoneyCard: React.FC = () => {

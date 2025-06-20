@@ -1,6 +1,6 @@
 import { create } from "zustand";
-import { widgetService } from "@/services/widgetService";
-import { HomeWidget } from "@/types";
+import { widgetService } from "@/features/widgets/api/widgetService";
+import { HomeWidget } from "@/shared/types/shared";
 
 interface WidgetsState {
   widgets: HomeWidget[];

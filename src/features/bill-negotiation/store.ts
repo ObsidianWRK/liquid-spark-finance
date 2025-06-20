@@ -1,7 +1,7 @@
 import { create } from "zustand";
-import { negotiationService } from "@/services/negotiationService";
+import { negotiationService } from "@/features/bill-negotiation/api/negotiationService";
 import { useSubscriptionsStore } from "@/features/subscriptions/store";
-import { NegotiationCase } from "@/types";
+import { NegotiationCase } from "@/shared/types/shared";
 
 interface NegotiationState {
   cases: NegotiationCase[];

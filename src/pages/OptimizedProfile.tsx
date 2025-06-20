@@ -1,8 +1,8 @@
 import React, { useState, useCallback, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { UserPreferences } from '@/types/shared';
-import { UniversalCard } from '@/components/ui/UniversalCard';
-import { shouldComponentUpdate } from '@/utils/optimizedHelpers';
+import { UniversalCard } from '@/shared/ui/UniversalCard';
+import { shouldComponentUpdate } from '@/shared/utils/optimizedHelpers';
 import { 
   User, 
   Settings, 
@@ -13,7 +13,7 @@ import {
   ArrowLeft,
   Home
 } from 'lucide-react';
-import { cn } from '@/lib/utils';
+import { cn } from '@/shared/lib/utils';
 
 // Optimized Profile Component - Demonstrates optimization principles
 // Original Profile.tsx: 764 lines with 40+ state variables

@@ -1,5 +1,5 @@
 import React from 'react';
-import NewInsightsPage from '@/components/insights/NewInsightsPage';
+import NewInsightsPage from '@/features/insights/components/NewInsightsPage';
 import { mockData } from '@/services/mockData';
 
 const InsightsPage = () => {

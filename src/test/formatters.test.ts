@@ -9,7 +9,7 @@ import {
   formatFinancialScore,
   safeRatio,
   formatPercent
-} from '@/utils/formatters';
+} from '@/shared/utils/formatters';
 
 describe('Formatter Functions', () => {
   describe('safeRatio', () => {

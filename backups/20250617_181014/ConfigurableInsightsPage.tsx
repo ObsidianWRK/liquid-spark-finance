@@ -1,21 +1,21 @@
 import React, { useState, useEffect, useMemo, Suspense, lazy } from 'react';
 import { Heart, Leaf, DollarSign, TrendingUp, Calendar, BarChart3, Settings, Filter, Eye, EyeOff, Download } from 'lucide-react';
-import { Card } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
-import { Switch } from '@/components/ui/switch';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Card } from '@/shared/ui/card';
+import { Button } from '@/shared/ui/button';
+import { Badge } from '@/shared/ui/badge';
+import { Switch } from '@/shared/ui/switch';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/shared/ui/select';
 import { cn } from '@/lib/utils';
 import { SharedScoreCircle, ScoreGroup } from './SharedScoreCircle';
 import { InputSanitizer } from '@/utils/sanitize';
 
 // Lazy load heavy components for performance
-const TimeSeriesChart = lazy(() => import('@/components/insights/TimeSeriesChart'));
-const SpendingTrendsChart = lazy(() => import('@/components/insights/SpendingTrendsChart'));
-const CategoryTrendsChart = lazy(() => import('@/components/insights/CategoryTrendsChart'));
-const FinancialCard = lazy(() => import('@/components/insights/FinancialCard'));
-const WellnessCard = lazy(() => import('@/components/insights/WellnessCard'));
-const EcoCard = lazy(() => import('@/components/insights/EcoCard'));
+const TimeSeriesChart = lazy(() => import('@/features/insights/components/TimeSeriesChart'));
+const SpendingTrendsChart = lazy(() => import('@/features/insights/components/SpendingTrendsChart'));
+const CategoryTrendsChart = lazy(() => import('@/features/insights/components/CategoryTrendsChart'));
+const FinancialCard = lazy(() => import('@/features/insights/components/FinancialCard'));
+const WellnessCard = lazy(() => import('@/features/insights/components/WellnessCard'));
+const EcoCard = lazy(() => import('@/features/insights/components/EcoCard'));
 
 export interface Transaction {
   id: string;

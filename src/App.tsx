@@ -1,15 +1,15 @@
-import { Toaster } from "@/components/ui/toaster";
-import { Toaster as Sonner } from "@/components/ui/sonner";
-import { TooltipProvider } from "@/components/ui/tooltip";
+import { Toaster } from "@/shared/ui/toaster";
+import { Toaster as Sonner } from "@/shared/ui/sonner";
+import { TooltipProvider } from "@/shared/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { lazy, Suspense } from 'react';
-import { UniversalCard } from '@/components/ui/UniversalCard';
-import { LiquidGlassProvider } from '@/hooks/useLiquidGlass.tsx';
+import { UniversalCard } from '@/shared/ui/UniversalCard';
+import { LiquidGlassProvider } from '@/shared/hooks/useLiquidGlass';
 import { FeatureFlagProvider } from '@/components/shared/VueniFeatureFlags';
-import GlobalGradientBackground from '@/components/ui/GlobalGradientBackground';
+import GlobalGradientBackground from '@/shared/ui/GlobalGradientBackground';
 import { BiometricsProvider } from '@/providers/BiometricsProvider';
-import './styles/accessibility.css';
+import '@/app/styles/accessibility.css';
 
 const queryClient = new QueryClient();
 
@@ -19,11 +19,11 @@ const Profile = lazy(() => import('./pages/Profile'));
 const NotFound = lazy(() => import('./pages/NotFound'));
 
 // Financial Components
-const CreditScorePage = lazy(() => import('./components/credit/CreditScorePage'));
-const SavingsGoals = lazy(() => import('./components/savings/SavingsGoals'));
-const BudgetPlannerPage = lazy(() => import('./components/budget/BudgetPlannerPage'));
-const InvestmentTrackerPage = lazy(() => import('./components/investments/InvestmentTrackerPage'));
-const BudgetReportsPage = lazy(() => import('./components/reports/BudgetReportsPage'));
+const CreditScorePage = lazy(() => import('@/features/credit/components/CreditScorePage'));
+const SavingsGoals = lazy(() => import('@/features/savings/components/SavingsGoals'));
+const BudgetPlannerPage = lazy(() => import('@/features/budget/components/BudgetPlannerPage'));
+const InvestmentTrackerPage = lazy(() => import('@/features/investments/components/InvestmentTrackerPage'));
+const BudgetReportsPage = lazy(() => import('@/features/budget/components/BudgetReportsPage'));
 
 // Tools & Utilities
 const TransactionDemo = lazy(() => import('./pages/TransactionDemo'));

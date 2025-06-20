@@ -1,6 +1,6 @@
 import { create } from "zustand";
-import { bankLinkProvider } from "@/services/bankLinkProvider";
-import { LinkedAccount } from "@/types";
+import { bankLinkProvider } from "@/features/bank-linking/api/bankLinkProvider";
+import { LinkedAccount } from "@/shared/types/shared";
 
 interface BankLinkingState {
   accounts: LinkedAccount[];

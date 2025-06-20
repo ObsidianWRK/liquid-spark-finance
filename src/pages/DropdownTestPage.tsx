@@ -10,10 +10,10 @@ import {
   DropdownMenuRadioGroup,
   DropdownMenuRadioItem,
   DropdownMenuShortcut
-} from '@/components/ui/dropdown-menu';
-import { Button } from '@/components/ui/button';
+} from '@/shared/ui/dropdown-menu';
+import { Button } from '@/shared/ui/button';
 import { ChevronDown, User, Settings, LogOut, Check } from 'lucide-react';
-import BackHeader from '@/components/ui/BackHeader';
+import BackHeader from '@/shared/ui/BackHeader';
 
 const DropdownTestPage = () => {
   const [bookmarksChecked, setBookmarksChecked] = React.useState(true);

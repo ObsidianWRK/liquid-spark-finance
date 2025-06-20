@@ -1,8 +1,8 @@
 import React, { useEffect } from "react";
 import { useSharedBudgetsStore } from "../store";
-import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
+import { Card, CardHeader, CardTitle, CardContent } from "@/shared/ui/card";
 import { Users } from "lucide-react";
-import { cn } from "@/lib/utils";
+import { cn } from "@/shared/lib/utils";
 
 export const HouseholdsList: React.FC<{ className?: string }> = ({ className }) => {
   const { households, loading, refresh } = useSharedBudgetsStore((s) => ({

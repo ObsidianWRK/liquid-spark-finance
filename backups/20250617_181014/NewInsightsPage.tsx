@@ -7,9 +7,9 @@ import { SharedScoreCircle } from '@/components/shared';
 import TimeSeriesChart from './TimeSeriesChart';
 import SpendingTrendsChart from './SpendingTrendsChart';
 import CategoryTrendsChart from './CategoryTrendsChart';
-import { generateScoreSummary } from '@/services/scoringModel';
-import { mockHealthEcoService } from '@/services/mockHealthEcoService';
-import { mockHistoricalService } from '@/services/mockHistoricalData';
+import { generateScoreSummary } from '@/features/scoringModel';
+import { mockHealthEcoService } from '@/features/mockHealthEcoService';
+import { mockHistoricalService } from '@/features/mockHistoricalData';
 
 interface Transaction {
   id: string;

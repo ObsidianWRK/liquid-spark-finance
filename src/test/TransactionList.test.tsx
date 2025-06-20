@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import { describe, it, expect } from 'vitest';
-import TransactionList from '@/components/transactions/TransactionList';
+import TransactionList from '@/features/transactions/components/TransactionList';
 import { Transaction } from '@/types/transactions';
 
 // Helper to generate mock transactions

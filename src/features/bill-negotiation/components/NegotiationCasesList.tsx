@@ -1,8 +1,8 @@
 import React, { useEffect } from "react";
 import { useNegotiationStore } from "../store";
-import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
+import { Card, CardHeader, CardTitle, CardContent } from "@/shared/ui/card";
 import { Loader2, DollarSign, CheckCircle, XCircle } from "lucide-react";
-import { cn } from "@/lib/utils";
+import { cn } from "@/shared/lib/utils";
 
 export const NegotiationCasesList: React.FC<{ className?: string }> = ({ className }) => {
   const { cases, loading, refresh } = useNegotiationStore((s) => ({

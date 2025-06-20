@@ -1,7 +1,7 @@
 // Legacy GlassCard - Redirected to UniversalCard for optimization
 // This maintains backward compatibility while using the optimized system
 
-import { UniversalCard } from '@/components/ui/UniversalCard';
+import { UniversalCard } from '@/shared/ui/UniversalCard';
 import type { BaseCardProps } from '@/types/shared';
 
 interface GlassCardProps extends Omit<BaseCardProps, 'variant'> {

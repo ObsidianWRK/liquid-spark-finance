@@ -1,7 +1,7 @@
 import React from "react";
 import { LinkAccountsButton } from "./LinkAccountsButton";
 import { LinkedAccountsList } from "./LinkedAccountsList";
-import { UniversalCard } from "@/components/ui/UniversalCard";
+import { UniversalCard } from "@/shared/ui/UniversalCard";
 import { Banknote } from "lucide-react";
 
 export const BankLinkingPanel: React.FC = () => {
