@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, lazy, Suspense } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { 
   Calculator, 
@@ -19,18 +19,39 @@ import {
 import BackHeader from '@/shared/ui/BackHeader';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger, DropdownMenuSeparator, DropdownMenuLabel } from '@/shared/ui/dropdown-menu';
 
-// Import calculator components
-import FinancialFreedomCalculator from '@/features/calculators/components/FinancialFreedomCalculator';
-import ROICalculator from '@/features/calculators/components/ROICalculator';
-import LoanCalculator from '@/features/calculators/components/LoanCalculator';
-import InflationCalculator from '@/features/calculators/components/InflationCalculator';
-import CompoundInterestCalculator from '@/features/calculators/components/CompoundInterestCalculator';
-import Retirement401kCalculator from '@/features/calculators/components/Retirement401kCalculator';
-import ThreeFundPortfolioCalculator from '@/features/calculators/components/ThreeFundPortfolioCalculator';
-import HomeAffordabilityCalculator from '@/features/calculators/components/HomeAffordabilityCalculator';
-import MortgagePayoffCalculator from '@/features/calculators/components/MortgagePayoffCalculator';
-import StockBacktestCalculator from '@/features/calculators/components/StockBacktestCalculator';
-import ExchangeRateCalculator from '@/features/calculators/components/ExchangeRateCalculator';
+// Lazy load calculator components for code splitting and bundle size reduction
+const FinancialFreedomCalculator = lazy(() => import('@/features/calculators/components/FinancialFreedomCalculator'));
+const ROICalculator = lazy(() => import('@/features/calculators/components/ROICalculator'));
+const LoanCalculator = lazy(() => import('@/features/calculators/components/LoanCalculator'));
+const InflationCalculator = lazy(() => import('@/features/calculators/components/InflationCalculator'));
+const CompoundInterestCalculator = lazy(() => import('@/features/calculators/components/CompoundInterestCalculator'));
+const Retirement401kCalculator = lazy(() => import('@/features/calculators/components/Retirement401kCalculator'));
+const ThreeFundPortfolioCalculator = lazy(() => import('@/features/calculators/components/ThreeFundPortfolioCalculator'));
+const HomeAffordabilityCalculator = lazy(() => import('@/features/calculators/components/HomeAffordabilityCalculator'));
+const MortgagePayoffCalculator = lazy(() => import('@/features/calculators/components/MortgagePayoffCalculator'));
+const StockBacktestCalculator = lazy(() => import('@/features/calculators/components/StockBacktestCalculator'));
+const ExchangeRateCalculator = lazy(() => import('@/features/calculators/components/ExchangeRateCalculator'));
+
+// Calculator loading component
+const CalculatorSkeleton = () => (
+  <div className="p-8 space-y-6">
+    <div className="space-y-3">
+      <div className="h-8 bg-white/[0.05] rounded-lg w-1/3 animate-pulse"></div>
+      <div className="h-4 bg-white/[0.03] rounded w-2/3 animate-pulse"></div>
+    </div>
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div className="space-y-4">
+        {[...Array(4)].map((_, i) => (
+          <div key={i} className="space-y-2">
+            <div className="h-4 bg-white/[0.05] rounded w-1/4 animate-pulse"></div>
+            <div className="h-12 bg-white/[0.03] rounded-lg animate-pulse"></div>
+          </div>
+        ))}
+      </div>
+      <div className="h-64 bg-white/[0.03] rounded-lg animate-pulse"></div>
+    </div>
+  </div>
+);
 
 interface CalculatorItem {
   id: string;
@@ -269,7 +290,9 @@ const CalculatorList = () => {
 
         {/* Calculator Component */}
         <div className="bg-white/[0.02] border border-white/[0.08] rounded-2xl backdrop-blur-md overflow-hidden">
-          {selectedCalculator.component}
+          <Suspense fallback={<CalculatorSkeleton />}>
+            {selectedCalculator.component}
+          </Suspense>
         </div>
       </div>
     </div>
