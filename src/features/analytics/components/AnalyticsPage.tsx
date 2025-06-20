@@ -1,11 +1,9 @@
-import React, { useState, useEffect, useMemo, Suspense, lazy } from 'react';
-import { useSearchParams } from 'react-router-dom';
-import { Activity, TrendingUp, Brain, BarChart3, Settings, Download, RefreshCw, Calendar } from 'lucide-react';
+import React, { useState, useEffect, useMemo } from 'react';
+import { Activity, TrendingUp, Brain, BarChart3, Download, RefreshCw, Calendar } from 'lucide-react';
 import { UniversalCard } from '@/shared/ui/UniversalCard';
 import { Button } from '@/shared/ui/button';
 import { Badge } from '@/shared/ui/badge';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/shared/ui/select';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/shared/ui/tabs';
 import { cn } from '@/shared/lib/utils';
 import { useIsMobile } from '@/shared/hooks/use-mobile';
 import { analyticsService } from '../api/analyticsService';
@@ -31,7 +29,6 @@ export const AnalyticsPage: React.FC<AnalyticsPageProps> = ({
   familyId = 'demo_family',
   className 
 }) => {
-  const [searchParams, setSearchParams] = useSearchParams();
   const isMobile = useIsMobile();
   
   // State management
@@ -39,8 +36,6 @@ export const AnalyticsPage: React.FC<AnalyticsPageProps> = ({
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [timeframe, setTimeframe] = useState<string>('30d');
-  const [activeTab, setActiveTab] = useState('overview');
-  const [realTimeEnabled, setRealTimeEnabled] = useState(false);
 
   // Analytics timeframe configuration
   const analyticsTimeframe: AnalyticsTimeframe = useMemo(() => {
@@ -100,16 +95,7 @@ export const AnalyticsPage: React.FC<AnalyticsPageProps> = ({
     loadAnalyticsData();
   }, [familyId, analyticsTimeframe]);
 
-  // Handle tab changes
-  useEffect(() => {
-    const tab = searchParams.get('tab') || 'overview';
-    setActiveTab(tab);
-  }, [searchParams]);
-
-  const handleTabChange = (tab: string) => {
-    setActiveTab(tab);
-    setSearchParams({ tab });
-  };
+  // Tab handling will be implemented in Phase 3
 
   // Handle export functionality
   const handleExportData = async () => {
@@ -241,160 +227,7 @@ export const AnalyticsPage: React.FC<AnalyticsPageProps> = ({
         </span>
       </div>
 
-      {/* Main Content Tabs */}
-      <Tabs value={activeTab} onValueChange={handleTabChange} className="space-y-6">
-        <TabsList className="bg-white/[0.02] border border-white/[0.08] p-1">
-          <TabsTrigger value="overview" className="data-[state=active]:bg-white/[0.05]">
-            <BarChart3 className="w-4 h-4 mr-2" />
-            Overview
-          </TabsTrigger>
-          <TabsTrigger value="correlations" className="data-[state=active]:bg-white/[0.05]">
-            <Brain className="w-4 h-4 mr-2" />
-            Correlations
-          </TabsTrigger>
-          <TabsTrigger value="trends" className="data-[state=active]:bg-white/[0.05]">
-            <TrendingUp className="w-4 h-4 mr-2" />
-            Trends
-          </TabsTrigger>
-          {!isMobile && (
-            <TabsTrigger value="realtime" className="data-[state=active]:bg-white/[0.05]">
-              <Activity className="w-4 h-4 mr-2" />
-              Real-time
-            </TabsTrigger>
-          )}
-        </TabsList>
-
-        {/* Overview Tab */}
-        <TabsContent value="overview" className="space-y-6">
-          {/* Score Summary Grid */}
-          <ScoreSummaryGrid 
-            scores={dashboardData.overallScores}
-            trends={{
-              health: dashboardData.health.weeklyTrends.stress === 'falling' ? 'up' : 'down',
-              wealth: dashboardData.wealth.monthlyTrends.netWorth === 'growing' ? 'up' : 'down',
-              sustainability: dashboardData.transactions.spendingTrends.eco === 'improving' ? 'up' : 'down',
-              correlation: 'up'
-            }}
-          />
-
-          {/* Key Correlations */}
-          <CorrelationInsights 
-            correlations={dashboardData.correlations}
-            maxVisible={isMobile ? 2 : 3}
-          />
-
-          {/* Charts Grid */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            {/* Health Trends */}
-            <UniversalCard variant="glass" className="p-4 sm:p-6">
-              <div className="flex items-center justify-between mb-4">
-                <h3 className="text-lg font-semibold text-white flex items-center gap-2">
-                  <Activity className="w-5 h-5 text-green-400" />
-                  Health Trends
-                </h3>
-              </div>
-              <Suspense fallback={<LoadingFallback />}>
-                <HealthTrendsChart 
-                  data={dashboardData.health}
-                  height={isMobile ? 200 : 300}
-                />
-              </Suspense>
-            </UniversalCard>
-
-            {/* Wealth Trends */}
-            <UniversalCard variant="glass" className="p-4 sm:p-6">
-              <div className="flex items-center justify-between mb-4">
-                <h3 className="text-lg font-semibold text-white flex items-center gap-2">
-                  <TrendingUp className="w-5 h-5 text-blue-400" />
-                  Wealth Trends
-                </h3>
-              </div>
-              <Suspense fallback={<LoadingFallback />}>
-                <WealthTrendsChart 
-                  data={dashboardData.wealth}
-                  height={isMobile ? 200 : 300}
-                />
-              </Suspense>
-            </UniversalCard>
-          </div>
-
-          {/* Smart Insights */}
-          <SmartInsights insights={dashboardData.insights} />
-        </TabsContent>
-
-        {/* Correlations Tab */}
-        <TabsContent value="correlations" className="space-y-6">
-          <CorrelationInsights 
-            correlations={dashboardData.correlations}
-            detailed={true}
-          />
-          
-          {!isMobile && (
-            <Suspense fallback={<LoadingFallback />}>
-              <CorrelationMatrix correlations={dashboardData.correlations} />
-            </Suspense>
-          )}
-        </TabsContent>
-
-        {/* Trends Tab */}
-        <TabsContent value="trends" className="space-y-6">
-          <div className="grid grid-cols-1 gap-6">
-            {/* Health Trends */}
-            <UniversalCard variant="glass" className="p-4 sm:p-6">
-              <h3 className="text-xl font-bold text-white mb-6 flex items-center gap-2">
-                <Activity className="w-6 h-6 text-green-400" />
-                Health Metrics Over Time
-              </h3>
-              <Suspense fallback={<LoadingFallback />}>
-                <HealthTrendsChart 
-                  data={dashboardData.health}
-                  height={400}
-                  detailed={true}
-                />
-              </Suspense>
-            </UniversalCard>
-
-            {/* Wealth Trends */}
-            <UniversalCard variant="glass" className="p-4 sm:p-6">
-              <h3 className="text-xl font-bold text-white mb-6 flex items-center gap-2">
-                <TrendingUp className="w-6 h-6 text-blue-400" />
-                Wealth Performance Over Time
-              </h3>
-              <Suspense fallback={<LoadingFallback />}>
-                <WealthTrendsChart 
-                  data={dashboardData.wealth}
-                  height={400}
-                  detailed={true}
-                />
-              </Suspense>
-            </UniversalCard>
-
-            {/* Transaction Intelligence */}
-            <UniversalCard variant="glass" className="p-4 sm:p-6">
-              <h3 className="text-xl font-bold text-white mb-6 flex items-center gap-2">
-                <BarChart3 className="w-6 h-6 text-purple-400" />
-                Transaction Intelligence
-              </h3>
-              <Suspense fallback={<LoadingFallback />}>
-                <TransactionInsightsChart 
-                  data={dashboardData.transactions}
-                  height={400}
-                />
-              </Suspense>
-            </UniversalCard>
-          </div>
-        </TabsContent>
-
-        {/* Real-time Tab */}
-        {!isMobile && (
-          <TabsContent value="realtime" className="space-y-6">
-            <RealTimeMetrics 
-              enabled={realTimeEnabled}
-              onToggle={setRealTimeEnabled}
-            />
-          </TabsContent>
-        )}
-      </Tabs>
+      {/* Note: Advanced tabs and components will be implemented in Phase 3 */}
     </div>
   );
 };

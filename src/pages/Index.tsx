@@ -28,6 +28,7 @@ const BudgetPlannerPage = lazy(() => import('@/features/budget/components/Budget
 const DashboardPage = lazy(() => import('@/features/dashboard/components/DashboardPage'));
 const FinancialPlanningPage = lazy(() => import('@/features/planning/components/FinancialPlanningPage'));
 const CreditScorePage = lazy(() => import('@/features/credit/components/CreditScorePage'));
+const AnalyticsPage = lazy(() => import('@/features/analytics/components/AnalyticsPage'));
 
 // Error Boundary Component
 class ErrorBoundary extends React.Component<
@@ -344,7 +345,7 @@ export default function Index() {
       case 'analytics':
         return (
           <Suspense fallback={<div className="p-6 text-white">Loading analytics dashboard...</div>}>
-            <DashboardPage />
+            <AnalyticsPage />
           </Suspense>
         );
       case 'planning':
