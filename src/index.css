@@ -12,51 +12,7 @@
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
-
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
-
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
-
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
-
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
-
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
-
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
-
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
-
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
-
     --radius: 0.5rem;
-
-    --sidebar-background: 0 0% 98%;
-
-    --sidebar-foreground: 240 5.3% 26.1%;
-
-    --sidebar-primary: 240 5.9% 10%;
-
-    --sidebar-primary-foreground: 0 0% 98%;
-
-    --sidebar-accent: 240 4.8% 95.9%;
-
-    --sidebar-accent-foreground: 240 5.9% 10%;
-
-    --sidebar-border: 220 13% 91%;
-
-    --sidebar-ring: 217.2 91.2% 59.8%;
   }
 
   .dark {
@@ -105,14 +61,14 @@
 
   /* CLS Prevention: Font loading optimization */
   @font-face {
-    font-family: 'SF Pro Rounded';
+    font-family: 'SF Pro Display';
     font-display: swap;
     font-weight: 400 700;
   }
 
   body {
     @apply bg-background text-foreground;
-    font-family: 'SF Pro Rounded', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+    font-family: "SF Pro Display", -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;
@@ -121,21 +77,21 @@
     font-kerning: auto;
   }
   
-  /* Apply SF Pro Rounded to headings */
+  /* Apply SF Pro Display to headings */
   h1, h2, h3, h4, h5, h6 {
-    font-family: 'SF Pro Rounded', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+    font-family: "SF Pro Display", -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
     font-weight: 600;
     letter-spacing: -0.025em;
   }
   
   /* Button and interactive elements */
   button, input, select, textarea {
-    font-family: 'SF Pro Rounded', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+    font-family: "SF Pro Display", -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
   }
   
   /* Navigation specific font styling */
   .nav-text, .navigation-text {
-    font-family: 'SF Pro Rounded', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-family: "SF Pro Display", -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
     font-weight: 500;
     letter-spacing: -0.01em;
   }
@@ -173,205 +129,6 @@
   }
 }
 
-/* ======================================================
-   WCAG AA Compliant Light Mode Overrides
-   ====================================================== */
-
-/* Main text color overrides with proper contrast ratios */
-html:not(.dark) [class*="text-white"] {
-  color: rgb(15 23 42) !important; /* slate-900: contrast ratio 15.84:1 */
-}
-
-html:not(.dark) [class*="text-white/90"] {
-  color: rgb(30 41 59) !important; /* slate-800: contrast ratio 12.59:1 */
-}
-
-html:not(.dark) [class*="text-white/80"] {
-  color: rgb(51 65 85) !important; /* slate-700: contrast ratio 9.32:1 */
-}
-
-html:not(.dark) [class*="text-white/70"] {
-  color: rgb(71 85 105) !important; /* slate-600: contrast ratio 7.15:1 */
-}
-
-html:not(.dark) [class*="text-white/60"] {
-  color: rgb(100 116 139) !important; /* slate-500: contrast ratio 5.41:1 */
-}
-
-/* Glass card backgrounds with proper opacity for readability */
-html:not(.dark) .liquid-glass-card {
-  background: rgba(248, 250, 252, 0.95) !important; /* slate-50 with high opacity */
-  border: 1px solid rgba(148, 163, 184, 0.4) !important; /* slate-400 for visible borders */
-  backdrop-filter: blur(12px) !important;
-}
-
-html:not(.dark) .liquid-glass-card:hover {
-  background: rgba(241, 245, 249, 0.98) !important; /* slate-100 with higher opacity */
-  border-color: rgba(100, 116, 139, 0.6) !important; /* slate-500 for enhanced border */
-}
-
-/* Navigation glass effects */
-html:not(.dark) .liquid-glass-nav {
-  background: rgba(248, 250, 252, 0.92) !important; /* slate-50 */
-  border: 1px solid rgba(148, 163, 184, 0.3) !important; /* slate-400 */
-}
-
-html:not(.dark) .liquid-glass-top-menubar {
-  background: rgba(248, 250, 252, 0.95) !important; /* slate-50 with high opacity */
-  border: 1px solid rgba(148, 163, 184, 0.4) !important; /* visible border */
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08) !important; /* subtle shadow for definition */
-}
-
-/* Menu items and interactive elements */
-html:not(.dark) .liquid-glass-menu-item {
-  background: rgba(241, 245, 249, 0.7) !important; /* slate-100 */
-  border: 1px solid rgba(203, 213, 225, 0.6) !important; /* slate-300 */
-}
-
-html:not(.dark) .liquid-glass-menu-item:hover {
-  background: rgba(226, 232, 240, 0.9) !important; /* slate-200 */
-  border-color: rgba(148, 163, 184, 0.8) !important; /* slate-400 */
-}
-
-html:not(.dark) .liquid-glass-menu-item.active {
-  background: rgba(219, 234, 254, 0.9) !important; /* blue-100 */
-  border-color: rgba(59, 130, 246, 0.6) !important; /* blue-500 */
-  color: rgb(30, 64, 175) !important; /* blue-800 for high contrast */
-}
-
-/* Button enhancements */
-html:not(.dark) .liquid-glass-button {
-  background: rgba(241, 245, 249, 0.8) !important; /* slate-100 */
-  border: 1px solid rgba(148, 163, 184, 0.5) !important; /* slate-400 */
-}
-
-html:not(.dark) .liquid-glass-button:hover {
-  background: rgba(226, 232, 240, 0.9) !important; /* slate-200 */
-  border-color: rgba(100, 116, 139, 0.7) !important; /* slate-500 */
-}
-
-/* iOS navigation bubble */
-html:not(.dark) .ios26-nav-bubble {
-  background: rgba(248, 250, 252, 0.95) !important; /* slate-50 */
-  border: 1px solid rgba(148, 163, 184, 0.4) !important; /* slate-400 */
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1) !important; /* shadow for definition */
-}
-
-html:not(.dark) .ios26-nav-item {
-  color: rgb(71, 85, 105) !important; /* slate-600: good contrast */
-}
-
-html:not(.dark) .ios26-nav-item-active {
-  background: rgba(219, 234, 254, 0.8) !important; /* blue-100 */
-  color: rgb(30, 64, 175) !important; /* blue-800: high contrast */
-  border-color: rgba(59, 130, 246, 0.3) !important; /* blue-500 border */
-}
-
-html:not(.dark) .ios26-nav-item:hover {
-  background: rgba(241, 245, 249, 0.7) !important; /* slate-100 */
-  color: rgb(51, 65, 85) !important; /* slate-700 */
-}
-
-/* Floating Action Button */
-html:not(.dark) .liquid-glass-fab {
-  background: rgba(59, 130, 246, 0.9) !important; /* blue-500 with high opacity */
-  border: 2px solid rgba(37, 99, 235, 0.6) !important; /* blue-600 border */
-  box-shadow: 0 8px 25px rgba(59, 130, 246, 0.3) !important; /* blue shadow */
-}
-
-html:not(.dark) .liquid-glass-fab:hover {
-  background: rgba(37, 99, 235, 0.95) !important; /* blue-600 */
-  border-color: rgba(29, 78, 216, 0.8) !important; /* blue-700 */
-}
-
-/* Ensure FAB text remains white for proper contrast */
-html:not(.dark) .liquid-glass-fab [class*="text-white"] {
-  color: rgb(255, 255, 255) !important; /* Keep white for contrast against blue */
-}
-
-/* Notification badge improvements */
-html:not(.dark) .bg-red-500 {
-  background-color: rgb(239, 68, 68) !important; /* red-500 */
-  border: 2px solid rgb(248, 250, 252) !important; /* white border for definition */
-}
-
-/* Focus states for accessibility */
-html:not(.dark) *:focus-visible {
-  outline: 2px solid rgb(59, 130, 246) !important; /* blue-500 */
-  outline-offset: 2px !important;
-}
-
-html:not(.dark) button:focus-visible {
-  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.3) !important; /* blue focus ring */
-}
-
-/* Gradients and special text treatments */
-html:not(.dark) .bg-gradient-to-r.from-blue-400.to-purple-400 {
-  background: linear-gradient(to right, rgb(30, 64, 175), rgb(109, 40, 217)) !important; /* blue-800 to purple-700 */
-}
-
-html:not(.dark) .bg-clip-text.text-transparent {
-  color: rgb(30, 64, 175) !important; /* blue-800 as fallback */
-  background-clip: text;
-  -webkit-background-clip: text;
-}
-
-/* Dividers and separators */
-html:not(.dark) [class*="bg-white/10"],
-html:not(.dark) [class*="border-white/10"] {
-  background-color: rgba(148, 163, 184, 0.3) !important; /* slate-400 */
-  border-color: rgba(148, 163, 184, 0.3) !important;
-}
-
-/* Enhanced contrast for high contrast preference */
-@media (prefers-contrast: high) {
-  html:not(.dark) .liquid-glass-card {
-    background: rgba(255, 255, 255, 0.98) !important;
-    border-color: rgba(71, 85, 105, 0.8) !important; /* slate-600 */
-  }
-  
-  html:not(.dark) [class*="text-white"] {
-    color: rgb(0, 0, 0) !important; /* Pure black for maximum contrast */
-  }
-  
-  html:not(.dark) .liquid-glass-menu-item.active {
-    background: rgba(191, 219, 254, 1) !important; /* blue-200 solid */
-    color: rgb(30, 58, 138) !important; /* blue-900 */
-  }
-}
-
-/* Enhanced Dropdown Menu Visibility */
-html:not(.dark) [data-radix-dropdown-menu-content] {
-  background: rgba(255, 255, 255, 0.98) !important;
-  border: 2px solid rgba(148, 163, 184, 0.6) !important; /* slate-400 strong border */
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15) !important; /* stronger shadow */
-  backdrop-filter: blur(16px) !important;
-}
-
-html:not(.dark) [data-radix-dropdown-menu-item] {
-  color: rgb(30, 41, 59) !important; /* slate-800 for high contrast */
-}
-
-html:not(.dark) [data-radix-dropdown-menu-item]:hover {
-  background: rgba(241, 245, 249, 0.9) !important; /* slate-100 */
-  color: rgb(15, 23, 42) !important; /* slate-900 */
-}
-
-html:not(.dark) [data-radix-dropdown-menu-item]:focus {
-  background: rgba(226, 232, 240, 0.95) !important; /* slate-200 */
-  color: rgb(15, 23, 42) !important; /* slate-900 */
-  outline: 2px solid rgb(59, 130, 246) !important; /* blue-500 focus ring */
-  outline-offset: 1px !important;
-}
-
-html:not(.dark) [data-radix-dropdown-menu-label] {
-  color: rgb(100, 116, 139) !important; /* slate-500 for labels */
-}
-
-html:not(.dark) [data-radix-dropdown-menu-separator] {
-  background: rgba(148, 163, 184, 0.4) !important; /* slate-400 separator */
-}
-
 /* Dark mode dropdown enhancements for consistency */
 html.dark [data-radix-dropdown-menu-content] {
   background: rgba(0, 0, 0, 0.95) !important;
@@ -394,22 +151,6 @@ html.dark [data-radix-dropdown-menu-item]:focus {
   color: rgb(255, 255, 255) !important;
   outline: 2px solid rgb(96, 165, 250) !important; /* blue-400 focus ring */
   outline-offset: 1px !important;
-}
-
-/* Print styles override */
-@media print {
-  html:not(.dark) .liquid-glass-card,
-  html:not(.dark) .liquid-glass-nav,
-  html:not(.dark) .liquid-glass-button {
-    background: white !important;
-    border: 1px solid rgb(0, 0, 0) !important;
-    backdrop-filter: none !important;
-    box-shadow: none !important;
-  }
-  
-  html:not(.dark) [class*="text-white"] {
-    color: rgb(0, 0, 0) !important;
-  }
 }
 
 /* Enhanced Insights Page Responsive Styles */

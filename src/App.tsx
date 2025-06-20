@@ -9,6 +9,7 @@ import { LiquidGlassProvider } from '@/shared/hooks/useLiquidGlass';
 import { FeatureFlagProvider } from '@/components/shared/VueniFeatureFlags';
 import GlobalGradientBackground from '@/shared/ui/GlobalGradientBackground';
 import { BiometricsProvider } from '@/providers/BiometricsProvider';
+import { VueniThemeProvider } from '@/theme/ThemeProvider';
 import '@/app/styles/accessibility.css';
 
 const queryClient = new QueryClient();
@@ -48,39 +49,41 @@ const OptimizedLoadingFallback = () => (
 );
 
 const App = () => (
-  <QueryClientProvider client={queryClient}>
-    <FeatureFlagProvider preset="production">
-      <LiquidGlassProvider>
-        <BiometricsProvider autoStart={true} debugMode={import.meta.env.DEV}>
-          <TooltipProvider>
-            <GlobalGradientBackground />
-            <Toaster />
-            <Sonner />
-            <BrowserRouter>
-              <Suspense fallback={<OptimizedLoadingFallback />}>
-                <Routes>
-                  <Route path="/" element={<Index />} />
-                  <Route path="/profile" element={<Profile />} />
-                  <Route path="/credit-score" element={<CreditScorePage />} />
-                  <Route path="/savings" element={<SavingsGoals />} />
-                  <Route path="/transactions" element={<TransactionDemo />} />
-                  <Route path="/budget-planner" element={<BudgetPlannerPage />} />
-                  <Route path="/goal-setting" element={<SavingsGoals />} />
-                  <Route path="/investment-tracker" element={<InvestmentTrackerPage />} />
-                  <Route path="/calculators" element={<CalculatorsPage />} />
-                  <Route path="/calculators/:id" element={<CalculatorsPage />} />
-                  <Route path="/reports" element={<BudgetReportsPage />} />
-                  <Route path="/insights" element={<InsightsPage />} />
-                  {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-                  <Route path="*" element={<NotFound />} />
-                </Routes>
-              </Suspense>
-            </BrowserRouter>
-          </TooltipProvider>
-        </BiometricsProvider>
-      </LiquidGlassProvider>
-    </FeatureFlagProvider>
-  </QueryClientProvider>
+  <VueniThemeProvider>
+    <QueryClientProvider client={queryClient}>
+      <FeatureFlagProvider preset="production">
+        <LiquidGlassProvider>
+          <BiometricsProvider autoStart={true} debugMode={import.meta.env.DEV}>
+            <TooltipProvider>
+              <GlobalGradientBackground />
+              <Toaster />
+              <Sonner />
+              <BrowserRouter>
+                <Suspense fallback={<OptimizedLoadingFallback />}>
+                  <Routes>
+                    <Route path="/" element={<Index />} />
+                    <Route path="/profile" element={<Profile />} />
+                    <Route path="/credit-score" element={<CreditScorePage />} />
+                    <Route path="/savings" element={<SavingsGoals />} />
+                    <Route path="/transactions" element={<TransactionDemo />} />
+                    <Route path="/budget-planner" element={<BudgetPlannerPage />} />
+                    <Route path="/goal-setting" element={<SavingsGoals />} />
+                    <Route path="/investment-tracker" element={<InvestmentTrackerPage />} />
+                    <Route path="/calculators" element={<CalculatorsPage />} />
+                    <Route path="/calculators/:id" element={<CalculatorsPage />} />
+                    <Route path="/reports" element={<BudgetReportsPage />} />
+                    <Route path="/insights" element={<InsightsPage />} />
+                    {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+                    <Route path="*" element={<NotFound />} />
+                  </Routes>
+                </Suspense>
+              </BrowserRouter>
+            </TooltipProvider>
+          </BiometricsProvider>
+        </LiquidGlassProvider>
+      </FeatureFlagProvider>
+    </QueryClientProvider>
+  </VueniThemeProvider>
 );
 
 export default App;
