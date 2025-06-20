@@ -80,28 +80,93 @@ class ErrorBoundary extends React.Component<
 
 // Adapt mock transactions for new UI fields
 const adaptTransactions = (transactions: typeof mockData.transactions): Transaction[] => {
-  return transactions.map((t) => ({
-    ...t,
-    // Map legacy fields if present
-    shippingCarrier: (t as any).shippingCarrier ?? (t as any).shippingProvider ?? undefined,
-    shippingStatus: (t as any).shippingStatus ??
-      ((s => {
-        if (!s) return undefined;
-        const map: Record<string, string> = {
-          'Delivered': 'DELIVERED',
-          'Out for Delivery': 'OUT_FOR_DELIVERY',
-          'In Transit': 'IN_TRANSIT',
-          'Pending': 'PENDING'
-        };
-        return map[s] as any;
-      })((t as any).deliveryStatus)),
-    // Provide fallback paymentMethod mock if absent
-    paymentMethod: (t as any).paymentMethod ?? (t.amount < 0 ? {
-      accountName: 'Vueni Card',
-      last4: '4242',
-      network: 'Visa'
-    } : undefined)
-  })) as unknown as Transaction[];
+  // Helper to convert legacy transaction into full shape expected by UI
+  const baseAdapted = transactions.map((t, idx) => {
+    const categoryName = typeof (t as any).category === 'string'
+      ? (t as any).category
+      : ((t as any).category?.name?.toLowerCase() || 'other');
+
+    return {
+      // Legacy + required fields
+      id: t.id ?? `txn_${idx}`,
+      accountId: (t as any).accountId ?? 'acc_001',
+      familyId: 'demo_family',
+      amount: t.amount,
+      currency: (t as any).currency ?? 'USD',
+      date: new Date(t.date),
+      merchantName: (t as any).merchantName ?? (t as any).merchant ?? 'Unknown',
+      description: (t as any).description ?? ((t as any).merchant ? `Purchase at ${(t as any).merchant}` : 'Transaction'),
+      category: categoryName as any,
+      paymentChannel: 'online',
+      transactionType: t.amount < 0 ? 'purchase' : 'deposit',
+      status: (() => {
+        const raw = ((t.status as string) ?? '').toLowerCase();
+        if (raw === 'pending') return 'pending';
+        if (['cancelled', 'failed', 'returned', 'refunded'].includes(raw)) return 'refunded';
+        return 'completed';
+      })(),
+      isPending: ((t.status as string)?.toLowerCase() === 'pending'),
+      isRecurring: false,
+      metadata: {
+        tracking_number: (t as any).trackingNumber,
+        carrier: (t as any).shippingCarrier ?? (t as any).shippingProvider,
+        shipping_status: (t as any).shippingStatus ?? undefined,
+        payment_account_name: (t as any).paymentMethod?.accountName,
+        payment_last4: (t as any).paymentMethod?.last4,
+        payment_network: (t as any).paymentMethod?.network,
+      },
+      tags: [],
+      excludeFromBudget: false,
+      isTransfer: false,
+      createdAt: new Date(t.date),
+      updatedAt: new Date(t.date),
+    } as unknown as Transaction;
+  });
+
+  // --- Ensure 60 days of transactions ---
+  const DAY_MS = 24 * 60 * 60 * 1000;
+  const today = new Date();
+  const existingDateKeys = new Set(baseAdapted.map(tx => new Date(tx.date).toDateString()));
+
+  const fillerMerchants = [
+    'Starbucks', 'Amazon', 'Target', 'Whole Foods', 'CVS', 'Walmart',
+    'Netflix', 'Spotify', 'Uber', 'Airbnb', 'Costco', 'Home Depot'
+  ];
+
+  let fillerIdx = 0;
+  for (let i = 0; i < 60; i++) {
+    const d = new Date(today.getTime() - i * DAY_MS);
+    const key = d.toDateString();
+    if (existingDateKeys.has(key)) continue; // already have a transaction on this day
+
+    const merchant = fillerMerchants[fillerIdx % fillerMerchants.length];
+    fillerIdx++;
+
+    baseAdapted.push({
+      id: `auto_txn_${i}`,
+      accountId: 'acc_001',
+      familyId: 'demo_family',
+      amount: -(Math.random() * 100 + 5),
+      currency: 'USD',
+      date: d,
+      merchantName: merchant,
+      description: `Purchase at ${merchant}`,
+      category: 'shopping',
+      paymentChannel: 'online',
+      transactionType: 'purchase',
+      status: 'completed',
+      isPending: false,
+      isRecurring: false,
+      metadata: {},
+      tags: [],
+      excludeFromBudget: false,
+      isTransfer: false,
+      createdAt: d,
+      updatedAt: d,
+    } as unknown as Transaction);
+  }
+
+  return baseAdapted.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 };
 
 // Demo component to showcase intervention system
@@ -299,7 +364,7 @@ export default function Index() {
                 <div>
                   <h1 className="text-2xl lg:text-3xl font-bold text-white mb-2">Recent Transactions</h1>
                   <p className="text-white/60">
-                    {mockData.transactions?.length || 0} transactions • 30 of 30
+                    {adaptTransactions(mockData.transactions).length} transactions • Showing latest {adaptTransactions(mockData.transactions).length}
                   </p>
                 </div>
                 

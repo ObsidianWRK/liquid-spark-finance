@@ -10,6 +10,8 @@ const statusStyles: Record<TransactionStatus, string> = {
   [TransactionStatus.Pending]: 'bg-yellow-700/60 text-yellow-300',
   [TransactionStatus.InTransit]: 'bg-blue-700/60 text-blue-300',
   [TransactionStatus.Delivered]: 'bg-green-700/60 text-green-300',
+  [TransactionStatus.Completed]: 'bg-green-700/60 text-green-300',
+  [TransactionStatus.Refunded]: 'bg-purple-700/60 text-purple-300',
   [TransactionStatus.None]: 'bg-gray-700/60 text-gray-300',
 };
 
@@ -17,6 +19,8 @@ const labelMap: Record<TransactionStatus, string> = {
   [TransactionStatus.Pending]: 'Pending',
   [TransactionStatus.InTransit]: 'In Transit',
   [TransactionStatus.Delivered]: 'Delivered',
+  [TransactionStatus.Completed]: 'Completed',
+  [TransactionStatus.Refunded]: 'Refunded',
   [TransactionStatus.None]: '—',
 };
 

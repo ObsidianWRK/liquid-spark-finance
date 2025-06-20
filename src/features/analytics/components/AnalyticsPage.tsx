@@ -954,9 +954,9 @@ export const AnalyticsPage: React.FC<AnalyticsPageProps> = ({
                     <div className="text-xs text-white/60 mb-1">
                       {['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'][index]}
                     </div>
-                    <div className="h-12 bg-white/[0.05] rounded flex items-end justify-center">
+                    <div className="h-12 md:h-16 lg:h-24 bg-white/[0.05] rounded flex items-end justify-center">
                       <div 
-                        className="bg-green-400 rounded-sm w-3" 
+                        className="bg-green-400 rounded-sm w-3 md:w-4" 
                         style={{ height: `${(hrv / 50) * 100}%` }}
                       ></div>
                     </div>
@@ -980,9 +980,9 @@ export const AnalyticsPage: React.FC<AnalyticsPageProps> = ({
                     <div className="text-xs text-white/60 mb-1">
                       {['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'][index]}
                     </div>
-                    <div className="h-12 bg-white/[0.05] rounded flex items-end justify-center">
+                    <div className="h-12 md:h-16 lg:h-24 bg-white/[0.05] rounded flex items-end justify-center">
                       <div 
-                        className={`rounded-sm w-3 ${stress > 45 ? 'bg-red-400' : stress > 35 ? 'bg-yellow-400' : 'bg-green-400'}`}
+                        className={`rounded-sm w-3 md:w-4 ${stress > 45 ? 'bg-red-400' : stress > 35 ? 'bg-yellow-400' : 'bg-green-400'}`}
                         style={{ height: `${(stress / 60) * 100}%` }}
                       ></div>
                     </div>
@@ -1006,9 +1006,9 @@ export const AnalyticsPage: React.FC<AnalyticsPageProps> = ({
                     <div className="text-xs text-white/60 mb-1">
                       {['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'][index]}
                     </div>
-                    <div className="h-12 bg-white/[0.05] rounded flex items-end justify-center">
+                    <div className="h-12 md:h-16 lg:h-24 bg-white/[0.05] rounded flex items-end justify-center">
                       <div 
-                        className="bg-purple-400 rounded-sm w-3" 
+                        className="bg-purple-400 rounded-sm w-3 md:w-4" 
                         style={{ height: `${(sleep / 10) * 100}%` }}
                       ></div>
                     </div>

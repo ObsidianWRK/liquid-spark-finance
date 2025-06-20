@@ -94,6 +94,8 @@ export enum TransactionStatus {
   Pending = 'pending',
   InTransit = 'inTransit',
   Delivered = 'delivered',
+  Completed = 'completed',
+  Refunded = 'refunded',
   None = 'none', // placeholder when status is unavailable
 }
 

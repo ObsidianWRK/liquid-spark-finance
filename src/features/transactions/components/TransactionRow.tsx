@@ -29,30 +29,43 @@ const TransactionRow: React.FC<TransactionRowProps> = ({ tx, className, onClick 
     return 'text-white';
   }, [tx.amount]);
 
-  // Merchant and category fallback
-  const merchant = tx.merchantName || '—';
-  const category = tx.category ? String(tx.category) : '—';
+  // Merchant and category fallback – support legacy shapes
+  const merchant = (tx as any).merchantName ?? (tx as any).merchant ?? '—';
+
+  // If category is an object (legacy mock shape), use its name field; else use the string directly
+  const category = (() => {
+    const raw = (tx as any).category;
+    if (!raw) return '—';
+    if (typeof raw === 'string') return raw;
+    if (typeof raw === 'object' && 'name' in raw) return String(raw.name);
+    return String(raw);
+  })();
 
   // Date formatting (mm/dd/yyyy)
   const dateString = tx.date ? format(new Date(tx.date), 'MM/dd/yy') : '—';
 
   // Status handling – map existing status strings to new enum where possible
   const status: TransactionStatus = (() => {
-    switch (tx.status as string) {
-      case 'pending':
-        return TransactionStatus.Pending;
-      case 'posted':
-      case 'cancelled':
-      case 'failed':
-      case 'returned':
-        return TransactionStatus.Delivered;
-      case 'in_transit':
-      case 'inTransit':
-      case 'IN_TRANSIT':
-        return TransactionStatus.InTransit;
-      default:
-        return TransactionStatus.None;
+    const rawStatus = (tx.status as string)?.toLowerCase();
+    const hasTracking = Boolean((tx as any).trackingNumber ?? (tx.metadata as any)?.tracking_number);
+
+    // Handle shipment-related statuses first
+    if (hasTracking) {
+      const shippingStatus = ((tx as any).shippingStatus ?? (tx.metadata as any)?.shipping_status)?.toUpperCase();
+      if (shippingStatus === 'DELIVERED') return TransactionStatus.Delivered;
+      if (shippingStatus === 'IN_TRANSIT' || shippingStatus === 'OUT_FOR_DELIVERY') return TransactionStatus.InTransit;
     }
+
+    // Fallback to financial transaction status
+    if (rawStatus === 'pending') return TransactionStatus.Pending;
+    if (rawStatus === 'refunded' || rawStatus === 'returned' || rawStatus === 'cancelled' || rawStatus === 'failed') {
+      return TransactionStatus.Refunded;
+    }
+    if (rawStatus === 'completed' || rawStatus === 'posted' || rawStatus === 'settled') {
+      return TransactionStatus.Completed;
+    }
+
+    return TransactionStatus.None;
   })();
 
   return (

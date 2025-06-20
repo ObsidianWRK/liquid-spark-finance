@@ -433,3 +433,10 @@ html.dark [data-radix-dropdown-menu-item]:focus {
     }
   }
 }
+
+/* Dark Liquid Glass Menu Bar fallback when backdrop-filter is unsupported */
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  nav[role="menubar"] {
+    background: rgba(17,17,17,0.85) !important; /* Solid dark accent */
+  }
+}

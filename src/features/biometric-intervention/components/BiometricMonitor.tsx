@@ -1,10 +1,11 @@
-import React, { useEffect, useMemo } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { Heart, Activity, Thermometer, Wind, Watch, TrendingUp, TrendingDown, Minus } from 'lucide-react';
 import { Badge } from '@/shared/ui/badge';
 import { Button } from '@/shared/ui/button';
 import { cn } from '@/shared/lib/utils';
 import { useBiometricInterventionStore } from '../store';
 import { StressLevel, BiometricData } from '../types';
+import { unifiedDataManager } from '@/services/unifiedDataManager';
 
 interface BiometricMonitorProps {
   className?: string;
@@ -24,15 +25,43 @@ export const BiometricMonitor: React.FC<BiometricMonitorProps> = ({
     isActive
   } = useBiometricInterventionStore();
 
+  /**
+   * Sync with unifiedDataManager so the compact stress indicator stays
+   * consistent with the Analytics dashboard. If the biometric store has not
+   * yet produced a reading (ie. currentStress is undefined), we fall back to
+   * the global unified health state that powers the Analytics page.
+   */
+  const [unifiedStress, setUnifiedStress] = useState(() => unifiedDataManager.getSnapshot().health.stressLevel);
+
   useEffect(() => {
-    // Auto-refresh stress level every 30 seconds if active
-    if (isActive) {
-      const interval = setInterval(() => {
-        triggerManualStressCheck();
-      }, 30000);
-      return () => clearInterval(interval);
-    }
+    const sub = unifiedDataManager.healthData$.subscribe(health => {
+      setUnifiedStress(health.stressLevel);
+    });
+    return () => sub.unsubscribe();
+  }, []);
+
+  // Preserve original auto-refresh behavior to keep biometric data fresh when active
+  useEffect(() => {
+    if (!isActive) return;
+    const interval = setInterval(() => {
+      triggerManualStressCheck();
+    }, 30000);
+    return () => clearInterval(interval);
   }, [isActive, triggerManualStressCheck]);
+
+  const effectiveStress = React.useMemo(() => {
+    if (currentStress) return currentStress;
+    if (typeof unifiedStress === 'number') {
+      return {
+        score: unifiedStress,
+        confidence: 1,
+        baseline: 30,
+        trend: 'stable' as const,
+        timestamp: new Date().toISOString()
+      };
+    }
+    return undefined;
+  }, [currentStress, unifiedStress]);
 
   const mockBiometricData: BiometricData = useMemo(() => ({
     heartRate: 72 + Math.random() * 20,
@@ -70,7 +99,7 @@ export const BiometricMonitor: React.FC<BiometricMonitorProps> = ({
     return devices;
   };
 
-  const stressIndicator = getStressIndicator(currentStress);
+  const stressIndicator = getStressIndicator(effectiveStress);
   const connectedDevices = getConnectedDevices();
 
   if (compact) {
@@ -94,14 +123,14 @@ export const BiometricMonitor: React.FC<BiometricMonitorProps> = ({
             </div>
             <div>
               <p className="text-sm font-medium text-white/90">
-                Stress: {currentStress?.score || '--'}/100
+                Stress: {effectiveStress?.score ?? '--'}/100
               </p>
               <p className="text-xs text-white/60">
                 {stressIndicator.label} • {connectedDevices.length} device(s)
               </p>
             </div>
           </div>
-          {getTrendIcon(currentStress?.trend)}
+          {getTrendIcon(effectiveStress?.trend)}
         </div>
       </div>
     );
@@ -134,9 +163,9 @@ export const BiometricMonitor: React.FC<BiometricMonitorProps> = ({
             <span className="text-sm font-medium text-white/90">Current Stress Level</span>
             <div className="flex items-center space-x-2">
               <span className="text-sm text-white/70">
-                {currentStress?.score || '--'}/100
+                {effectiveStress?.score ?? '--'}/100
               </span>
-              {getTrendIcon(currentStress?.trend)}
+              {getTrendIcon(effectiveStress?.trend)}
             </div>
           </div>
           
@@ -149,7 +178,7 @@ export const BiometricMonitor: React.FC<BiometricMonitorProps> = ({
                 stressIndicator.color === 'yellow' ? 'bg-yellow-400' :
                 stressIndicator.color === 'green' ? 'bg-green-400' : 'bg-white/20'
               )}
-              style={{ width: `${currentStress?.score || 0}%` }}
+              style={{ width: `${effectiveStress?.score ?? 0}%` }}
             />
           </div>
           
@@ -242,11 +271,11 @@ export const BiometricMonitor: React.FC<BiometricMonitorProps> = ({
         </Button>
 
         {/* Metadata */}
-        {currentStress && (
+        {effectiveStress && (
           <div className="pt-3 border-t border-white/[0.08]">
             <div className="flex justify-between text-xs text-white/60">
-              <span>Confidence: {Math.round((currentStress.confidence || 0) * 100)}%</span>
-              <span>Updated: {new Date(currentStress.timestamp).toLocaleTimeString()}</span>
+              <span>Confidence: {Math.round((effectiveStress.confidence || 0) * 100)}%</span>
+              <span>Updated: {new Date(effectiveStress.timestamp).toLocaleTimeString()}</span>
             </div>
           </div>
         )}

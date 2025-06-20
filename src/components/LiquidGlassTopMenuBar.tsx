@@ -1,14 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { 
-  File, 
-  Edit, 
-  Eye, 
-  Settings, 
-  HelpCircle,
   User,
   Search,
   Bell,
-  ChevronDown,
   Home,
   BarChart3,
   Wallet,
@@ -29,6 +23,8 @@ import {
   MenubarShortcut,
 } from '@/shared/ui/menubar';
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/shared/ui/sheet';
+import { MENU_BAR_HEIGHT, LIQUID_BG_DARK } from '@/shared/tokens/menuBar.tokens';
+import { useMenuBarReveal } from '@/hooks/useMenuBarReveal';
 
 interface MenuBarProps {
   className?: string;
@@ -41,8 +37,9 @@ interface MenuItem {
 }
 
 const LiquidGlassTopMenuBar = ({ className, onMenuItemClick }: MenuBarProps) => {
+  const menubarRef = useRef<HTMLElement | null>(null);
+  const { orientation, translateY } = useMenuBarReveal();
   const navigate = useNavigate();
-  const [isMobileToolsOpen, setIsMobileToolsOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const fileMenu = [
@@ -79,7 +76,9 @@ const LiquidGlassTopMenuBar = ({ className, onMenuItemClick }: MenuBarProps) => 
     { label: 'About Vueni' },
   ];
 
-  const handleItemSelect = (item: string) => {
+  const handleItemSelect = (item?: string) => {
+    if (!item) return;
+
     switch (item) {
       // Tools Menu Navigation
       case 'Calculators':
@@ -147,246 +146,274 @@ const LiquidGlassTopMenuBar = ({ className, onMenuItemClick }: MenuBarProps) => 
     setIsMobileMenuOpen(false);
   };
 
+  // Accessibility: Ctrl+F2 focuses the menubar just like macOS.
+  useEffect(() => {
+    function onKeyDown(e: KeyboardEvent) {
+      if ((e.ctrlKey || e.metaKey) && e.key === 'F2') {
+        e.preventDefault();
+        menubarRef.current?.focus();
+      }
+    }
+    window.addEventListener('keydown', onKeyDown);
+    return () => window.removeEventListener('keydown', onKeyDown);
+  }, []);
+
   return (
     <>
       <LiquidGlassSVGFilters />
       
-      {/* Top Menu Bar with Liquid Glass Effect */}
-      <div className={cn("fixed top-0 left-0 right-0 z-50 p-2 sm:p-4 pt-safe", className)}>
-        <div className="liquid-glass-nav rounded-2xl p-2 sm:p-3 border-x-0 border-t-0 border-b border-white/10 backdrop-blur-xl">
-          <div className="flex items-center justify-between max-w-7xl mx-auto">
-            
-            {/* Logo/Brand */}
-            <div className="flex items-center space-x-2 sm:space-x-6 flex-shrink-0">
-              <VueniLogo
-                size="lg"
-                variant="text-only"
-                onClick={() => navigate('/')}
-                className="liquid-glass-button p-2 sm:p-3 rounded-xl"
-                onDownloadComplete={(filename) => {
-                  console.log(`Downloaded: ${filename}`);
-                }}
-              />
+      {/* Dark-only Liquid Glass Menu Bar */}
+      <nav
+        role="menubar"
+        aria-keyshortcuts="Control+F2"
+        ref={menubarRef}
+        tabIndex={0}
+        className={cn(
+          "fixed inset-x-0 top-[env(safe-area-inset-top)] h-[--menu-bar-height] flex items-center z-50 backdrop-blur-md saturate-[180%] border-t border-white/20 transition-transform duration-200 dark:[&]:bg-[rgba(0,0,0,0.42)]",
+          className
+        )}
+        style={{
+          '--menu-bar-height': `${MENU_BAR_HEIGHT[orientation]}px`,
+          transform: `translateY(${translateY})`,
+          background: LIQUID_BG_DARK,
+        } as React.CSSProperties}
+      >
+        {/* Inner content wrapper for spacing (reuses existing layout) */}
+        <div className="w-full px-2 sm:px-4">
+          <div className="liquid-glass-nav rounded-2xl p-2 sm:p-3 border-x-0 border-t-0 border-b border-white/10">
+            <div className="flex items-center justify-between max-w-7xl mx-auto">
+              {/* Logo/Brand */}
+              <div className="flex items-center space-x-2 sm:space-x-6 flex-shrink-0">
+                <VueniLogo
+                  size="lg"
+                  variant="text-only"
+                  onClick={() => navigate('/')}
+                  className="liquid-glass-button p-2 sm:p-3 rounded-xl"
+                  onDownloadComplete={(filename) => {
+                    console.log(`Downloaded: ${filename}`);
+                  }}
+                />
 
-              {/* Desktop Menu Items using Radix Menubar */}
-              <div className="hidden lg:block">
-                <Menubar>
-                  {/* File */}
-                  <MenubarMenu>
-                    <MenubarTrigger>File</MenubarTrigger>
-                    <MenubarContent>
-                      {fileMenu.map((item, idx) =>
-                        item.separator ? (
-                          <MenubarSeparator key={idx} />
-                        ) : (
-                          <MenubarItem key={idx} onSelect={() => handleItemSelect(item.label)}>
-                            {item.label}
-                            {item.shortcut && <MenubarShortcut>{item.shortcut}</MenubarShortcut>}
-                          </MenubarItem>
-                        )
-                      )}
-                    </MenubarContent>
-                  </MenubarMenu>
-
-                  {/* View */}
-                  <MenubarMenu>
-                    <MenubarTrigger>View</MenubarTrigger>
-                    <MenubarContent>
-                      {viewMenu.map((item, idx) =>
-                        item.separator ? (
-                          <MenubarSeparator key={idx} />
-                        ) : (
-                          <MenubarItem key={idx} onSelect={() => handleItemSelect(item.label)}>
-                            {item.label}
-                            {item.shortcut && <MenubarShortcut>{item.shortcut}</MenubarShortcut>}
-                          </MenubarItem>
-                        )
-                      )}
-                    </MenubarContent>
-                  </MenubarMenu>
-
-                  {/* Tools */}
-                  <MenubarMenu>
-                    <MenubarTrigger>Tools</MenubarTrigger>
-                    <MenubarContent>
-                      {toolsMenu.map((item, idx) =>
-                        item.separator ? (
-                          <MenubarSeparator key={idx} />
-                        ) : (
-                          <MenubarItem key={idx} onSelect={() => handleItemSelect(item.label)}>
-                            {item.label}
-                          </MenubarItem>
-                        )
-                      )}
-                    </MenubarContent>
-                  </MenubarMenu>
-
-                  {/* Help */}
-                  <MenubarMenu>
-                    <MenubarTrigger>Help</MenubarTrigger>
-                    <MenubarContent>
-                      {helpMenu.map((item, idx) =>
-                        item.separator ? (
-                          <MenubarSeparator key={idx} />
-                        ) : (
-                          <MenubarItem key={idx} onSelect={() => handleItemSelect(item.label)}>
-                            {item.label}
-                            {item.shortcut && <MenubarShortcut>{item.shortcut}</MenubarShortcut>}
-                          </MenubarItem>
-                        )
-                      )}
-                    </MenubarContent>
-                  </MenubarMenu>
-                </Menubar>
-              </div>
-
-              {/* Mobile Menu Button - Tablet and smaller */}
-              <Sheet open={isMobileMenuOpen} onOpenChange={setIsMobileMenuOpen}>
-                <SheetTrigger asChild>
-                  <button
-                    className="lg:hidden liquid-glass-menu-item p-2 rounded-xl text-white/90 hover:text-white transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-blue-400/50 flex items-center"
-                    aria-label="Open menu"
-                  >
-                    <Menu className="w-4 h-4" />
-                  </button>
-                </SheetTrigger>
-                <SheetContent side="left" className="liquid-glass-card border-0 backdrop-blur-xl w-80 sm:w-96">
-                  <SheetHeader className="mb-6">
-                    <SheetTitle className="text-white text-left">Menu</SheetTitle>
-                  </SheetHeader>
-                  <div className="space-y-6">
-                    {/* File Menu */}
-                    <div>
-                      <h3 className="text-white/80 font-medium mb-3">File</h3>
-                      <div className="space-y-1">
+                {/* Desktop Menu Items using Radix Menubar */}
+                <div className="hidden lg:block">
+                  <Menubar>
+                    {/* File */}
+                    <MenubarMenu>
+                      <MenubarTrigger>File</MenubarTrigger>
+                      <MenubarContent>
                         {fileMenu.map((item, idx) =>
                           item.separator ? (
-                            <div key={idx} className="my-3 h-px bg-white/10" />
+                            <MenubarSeparator key={idx} />
                           ) : (
-                            <button
-                              key={idx}
-                              onClick={() => handleItemSelect(item.label)}
-                              className="w-full text-left px-3 py-2 rounded-lg text-white/70 hover:text-white hover:bg-white/5 transition-all flex items-center justify-between"
-                            >
-                              <span>{item.label}</span>
-                              {item.shortcut && <span className="text-xs text-white/40">{item.shortcut}</span>}
-                            </button>
+                            <MenubarItem key={idx} onSelect={() => handleItemSelect(item.label!)}>
+                              {item.label}
+                              {item.shortcut && <MenubarShortcut>{item.shortcut}</MenubarShortcut>}
+                            </MenubarItem>
                           )
                         )}
-                      </div>
-                    </div>
+                      </MenubarContent>
+                    </MenubarMenu>
 
-                    {/* View Menu */}
-                    <div>
-                      <h3 className="text-white/80 font-medium mb-3">View</h3>
-                      <div className="space-y-1">
+                    {/* View */}
+                    <MenubarMenu>
+                      <MenubarTrigger>View</MenubarTrigger>
+                      <MenubarContent>
                         {viewMenu.map((item, idx) =>
                           item.separator ? (
-                            <div key={idx} className="my-3 h-px bg-white/10" />
+                            <MenubarSeparator key={idx} />
                           ) : (
-                            <button
-                              key={idx}
-                              onClick={() => handleItemSelect(item.label)}
-                              className="w-full text-left px-3 py-2 rounded-lg text-white/70 hover:text-white hover:bg-white/5 transition-all flex items-center justify-between"
-                            >
-                              <span>{item.label}</span>
-                              {item.shortcut && <span className="text-xs text-white/40">{item.shortcut}</span>}
-                            </button>
+                            <MenubarItem key={idx} onSelect={() => handleItemSelect(item.label!)}>
+                              {item.label}
+                              {item.shortcut && <MenubarShortcut>{item.shortcut}</MenubarShortcut>}
+                            </MenubarItem>
                           )
                         )}
-                      </div>
-                    </div>
+                      </MenubarContent>
+                    </MenubarMenu>
 
-                    {/* Tools Menu */}
-                    <div>
-                      <h3 className="text-white/80 font-medium mb-3">Tools</h3>
-                      <div className="space-y-1">
+                    {/* Tools */}
+                    <MenubarMenu>
+                      <MenubarTrigger>Tools</MenubarTrigger>
+                      <MenubarContent>
                         {toolsMenu.map((item, idx) =>
                           item.separator ? (
-                            <div key={idx} className="my-3 h-px bg-white/10" />
+                            <MenubarSeparator key={idx} />
                           ) : (
-                            <button
-                              key={idx}
-                              onClick={() => handleItemSelect(item.label)}
-                              className="w-full text-left px-3 py-2 rounded-lg text-white/70 hover:text-white hover:bg-white/5 transition-all"
-                            >
+                            <MenubarItem key={idx} onSelect={() => handleItemSelect(item.label!)}>
                               {item.label}
-                            </button>
+                            </MenubarItem>
                           )
                         )}
+                      </MenubarContent>
+                    </MenubarMenu>
+
+                    {/* Help */}
+                    <MenubarMenu>
+                      <MenubarTrigger>Help</MenubarTrigger>
+                      <MenubarContent>
+                        {helpMenu.map((item, idx) =>
+                          item.separator ? (
+                            <MenubarSeparator key={idx} />
+                          ) : (
+                            <MenubarItem key={idx} onSelect={() => handleItemSelect(item.label!)}>
+                              {item.label}
+                              {item.shortcut && <MenubarShortcut>{item.shortcut}</MenubarShortcut>}
+                            </MenubarItem>
+                          )
+                        )}
+                      </MenubarContent>
+                    </MenubarMenu>
+                  </Menubar>
+                </div>
+
+                {/* Mobile Menu Button - Tablet and smaller */}
+                <Sheet open={isMobileMenuOpen} onOpenChange={setIsMobileMenuOpen}>
+                  <SheetTrigger asChild>
+                    <button
+                      className="lg:hidden liquid-glass-menu-item p-2 rounded-xl text-white/90 hover:text-white transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-blue-400/50 flex items-center"
+                      aria-label="Open menu"
+                    >
+                      <Menu className="w-4 h-4" />
+                    </button>
+                  </SheetTrigger>
+                  <SheetContent side="left" className="liquid-glass-card border-0 backdrop-blur-xl w-80 sm:w-96">
+                    <SheetHeader className="mb-6">
+                      <SheetTitle className="text-white text-left">Menu</SheetTitle>
+                    </SheetHeader>
+                    <div className="space-y-6">
+                      {/* File Menu */}
+                      <div>
+                        <h3 className="text-white/80 font-medium mb-3">File</h3>
+                        <div className="space-y-1">
+                          {fileMenu.map((item, idx) =>
+                            item.separator ? (
+                              <div key={idx} className="my-3 h-px bg-white/10" />
+                            ) : (
+                              <button
+                                key={idx}
+                                onClick={() => handleItemSelect(item.label!)}
+                                className="w-full text-left px-3 py-2 rounded-lg text-white/70 hover:text-white hover:bg-white/5 transition-all flex items-center justify-between"
+                              >
+                                <span>{item.label}</span>
+                                {item.shortcut && <span className="text-xs text-white/40">{item.shortcut}</span>}
+                              </button>
+                            )
+                          )}
+                        </div>
+                      </div>
+
+                      {/* View Menu */}
+                      <div>
+                        <h3 className="text-white/80 font-medium mb-3">View</h3>
+                        <div className="space-y-1">
+                          {viewMenu.map((item, idx) =>
+                            item.separator ? (
+                              <div key={idx} className="my-3 h-px bg-white/10" />
+                            ) : (
+                              <button
+                                key={idx}
+                                onClick={() => handleItemSelect(item.label!)}
+                                className="w-full text-left px-3 py-2 rounded-lg text-white/70 hover:text-white hover:bg-white/5 transition-all flex items-center justify-between"
+                              >
+                                <span>{item.label}</span>
+                                {item.shortcut && <span className="text-xs text-white/40">{item.shortcut}</span>}
+                              </button>
+                            )
+                          )}
+                        </div>
+                      </div>
+
+                      {/* Tools Menu */}
+                      <div>
+                        <h3 className="text-white/80 font-medium mb-3">Tools</h3>
+                        <div className="space-y-1">
+                          {toolsMenu.map((item, idx) =>
+                            item.separator ? (
+                              <div key={idx} className="my-3 h-px bg-white/10" />
+                            ) : (
+                              <button
+                                key={idx}
+                                onClick={() => handleItemSelect(item.label!)}
+                                className="w-full text-left px-3 py-2 rounded-lg text-white/70 hover:text-white hover:bg-white/5 transition-all"
+                              >
+                                {item.label}
+                              </button>
+                            )
+                          )}
+                        </div>
                       </div>
                     </div>
-                  </div>
-                </SheetContent>
-              </Sheet>
-            </div>
-
-            {/* Right Side Actions - Responsive */}
-            <div className="flex items-center space-x-1 sm:space-x-2 flex-shrink-0">
-              {/* Quick Navigation Pills - Large screens only */}
-              <div className="hidden xl:flex items-center space-x-1">
-                <button 
-                  onClick={() => navigate('/')}
-                  className="liquid-glass-menu-item p-2 rounded-xl text-white/80 hover:text-white transition-all duration-300 group"
-                  aria-label="Dashboard"
-                >
-                  <Home className="w-4 h-4" />
-                </button>
-                <button 
-                  onClick={() => navigate('/?tab=insights')}
-                  className="liquid-glass-menu-item p-2 rounded-xl text-white/80 hover:text-white transition-all duration-300"
-                  aria-label="Insights"
-                >
-                  <BarChart3 className="w-4 h-4" />
-                </button>
-                <button 
-                  onClick={() => navigate('/transactions')}
-                  className="liquid-glass-menu-item p-2 rounded-xl text-white/80 hover:text-white transition-all duration-300"
-                  aria-label="Transactions"
-                >
-                  <Wallet className="w-4 h-4" />
-                </button>
-                <button 
-                  onClick={() => navigate('/reports')}
-                  className="liquid-glass-menu-item p-2 rounded-xl text-white/80 hover:text-white transition-all duration-300"
-                  aria-label="Reports"
-                >
-                  <TrendingUp className="w-4 h-4" />
-                </button>
+                  </SheetContent>
+                </Sheet>
               </div>
 
-              {/* Divider - Large screens only */}
-              <div className="hidden xl:block w-px h-6 bg-white/10" />
+              {/* Right Side Actions - Responsive */}
+              <div className="flex items-center space-x-1 sm:space-x-2 flex-shrink-0">
+                {/* Quick Navigation Pills - Large screens only */}
+                <div className="hidden xl:flex items-center space-x-1">
+                  <button 
+                    onClick={() => navigate('/')}
+                    className="liquid-glass-menu-item p-2 rounded-xl text-white/80 hover:text-white transition-all duration-300 group"
+                    aria-label="Dashboard"
+                  >
+                    <Home className="w-4 h-4" />
+                  </button>
+                  <button 
+                    onClick={() => navigate('/?tab=insights')}
+                    className="liquid-glass-menu-item p-2 rounded-xl text-white/80 hover:text-white transition-all duration-300"
+                    aria-label="Insights"
+                  >
+                    <BarChart3 className="w-4 h-4" />
+                  </button>
+                  <button 
+                    onClick={() => navigate('/transactions')}
+                    className="liquid-glass-menu-item p-2 rounded-xl text-white/80 hover:text-white transition-all duration-300"
+                    aria-label="Transactions"
+                  >
+                    <Wallet className="w-4 h-4" />
+                  </button>
+                  <button 
+                    onClick={() => navigate('/reports')}
+                    className="liquid-glass-menu-item p-2 rounded-xl text-white/80 hover:text-white transition-all duration-300"
+                    aria-label="Reports"
+                  >
+                    <TrendingUp className="w-4 h-4" />
+                  </button>
+                </div>
 
-              {/* Essential Action Buttons - Always visible */}
-              <button 
-                onClick={() => alert('Search functionality coming soon!')}
-                className="hidden sm:flex liquid-glass-menu-item p-2 rounded-xl text-white/80 hover:text-white transition-all duration-300 relative"
-                aria-label="Search"
-              >
-                <Search className="w-4 h-4 sm:w-5 sm:h-5" />
-              </button>
-              
-              <button 
-                onClick={() => alert('Notifications coming soon!')}
-                className="liquid-glass-menu-item p-2 rounded-xl text-white/80 hover:text-white transition-all duration-300 relative"
-                aria-label="Notifications"
-              >
-                <Bell className="w-4 h-4 sm:w-5 sm:h-5" />
-                <span className="absolute -top-1 -right-1 w-2 h-2 sm:w-3 sm:h-3 bg-red-500 rounded-full border border-black/20"></span>
-              </button>
+                {/* Divider - Large screens only */}
+                <div className="hidden xl:block w-px h-6 bg-white/10" />
 
-              <button 
-                onClick={() => navigate('/profile')}
-                className="liquid-glass-button p-2 rounded-xl text-white/90 hover:text-white transition-all duration-300"
-                aria-label="Profile"
-              >
-                <User className="w-4 h-4 sm:w-5 sm:h-5" />
-              </button>
+                {/* Essential Action Buttons - Always visible */}
+                <button 
+                  onClick={() => alert('Search functionality coming soon!')}
+                  className="hidden sm:flex liquid-glass-menu-item p-2 rounded-xl text-white/80 hover:text-white transition-all duration-300 relative"
+                  aria-label="Search"
+                >
+                  <Search className="w-4 h-4 sm:w-5 sm:h-5" />
+                </button>
+                
+                <button 
+                  onClick={() => alert('Notifications coming soon!')}
+                  className="liquid-glass-menu-item p-2 rounded-xl text-white/80 hover:text-white transition-all duration-300 relative"
+                  aria-label="Notifications"
+                >
+                  <Bell className="w-4 h-4 sm:w-5 sm:h-5" />
+                  <span className="absolute -top-1 -right-1 w-2 h-2 sm:w-3 sm:h-3 bg-red-500 rounded-full border border-black/20"></span>
+                </button>
+
+                <button 
+                  onClick={() => navigate('/profile')}
+                  className="liquid-glass-button p-2 rounded-xl text-white/90 hover:text-white transition-all duration-300"
+                  aria-label="Profile"
+                >
+                  <User className="w-4 h-4 sm:w-5 sm:h-5" />
+                </button>
+              </div>
             </div>
           </div>
         </div>
-      </div>
+      </nav>
     </>
   );
 };

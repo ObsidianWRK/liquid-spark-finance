@@ -1,8 +1,8 @@
 import React, { useState, useMemo } from 'react';
 import AppShell from '@/components/layout/AppShell';
-import { CleanAccountCard, AccountData } from '@/features/accounts/components/CleanAccountCard';
-import { CleanCreditScoreCard, CreditScoreData } from '@/features/credit/components/CleanCreditScoreCard';
-import { VueniUnifiedTransactionList } from '@/components/shared/VueniUnifiedTransactionList';
+import CleanAccountCard, { AccountData } from '@/features/accounts/components/CleanAccountCard';
+import CleanCreditScoreCard from '@/features/credit/components/CleanCreditScoreCard';
+import { UnifiedTransactionList } from '@/features/transactions/components/UnifiedTransactionList';
 import SimpleGlassCard from '@/shared/ui/SimpleGlassCard';
 import { vueniTheme } from '@/theme/unified';
 import { cn } from '@/shared/lib/utils';
@@ -127,7 +127,7 @@ const DashboardMetric = ({
   const [isVisible, setIsVisible] = useState(true);
 
   return (
-    <SimpleGlassCard className="p-6">
+              <SimpleGlassCard variant="glass" className="p-6">
       <div className="flex items-center gap-3">
         <div className="p-3 rounded-full" style={{ backgroundColor: vueniTheme.colors.surface.overlay }}>
           <Icon className="w-5 h-5" style={{ color: iconColor }} />
@@ -181,7 +181,7 @@ const CleanDashboard = () => {
     return (
       <AppShell activeTab={activeTab} onTabChange={setActiveTab}>
         <div className="space-y-6">
-          <SimpleGlassCard className="p-8 text-center">
+          <SimpleGlassCard variant="glass" className="p-8 text-center">
             <h2 className="text-2xl font-bold text-white mb-4">
               {activeTab.charAt(0).toUpperCase() + activeTab.slice(1)}
             </h2>
@@ -198,7 +198,7 @@ const CleanDashboard = () => {
     <AppShell activeTab={activeTab} onTabChange={setActiveTab}>
       <div className="space-y-6">
         {/* Welcome Header */}
-        <SimpleGlassCard className="p-6">
+        <SimpleGlassCard variant="glass" className="p-6">
           <div className="flex items-center justify-between">
             <div>
               <h1 className="text-3xl font-black text-white mb-2 tracking-wide">
@@ -280,7 +280,7 @@ const CleanDashboard = () => {
 
           {/* Right Column - Transactions */}
           <div className="lg:col-span-2">
-            <OptimizedTransactionList
+            <UnifiedTransactionList
               transactions={mockTransactions.map(t => ({
                 id: t.id,
                 date: t.date,

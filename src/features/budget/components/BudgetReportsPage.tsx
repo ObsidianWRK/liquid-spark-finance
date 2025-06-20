@@ -3,6 +3,13 @@ import GlassCard from '@/components/GlassCard';
 import { Calendar, Download, TrendingDown, TrendingUp, AlertCircle, ArrowLeft } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { mockReportService, BudgetReport } from '@/services/mockReportService';
+import {
+  Select,
+  SelectTrigger,
+  SelectValue,
+  SelectContent,
+  SelectItem
+} from '@/shared/components/ui/select';
 
 const BudgetReportsPage = () => {
   const navigate = useNavigate();
@@ -59,27 +66,34 @@ const BudgetReportsPage = () => {
           <p className="text-white/70">Track your spending against your budget goals</p>
         </div>
         
-        <div className="flex gap-2">
-          <select
-            value={selectedMonth}
-            onChange={(e) => setSelectedMonth(e.target.value)}
-            className="bg-white/10 border border-white/20 rounded-lg px-3 py-2 text-white focus:outline-none focus:border-blue-400"
-          >
-            {months.map(month => (
-              <option key={month} value={month} className="bg-gray-800">
-                {month}
-              </option>
-            ))}
-          </select>
-          
-          <select
-            value={selectedYear}
-            onChange={(e) => setSelectedYear(Number(e.target.value))}
-            className="bg-white/10 border border-white/20 rounded-lg px-3 py-2 text-white focus:outline-none focus:border-blue-400"
-          >
-            <option value={2024} className="bg-gray-800">2024</option>
-            <option value={2023} className="bg-gray-800">2023</option>
-          </select>
+        <div className="flex gap-3">
+          {/* Month Selector */}
+          <Select value={selectedMonth} onValueChange={setSelectedMonth}>
+            <SelectTrigger className="w-[140px] bg-white/10 border-white/20 text-white rounded-lg focus:border-blue-400">
+              <SelectValue placeholder="Month" />
+            </SelectTrigger>
+            <SelectContent className="bg-black/90 border-white/20 text-white">
+              {months.map(month => (
+                <SelectItem key={month} value={month} className="focus:bg-white/10">
+                  {month}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+
+          {/* Year Selector */}
+          <Select value={String(selectedYear)} onValueChange={(val) => setSelectedYear(Number(val))}>
+            <SelectTrigger className="w-[100px] bg-white/10 border-white/20 text-white rounded-lg focus:border-blue-400">
+              <SelectValue placeholder="Year" />
+            </SelectTrigger>
+            <SelectContent className="bg-black/90 border-white/20 text-white">
+              {[2024, 2023, 2022, 2021].map(year => (
+                <SelectItem key={year} value={String(year)} className="focus:bg-white/10">
+                  {year}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
         </div>
       </div>
 

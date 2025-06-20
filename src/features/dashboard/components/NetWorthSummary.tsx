@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import SimpleGlassCard from '@/shared/ui/SimpleGlassCard';
+import { UniversalCard } from '@/shared/ui/UniversalCard';
 import { vueniTheme } from '@/theme/unified';
 import { 
   TrendingUp, 

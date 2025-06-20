@@ -48,6 +48,8 @@ const OptimizedLoadingFallback = () => (
   </div>
 );
 
+const AccountOverview = lazy(() => import('./pages/AccountOverview'));
+
 const App = () => (
   <VueniThemeProvider>
     <QueryClientProvider client={queryClient}>
@@ -73,6 +75,7 @@ const App = () => (
                     <Route path="/calculators/:id" element={<CalculatorsPage />} />
                     <Route path="/reports" element={<BudgetReportsPage />} />
                     <Route path="/insights" element={<InsightsPage />} />
+                    <Route path="/accounts/:accountId" element={<AccountOverview />} />
                     {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
                     <Route path="*" element={<NotFound />} />
                   </Routes>

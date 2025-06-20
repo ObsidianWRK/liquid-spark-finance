@@ -58,7 +58,7 @@ export type TransactionType =
   | 'purchase' | 'deposit' | 'withdrawal' | 'transfer' | 'payment' | 'fee' | 'interest' | 'dividend' | 'adjustment';
 
 export type TransactionStatus = 
-  | 'posted' | 'pending' | 'cancelled' | 'failed' | 'returned';
+  | 'posted' | 'completed' | 'pending' | 'refunded' | 'cancelled' | 'failed' | 'returned';
 
 export interface RecurrenceRule {
   frequency: 'daily' | 'weekly' | 'biweekly' | 'monthly' | 'quarterly' | 'annually';
