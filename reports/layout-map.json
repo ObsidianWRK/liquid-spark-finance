@@ -1,0 +1,71 @@
+{
+  "agent": "LayoutMapper",
+  "timestamp": "2024-12-19T00:00:00Z",
+  "scan_results": {
+    "total_files_scanned": 120,
+    "layout_containers": {
+      "flex_containers": 156,
+      "grid_containers": 89,
+      "responsive_containers": 234
+    },
+    "hard_coded_dimensions": {
+      "width_px": [
+        { "file": "src/app/styles/responsive-enhancements.css", "line": 121, "value": "1px" },
+        { "file": "src/app/styles/responsive-enhancements.css", "line": 122, "value": "1px" },
+        { "file": "src/app/styles/accessibility.css", "line": 241, "value": "48px" },
+        { "file": "src/app/styles/accessibility.css", "line": 242, "value": "48px" }
+      ],
+      "min_height_px": [
+        { "file": "src/index.css", "line": 606, "value": "44px", "context": "iOS touch targets" },
+        { "file": "src/app/styles/responsive-enhancements.css", "line": 188, "value": "44px" },
+        { "file": "src/app/styles/responsive-enhancements.css", "line": 775, "value": "48px" }
+      ]
+    },
+    "responsive_patterns": {
+      "mobile_first": true,
+      "breakpoints_used": ["sm:", "md:", "lg:", "xl:", "2xl:"],
+      "css_grid_layouts": 89,
+      "flex_layouts": 156,
+      "container_queries": 0
+    },
+    "more_drawer_components": {
+      "calculators": {
+        "file": "src/pages/CalculatorsHub.tsx",
+        "responsive_grid": "grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4",
+        "issues": ["fixed width containers on small viewports"]
+      },
+      "profile": {
+        "file": "src/pages/OptimizedProfile.tsx", 
+        "responsive_grid": "grid-cols-1 lg:grid-cols-4",
+        "issues": ["large gap between mobile and desktop breakpoints"]
+      },
+      "transaction_demo": {
+        "file": "src/pages/TransactionDemo.tsx",
+        "responsive_grid": "grid-cols-1 md:grid-cols-3", 
+        "issues": ["missing tablet breakpoint handling"]
+      }
+    },
+    "priority_fixes": [
+      {
+        "component": "CalculatorsHub",
+        "issue": "Grid columns jump from 1 to 4 without intermediate steps",
+        "recommended_fix": "Implement progressive grid: grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4"
+      },
+      {
+        "component": "Navigation bottom dock",
+        "issue": "Horizontal margins prevent full-width on mobile",
+        "recommended_fix": "Remove mx-4 and padding constraints for flush edge-to-edge"
+      },
+      {
+        "component": "More drawer pages",
+        "issue": "Inconsistent responsive patterns across calculator/profile pages",
+        "recommended_fix": "Standardize mobile-first responsive grid system"
+      }
+    ],
+    "design_token_compliance": {
+      "unified_card_tokens_usage": 78,
+      "legacy_hardcoded_styles": 45,
+      "breakpoint_inconsistencies": 12
+    }
+  }
+} 

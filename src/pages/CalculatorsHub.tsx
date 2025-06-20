@@ -50,7 +50,7 @@ const calculatorList = [
 
 const CalculatorsHub = () => {
     const navigate = useNavigate();
-    const [selectedCalculator, setSelectedCalculator] = useState(null);
+    const [selectedCalculator, setSelectedCalculator] = useState<typeof calculatorList[0] | null>(null);
     const [isMenuOpen, setIsMenuOpen] = useState(false);
 
     const openCalculator = (calculator) => {
@@ -69,48 +69,88 @@ const CalculatorsHub = () => {
     };
 
     return (
-        <div className="p-4 sm:p-6 bg-gray-900 min-h-screen text-white">
-            <BackHeader onBack={() => navigate('/')} />
-            <div className="flex justify-between items-center mb-6">
-                <h1 className="text-3xl font-bold">Calculators</h1>
-                <DropdownMenu>
-                    <DropdownMenuTrigger asChild>
-                        <button
-                            onClick={() => setIsMenuOpen(!isMenuOpen)}
-                            className="px-4 py-2 bg-blue-600 rounded-lg hover:bg-blue-700"
-                        >
-                            Select Calculator
-                        </button>
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent>
-                        {calculatorList.map(calculator => (
-                            <DropdownMenuItem key={calculator.id} onSelect={() => handleMenuSelect(calculator.id)}>
-                                {calculator.name}
-                            </DropdownMenuItem>
-                        ))}
-                    </DropdownMenuContent>
-                </DropdownMenu>
-            </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-                {calculatorList.map((calculator) => (
-                    <UnifiedCard
-                        key={calculator.id}
-                        onClick={() => openCalculator(calculator)}
-                        className="cursor-pointer"
-                    >
-                        <div className="p-4">
-                            <calculator.icon className="w-8 h-8 mb-2 text-blue-400" />
-                            <h2 className="text-lg font-semibold">{calculator.name}</h2>
+        <div className="min-h-screen bg-black text-white">
+            {/* Mobile-first responsive container with proper spacing */}
+            <div className="p-4 sm:p-6 md:p-8 lg:p-10 xl:p-12">
+                <div className="max-w-none w-full mx-auto">
+                    <BackHeader title="Calculators" />
+                    
+                    {/* Responsive header with proper spacing */}
+                    <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4 mb-6 sm:mb-8">
+                        <div>
+                            <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold">Calculators</h1>
+                            <p className="text-white/60 text-sm sm:text-base mt-1">
+                                Financial tools and calculators
+                            </p>
                         </div>
-                    </UnifiedCard>
-                ))}
+                        
+                        {/* Responsive dropdown menu */}
+                        <DropdownMenu>
+                            <DropdownMenuTrigger asChild>
+                                <button
+                                    onClick={() => setIsMenuOpen(!isMenuOpen)}
+                                    className="w-full sm:w-auto px-4 py-3 sm:py-2 bg-blue-600 rounded-lg hover:bg-blue-700 
+                                             transition-all duration-200 text-sm sm:text-base font-medium
+                                             focus:outline-none focus:ring-2 focus:ring-blue-500/50"
+                                >
+                                    Select Calculator
+                                </button>
+                            </DropdownMenuTrigger>
+                            <DropdownMenuContent className="w-56">
+                                {calculatorList.map(calculator => (
+                                    <DropdownMenuItem key={calculator.id} onSelect={() => handleMenuSelect(calculator.id)}>
+                                        {calculator.name}
+                                    </DropdownMenuItem>
+                                ))}
+                            </DropdownMenuContent>
+                        </DropdownMenu>
+                    </div>
+                    
+                    {/* Mobile-first responsive grid with progressive enhancement */}
+                    <div className="grid grid-cols-1 
+                                    xs:grid-cols-2 
+                                    sm:grid-cols-2 
+                                    md:grid-cols-3 
+                                    lg:grid-cols-4 
+                                    xl:grid-cols-5
+                                    2xl:grid-cols-6
+                                    gap-3 sm:gap-4 md:gap-5 lg:gap-6"
+                         data-testid="calculators-grid">
+                        {calculatorList.map((calculator) => (
+                            <UnifiedCard
+                                key={calculator.id}
+                                onClick={() => openCalculator(calculator)}
+                                className="cursor-pointer group hover:scale-[1.02] transition-all duration-200
+                                          min-h-[120px] sm:min-h-[140px] md:min-h-[160px]
+                                          flex flex-col items-center justify-center
+                                          border border-white/[0.08] hover:border-white/[0.16]"
+                                data-testid="calculator-card"
+                            >
+                                <div className="p-3 sm:p-4 md:p-5 text-center w-full">
+                                    <calculator.icon className="w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 
+                                                               mb-2 sm:mb-3 text-blue-400 mx-auto
+                                                               group-hover:text-blue-300 transition-colors" />
+                                    <h2 className="text-sm sm:text-base md:text-lg font-semibold
+                                                   leading-tight text-white/90 group-hover:text-white
+                                                   transition-colors">
+                                        {calculator.name}
+                                    </h2>
+                                </div>
+                            </UnifiedCard>
+                        ))}
+                    </div>
+                </div>
             </div>
 
+            {/* Responsive modal dialog */}
             {selectedCalculator && (
                 <Dialog open={true} onOpenChange={closeCalculator}>
-                    <DialogContent className="max-w-4xl">
+                    <DialogContent className="max-w-[95vw] sm:max-w-4xl lg:max-w-6xl xl:max-w-7xl
+                                            max-h-[90vh] overflow-y-auto">
                         <DialogHeader>
-                            <DialogTitle>{selectedCalculator.name}</DialogTitle>
+                            <DialogTitle className="text-lg sm:text-xl md:text-2xl">
+                                {selectedCalculator.name}
+                            </DialogTitle>
                         </DialogHeader>
                         <div className="mt-4">
                             <selectedCalculator.component />

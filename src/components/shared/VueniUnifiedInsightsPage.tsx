@@ -39,6 +39,7 @@ export interface Account {
   balance: number;
   availableBalance: number;
   currency: string;
+  accountType?: string;
 }
 
 export type InsightsVariant = 'standard' | 'refined' | 'enhanced' | 'optimized' | 'comprehensive' | 'mobile' | 'dashboard';
@@ -337,7 +338,23 @@ export const VueniUnifiedInsightsPage = React.memo<VueniUnifiedInsightsPageProps
       .filter(t => t.amount < 0 && new Date(t.date).getMonth() === new Date().getMonth())
       .reduce((sum, t) => sum + t.amount, 0));
 
-    const totalBalance = accounts.reduce((sum, acc) => sum + acc.balance, 0);
+    // Proper net worth calculation (assets - liabilities)
+    const totalAssets = accounts
+      .filter(acc => {
+        const accountType = acc.accountType?.toLowerCase() || '';
+        return !accountType.includes('credit') && !accountType.includes('loan') && acc.balance > 0;
+      })
+      .reduce((sum, acc) => sum + Math.max(0, acc.balance), 0);
+
+    const totalLiabilities = accounts
+      .filter(acc => {
+        const accountType = acc.accountType?.toLowerCase() || '';
+        return accountType.includes('credit') || accountType.includes('loan') || acc.balance < 0;
+      })
+      .reduce((sum, acc) => sum + Math.abs(Math.min(0, acc.balance)), 0);
+
+    const totalBalance = Math.round(totalAssets - totalLiabilities); // True net worth, rounded
+
     const spendingRatio = monthlyIncome > 0 ? (monthlySpending / monthlyIncome) * 100 : 0;
     const emergencyFundMonths = monthlySpending > 0 ? totalBalance / monthlySpending : 0;
     const savingsRate = monthlyIncome > 0 ? ((monthlyIncome - monthlySpending) / monthlyIncome) * 100 : 0;

@@ -26,14 +26,13 @@ export default defineConfig(({ mode }) => ({
     sourcemap: false,
     rollupOptions: {
       output: {
-        // Manual chunk splitting for better caching
+        // Separate vendor chunks for better caching
         manualChunks: {
-          vendor: ['react', 'react-dom'],
-          ui: ['@radix-ui/react-dialog', '@radix-ui/react-popover', '@radix-ui/react-dropdown-menu'],
-          icons: ['lucide-react'],
-          charts: ['recharts'],
-          utils: ['clsx', 'tailwind-merge', 'date-fns'],
-          router: ['react-router-dom'],
+          'vendor-react': ['react', 'react-dom'],
+          'vendor-router': ['react-router-dom'],
+          'vendor-ui': ['@radix-ui/react-accordion', '@radix-ui/react-alert-dialog', '@radix-ui/react-dropdown-menu'],
+          'vendor-charts': ['recharts'],
+          'vendor-utils': ['date-fns', 'clsx', 'tailwind-merge'],
         },
       },
     },

@@ -192,7 +192,7 @@ const TransactionDemo: React.FC = () => {
             <div className="bg-gray-900 rounded-2xl p-8 shadow-2xl">
               <div className="bg-black rounded-xl overflow-hidden">
                 <VueniUnifiedTransactionList
-                  transactions={transactions.map(t => ({
+                                      transactions={transactions.map(t => ({
                     id: t.id,
                     date: t.date,
                     description: t.merchant,
@@ -200,6 +200,7 @@ const TransactionDemo: React.FC = () => {
                     category: t.category.toLowerCase(),
                     type: t.amount < 0 ? 'expense' : 'income' as const,
                     merchant: t.merchant,
+                    status: t.status,
                     scores: {
                       health: Math.floor(Math.random() * 100),
                       eco: Math.floor(Math.random() * 100),
@@ -227,30 +228,34 @@ const TransactionDemo: React.FC = () => {
         </div>
 
         {/* Feature Highlights */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-12">
-          <div className="p-6 bg-white/[0.02] rounded-xl border border-white/[0.08]">
-            <h3 className="text-lg font-semibold text-white mb-2">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 md:gap-6 mt-8 sm:mt-10 md:mt-12">
+          <div className="p-4 sm:p-5 md:p-6 bg-white/[0.02] rounded-xl border border-white/[0.08] 
+                          hover:bg-white/[0.03] hover:border-white/[0.12] transition-all duration-200">
+            <h3 className="text-base sm:text-lg font-semibold text-white mb-2">
               Clean Design
             </h3>
-            <p className="text-white/60 text-sm">
+            <p className="text-white/60 text-sm sm:text-base">
               Minimal visual noise with focus on content. Every pixel serves a purpose.
             </p>
           </div>
           
-          <div className="p-6 bg-white/[0.02] rounded-xl border border-white/[0.08]">
-            <h3 className="text-lg font-semibold text-white mb-2">
+          <div className="p-4 sm:p-5 md:p-6 bg-white/[0.02] rounded-xl border border-white/[0.08]
+                          hover:bg-white/[0.03] hover:border-white/[0.12] transition-all duration-200">
+            <h3 className="text-base sm:text-lg font-semibold text-white mb-2">
               Smart UX
             </h3>
-            <p className="text-white/60 text-sm">
+            <p className="text-white/60 text-sm sm:text-base">
               Inline shipping tracking, smart date formatting, and contextual information.
             </p>
           </div>
           
-          <div className="p-6 bg-white/[0.02] rounded-xl border border-white/[0.08]">
-            <h3 className="text-lg font-semibold text-white mb-2">
+          <div className="p-4 sm:p-5 md:p-6 bg-white/[0.02] rounded-xl border border-white/[0.08]
+                          hover:bg-white/[0.03] hover:border-white/[0.12] transition-all duration-200
+                          sm:col-span-2 lg:col-span-1">
+            <h3 className="text-base sm:text-lg font-semibold text-white mb-2">
               Performance
             </h3>
-            <p className="text-white/60 text-sm">
+            <p className="text-white/60 text-sm sm:text-base">
               Optimized for large datasets with virtualization support and minimal rerenders.
             </p>
           </div>

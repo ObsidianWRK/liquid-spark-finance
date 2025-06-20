@@ -1,4 +1,4 @@
-import { CreditScore, CreditTip, ScoreHistoryPoint } from '@/types/creditScore';
+import { CreditScore, CreditTip, ScoreHistoryPoint } from '@/shared/types/creditScore';
 import { VueniSecureStorage } from '@/shared/utils/crypto';
 
 export class CreditScoreService {
@@ -136,20 +136,63 @@ export class CreditScoreService {
 
   private generateMockHistory(): ScoreHistoryPoint[] {
     const history: ScoreHistoryPoint[] = [];
-    const baseScore = 680;
+    const currentScore = 750; // Match the current score
+    const baseScore = 680; // Starting score 12 months ago
+    
+    // Create a realistic progression over 12 months
+    const milestones = [
+      { month: 11, event: 'started', impact: 0 },
+      { month: 10, event: 'paid_down_debt', impact: 15 },
+      { month: 8, event: 'new_account', impact: -8 },
+      { month: 6, event: 'utilization_drop', impact: 25 },
+      { month: 4, event: 'payment_history', impact: 12 },
+      { month: 2, event: 'credit_age', impact: 8 },
+      { month: 0, event: 'final_adjustment', impact: 5 }
+    ];
     
     for (let i = 11; i >= 0; i--) {
       const date = new Date();
       date.setMonth(date.getMonth() - i);
       
-      const variance = Math.random() * 40 - 20; // ±20 points
-      const score = Math.round(baseScore + variance);
+      // Calculate progressive score improvement
+      const monthsProgressed = 11 - i;
+      const progressRatio = monthsProgressed / 11;
+      const baseProgressScore = baseScore + (currentScore - baseScore) * progressRatio;
+      
+      // Add milestone impacts
+      let milestoneImpact = 0;
+      milestones.forEach(milestone => {
+        if (i <= milestone.month) {
+          milestoneImpact += milestone.impact;
+        }
+      });
+      
+      // Add realistic variance (smaller for recent months)
+      const varianceRange = Math.max(5, 15 - monthsProgressed);
+      const variance = (Math.random() - 0.5) * varianceRange;
+      
+      // Calculate final score with bounds
+      let score = Math.round(baseProgressScore + milestoneImpact + variance);
+      score = Math.max(580, Math.min(850, score)); // Keep within realistic bounds
+      
+      // Calculate change from previous month
       const change = i === 11 ? 0 : score - (history[history.length - 1]?.score || baseScore);
       
       history.push({
         date: date.toISOString().split('T')[0],
         score,
         change
+      });
+    }
+    
+    // Ensure the last score matches our current score
+    if (history.length > 0) {
+      const lastPoint = history[history.length - 1];
+      const finalChange = currentScore - lastPoint.score;
+      history.push({
+        date: new Date().toISOString().split('T')[0],
+        score: currentScore,
+        change: finalChange
       });
     }
     

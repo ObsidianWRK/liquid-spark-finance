@@ -49,6 +49,7 @@ export interface Account {
   balance: number;
   availableBalance: number;
   currency: string;
+  accountType?: string;
 }
 
 export type InsightsVariant = 'standard' | 'refined' | 'enhanced' | 'optimized' | 'comprehensive' | 'mobile' | 'dashboard';
@@ -344,15 +345,15 @@ export const ConfigurableInsightsPage = React.memo<ConfigurableInsightsPageProps
     // Proper net worth calculation (assets - liabilities)
     const totalAssets = accounts
       .filter(acc => {
-        const type = acc.type?.toLowerCase() || '';
-        return !type.includes('credit') && !type.includes('loan') && acc.balance > 0;
+        const accountType = acc.accountType?.toLowerCase() || '';
+        return !accountType.includes('credit') && !accountType.includes('loan') && acc.balance > 0;
       })
       .reduce((sum, acc) => sum + Math.max(0, acc.balance), 0);
 
     const totalLiabilities = accounts
       .filter(acc => {
-        const type = acc.type?.toLowerCase() || '';
-        return type.includes('credit') || type.includes('loan') || acc.balance < 0;
+        const accountType = acc.accountType?.toLowerCase() || '';
+        return accountType.includes('credit') || accountType.includes('loan') || acc.balance < 0;
       })
       .reduce((sum, acc) => sum + Math.abs(Math.min(0, acc.balance)), 0);
 
