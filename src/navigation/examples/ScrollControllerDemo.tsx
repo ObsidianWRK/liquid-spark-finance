@@ -359,17 +359,17 @@ const ScrollControllerDemo: React.FC = () => {
         debounceMs: 150,
       }}
       callbacks={{
-        onVisibilityChange: (isVisible) => {
-          console.log('Navigation visibility changed:', isVisible);
+        onVisibilityChange: () => {
+          /* Navigation visibility changed */
         },
         onScrollStateChange: (state) => {
           // Throttled logging
           if (Math.floor(state.timestamp / 1000) % 2 === 0) {
-            console.log('Scroll state:', state);
+            /* Scroll state info */
           }
         },
-        onVirtualKeyboardToggle: (isVisible, height) => {
-          console.log('Virtual keyboard:', { isVisible, height });
+        onVirtualKeyboardToggle: () => {
+          /* Virtual keyboard info */
         },
       }}
     >

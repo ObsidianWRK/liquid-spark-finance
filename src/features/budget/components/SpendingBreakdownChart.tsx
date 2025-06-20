@@ -194,23 +194,16 @@ const SpendingBreakdownChart: React.FC<SpendingBreakdownChartProps> = ({
   }, [chartData, chartSeries]);
 
   // Handle chart interactions
-  const handleCategoryClick = useCallback((data: StackedBarDataPoint, categoryKey: string, value: number) => {
-    console.log('Category clicked:', { 
-      month: data.label, 
-      category: categoryKey, 
-      amount: value 
-    });
+  const handleCategoryClick = useCallback(() => {
     // Could navigate to detailed transaction view
   }, []);
 
   const handleExport = useCallback(() => {
     // Export functionality
-    console.log('Exporting spending breakdown data');
   }, []);
 
   const handleShare = useCallback(() => {
     // Share functionality
-    console.log('Sharing spending breakdown chart');
   }, []);
 
   if (chartData.length === 0) {
@@ -308,7 +301,9 @@ const SpendingBreakdownChart: React.FC<SpendingBreakdownChartProps> = ({
           defaultRange: timeRange
         }}
         onBarClick={handleCategoryClick}
-        onChartReady={() => console.log('Spending breakdown chart ready')}
+        onChartReady={() => {
+          /* Chart ready */
+        }}
         accessibility={{
           ariaLabel: 'Monthly spending breakdown by category',
           keyboardNavigation: true

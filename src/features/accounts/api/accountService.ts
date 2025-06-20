@@ -35,7 +35,6 @@ export class AccountService {
     environment: 'sandbox' | 'development' | 'production';
   }): Promise<void> {
     // TODO: Initialize Plaid client with secure credential storage
-    console.log('Initializing Plaid connection...');
     await this.loadSupportedInstitutions();
   }
 
@@ -418,7 +417,6 @@ export class AccountService {
 
   private async syncTellerAccounts(connection: AccountConnection): Promise<void> {
     // TODO: Implement Teller API integration
-    console.log('Syncing Teller accounts...');
   }
 
   private async recordBalanceHistory(

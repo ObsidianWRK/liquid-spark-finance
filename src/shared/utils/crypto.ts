@@ -233,7 +233,7 @@ export class VueniSecureStorage {
     }
 
     if (import.meta.env.DEV) {
-      console.log(`[VueniSecureStorage] ${action}: ${this.maskSensitiveKey(key)}`, metadata);
+      // Storage action logged in development
     }
 
     // In production, send to audit service

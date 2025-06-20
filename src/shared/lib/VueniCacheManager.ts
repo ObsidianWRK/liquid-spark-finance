@@ -91,7 +91,7 @@ export class VueniCacheManager {
     this.currentSize += dataSize;
 
     if (this.config.enableMetrics) {
-      console.log(`[Vueni Cache] Cached ${key} (${this.formatSize(dataSize)})`);
+      // Cache entry stored
     }
   }
 
@@ -136,7 +136,7 @@ export class VueniCacheManager {
   clear(): void {
     this.cache.clear();
     this.currentSize = 0;
-    console.log('[Vueni Cache] Cache cleared');
+    // Cache cleared
   }
 
   // Cache financial transactions with optimized strategy
@@ -207,7 +207,7 @@ export class VueniCacheManager {
     });
 
     if (this.config.enableMetrics && items.length > 0) {
-      console.log(`[Vueni Cache] Evicted ${items.length} items (LRU)`);
+      // Evicted items for LRU policy
     }
   }
 
@@ -224,7 +224,7 @@ export class VueniCacheManager {
     expiredKeys.forEach(key => this.delete(key));
 
     if (this.config.enableMetrics && expiredKeys.length > 0) {
-      console.log(`[Vueni Cache] Cleaned up ${expiredKeys.length} expired items`);
+      // Cleaned up expired cache entries
     }
   }
 
@@ -382,7 +382,7 @@ if (typeof window !== 'undefined') {
   if (import.meta.env.DEV) {
     setInterval(() => {
       const stats = vueniCache.getStats();
-      console.log('[Vueni Cache] Stats:', stats);
+      // Cache stats output for debugging
     }, 60000); // Every minute
   }
 }

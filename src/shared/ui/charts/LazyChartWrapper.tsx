@@ -174,7 +174,6 @@ export const chartPerformance = {
   // Monitor chart loading performance
   trackChartLoad: (chartType: string, startTime: number): void => {
     const loadTime = performance.now() - startTime;
-    console.log(`[Chart Performance] ${chartType} loaded in ${loadTime.toFixed(2)}ms`);
     
     // Send to analytics in production
     if (import.meta.env.PROD && 'sendBeacon' in navigator) {

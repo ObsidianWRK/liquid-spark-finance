@@ -630,7 +630,6 @@ class InvestmentService {
    */
   async recordSnapshot(value: number) {
     // This would be used for historical tracking
-    console.log(`Recording portfolio snapshot: $${value}`);
   }
 
   // Private helper methods

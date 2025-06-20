@@ -95,7 +95,6 @@ const FinancialDashboard = ({ familyId, timeframe = '3m', className }: Financial
         // 🛡️ BULLETPROOF: Enhanced data validation
         if (!isMounted) return; // Component unmounted, don't update state
         
-        console.log("Fetched Dashboard Data:", JSON.stringify(data, null, 2));
         
         if (data && typeof data === 'object' && !Array.isArray(data)) {
           // Additional validation of required properties

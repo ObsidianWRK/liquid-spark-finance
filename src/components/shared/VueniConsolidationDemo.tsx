@@ -188,8 +188,8 @@ const ConsolidationDemo: React.FC = () => {
               animationsEnabled: flags.enableAnimations,
             }}
             currency="USD"
-            onTransactionClick={(transaction) => {
-              console.log('Transaction clicked:', transaction);
+            onTransactionClick={() => {
+              /* Transaction clicked */
             }}
           />
         </VueniDesignSystem.Section>
@@ -207,7 +207,7 @@ const ConsolidationDemo: React.FC = () => {
             accounts={sampleAccounts}
             enableFeatureFlags={true}
             onExportData={() => {
-              console.log('Export data requested');
+              /* Export data requested */
             }}
           /> */}
           <div className="p-8 text-center text-white/60 bg-white/5 rounded-lg border border-white/10">

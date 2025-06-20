@@ -220,7 +220,9 @@ const AccountOverview: React.FC = () => {
             <TransactionList
               transactions={transactions}
               isLoading={false}
-              onTransactionClick={(transaction) => console.log('Transaction clicked:', transaction)}
+              onTransactionClick={() => {
+                /* Transaction clicked */
+              }}
             />
           </CollapsiblePane>
 

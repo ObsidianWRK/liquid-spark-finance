@@ -61,7 +61,6 @@ const DashboardPage = () => {
 
   const handleExport = () => {
     // TODO: Implement dashboard export functionality
-    console.log('Exporting dashboard data...');
   };
 
   const formatLastUpdated = (date: Date) => {

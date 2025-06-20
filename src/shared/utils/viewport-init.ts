@@ -37,7 +37,7 @@ export const initializeViewportGuardianWithCSS = (): void => {
   // Set up dynamic class updates
   setupDynamicClasses();
 
-  console.log('🛡️ Viewport Guardian initialized with CSS integration');
+  // Initialization complete for CSS integration
 };
 
 /**
@@ -153,19 +153,20 @@ const addDevelopmentHelpers = (): void => {
 
   // Add global debug function
   (window as any).viewportDebug = () => {
-    console.log('🛡️ Viewport Guardian Debug Info:', getViewportDebugInfo());
+    // Expose debug info helper
+    getViewportDebugInfo();
   };
 
   // Add keyboard shortcuts for testing
   document.addEventListener('keydown', (event) => {
     // Ctrl/Cmd + Shift + V for viewport debug
     if ((event.ctrlKey || event.metaKey) && event.shiftKey && event.key === 'V') {
-      console.log('🛡️ Viewport Guardian Debug Info:', getViewportDebugInfo());
+      getViewportDebugInfo();
       event.preventDefault();
     }
   });
 
-  console.log('🛡️ Development helpers added. Press Ctrl/Cmd+Shift+V for debug info or call window.viewportDebug()');
+  // Development helpers are now available
 };
 
 /**
@@ -223,7 +224,7 @@ export const initializeViewportGuardianCustom = (config: {
     setupDynamicClasses();
   }
 
-  console.log('🛡️ Viewport Guardian initialized with custom configuration');
+  // Viewport Guardian initialized with custom configuration
 };
 
 /**

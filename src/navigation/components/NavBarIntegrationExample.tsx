@@ -41,7 +41,6 @@ const NavBarIntegrationExample: React.FC = () => {
   const fabConfig = {
     icon: Plus,
     action: () => {
-      console.log('Quick action triggered');
       // Navigate to a quick add form or open a modal
       navigate('/transactions/add');
     },
@@ -50,7 +49,6 @@ const NavBarIntegrationExample: React.FC = () => {
   };
 
   const handleActiveTabChange = (tabId: string) => {
-    console.log(`Active tab changed to: ${tabId}`);
     
     // Clear notifications for the visited tab
     if (notificationCounts[tabId as keyof typeof notificationCounts]) {

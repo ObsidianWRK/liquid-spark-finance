@@ -139,7 +139,6 @@ const LiquidGlassTopMenuBar = ({ className, onMenuItemClick }: MenuBarProps) => 
       
       // Default fallback
       default:
-        console.log('Menu item not handled:', item);
         onMenuItemClick?.(item);
     }
     // Close mobile menu after selection
@@ -189,8 +188,8 @@ const LiquidGlassTopMenuBar = ({ className, onMenuItemClick }: MenuBarProps) => 
                   variant="text-only"
                   onClick={() => navigate('/')}
                   className="liquid-glass-button p-2 sm:p-3 rounded-xl"
-                  onDownloadComplete={(filename) => {
-                    console.log(`Downloaded: ${filename}`);
+                  onDownloadComplete={() => {
+                    /* Download completed */
                   }}
                 />
 

@@ -229,18 +229,12 @@ const PortfolioAllocationChart: React.FC<PortfolioAllocationChartProps> = ({
 
   // Handle rebalancing
   const handleRebalance = useCallback(() => {
-    console.log('Initiating portfolio rebalancing');
     // Would integrate with investment service
   }, []);
 
   // Handle asset class click
-  const handleAssetClick = useCallback((data: StackedBarDataPoint, assetKey: string, value: number) => {
-    console.log('Asset clicked:', { 
-      period: data.label, 
-      asset: assetKey, 
-      value,
-      percentage: ((value / (data.total as number)) * 100).toFixed(1)
-    });
+  const handleAssetClick = useCallback(() => {
+    // Asset click details available here
   }, []);
 
   return (

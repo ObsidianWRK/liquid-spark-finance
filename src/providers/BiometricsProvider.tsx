@@ -169,7 +169,7 @@ export const BiometricsProvider: React.FC<BiometricsProviderProps> = ({
   // Initialize wellness engine and subscribe to state changes
   useEffect(() => {
     if (debugMode) {
-      console.log('🧠 BiometricsProvider: Initializing...');
+      // BiometricsProvider initializing
     }
 
     const subscription = wellnessEngine.state$.subscribe({
@@ -177,13 +177,7 @@ export const BiometricsProvider: React.FC<BiometricsProviderProps> = ({
         setState(newState);
         
         if (debugMode) {
-          console.log('🧠 BiometricsState Update:', {
-            stressIndex: newState.stressIndex,
-            wellnessScore: newState.wellnessScore,
-            shouldIntervene: newState.shouldIntervene,
-            timestamp: newState.timestamp,
-            syncDelay: Date.now() - new Date(newState.lastReading || 0).getTime(),
-          });
+          // Biometrics state update details
         }
       },
       error: (error) => {
@@ -219,7 +213,7 @@ export const BiometricsProvider: React.FC<BiometricsProviderProps> = ({
       wellnessEngine.stopEngine();
       
       if (debugMode) {
-        console.log('🧠 BiometricsProvider: Cleaned up');
+        // BiometricsProvider cleaned up
       }
     };
   }, [autoStart, debugMode]);
@@ -230,32 +224,46 @@ export const BiometricsProvider: React.FC<BiometricsProviderProps> = ({
     isInitialized,
     startEngine: () => {
       wellnessEngine.startEngine();
-      if (debugMode) console.log('🧠 Engine started');
+      if (debugMode) {
+        // Engine started
+      }
     },
     stopEngine: () => {
       wellnessEngine.stopEngine();
-      if (debugMode) console.log('🧠 Engine stopped');
+      if (debugMode) {
+        // Engine stopped
+      }
     },
     triggerManualCheck: async () => {
-      if (debugMode) console.log('🧠 Manual check triggered');
+      if (debugMode) {
+        // Manual check triggered
+      }
       return wellnessEngine.triggerManualCheck();
     },
     addTrigger: (trigger: WellnessTrigger) => {
       wellnessEngine.addTrigger(trigger);
-      if (debugMode) console.log('🧠 Trigger added:', trigger.id);
+      if (debugMode) {
+        // Trigger added
+      }
     },
     removeTrigger: (triggerId: string) => {
       wellnessEngine.removeTrigger(triggerId);
-      if (debugMode) console.log('🧠 Trigger removed:', triggerId);
+      if (debugMode) {
+        // Trigger removed
+      }
     },
     updateTrigger: (triggerId: string, updates: Partial<WellnessTrigger>) => {
       wellnessEngine.updateTrigger(triggerId, updates);
-      if (debugMode) console.log('🧠 Trigger updated:', triggerId);
+      if (debugMode) {
+        // Trigger updated
+      }
     },
     getHistory: () => wellnessEngine.getHistory(),
     clearHistory: () => {
       wellnessEngine.clearHistory();
-      if (debugMode) console.log('🧠 History cleared');
+      if (debugMode) {
+        // History cleared
+      }
     },
   }), [state, isInitialized, debugMode]);
 
