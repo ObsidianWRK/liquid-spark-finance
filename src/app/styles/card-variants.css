@@ -1,0 +1,20 @@
+@layer components {
+  .card-variant {
+    background-image: linear-gradient(
+      to bottom right,
+      rgba(var(--card-color), 0.1),
+      rgba(var(--card-color), 0.2)
+    );
+    border: 1px solid rgba(var(--card-color), 0.2);
+  }
+
+  .card-variant-hover:hover {
+    background-image: linear-gradient(
+      to bottom right,
+      rgba(var(--card-color), 0.15),
+      rgba(var(--card-color), 0.3)
+    );
+    border-color: rgba(var(--card-color), 0.3);
+    box-shadow: 0 4px 12px rgba(var(--card-color), 0.1);
+  }
+}
