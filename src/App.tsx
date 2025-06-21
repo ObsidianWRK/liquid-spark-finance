@@ -20,6 +20,7 @@ const BudgetReportsPage = React.lazy(() => import('./pages/Reports'));
 const InsightsPage = React.lazy(() => import('./pages/InsightsPage'));
 const AccountOverview = React.lazy(() => import('./pages/AccountOverview'));
 const AccountsListPage = React.lazy(() => import('./pages/AccountsListPage'));
+const SettingsPage = React.lazy(() => import('./pages/Settings'));
 
 // Loading component
 const LoadingSpinner = () => (
@@ -155,6 +156,7 @@ function App() {
                     <Route path="/transactions" element={<TransactionDemo />} />
                     <Route path="/insights" element={<InsightsPage />} />
                     <Route path="/reports" element={<BudgetReportsPage />} />
+                    <Route path="/settings" element={<SettingsPage />} />
 
                     {/* Accounts Routes */}
                     <Route path="/accounts" element={<AccountsListPage />} />
