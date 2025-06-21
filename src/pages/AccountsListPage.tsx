@@ -1,10 +1,11 @@
 import React from 'react';
+import type { AccountCardDTO } from "@/shared/types/accounts";
 import { useNavigate } from 'react-router-dom';
 import { CreditCard, ChevronRight, Building2, TrendingUp, Shield } from 'lucide-react';
 import { UniversalCard } from '@/shared/ui/UniversalCard';
 import { Badge } from '@/shared/ui/badge';
 import { formatCurrency } from '@/shared/utils/formatters';
-import { getCompactAccountCards, mockAccountsEnhanced } from '@/services/mockData';
+import { fetchAccountCards, MOCK_ACCOUNTS } from "@/services/dataProvider";
 import { BackButton } from '@/shared/components/ui/BackButton';
 import { BankLinkingPanel } from '@/features/bank-linking/components/BankLinkingPanel';
 // Financial selectors for proper financial calculations
@@ -19,13 +20,14 @@ import { selectTotalWealth, selectTotalAssets, selectTotalLiabilities } from '@/
  */
 const AccountsListPage: React.FC = () => {
   const navigate = useNavigate();
-  const accounts = getCompactAccountCards();
+  const [accounts, setAccounts] = React.useState<AccountCardDTO[]>([]);
+  React.useEffect(() => {
+    fetchAccountCards().then(setAccounts);
+  }, []);
 
-  // Calculate proper financial metrics using selectors
-  const netWorth = selectTotalWealth(mockAccountsEnhanced);
-  const totalAssets = selectTotalAssets(mockAccountsEnhanced);
-  const totalLiabilities = selectTotalLiabilities(mockAccountsEnhanced);
-
+  const netWorth = selectTotalWealth(MOCK_ACCOUNTS);
+  const totalAssets = selectTotalAssets(MOCK_ACCOUNTS);
+  const totalLiabilities = selectTotalLiabilities(MOCK_ACCOUNTS);
   const handleAccountClick = (accountId: string) => {
     navigate(`/accounts/${accountId}`);
   };
