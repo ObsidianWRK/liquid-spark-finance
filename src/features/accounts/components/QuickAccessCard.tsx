@@ -79,9 +79,7 @@ export const QuickAccessCard = React.memo<QuickAccessCardProps>(
               : 'flat';
       }
 
-      const balance = showBalance
-        ? formatCurrency(account.currentBalance, { currency: account.currency })
-        : '••••••';
+      const balance = formatCurrency(account.currentBalance, { currency: account.currency });
       const mask = account.last4 || '••••';
 
       return {
@@ -92,7 +90,7 @@ export const QuickAccessCard = React.memo<QuickAccessCardProps>(
         formattedBalance: balance,
         accountMask: mask,
       };
-    }, [account, showBalance]);
+    }, [account]);
 
     const handleClick = () => {
       onSelect?.(account.id);
@@ -157,11 +155,9 @@ export const QuickAccessCard = React.memo<QuickAccessCardProps>(
               <div className="flex justify-between items-center">
                 <span className="text-xs text-white/60">Available</span>
                 <span className="text-xs font-medium text-green-400">
-                  {showBalance
-                    ? formatCurrency(account.availableBalance || 0, {
-                        currency: account.currency,
-                      })
-                    : '••••••'}
+                  {formatCurrency(account.availableBalance || 0, {
+                    currency: account.currency,
+                  })}
                 </span>
               </div>
             </div>
