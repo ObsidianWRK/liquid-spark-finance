@@ -6,7 +6,7 @@
  * while the unified theme system is being rolled out.
  */
 
-import { vueniTheme } from './unified';
+import { vueniTheme, getSeriesColor } from './unified';
 
 // Re-export chart system from unified theme
 export const appleGraphTokens = vueniTheme.charts;
@@ -19,6 +19,8 @@ export const {
   animation: appleChartAnimation,
   typography: appleChartTypography,
 } = vueniTheme.charts;
+
+export { getSeriesColor };
 
 // Animation presets for charts
 export const chartAnimationPreset = {

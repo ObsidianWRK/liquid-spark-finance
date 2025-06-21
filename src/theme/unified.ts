@@ -186,6 +186,33 @@ const cardSystem = {
   },
 } as const;
 
+// Core color tokens for reusable series colors
+export const VueniCore = {
+  primary: {
+    sapphireDust: colorPalette.primary,
+  },
+  secondary: {
+    caramelEssence: '#F5C07B',
+    blueOblivion: '#617BF3',
+  },
+} as const;
+
+export const VueniSemantic = {
+  success: colorPalette.success,
+} as const;
+
+export const VueniNeutral = {
+  500: colorPalette.neutral,
+} as const;
+
+export const chartSeriesColors = [
+  VueniCore.primary.sapphireDust,
+  VueniCore.secondary.caramelEssence,
+  VueniCore.secondary.blueOblivion,
+  VueniSemantic.success,
+  VueniNeutral[500],
+] as const;
+
 // Chart & Graph System (from graph-tokens.ts)
 const chartSystem = {
   // Apple HIG-compliant colors
@@ -194,6 +221,8 @@ const chartSystem = {
     negative: '#FF453A', // systemRed dark
     neutral: '#0A84FF', // systemBlue dark
     warning: '#FF9F0A', // systemOrange dark
+
+    series: chartSeriesColors,
 
     // Extended palette for complex charts
     extended: {
@@ -303,6 +332,12 @@ export const getSpacing = (size: keyof typeof spacingSystem) => {
 
 export const getGlassEffect = (level: keyof typeof glassEffects) => {
   return vueniTheme.glass[level];
+};
+
+// Retrieve series color by index with graceful fallback
+export const getSeriesColor = (index: number): string => {
+  const colors = vueniTheme.charts.colors.series;
+  return colors[index % colors.length];
 };
 
 // CSS custom properties generator for runtime theming
