@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { UniversalCard } from '@/shared/ui/UniversalCard';
 import { 
   Banknote, 
@@ -147,7 +147,11 @@ const MOCK_ACCOUNTS: MockAccount[] = import.meta.env.VITE_USE_MOCK_ACCOUNTS === 
       },
     ];
 
+const VISIBLE_COUNT = 5;
+
 export const BankLinkingPanel: React.FC = () => {
+  const [expanded, setExpanded] = useState(false);
+
   const getAccountIcon = (type: string) => {
     switch (type) {
       case 'checking':
@@ -196,6 +200,10 @@ export const BankLinkingPanel: React.FC = () => {
     }, 0);
   };
 
+  const visibleAccounts = expanded
+    ? MOCK_ACCOUNTS
+    : MOCK_ACCOUNTS.slice(0, VISIBLE_COUNT);
+
   return (
     <div className="bg-white/[0.02] rounded-2xl border border-white/[0.08] p-4 hover:bg-white/[0.04] hover:border-white/[0.12] transition-all duration-300 hover:scale-[1.02] cursor-pointer">
       <div className="flex items-center gap-3 mb-4">
@@ -226,7 +234,7 @@ export const BankLinkingPanel: React.FC = () => {
 
       {/* Scrollable Account List - Show only 5 accounts initially */}
       <div className="max-h-32 overflow-y-auto space-y-1 mb-3 scrollbar-thin scrollbar-thumb-white/20 scrollbar-track-white/5">
-        {MOCK_ACCOUNTS.map((account) => (
+        {visibleAccounts.map((account) => (
           <div
             key={account.id}
             className="pfm-row justify-between px-1.5 bg-white/[0.02] rounded-lg border border-white/[0.05] hover:bg-white/[0.04] transition-all cursor-pointer"
@@ -254,6 +262,14 @@ export const BankLinkingPanel: React.FC = () => {
             </div>
           </div>
         ))}
+        {!expanded && MOCK_ACCOUNTS.length > VISIBLE_COUNT && (
+          <div
+            className="flex items-center justify-center p-1.5 bg-white/[0.02] rounded-lg border border-white/[0.05] hover:bg-white/[0.04] transition-all cursor-pointer text-xs text-white/70"
+            onClick={() => setExpanded(true)}
+          >
+            Show all accounts
+          </div>
+        )}
       </div>
 
       {/* Add Account Action - Compact */}
