@@ -1,12 +1,14 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { CreditCard, ChevronRight, Building2 } from 'lucide-react';
+import { CreditCard, ChevronRight, Building2, TrendingUp, Shield } from 'lucide-react';
 import { UniversalCard } from '@/shared/ui/UniversalCard';
 import { Badge } from '@/shared/ui/badge';
 import { formatCurrency } from '@/shared/utils/formatters';
-import { getCompactAccountCards } from '@/services/mockData';
+import { getCompactAccountCards, mockAccountsEnhanced } from '@/services/mockData';
 import { BackButton } from '@/shared/components/ui/BackButton';
 import { BankLinkingPanel } from '@/features/bank-linking/components/BankLinkingPanel';
+// Financial selectors for proper financial calculations
+import { selectTotalWealth, selectTotalAssets, selectTotalLiabilities } from '@/selectors/financialSelectors';
 
 /**
  * AccountsListPage Component
@@ -18,6 +20,11 @@ import { BankLinkingPanel } from '@/features/bank-linking/components/BankLinking
 const AccountsListPage: React.FC = () => {
   const navigate = useNavigate();
   const accounts = getCompactAccountCards();
+
+  // Calculate proper financial metrics using selectors
+  const netWorth = selectTotalWealth(mockAccountsEnhanced);
+  const totalAssets = selectTotalAssets(mockAccountsEnhanced);
+  const totalLiabilities = selectTotalLiabilities(mockAccountsEnhanced);
 
   const handleAccountClick = (accountId: string) => {
     navigate(`/accounts/${accountId}`);
@@ -73,17 +80,14 @@ const AccountsListPage: React.FC = () => {
 
           <UniversalCard variant="glass" className="p-6">
             <div className="flex items-center gap-3 mb-2">
-              <CreditCard className="w-5 h-5 text-green-400" />
-              <span className="text-white/60 text-sm">Total Balance</span>
+              <TrendingUp className="w-5 h-5 text-green-400" />
+              <span className="text-white/60 text-sm">Net Worth</span>
             </div>
             <div className="text-2xl font-bold text-white">
-              {formatCurrency(
-                accounts.reduce(
-                  (sum, account) => sum + account.currentBalance,
-                  0
-                ),
-                { currency: 'USD' }
-              )}
+              {formatCurrency(netWorth, { currency: 'USD' })}
+            </div>
+            <div className="text-white/40 text-xs mt-1">
+              Assets - Liabilities
             </div>
           </UniversalCard>
 
@@ -97,6 +101,35 @@ const AccountsListPage: React.FC = () => {
                 new Set(accounts.map((account) => account.institution.name))
                   .size
               }
+            </div>
+          </UniversalCard>
+        </div>
+
+        {/* Financial Breakdown */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+          <UniversalCard variant="glass" className="p-6">
+            <div className="flex items-center gap-3 mb-2">
+              <TrendingUp className="w-5 h-5 text-green-400" />
+              <span className="text-white/60 text-sm">Total Assets</span>
+            </div>
+            <div className="text-xl font-bold text-green-400">
+              {formatCurrency(totalAssets, { currency: 'USD' })}
+            </div>
+            <div className="text-white/40 text-xs mt-1">
+              Checking, Savings, Investments
+            </div>
+          </UniversalCard>
+
+          <UniversalCard variant="glass" className="p-6">
+            <div className="flex items-center gap-3 mb-2">
+              <Shield className="w-5 h-5 text-orange-400" />
+              <span className="text-white/60 text-sm">Total Liabilities</span>
+            </div>
+            <div className="text-xl font-bold text-orange-400">
+              {formatCurrency(totalLiabilities, { currency: 'USD' })}
+            </div>
+            <div className="text-white/40 text-xs mt-1">
+              Credit Cards, Loans
             </div>
           </UniversalCard>
         </div>

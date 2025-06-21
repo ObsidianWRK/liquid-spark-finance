@@ -1,149 +1,112 @@
-import { RecurringCharge } from '../types';
+import { RecurringCharge } from '@/types';
 import { mockData } from '@/services/mockData';
+import { billAnalysisService } from '@/features/bill-negotiation/api/billAnalysisService';
 
 export interface SubscriptionService {
   detectSubscriptions: (transactions: unknown[]) => Promise<RecurringCharge[]>;
   cancelSubscription: (chargeId: string) => Promise<boolean>; // returns success flag
 }
 
-interface TransactionPattern {
-  merchant: string;
-  amount: number;
-  frequency: 'monthly' | 'yearly' | 'weekly';
-  dates: Date[];
-  category: string;
+// Enhanced interface for better subscription management
+export interface EnhancedRecurringCharge extends RecurringCharge {
+  isNegotiable?: boolean;
+  negotiationPotential?: 'high' | 'medium' | 'low';
+  potentialSavings?: number;
 }
 
 class MockSubscriptionService implements SubscriptionService {
   private charges: RecurringCharge[] = [];
 
-  async detectSubscriptions(transactions: unknown[] = []): Promise<RecurringCharge[]> {
-    // Use mock data if no transactions provided
-    const transactionsToAnalyze = transactions.length > 0 ? transactions : mockData.transactions;
+  async detectSubscriptions(transactions: unknown[]): Promise<RecurringCharge[]> {
+    // Use the bill analysis service to get comprehensive negotiatable bills
+    const analysisResult = billAnalysisService.analyzeTransactionsForNegotiatableBills();
     
-    // Convert to a consistent format
-    const normalizedTransactions = transactionsToAnalyze.map((t: any) => ({
-      id: t.id,
-      merchant: t.merchant || t.merchantName || 'Unknown',
-      amount: Math.abs(t.amount), // Use absolute value for comparison
-      date: new Date(t.date),
-      category: typeof t.category === 'string' ? t.category : t.category?.name || 'other',
-      status: t.status
-    })).filter(t => t.amount > 0 && t.status === 'completed'); // Only completed transactions with positive amounts
+    // Convert NegotiatableBill to RecurringCharge format
+    const negotiatableBills: RecurringCharge[] = analysisResult.negotiatableBills.map(bill => ({
+      id: bill.id,
+      accountId: bill.accountId,
+      merchantName: bill.merchantName,
+      amount: Math.abs(bill.amount), // Ensure positive amount for display
+      frequency: bill.frequency,
+      nextDueDate: bill.nextDueDate,
+      status: bill.status,
+      category: bill.category,
+      lastChargeDate: bill.lastChargeDate,
+      averageAmount: bill.averageAmount,
+      confidence: bill.confidence
+    }));
 
-    // Detect recurring patterns
-    const patterns = this.detectRecurringPatterns(normalizedTransactions);
+    // Add some additional mock subscriptions for completeness
+    const additionalMockCharges: RecurringCharge[] = [
+      {
+        id: 'sub_streaming_bundle',
+        accountId: 'acc_001',
+        merchantName: 'Entertainment Bundle',
+        amount: 49.99,
+        frequency: 'monthly',
+        nextDueDate: new Date(Date.now() + 10 * 24 * 60 * 60 * 1000).toISOString(),
+        status: 'active',
+        category: 'entertainment',
+        confidence: 0.95,
+        lastChargeDate: new Date(Date.now() - 20 * 24 * 60 * 60 * 1000).toISOString()
+      },
+      {
+        id: 'sub_cloud_storage',
+        accountId: 'acc_001', 
+        merchantName: 'Cloud Storage Pro',
+        amount: 19.99,
+        frequency: 'monthly',
+        nextDueDate: new Date(Date.now() + 5 * 24 * 60 * 60 * 1000).toISOString(),
+        status: 'active',
+        category: 'software',
+        confidence: 0.90,
+        lastChargeDate: new Date(Date.now() - 25 * 24 * 60 * 60 * 1000).toISOString()
+      }
+    ];
+
+    // Combine negotiatable bills with additional mock charges
+    this.charges = [...negotiatableBills, ...additionalMockCharges];
     
-    // Convert patterns to RecurringCharge format
-    this.charges = patterns.map((pattern, index) => {
-      const lastTransaction = pattern.dates[pattern.dates.length - 1];
-      const nextDueDate = this.calculateNextDueDate(lastTransaction, pattern.frequency);
-      
-      return {
-        id: `sub-${index + 1}`,
-        accountId: 'acc_001', // Default account
-        merchantName: pattern.merchant,
-        amount: pattern.amount,
-        frequency: pattern.frequency,
-        nextDueDate: nextDueDate.toISOString(),
-        status: 'active' as const,
-        category: pattern.category,
-        lastChargeDate: lastTransaction.toISOString(),
-        averageAmount: pattern.amount,
-        detectedPattern: `Recurring ${pattern.frequency} charges detected`,
-        confidence: this.calculateConfidence(pattern)
-      };
-    });
-
     return this.charges;
   }
 
-  private detectRecurringPatterns(transactions: any[]): TransactionPattern[] {
-    // Group transactions by merchant and similar amounts
-    const merchantGroups = new Map<string, any[]>();
-    
-    transactions.forEach(t => {
-      const key = this.normalizeMerchant(t.merchant);
-      if (!merchantGroups.has(key)) {
-        merchantGroups.set(key, []);
-      }
-      merchantGroups.get(key)!.push(t);
-    });
-
-    const patterns: TransactionPattern[] = [];
-
-    merchantGroups.forEach((merchantTransactions, merchant) => {
-      // Group by similar amounts (within $1 tolerance)
-      const amountGroups = new Map<number, any[]>();
-      
-      merchantTransactions.forEach(t => {
-        let found = false;
-        for (const [amount, group] of amountGroups.entries()) {
-          if (Math.abs(t.amount - amount) <= 1.0) {
-            group.push(t);
-            found = true;
-            break;
-          }
-        }
-        if (!found) {
-          amountGroups.set(t.amount, [t]);
-        }
-      });
-
-      amountGroups.forEach((amountTransactions, amount) => {
-        if (amountTransactions.length >= 2) { // Need at least 2 occurrences
-          const dates = amountTransactions.map(t => t.date).sort();
-          const frequency = this.detectFrequency(dates);
-          
-          if (frequency && this.isValidSubscription(merchant, amount)) {
-            patterns.push({
-              merchant: this.formatMerchantName(merchant),
-              amount,
-              frequency,
-              dates,
-              category: amountTransactions[0].category
-            });
-          }
-        }
-      });
-    });
-
-    return patterns.sort((a, b) => b.amount - a.amount); // Sort by amount descending
-  }
-
-  private normalizeMerchant(merchant: string): string {
-    return merchant.toLowerCase()
-      .replace(/\s+/g, ' ')
-      .replace(/[^a-z0-9\s]/g, '')
-      .trim();
-  }
-
-  private formatMerchantName(normalizedMerchant: string): string {
-    // Convert back to proper case
-    return normalizedMerchant
-      .split(' ')
-      .map(word => word.charAt(0).toUpperCase() + word.slice(1))
-      .join(' ');
-  }
-
-  private detectFrequency(dates: Date[]): 'monthly' | 'yearly' | 'weekly' | null {
-    if (dates.length < 2) return null;
-
-    const intervals: number[] = [];
-    for (let i = 1; i < dates.length; i++) {
-      const diff = dates[i].getTime() - dates[i-1].getTime();
-      intervals.push(diff);
+  async cancelSubscription(chargeId: string): Promise<boolean> {
+    const chargeIndex = this.charges.findIndex(c => c.id === chargeId);
+    if (chargeIndex >= 0) {
+      // Update status instead of removing entirely
+      this.charges[chargeIndex] = {
+        ...this.charges[chargeIndex],
+        status: 'pending_cancel'
+      };
+      return true;
     }
+    return false;
+  }
 
-    const avgInterval = intervals.reduce((a, b) => a + b, 0) / intervals.length;
-    const daysDiff = avgInterval / (1000 * 60 * 60 * 24);
+  // Additional method to get charges for bill negotiation
+  getChargesForNegotiation(): RecurringCharge[] {
+    return this.charges.filter(charge => 
+      charge.status === 'active' && this.isNegotiableCharge(charge)
+    );
+  }
 
-    // Allow some tolerance in the intervals
-    if (daysDiff >= 28 && daysDiff <= 35) return 'monthly';
-    if (daysDiff >= 6 && daysDiff <= 8) return 'weekly';
-    if (daysDiff >= 360 && daysDiff <= 370) return 'yearly';
-    
-    return null;
+  private isNegotiableCharge(charge: RecurringCharge): boolean {
+    const negotiatableKeywords = [
+      // Telecom
+      'verizon', 'at&t', 'xfinity', 'comcast', 't-mobile',
+      // Insurance  
+      'insurance', 'allstate', 'state farm', 'blue cross',
+      // Utilities
+      'electric', 'gas', 'water', 'utility', 'security',
+      // Fitness
+      'fitness', 'gym', 'planet', 'la fitness',
+      // High-value subscriptions
+      'adobe', 'microsoft', 'enterprise'
+    ];
+
+    const merchantLower = charge.merchantName.toLowerCase();
+    return negotiatableKeywords.some(keyword => merchantLower.includes(keyword)) ||
+           charge.amount > 30; // Bills over $30 are typically negotiatable
   }
 
   private isValidSubscription(merchant: string, amount: number): boolean {
@@ -151,7 +114,8 @@ class MockSubscriptionService implements SubscriptionService {
     const subscriptionKeywords = [
       'netflix', 'spotify', 'hulu', 'disney', 'apple music', 
       'amazon prime', 'adobe', 'icloud', 'gym', 'fitness',
-      'planet fitness', 'subscription', 'monthly', 'premium'
+      'planet fitness', 'subscription', 'monthly', 'premium',
+      'insurance', 'verizon', 'at&t', 'xfinity', 'utility'
     ];
 
     const merchantLower = merchant.toLowerCase();
@@ -159,51 +123,57 @@ class MockSubscriptionService implements SubscriptionService {
       merchantLower.includes(keyword)
     );
 
-    // Typical subscription amount ranges
-    const isTypicalSubscriptionAmount = amount >= 2.99 && amount <= 50.00;
+    // Expanded amount range for utilities and insurance
+    const isTypicalSubscriptionAmount = amount >= 2.99 && amount <= 500.00;
 
     return hasSubscriptionKeyword && isTypicalSubscriptionAmount;
   }
 
-  private calculateNextDueDate(lastDate: Date, frequency: string): Date {
-    const nextDate = new Date(lastDate);
-    
-    switch (frequency) {
-      case 'monthly':
-        nextDate.setMonth(nextDate.getMonth() + 1);
-        break;
-      case 'weekly':
-        nextDate.setDate(nextDate.getDate() + 7);
-        break;
-      case 'yearly':
-        nextDate.setFullYear(nextDate.getFullYear() + 1);
-        break;
+  // Method to simulate negotiation success
+  async simulateNegotiation(chargeId: string): Promise<{success: boolean, newAmount?: number, savings?: number}> {
+    const charge = this.charges.find(c => c.id === chargeId);
+    if (!charge) return { success: false };
+
+    // Simulate different success rates based on charge type
+    const successRate = this.getNegotiationSuccessRate(charge);
+    const isSuccessful = Math.random() < successRate;
+
+    if (isSuccessful) {
+      const savingsPercentage = Math.random() * 0.25 + 0.05; // 5-30% savings
+      const newAmount = charge.amount * (1 - savingsPercentage);
+      const savings = charge.amount - newAmount;
+
+      // Update the charge amount
+      const chargeIndex = this.charges.findIndex(c => c.id === chargeId);
+      if (chargeIndex >= 0) {
+        this.charges[chargeIndex] = {
+          ...this.charges[chargeIndex],
+          amount: newAmount,
+          averageAmount: newAmount
+        };
+      }
+
+      return {
+        success: true,
+        newAmount: Math.round(newAmount * 100) / 100,
+        savings: Math.round(savings * 100) / 100
+      };
     }
-    
-    return nextDate;
+
+    return { success: false };
   }
 
-  private calculateConfidence(pattern: TransactionPattern): number {
-    let confidence = 0.5; // Base confidence
+  private getNegotiationSuccessRate(charge: RecurringCharge): number {
+    const merchantLower = charge.merchantName.toLowerCase();
     
-    // More occurrences = higher confidence
-    confidence += Math.min(pattern.dates.length * 0.1, 0.3);
+    // Higher success rates for certain types of services
+    if (merchantLower.includes('gym') || merchantLower.includes('fitness')) return 0.8;
+    if (merchantLower.includes('cable') || merchantLower.includes('internet')) return 0.7;
+    if (merchantLower.includes('phone') || merchantLower.includes('wireless')) return 0.6;
+    if (merchantLower.includes('insurance')) return 0.5;
     
-    // Consistent timing = higher confidence
-    if (pattern.frequency === 'monthly') confidence += 0.2;
-    
-    return Math.min(confidence, 1.0);
-  }
-
-  async cancelSubscription(chargeId: string): Promise<boolean> {
-    const charge = this.charges.find((c) => c.id === chargeId);
-    if (charge) {
-      charge.status = 'pending_cancel';
-      return true;
-    }
-    return false;
+    return 0.4; // Default success rate
   }
 }
 
-export const subscriptionService: SubscriptionService =
-  new MockSubscriptionService();
+export const subscriptionService: SubscriptionService = new MockSubscriptionService();
