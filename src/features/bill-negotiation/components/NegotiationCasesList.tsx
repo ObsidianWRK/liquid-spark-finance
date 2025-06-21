@@ -75,10 +75,13 @@ export const NegotiationCasesList: React.FC<{ className?: string }> = ({
                   {icon}
                   <div>
                     <p className="text-xs font-medium text-white">
-                      Case #{cs.id.slice(-6)}
+                      {cs.merchantName || `Case #${cs.id.slice(-6)}`}
                     </p>
                     <p className="text-xs text-white/60">
-                      Charge {cs.chargeId.slice(-6)}
+                      {cs.status === 'queued' ? 'Queued for negotiation' : 
+                       cs.status === 'in_progress' ? 'Negotiating...' : 
+                       cs.status === 'completed' ? 'Negotiation completed' : 
+                       'Negotiation failed'}
                     </p>
                   </div>
                 </div>

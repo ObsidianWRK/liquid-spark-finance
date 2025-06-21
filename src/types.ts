@@ -31,6 +31,7 @@ export interface RecurringCharge {
 export interface NegotiationCase {
   id: string;
   chargeId: string;
+  merchantName: string; // Company name (e.g., "Verizon Wireless", "Netflix")
   status: 'queued' | 'in_progress' | 'completed' | 'failed';
   savingsAmount?: number;
   submittedAt: string;

@@ -22,7 +22,7 @@ export const useNegotiationStore = create<NegotiationState>((set, get) => ({
       // refresh each case status
       const updated: NegotiationCase[] = await Promise.all(
         current.map(
-          async (c) =>
+          async (c: NegotiationCase) =>
             (await negotiationService.getNegotiationStatus(c.id)) ?? c
         )
       );
@@ -40,8 +40,8 @@ export const useNegotiationStore = create<NegotiationState>((set, get) => ({
       const newCases: NegotiationCase[] = [];
       for (const charge of charges) {
         // avoid duplicate negotiation per chargeId
-        if (!get().cases.find((cs) => cs.chargeId === charge.id)) {
-          const nc = await negotiationService.submitNegotiation(charge.id);
+        if (!get().cases.find((cs: NegotiationCase) => cs.chargeId === charge.id)) {
+          const nc = await negotiationService.submitNegotiation(charge.id, charge.merchantName);
           newCases.push(nc);
         }
       }

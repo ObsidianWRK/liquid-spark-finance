@@ -3,7 +3,7 @@ import { useSearchParams } from 'react-router-dom';
 import AccountCard from '@/features/accounts/components/AccountCard';
 import { Grid } from '@/features/accounts/components/Grid';
 import { QuickAccessRail } from '@/features/accounts/components/QuickAccessRail';
-import { TransactionList } from '@/features/transactions/components/TransactionList';
+import TransactionList from '@/components/TransactionList';
 import LiquidGlassTopMenuBar from '@/components/LiquidGlassTopMenuBar';
 import BudgetReportsPage from '@/features/budget/components/BudgetReportsPage';
 import SavingsGoals from '@/features/savings/components/SavingsGoals';
@@ -424,6 +424,7 @@ export default function Index() {
                   []
                 }
                 isLoading={false}
+                currency="USD"
                 onTransactionClick={(transaction) =>
                   console.log('Transaction clicked:', transaction)
                 }
