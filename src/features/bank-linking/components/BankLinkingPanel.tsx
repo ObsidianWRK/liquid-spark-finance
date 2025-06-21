@@ -9,7 +9,8 @@ import {
 } from 'lucide-react';
 import { formatCurrency } from '@/shared/utils/formatters';
 import { cn } from '@/shared/lib/utils';
-import { mockAccountsEnhanced, mockInstitutions } from '@/services/mockData';
+import { mockInstitutions } from '@/services/mockData';
+import { getAccounts } from '@/services/mockDataProvider';
 
 interface MockAccount {
   id: string;
@@ -35,8 +36,8 @@ interface MockAccount {
 }
 
 // Transform enhanced mock data to panel format
-const transformMockAccounts = (): MockAccount[] => {
-  return mockAccountsEnhanced.map((account, index) => {
+const transformMockAccounts = (accounts: ReturnType<typeof getAccounts>): MockAccount[] => {
+  return accounts.map((account, index) => {
     const institutionName = account.institutionName || 'Chase Bank';
     const institutionData = institutionName in mockInstitutions 
       ? mockInstitutions[institutionName as keyof typeof mockInstitutions]
@@ -77,10 +78,11 @@ const transformMockAccounts = (): MockAccount[] => {
   });
 };
 
-// Use all mock accounts when enabled
-const MOCK_ACCOUNTS: MockAccount[] = import.meta.env.VITE_USE_MOCK_ACCOUNTS === 'true' || import.meta.env.DEV
-  ? transformMockAccounts()
-  : [
+// Use accounts from provider with a small fallback when disabled
+const MOCK_ACCOUNTS: MockAccount[] = (() => {
+  const accs = transformMockAccounts(getAccounts());
+  if (accs.length > 0) return accs;
+  return [
       {
         id: 'acc_chase_checking_001',
         institution: {
@@ -144,8 +146,9 @@ const MOCK_ACCOUNTS: MockAccount[] = import.meta.env.VITE_USE_MOCK_ACCOUNTS === 
           date: '2024-01-14T14:22:00Z',
           pending: true,
         },
-      },
+      }
     ];
+})();
 
 const VISIBLE_COUNT = 5;
 
