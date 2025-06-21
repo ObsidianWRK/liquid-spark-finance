@@ -375,10 +375,10 @@ export default function Index() {
 
         <div className="p-6 space-y-6">
           {/* CC: Smart Accounts Deck and Compact Account Cards Grid */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:items-stretch">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6" style={{ minHeight: '400px' }}>
             {/* Smart Accounts Deck (R2 requirement) */}
             {isFeatureEnabled('SMART_ACCOUNTS_DECK') && (
-              <div className="flex flex-col h-full">
+              <div className="h-full">
                 <VirtualizedDeck
                   accounts={transformToAccountRowData()}
                   height={400}
@@ -389,13 +389,13 @@ export default function Index() {
                     );
                     // Account click handler
                   }}
-                  className="flex-1 h-full"
+                  className="h-full"
                 />
               </div>
             )}
 
             {/* Enhanced Quick Access Rail */}
-            <div className="flex flex-col h-full">
+            <div className="h-full">
               <QuickAccessRail
                 accounts={getCompactAccountCards()}
                 title="Quick Access"
@@ -411,7 +411,7 @@ export default function Index() {
                   console.log('Navigate to accounts page');
                 }}
                 maxVisibleDesktop={6}
-                className="flex-1"
+                className="h-full flex flex-col"
               />
             </div>
           </div>

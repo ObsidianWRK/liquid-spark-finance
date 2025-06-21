@@ -1,5 +1,5 @@
 // CC: VirtualizedDeck component for Smart Accounts Deck with react-window (R2 requirement)
-import React, { useMemo, useRef, useEffect, useState } from 'react';
+import React, { useMemo } from 'react';
 import { FixedSizeList as List } from 'react-window';
 import { motion } from 'framer-motion';
 import { AccountRow, AccountRowData } from './AccountRow';
@@ -44,11 +44,6 @@ export const VirtualizedDeck: React.FC<VirtualizedDeckProps> = ({
   className,
   onAccountClick,
 }) => {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const headerRef = useRef<HTMLDivElement>(null);
-  const footerRef = useRef<HTMLDivElement>(null);
-  const [listHeight, setListHeight] = useState(height);
-
   // CC: Memoize data for react-window performance
   const itemData = useMemo(
     () => ({
@@ -57,39 +52,6 @@ export const VirtualizedDeck: React.FC<VirtualizedDeckProps> = ({
     }),
     [accounts, onAccountClick]
   );
-
-  // CC: Calculate dynamic height based on container size
-  useEffect(() => {
-    const calculateHeight = () => {
-      if (!containerRef.current || !headerRef.current || !footerRef.current) {
-        setListHeight(height);
-        return;
-      }
-
-      const containerHeight = containerRef.current.clientHeight;
-      const headerHeight = headerRef.current.clientHeight;
-      const footerHeight = footerRef.current.clientHeight;
-      
-      // Account for padding (p-2 = 8px top + 8px bottom)
-      const availableHeight = containerHeight - headerHeight - footerHeight - 16;
-      
-      // Ensure minimum height
-      const calculatedHeight = Math.max(200, availableHeight);
-      setListHeight(calculatedHeight);
-    };
-
-    calculateHeight();
-
-    // Recalculate on resize
-    const resizeObserver = new ResizeObserver(calculateHeight);
-    if (containerRef.current) {
-      resizeObserver.observe(containerRef.current);
-    }
-
-    return () => {
-      resizeObserver.disconnect();
-    };
-  }, [height, accounts.length]);
 
   // CC: Animation variants for container
   const containerVariants = {
@@ -104,9 +66,11 @@ export const VirtualizedDeck: React.FC<VirtualizedDeckProps> = ({
     },
   };
 
+  // Calculate stable list height by subtracting header and footer heights
+  const listHeight = Math.max(200, height - 120); // 60px header + 60px footer
+
   return (
     <motion.div
-      ref={containerRef}
       variants={containerVariants}
       initial="hidden"
       animate="visible"
@@ -117,7 +81,7 @@ export const VirtualizedDeck: React.FC<VirtualizedDeckProps> = ({
       )}
     >
       {/* CC: Header with account count */}
-      <div ref={headerRef} className="px-4 py-3 border-b border-white/[0.08] flex-shrink-0">
+      <div className="px-4 py-3 border-b border-white/[0.08] flex-shrink-0">
         <h3 className="text-white font-semibold text-lg">Smart Accounts</h3>
         <p className="text-white/60 text-sm">
           {accounts.length} accounts • Scroll to view all
@@ -139,7 +103,7 @@ export const VirtualizedDeck: React.FC<VirtualizedDeckProps> = ({
       </div>
 
       {/* CC: Footer with "Add Account" CTA for success metrics */}
-      <div ref={footerRef} className="px-4 py-3 border-t border-white/[0.08] flex-shrink-0">
+      <div className="px-4 py-3 border-t border-white/[0.08] flex-shrink-0">
         <motion.button
           whileHover={{ scale: 1.02 }}
           whileTap={{ scale: 0.98 }}
