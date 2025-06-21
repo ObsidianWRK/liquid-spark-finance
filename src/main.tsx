@@ -42,7 +42,7 @@ try {
   // In development, show a helpful error message
   if (import.meta.env.DEV) {
     document.body.innerHTML = `
-      <div style="background: #1a1a1a; color: #ff6b6b; padding: 2rem; font-family: monospace; line-height: 1.6;">
+      <div style="background: #1a1a1a; color: #ff6b6b; padding: 2rem; font-family: var(--vueni-font-family); line-height: 1.6;">
         <h1>🔒 Security Configuration Required</h1>
         <pre style="background: #2a2a2a; padding: 1rem; border-radius: 8px; overflow-x: auto;">
 ${errorMessage}
