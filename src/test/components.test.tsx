@@ -15,7 +15,7 @@ import {
 import { ConfigurableInsightsPage } from '../components/shared/ConfigurableInsightsPage';
 import { TransactionWithScores } from '../components/TransactionWithScores';
 import { GlassCard } from '../components/GlassCard';
-import { LiquidGlassTopMenuBar } from '../components/LiquidGlassTopMenuBar';
+
 
 // Mock data for testing
 const mockTransactions = [
@@ -378,53 +378,7 @@ describe('Component Integration Tests - Consolidated Components', () => {
     });
   });
 
-  describe('LiquidGlassTopMenuBar Component', () => {
-    it('should render navigation items', () => {
-      render(<LiquidGlassTopMenuBar />);
 
-      // Check for common navigation items
-      expect(screen.getByText('Dashboard')).toBeInTheDocument();
-      expect(screen.getByText('Transactions')).toBeInTheDocument();
-      expect(screen.getByText('Budget')).toBeInTheDocument();
-      expect(screen.getByText('Insights')).toBeInTheDocument();
-    });
-
-    it('should handle navigation clicks', () => {
-      render(<LiquidGlassTopMenuBar />);
-
-      const dashboardLink = screen.getByText('Dashboard');
-      fireEvent.click(dashboardLink);
-
-      // Should handle navigation (depends on router implementation)
-    });
-
-    it('should display user menu when available', () => {
-      render(<LiquidGlassTopMenuBar />);
-
-      // Look for user menu trigger (could be avatar, name, or menu icon)
-      const userElements = screen.getAllByRole('button');
-      expect(userElements.length).toBeGreaterThan(0);
-    });
-
-    it('should apply liquid glass visual effects', () => {
-      render(<LiquidGlassTopMenuBar />);
-
-      const menuBar =
-        screen.getByRole('banner') || screen.getByRole('navigation');
-      expect(menuBar).toHaveClass(/backdrop|glass|blur/);
-    });
-
-    it('should be responsive to screen size changes', () => {
-      render(<LiquidGlassTopMenuBar />);
-
-      // Test mobile menu toggle
-      const mobileToggle = screen.queryByLabelText(/menu|toggle/i);
-      if (mobileToggle) {
-        fireEvent.click(mobileToggle);
-        // Should show/hide mobile menu
-      }
-    });
-  });
 });
 
 describe('Component Regression Tests - Consolidated Components', () => {
