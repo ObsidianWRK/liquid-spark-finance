@@ -394,9 +394,9 @@
 
 /* Ensure accessibility features work across all breakpoints */
 @media (min-width: 640px) {
-  .bottom-nav {
-    display: none; /* Hidden on larger screens */
-  }
+  /* .bottom-nav {
+    display: none;
+  } */
 
   /* Focus management for nav rail on larger screens */
   .nav-rail button:focus,

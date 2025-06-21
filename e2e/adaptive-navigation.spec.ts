@@ -24,7 +24,7 @@ test.describe('Adaptive Navigation System', () => {
     }) => {
       // Wait for navigation to be visible
       const bottomNav = page.locator(
-        '[role="navigation"][aria-label="Bottom navigation"]'
+        'nav.bottom-nav'
       );
       await expect(bottomNav).toBeVisible();
 
@@ -45,7 +45,7 @@ test.describe('Adaptive Navigation System', () => {
       page,
     }) => {
       const bottomNav = page.locator(
-        '[role="navigation"][aria-label="Bottom navigation"]'
+        'nav.bottom-nav'
       );
 
       // Test navigation to transactions
@@ -65,7 +65,7 @@ test.describe('Adaptive Navigation System', () => {
 
     test('should respect safe area insets', async ({ page }) => {
       const bottomNav = page.locator(
-        '[role="navigation"][aria-label="Bottom navigation"]'
+        'nav.bottom-nav'
       );
 
       // Check that navigation respects safe area
@@ -138,7 +138,7 @@ test.describe('Adaptive Navigation System', () => {
 
     test('should not show mobile or desktop navigation', async ({ page }) => {
       // Mobile navigation should be hidden
-      const bottomNav = page.locator('[aria-label="Bottom navigation"]');
+      const bottomNav = page.locator('nav.bottom-nav');
       await expect(bottomNav).toBeHidden();
 
       // Desktop navigation should be hidden
@@ -204,10 +204,10 @@ test.describe('Adaptive Navigation System', () => {
       await expect(page).toHaveURL(/.*profile.*/);
     });
 
-    test('should not show mobile or tablet navigation', async ({ page }) => {
-      // Mobile navigation should be hidden
-      const bottomNav = page.locator('[aria-label="Bottom navigation"]');
-      await expect(bottomNav).toBeHidden();
+    test('should show bottom navigation and hide tablet navigation', async ({ page }) => {
+      // Bottom navigation should be visible
+      const bottomNav = page.locator('nav.bottom-nav');
+      await expect(bottomNav).toBeVisible();
 
       // Tablet navigation should be hidden
       const navRail = page.locator('[aria-label="Navigation rail"]');
@@ -226,6 +226,9 @@ test.describe('Adaptive Navigation System', () => {
       const sidebar = page.locator('[aria-label="Main navigation"]');
       await expect(sidebar).toBeVisible();
 
+      const bottomNav = page.locator('nav.bottom-nav');
+      await expect(bottomNav).toBeVisible();
+
       // Resize to tablet
       await page.setViewportSize(viewports.tablet);
       await page.waitForTimeout(300); // Wait for transition
@@ -238,7 +241,6 @@ test.describe('Adaptive Navigation System', () => {
       await page.setViewportSize(viewports.mobile);
       await page.waitForTimeout(300); // Wait for transition
 
-      const bottomNav = page.locator('[aria-label="Bottom navigation"]');
       await expect(bottomNav).toBeVisible();
       await expect(navRail).toBeHidden();
     });
@@ -254,7 +256,7 @@ test.describe('Adaptive Navigation System', () => {
       await page.setViewportSize(viewports.mobile);
       await page.waitForTimeout(300);
 
-      const bottomNav = page.locator('[aria-label="Bottom navigation"]');
+      const bottomNav = page.locator('nav.bottom-nav');
       const transactionsBtn = bottomNav.locator('button', {
         hasText: 'Transactions',
       });
@@ -303,7 +305,7 @@ test.describe('Adaptive Navigation System', () => {
       await page.setViewportSize(viewports.mobile);
       await page.goto('/');
 
-      const bottomNav = page.locator('[aria-label="Bottom navigation"]');
+      const bottomNav = page.locator('nav.bottom-nav');
       const navButtons = bottomNav.locator('button');
 
       const buttonCount = await navButtons.count();
