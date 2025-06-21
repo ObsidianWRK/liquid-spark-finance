@@ -98,6 +98,28 @@ export const mainRoutes: Route[] = [
 ];
 ```
 
+### Route → Breakpoint Behavior Matrix
+
+| Route ID | Label | Mobile (<768px) | Tablet (768-1023px) | Desktop (≥1024px) | Badge Support |
+|----------|-------|------------------|---------------------|-------------------|---------------|
+| `dashboard` | Dashboard | ✅ Bottom Nav | ✅ Nav Rail | ✅ Top Bar | ❌ |
+| `accounts` | Accounts | ✅ Bottom Nav | ✅ Nav Rail | ✅ Top Bar | ❌ |
+| `transactions` | Transactions | ✅ Bottom Nav | ✅ Nav Rail | ✅ Top Bar | ❌ |
+| `insights` | Insights | ✅ Bottom Nav | ✅ Nav Rail | ✅ Top Bar | ❌ |
+| `calculators` | Calculators | ❌ Hidden | ✅ Nav Rail | ✅ Top Bar | ❌ |
+| `budget-planner` | Budget Planner | ❌ Hidden | ✅ Nav Rail | ✅ Top Bar | ❌ |
+| `investment-tracker` | Investment Tracker | ❌ Hidden | ✅ Nav Rail | ✅ Top Bar | ❌ |
+| `credit` | Credit Score | ❌ Hidden | ✅ Nav Rail | ✅ Top Bar | ❌ |
+| `savings` | Savings Goals | ❌ Hidden | ✅ Nav Rail | ✅ Top Bar | ❌ |
+| `reports` | Reports | ❌ Hidden | ✅ Nav Rail | ✅ Top Bar | ❌ |
+| `profile` | Profile | ❌ Hidden | ❌ Hidden | ✅ Top Bar | ❌ |
+| `settings` | Settings | ❌ Hidden | ❌ Hidden | ✅ Top Bar | ❌ |
+
+**Navigation Strategy:**
+- **Mobile**: Limited to 4 primary routes (Dashboard, Accounts, Transactions, Insights) to maintain touch-friendly spacing
+- **Tablet**: Nav rail expands on hover to show all main routes and their labels
+- **Desktop**: Top bar shows all routes with full labels and supports keyboard navigation
+
 ### Route Properties
 
 | Property           | Type         | Description                 |

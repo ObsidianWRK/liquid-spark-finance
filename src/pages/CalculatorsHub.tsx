@@ -1,5 +1,5 @@
 // A no-op comment to try and un-stick the model.
-import React, { useState } from 'react';
+import React, { useState, Suspense } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { UnifiedCard } from '@/shared/ui/UnifiedCard';
 import {
@@ -30,18 +30,18 @@ import {
 } from 'lucide-react';
 import BackHeader from '@/shared/ui/BackHeader';
 
-// Import calculator components
-import FinancialFreedomCalculator from '@/features/calculators/components/FinancialFreedomCalculator';
-import ROICalculator from '@/features/calculators/components/ROICalculator';
-import LoanCalculator from '@/features/calculators/components/LoanCalculator';
-import InflationCalculator from '@/features/calculators/components/InflationCalculator';
-import CompoundInterestCalculator from '@/features/calculators/components/CompoundInterestCalculator';
-import Retirement401kCalculator from '@/features/calculators/components/Retirement401kCalculator';
-import ThreeFundPortfolioCalculator from '@/features/calculators/components/ThreeFundPortfolioCalculator';
-import HomeAffordabilityCalculator from '@/features/calculators/components/HomeAffordabilityCalculator';
-import MortgagePayoffCalculator from '@/features/calculators/components/MortgagePayoffCalculator';
-import StockBacktestCalculator from '@/features/calculators/components/StockBacktestCalculator';
-import ExchangeRateCalculator from '@/features/calculators/components/ExchangeRateCalculator';
+// Lazy-load calculator components for code splitting
+const FinancialFreedomCalculator = React.lazy(() => import('@/features/calculators/components/FinancialFreedomCalculator'));
+const ROICalculator = React.lazy(() => import('@/features/calculators/components/ROICalculator'));
+const LoanCalculator = React.lazy(() => import('@/features/calculators/components/LoanCalculator'));
+const InflationCalculator = React.lazy(() => import('@/features/calculators/components/InflationCalculator'));
+const CompoundInterestCalculator = React.lazy(() => import('@/features/calculators/components/CompoundInterestCalculator'));
+const Retirement401kCalculator = React.lazy(() => import('@/features/calculators/components/Retirement401kCalculator'));
+const ThreeFundPortfolioCalculator = React.lazy(() => import('@/features/calculators/components/ThreeFundPortfolioCalculator'));
+const HomeAffordabilityCalculator = React.lazy(() => import('@/features/calculators/components/HomeAffordabilityCalculator'));
+const MortgagePayoffCalculator = React.lazy(() => import('@/features/calculators/components/MortgagePayoffCalculator'));
+const StockBacktestCalculator = React.lazy(() => import('@/features/calculators/components/StockBacktestCalculator'));
+const ExchangeRateCalculator = React.lazy(() => import('@/features/calculators/components/ExchangeRateCalculator'));
 
 const calculatorList = [
   {
@@ -231,7 +231,14 @@ const CalculatorsHub = () => {
               </DialogTitle>
             </DialogHeader>
             <div className="mt-4">
-              <selectedCalculator.component />
+              <Suspense fallback={
+                <div className="flex items-center justify-center p-8">
+                  <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-400"></div>
+                  <span className="ml-3 text-white/70">Loading calculator...</span>
+                </div>
+              }>
+                <selectedCalculator.component />
+              </Suspense>
             </div>
           </DialogContent>
         </Dialog>

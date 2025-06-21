@@ -6,6 +6,7 @@ import { Badge } from '@/shared/ui/badge';
 import { formatCurrency } from '@/shared/utils/formatters';
 import { getCompactAccountCards } from '@/services/mockData';
 import { BackButton } from '@/shared/components/ui/BackButton';
+import { BankLinkingPanel } from '@/features/bank-linking/components/BankLinkingPanel';
 
 /**
  * AccountsListPage Component
@@ -100,6 +101,9 @@ const AccountsListPage: React.FC = () => {
           </UniversalCard>
         </div>
 
+        {/* Bank Linking Panel */}
+        <BankLinkingPanel />
+
         {/* Accounts List */}
         <div className="space-y-4">
           <h2 className="text-xl font-semibold text-white mb-4">
@@ -112,7 +116,8 @@ const AccountsListPage: React.FC = () => {
               <UniversalCard
                 key={account.id}
                 variant="glass"
-                className="p-6 hover:bg-white/[0.03] transition-colors cursor-pointer"
+                className="p-6 card-hover"
+                interactive={true}
                 onClick={() => handleAccountClick(account.id)}
               >
                 <div className="flex items-center justify-between">

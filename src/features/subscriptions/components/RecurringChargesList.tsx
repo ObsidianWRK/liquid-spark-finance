@@ -1,15 +1,17 @@
 import React, { useEffect } from 'react';
 import { useSubscriptionsStore } from '../store';
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-  CardFooter,
-} from '@/shared/ui/card';
 import { Button } from '@/shared/ui/button';
-import { Repeat, XCircle } from 'lucide-react';
+import { 
+  Repeat, 
+  XCircle, 
+  Calendar, 
+  DollarSign, 
+  TrendingUp,
+  Clock,
+  Zap
+} from 'lucide-react';
 import { cn } from '@/shared/lib/utils';
+import { formatCurrency } from '@/shared/utils/formatters';
 
 export const RecurringChargesList: React.FC<{ className?: string }> = ({
   className,
@@ -25,53 +27,139 @@ export const RecurringChargesList: React.FC<{ className?: string }> = ({
     detect();
   }, [detect]);
 
+  const formatDate = (dateString: string) => {
+    const date = new Date(dateString);
+    const now = new Date();
+    const diffTime = date.getTime() - now.getTime();
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+    
+    if (diffDays < 0) return 'Overdue';
+    if (diffDays === 0) return 'Due today';
+    if (diffDays === 1) return 'Due tomorrow';
+    if (diffDays <= 7) return `Due in ${diffDays} days`;
+    
+    return date.toLocaleDateString('en-US', { 
+      month: 'short', 
+      day: 'numeric',
+      year: date.getFullYear() !== now.getFullYear() ? 'numeric' : undefined
+    });
+  };
+
+  const getFrequencyColor = (frequency: string) => {
+    switch (frequency) {
+      case 'weekly': return 'text-blue-400';
+      case 'monthly': return 'text-green-400';
+      case 'quarterly': return 'text-yellow-400';
+      case 'yearly': return 'text-purple-400';
+      default: return 'text-white/60';
+    }
+  };
+
+  const getConfidenceColor = (confidence?: number) => {
+    if (!confidence) return 'text-white/40';
+    if (confidence >= 0.8) return 'text-green-400';
+    if (confidence >= 0.6) return 'text-yellow-400';
+    return 'text-orange-400';
+  };
+
+  const getConfidenceText = (confidence?: number) => {
+    if (!confidence) return 'Unknown';
+    if (confidence >= 0.8) return 'High confidence';
+    if (confidence >= 0.6) return 'Medium confidence';
+    return 'Low confidence';
+  };
+
   if (loading && charges.length === 0) {
     return (
-      <p className={cn('text-muted-foreground', className)}>
-        Scanning for subscriptions…
-      </p>
+      <div className={cn('text-white/60 text-center py-4', className)}>
+        <div className="animate-spin w-4 h-4 border-2 border-orange-400 border-t-transparent rounded-full mx-auto mb-2"></div>
+        <p className="text-xs">Analyzing subscriptions...</p>
+      </div>
     );
   }
 
   if (charges.length === 0) {
     return (
-      <p className={cn('text-muted-foreground', className)}>
-        No subscriptions detected.
-      </p>
+      <div className={cn('text-white/60 text-center py-4', className)}>
+        <Repeat className="w-8 h-8 text-white/20 mx-auto mb-2" />
+        <p className="text-xs text-white/70 mb-1">No Subscriptions Detected</p>
+        <p className="text-xs text-white/50">We&apos;ll scan your transactions</p>
+      </div>
     );
   }
 
   return (
-    <div className={cn('space-y-4', className)}>
-      {charges.map((ch) => (
-        <Card key={ch.id}>
-          <CardHeader className="flex-row items-center justify-between space-y-0">
-            <div className="flex items-center gap-2">
-              <Repeat className="text-primary" />
-              <CardTitle>{ch.merchantName}</CardTitle>
-            </div>
-            {ch.status === 'active' ? (
-              <Button
-                variant="destructive"
-                size="sm"
-                onClick={() => cancel(ch.id)}
-              >
-                Cancel
-              </Button>
-            ) : (
-              <span className="text-sm text-muted-foreground">
-                {ch.status.replace('_', ' ')}
-              </span>
+    <div className={cn('space-y-2', className)}>
+      {/* Summary - Compact */}
+      <div className="flex items-center justify-between p-2 bg-white/[0.03] rounded-lg border border-white/[0.05] mb-3">
+        <div className="flex items-center gap-2">
+          <Zap className="w-3 h-3 text-orange-400" />
+          <span className="text-xs text-white/70">Active</span>
+          <span className="text-xs px-1.5 py-0.5 bg-orange-500/20 text-orange-400 rounded-full">
+            {charges.length}
+          </span>
+        </div>
+        <div className="text-right">
+          <p className="text-xs text-white/60">Monthly</p>
+          <p className="text-xs font-semibold text-white">
+            {formatCurrency(
+              charges
+                .filter(c => c.frequency === 'monthly')
+                .reduce((sum, c) => sum + c.amount, 0)
             )}
-          </CardHeader>
-          <CardContent className="flex items-center justify-between">
-            <p className="text-sm text-muted-foreground">
-              Next due {new Date(ch.nextDueDate).toLocaleDateString()} • $
-              {ch.amount.toFixed(2)} / {ch.frequency}
-            </p>
-          </CardContent>
-        </Card>
-      ))}
+          </p>
+        </div>
+      </div>
+
+      {/* Scrollable Subscription List - Compact */}
+      <div className="max-h-40 overflow-y-auto space-y-2 scrollbar-thin scrollbar-thumb-white/20 scrollbar-track-white/5">
+        {charges.map((charge) => (
+          <div
+            key={charge.id}
+            className="p-2 bg-white/[0.02] rounded-lg border border-white/[0.05] hover:bg-white/[0.04] transition-all"
+          >
+            <div className="flex items-center justify-between mb-1">
+              <h4 className="text-xs font-medium text-white truncate">
+                {charge.merchantName}
+              </h4>
+              <div className="text-right ml-2">
+                <p className="text-xs font-bold text-white">
+                  {formatCurrency(charge.amount)}
+                </p>
+                <p className={cn('text-xs', getFrequencyColor(charge.frequency))}>
+                  {charge.frequency}
+                </p>
+              </div>
+            </div>
+
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-1">
+                <Calendar className="w-3 h-3 text-white/40" />
+                <span className="text-xs text-white/60">
+                  {formatDate(charge.nextDueDate)}
+                </span>
+              </div>
+              
+              <Button
+                size="sm"
+                variant="outline"
+                onClick={() => cancel(charge.id)}
+                disabled={charge.status === 'pending_cancel'}
+                className="h-6 px-2 text-xs border-red-500/20 text-red-400 hover:bg-red-500/10"
+              >
+                <XCircle className="w-3 h-3" />
+              </Button>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {/* Footer - Compact */}
+      <div className="p-2 bg-white/[0.02] rounded-lg border border-white/[0.05]">
+        <p className="text-xs text-white/60 text-center">
+          Auto-detected from transactions
+        </p>
+      </div>
     </div>
   );
 };

@@ -20,6 +20,12 @@ export interface RecurringCharge {
   frequency: 'weekly' | 'biweekly' | 'monthly' | 'quarterly' | 'yearly';
   nextDueDate: string; // ISO
   status: 'active' | 'canceled' | 'pending_cancel';
+  // Enhanced fields for smart subscription detection
+  category?: string;
+  lastChargeDate?: string; // ISO date
+  averageAmount?: number;
+  detectedPattern?: string;
+  confidence?: number; // 0-1 confidence score
 }
 
 export interface NegotiationCase {

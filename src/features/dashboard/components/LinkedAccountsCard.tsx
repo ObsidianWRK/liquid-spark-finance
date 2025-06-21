@@ -8,34 +8,33 @@ import {
   RefreshCw,
   Banknote,
   CheckCircle,
+  University,
+  GraduationCap,
+  Landmark,
+  Car,
 } from 'lucide-react';
 import { CardSkeleton } from './health/CardSkeleton';
 import { formatCurrency } from '@/shared/utils/formatters';
 import { cn } from '@/shared/lib/utils';
+import { mockAccountsEnhanced } from '@/services/mockData';
 
 interface MockAccount {
   id: string;
-  institution: {
-    name: string;
-    id: string;
-    logo?: string;
-    color: string;
-  };
-  type: 'checking' | 'savings' | 'credit' | 'investment';
   name: string;
-  mask: string;
+  institutionName: string;
+  accountType: string;
+  accountSubtype: string;
   balance: number;
   availableBalance: number;
   currency: string;
   isActive: boolean;
-  creditLimit?: number;
-  lastTransaction?: {
-    merchant: string;
-    amount: number;
-    date: string;
-    pending: boolean;
+  metadata?: {
+    accountNumber?: string;
+    creditLimit?: number;
+    apy?: number;
+    fees?: any[];
+    sparklineData?: number[];
   };
-  metadata?: Record<string, any>;
 }
 
 interface LinkedAccountsCardProps {
@@ -44,116 +43,21 @@ interface LinkedAccountsCardProps {
   onAddAccount?: () => void;
 }
 
-// Mock data directly in component to avoid fetch issues
-const MOCK_ACCOUNTS: MockAccount[] = [
-  {
-    id: 'acc_chase_checking_001',
-    institution: {
-      name: 'Chase Bank',
-      id: 'ins_chase',
-      color: '#004879',
-    },
-    type: 'checking',
-    name: 'Chase Total Checking',
-    mask: '4521',
-    balance: 4250.75,
-    availableBalance: 4250.75,
-    currency: 'USD',
-    isActive: true,
-    lastTransaction: {
-      merchant: 'Starbucks',
-      amount: -5.67,
-      date: '2024-01-15T09:30:00Z',
-      pending: false,
-    },
-  },
-  {
-    id: 'acc_bofa_savings_001',
-    institution: {
-      name: 'Bank of America',
-      id: 'ins_bofa',
-      color: '#E31837',
-    },
-    type: 'savings',
-    name: 'Advantage Savings',
-    mask: '8932',
-    balance: 15750.42,
-    availableBalance: 15750.42,
-    currency: 'USD',
-    isActive: true,
-    lastTransaction: {
-      merchant: 'Interest Payment',
-      amount: 18.25,
-      date: '2024-01-01T00:00:00Z',
-      pending: false,
-    },
-  },
-  {
-    id: 'acc_wells_credit_001',
-    institution: {
-      name: 'Wells Fargo',
-      id: 'ins_wells',
-      color: '#D50032',
-    },
-    type: 'credit',
-    name: 'Cash Wise Visa',
-    mask: '1847',
-    balance: -1285.63,
-    availableBalance: 3714.37,
-    currency: 'USD',
-    isActive: true,
-    creditLimit: 5000.0,
-    lastTransaction: {
-      merchant: 'Amazon',
-      amount: -89.99,
-      date: '2024-01-14T14:22:00Z',
-      pending: true,
-    },
-  },
-  {
-    id: 'acc_schwab_investment_001',
-    institution: {
-      name: 'Charles Schwab',
-      id: 'ins_schwab',
-      color: '#00A0DF',
-    },
-    type: 'investment',
-    name: 'Brokerage Account',
-    mask: '7409',
-    balance: 42850.19,
-    availableBalance: 1250.0,
-    currency: 'USD',
-    isActive: true,
-    lastTransaction: {
-      merchant: 'VTSAX Purchase',
-      amount: -1000.0,
-      date: '2024-01-12T16:00:00Z',
-      pending: false,
-    },
-  },
-  {
-    id: 'acc_citi_credit_001',
-    institution: {
-      name: 'Citibank',
-      id: 'ins_citi',
-      color: '#DC143C',
-    },
-    type: 'credit',
-    name: 'Double Cash Card',
-    mask: '2156',
-    balance: -567.23,
-    availableBalance: 2432.77,
-    currency: 'USD',
-    isActive: true,
-    creditLimit: 3000.0,
-    lastTransaction: {
-      merchant: 'Whole Foods',
-      amount: -127.45,
-      date: '2024-01-13T18:45:00Z',
-      pending: false,
-    },
-  },
-];
+// Transform the enhanced mock data to our component format
+const transformMockAccounts = (): MockAccount[] => {
+  return mockAccountsEnhanced.map((account) => ({
+    id: account.id,
+    name: account.name,
+    institutionName: account.institutionName || 'Unknown Bank',
+    accountType: account.accountType,
+    accountSubtype: account.accountSubtype,
+    balance: account.balance,
+    availableBalance: account.availableBalance,
+    currency: account.currency,
+    isActive: account.isActive,
+    metadata: account.metadata,
+  }));
+};
 
 export const LinkedAccountsCard: React.FC<LinkedAccountsCardProps> = ({
   className,
@@ -170,7 +74,8 @@ export const LinkedAccountsCard: React.FC<LinkedAccountsCardProps> = ({
     const shouldUseMocks =
       import.meta.env.VITE_USE_MOCKS === 'true' ||
       process.env.NEXT_PUBLIC_USE_MOCKS === 'true' ||
-      window.location.search.includes('mock=true');
+      window.location.search.includes('mock=true') ||
+      true; // Always show for staging/demo
 
     setUseMocks(shouldUseMocks);
   }, []);
@@ -190,7 +95,8 @@ export const LinkedAccountsCard: React.FC<LinkedAccountsCardProps> = ({
         // Simulate network delay
         await new Promise((resolve) => setTimeout(resolve, 500));
 
-        setAccounts(MOCK_ACCOUNTS);
+        const transformedAccounts = transformMockAccounts();
+        setAccounts(transformedAccounts);
       } catch (err) {
         console.error('Failed to load mock accounts:', err);
         setError('Failed to load accounts');
@@ -202,52 +108,113 @@ export const LinkedAccountsCard: React.FC<LinkedAccountsCardProps> = ({
     loadMockAccounts();
   }, [useMocks]);
 
-  const getAccountIcon = (type: string) => {
-    switch (type) {
+  const getAccountIcon = (accountType: string, accountSubtype: string) => {
+    // Handle by subtype first for more specific icons
+    switch (accountSubtype) {
       case 'checking':
-      case 'savings':
         return <Building2 className="w-5 h-5 text-blue-400" />;
-      case 'credit':
+      case 'savings':
+        return <PiggyBank className="w-5 h-5 text-green-400" />;
+      case 'credit_card':
         return <CreditCard className="w-5 h-5 text-orange-400" />;
-      case 'investment':
+      case 'line_of_credit':
+        return <CreditCard className="w-5 h-5 text-orange-300" />;
+      case 'brokerage':
         return <TrendingUp className="w-5 h-5 text-green-400" />;
+      case '401k':
+      case 'ira':
+      case 'roth_ira':
+        return <University className="w-5 h-5 text-purple-400" />;
+      case '529':
+        return <GraduationCap className="w-5 h-5 text-indigo-400" />;
+      case 'cd':
+        return <Landmark className="w-5 h-5 text-blue-300" />;
+      case 'student':
+        return <GraduationCap className="w-5 h-5 text-red-400" />;
+      case 'auto':
+        return <Car className="w-5 h-5 text-red-400" />;
       default:
-        return <PiggyBank className="w-5 h-5 text-purple-400" />;
+        // Fall back to account type
+        switch (accountType) {
+          case 'depository':
+            return <Building2 className="w-5 h-5 text-blue-400" />;
+          case 'credit':
+            return <CreditCard className="w-5 h-5 text-orange-400" />;
+          case 'investment':
+            return <TrendingUp className="w-5 h-5 text-green-400" />;
+          case 'loan':
+            return <Landmark className="w-5 h-5 text-red-400" />;
+          default:
+            return <PiggyBank className="w-5 h-5 text-purple-400" />;
+        }
     }
   };
 
-  const getAccountTypeLabel = (type: string) => {
-    switch (type) {
+  const getAccountTypeLabel = (accountType: string, accountSubtype: string) => {
+    switch (accountSubtype) {
       case 'checking':
         return 'Checking';
       case 'savings':
         return 'Savings';
-      case 'credit':
+      case 'credit_card':
         return 'Credit Card';
-      case 'investment':
-        return 'Investment';
+      case 'line_of_credit':
+        return 'Line of Credit';
+      case 'brokerage':
+        return 'Brokerage';
+      case '401k':
+        return '401(k)';
+      case 'ira':
+        return 'IRA';
+      case 'roth_ira':
+        return 'Roth IRA';
+      case '529':
+        return '529 Plan';
+      case 'cd':
+        return 'Certificate of Deposit';
+      case 'student':
+        return 'Student Loan';
+      case 'auto':
+        return 'Auto Loan';
       default:
-        return 'Account';
+        return accountType.charAt(0).toUpperCase() + accountType.slice(1);
     }
   };
 
   const getBalanceColor = (account: MockAccount) => {
-    if (account.type === 'credit') {
-      // Credit cards: negative balance is good
-      return account.balance > 0 ? 'text-red-400' : 'text-green-400';
+    const isDebt = account.accountType === 'credit' || account.accountType === 'loan';
+    
+    if (isDebt) {
+      // For debt accounts: closer to zero is better
+      return account.balance >= 0 ? 'text-red-400' : 'text-green-400';
     }
-    // Other accounts: positive balance is good
+    // For asset accounts: positive balance is good
     return account.balance > 0 ? 'text-green-400' : 'text-red-400';
   };
 
   const calculateNetWorth = () => {
     return accounts.reduce((total, account) => {
-      if (account.type === 'credit') {
-        // Credit cards subtract from net worth
-        return total + account.balance; // balance is already negative
+      const isDebt = account.accountType === 'credit' || account.accountType === 'loan';
+      
+      if (isDebt) {
+        // Debt subtracts from net worth (balance is typically negative for debt)
+        return total + account.balance;
       }
+      // Assets add to net worth
       return total + account.balance;
     }, 0);
+  };
+
+  const getLastFourDigits = (account: MockAccount) => {
+    if (account.metadata?.accountNumber) {
+      return account.metadata.accountNumber.replace('****', '');
+    }
+    // Generate consistent last 4 digits based on account ID
+    const hash = account.id.split('').reduce((a, b) => {
+      a = ((a << 5) - a) + b.charCodeAt(0);
+      return a & a;
+    }, 0);
+    return Math.abs(hash).toString().slice(-4).padStart(4, '0');
   };
 
   // Show loading skeleton
@@ -320,6 +287,13 @@ export const LinkedAccountsCard: React.FC<LinkedAccountsCardProps> = ({
 
         <div className="space-y-2">
           <div className="flex justify-between items-center">
+            <span className="text-sm text-white/70">Connected</span>
+            <span className="text-sm font-semibold text-green-400">
+              {accounts.length}
+            </span>
+          </div>
+          
+          <div className="flex justify-between items-center">
             <span className="text-sm text-white/70">Net Worth</span>
             <span
               className={cn(
@@ -332,25 +306,25 @@ export const LinkedAccountsCard: React.FC<LinkedAccountsCardProps> = ({
           </div>
 
           <div className="grid grid-cols-2 gap-2">
-            {accounts.slice(0, 4).map((account) => (
+            {accounts.slice(0, 6).map((account) => (
               <div
                 key={account.id}
                 className="flex items-center space-x-2 p-2 bg-white/[0.03] rounded-lg"
               >
-                {getAccountIcon(account.type)}
+                {getAccountIcon(account.accountType, account.accountSubtype)}
                 <div className="flex-1 min-w-0">
                   <p className="text-xs text-white/80 truncate">
-                    {account.institution.name}
+                    {account.institutionName}
                   </p>
-                  <p className="text-xs text-white/60">•••• {account.mask}</p>
+                  <p className="text-xs text-white/60">•••• {getLastFourDigits(account)}</p>
                 </div>
               </div>
             ))}
           </div>
 
-          {accounts.length > 4 && (
+          {accounts.length > 6 && (
             <p className="text-xs text-white/60 text-center">
-              +{accounts.length - 4} more accounts
+              +{accounts.length - 6} more accounts
             </p>
           )}
         </div>
@@ -358,7 +332,7 @@ export const LinkedAccountsCard: React.FC<LinkedAccountsCardProps> = ({
     );
   }
 
-  // Full view
+  // Full view with scrollable list
   return (
     <div
       className={cn(
@@ -371,29 +345,49 @@ export const LinkedAccountsCard: React.FC<LinkedAccountsCardProps> = ({
           <div className="w-10 h-10 rounded-xl bg-white/[0.05] flex items-center justify-center">
             <Banknote className="w-5 h-5 text-blue-400" />
           </div>
-          <h3 className="font-medium text-white/80">Mock Linked Accounts</h3>
+          <h3 className="font-medium text-white/80">Linked Bank Accounts</h3>
         </div>
-        <span className="text-white/60 text-sm">
-          {accounts.length} accounts
-        </span>
+        <div className="text-right">
+          <div className="flex items-center gap-2">
+            <span className="text-sm text-white/60">Connected</span>
+            <span className="bg-green-500/20 text-green-400 px-2 py-1 rounded-lg text-sm font-medium">
+              {accounts.length}
+            </span>
+          </div>
+        </div>
       </div>
 
-      <div className="space-y-4">
-        {accounts.map((account, index) => (
+      <div className="mb-4 p-4 bg-white/[0.03] rounded-xl border border-white/[0.05]">
+        <div className="flex justify-between items-center">
+          <span className="font-medium text-white/80">Net Worth</span>
+          <span
+            className={cn(
+              'text-xl font-bold',
+              calculateNetWorth() >= 0 ? 'text-green-400' : 'text-red-400'
+            )}
+          >
+            {formatCurrency(calculateNetWorth())}
+          </span>
+        </div>
+      </div>
+
+      <div className="space-y-3 max-h-96 overflow-y-auto">
+        {accounts.map((account) => (
           <div
-            key={index}
+            key={account.id}
             className="flex items-center justify-between p-4 bg-white/[0.03] rounded-xl border border-white/[0.05] hover:bg-white/[0.05] transition-all"
           >
             <div className="flex items-center gap-3">
               <div className="w-8 h-8 rounded-lg bg-white/[0.05] flex items-center justify-center">
-                {getAccountIcon(account.type)}
+                {getAccountIcon(account.accountType, account.accountSubtype)}
               </div>
               <div>
-                <p className="font-medium text-white">{account.name}</p>
+                <p className="font-medium text-white">{account.institutionName}</p>
+                <p className="text-sm text-white/70">{account.name}</p>
                 <div className="flex items-center gap-2">
-                  <p className="text-xs text-white/60">****{account.mask}</p>
-                  <span className="text-xs px-2 py-1 rounded-lg bg-white/[0.05] text-white/70 capitalize">
-                    {getAccountTypeLabel(account.type)}
+                  <p className="text-xs text-white/60">****{getLastFourDigits(account)}</p>
+                  <span className="text-xs px-2 py-1 rounded-lg bg-white/[0.05] text-white/70">
+                    {getAccountTypeLabel(account.accountType, account.accountSubtype)}
                   </span>
                 </div>
               </div>
@@ -402,29 +396,30 @@ export const LinkedAccountsCard: React.FC<LinkedAccountsCardProps> = ({
               <p className={cn('font-bold', getBalanceColor(account))}>
                 {formatCurrency(account.balance)}
               </p>
-              {account.type === 'credit' && account.creditLimit && (
+              {account.metadata?.creditLimit && (
                 <p className="text-xs text-white/60">
-                  Limit: {formatCurrency(account.creditLimit)}
+                  Limit: {formatCurrency(account.metadata.creditLimit)}
+                </p>
+              )}
+              {account.metadata?.apy && (
+                <p className="text-xs text-white/60">
+                  APY: {(account.metadata.apy * 100).toFixed(2)}%
                 </p>
               )}
             </div>
           </div>
         ))}
-
-        <div className="mt-6 pt-4 border-t border-white/[0.08]">
-          <div className="flex items-center justify-between">
-            <span className="font-medium text-white/80">Total Net Worth</span>
-            <span
-              className={cn(
-                'text-lg font-bold',
-                calculateNetWorth() >= 0 ? 'text-green-400' : 'text-red-400'
-              )}
-            >
-              {formatCurrency(calculateNetWorth())}
-            </span>
-          </div>
-        </div>
       </div>
+
+      {onAddAccount && (
+        <button
+          onClick={onAddAccount}
+          className="w-full mt-4 p-3 border-2 border-dashed border-white/[0.15] rounded-xl text-white/60 hover:text-white/80 hover:border-white/[0.25] transition-all flex items-center justify-center gap-2"
+        >
+          <Plus className="w-4 h-4" />
+          Link Additional Account
+        </button>
+      )}
     </div>
   );
 };

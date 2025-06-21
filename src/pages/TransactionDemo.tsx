@@ -4,6 +4,7 @@ import MobileTransactionScreen from '@/screens/MobileTransactionScreen';
 import EnterpriseTransactionView from '@/features/transactions/components/EnterpriseTransactionView';
 import { Smartphone, Tablet, Monitor } from 'lucide-react';
 import { cn } from '@/shared/lib/utils';
+import { SubscriptionsPanel } from '@/features/subscriptions/components/SubscriptionsPanel';
 
 const TransactionDemo: React.FC = () => {
   const [view, setView] = useState<'mobile' | 'tablet' | 'desktop'>('desktop');
@@ -229,6 +230,11 @@ const TransactionDemo: React.FC = () => {
           {view === 'desktop' && (
             <EnterpriseTransactionView transactions={transactions} />
           )}
+        </div>
+
+        {/* Subscriptions Panel */}
+        <div className="mt-6 sm:mt-8 md:mt-10 px-4 sm:px-6">
+          <SubscriptionsPanel />
         </div>
 
         {/* Feature Highlights */}

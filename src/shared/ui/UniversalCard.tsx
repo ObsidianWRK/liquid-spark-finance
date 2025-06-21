@@ -105,6 +105,8 @@ export const UniversalCard = React.memo<UniversalCardProps>(
 
         // Interactive - Use standardized hover effect
         'card-hover': interactive,
+        // Accessibility - Focus ring for keyboard navigation
+        'focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500': interactive,
 
         // Orientation
         'flex flex-col': orientation === 'vertical',
@@ -212,8 +214,23 @@ export const UniversalCard = React.memo<UniversalCardProps>(
       );
     };
 
+    const accessibilityProps = {
+      role: interactive ? 'button' : 'region',
+      'aria-label': interactive 
+        ? `${title ? `${title} - ` : ''}Click to interact`
+        : title || 'Card content',
+      tabIndex: interactive ? 0 : undefined,
+      'aria-describedby': value ? `${title?.toLowerCase().replace(/\s+/g, '-')}-value` : undefined,
+      onKeyDown: interactive ? (e: React.KeyboardEvent) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          onClick?.();
+        }
+      } : undefined,
+    };
+
     return (
-      <div className={baseClasses} onClick={onClick} {...props}>
+      <div className={baseClasses} onClick={onClick} {...accessibilityProps} {...props}>
         {showBackground && variant === 'glass' && (
           <div className="absolute inset-0 bg-gradient-to-br from-white/[0.02] to-white/0 pointer-events-none" />
         )}
@@ -254,7 +271,13 @@ export const UniversalCard = React.memo<UniversalCardProps>(
           {/* Value Display */}
           {value && (
             <div className="text-center mb-4">
-              <div className="text-2xl font-bold text-white">{value}</div>
+              <div 
+                id={title ? `${title.toLowerCase().replace(/\s+/g, '-')}-value` : undefined}
+                className="text-2xl font-bold text-white"
+                aria-label={`Current value: ${value}`}
+              >
+                {value}
+              </div>
             </div>
           )}
 

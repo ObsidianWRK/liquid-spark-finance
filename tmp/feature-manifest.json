@@ -1,0 +1,273 @@
+{
+  "pfm_gap10_features": {
+    "bank_linking": {
+      "name": "Secure Bank Account Aggregation & Auto-Import",
+      "location": "src/features/bank-linking/",
+      "primary_files": [
+        "src/features/bank-linking/api/bankLinkProvider.ts",
+        "src/features/bank-linking/components/BankLinkingPanel.tsx",
+        "src/features/bank-linking/components/LinkAccountsButton.tsx",
+        "src/features/bank-linking/components/LinkedAccountsList.tsx",
+        "src/features/bank-linking/store.ts"
+      ],
+      "integration_pages": ["dashboard", "accounts"],
+      "icon": "Banknote",
+      "color": "#6366f1"
+    },
+    "subscriptions": {
+      "name": "Subscription Detection + 1-Tap Cancellation",
+      "location": "src/features/subscriptions/",
+      "primary_files": [
+        "src/features/subscriptions/api/subscriptionService.ts",
+        "src/features/subscriptions/components/SubscriptionsPanel.tsx",
+        "src/features/subscriptions/components/RecurringChargesList.tsx",
+        "src/features/subscriptions/store.ts"
+      ],
+      "integration_pages": ["dashboard", "transactions"],
+      "icon": "Repeat",
+      "color": "#f59e0b"
+    },
+    "bill_negotiation": {
+      "name": "Bill Negotiation Concierge",
+      "location": "src/features/bill-negotiation/",
+      "primary_files": [
+        "src/features/bill-negotiation/api/negotiationService.ts",
+        "src/features/bill-negotiation/components/BillNegotiationPanel.tsx",
+        "src/features/bill-negotiation/components/NegotiateBillsButton.tsx",
+        "src/features/bill-negotiation/components/NegotiationCasesList.tsx",
+        "src/features/bill-negotiation/store.ts"
+      ],
+      "integration_pages": ["dashboard"],
+      "icon": "Handshake",
+      "color": "#10b981"
+    },
+    "smart_savings": {
+      "name": "Smart Automated Savings Plans",
+      "location": "src/features/smart-savings/",
+      "primary_files": [
+        "src/features/smart-savings/api/autoSaveEngine.ts",
+        "src/features/smart-savings/components/SmartSavingsPanel.tsx",
+        "src/features/smart-savings/components/CreatePlanForm.tsx",
+        "src/features/smart-savings/components/AutosavePlansList.tsx",
+        "src/features/smart-savings/store.ts"
+      ],
+      "integration_pages": ["dashboard", "savings"],
+      "icon": "PiggyBank",
+      "color": "#ec4899"
+    },
+    "shared_budgets": {
+      "name": "Shared Budgets / Household Collaboration",
+      "location": "src/features/shared-budgets/",
+      "primary_files": [
+        "src/features/shared-budgets/api/householdService.ts",
+        "src/features/shared-budgets/api/familyService.ts",
+        "src/features/shared-budgets/components/SharedBudgetsPanel.tsx",
+        "src/features/shared-budgets/components/CreateHouseholdForm.tsx",
+        "src/features/shared-budgets/components/HouseholdsList.tsx",
+        "src/features/shared-budgets/store.ts"
+      ],
+      "integration_pages": ["dashboard", "budget-planner"],
+      "icon": "Users",
+      "color": "#8b5cf6"
+    },
+    "age_of_money": {
+      "name": "Age-of-Money Metric",
+      "location": "src/features/age-of-money/",
+      "primary_files": [
+        "src/features/age-of-money/api/ageMetricService.ts",
+        "src/features/age-of-money/components/AgeOfMoneyCard.tsx",
+        "src/features/age-of-money/store.ts"
+      ],
+      "integration_pages": ["dashboard", "insights"],
+      "icon": "Clock",
+      "color": "#06b6d4",
+      "display_type": "wellness_variant"
+    },
+    "privacy_hide_amounts": {
+      "name": "Privacy 'Hide Amounts' Toggle",
+      "location": "src/features/privacy-hide-amounts/",
+      "primary_files": [
+        "src/features/privacy-hide-amounts/components/PrivacyToggle.tsx",
+        "src/features/privacy-hide-amounts/store.ts"
+      ],
+      "integration_pages": ["dashboard"],
+      "icon": "EyeOff",
+      "color": "#8b5cf6",
+      "integration_type": "global_formatter_patching"
+    },
+    "advisor_chat": {
+      "name": "Ask-an-Advisor Live CFP Chat",
+      "location": "src/features/advisor-chat/",
+      "primary_files": [
+        "src/features/advisor-chat/api/advisorService.ts",
+        "src/features/advisor-chat/api/aiFinancialService.ts",
+        "src/features/advisor-chat/components/AdvisorChatPanel.tsx",
+        "src/features/advisor-chat/components/AdvisorChatButton.tsx",
+        "src/features/advisor-chat/components/ChatDialog.tsx",
+        "src/features/advisor-chat/store.ts"
+      ],
+      "integration_pages": ["dashboard"],
+      "icon": "MessageCircle",
+      "color": "#3b82f6"
+    },
+    "safe_to_spend": {
+      "name": "Safe-to-Spend & Payday View",
+      "location": "src/features/safe-to-spend/",
+      "primary_files": [
+        "src/features/safe-to-spend/api/safeToSpendService.ts",
+        "src/features/safe-to-spend/components/SafeToSpendCard.tsx",
+        "src/features/safe-to-spend/store.ts"
+      ],
+      "integration_pages": ["dashboard"],
+      "icon": "DollarSign",
+      "color": "#10b981",
+      "display_type": "value_display"
+    },
+    "widgets": {
+      "name": "Home-Screen Balance / Safe-to-Spend Widgets",
+      "location": "src/features/widgets/",
+      "primary_files": [
+        "src/features/widgets/api/widgetService.ts",
+        "src/features/widgets/components/WidgetsPanel.tsx",
+        "src/features/widgets/components/AddWidgetButtons.tsx",
+        "src/features/widgets/components/WidgetPreview.tsx",
+        "src/features/widgets/store.ts"
+      ],
+      "integration_pages": ["dashboard"],
+      "icon": "Grid",
+      "color": "#f59e0b"
+    },
+    "biometric_intervention": {
+      "name": "Biometric Stress Intervention (Bonus Feature)",
+      "location": "src/features/biometric-intervention/",
+      "primary_files": [
+        "src/features/biometric-intervention/api/biometricService.ts",
+        "src/features/biometric-intervention/api/healthKitService.ts",
+        "src/features/biometric-intervention/api/BiometricStream.ts",
+        "src/features/biometric-intervention/api/WellnessEngine.ts",
+        "src/features/biometric-intervention/components/BiometricMonitorCard.tsx",
+        "src/features/biometric-intervention/components/BiometricMonitor.tsx",
+        "src/features/biometric-intervention/components/InterventionNudge.tsx",
+        "src/features/biometric-intervention/components/InterventionSettings.tsx",
+        "src/features/biometric-intervention/store.ts",
+        "src/features/biometric-intervention/types.ts"
+      ],
+      "integration_pages": ["dashboard", "analytics"],
+      "icon": "Activity",
+      "color": "#ef4444",
+      "display_type": "wellness_variant"
+    }
+  },
+  "core_pages": {
+    "dashboard": {
+      "path": "/",
+      "component": "src/pages/Index.tsx",
+      "route_id": "dashboard",
+      "primary_features": [
+        "bank_linking",
+        "subscriptions", 
+        "bill_negotiation",
+        "smart_savings",
+        "shared_budgets",
+        "age_of_money",
+        "privacy_hide_amounts",
+        "advisor_chat",
+        "safe_to_spend",
+        "widgets",
+        "biometric_intervention"
+      ]
+    },
+    "accounts": {
+      "path": "/accounts",
+      "component": "src/pages/AccountsListPage.tsx", 
+      "route_id": "accounts",
+      "primary_features": ["bank_linking"]
+    },
+    "transactions": {
+      "path": "/transactions",
+      "component": "src/pages/TransactionDemo.tsx",
+      "route_id": "transactions", 
+      "primary_features": ["subscriptions"]
+    },
+    "insights": {
+      "path": "/insights",
+      "component": "src/pages/InsightsPage.tsx",
+      "route_id": "insights",
+      "primary_features": ["age_of_money"]
+    },
+    "reports": {
+      "path": "/reports", 
+      "component": "src/features/budget/components/BudgetReportsPage.tsx",
+      "route_id": "reports",
+      "primary_features": []
+    },
+    "calculators": {
+      "path": "/calculators",
+      "component": "src/pages/CalculatorsHub.tsx",
+      "route_id": "calculators",
+      "primary_features": []
+    },
+    "budget_planner": {
+      "path": "/budget-planner",
+      "component": "src/features/budget/components/BudgetPlannerPage.tsx",
+      "route_id": "budget-planner",
+      "primary_features": ["shared_budgets"]
+    },
+    "investment_tracker": {
+      "path": "/investment-tracker",
+      "component": "src/features/investments/components/InvestmentTrackerPage.tsx",
+      "route_id": "investment-tracker",
+      "primary_features": []
+    },
+    "credit_score": {
+      "path": "/credit", 
+      "component": "src/features/credit/components/CreditScorePage.tsx",
+      "route_id": "credit",
+      "primary_features": []
+    },
+    "savings_goals": {
+      "path": "/savings",
+      "component": "src/features/savings/components/SavingsGoals.tsx", 
+      "route_id": "savings",
+      "primary_features": ["smart_savings"]
+    }
+  },
+  "missing_routes": {
+    "calculators": {
+      "needed": true,
+      "icon": "Calculator",
+      "path": "/calculators"
+    },
+    "budget_planner": {
+      "needed": true,
+      "icon": "PieChart", 
+      "path": "/budget-planner"
+    },
+    "investment_tracker": {
+      "needed": true,
+      "icon": "TrendingUp",
+      "path": "/investment-tracker"
+    },
+    "credit_score": {
+      "needed": true,
+      "icon": "CreditCard",
+      "path": "/credit"
+    },
+    "savings_goals": {
+      "needed": true,
+      "icon": "Target",
+      "path": "/savings"
+    }
+  },
+  "navigation_system": {
+    "adaptive_navigation_component": "src/navigation/components/AdaptiveNavigation.tsx",
+    "route_config": "src/navigation/routeConfig.ts",
+    "breakpoints": {
+      "mobile": "< 768px",
+      "tablet": "768px - 1023px", 
+      "desktop": ">= 1024px"
+    }
+  },
+  "generation_timestamp": "2025-06-20T00:00:00Z",
+  "total_pfm_features": 11
+}

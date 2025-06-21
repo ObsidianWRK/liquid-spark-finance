@@ -12,21 +12,11 @@ const Profile = React.lazy(() => import('./pages/Profile'));
 const TransactionDemo = React.lazy(() => import('./pages/TransactionDemo'));
 const CalculatorsPage = React.lazy(() => import('./pages/CalculatorsPage'));
 const CalculatorsHub = React.lazy(() => import('./pages/CalculatorsHub'));
-const CreditScorePage = React.lazy(
-  () => import('@/features/credit/components/CreditScorePage')
-);
-const SavingsGoals = React.lazy(
-  () => import('@/features/savings/components/SavingsGoals')
-);
-const BudgetPlannerPage = React.lazy(
-  () => import('@/features/budget/components/BudgetPlannerPage')
-);
-const InvestmentTrackerPage = React.lazy(
-  () => import('@/features/investments/components/InvestmentTrackerPage')
-);
-const BudgetReportsPage = React.lazy(
-  () => import('@/features/budget/components/BudgetReportsPage')
-);
+const CreditScorePage = React.lazy(() => import('./pages/CreditScore'));
+const SavingsGoals = React.lazy(() => import('./pages/SavingsGoals'));
+const BudgetPlannerPage = React.lazy(() => import('./pages/BudgetPlanner'));
+const InvestmentTrackerPage = React.lazy(() => import('./pages/InvestmentTracker'));
+const BudgetReportsPage = React.lazy(() => import('./pages/Reports'));
 const InsightsPage = React.lazy(() => import('./pages/InsightsPage'));
 const AccountOverview = React.lazy(() => import('./pages/AccountOverview'));
 const AccountsListPage = React.lazy(() => import('./pages/AccountsListPage'));

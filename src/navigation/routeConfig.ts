@@ -11,6 +11,10 @@ import {
   BarChart3,
   User,
   Settings,
+  Calculator,
+  PieChart,
+  Target,
+  ShieldCheck,
 } from 'lucide-react';
 
 export type Route = {
@@ -53,6 +57,41 @@ export const mainRoutes: Route[] = [
     label: 'Insights',
     path: '/insights',
     icon: TrendingUp,
+  },
+  {
+    id: 'calculators',
+    label: 'Calculators',
+    path: '/calculators',
+    icon: Calculator,
+    hideInBottomNav: true, // limit bottom nav to 5 items
+  },
+  {
+    id: 'budget-planner',
+    label: 'Budget Planner',
+    path: '/budget-planner',
+    icon: PieChart,
+    hideInBottomNav: true,
+  },
+  {
+    id: 'investment-tracker',
+    label: 'Investment Tracker',
+    path: '/investment-tracker',
+    icon: TrendingUp,
+    hideInBottomNav: true,
+  },
+  {
+    id: 'credit',
+    label: 'Credit Score',
+    path: '/credit',
+    icon: ShieldCheck,
+    hideInBottomNav: true,
+  },
+  {
+    id: 'savings',
+    label: 'Savings Goals',
+    path: '/savings',
+    icon: Target,
+    hideInBottomNav: true,
   },
   {
     id: 'reports',

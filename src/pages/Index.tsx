@@ -27,6 +27,18 @@ import {
   InterventionNudge,
   useBiometricInterventionStore,
 } from '@/features/biometric-intervention';
+// PFM Gap-10 Feature Imports
+import { BankLinkingPanel } from '@/features/bank-linking/components/BankLinkingPanel';
+import { SubscriptionsPanel } from '@/features/subscriptions/components/SubscriptionsPanel';
+import { BillNegotiationPanel } from '@/features/bill-negotiation/components/BillNegotiationPanel';
+import { SmartSavingsPanel } from '@/features/smart-savings/components/SmartSavingsPanel';
+import { SharedBudgetsPanel } from '@/features/shared-budgets/components/SharedBudgetsPanel';
+import { AgeOfMoneyCard } from '@/features/age-of-money/components/AgeOfMoneyCard';
+import { PrivacyToggle } from '@/features/privacy-hide-amounts/components/PrivacyToggle';
+import { AdvisorChatPanel } from '@/features/advisor-chat/components/AdvisorChatPanel';
+import { SafeToSpendCard } from '@/features/safe-to-spend/components/SafeToSpendCard';
+import { WidgetsPanel } from '@/features/widgets/components/WidgetsPanel';
+import { BiometricMonitorCard } from '@/features/biometric-intervention/components/BiometricMonitorCard';
 
 // Lazy load components properly without webpack comments
 const InvestmentTrackerPage = lazy(
@@ -587,6 +599,46 @@ export default function Index() {
                 <div className="space-y-6">
                   <CleanCreditScoreCard />
                   <SavingsGoals compact={true} />
+                </div>
+              </div>
+
+              {/* PFM Gap-10 Features Section */}
+              <div className="space-y-6">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <h2 className="text-2xl font-bold text-white">Personal Finance Management</h2>
+                    <p className="text-white/60 mt-1">
+                      Comprehensive financial tools and automation
+                    </p>
+                  </div>
+                  <PrivacyToggle />
+                </div>
+
+                {/* Core PFM Features Grid */}
+                <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+                  <BankLinkingPanel />
+                  <SubscriptionsPanel />
+                  <BillNegotiationPanel />
+                  <SmartSavingsPanel />
+                  <SharedBudgetsPanel />
+                  <AdvisorChatPanel />
+                  <SafeToSpendCard />
+                  <WidgetsPanel />
+                </div>
+
+                {/* Analytics & Wellness Features */}
+                <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+                  <AgeOfMoneyCard />
+                  <BiometricMonitorCard />
+                  <div className="md:col-span-1 lg:col-span-1">
+                    {/* Future expansion slot for additional wellness features */}
+                    <div className="h-full bg-white/[0.02] border border-white/[0.08] rounded-2xl p-6 flex items-center justify-center">
+                      <div className="text-center text-white/40">
+                        <div className="text-sm">More features</div>
+                        <div className="text-xs">Coming soon</div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
