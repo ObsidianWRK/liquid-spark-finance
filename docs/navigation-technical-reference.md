@@ -110,45 +110,6 @@ const NavRail: React.FC = () => {
 - Logo/brand area at top
 - Expansion indicator at bottom
 
-#### `TopBar`
-
-**Import Path:** `@/navigation/components/TopBar`
-
-```typescript
-interface TopBarProps {
-  // Props for search and actions
-}
-
-const TopBar: React.FC = () => {
-  const navigate = useNavigate();
-  const [searchQuery, setSearchQuery] = useState('');
-
-  const handleSearch = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (searchQuery.trim()) {
-      // Handle search functionality
-      console.log('Search:', searchQuery);
-    }
-  };
-
-  return (
-    <header
-      className="hidden lg:flex fixed top-0 left-0 right-0 z-50"
-      style={{ height: `${MENU_BAR_HEIGHT.landscape}px` }}
-    >
-      {/* TopBar implementation */}
-    </header>
-  );
-};
-```
-
-**Features:**
-
-- Fixed top positioning for desktop only
-- Search functionality with form submission
-- Quick action buttons (Add, Notifications, Settings, Profile)
-- Glass morphism styling
-- Responsive search input
 
 #### `useBreakpoint`
 
@@ -633,7 +594,7 @@ describe('NavigationComponent', () => {
     it('should render correct variant for desktop viewport', () => {
       mockViewport('desktop');
       render(<AdaptiveNavigation />);
-      expect(screen.getByLabelText('Top navigation bar')).toBeInTheDocument();
+      expect(screen.getByLabelText('navigation header')).toBeInTheDocument();
     });
   });
 
@@ -810,7 +771,6 @@ export default defineConfig({
             './src/navigation/components/AdaptiveNavigation',
             './src/navigation/components/BottomNav',
             './src/navigation/components/NavRail',
-            './src/navigation/components/TopBar',
           ],
           'navigation-utils': [
             './src/navigation/routeConfig',
