@@ -20,6 +20,7 @@ const BudgetReportsPage = React.lazy(() => import('./pages/Reports'));
 const InsightsPage = React.lazy(() => import('./pages/InsightsPage'));
 const AccountOverview = React.lazy(() => import('./pages/AccountOverview'));
 const AccountsListPage = React.lazy(() => import('./pages/AccountsListPage'));
+const VizDashboard = React.lazy(() => import('./pages/VizDashboard'));
 
 // Loading component
 const LoadingSpinner = () => (
@@ -166,6 +167,7 @@ function App() {
                         </Suspense>
                       }
                     />
+                    <Route path="/viz-dashboard" element={<VizDashboard />} />
 
                     {/* Feature Pages */}
                     <Route path="/calculators" element={<CalculatorsHub />} />

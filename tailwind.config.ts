@@ -2,6 +2,7 @@ import type { Config } from 'tailwindcss';
 import defaultTheme from 'tailwindcss/defaultTheme';
 import tailwindcssAnimate from 'tailwindcss-animate';
 import typography from "./src/theme/typography";
+import { vueni } from './src/theme/colors/vueniPalette';
 
 export default {
   darkMode: ['class'],
@@ -54,6 +55,9 @@ export default {
         heading6: typography.fontSizes.sm,
       },
       colors: {
+        // Preserve default Tailwind colors
+        ...require('tailwindcss/colors'),
+        
         // Base shadcn colors (keeping for compatibility)
         border: 'hsl(var(--border))',
         input: 'hsl(var(--input))',
@@ -99,29 +103,19 @@ export default {
           ring: 'hsl(var(--sidebar-ring))',
         },
 
-        // NEW: Vueni Brand Color System
+        // Vueni Brand Color System
         vueni: {
-          // Core brand colors
-          'sapphire-dust': '#516AC8',      // Primary
-          'cosmic-odyssey': '#0F1939',     // Dark background
-          'caramel-essence': '#E3AF64',    // Accent/warning
-          'blue-oblivion': '#26428B',      // Secondary blue
-          'raptures-light': '#F6F3E7',     // Light background
-          'milk-tooth': '#FAEBD7',         // Light secondary
-
-          // Semantic colors
-          primary: '#516AC8',
-          secondary: '#E3AF64',
-          success: '#4ABA70',
-          error: '#D64545',
-          warning: '#E3AF64',
-          info: '#516AC8',
-
+          // Core brand colors with semantic naming
+          ...vueni.core,
+          ...vueni.semantic,
+          ...vueni.neutral,
+          
           // Surface system
           surface: {
-            primary: '#0F1939',
-            secondary: '#1A2547',
-            tertiary: '#253655',
+            'light-bg': vueni.core.rapturesLight,
+            'light-card': vueni.neutral.n100,
+            'dark-bg': vueni.core.cosmicOdyssey,
+            'dark-card': '#253655',
           },
 
           // Glass effects (using CSS custom properties)
@@ -144,6 +138,17 @@ export default {
         'vueni-pill': '9999px',
         'vueni-container': '16px',
         'vueni-island': '44px',
+        // Viz-specific radius
+        'lg-24': '24px',
+      },
+      boxShadow: {
+        // Viz-specific shadows (2dp and 4dp)
+        'dp2': '0 2px 4px rgba(0,0,0,.05)',
+        'dp4': '0 4px 12px rgba(0,0,0,.08)',
+      },
+      transitionProperty: {
+        // Viz depth transitions
+        'depth': 'box-shadow, transform',
       },
       keyframes: {
         'accordion-down': {
@@ -162,15 +167,49 @@ export default {
             height: '0',
           },
         },
+        // Viz-specific animations
+        'pulse-scale': {
+          '0%, 100%': { 
+            transform: 'scale(1)', 
+            opacity: '1' 
+          },
+          '50%': { 
+            transform: 'scale(1.05)', 
+            opacity: '0.8' 
+          },
+        },
       },
       animation: {
         'accordion-down': 'accordion-down 0.2s ease-out',
         'accordion-up': 'accordion-up 0.2s ease-out',
+        'pulse-scale': 'pulse-scale 2s ease-in-out infinite',
       },
     },
   },
   plugins: [
     tailwindcssAnimate,
     require('./src/plugins/liquid-glass-nav-plugin.js'),
+    // Viz utilities plugin
+    function({ addUtilities }: any) {
+      addUtilities({
+        '.rounded-viz': {
+          borderRadius: '24px',
+        },
+        '.shadow-card': {
+          boxShadow: '0 2px 4px rgba(0,0,0,.05)',
+        },
+        '.shadow-card-hover': {
+          boxShadow: '0 4px 12px rgba(0,0,0,.08)',
+        },
+        '.transition-depth': {
+          transitionProperty: 'box-shadow, transform',
+          transitionDuration: '200ms',
+          transform: 'translateY(0)',
+        },
+        '.transition-depth:hover': {
+          transform: 'translateY(-0.125rem)',
+        },
+      });
+    },
   ],
 } satisfies Config;

@@ -107,6 +107,12 @@
     "zod": "^3.23.8",
     "zustand": "^4.5.2"
   },
+  "size-limit": [
+    {
+      "path": "src/viz/**/*.{ts,tsx}",
+      "limit": "15 KB"
+    }
+  ],
   "devDependencies": {
     "@axe-core/cli": "^4.10.2",
     "@axe-core/react": "^4.10.2",
