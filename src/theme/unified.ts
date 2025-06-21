@@ -220,7 +220,13 @@ export const vueniTheme = {
       warning: vueni.core.caramelEssence,
       neutral: vueni.neutral.n500,
     },
-    semantic: vueni.semantic,
+    semantic: {
+      ...vueni.semantic,
+      // Alias for backward compatibility with older code expecting semantic.status.*
+      status: {
+        ...vueni.semantic,
+      },
+    },
     surface: VueniSurfaces,
     text: VueniSurfaces.dark.text,
     core: vueni.core,
