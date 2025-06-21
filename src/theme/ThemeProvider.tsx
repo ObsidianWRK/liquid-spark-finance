@@ -56,8 +56,9 @@ export const VueniThemeProvider: React.FC<VueniThemeProviderProps> = ({
       rootElement.style.setProperty(property, value);
     });
 
-    // Ensure dark mode class is applied
-    rootElement.classList.add('dark');
+    // Ensure dark mode attribute/class are applied
+    rootElement.setAttribute('data-theme', 'dark');
+    rootElement.classList.add('dark'); // legacy fallback
     rootElement.classList.remove('light'); // Remove any light mode remnants
 
     // Set primary font family on body
@@ -68,6 +69,8 @@ export const VueniThemeProvider: React.FC<VueniThemeProviderProps> = ({
       Object.keys(cssProperties).forEach((property) => {
         rootElement.style.removeProperty(property);
       });
+      rootElement.removeAttribute('data-theme');
+      rootElement.classList.remove('dark');
     };
   }, [cssProperties]);
 

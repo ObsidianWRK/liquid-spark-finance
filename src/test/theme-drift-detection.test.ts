@@ -130,14 +130,14 @@ describe('Theme Drift Detection', () => {
         const cssContent = fs.readFileSync(indexCssPath, 'utf-8');
 
         // Should not contain light mode selectors
-        expect(cssContent).not.toMatch(/html:not\(\.dark\)/);
+        expect(cssContent).not.toMatch(/\[data-theme='light'\]/);
         expect(cssContent).not.toMatch(
           /:root\s*\{[^}]*--background:\s*0\s+0%\s+100%/
         );
         expect(cssContent).not.toMatch(/\.light/);
 
         // Should contain dark mode
-        expect(cssContent).toMatch(/\.dark/);
+        expect(cssContent).toMatch(/\[data-theme='dark'\]/);
       }
     });
 

@@ -150,7 +150,7 @@ textarea:focus-visible,
 
 /* Light Mode High Contrast */
 @media (prefers-contrast: high) {
-  html:not(.dark) {
+  [data-theme='light'], html:not(.dark) {
     --light-text-primary: rgb(0, 0, 0);
     --light-text-secondary: rgb(17, 24, 39);
     --light-bg-glass: rgba(255, 255, 255, 1);
@@ -198,11 +198,13 @@ textarea:focus-visible,
 }
 
 /* Color Contrast Improvements for Light Mode */
-html:not(.dark) {
+[data-theme='light'], html:not(.dark) {
   /* Ensure all text meets WCAG AA standards */
   color: var(--light-text-primary);
 }
 
+[data-theme='light'] .text-muted,
+[data-theme='light'] [class*='text-muted'],
 html:not(.dark) .text-muted,
 html:not(.dark) [class*='text-muted'] {
   color: var(--light-text-secondary) !important;
@@ -707,6 +709,7 @@ html:not(.dark) [class*='text-muted'] {
 }
 
 /* Dark mode toggle background */
+[data-theme='dark'] .ios26-toggle,
 .dark .ios26-toggle {
   background-color: rgba(107, 114, 128, 0.4); /* gray-500/40 */
 }
@@ -716,6 +719,7 @@ html:not(.dark) [class*='text-muted'] {
   background-color: #2563eb; /* blue-600 */
 }
 
+[data-theme='dark'] .ios26-toggle[data-state='checked'],
 .dark .ios26-toggle[data-state='checked'] {
   background-color: #3b82f6; /* blue-500 */
 }
@@ -735,6 +739,7 @@ html:not(.dark) [class*='text-muted'] {
 }
 
 /* Dark mode thumb shadow */
+[data-theme='dark'] .ios26-toggle-thumb,
 .dark .ios26-toggle-thumb {
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
 }
