@@ -96,8 +96,8 @@ const TransactionRow: React.FC<TransactionRowProps> = ({
       onClick={() => onClick?.(tx)}
       className={cn(
         'grid items-center gap-3 lg:gap-4',
-        // icon (48px) | merchant (auto) | date (96px) | status (110px) | amount (96px)
-        'grid-cols-[48px_1fr_96px_110px_96px]',
+        // icon (3rem) | merchant (auto) | date (min 6rem) | status (min 6.875rem) | amount (min 6rem)
+        'grid-cols-[3rem_1fr_minmax(6rem,_1fr)_minmax(6.875rem,_1fr)_minmax(6rem,_1fr)]',
         'px-4 py-3 rounded-md transition-colors text-left',
         'hover:bg-zinc-800/60 bg-transparent',
         className
@@ -122,17 +122,17 @@ const TransactionRow: React.FC<TransactionRowProps> = ({
       </div>
 
       {/* Date */}
-      <div className="text-sm text-white/70 justify-self-end w-[96px]">
+      <div className="text-sm text-white/70 justify-self-end">
         {dateString}
       </div>
 
       {/* Status */}
-      <div className="w-[110px] justify-self-end">
+      <div className="justify-self-end">
         <StatusChip status={status} />
       </div>
 
       {/* Amount */}
-      <div className={cn('text-right w-[96px] font-medium', amountColor)}>
+      <div className={cn('text-right font-medium', amountColor)}>
         {formatAmount(tx.amount, tx.currency)}
       </div>
     </button>
