@@ -808,25 +808,6 @@ html:not(.dark) [class*='text-muted'] {
   }
 }
 
-/* Top navigation bar responsive improvements */
-.top-nav-responsive {
-  /* Mobile: Compact padding */
-  padding: 0.5rem;
-}
-
-@media (min-width: 640px) {
-  .top-nav-responsive {
-    /* Tablet: Medium padding */
-    padding: 1rem;
-  }
-}
-
-@media (min-width: 1024px) {
-  .top-nav-responsive {
-    /* Desktop: Standard padding */
-    padding: 1rem 1.5rem;
-  }
-}
 
 /* Prevent overflow on small screens */
 .nav-overflow-hidden {
