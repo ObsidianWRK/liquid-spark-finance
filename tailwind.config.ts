@@ -1,5 +1,6 @@
 import type { Config } from 'tailwindcss';
 import tailwindcssAnimate from 'tailwindcss-animate';
+import { typography } from "./src/theme/typography";
 
 export default {
   darkMode: ['class'],
@@ -39,6 +40,17 @@ export default {
           'BlinkMacSystemFont',
           'sans-serif',
         ],
+      },
+      fontSize: {
+        body: typography.fontSize.body,
+        bodySmall: typography.fontSize.bodySmall,
+        bodyLarge: typography.fontSize.bodyLarge,
+        heading1: typography.fontSize.heading1,
+        heading2: typography.fontSize.heading2,
+        heading3: typography.fontSize.heading3,
+        heading4: typography.fontSize.heading4,
+        heading5: typography.fontSize.heading5,
+        heading6: typography.fontSize.heading6,
       },
       colors: {
         // Base shadcn colors (keeping for compatibility)
