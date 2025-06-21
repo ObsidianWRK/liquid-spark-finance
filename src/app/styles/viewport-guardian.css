@@ -251,15 +251,6 @@
   z-index: 50;
 }
 
-/* Top navigation with safe area support */
-.top-nav-safe {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  padding-top: env(safe-area-inset-top, var(--safe-area-inset-top, 0px));
-  z-index: 50;
-}
 
 /* Content area that accounts for fixed navigation */
 .content-with-nav {
