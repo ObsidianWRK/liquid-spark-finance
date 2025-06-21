@@ -114,6 +114,6 @@ describe('AdaptiveNavigation', () => {
       </BrowserRouter>
     );
     expect(screen.queryByTestId('nav-rail')).not.toBeInTheDocument();
-    expect(screen.queryByTestId('bottom-nav')).not.toBeInTheDocument();
+    expect(screen.getByTestId('bottom-nav')).toBeInTheDocument();
   });
 });
