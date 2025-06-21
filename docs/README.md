@@ -26,6 +26,7 @@ Welcome to the comprehensive documentation for the Vueni application. This docum
 - **[Architecture Diagrams](./ARCHITECTURE_DIAGRAMS.md)** - System architecture, component hierarchy, and data flow diagrams
 - **[Refactoring Blueprint](./REFACTORING_BLUEPRINT.md)** - Comprehensive refactoring strategy and implementation plan
 - **[API Reference](./API_REFERENCE.md)** - Complete API documentation for all functions and services
+- **[Font Configuration](./guides/guide-font-configuration.md)** - Official font stack and CSS variables
 
 ### 🔒 Security
 
