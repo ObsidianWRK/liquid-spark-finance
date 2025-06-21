@@ -6,6 +6,7 @@
 @import './app/styles/nav-styles.css'; /* iOS 26 Liquid Glass Navigation */
 @import './app/styles/viewport-guardian.css'; /* Viewport Guardian utilities */
 @import './app/styles/card-interactions.css';
+@import './app/styles/card-variants.css';
 @import './app/styles/accessibility.css';
 @import './app/styles/pfm-row.css';
 
@@ -55,6 +56,14 @@
     --sidebar-accent: 240 3.7% 15.9%;
     --sidebar-accent-foreground: 240 4.8% 95.9%;
     --sidebar-border: 240 3.7% 15.9%;
+    --vueni-eco: #4AFF88;
+    --vueni-eco-rgb: 74 255 136;
+    --vueni-wellness: #4A9EFF;
+    --vueni-wellness-rgb: 74 158 255;
+    --vueni-financial: #9F4AFF;
+    --vueni-financial-rgb: 159 74 255;
+    --vueni-cosmic-odyssey: #9F4AFF;
+    --vueni-blue-oblivion: #4A9EFF;
     --sidebar-ring: 217.2 91.2% 59.8%;
   }
 }
