@@ -209,11 +209,8 @@ export const UnifiedInsightsPage = memo<UnifiedInsightsPageProps>(
           : 'gap-6';
 
     return (
-      <main
-        role="main"
-        data-testid={testId}
-        className={cn('w-full bg-black text-white p-6 space-y-6', className)}
-      >
+      <PageContainer className={cn('w-full p-6 space-y-6', className)}>
+        <main role="main" data-testid={testId}>
         {/* Header */}
         <div className="mb-8">
           <h1 className="text-2xl font-bold text-white mb-2">
@@ -353,7 +350,8 @@ export const UnifiedInsightsPage = memo<UnifiedInsightsPageProps>(
             </Card>
           </div>
         )}
-      </main>
+        </main>
+      </PageContainer>
     );
   }
 );

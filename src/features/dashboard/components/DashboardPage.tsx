@@ -31,6 +31,7 @@ import { WidgetsPanel } from '@/features/widgets';
 import { BiometricMonitorCard } from './health/BiometricMonitorCard';
 import { WellnessScoreCard } from './health/WellnessScoreCard';
 // import { LinkedAccountsCard } from './LinkedAccountsCard';
+import PageContainer from '@/shared/components/PageContainer';
 
 const DashboardPage = () => {
   const navigate = useNavigate();
@@ -76,7 +77,7 @@ const DashboardPage = () => {
   };
 
   return (
-    <div className="p-6 space-y-8">
+    <PageContainer className="p-6 space-y-8">
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
@@ -361,7 +362,7 @@ const DashboardPage = () => {
           </div>
         </div>
       </div>
-    </div>
+    </PageContainer>
   );
 };
 

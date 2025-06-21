@@ -25,6 +25,7 @@ import { calculateEcoScore } from '@/services/ecoScoreService';
 import ComprehensiveWellnessCard from './components/ComprehensiveWellnessCard';
 import ComprehensiveEcoCard from './components/ComprehensiveEcoCard';
 import { Transaction, Account } from '@/shared/types/shared';
+import PageContainer from '@/shared/components/PageContainer';
 
 // Enhanced TypeScript interfaces
 export type InsightsVariant = 'base' | 'configurable' | 'unified';
@@ -351,7 +352,7 @@ const BaseInsightsPage = ({
     : 'relative overflow-hidden';
 
   return (
-    <div className={`${containerClasses} ${className}`}>
+    <PageContainer className={`${containerClasses} ${className}`}>
       {/* Enhanced floating orbs for depth */}
       {animationsEnabled && (
         <>
@@ -586,7 +587,7 @@ const BaseInsightsPage = ({
           </div>
         )}
       </div>
-    </div>
+    </PageContainer>
   );
 };
 

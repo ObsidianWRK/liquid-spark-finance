@@ -39,6 +39,7 @@ import {
 } from '@/shared/ui/select';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/shared/ui/tabs';
 import { cn } from '@/shared/lib/utils';
+import PageContainer from '@/shared/components/PageContainer';
 import {
   SharedScoreCircle,
   ScoreGroup,
@@ -625,22 +626,21 @@ export const ConfigurableInsightsPage =
 
       if (isLoading) {
         return (
-          <UnifiedCard
-            variant="default"
-            className={cn('w-full text-white', className)}
-          >
-            <div className="flex items-center justify-center py-20">
-              <div className="flex items-center space-x-4">
-                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-white/50"></div>
-                <span className="text-white text-lg">Loading insights...</span>
+          <PageContainer className={cn('w-full text-white', className)}>
+            <UnifiedCard variant="default" className="p-0">
+              <div className="flex items-center justify-center py-20">
+                <div className="flex items-center space-x-4">
+                  <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-white/50"></div>
+                  <span className="text-white text-lg">Loading insights...</span>
+                </div>
               </div>
-            </div>
-          </UnifiedCard>
+            </UnifiedCard>
+          </PageContainer>
         );
       }
 
       return (
-        <div
+        <PageContainer
           className={cn('w-full text-white space-y-6', className)}
           data-testid="configurable-insights"
         >
@@ -887,7 +887,7 @@ export const ConfigurableInsightsPage =
               </div>
             )}
           </div>
-        </div>
+        </PageContainer>
       );
     }
   );

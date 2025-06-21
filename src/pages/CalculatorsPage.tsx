@@ -13,6 +13,7 @@ import MortgagePayoffCalculator from '@/features/calculators/components/Mortgage
 import StockBacktestCalculator from '@/features/calculators/components/StockBacktestCalculator';
 import ExchangeRateCalculator from '@/features/calculators/components/ExchangeRateCalculator';
 import BackHeader from '@/shared/ui/BackHeader';
+import PageContainer from '@/shared/components/PageContainer';
 
 const componentMap: Record<string, React.ReactNode> = {
   'financial-freedom': <FinancialFreedomCalculator />,
@@ -47,15 +48,15 @@ const CalculatorsPage = () => {
 
   if (!id) {
     return (
-      <div className="w-full text-white">
+      <PageContainer className="w-full text-white">
         <CalculatorList />
-      </div>
+      </PageContainer>
     );
   }
 
   const Component = componentMap[id];
   return (
-    <div className="w-full text-white">
+    <PageContainer className="w-full text-white">
       <BackHeader title={nameMap[id] || 'Calculator'} />
       <Suspense
         fallback={
@@ -81,7 +82,7 @@ const CalculatorsPage = () => {
           </div>
         </div>
       </Suspense>
-    </div>
+    </PageContainer>
   );
 };
 
