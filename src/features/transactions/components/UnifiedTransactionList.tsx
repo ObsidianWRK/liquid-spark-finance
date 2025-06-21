@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useCallback } from 'react';
+import React, { useState, useMemo, useCallback, useEffect } from 'react';
 import {
   Search,
   Filter,
@@ -11,6 +11,8 @@ import {
   Eye,
   EyeOff,
 } from 'lucide-react';
+import { FixedSizeList as List, ListChildComponentProps } from 'react-window';
+import { format } from 'date-fns';
 import { UniversalCard } from '@/shared/ui/UniversalCard';
 import { SharedScoreCircle } from '@/components/shared/SharedScoreCircle';
 import { cn } from '@/shared/lib/utils';
@@ -66,6 +68,8 @@ interface TransactionFeatures {
   showStatus?: boolean;
   exportable?: boolean;
   compactMode?: boolean;
+  showShipping?: boolean;
+  virtualize?: boolean;
 }
 
 interface UnifiedTransactionListProps {
@@ -78,7 +82,88 @@ interface UnifiedTransactionListProps {
   onExport?: () => void;
   className?: string;
   maxHeight?: string;
+  isLoading?: boolean;
 }
+
+const ROW_HEIGHT = 72;
+const VIRTUALIZE_THRESHOLD = 500;
+
+const useAvailableHeight = () => {
+  const [availableHeight, setAvailableHeight] = useState<number | null>(null);
+
+  useEffect(() => {
+    const calculate = () => {
+      const isDesktop = window.innerWidth >= 1024;
+      if (!isDesktop) {
+        setAvailableHeight(null);
+        return;
+      }
+      const used = 96 + 120 + 64 + 40;
+      setAvailableHeight(Math.max(400, window.innerHeight - used));
+    };
+
+    calculate();
+    const handle = () => calculate();
+    window.addEventListener('resize', handle);
+    return () => window.removeEventListener('resize', handle);
+  }, []);
+
+  return availableHeight;
+};
+
+const SkeletonRow = () => (
+  <div className="flex items-center justify-between py-3 px-4 animate-pulse">
+    <div className="w-10 h-10 rounded-lg bg-white/10" />
+    <div className="flex-1 ml-3 space-y-1">
+      <div className="h-3 w-24 bg-white/10 rounded" />
+      <div className="h-2 w-16 bg-white/10 rounded" />
+    </div>
+    <div className="h-3 w-16 bg-white/10 rounded" />
+  </div>
+);
+
+interface RowItemSeparator {
+  type: 'separator';
+  dateKey: string;
+  date: Date;
+}
+
+interface RowItemTransaction {
+  type: 'transaction';
+  tx: Transaction;
+}
+
+type RowItem = RowItemSeparator | RowItemTransaction;
+
+interface RowRendererData {
+  items: RowItem[];
+  onClick?: (tx: Transaction) => void;
+  features: TransactionFeatures;
+  styles: ReturnType<typeof getVariantStyles>;
+}
+
+const RowRenderer: React.FC<ListChildComponentProps<RowRendererData>> = ({ index, style, data }) => {
+  const item = data.items[index];
+  if (!item) return null;
+  if (item.type === 'separator') {
+    return (
+      <div style={style} className="px-4 py-2 text-white/60 text-sm">
+        {format(item.date, 'PPPP')}
+      </div>
+    );
+  }
+  return (
+    <div style={style}>
+      <TransactionItem
+        transaction={item.tx}
+        currency="USD"
+        features={data.features}
+        styles={data.styles}
+        onClick={() => data.onClick?.(item.tx)}
+      />
+    </div>
+  );
+};
 
 const defaultFeatures: TransactionFeatures = {
   searchable: true,
@@ -90,6 +175,8 @@ const defaultFeatures: TransactionFeatures = {
   showStatus: true,
   exportable: false,
   compactMode: false,
+  showShipping: false,
+  virtualize: false,
 };
 
 export const UnifiedTransactionList = React.memo<UnifiedTransactionListProps>(
@@ -103,6 +190,7 @@ export const UnifiedTransactionList = React.memo<UnifiedTransactionListProps>(
     onExport,
     className = '',
     maxHeight = '32rem',
+    isLoading = false,
   }) => {
     const [searchTerm, setSearchTerm] = useState('');
     const [selectedCategory, setSelectedCategory] = useState<string>('all');
@@ -190,6 +278,34 @@ export const UnifiedTransactionList = React.memo<UnifiedTransactionListProps>(
       return uniqueCategories;
     }, [transactions]);
 
+    const buildRowItems = useCallback(
+      (txs: Transaction[]): RowItem[] => {
+        const sorted = [...txs].sort(
+          (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
+        );
+        const items: RowItem[] = [];
+        let lastDateKey = '';
+        sorted.forEach((tx) => {
+          const date = new Date(tx.date);
+          const dateKey = format(date, 'yyyy-MM-dd');
+          if (mergedFeatures.groupByDate && dateKey !== lastDateKey) {
+            items.push({ type: 'separator', dateKey, date });
+            lastDateKey = dateKey;
+          }
+          items.push({ type: 'transaction', tx });
+        });
+        return items;
+      },
+      [mergedFeatures.groupByDate]
+    );
+
+    const items = useMemo(() => buildRowItems(processedTransactions), [processedTransactions, buildRowItems]);
+    const availableHeight = useAvailableHeight();
+    const shouldVirtualize =
+      mergedFeatures.virtualize &&
+      (items.length > VIRTUALIZE_THRESHOLD ||
+        (availableHeight && items.length > 20));
+
     // Optimized event handlers
     const handleSearchChange = useCallback(
       (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -269,6 +385,21 @@ export const UnifiedTransactionList = React.memo<UnifiedTransactionListProps>(
     };
 
     const variantStyles = getVariantStyles();
+
+    if (isLoading) {
+      return (
+        <UniversalCard
+          variant="glass"
+          className={cn('overflow-hidden', className, variantStyles.container)}
+        >
+          <div className="p-4 space-y-2">
+            {Array.from({ length: 8 }).map((_, i) => (
+              <SkeletonRow key={i} />
+            ))}
+          </div>
+        </UniversalCard>
+      );
+    }
 
     const formatDate = (date: string) => {
       const dateObj = new Date(date);
@@ -404,10 +535,22 @@ export const UnifiedTransactionList = React.memo<UnifiedTransactionListProps>(
         {/* Transaction List */}
         {!isCollapsed && (
           <div className="overflow-y-auto" style={{ maxHeight }}>
-            {Object.entries(groupedTransactions).map(
-              ([date, groupTransactions]) => (
+            {shouldVirtualize ? (
+              <List
+                height={
+                  availableHeight ||
+                  Math.min(items.length * ROW_HEIGHT, parseInt(maxHeight))
+                }
+                itemCount={items.length}
+                itemSize={ROW_HEIGHT}
+                itemData={{ items, onClick: handleTransactionClick, features: mergedFeatures, styles: variantStyles }}
+                width="100%"
+              >
+                {RowRenderer}
+              </List>
+            ) : (
+              Object.entries(groupedTransactions).map(([date, groupTransactions]) => (
                 <div key={date}>
-                  {/* Date Header (if grouping enabled) */}
                   {mergedFeatures.groupByDate && date && (
                     <div className="sticky top-0 bg-white/5 backdrop-blur-md px-4 py-2 border-b border-white/10">
                       <div className="text-sm font-medium text-white/80">
@@ -415,8 +558,6 @@ export const UnifiedTransactionList = React.memo<UnifiedTransactionListProps>(
                       </div>
                     </div>
                   )}
-
-                  {/* Transactions in Group */}
                   {groupTransactions.map((transaction) => (
                     <TransactionItem
                       key={transaction.id}
@@ -428,10 +569,9 @@ export const UnifiedTransactionList = React.memo<UnifiedTransactionListProps>(
                     />
                   ))}
                 </div>
-              )
+              ))
             )}
 
-            {/* Empty State */}
             {processedTransactions.length === 0 && (
               <div className="p-8 text-center">
                 <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-white/5 flex items-center justify-center">
@@ -600,10 +740,22 @@ const TransactionItem = React.memo<{
           </div>
         )}
       </div>
+
+      {features.showShipping && transaction.shipping && (
+        <div className="mt-2 flex items-center justify-between text-xs text-white/60">
+          <span className="font-mono truncate">
+            {transaction.shipping.trackingNumber}
+          </span>
+          <span>
+            {transaction.shipping.provider}
+            {transaction.shipping.status && ` • ${transaction.shipping.status}`}
+          </span>
+        </div>
+      )}
     </div>
   );
 });
 
 TransactionItem.displayName = 'TransactionItem';
-
+export { TransactionItem, defaultFeatures };
 export default UnifiedTransactionList;
