@@ -4,6 +4,7 @@ import MobileTransactionScreen from '@/screens/MobileTransactionScreen';
 import { Smartphone, Tablet, Monitor } from 'lucide-react';
 import { cn } from '@/shared/lib/utils';
 import { SubscriptionsPanel } from '@/features/subscriptions/components/SubscriptionsPanel';
+import { BackButton } from '@/shared/components/ui/BackButton';
 
 const TransactionDemo: React.FC = () => {
   const [view, setView] = useState<'mobile' | 'tablet' | 'desktop'>('desktop');
@@ -147,6 +148,12 @@ const TransactionDemo: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-black p-8">
+      <BackButton
+        fallbackPath="/"
+        variant="default"
+        label="Back to Dashboard"
+        className="mb-8"
+      />
       {/* Header */}
       <div className="max-w-7xl mx-auto mb-8">
         <div className="flex items-center justify-between mb-8">
