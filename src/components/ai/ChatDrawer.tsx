@@ -8,7 +8,7 @@ import {
 } from '@/shared/ui/sheet';
 import { Button } from '@/shared/ui/button';
 import GlassCard from '@/components/GlassCard';
-import { MessageCircle, Send, Sparkles, X } from 'lucide-react';
+import { MessageCircle, Send, Sparkles } from 'lucide-react';
 import { mockAiService, ChatMessage } from '@/services/mockAiService';
 
 interface ChatDrawerProps {
