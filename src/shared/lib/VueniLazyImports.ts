@@ -54,9 +54,9 @@ export const VueniLazyComponents = {
 
   // Vueni Components - Lazy loaded when needed
   VueniUnifiedTransactionList: lazy(() =>
-    import('@/components/shared/VueniUnifiedTransactionList').then(
+    import('@/features/transactions/components/UnifiedTransactionList').then(
       (module) => ({
-        default: module.VueniUnifiedTransactionList || module.default,
+        default: module.UnifiedTransactionList || module.default,
       })
     )
   ),
@@ -117,7 +117,7 @@ export const VueniPreloadStrategies = {
   // Preload critical components on app start
   preloadCritical: () => {
     const criticalComponents = [
-      () => import('@/components/shared/VueniUnifiedTransactionList'),
+      () => import('@/features/transactions/components/UnifiedTransactionList'),
       () => import('@/components/shared/VueniDesignSystem'),
     ];
 
