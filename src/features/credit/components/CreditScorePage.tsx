@@ -181,7 +181,7 @@ const CreditScorePage = () => {
         </div>
 
         {/* Score Overview Card */}
-        <div className="bg-white/[0.02] rounded-2xl sm:rounded-3xl border border-white/[0.08] p-4 sm:p-6 md:p-8">
+        <div className="bg-white/[0.02] rounded-2xl sm:rounded-3xl border border-white/[0.08] responsive-padding-md">
           <div className="flex flex-col lg:flex-row items-center lg:items-start gap-6 sm:gap-8">
             {/* Score Display */}
             <div className="text-center flex-shrink-0 w-full lg:w-auto">
