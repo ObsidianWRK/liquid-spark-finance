@@ -109,7 +109,13 @@ const TransactionItem = React.memo<TransactionItemProps>(
               ) : (
                 <div className="w-7 h-7 rounded-lg bg-blue-500/20 flex items-center justify-center">
                   <span className="text-blue-400 text-xs font-bold">
-                    {transaction.merchant.charAt(0).toUpperCase()}
+                    {(
+                      (transaction as any).merchant ??
+                      (transaction as any).merchantName ??
+                      '?'
+                    )
+                      .charAt(0)
+                      .toUpperCase()}
                   </span>
                 </div>
               )}

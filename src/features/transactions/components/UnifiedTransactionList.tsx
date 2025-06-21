@@ -534,7 +534,13 @@ const TransactionItem = React.memo<{
           )}
           style={{ backgroundColor: transaction.category.color + '30' }}
         >
-          {transaction.merchant.charAt(0).toUpperCase()}
+          {(
+            (transaction as any).merchant ??
+            (transaction as any).merchantName ??
+            '?'
+          )
+            .charAt(0)
+            .toUpperCase()}
         </div>
 
         {/* Transaction Details */}
