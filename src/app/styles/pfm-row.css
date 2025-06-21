@@ -1,0 +1,5 @@
+@layer components {
+  .pfm-row {
+    @apply flex w-full items-center min-h-[56px] py-2;
+  }
+}

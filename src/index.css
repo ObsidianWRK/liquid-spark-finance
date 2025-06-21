@@ -7,6 +7,7 @@
 @import './app/styles/viewport-guardian.css'; /* Viewport Guardian utilities */
 @import './app/styles/card-interactions.css';
 @import './app/styles/accessibility.css';
+@import './app/styles/pfm-row.css';
 
 @tailwind base;
 @tailwind components;

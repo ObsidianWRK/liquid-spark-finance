@@ -229,7 +229,7 @@ export const BankLinkingPanel: React.FC = () => {
         {MOCK_ACCOUNTS.map((account) => (
           <div
             key={account.id}
-            className="flex items-center justify-between p-1.5 bg-white/[0.02] rounded-lg border border-white/[0.05] hover:bg-white/[0.04] transition-all cursor-pointer"
+            className="pfm-row justify-between px-1.5 bg-white/[0.02] rounded-lg border border-white/[0.05] hover:bg-white/[0.04] transition-all cursor-pointer"
           >
             <div className="flex items-center gap-2">
               <div className="w-5 h-5 rounded-lg bg-white/[0.05] flex items-center justify-center">

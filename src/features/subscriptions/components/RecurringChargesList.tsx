@@ -116,9 +116,9 @@ export const RecurringChargesList: React.FC<{ className?: string }> = ({
         {charges.map((charge) => (
           <div
             key={charge.id}
-            className="p-2 bg-white/[0.02] rounded-lg border border-white/[0.05] hover:bg-white/[0.04] transition-all"
+            className="pfm-row flex-col sm:flex-row px-2 bg-white/[0.02] rounded-lg border border-white/[0.05] hover:bg-white/[0.04] transition-all"
           >
-            <div className="flex items-center justify-between mb-1">
+            <div className="flex items-center justify-between w-full sm:w-auto mb-1 sm:mb-0">
               <h4 className="text-xs font-medium text-white truncate">
                 {charge.merchantName}
               </h4>
@@ -131,8 +131,7 @@ export const RecurringChargesList: React.FC<{ className?: string }> = ({
                 </p>
               </div>
             </div>
-
-            <div className="flex items-center justify-between">
+            <div className="flex items-center justify-between w-full sm:w-auto">
               <div className="flex items-center gap-1">
                 <Calendar className="w-3 h-3 text-white/40" />
                 <span className="text-xs text-white/60">
