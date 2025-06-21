@@ -23,17 +23,6 @@ jest.mock('../components/NavRail', () => {
   };
 });
 
-jest.mock('../components/Sidebar', () => {
-  return function MockSidebar() {
-    return <div data-testid="sidebar">Sidebar</div>;
-  };
-});
-
-jest.mock('../components/TopBar', () => {
-  return function MockTopBar() {
-    return <div data-testid="top-bar">Top Bar</div>;
-  };
-});
 
 const renderWithRouter = (component: React.ReactElement) => {
   return render(<BrowserRouter>{component}</BrowserRouter>);
@@ -58,7 +47,6 @@ describe('AdaptiveNavigation', () => {
     expect(screen.getByTestId('bottom-nav')).toBeInTheDocument();
     expect(screen.queryByTestId('nav-rail')).not.toBeInTheDocument();
     expect(screen.queryByTestId('sidebar')).not.toBeInTheDocument();
-    expect(screen.queryByTestId('top-bar')).not.toBeInTheDocument();
   });
 
   it('renders NavRail on tablet breakpoint', () => {
@@ -75,42 +63,8 @@ describe('AdaptiveNavigation', () => {
     expect(screen.getByTestId('nav-rail')).toBeInTheDocument();
     expect(screen.queryByTestId('bottom-nav')).not.toBeInTheDocument();
     expect(screen.queryByTestId('sidebar')).not.toBeInTheDocument();
-    expect(screen.queryByTestId('top-bar')).not.toBeInTheDocument();
   });
 
-  it('renders Sidebar and TopBar on desktop breakpoint', () => {
-    mockUseBreakpoint.mockReturnValue({
-      breakpoint: 'desktop',
-      isMobile: false,
-      isTablet: false,
-      isDesktop: true,
-      isLargeDesktop: false,
-    });
-
-    renderWithRouter(<AdaptiveNavigation />);
-
-    expect(screen.getByTestId('sidebar')).toBeInTheDocument();
-    expect(screen.getByTestId('top-bar')).toBeInTheDocument();
-    expect(screen.queryByTestId('bottom-nav')).not.toBeInTheDocument();
-    expect(screen.queryByTestId('nav-rail')).not.toBeInTheDocument();
-  });
-
-  it('renders Sidebar and TopBar on large desktop breakpoint', () => {
-    mockUseBreakpoint.mockReturnValue({
-      breakpoint: 'large',
-      isMobile: false,
-      isTablet: false,
-      isDesktop: true,
-      isLargeDesktop: true,
-    });
-
-    renderWithRouter(<AdaptiveNavigation />);
-
-    expect(screen.getByTestId('sidebar')).toBeInTheDocument();
-    expect(screen.getByTestId('top-bar')).toBeInTheDocument();
-    expect(screen.queryByTestId('bottom-nav')).not.toBeInTheDocument();
-    expect(screen.queryByTestId('nav-rail')).not.toBeInTheDocument();
-  });
 
   it('switches navigation correctly when breakpoint changes', () => {
     const { rerender } = renderWithRouter(<AdaptiveNavigation />);
@@ -159,8 +113,7 @@ describe('AdaptiveNavigation', () => {
         <AdaptiveNavigation />
       </BrowserRouter>
     );
-    expect(screen.getByTestId('sidebar')).toBeInTheDocument();
-    expect(screen.getByTestId('top-bar')).toBeInTheDocument();
     expect(screen.queryByTestId('nav-rail')).not.toBeInTheDocument();
+    expect(screen.queryByTestId('bottom-nav')).not.toBeInTheDocument();
   });
 });

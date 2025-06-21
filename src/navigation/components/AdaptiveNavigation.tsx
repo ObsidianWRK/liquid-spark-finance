@@ -2,14 +2,13 @@ import React from 'react';
 import { useBreakpoint } from '@/shared/hooks/useBreakpoint';
 import BottomNav from './BottomNav';
 import NavRail from './NavRail';
-import TopBar from './TopBar';
 
 /**
  * AdaptiveNavigation Component
  * Automatically selects the appropriate navigation variant based on viewport size:
  * - Mobile (<640px): BottomNav
  * - Tablet (640-1024px): NavRail
- * - Desktop (≥1024px): TopBar only (no sidebar)
+ * - Desktop (≥1024px): No navigation
  */
 const AdaptiveNavigation: React.FC = () => {
   const { isMobile, isTablet, isDesktop } = useBreakpoint();
@@ -22,8 +21,8 @@ const AdaptiveNavigation: React.FC = () => {
       {/* Tablet Navigation */}
       {isTablet && <NavRail />}
 
-      {/* Desktop Navigation - TopBar only */}
-      {isDesktop && <TopBar />}
+      {/* Desktop Navigation - none */}
+      {isDesktop && null}
     </div>
   );
 };
