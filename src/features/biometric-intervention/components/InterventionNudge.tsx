@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { AlertTriangle, Heart, Clock, Shield, X } from 'lucide-react';
 import { Button } from '@/shared/ui/button';
-import { Card, CardContent } from '@/shared/ui/card';
+import { UniversalCard } from '@/shared/ui/UniversalCard';
 import { cn } from '@/shared/lib/utils';
 import { InterventionEvent } from '../types';
 
@@ -60,14 +60,14 @@ export const InterventionNudge: React.FC<InterventionNudgeProps> = ({
   };
 
   return (
-    <Card
+    <UniversalCard
+      variant="glass"
       className={cn(
-        'fixed bottom-4 right-4 w-80 z-50 shadow-2xl border',
+        'fixed bottom-4 right-4 w-80 z-50 shadow-2xl',
         getStressColor(event.stressLevel.score),
         className
       )}
     >
-      <CardContent className="p-4">
         {/* Header */}
         <div className="flex items-start justify-between mb-3">
           <div className="flex items-center space-x-2">
@@ -166,8 +166,7 @@ export const InterventionNudge: React.FC<InterventionNudgeProps> = ({
             Policy: {event.policy.name} • Confidence:{' '}
             {Math.round(event.stressLevel.confidence * 100)}%
           </p>
-        </div>
-      </CardContent>
-    </Card>
+          </div>
+        </UniversalCard>
   );
 };

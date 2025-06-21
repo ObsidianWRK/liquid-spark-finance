@@ -9,7 +9,7 @@ import {
   Clock,
   DollarSign,
 } from 'lucide-react';
-import { Card, CardHeader, CardTitle, CardContent } from '@/shared/ui/card';
+import { UniversalCard } from '@/shared/ui/UniversalCard';
 import { Button } from '@/shared/ui/button';
 import { Badge } from '@/shared/ui/badge';
 import { Switch } from '@/shared/ui/switch';
@@ -144,47 +144,41 @@ export const InterventionSettings: React.FC<InterventionSettingsProps> = ({
   return (
     <div className={cn('space-y-6', className)}>
       {/* Main Toggle */}
-      <Card className="bg-white/[0.02] border-white/[0.08]">
-        <CardHeader>
-          <CardTitle className="flex items-center justify-between">
-            <div className="flex items-center space-x-2">
-              <Settings className="w-5 h-5 text-blue-400" />
-              <span>Biometric Interventions</span>
-            </div>
-            <Switch
-              checked={isActive}
-              onCheckedChange={handleToggleActive}
-              className="data-[state=checked]:bg-blue-600"
-            />
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <p className="text-sm text-white/70">
-            {isActive
-              ? 'Smart interventions are active and monitoring your stress levels.'
-              : 'Enable biometric interventions to help prevent stress-induced spending.'}
-          </p>
-        </CardContent>
-      </Card>
+      <UniversalCard variant="glass" className="p-6 space-y-4">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center space-x-2">
+            <Settings className="w-5 h-5 text-blue-400" />
+            <span>Biometric Interventions</span>
+          </div>
+          <Switch
+            checked={isActive}
+            onCheckedChange={handleToggleActive}
+            className="data-[state=checked]:bg-blue-600"
+          />
+        </div>
+        <p className="text-sm text-white/70">
+          {isActive
+            ? 'Smart interventions are active and monitoring your stress levels.'
+            : 'Enable biometric interventions to help prevent stress-induced spending.'}
+        </p>
+      </UniversalCard>
 
       {isActive && (
         <>
           {/* Active Policies */}
-          <Card className="bg-white/[0.02] border-white/[0.08]">
-            <CardHeader>
-              <CardTitle className="flex items-center justify-between">
-                <span>Intervention Policies</span>
-                <Button
-                  onClick={() => setShowAddForm(true)}
-                  size="sm"
-                  className="bg-blue-600 hover:bg-blue-700"
-                >
-                  <Plus className="w-4 h-4 mr-2" />
-                  Add Policy
-                </Button>
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4">
+          <UniversalCard variant="glass" className="p-6 space-y-4">
+            <div className="flex items-center justify-between">
+              <span>Intervention Policies</span>
+              <Button
+                onClick={() => setShowAddForm(true)}
+                size="sm"
+                className="bg-blue-600 hover:bg-blue-700"
+              >
+                <Plus className="w-4 h-4 mr-2" />
+                Add Policy
+              </Button>
+            </div>
+            <div className="space-y-4">
               {activePolicies.length === 0 ? (
                 <p className="text-sm text-white/60 text-center py-4">
                   No intervention policies configured. Add your first policy to
@@ -227,10 +221,10 @@ export const InterventionSettings: React.FC<InterventionSettingsProps> = ({
                         >
                           <Trash2 className="w-4 h-4" />
                         </Button>
-                      </div>
                     </div>
+                  </div>
 
-                    <div className="grid grid-cols-2 gap-4 text-sm">
+                  <div className="grid grid-cols-2 gap-4 text-sm">
                       <div className="flex items-center space-x-2">
                         <Shield className="w-4 h-4 text-orange-400" />
                         <span className="text-white/70">Stress Threshold:</span>
@@ -269,18 +263,16 @@ export const InterventionSettings: React.FC<InterventionSettingsProps> = ({
                   </div>
                 ))
               )}
-            </CardContent>
-          </Card>
+            </div>
+          </UniversalCard>
 
           {/* Add/Edit Policy Form */}
           {showAddForm && (
-            <Card className="bg-white/[0.02] border-white/[0.08]">
-              <CardHeader>
-                <CardTitle>
-                  {editingPolicy ? 'Edit Policy' : 'Add New Policy'}
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-4">
+            <UniversalCard variant="glass" className="p-6 space-y-4">
+              <h3 className="text-2xl font-semibold leading-none tracking-tight">
+                {editingPolicy ? 'Edit Policy' : 'Add New Policy'}
+              </h3>
+              <div className="space-y-4">
                 <div>
                   <Label htmlFor="policy-name">Policy Name</Label>
                   <Input
@@ -420,16 +412,16 @@ export const InterventionSettings: React.FC<InterventionSettingsProps> = ({
                         : 'Add Policy'}
                   </Button>
                 </div>
-              </CardContent>
-            </Card>
+              </div>
+            </UniversalCard>
           )}
 
           {/* Wearable Integrations */}
-          <Card className="bg-white/[0.02] border-white/[0.08]">
-            <CardHeader>
-              <CardTitle>Wearable Devices</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-3">
+          <UniversalCard variant="glass" className="p-6 space-y-4">
+            <h3 className="text-2xl font-semibold leading-none tracking-tight">
+              Wearable Devices
+            </h3>
+            <div className="space-y-3">
               {Object.entries(preferences.wearableIntegrations).map(
                 ([device, enabled]) => (
                   <div
@@ -450,8 +442,8 @@ export const InterventionSettings: React.FC<InterventionSettingsProps> = ({
                   </div>
                 )
               )}
-            </CardContent>
-          </Card>
+            </div>
+          </UniversalCard>
         </>
       )}
     </div>
