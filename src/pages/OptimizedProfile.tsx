@@ -174,7 +174,7 @@ const OptimizedProfile = React.memo(() => {
         {/* Header with Navigation */}
         <div className="mb-8">
           {/* Back to Dashboard Button */}
-          <div className="flex items-center mb-4">
+          <div className="flex items-center mb-6">
             <button
               onClick={handleBackToDashboard}
               className="flex items-center space-x-2 text-white/70 hover:text-white transition-all duration-200 group cursor-pointer bg-transparent border-none outline-none focus:outline-none focus:ring-2 focus:ring-blue-500/50 rounded-lg p-2 -m-2"
