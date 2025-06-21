@@ -1,4 +1,4 @@
-@layer utilities {
+@layer components {
   /*
     Calculator card overrides
     Bring calculator input/result/chart sections inline with global UnifiedCard styling
@@ -18,7 +18,5 @@
   }
 
   /* Normalise oversized corner radius */
-  .calculator-content .rounded-vueni-lg {
-    border-radius: 8px;
-  }
+  /* Removed direct override to avoid circular dependency */
 }
