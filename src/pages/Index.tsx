@@ -10,7 +10,7 @@ import SavingsGoals from '@/features/savings/components/SavingsGoals';
 import CalculatorList from '@/features/calculators/components/CalculatorList';
 import { useIsMobile } from '@/shared/hooks/use-mobile';
 import { PerformanceMonitor } from '@/components/performance/PerformanceMonitor';
-import { mockData, getCompactAccountCards } from '@/services/mockData';
+import { getCompactAccountCards, getAccounts, getTransactions } from '@/services/mockDataProvider';
 import { usePrivacyStore } from '@/features/privacy-hide-amounts/store';
 import { Transaction } from '@/shared/types/shared';
 // CC: New Feature Cloud and Smart Accounts Deck imports
@@ -41,7 +41,6 @@ import { WidgetsPanel } from '@/features/widgets/components/WidgetsPanel';
 import { BiometricMonitorCard } from '@/features/biometric-intervention/components/BiometricMonitorCard';
 // Financial selectors for proper financial calculations
 import { selectTotalWealth } from '@/selectors/financialSelectors';
-import { mockAccountsEnhanced } from '@/services/mockData';
 import { formatCurrency } from '@/shared/utils/formatters';
 
 // Lazy load components properly without webpack comments
@@ -110,7 +109,7 @@ class ErrorBoundary extends React.Component<
 
 // Adapt mock transactions for new UI fields
 const adaptTransactions = (
-  transactions: typeof mockData.transactions
+  transactions: ReturnType<typeof getTransactions>
 ): Transaction[] => {
   // Helper to convert legacy transaction into full shape expected by UI
   const baseAdapted = transactions.map((t, idx) => {
@@ -297,7 +296,7 @@ export default function Index() {
   const isMobile = useIsMobile();
 
   // Calculate proper financial metrics using selectors
-  const netWorth = selectTotalWealth(mockAccountsEnhanced);
+  const netWorth = selectTotalWealth(getAccounts());
 
   // Data validation in useEffect instead of early return
   useEffect(() => {
@@ -420,7 +419,7 @@ export default function Index() {
             <div className="lg:col-span-2">
               <TransactionList
                 transactions={
-                  adaptTransactions(mockData.transactions)?.slice(0, 10) ||
+                  adaptTransactions(getTransactions())?.slice(0, 10) ||
                   []
                 }
                 isLoading={false}

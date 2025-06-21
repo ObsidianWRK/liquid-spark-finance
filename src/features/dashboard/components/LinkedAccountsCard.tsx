@@ -16,7 +16,7 @@ import {
 import { CardSkeleton } from './health/CardSkeleton';
 import { formatCurrency } from '@/shared/utils/formatters';
 import { cn } from '@/shared/lib/utils';
-import { mockAccountsEnhanced } from '@/services/mockData';
+import { getAccounts } from '@/services/mockDataProvider';
 
 interface MockAccount {
   id: string;
@@ -44,8 +44,8 @@ interface LinkedAccountsCardProps {
 }
 
 // Transform the enhanced mock data to our component format
-const transformMockAccounts = (): MockAccount[] => {
-  return mockAccountsEnhanced.map((account) => ({
+const transformMockAccounts = (accounts: ReturnType<typeof getAccounts>): MockAccount[] => {
+  return accounts.map((account) => ({
     id: account.id,
     name: account.name,
     institutionName: account.institutionName || 'Unknown Bank',
@@ -65,50 +65,13 @@ export const LinkedAccountsCard: React.FC<LinkedAccountsCardProps> = ({
   onAddAccount,
 }) => {
   const [accounts, setAccounts] = useState<MockAccount[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-  const [useMocks, setUseMocks] = useState(false);
 
-  // Check if we should use mock data
   useEffect(() => {
-    const shouldUseMocks =
-      import.meta.env.VITE_USE_MOCK_ACCOUNTS === 'true' ||
-      import.meta.env.VITE_USE_MOCKS === 'true' ||
-      process.env.NEXT_PUBLIC_USE_MOCKS === 'true' ||
-      window.location.search.includes('mock=true') ||
-      import.meta.env.DEV || // Always show in development
-      true; // Always show for staging/demo
-
-    setUseMocks(shouldUseMocks);
+    setAccounts(transformMockAccounts(getAccounts()));
   }, []);
 
-  // Load accounts data
-  useEffect(() => {
-    if (!useMocks) {
-      setLoading(false);
-      return;
-    }
-
-    const loadMockAccounts = async () => {
-      try {
-        setLoading(true);
-        setError(null);
-
-        // Simulate network delay
-        await new Promise((resolve) => setTimeout(resolve, 500));
-
-        const transformedAccounts = transformMockAccounts();
-        setAccounts(transformedAccounts);
-      } catch (err) {
-        console.error('Failed to load mock accounts:', err);
-        setError('Failed to load accounts');
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    loadMockAccounts();
-  }, [useMocks]);
+  const loading = false;
+  const error: string | null = null;
 
   const getAccountIcon = (accountType: string, accountSubtype: string) => {
     // Handle by subtype first for more specific icons
@@ -230,28 +193,6 @@ export const LinkedAccountsCard: React.FC<LinkedAccountsCardProps> = ({
     );
   }
 
-  // Show empty state if not using mocks
-  if (!useMocks) {
-    return (
-      <CardSkeleton
-        variant={compact ? 'compact' : 'default'}
-        className={className}
-      >
-        <div className="text-center py-8">
-          <Building2 className="w-12 h-12 text-white/20 mx-auto mb-4" />
-          <h3 className="text-lg font-semibold text-white/70 mb-2">
-            No Linked Accounts
-          </h3>
-          <p className="text-sm text-white/50 mb-4">
-            Enable mock mode to see sample accounts
-          </p>
-          <p className="text-xs text-white/40">
-            Add ?mock=true to URL or set VITE_USE_MOCK_ACCOUNTS=true
-          </p>
-        </div>
-      </CardSkeleton>
-    );
-  }
 
   // Show error state
   if (error) {

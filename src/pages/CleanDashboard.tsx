@@ -27,91 +27,33 @@ import {
   EyeOff,
 } from 'lucide-react';
 import { OptimizedTransactionList } from '@/features/transactions/components/OptimizedTransactionList';
+import {
+  getAccounts,
+  getTransactions,
+} from '@/services/mockDataProvider';
 
-// Mock data that matches your existing structure
-const mockAccounts = [
-  {
-    id: 'acc_001',
-    accountType: 'Checking',
-    accountName: 'Main Account',
-    balance: 12450.0,
-    available: 11200.0,
-    change: { amount: 1523.5, percentage: 12.5, period: 'vs last month' },
-    isActive: true,
-  },
-  {
-    id: 'acc_002',
-    accountType: 'Savings',
-    accountName: 'Emergency Fund',
-    balance: 25780.5,
-    available: 25780.5,
-    change: { amount: 780.25, percentage: 3.1, period: 'vs last month' },
-  },
-  {
-    id: 'acc_003',
-    accountType: 'Credit Card',
-    accountName: 'Rewards Card',
-    balance: -1245.3,
-    available: 8754.7,
-    change: { amount: -245.3, percentage: -2.1, period: 'vs last month' },
-  },
-  {
-    id: 'acc_004',
-    accountType: 'Investment',
-    accountName: 'Portfolio',
-    balance: 45600.25,
-    available: 45600.25,
-    change: { amount: 2340.8, percentage: 5.4, period: 'vs last month' },
-  },
-];
+// Pull mock data from centralized provider
+const mockAccounts: AccountData[] = getAccounts().map((acc) => ({
+  id: acc.id,
+  accountType: acc.accountSubtype || acc.accountType,
+  accountName: acc.name,
+  balance: acc.balance,
+  available: acc.availableBalance,
+  change: { amount: 0, percentage: 0, period: 'vs last month' },
+  isActive: acc.isActive,
+}));
 
-const mockTransactions = [
-  {
-    id: 'txn_001',
-    merchant: 'Whole Foods Market',
-    category: 'Groceries',
-    amount: -127.43,
-    date: '2025-06-16T10:30:00Z',
-    status: 'completed' as const,
-    scores: { health: 85, eco: 92, financial: 78 },
-  },
-  {
-    id: 'txn_002',
-    merchant: 'Apple Store',
-    category: 'Electronics',
-    amount: -899.0,
-    date: '2025-06-16T08:15:00Z',
-    status: 'completed' as const,
-    scores: { health: 65, eco: 45, financial: 60 },
-  },
-  {
-    id: 'txn_003',
-    merchant: 'Salary Deposit',
-    category: 'Income',
-    amount: 3250.0,
-    date: '2025-06-15T09:00:00Z',
-    status: 'completed' as const,
-    scores: { health: 100, eco: 85, financial: 95 },
-  },
-  {
-    id: 'txn_004',
-    merchant: 'Starbucks',
-    category: 'Coffee',
-    amount: -6.85,
-    date: '2025-06-15T07:45:00Z',
-    status: 'completed' as const,
-    scores: { health: 40, eco: 60, financial: 85 },
-  },
-  {
-    id: 'txn_005',
-    merchant: 'Gas Station',
-    category: 'Transportation',
-    amount: -45.2,
-    date: '2025-06-14T18:30:00Z',
-    status: 'pending' as const,
-    scores: { health: 70, eco: 30, financial: 80 },
-  },
-];
+const mockTransactions = getTransactions().map((t) => ({
+  id: t.id,
+  merchant: (t as any).merchant ?? (t as any).merchantName ?? 'Unknown',
+  category: typeof (t as any).category === 'string'
+    ? (t as any).category
+    : (t as any).category?.name ?? 'Other',
+  amount: t.amount,
+  date: t.date,
+  status: (t as any).status ?? 'completed',
+  scores: { health: 0, eco: 0, financial: 0 },
+}));
 
 const DashboardMetric = ({
   title,
