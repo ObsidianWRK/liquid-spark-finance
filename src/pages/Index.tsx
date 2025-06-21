@@ -4,7 +4,6 @@ import AccountCard from '@/features/accounts/components/AccountCard';
 import { Grid } from '@/features/accounts/components/Grid';
 import { QuickAccessRail } from '@/features/accounts/components/QuickAccessRail';
 import TransactionList from '@/components/TransactionList';
-import LiquidGlassTopMenuBar from '@/components/LiquidGlassTopMenuBar';
 import BudgetReportsPage from '@/features/budget/components/BudgetReportsPage';
 import SavingsGoals from '@/features/savings/components/SavingsGoals';
 import CalculatorList from '@/features/calculators/components/CalculatorList';
@@ -490,7 +489,6 @@ export default function Index() {
       <div>
         {/* WHY: Removed min-h-screen and flex - let content flow naturally */}
         <PerformanceMonitor />
-        <LiquidGlassTopMenuBar />
 
         <main
           className="pt-24 pb-safe"
