@@ -198,9 +198,9 @@ const chartSystem = {
     fontSize: {
       chartTitle: '20px',
       axisLabel: '12px',
-      dataLabel: '11px',
-      legend: '11px',
-      tooltip: '11px',
+      dataLabel: '12px',
+      legend: '12px',
+      tooltip: '12px',
     },
     fontWeight: {
       chartTitle: 600,
