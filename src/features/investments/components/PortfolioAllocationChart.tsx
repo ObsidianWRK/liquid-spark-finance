@@ -21,12 +21,12 @@ import {
 } from 'lucide-react';
 import { Button } from '@/shared/ui/button';
 import {
-  Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
 } from '@/shared/ui/card';
+import { UniversalCard } from '@/shared/ui/UniversalCard';
 
 interface PortfolioAllocationChartProps {
   familyId?: string;
@@ -285,7 +285,7 @@ const PortfolioAllocationChart: React.FC<PortfolioAllocationChartProps> = ({
       {/* Allocation Overview */}
       {allocationInsights && (
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
-          <Card>
+          <UniversalCard>
             <CardContent className="p-4">
               <div className="flex items-center gap-2 mb-2">
                 <PieChart className="w-4 h-4 text-blue-400" />
@@ -302,9 +302,9 @@ const PortfolioAllocationChart: React.FC<PortfolioAllocationChartProps> = ({
                 +{allocationInsights.growthRate.toFixed(1)}% this year
               </p>
             </CardContent>
-          </Card>
+          </UniversalCard>
 
-          <Card>
+          <UniversalCard>
             <CardContent className="p-4">
               <div className="flex items-center gap-2 mb-2">
                 <TrendingUp className="w-4 h-4 text-green-400" />
@@ -321,9 +321,9 @@ const PortfolioAllocationChart: React.FC<PortfolioAllocationChartProps> = ({
                     : 'Conservative'}
               </p>
             </CardContent>
-          </Card>
+          </UniversalCard>
 
-          <Card>
+          <UniversalCard>
             <CardContent className="p-4">
               <div className="flex items-center gap-2 mb-2">
                 <Target className="w-4 h-4 text-purple-400" />
@@ -340,9 +340,9 @@ const PortfolioAllocationChart: React.FC<PortfolioAllocationChartProps> = ({
                     : 'Concentrated'}
               </p>
             </CardContent>
-          </Card>
+          </UniversalCard>
 
-          <Card>
+          <UniversalCard>
             <CardContent className="p-4">
               <div className="flex items-center gap-2 mb-2">
                 <AlertTriangle className="w-4 h-4 text-yellow-400" />
@@ -357,7 +357,7 @@ const PortfolioAllocationChart: React.FC<PortfolioAllocationChartProps> = ({
                   : 'Well Balanced'}
               </p>
             </CardContent>
-          </Card>
+          </UniversalCard>
         </div>
       )}
 
@@ -417,7 +417,7 @@ const PortfolioAllocationChart: React.FC<PortfolioAllocationChartProps> = ({
       {/* Rebalancing Recommendations */}
       {showRebalanceSignals &&
         allocationInsights?.rebalanceNeeded.length > 0 && (
-          <Card className="mt-6">
+          <UniversalCard className="mt-6">
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 <AlertTriangle className="w-5 h-5 text-yellow-400" />
@@ -475,7 +475,7 @@ const PortfolioAllocationChart: React.FC<PortfolioAllocationChartProps> = ({
                 </p>
               </div>
             </CardContent>
-          </Card>
+          </UniversalCard>
         )}
 
       {/* Asset Class Details */}
@@ -486,7 +486,7 @@ const PortfolioAllocationChart: React.FC<PortfolioAllocationChartProps> = ({
           const drift = allocationInsights?.drifts[key] || 0;
 
           return (
-            <Card key={key}>
+            <UniversalCard key={key}>
               <CardContent className="p-4">
                 <div className="flex items-center justify-between mb-3">
                   <div className="flex items-center gap-2">
@@ -526,7 +526,7 @@ const PortfolioAllocationChart: React.FC<PortfolioAllocationChartProps> = ({
 
                 <p className="text-white/60 text-xs">{config.description}</p>
               </CardContent>
-            </Card>
+            </UniversalCard>
           );
         })}
       </div>

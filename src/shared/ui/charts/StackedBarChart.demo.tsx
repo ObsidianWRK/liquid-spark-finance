@@ -7,12 +7,12 @@ import React, { useState } from 'react';
 import { StackedBarChart, StackedBarDataPoint } from './StackedBarChart';
 import { Button } from '@/shared/ui/button';
 import {
-  Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
 } from '@/shared/ui/card';
+import { UniversalCard } from '@/shared/ui/UniversalCard';
 
 // Sample spending data
 const spendingData: StackedBarDataPoint[] = [
@@ -302,7 +302,7 @@ export const StackedBarChartDemo: React.FC = () => {
         </div>
 
         {/* Controls */}
-        <Card className="mb-8">
+        <UniversalCard className="mb-8">
           <CardHeader>
             <CardTitle>Demo Controls</CardTitle>
             <CardDescription>
@@ -377,10 +377,10 @@ export const StackedBarChartDemo: React.FC = () => {
               </div>
             </div>
           </CardContent>
-        </Card>
+        </UniversalCard>
 
         {/* Main Chart */}
-        <Card className="mb-8">
+        <UniversalCard className="mb-8">
           <CardContent className="p-6">
             <StackedBarChart
               data={getCurrentData()}
@@ -434,12 +434,12 @@ export const StackedBarChartDemo: React.FC = () => {
               }}
             />
           </CardContent>
-        </Card>
+        </UniversalCard>
 
         {/* Feature Showcase Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {/* Spending with Percentage Mode */}
-          <Card>
+          <UniversalCard>
             <CardHeader>
               <CardTitle className="text-lg">Spending Distribution</CardTitle>
               <CardDescription>
@@ -458,10 +458,10 @@ export const StackedBarChartDemo: React.FC = () => {
                 financialType="percentage"
               />
             </CardContent>
-          </Card>
+          </UniversalCard>
 
           {/* Portfolio with Custom Colors */}
-          <Card>
+          <UniversalCard>
             <CardHeader>
               <CardTitle className="text-lg">Asset Allocation</CardTitle>
               <CardDescription>Investment portfolio breakdown</CardDescription>
@@ -488,10 +488,10 @@ export const StackedBarChartDemo: React.FC = () => {
                 financialType="currency"
               />
             </CardContent>
-          </Card>
+          </UniversalCard>
 
           {/* Income Sources */}
-          <Card>
+          <UniversalCard>
             <CardHeader>
               <CardTitle className="text-lg">Income Streams</CardTitle>
               <CardDescription>Monthly revenue by source</CardDescription>
@@ -509,10 +509,10 @@ export const StackedBarChartDemo: React.FC = () => {
                 financialType="currency"
               />
             </CardContent>
-          </Card>
+          </UniversalCard>
 
           {/* Budget Comparison */}
-          <Card>
+          <UniversalCard>
             <CardHeader>
               <CardTitle className="text-lg">Budget Analysis</CardTitle>
               <CardDescription>Planned vs actual spending</CardDescription>
@@ -540,11 +540,11 @@ export const StackedBarChartDemo: React.FC = () => {
                 financialType="currency"
               />
             </CardContent>
-          </Card>
+          </UniversalCard>
         </div>
 
         {/* Features List */}
-        <Card className="mt-8">
+        <UniversalCard className="mt-8">
           <CardHeader>
             <CardTitle>StackedBarChart Features</CardTitle>
             <CardDescription>
@@ -580,7 +580,7 @@ export const StackedBarChartDemo: React.FC = () => {
               ))}
             </div>
           </CardContent>
-        </Card>
+        </UniversalCard>
       </div>
     </div>
   );

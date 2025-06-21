@@ -1,5 +1,5 @@
 import React, { memo, useMemo } from 'react';
-import { Card } from '@/shared/ui/card';
+import { UniversalCard } from '@/shared/ui/UniversalCard';
 import { cn } from '@/shared/lib/utils';
 
 // Types based on test requirements
@@ -149,11 +149,11 @@ const MetricCard = memo(
     value: string;
     subtitle?: string;
   }) => (
-    <Card className="bg-white/[0.02] border-white/[0.08] p-4">
+    <UniversalCard className="bg-white/[0.02] border-white/[0.08] p-4">
       <h3 className="text-white/80 text-sm font-medium mb-1">{title}</h3>
       <p className="text-white text-lg font-semibold">{value}</p>
       {subtitle && <p className="text-white/60 text-xs mt-1">{subtitle}</p>}
-    </Card>
+    </UniversalCard>
   )
 );
 
@@ -228,12 +228,12 @@ export const UnifiedInsightsPage = memo<UnifiedInsightsPageProps>(
 
         {/* Scores Section */}
         {features.showScores && (
-          <Card className="bg-white/[0.02] border-white/[0.08] p-6">
+          <UniversalCard className="bg-white/[0.02] border-white/[0.08] p-6">
             <h2 className="text-white text-lg font-semibold mb-4">
               Your Scores
             </h2>
             <ScoreDisplay scores={scores} />
-          </Card>
+          </UniversalCard>
         )}
 
         {/* Summary Metrics */}
@@ -258,11 +258,11 @@ export const UnifiedInsightsPage = memo<UnifiedInsightsPageProps>(
         {/* Categories Section */}
         {features.showCategories && (
           <div className={cn('grid', 'grid-cols-1 md:grid-cols-2', spacing)}>
-            <Card className="bg-white/[0.02] border-white/[0.08] p-6">
+            <UniversalCard className="bg-white/[0.02] border-white/[0.08] p-6">
               <CategoryBreakdown categories={stats.categories} />
-            </Card>
+            </UniversalCard>
 
-            <Card className="bg-white/[0.02] border-white/[0.08] p-6">
+            <UniversalCard className="bg-white/[0.02] border-white/[0.08] p-6">
               <h3 className="text-white text-sm font-medium mb-3">
                 Recent Activity
               </h3>
@@ -283,13 +283,13 @@ export const UnifiedInsightsPage = memo<UnifiedInsightsPageProps>(
                   </div>
                 ))}
               </div>
-            </Card>
+            </UniversalCard>
           </div>
         )}
 
         {/* Trends Section */}
         {features.showTrends && (
-          <Card className="bg-white/[0.02] border-white/[0.08] p-6">
+          <UniversalCard className="bg-white/[0.02] border-white/[0.08] p-6">
             <h2 className="text-white text-lg font-semibold mb-4">
               Spending Trends
             </h2>
@@ -299,13 +299,13 @@ export const UnifiedInsightsPage = memo<UnifiedInsightsPageProps>(
                 Data for {dataSource.timeframe} timeframe
               </p>
             </div>
-          </Card>
+          </UniversalCard>
         )}
 
         {/* Comprehensive variant additional content */}
         {variant === 'comprehensive' && (
           <div className={cn('grid', 'grid-cols-1 lg:grid-cols-2', spacing)}>
-            <Card className="bg-white/[0.02] border-white/[0.08] p-6">
+            <UniversalCard className="bg-white/[0.02] border-white/[0.08] p-6">
               <h3 className="text-white text-lg font-semibold mb-4">
                 Account Summary
               </h3>
@@ -327,9 +327,9 @@ export const UnifiedInsightsPage = memo<UnifiedInsightsPageProps>(
                   </div>
                 ))}
               </div>
-            </Card>
+            </UniversalCard>
 
-            <Card className="bg-white/[0.02] border-white/[0.08] p-6">
+            <UniversalCard className="bg-white/[0.02] border-white/[0.08] p-6">
               <h3 className="text-white text-lg font-semibold mb-4">
                 Financial Health
               </h3>
@@ -350,7 +350,7 @@ export const UnifiedInsightsPage = memo<UnifiedInsightsPageProps>(
                   Based on spending patterns, savings rate, and account balances
                 </p>
               </div>
-            </Card>
+            </UniversalCard>
           </div>
         )}
       </main>

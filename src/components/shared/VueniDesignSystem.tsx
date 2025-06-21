@@ -1,6 +1,6 @@
 import React, { memo, forwardRef } from 'react';
 import { cn } from '@/shared/lib/utils';
-import { Card } from '@/shared/ui/card';
+import { UniversalCard } from '@/shared/ui/UniversalCard';
 import { Button } from '@/shared/ui/button';
 
 // Enhanced Glass Card Component
@@ -52,7 +52,7 @@ export const VueniGlassCard = memo(
       ref
     ) => {
       return (
-        <Card
+        <UniversalCard
           ref={ref}
           className={cn(
             glassVariants[variant],
@@ -65,7 +65,7 @@ export const VueniGlassCard = memo(
           {...props}
         >
           {children}
-        </Card>
+        </UniversalCard>
       );
     }
   )

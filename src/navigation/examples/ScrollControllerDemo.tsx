@@ -24,7 +24,7 @@ import {
   useScrollController,
 } from '../hooks/useScrollController';
 import { Button } from '@/shared/ui/button';
-import { Card } from '@/shared/ui/card';
+import { UniversalCard } from '@/shared/ui/UniversalCard';
 import { cn } from '@/shared/lib/utils';
 
 // Demo Navigation Bar Component
@@ -99,7 +99,7 @@ const DemoContent: React.FC = () => {
 
       <div className="container mx-auto px-4 py-8 space-y-8">
         {/* Scroll State Card */}
-        <Card className="p-6 bg-black/40 border-white/20">
+        <UniversalCard className="p-6 bg-black/40 border-white/20">
           <h2 className="text-xl font-semibold text-white mb-4">
             Scroll State
           </h2>
@@ -148,10 +148,10 @@ const DemoContent: React.FC = () => {
               </div>
             </div>
           </div>
-        </Card>
+        </UniversalCard>
 
         {/* Virtual Keyboard Card */}
-        <Card className="p-6 bg-black/40 border-white/20">
+        <UniversalCard className="p-6 bg-black/40 border-white/20">
           <h2 className="text-xl font-semibold text-white mb-4">
             Virtual Keyboard
           </h2>
@@ -191,10 +191,10 @@ const DemoContent: React.FC = () => {
               className="w-full p-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-blue-500/50"
             />
           </div>
-        </Card>
+        </UniversalCard>
 
         {/* Performance Card */}
-        <Card className="p-6 bg-black/40 border-white/20">
+        <UniversalCard className="p-6 bg-black/40 border-white/20">
           <h2 className="text-xl font-semibold text-white mb-4">
             Scroll Performance
           </h2>
@@ -257,7 +257,7 @@ const DemoContent: React.FC = () => {
               </div>
             </div>
           </div>
-        </Card>
+        </UniversalCard>
 
         {/* Test Content - Long scrollable content */}
         <div className="space-y-4">
@@ -280,7 +280,7 @@ const DemoContent: React.FC = () => {
 
           {/* Generate scrollable content */}
           {Array.from({ length: 50 }, (_, i) => (
-            <Card key={i} className="p-6 bg-black/20 border-white/10">
+            <UniversalCard key={i} className="p-6 bg-black/20 border-white/10">
               <h3 className="text-lg font-medium text-white mb-2">
                 Section {i + 1}
               </h3>
@@ -307,7 +307,7 @@ const DemoContent: React.FC = () => {
                   </div>
                 </div>
               )}
-            </Card>
+            </UniversalCard>
           ))}
         </div>
       </div>
@@ -328,7 +328,7 @@ const CustomHookDemo: React.FC = () => {
     });
 
   return (
-    <Card className="p-6 bg-black/40 border-white/20">
+    <UniversalCard className="p-6 bg-black/40 border-white/20">
       <h2 className="text-xl font-semibold text-white mb-4">
         Custom Hook Demo
       </h2>
@@ -380,7 +380,7 @@ const CustomHookDemo: React.FC = () => {
           </Button>
         </div>
       </div>
-    </Card>
+    </UniversalCard>
   );
 };
 

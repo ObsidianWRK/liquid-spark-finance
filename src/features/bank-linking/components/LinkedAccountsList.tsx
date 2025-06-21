@@ -1,12 +1,12 @@
 import React, { useEffect } from 'react';
 import { useBankLinkingStore } from '../store';
 import {
-  Card,
   CardContent,
   CardHeader,
   CardTitle,
   CardFooter,
 } from '@/shared/ui/card';
+import { UniversalCard } from '@/shared/ui/UniversalCard';
 import { Button } from '@/shared/ui/button';
 import { Banknote, X } from 'lucide-react';
 import { cn } from '@/shared/lib/utils';
@@ -44,7 +44,7 @@ export const LinkedAccountsList: React.FC<{ className?: string }> = ({
   return (
     <div className={cn('space-y-4', className)}>
       {accounts.map((acc) => (
-        <Card key={acc.id}>
+        <UniversalCard key={acc.id}>
           <CardHeader className="flex-row items-center justify-between space-y-0">
             <div className="flex items-center gap-2">
               <Banknote className="text-primary" />
@@ -62,7 +62,7 @@ export const LinkedAccountsList: React.FC<{ className?: string }> = ({
           <CardFooter className="text-xs text-muted-foreground">
             Linked {new Date(acc.createdAt).toLocaleDateString()}
           </CardFooter>
-        </Card>
+        </UniversalCard>
       ))}
     </div>
   );

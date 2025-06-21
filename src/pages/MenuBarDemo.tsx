@@ -16,12 +16,12 @@ import {
   MenubarTrigger,
 } from '@/shared/ui/menubar';
 import {
-  Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
 } from '@/shared/ui/card';
+import { UniversalCard } from '@/shared/ui/UniversalCard';
 
 const MenuBarDemo = () => {
   const [selectedAction, setSelectedAction] = useState<string>('');
@@ -54,7 +54,7 @@ const MenuBarDemo = () => {
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
           {/* Traditional Menubar Demo */}
-          <Card className="liquid-glass-card border-0 bg-transparent">
+          <UniversalCard className="liquid-glass-card border-0 bg-transparent">
             <CardHeader>
               <CardTitle className="text-white">
                 Enhanced Radix UI Menubar
@@ -120,10 +120,10 @@ const MenuBarDemo = () => {
                 </MenubarMenu>
               </Menubar>
             </CardContent>
-          </Card>
+          </UniversalCard>
 
           {/* Action Log */}
-          <Card className="liquid-glass-card border-0 bg-transparent">
+          <UniversalCard className="liquid-glass-card border-0 bg-transparent">
             <CardHeader>
               <CardTitle className="text-white">Action Log</CardTitle>
               <CardDescription className="text-white/60">
@@ -151,12 +151,12 @@ const MenuBarDemo = () => {
                 )}
               </div>
             </CardContent>
-          </Card>
+          </UniversalCard>
         </div>
 
         {/* Features Grid */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
-          <Card className="liquid-glass-card border-0 bg-transparent">
+          <UniversalCard className="liquid-glass-card border-0 bg-transparent">
             <CardHeader>
               <CardTitle className="text-white text-lg">
                 🌊 Liquid Glass Effect
@@ -168,9 +168,9 @@ const MenuBarDemo = () => {
                 authentic liquid glass appearance.
               </p>
             </CardContent>
-          </Card>
+          </UniversalCard>
 
-          <Card className="liquid-glass-card border-0 bg-transparent">
+          <UniversalCard className="liquid-glass-card border-0 bg-transparent">
             <CardHeader>
               <CardTitle className="text-white text-lg">
                 ⚡ Smooth Animations
@@ -182,9 +182,9 @@ const MenuBarDemo = () => {
                 natural motion.
               </p>
             </CardContent>
-          </Card>
+          </UniversalCard>
 
-          <Card className="liquid-glass-card border-0 bg-transparent">
+          <UniversalCard className="liquid-glass-card border-0 bg-transparent">
             <CardHeader>
               <CardTitle className="text-white text-lg">
                 🎯 Interactive States
@@ -196,11 +196,11 @@ const MenuBarDemo = () => {
                 feedback.
               </p>
             </CardContent>
-          </Card>
+          </UniversalCard>
         </div>
 
         {/* Browser Compatibility Note */}
-        <Card className="liquid-glass-card border-0 bg-transparent">
+        <UniversalCard className="liquid-glass-card border-0 bg-transparent">
           <CardContent className="pt-6">
             <div className="text-center">
               <p className="text-white/60 text-sm">
@@ -215,7 +215,7 @@ const MenuBarDemo = () => {
               </p>
             </div>
           </CardContent>
-        </Card>
+        </UniversalCard>
       </div>
     </div>
   );

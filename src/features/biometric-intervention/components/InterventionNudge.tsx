@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { AlertTriangle, Heart, Clock, Shield, X } from 'lucide-react';
 import { Button } from '@/shared/ui/button';
-import { Card, CardContent } from '@/shared/ui/card';
+import { CardContent } from '@/shared/ui/card';
+import { UniversalCard } from '@/shared/ui/UniversalCard';
 import { cn } from '@/shared/lib/utils';
 import { InterventionEvent } from '../types';
 
@@ -60,7 +61,7 @@ export const InterventionNudge: React.FC<InterventionNudgeProps> = ({
   };
 
   return (
-    <Card
+    <UniversalCard
       className={cn(
         'fixed bottom-4 right-4 w-80 z-50 shadow-2xl border',
         getStressColor(event.stressLevel.score),
@@ -168,6 +169,6 @@ export const InterventionNudge: React.FC<InterventionNudgeProps> = ({
           </p>
         </div>
       </CardContent>
-    </Card>
+    </UniversalCard>
   );
 };
