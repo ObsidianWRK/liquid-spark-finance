@@ -2,6 +2,7 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ArrowLeft } from 'lucide-react';
 import { cn } from '@/shared/lib/utils';
+import { goBack } from '@/navigation/utils/backNavigation';
 
 interface BackButtonProps {
   /** Fallback path when no history is available */
@@ -53,15 +54,7 @@ export const BackButton: React.FC<BackButtonProps> = ({
     // Call custom onClick handler if provided
     onClick?.();
 
-    // Check if there's navigation history available
-    // window.history.length > 2 means user has navigated within the app
-    // (initial load creates 1 entry, first navigation creates 2)
-    if (window.history.length > 2) {
-      navigate(-1);
-    } else {
-      // No history available (direct link, page refresh), use fallback
-      navigate(fallbackPath);
-    }
+    goBack(navigate, fallbackPath);
   };
 
   // Style variants
@@ -121,11 +114,7 @@ export const IconBackButton: React.FC<
   const handleBack = () => {
     onClick?.();
 
-    if (window.history.length > 2) {
-      navigate(-1);
-    } else {
-      navigate(fallbackPath);
-    }
+    goBack(navigate, fallbackPath);
   };
 
   const sizes = {

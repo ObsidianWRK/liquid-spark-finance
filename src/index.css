@@ -310,12 +310,48 @@ html.dark [data-radix-dropdown-menu-item]:focus {
     @apply flex p-1 mb-6;
     /* Mobile: smaller padding */
     @apply rounded-2xl sm:rounded-3xl;
+    /* Desktop: enhanced spacing */
+    @apply lg:p-1.5 lg:mb-8;
   }
 
   .tab-button {
     @apply flex-1 py-2 px-3 rounded-xl text-xs font-semibold transition-all duration-300;
     /* Tablet: larger padding */
     @apply sm:py-3 sm:px-6 sm:rounded-2xl sm:text-sm;
+    /* Desktop: enhanced padding and spacing */
+    @apply lg:py-4 lg:px-8 lg:text-base lg:min-h-[52px];
+    /* Large desktop: maximum comfortable size */
+    @apply xl:py-5 xl:px-10 xl:min-h-[56px];
+  }
+
+  /* Enhanced desktop button groups spacing */
+  @media (min-width: 1024px) {
+    .tab-navigation {
+      gap: 0.375rem; /* 6px gap between tabs */
+    }
+    
+    .button-group {
+      gap: 0.75rem; /* 12px gap between button groups */
+    }
+    
+    .button-group-lg {
+      gap: 1rem; /* 16px gap for large button groups */
+    }
+  }
+  
+  /* Large desktop enhanced spacing */
+  @media (min-width: 1280px) {
+    .tab-navigation {
+      gap: 0.5rem; /* 8px gap between tabs */
+    }
+    
+    .button-group {
+      gap: 1rem; /* 16px gap between button groups */
+    }
+    
+    .button-group-lg {
+      gap: 1.25rem; /* 20px gap for large button groups */
+    }
   }
 
   /* Score circle responsiveness */

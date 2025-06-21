@@ -16,6 +16,7 @@ import {
 import { useNavigate } from 'react-router-dom';
 import { cn } from '@/shared/lib/utils';
 import { BackButton } from '@/shared/components/ui/BackButton';
+import PageContainer from '@/shared/components/PageContainer';
 
 const BudgetPlannerPage = () => {
   const navigate = useNavigate();
@@ -57,7 +58,7 @@ const BudgetPlannerPage = () => {
 
   if (loading) {
     return (
-      <div className="p-6 space-y-6">
+      <PageContainer className="p-6 space-y-6">
         <div className="animate-pulse">
           <div className="h-8 bg-white/[0.05] rounded w-64 mb-4"></div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -72,12 +73,12 @@ const BudgetPlannerPage = () => {
             ))}
           </div>
         </div>
-      </div>
+      </PageContainer>
     );
   }
 
   return (
-    <div className="p-4 sm:p-6 space-y-6 sm:space-y-8">
+    <PageContainer className="p-4 sm:p-6 space-y-6 sm:space-y-8">
       {/* Back Button */}
       <BackButton
         fallbackPath="/"
@@ -187,7 +188,7 @@ const BudgetPlannerPage = () => {
 
       {/* Budget Tracker Component */}
       <BudgetTracker familyId="demo_family" />
-    </div>
+    </PageContainer>
   );
 };
 

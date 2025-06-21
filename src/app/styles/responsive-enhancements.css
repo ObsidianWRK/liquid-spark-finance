@@ -1268,3 +1268,145 @@ main,
     margin-top: 0.5rem;
   }
 }
+
+/* ==============================================
+   Desktop Button Enhancements
+   ============================================== */
+
+/* Enhanced desktop button sizing and spacing */
+@media (min-width: 1024px) {
+  /* Standard buttons get enhanced desktop sizing */
+  .btn-desktop-enhanced,
+  button:not(.btn-mobile-only):not(.nav-item):not(.category-nav-button) {
+    min-height: 48px;
+    padding: 0.75rem 1.5rem;
+    font-size: 0.95rem;
+    border-radius: 0.75rem;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  
+  /* Large buttons for primary actions */
+  .btn-lg-desktop {
+    min-height: 56px;
+    padding: 1rem 2rem;
+    font-size: 1.1rem;
+    border-radius: 1rem;
+    font-weight: 600;
+  }
+  
+  /* Enhanced hover states for desktop */
+  .btn-desktop-enhanced:hover,
+  button:not(.btn-mobile-only):not(.nav-item):not(.category-nav-button):hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  }
+  
+  .btn-lg-desktop:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+  }
+  
+  /* Button groups enhanced spacing */
+  .btn-group-desktop {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+  }
+  
+  .btn-group-desktop-lg {
+    gap: 1.5rem;
+  }
+  
+  /* Form button improvements */
+  .form-actions-desktop {
+    display: flex;
+    gap: 1rem;
+    justify-content: flex-end;
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+  }
+  
+  .form-actions-desktop button {
+    min-width: 120px;
+  }
+  
+  /* Navigation button enhancements */
+  .nav-button-desktop {
+    min-height: 52px;
+    padding: 0.875rem 1.75rem;
+    font-size: 1rem;
+    border-radius: 1rem;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+  }
+  
+  .nav-button-desktop:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+  }
+}
+
+/* Large desktop refinements */
+@media (min-width: 1280px) {
+  .btn-desktop-enhanced,
+  button:not(.btn-mobile-only):not(.nav-item):not(.category-nav-button) {
+    min-height: 52px;
+    padding: 0.875rem 1.75rem;
+    font-size: 1rem;
+    border-radius: 0.875rem;
+  }
+  
+  .btn-lg-desktop {
+    min-height: 60px;
+    padding: 1.25rem 2.5rem;
+    font-size: 1.125rem;
+    border-radius: 1.125rem;
+  }
+  
+  .btn-group-desktop {
+    gap: 1.25rem;
+  }
+  
+  .btn-group-desktop-lg {
+    gap: 2rem;
+  }
+  
+  .form-actions-desktop {
+    gap: 1.25rem;
+    margin-top: 2.5rem;
+    padding-top: 2rem;
+  }
+  
+  .nav-button-desktop {
+    min-height: 56px;
+    padding: 1rem 2rem;
+    font-size: 1.05rem;
+    border-radius: 1.125rem;
+  }
+}
+
+/* Ultra-wide desktop optimizations */
+@media (min-width: 1536px) {
+  .btn-lg-desktop {
+    min-height: 64px;
+    padding: 1.5rem 3rem;
+    font-size: 1.25rem;
+    border-radius: 1.25rem;
+  }
+  
+  .btn-group-desktop-lg {
+    gap: 2.5rem;
+  }
+  
+  .form-actions-desktop {
+    gap: 1.5rem;
+    margin-top: 3rem;
+    padding-top: 2.5rem;
+  }
+  
+  .nav-button-desktop {
+    min-height: 60px;
+    padding: 1.125rem 2.25rem;
+    font-size: 1.1rem;
+  }
+}

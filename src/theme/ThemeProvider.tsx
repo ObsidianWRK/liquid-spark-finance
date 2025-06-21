@@ -2,15 +2,32 @@
  * Vueni Theme Provider - React Context for Unified Theme System
  *
  * Provides the unified theme to all components throughout the app.
- * Only supports dark mode as per design requirements.
+ * Now supports both light and dark modes with toggle functionality.
  */
 
-import React, { createContext, useContext, useMemo, ReactNode } from 'react';
+import React, { createContext, useContext, useMemo, ReactNode, useState, useEffect } from 'react';
 import {
   vueniTheme,
-  type VueniThemeContextValue,
   generateCSSProperties,
 } from './unified';
+import {
+  VueniComponents,
+  VueniThemeModes,
+  generateVueniCSSPropertiesWithTheme,
+} from './colors/vueniPalette';
+
+// Theme mode type
+export type ThemeMode = 'light' | 'dark';
+
+// Enhanced theme context value
+export interface VueniThemeContextValue {
+  mode: ThemeMode;
+  toggleMode: () => void;
+  setMode: (mode: ThemeMode) => void;
+  theme: typeof vueniTheme;
+  colors: typeof VueniComponents;
+  themeModeColors: typeof VueniThemeModes;
+}
 
 // Theme context
 const VueniThemeContext = createContext<VueniThemeContextValue | undefined>(
@@ -29,25 +46,62 @@ export const useVueniTheme = () => {
 // Theme provider props
 interface VueniThemeProviderProps {
   children: ReactNode;
+  defaultMode?: ThemeMode;
 }
+
+// Local storage key for theme preference
+const THEME_STORAGE_KEY = 'vueni-theme-mode';
 
 // Theme provider component
 export const VueniThemeProvider: React.FC<VueniThemeProviderProps> = ({
   children,
+  defaultMode = 'dark', // Vueni primarily dark mode by design
 }) => {
-  // Generate CSS custom properties
-  const cssProperties = useMemo(() => generateCSSProperties(), []);
+  // Initialize theme mode from localStorage or default
+  const [mode, setModeState] = useState<ThemeMode>(() => {
+    if (typeof window !== 'undefined') {
+      const savedMode = localStorage.getItem(THEME_STORAGE_KEY) as ThemeMode;
+      if (savedMode === 'light' || savedMode === 'dark') {
+        return savedMode;
+      }
+    }
+    return defaultMode;
+  });
+
+  // Theme mode management functions
+  const setMode = (newMode: ThemeMode) => {
+    setModeState(newMode);
+    if (typeof window !== 'undefined') {
+      localStorage.setItem(THEME_STORAGE_KEY, newMode);
+    }
+  };
+
+  const toggleMode = () => {
+    setMode(mode === 'dark' ? 'light' : 'dark');
+  };
+
+  // Generate CSS custom properties for current mode
+  const cssProperties = useMemo(() => {
+    return {
+      ...generateCSSProperties(),
+      ...generateVueniCSSPropertiesWithTheme(mode),
+    };
+  }, [mode]);
 
   // Theme context value
   const contextValue: VueniThemeContextValue = useMemo(
     () => ({
+      mode,
+      toggleMode,
+      setMode,
       theme: vueniTheme,
-      colorMode: 'dark',
+      colors: VueniComponents,
+      themeModeColors: VueniThemeModes,
     }),
-    []
+    [mode]
   );
 
-  // Apply CSS custom properties to document root
+  // Apply CSS custom properties and mode classes to document root
   React.useEffect(() => {
     const rootElement = document.documentElement;
 
@@ -56,9 +110,12 @@ export const VueniThemeProvider: React.FC<VueniThemeProviderProps> = ({
       rootElement.style.setProperty(property, value);
     });
 
-    // Ensure dark mode class is applied
-    rootElement.classList.add('dark');
-    rootElement.classList.remove('light'); // Remove any light mode remnants
+    // Apply theme mode classes
+    rootElement.classList.remove('light', 'dark');
+    rootElement.classList.add(mode);
+
+    // Set data attribute for easier CSS targeting
+    rootElement.setAttribute('data-theme', mode);
 
     // Set primary font family on body
     document.body.style.fontFamily = vueniTheme.typography.fontFamily.primary;
@@ -69,7 +126,7 @@ export const VueniThemeProvider: React.FC<VueniThemeProviderProps> = ({
         rootElement.style.removeProperty(property);
       });
     };
-  }, [cssProperties]);
+  }, [cssProperties, mode]);
 
   return (
     <VueniThemeContext.Provider value={contextValue}>
@@ -122,8 +179,8 @@ export const useSemanticColors = () => {
     // Status colors
     status: theme.colors.semantic.status,
 
-    // Chart colors
-    chart: theme.colors.semantic.chart,
+    // Chart colors (from chart system)
+    chart: theme.charts.colors,
   };
 };
 
@@ -155,7 +212,6 @@ export function withVueniTheme<P extends object>(
 
 // Re-export theme for direct access when needed
 export { vueniTheme } from './unified';
-export type { VueniTheme, VueniThemeContextValue } from './unified';
 
 // Default export
 export default VueniThemeProvider;
