@@ -3,6 +3,7 @@ import { Switch } from '@/shared/ui/switch';
 import { usePrivacyStore } from '../store';
 import { UniversalCard } from '@/shared/ui/UniversalCard';
 import { EyeOff } from 'lucide-react';
+import { getColor } from '@/theme/vueniPalette';
 
 export const PrivacyToggle: React.FC = () => {
   const hide = usePrivacyStore((s) => s.setting.hideAmounts);
@@ -14,7 +15,7 @@ export const PrivacyToggle: React.FC = () => {
       size="md"
       title="Privacy Settings"
       icon={EyeOff}
-      iconColor="#8b5cf6"
+      iconColor={getColor('semantic.chart.investments')}
     >
       <div className="flex items-center justify-between">
         <span className="text-sm text-white/70">Hide amounts</span>
