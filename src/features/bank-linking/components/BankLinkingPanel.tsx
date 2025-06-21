@@ -225,7 +225,7 @@ export const BankLinkingPanel: React.FC = () => {
       </div>
 
       {/* Scrollable Account List */}
-      <div className="max-h-96 overflow-y-auto space-y-2 mb-3 scrollbar-thin scrollbar-thumb-white/20 scrollbar-track-white/5">
+      <div className="max-h-52 overflow-y-auto space-y-2 mb-3 scrollbar-thin scrollbar-thumb-white/20 scrollbar-track-white/5">
         {MOCK_ACCOUNTS.map((account) => (
           <div
             key={account.id}
