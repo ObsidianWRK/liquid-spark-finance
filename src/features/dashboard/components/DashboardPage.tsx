@@ -30,7 +30,7 @@ import { SafeToSpendCard } from '@/features/safe-to-spend';
 import { WidgetsPanel } from '@/features/widgets';
 import { BiometricMonitorCard } from './health/BiometricMonitorCard';
 import { WellnessScoreCard } from './health/WellnessScoreCard';
-import { LinkedAccountsCard } from './LinkedAccountsCard';
+// import { LinkedAccountsCard } from './LinkedAccountsCard';
 
 const DashboardPage = () => {
   const navigate = useNavigate();
@@ -177,11 +177,11 @@ const DashboardPage = () => {
         </div>
       </div>
 
-      {/* Bank Linking & Mock Accounts */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <BankLinkingPanel />
-        <LinkedAccountsCard compact={false} />
-      </div>
+              {/* Bank Linking & Mock Accounts */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <BankLinkingPanel />
+          {/* <LinkedAccountsCard compact={false} /> */}
+        </div>
 
       {/* Subscriptions Detection */}
       <SubscriptionsPanel />

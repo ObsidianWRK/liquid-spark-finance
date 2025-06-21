@@ -260,3 +260,158 @@ if (process.env.NODE_ENV === 'development') {
   (window as any).resolveHoverConflicts = resolveHoverConflicts;
   (window as any).monitorHoverPerformance = monitorHoverPerformance;
 }
+
+/**
+ * Card Hover Effects Standardization
+ * Ensures all cards throughout the Vueni application have consistent hover effects
+ */
+
+// Standard hover effect classes used throughout Vueni
+export const VUENI_CARD_HOVER_CLASSES = {
+  // The standard hover class already used in LinkedAccountsCard and other components
+  subtle: 'card-hover-subtle',
+  
+  // Enhanced hover for interactive elements
+  enhanced: 'hover:bg-white/[0.05] hover:border-white/[0.15] hover:scale-[1.02] transition-all duration-300 ease-out',
+  
+  // Action hover for clickable cards
+  action: 'hover:bg-white/[0.08] hover:border-white/[0.25] hover:scale-[1.03] hover:shadow-lg hover:shadow-blue-500/10 transition-all duration-300 ease-out cursor-pointer',
+  
+  // Glow effect for special cards
+  glow: 'hover:bg-white/[0.06] hover:border-blue-400/[0.30] hover:scale-[1.02] hover:shadow-xl hover:shadow-blue-500/20 transition-all duration-400 ease-out',
+  
+  // Minimal for widgets
+  minimal: 'hover:bg-white/[0.04] hover:border-white/[0.12] transition-all duration-200 ease-out'
+} as const;
+
+// Components that need hover effects based on the screenshot
+export const SCREENSHOT_COMPONENTS = [
+  'SmartAutomatedSavings',
+  'SharedBudgets', 
+  'AskAnAdvisor',
+  'SafeToSpend',
+  'HomeScreenWidgets',
+  'AgeOfMoney',
+  'BiometricMonitor'
+] as const;
+
+// All card components throughout the application that should have hover effects
+export const ALL_CARD_COMPONENTS = [
+  // Dashboard cards (from screenshot)
+  'SmartAutomatedSavings',
+  'SharedBudgets',
+  'AskAnAdvisor', 
+  'SafeToSpend',
+  'HomeScreenWidgets',
+  'AgeOfMoney',
+  'BiometricMonitor',
+  'LinkedAccountsCard',
+  
+  // Account cards
+  'AccountCard',
+  'AccountOverviewCard',
+  'AccountSummaryCard',
+  'CompactAccountCard',
+  
+  // Transaction cards
+  'TransactionCard',
+  'TransactionListItem',
+  'TransactionSummaryCard',
+  
+  // Budget & Goals cards
+  'BudgetCard',
+  'BudgetCategoryCard',
+  'SavingsGoalCard',
+  'GoalProgressCard',
+  
+  // Credit & Investment cards
+  'CreditScoreCard',
+  'CreditMetricCard', 
+  'InvestmentCard',
+  'PortfolioCard',
+  
+  // Insights & Analytics cards
+  'InsightsCard',
+  'MetricCard',
+  'AnalyticsCard',
+  'TrendCard',
+  
+  // Health & Wellness cards
+  'HealthCard',
+  'WellnessCard',
+  'BiometricCard',
+  'EcoCard',
+  
+  // UI framework cards
+  'UniversalCard',
+  'UnifiedCard',
+  'GlassCard',
+  'EnhancedGlassCard',
+  
+  // Widget cards
+  'WidgetCard',
+  'CompactWidget',
+  'DashboardWidget',
+  
+  // Feature-specific cards
+  'CalculatorCard',
+  'PlannerCard',
+  'ReportCard',
+  'ProfileCard',
+  'SettingsCard',
+  'NotificationCard'
+] as const;
+
+// Check if element has proper hover effects
+export function hasProperHoverEffects(className: string): boolean {
+  const requiredPatterns = [
+    /hover:bg-/, // Background hover
+    /hover:border-/, // Border hover  
+    /transition/, // Smooth transitions
+  ];
+  
+  return requiredPatterns.every(pattern => pattern.test(className));
+}
+
+// Get standardized hover classes for different card types
+export function getStandardHoverClasses(cardType: 'dashboard' | 'widget' | 'action' | 'feature' = 'dashboard'): string {
+  switch (cardType) {
+    case 'dashboard':
+      return VUENI_CARD_HOVER_CLASSES.enhanced;
+    case 'widget':
+      return VUENI_CARD_HOVER_CLASSES.minimal;
+    case 'action':
+      return VUENI_CARD_HOVER_CLASSES.action;
+    case 'feature':
+      return VUENI_CARD_HOVER_CLASSES.glow;
+    default:
+      return VUENI_CARD_HOVER_CLASSES.subtle;
+  }
+}
+
+// Apply standard hover effects to a card component
+export function standardizeCardHoverClasses(
+  currentClasses: string,
+  cardType: 'dashboard' | 'widget' | 'action' | 'feature' = 'dashboard'
+): string {
+  // Remove existing hover classes
+  const baseClasses = currentClasses
+    .replace(/hover:[\w-\[\]\/\.]+/g, '')
+    .replace(/transition[\w-\[\]\/\.]*(\s+duration[\w-\[\]\/\.]*)?(\s+ease[\w-\[\]\/\.]*)?/g, '')
+    .replace(/\s+/g, ' ')
+    .trim();
+    
+  // Add standard hover classes
+  const hoverClasses = getStandardHoverClasses(cardType);
+  
+  return `${baseClasses} ${hoverClasses}`.replace(/\s+/g, ' ').trim();
+}
+
+export default {
+  VUENI_CARD_HOVER_CLASSES,
+  SCREENSHOT_COMPONENTS,
+  ALL_CARD_COMPONENTS,
+  hasProperHoverEffects,
+  getStandardHoverClasses,
+  standardizeCardHoverClasses
+};

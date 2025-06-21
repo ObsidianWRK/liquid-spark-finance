@@ -29,6 +29,7 @@ interface UnifiedCardProps {
   interactive?: boolean;
   onClick?: () => void;
   children?: ReactNode;
+  disableHover?: boolean;
   progress?: {
     value: number;
     max: number;
@@ -56,6 +57,7 @@ export const UnifiedCard = React.memo<UnifiedCardProps>(
     interactive = false,
     onClick,
     children,
+    disableHover = false,
     progress,
     badge,
   }) => {
@@ -129,7 +131,7 @@ export const UnifiedCard = React.memo<UnifiedCardProps>(
     };
 
     const cardClasses = cn(
-      'p-6 rounded-2xl border',
+      'p-6 rounded-2xl border relative overflow-hidden',
       {
         'bg-white/[0.02] border-white/[0.08]': variant === 'default',
         'bg-gradient-to-br from-green-500/10 to-emerald-600/10 border-green-500/20':
@@ -140,19 +142,43 @@ export const UnifiedCard = React.memo<UnifiedCardProps>(
           variant === 'financial',
       },
       {
-        'card-hover': interactive,
+        'hover:bg-white/[0.05] hover:border-white/[0.15] hover:scale-[1.02] transition-all duration-300 ease-out cursor-pointer': 
+          !disableHover && (interactive || onClick),
+        'hover:bg-white/[0.04] hover:border-white/[0.12] transition-all duration-300 ease-out': 
+          !disableHover && !interactive && !onClick,
+        
+        'hover:from-green-500/15 hover:to-emerald-600/15 hover:border-green-500/30 hover:shadow-lg hover:shadow-green-500/10': 
+          !disableHover && variant === 'eco',
+        'hover:from-blue-500/15 hover:to-cyan-600/15 hover:border-blue-500/30 hover:shadow-lg hover:shadow-blue-500/10': 
+          !disableHover && variant === 'wellness',
+        'hover:from-purple-500/15 hover:to-indigo-600/15 hover:border-purple-500/30 hover:shadow-lg hover:shadow-purple-500/10': 
+          !disableHover && variant === 'financial',
+        
+        'focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500': 
+          interactive || onClick,
       },
       className
     );
 
     return (
-      <div className={cardClasses} onClick={interactive ? onClick : undefined}>
+      <div 
+        className={cardClasses} 
+        onClick={interactive || onClick ? onClick : undefined}
+        role={interactive || onClick ? 'button' : 'region'}
+        tabIndex={interactive || onClick ? 0 : undefined}
+        onKeyDown={interactive || onClick ? (e: React.KeyboardEvent) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            onClick?.();
+          }
+        } : undefined}
+      >
         {(icon || title || getTrendIcon() || badge) && (
           <div className="flex items-center justify-between mb-4">
             <div className="flex items-center gap-3">
               {icon && (
                 <div
-                  className="w-10 h-10 rounded-xl flex items-center justify-center bg-white/[0.05]"
+                  className="w-10 h-10 rounded-xl flex items-center justify-center bg-white/[0.05] hover:bg-white/[0.08] transition-all duration-200"
                   style={{ color: iconColor }}
                 >
                   {renderIcon()}

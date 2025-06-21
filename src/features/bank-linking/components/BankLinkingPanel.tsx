@@ -9,6 +9,7 @@ import {
 } from 'lucide-react';
 import { formatCurrency } from '@/shared/utils/formatters';
 import { cn } from '@/shared/lib/utils';
+import { mockAccountsEnhanced, mockInstitutions } from '@/services/mockData';
 
 interface MockAccount {
   id: string;
@@ -33,73 +34,118 @@ interface MockAccount {
   };
 }
 
-// Mock data - always display these accounts
-const MOCK_ACCOUNTS: MockAccount[] = [
-  {
-    id: 'acc_chase_checking_001',
-    institution: {
-      name: 'Chase Bank',
-      id: 'ins_chase',
-      color: '#004879',
-    },
-    type: 'checking',
-    name: 'Chase Total Checking',
-    mask: '4521',
-    balance: 4250.75,
-    availableBalance: 4250.75,
-    currency: 'USD',
-    isActive: true,
-    lastTransaction: {
-      merchant: 'Starbucks',
-      amount: -5.67,
-      date: '2024-01-15T09:30:00Z',
-      pending: false,
-    },
-  },
-  {
-    id: 'acc_bofa_savings_001',
-    institution: {
-      name: 'Bank of America',
-      id: 'ins_bofa',
-      color: '#E31837',
-    },
-    type: 'savings',
-    name: 'Advantage Savings',
-    mask: '8932',
-    balance: 15750.42,
-    availableBalance: 15750.42,
-    currency: 'USD',
-    isActive: true,
-    lastTransaction: {
-      merchant: 'Interest Payment',
-      amount: 18.25,
-      date: '2024-01-01T00:00:00Z',
-      pending: false,
-    },
-  },
-  {
-    id: 'acc_wells_credit_001',
-    institution: {
-      name: 'Wells Fargo',
-      id: 'ins_wells',
-      color: '#D50032',
-    },
-    type: 'credit',
-    name: 'Cash Wise Visa',
-    mask: '1847',
-    balance: -1285.63,
-    availableBalance: 3714.37,
-    currency: 'USD',
-    isActive: true,
-    creditLimit: 5000.0,
-    lastTransaction: {
-      merchant: 'Amazon',
-      amount: -89.99,
-      date: '2024-01-14T14:22:00Z',
-      pending: true,
-    },
-  },
-];
+// Transform enhanced mock data to panel format
+const transformMockAccounts = (): MockAccount[] => {
+  return mockAccountsEnhanced.map((account, index) => {
+    const institutionName = account.institutionName || 'Chase Bank';
+    const institutionData = institutionName in mockInstitutions 
+      ? mockInstitutions[institutionName as keyof typeof mockInstitutions]
+      : { color: '#004879' };
+    
+    // Map account subtypes to panel types
+    let panelType: 'checking' | 'savings' | 'credit' | 'investment' = 'checking';
+    if (account.accountSubtype === 'checking') panelType = 'checking';
+    else if (account.accountSubtype === 'savings' || account.accountSubtype === 'cd') panelType = 'savings';
+    else if (account.accountSubtype === 'credit_card' || account.accountSubtype === 'line_of_credit') panelType = 'credit';
+    else if (account.accountSubtype === 'brokerage' || account.accountSubtype === '401k' || 
+             account.accountSubtype === 'ira' || account.accountSubtype === 'roth_ira' || 
+             account.accountSubtype === '529') panelType = 'investment';
+    else if (account.accountType === 'loan' || account.accountSubtype === 'student' || account.accountSubtype === 'auto') panelType = 'credit';
+    
+    return {
+      id: account.id,
+      institution: {
+        name: account.institutionName || 'Unknown Bank',
+        id: `ins_${account.institutionName?.toLowerCase().replace(/\s+/g, '_')}`,
+        color: institutionData?.color || '#004879',
+      },
+      type: panelType,
+      name: account.name,
+      mask: account.metadata?.accountNumber?.replace('****', '') || index.toString().padStart(4, '0'),
+      balance: account.balance,
+      availableBalance: account.availableBalance,
+      currency: account.currency,
+      isActive: account.isActive,
+      creditLimit: account.metadata?.creditLimit,
+      lastTransaction: {
+        merchant: 'Recent Transaction',
+        amount: account.metadata?.sparklineData?.[account.metadata.sparklineData.length - 1] || 0,
+        date: new Date().toISOString(),
+        pending: false,
+      },
+    };
+  });
+};
+
+// Use all mock accounts when enabled
+const MOCK_ACCOUNTS: MockAccount[] = import.meta.env.VITE_USE_MOCK_ACCOUNTS === 'true' || import.meta.env.DEV
+  ? transformMockAccounts()
+  : [
+      {
+        id: 'acc_chase_checking_001',
+        institution: {
+          name: 'Chase Bank',
+          id: 'ins_chase',
+          color: '#004879',
+        },
+        type: 'checking',
+        name: 'Chase Total Checking',
+        mask: '4521',
+        balance: 4250.75,
+        availableBalance: 4250.75,
+        currency: 'USD',
+        isActive: true,
+        lastTransaction: {
+          merchant: 'Starbucks',
+          amount: -5.67,
+          date: '2024-01-15T09:30:00Z',
+          pending: false,
+        },
+      },
+      {
+        id: 'acc_bofa_savings_001',
+        institution: {
+          name: 'Bank of America',
+          id: 'ins_bofa',
+          color: '#E31837',
+        },
+        type: 'savings',
+        name: 'Advantage Savings',
+        mask: '8932',
+        balance: 15750.42,
+        availableBalance: 15750.42,
+        currency: 'USD',
+        isActive: true,
+        lastTransaction: {
+          merchant: 'Interest Payment',
+          amount: 18.25,
+          date: '2024-01-01T00:00:00Z',
+          pending: false,
+        },
+      },
+      {
+        id: 'acc_wells_credit_001',
+        institution: {
+          name: 'Wells Fargo',
+          id: 'ins_wells',
+          color: '#D50032',
+        },
+        type: 'credit',
+        name: 'Cash Wise Visa',
+        mask: '1847',
+        balance: -1285.63,
+        availableBalance: 3714.37,
+        currency: 'USD',
+        isActive: true,
+        creditLimit: 5000.0,
+        lastTransaction: {
+          merchant: 'Amazon',
+          amount: -89.99,
+          date: '2024-01-14T14:22:00Z',
+          pending: true,
+        },
+      },
+    ];
 
 export const BankLinkingPanel: React.FC = () => {
   const getAccountIcon = (type: string) => {
@@ -179,7 +225,7 @@ export const BankLinkingPanel: React.FC = () => {
       </div>
 
       {/* Scrollable Account List */}
-      <div className="max-h-32 overflow-y-auto space-y-2 mb-3 scrollbar-thin scrollbar-thumb-white/20 scrollbar-track-white/5">
+      <div className="max-h-96 overflow-y-auto space-y-2 mb-3 scrollbar-thin scrollbar-thumb-white/20 scrollbar-track-white/5">
         {MOCK_ACCOUNTS.map((account) => (
           <div
             key={account.id}
