@@ -2,12 +2,6 @@
 
 // Transaction List Components
 export { default as VueniUnifiedTransactionList } from './VueniUnifiedTransactionList';
-export type {
-  VueniUnifiedTransactionListProps,
-  VueniTransaction,
-  VueniTransactionFeatures,
-  TransactionVariant,
-} from './VueniUnifiedTransactionList';
 
 // Score Circle Components
 export { SharedScoreCircle } from './SharedScoreCircle';
