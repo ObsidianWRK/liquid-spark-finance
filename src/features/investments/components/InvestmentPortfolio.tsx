@@ -16,6 +16,7 @@ import {
 import { investmentService } from '@/features/investments/api/investmentService';
 import { Portfolio, Holding } from '@/types/investments';
 import { cn } from '@/shared/lib/utils';
+import { UniversalCard } from '@/shared/ui/UniversalCard';
 
 interface InvestmentPortfolioProps {
   familyId: string;
@@ -147,7 +148,7 @@ const InvestmentPortfolio = ({
   const renderOverview = () => (
     <div className="space-y-4 sm:space-y-6">
       {/* Portfolio Summary */}
-      <div className="bg-white/[0.02] rounded-2xl border border-white/[0.08] p-4 sm:p-6 card-hover">
+      <UniversalCard variant="glass" interactive className="p-4 sm:p-6">
         <h3 className="text-lg sm:text-xl font-bold text-white mb-4 sm:mb-6 flex items-center gap-3">
           <PieChart className="w-5 h-5 sm:w-6 sm:h-6 text-blue-400" />
           Portfolio Summary
@@ -190,10 +191,10 @@ const InvestmentPortfolio = ({
             </p>
           </div>
         </div>
-      </div>
+      </UniversalCard>
 
       {/* Performance Metrics */}
-      <div className="bg-white/[0.02] rounded-2xl border border-white/[0.08] p-4 sm:p-6 card-hover">
+      <UniversalCard variant="glass" interactive className="p-4 sm:p-6">
         <h3 className="text-base sm:text-lg font-bold text-white mb-3 sm:mb-4 flex items-center gap-3">
           <BarChart3 className="w-4 h-4 sm:w-5 sm:h-5 text-blue-400" />
           Performance Metrics
@@ -242,10 +243,10 @@ const InvestmentPortfolio = ({
             </p>
           </div>
         </div>
-      </div>
+      </UniversalCard>
 
       {/* Asset Allocation */}
-      <div className="bg-white/[0.02] rounded-2xl border border-white/[0.08] p-4 sm:p-6 card-hover">
+      <UniversalCard variant="glass" interactive className="p-4 sm:p-6">
         <h3 className="text-base sm:text-lg font-bold text-white mb-3 sm:mb-4 flex items-center gap-3">
           <Target className="w-4 h-4 sm:w-5 sm:h-5 text-blue-400" />
           Asset Allocation
@@ -303,10 +304,10 @@ const InvestmentPortfolio = ({
             </div>
           </div>
         )}
-      </div>
+      </UniversalCard>
 
       {/* Risk Metrics */}
-      <div className="bg-white/[0.02] rounded-2xl border border-white/[0.08] p-4 sm:p-6 card-hover">
+      <UniversalCard variant="glass" interactive className="p-4 sm:p-6">
         <h3 className="text-base sm:text-lg font-bold text-white mb-3 sm:mb-4 flex items-center gap-3">
           <AlertTriangle className="w-4 h-4 sm:w-5 sm:h-5 text-yellow-400" />
           Risk Analysis
@@ -376,7 +377,7 @@ const InvestmentPortfolio = ({
             </p>
           </div>
         </div>
-      </div>
+      </UniversalCard>
     </div>
   );
 
@@ -600,7 +601,7 @@ const InvestmentPortfolio = ({
   const renderPerformance = () => (
     <div className="space-y-6">
       {/* Performance Overview */}
-      <div className="bg-white/[0.02] rounded-2xl border border-white/[0.08] p-4 sm:p-6 card-hover">
+      <UniversalCard variant="glass" interactive className="p-4 sm:p-6">
         <h3 className="text-lg sm:text-xl font-bold text-white mb-4 sm:mb-6 flex items-center gap-3">
           <BarChart3 className="w-5 h-5 sm:w-6 sm:h-6 text-blue-400" />
           Performance Analysis
@@ -638,10 +639,10 @@ const InvestmentPortfolio = ({
             <p className="text-xs sm:text-sm text-white/60">Peak to trough</p>
           </div>
         </div>
-      </div>
+      </UniversalCard>
 
       {/* Detailed Performance Metrics */}
-      <div className="bg-white/[0.02] rounded-2xl border border-white/[0.08] p-4 sm:p-6 card-hover">
+      <UniversalCard variant="glass" interactive className="p-4 sm:p-6">
         <h3 className="text-base sm:text-lg font-bold text-white mb-3 sm:mb-4 flex items-center gap-3">
           <TrendingUp className="w-4 h-4 sm:w-5 sm:h-5 text-green-400" />
           Time Period Returns
@@ -667,11 +668,11 @@ const InvestmentPortfolio = ({
             </div>
           ))}
         </div>
-      </div>
+      </UniversalCard>
 
       {/* Performance Attribution */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <div className="bg-white/[0.02] rounded-2xl border border-white/[0.08] p-4 sm:p-6 card-hover">
+        <UniversalCard variant="glass" interactive className="p-4 sm:p-6">
           <h3 className="text-base sm:text-lg font-bold text-white mb-3 sm:mb-4 flex items-center gap-3">
             <Target className="w-4 h-4 sm:w-5 sm:h-5 text-purple-400" />
             Top Performers
@@ -700,9 +701,9 @@ const InvestmentPortfolio = ({
                 </div>
               ))}
           </div>
-        </div>
+        </UniversalCard>
 
-        <div className="bg-white/[0.02] rounded-2xl border border-white/[0.08] p-4 sm:p-6 card-hover">
+        <UniversalCard variant="glass" interactive className="p-4 sm:p-6">
           <h3 className="text-base sm:text-lg font-bold text-white mb-3 sm:mb-4 flex items-center gap-3">
             <AlertTriangle className="w-4 h-4 sm:w-5 sm:h-5 text-red-400" />
             Underperformers
@@ -731,11 +732,11 @@ const InvestmentPortfolio = ({
                 </div>
               ))}
           </div>
-        </div>
+        </UniversalCard>
       </div>
 
       {/* Benchmark Comparison */}
-      <div className="bg-white/[0.02] rounded-2xl border border-white/[0.08] p-4 sm:p-6 card-hover">
+      <UniversalCard variant="glass" interactive className="p-4 sm:p-6">
         <h3 className="text-base sm:text-lg font-bold text-white mb-3 sm:mb-4 flex items-center gap-3">
           <Activity className="w-4 h-4 sm:w-5 sm:h-5 text-blue-400" />
           Benchmark Comparison
@@ -763,7 +764,7 @@ const InvestmentPortfolio = ({
             <p className="text-white/60 text-xs">vs Benchmark</p>
           </div>
         </div>
-      </div>
+      </UniversalCard>
     </div>
   );
 
@@ -778,9 +779,11 @@ const InvestmentPortfolio = ({
       </div>
 
       {portfolio.holdings.map((holding) => (
-        <div
+        <UniversalCard
           key={holding.id}
-          className="bg-white/[0.02] rounded-2xl border border-white/[0.08] p-4 card-hover"
+          variant="glass"
+          interactive
+          className="p-4"
         >
           <div className="flex items-center gap-4">
             {/* Symbol & Icon */}
@@ -857,7 +860,7 @@ const InvestmentPortfolio = ({
               </div>
             </div>
           </div>
-        </div>
+        </UniversalCard>
       ))}
     </div>
   );
