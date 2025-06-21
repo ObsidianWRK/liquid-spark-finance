@@ -79,10 +79,6 @@ export const LinkedAccountsCard: React.FC<LinkedAccountsCardProps> = ({
       import.meta.env.DEV || // Always show in development
       true; // Always show for staging/demo
 
-    console.log('Should use mocks:', shouldUseMocks, {
-      VITE_USE_MOCK_ACCOUNTS: import.meta.env.VITE_USE_MOCK_ACCOUNTS,
-      DEV: import.meta.env.DEV,
-    });
     setUseMocks(shouldUseMocks);
   }, []);
 
@@ -102,8 +98,6 @@ export const LinkedAccountsCard: React.FC<LinkedAccountsCardProps> = ({
         await new Promise((resolve) => setTimeout(resolve, 500));
 
         const transformedAccounts = transformMockAccounts();
-        console.log('Mock accounts loaded:', transformedAccounts.length, 'accounts');
-        console.log('First few accounts:', transformedAccounts.slice(0, 5));
         setAccounts(transformedAccounts);
       } catch (err) {
         console.error('Failed to load mock accounts:', err);
@@ -348,7 +342,7 @@ export const LinkedAccountsCard: React.FC<LinkedAccountsCardProps> = ({
         className
       )}
     >
-      {console.log('Rendering accounts:', accounts.length, 'total')}
+
       <div className="flex items-center justify-between mb-6">
         <div className="flex items-center gap-3">
           <div className="w-10 h-10 rounded-xl bg-white/[0.05] flex items-center justify-center">
