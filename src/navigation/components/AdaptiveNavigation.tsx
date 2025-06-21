@@ -8,7 +8,7 @@ import NavRail from './NavRail';
  * Automatically selects the appropriate navigation variant based on viewport size:
  * - Mobile (<640px): BottomNav
  * - Tablet (640-1024px): NavRail
- * - Desktop (≥1024px): No navigation
+ * - Desktop (≥1024px): BottomNav
  */
 const AdaptiveNavigation: React.FC = () => {
   const { isMobile, isTablet, isDesktop } = useBreakpoint();
@@ -16,13 +16,10 @@ const AdaptiveNavigation: React.FC = () => {
   return (
     <div data-testid="adaptive-navigation">
       {/* Mobile Navigation */}
-      {isMobile && <BottomNav />}
+      {(isMobile || isDesktop) && <BottomNav />}
 
       {/* Tablet Navigation */}
       {isTablet && <NavRail />}
-
-      {/* Desktop Navigation - none */}
-      {isDesktop && null}
     </div>
   );
 };

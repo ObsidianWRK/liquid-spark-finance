@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { budgetService } from '@/features/budget/api/budgetService';
 import { Budget, SavingsGoal } from '@/types/budgets';
 import BudgetTracker from './BudgetTracker';
@@ -17,8 +17,15 @@ import { useNavigate } from 'react-router-dom';
 import { cn } from '@/shared/lib/utils';
 import { BackButton } from '@/shared/components/ui/BackButton';
 
+// Hook to navigate to the Savings Goals page
+export const useNewGoalNavigation = () => {
+  const navigate = useNavigate();
+  return React.useCallback(() => navigate('/savings'), [navigate]);
+};
+
 const BudgetPlannerPage = () => {
   const navigate = useNavigate();
+  const handleNewGoalClick = useNewGoalNavigation();
   const [budget, setBudget] = useState<Budget | null>(null);
   const [goals, setGoals] = useState<SavingsGoal[]>([]);
   const [loading, setLoading] = useState(true);
@@ -98,7 +105,11 @@ const BudgetPlannerPage = () => {
           </p>
         </div>
         <div className="flex items-center gap-3 flex-wrap">
-          <button className="bg-green-500 hover:bg-green-600 text-white px-3 sm:px-4 py-2 rounded-xl transition-colors flex items-center gap-2 text-sm sm:text-base whitespace-nowrap">
+          <button
+            type="button"
+            onClick={handleNewGoalClick}
+            className="bg-green-500 hover:bg-green-600 text-white px-3 sm:px-4 py-2 rounded-xl transition-colors flex items-center gap-2 text-sm sm:text-base whitespace-nowrap"
+          >
             <Target className="w-4 h-4" />
             New Goal
           </button>

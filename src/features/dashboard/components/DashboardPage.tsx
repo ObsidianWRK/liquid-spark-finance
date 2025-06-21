@@ -24,7 +24,6 @@ import { BillNegotiationPanel } from '@/features/bill-negotiation';
 import { SmartSavingsPanel } from '@/features/smart-savings';
 import { SharedBudgetsPanel } from '@/features/shared-budgets';
 import { AgeOfMoneyCard } from '@/features/age-of-money';
-import { PrivacyToggle } from '@/features/privacy-hide-amounts';
 import { AdvisorChatPanel } from '@/features/advisor-chat';
 import { SafeToSpendCard } from '@/features/safe-to-spend';
 import { WidgetsPanel } from '@/features/widgets';
@@ -140,8 +139,6 @@ const DashboardPage = () => {
           <button className="bg-white/[0.05] hover:bg-white/[0.08] text-white/80 hover:text-white p-2 rounded-xl transition-colors border border-white/[0.08] flex items-center justify-center">
             <Settings className="w-4 h-4" />
           </button>
-
-          <PrivacyToggle />
         </div>
       </div>
 

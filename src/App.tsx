@@ -1,5 +1,5 @@
 import React, { Suspense, useEffect } from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { AdaptiveNavigation } from '@/navigation';
 import { ScrollControllerProvider } from '@/navigation/context/ScrollControllerContext';
 import { BiometricsProvider } from '@/providers/BiometricsProvider';
@@ -181,11 +181,14 @@ function App() {
                       path="/investment-tracker"
                       element={<InvestmentTrackerPage />}
                     />
-                    <Route path="/goal-setting" element={<SavingsGoals />} />
                     <Route path="/credit" element={<CreditScorePage />} />
                     <Route path="/savings" element={<SavingsGoals />} />
 
                     {/* Legacy Route Redirects */}
+                    <Route
+                      path="/goal-setting"
+                      element={<Navigate to="/savings" replace />}
+                    />
                     <Route path="/credit-score" element={<CreditScorePage />} />
                   </Routes>
                 </Suspense>

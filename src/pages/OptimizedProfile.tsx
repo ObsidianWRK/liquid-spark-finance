@@ -137,8 +137,12 @@ const OptimizedProfile = React.memo(() => {
   );
 
   const handleBackToDashboard = useCallback(() => {
-    // Back to Dashboard navigation
-    navigate('/', { replace: true });
+    // Prefer navigating back if history is available
+    if (window.history.length > 1) {
+      navigate(-1);
+    } else {
+      navigate('/');
+    }
   }, [navigate]);
 
   // Memoized active section component
