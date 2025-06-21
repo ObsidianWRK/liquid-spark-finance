@@ -72,9 +72,11 @@ export const LinkedAccountsCard: React.FC<LinkedAccountsCardProps> = ({
   // Check if we should use mock data
   useEffect(() => {
     const shouldUseMocks =
+      import.meta.env.VITE_USE_MOCK_ACCOUNTS === 'true' ||
       import.meta.env.VITE_USE_MOCKS === 'true' ||
       process.env.NEXT_PUBLIC_USE_MOCKS === 'true' ||
       window.location.search.includes('mock=true') ||
+      import.meta.env.DEV || // Always show in development
       true; // Always show for staging/demo
 
     setUseMocks(shouldUseMocks);
@@ -244,7 +246,7 @@ export const LinkedAccountsCard: React.FC<LinkedAccountsCardProps> = ({
             Enable mock mode to see sample accounts
           </p>
           <p className="text-xs text-white/40">
-            Add ?mock=true to URL or set VITE_USE_MOCKS=true
+            Add ?mock=true to URL or set VITE_USE_MOCK_ACCOUNTS=true
           </p>
         </div>
       </CardSkeleton>
