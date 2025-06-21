@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { budgetService } from '@/features/budget/api/budgetService';
 import { Budget, SavingsGoal } from '@/types/budgets';
 import BudgetTracker from './BudgetTracker';
+import { UniversalCard } from '@/shared/ui/UniversalCard';
 import {
   Plus,
   Trash2,
@@ -111,7 +112,7 @@ const BudgetPlannerPage = () => {
       {/* Quick Stats */}
       {budget && (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
-          <div className="bg-white/[0.02] rounded-2xl border border-white/[0.08] p-4 sm:p-6 card-hover">
+          <UniversalCard className="p-4 sm:p-6 rounded-2xl card-hover">
             <div className="flex items-center gap-3 mb-2">
               <BarChart3 className="w-5 h-5 text-blue-400" />
               <p className="text-white/60 text-sm">Monthly Budget</p>
@@ -119,9 +120,9 @@ const BudgetPlannerPage = () => {
             <p className="text-2xl font-bold text-white">
               {formatCurrency(budget.totalBudgeted)}
             </p>
-          </div>
+          </UniversalCard>
 
-          <div className="bg-white/[0.02] rounded-2xl border border-white/[0.08] p-4 sm:p-6 card-hover">
+          <UniversalCard className="p-4 sm:p-6 rounded-2xl card-hover">
             <div className="flex items-center gap-3 mb-2">
               <TrendingUp className="w-5 h-5 text-red-400" />
               <p className="text-white/60 text-sm">Total Spent</p>
@@ -133,9 +134,9 @@ const BudgetPlannerPage = () => {
               {((budget.totalSpent / budget.totalBudgeted) * 100).toFixed(1)}%
               of budget
             </p>
-          </div>
+          </UniversalCard>
 
-          <div className="bg-white/[0.02] rounded-2xl border border-white/[0.08] p-4 sm:p-6 card-hover">
+          <UniversalCard className="p-4 sm:p-6 rounded-2xl card-hover">
             <div className="flex items-center gap-3 mb-2">
               <Target className="w-5 h-5 text-green-400" />
               <p className="text-white/60 text-sm">Remaining</p>
@@ -149,9 +150,9 @@ const BudgetPlannerPage = () => {
               )}
               % available
             </p>
-          </div>
+          </UniversalCard>
 
-          <div className="bg-white/[0.02] rounded-2xl border border-white/[0.08] p-4 sm:p-6 card-hover">
+          <UniversalCard className="p-4 sm:p-6 rounded-2xl card-hover">
             <div className="flex items-center gap-3 mb-2">
               <AlertCircle className="w-5 h-5 text-yellow-400" />
               <p className="text-white/60 text-sm">Active Goals</p>
@@ -165,7 +166,7 @@ const BudgetPlannerPage = () => {
               }{' '}
               on track
             </p>
-          </div>
+          </UniversalCard>
         </div>
       )}
 

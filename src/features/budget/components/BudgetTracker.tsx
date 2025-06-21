@@ -19,6 +19,7 @@ import { Budget, BudgetCategory, SavingsGoal } from '@/shared/types/budgets';
 import { cn } from '@/shared/lib/utils';
 import { mockData } from '@/services/mockData';
 import { TransactionCategory } from '@/shared/types/transactions';
+import { UniversalCard } from '@/shared/ui/UniversalCard';
 
 interface BudgetTrackerProps {
   familyId: string;
@@ -123,20 +124,34 @@ const BudgetTracker = ({ familyId, className }: BudgetTrackerProps) => {
         });
 
         // Accumulate expenses per category
-        expenses.forEach(txn => {
+        expenses.forEach((txn) => {
           const catKey = mapCategory(txn.category.name || 'other');
-          const category = budgetToPopulate.categories.find((c: BudgetCategory) => c.categoryName === catKey);
+          const category = budgetToPopulate.categories.find(
+            (c: BudgetCategory) => c.categoryName === catKey
+          );
           if (category) {
             const amount = Math.abs(txn.amount);
             category.spentAmount += amount;
-            category.remainingAmount = Math.max(category.budgetedAmount - category.spentAmount, 0);
-            category.overageAmount = Math.max(category.spentAmount - category.budgetedAmount, 0);
+            category.remainingAmount = Math.max(
+              category.budgetedAmount - category.spentAmount,
+              0
+            );
+            category.overageAmount = Math.max(
+              category.spentAmount - category.budgetedAmount,
+              0
+            );
           }
         });
 
         // Recalculate totals
-        budgetToPopulate.totalSpent = budgetToPopulate.categories.reduce((sum: number, c: BudgetCategory) => sum + c.spentAmount, 0);
-        budgetToPopulate.totalRemaining = Math.max(budgetToPopulate.totalBudgeted - budgetToPopulate.totalSpent, 0);
+        budgetToPopulate.totalSpent = budgetToPopulate.categories.reduce(
+          (sum: number, c: BudgetCategory) => sum + c.spentAmount,
+          0
+        );
+        budgetToPopulate.totalRemaining = Math.max(
+          budgetToPopulate.totalBudgeted - budgetToPopulate.totalSpent,
+          0
+        );
 
         return budgetToPopulate;
       };
@@ -277,7 +292,7 @@ const BudgetTracker = ({ familyId, className }: BudgetTrackerProps) => {
     <div className="space-y-6">
       {/* Budget Summary */}
       {budget && (
-        <div className="bg-white/[0.02] rounded-2xl border border-white/[0.08] p-6 card-hover">
+        <UniversalCard className="p-6 rounded-2xl card-hover">
           <h3 className="text-xl font-bold text-white mb-6 flex items-center gap-3">
             <PieChart className="w-6 h-6 text-blue-400" />
             {budget.name}
@@ -339,12 +354,12 @@ const BudgetTracker = ({ familyId, className }: BudgetTrackerProps) => {
               ></div>
             </div>
           </div>
-        </div>
+        </UniversalCard>
       )}
 
       {/* Top Categories */}
       {budget && budget.categories.length > 0 && (
-        <div className="bg-white/[0.02] rounded-2xl border border-white/[0.08] p-6 card-hover">
+        <UniversalCard className="p-6 rounded-2xl card-hover">
           <h3 className="text-lg font-bold text-white mb-4 flex items-center gap-3">
             <BarChart3 className="w-5 h-5 text-blue-400" />
             Top Spending Categories
@@ -352,7 +367,10 @@ const BudgetTracker = ({ familyId, className }: BudgetTrackerProps) => {
 
           <div className="space-y-4">
             {budget.categories
-              .sort((a: BudgetCategory, b: BudgetCategory) => b.spentAmount - a.spentAmount)
+              .sort(
+                (a: BudgetCategory, b: BudgetCategory) =>
+                  b.spentAmount - a.spentAmount
+              )
               .slice(0, 5)
               .map((category: BudgetCategory) => {
                 const progress = getCategoryProgress(category);
@@ -409,12 +427,12 @@ const BudgetTracker = ({ familyId, className }: BudgetTrackerProps) => {
                 );
               })}
           </div>
-        </div>
+        </UniversalCard>
       )}
 
       {/* Savings Goals */}
       {goals.length > 0 && (
-        <div className="bg-white/[0.02] rounded-2xl border border-white/[0.08] p-6 card-hover">
+        <UniversalCard className="p-6 rounded-2xl card-hover">
           <h3 className="text-lg font-bold text-white mb-4 flex items-center gap-3">
             <Target className="w-5 h-5 text-green-400" />
             Savings Goals
@@ -463,7 +481,7 @@ const BudgetTracker = ({ familyId, className }: BudgetTrackerProps) => {
               );
             })}
           </div>
-        </div>
+        </UniversalCard>
       )}
     </div>
   );
@@ -484,9 +502,9 @@ const BudgetTracker = ({ familyId, className }: BudgetTrackerProps) => {
           const status = getCategoryStatus(category);
 
           return (
-            <div
+            <UniversalCard
               key={category.id}
-              className="bg-white/[0.02] rounded-2xl border border-white/[0.08] p-6 card-hover"
+              className="p-6 rounded-2xl card-hover"
             >
               <div className="flex items-center justify-between mb-4">
                 <div className="flex items-center gap-3">
@@ -565,7 +583,7 @@ const BudgetTracker = ({ familyId, className }: BudgetTrackerProps) => {
                   </div>
                 </div>
               )}
-            </div>
+            </UniversalCard>
           );
         })}
     </div>
@@ -594,10 +612,7 @@ const BudgetTracker = ({ familyId, className }: BudgetTrackerProps) => {
         );
 
         return (
-          <div
-            key={goal.id}
-            className="bg-white/[0.02] rounded-2xl border border-white/[0.08] p-6 card-hover"
-          >
+          <UniversalCard key={goal.id} className="p-6 rounded-2xl card-hover">
             <div className="flex items-center justify-between mb-4">
               <div className="flex items-center gap-3">
                 <div className="w-12 h-12 rounded-2xl bg-green-500/20 flex items-center justify-center">
@@ -662,7 +677,7 @@ const BudgetTracker = ({ familyId, className }: BudgetTrackerProps) => {
                 </span>
               )}
             </div>
-          </div>
+          </UniversalCard>
         );
       })}
     </div>
