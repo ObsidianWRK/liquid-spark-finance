@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSubscriptionsStore } from '../store';
 import { Button } from '@/shared/ui/button';
 import { 
@@ -13,6 +13,8 @@ import {
 import { cn } from '@/shared/lib/utils';
 import { formatCurrency } from '@/shared/utils/formatters';
 
+const VISIBLE_COUNT = 5;
+
 export const RecurringChargesList: React.FC<{ className?: string }> = ({
   className,
 }) => {
@@ -22,6 +24,16 @@ export const RecurringChargesList: React.FC<{ className?: string }> = ({
     detect: s.detect,
     cancel: s.cancel,
   }));
+
+  const [expanded, setExpanded] = useState(false);
+  const displayCharges = expanded ? charges : charges.slice(0, VISIBLE_COUNT);
+
+  const handleScroll = (e: React.UIEvent<HTMLDivElement>) => {
+    const { scrollTop, scrollHeight, clientHeight } = e.currentTarget;
+    if (!expanded && scrollTop + clientHeight >= scrollHeight - 5) {
+      setExpanded(true);
+    }
+  };
 
   useEffect(() => {
     detect();
@@ -112,8 +124,11 @@ export const RecurringChargesList: React.FC<{ className?: string }> = ({
       </div>
 
       {/* Scrollable Subscription List - Compact */}
-      <div className="max-h-40 overflow-y-auto space-y-2 scrollbar-thin scrollbar-thumb-white/20 scrollbar-track-white/5">
-        {charges.map((charge) => (
+      <div
+        className="max-h-40 overflow-y-auto space-y-2 scrollbar-thin scrollbar-thumb-white/20 scrollbar-track-white/5"
+        onScroll={handleScroll}
+      >
+        {displayCharges.map((charge) => (
           <div
             key={charge.id}
             className="p-2 bg-white/[0.02] rounded-lg border border-white/[0.05] hover:bg-white/[0.04] transition-all"
@@ -152,6 +167,14 @@ export const RecurringChargesList: React.FC<{ className?: string }> = ({
             </div>
           </div>
         ))}
+        {!expanded && charges.length > VISIBLE_COUNT && (
+          <button
+            className="w-full text-center text-xs text-orange-400 p-2 hover:underline"
+            onClick={() => setExpanded(true)}
+          >
+            See all subscriptions
+          </button>
+        )}
       </div>
 
       {/* Footer - Compact */}
