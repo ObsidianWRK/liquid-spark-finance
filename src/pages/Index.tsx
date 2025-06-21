@@ -375,7 +375,7 @@ export default function Index() {
 
         <div className="p-6 space-y-6">
           {/* CC: Smart Accounts Deck and Compact Account Cards Grid */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6" style={{ minHeight: '400px' }}>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6" style={{ minHeight: '400px' }}>
             {/* Smart Accounts Deck (R2 requirement) */}
             {isFeatureEnabled('SMART_ACCOUNTS_DECK') && (
               <div className="h-full">
@@ -416,7 +416,7 @@ export default function Index() {
             </div>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
             <div className="lg:col-span-2">
               <TransactionList
                 transactions={
