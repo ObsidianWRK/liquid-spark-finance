@@ -218,7 +218,7 @@
   border-radius: 0.5rem;
   font-size: 0.75rem;
   z-index: 9999;
-  font-family: monospace;
+  font-family: var(--vueni-font-family);
 }
 
 /* Optimized Transitions */
