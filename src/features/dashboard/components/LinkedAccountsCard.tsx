@@ -16,7 +16,7 @@ import {
 import { CardSkeleton } from './health/CardSkeleton';
 import { formatCurrency } from '@/shared/utils/formatters';
 import { cn } from '@/shared/lib/utils';
-import { mockAccountsEnhanced } from '@/services/mockData';
+import { MOCK_ACCOUNTS } from '@/services/dataProvider';
 
 interface MockAccount {
   id: string;
@@ -45,7 +45,7 @@ interface LinkedAccountsCardProps {
 
 // Transform the enhanced mock data to our component format
 const transformMockAccounts = (): MockAccount[] => {
-  return mockAccountsEnhanced.map((account) => ({
+  return MOCK_ACCOUNTS.map((account) => ({
     id: account.id,
     name: account.name,
     institutionName: account.institutionName || 'Unknown Bank',

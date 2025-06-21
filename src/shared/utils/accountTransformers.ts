@@ -1,10 +1,10 @@
 // CC: Data transformation utilities for Smart Accounts Deck
 import { AccountRowData } from '@/components/AccountDeck/AccountRow';
-import { mockAccountsEnhanced, mockInstitutions } from '@/services/mockData';
+import { MOCK_ACCOUNTS, MOCK_INSTITUTIONS } from '@/services/dataProvider';
 
 // CC: Transform account data to AccountRowData format for Smart Accounts Deck
 export const transformToAccountRowData = (): AccountRowData[] => {
-  return mockAccountsEnhanced.map((account, index) => {
+  return MOCK_ACCOUNTS.map((account, index) => {
     // CC: Calculate realistic percentage delta for each account
     const sparklineData = account.metadata?.sparklineData || [];
     const deltaPercentage =
@@ -16,7 +16,7 @@ export const transformToAccountRowData = (): AccountRowData[] => {
         : (Math.random() - 0.5) * 10; // Random delta if no sparkline data
 
     // CC: Get institution data with fallback
-    const institution = mockInstitutions[account.institutionName] || {
+    const institution = MOCK_INSTITUTIONS[account.institutionName] || {
       name: account.institutionName,
       color: '#6366f1',
       logo: undefined,
@@ -81,7 +81,7 @@ const formatAccountType = (
 
 // CC: Get total account balance for Smart Accounts header
 export const getTotalAccountBalance = (): number => {
-  return mockAccountsEnhanced.reduce((total, account) => {
+  return MOCK_ACCOUNTS.reduce((total, account) => {
     // CC: Only count positive balances (assets, not liabilities)
     return total + (account.balance > 0 ? account.balance : 0);
   }, 0);

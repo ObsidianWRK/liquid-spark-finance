@@ -8,7 +8,7 @@ import {
   StackedBarChart,
   StackedBarDataPoint,
 } from '@/components/charts/StackedBarChart';
-import { mockData } from '@/services/mockData';
+import { MOCK_DATA } from '@/services/dataProvider';
 import { Transaction, TransactionCategory } from '@/types/transactions';
 import { Calendar, TrendingDown, Filter, Download, Share2 } from 'lucide-react';
 import { Button } from '@/shared/ui/button';
@@ -48,7 +48,7 @@ const SpendingBreakdownChart: React.FC<SpendingBreakdownChartProps> = ({
   // Process transaction data into chart format
   const chartData = useMemo((): StackedBarDataPoint[] => {
     // Filter to expense transactions only
-    const expenses = mockData.transactions.filter((tx) => tx.amount < 0);
+    const expenses = MOCK_DATA.transactions.filter((tx) => tx.amount < 0);
 
     // Map transaction categories to our category system
     const mapCategory = (txCategory: string): TransactionCategory => {

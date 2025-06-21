@@ -1,6 +1,6 @@
 import React from 'react';
 import BaseInsightsPage from '@/features/insights/components/BaseInsightsPage';
-import { mockData } from '@/services/mockData';
+import { MOCK_DATA } from '@/services/dataProvider';
 import { AgeOfMoneyCard } from '@/features/age-of-money/components/AgeOfMoneyCard';
 
 const InsightsPage = () => {
@@ -13,8 +13,8 @@ const InsightsPage = () => {
       
       {/* Base Insights */}
       <BaseInsightsPage
-        transactions={mockData.transactions}
-        accounts={mockData.accounts}
+        transactions={MOCK_DATA.transactions}
+        accounts={MOCK_DATA.accounts}
       />
     </div>
   );

@@ -1,4 +1,4 @@
-import { mockData } from '@/services/mockData';
+import { MOCK_DATA } from '@/services/dataProvider';
 import { RecurringCharge } from '@/types';
 
 export interface NegotiatableBill extends RecurringCharge {
@@ -66,7 +66,7 @@ class BillAnalysisService {
   };
 
   analyzeTransactionsForNegotiatableBills(): BillAnalysisResult {
-    const transactions = mockData.transactions;
+    const transactions = MOCK_DATA.transactions;
     const billGroups = this.groupRecurringTransactions(transactions);
     const negotiatableBills: NegotiatableBill[] = [];
 

@@ -9,9 +9,8 @@ import {
 } from 'lucide-react';
 import { formatCurrency } from '@/shared/utils/formatters';
 import { cn } from '@/shared/lib/utils';
-import { mockAccountsEnhanced, mockInstitutions } from '@/services/mockData';
 
-interface MockAccount {
+import { MOCK_ACCOUNTS, MOCK_INSTITUTIONS } from '@/services/dataProvider';
   id: string;
   institution: {
     name: string;
@@ -36,10 +35,10 @@ interface MockAccount {
 
 // Transform enhanced mock data to panel format
 const transformMockAccounts = (): MockAccount[] => {
-  return mockAccountsEnhanced.map((account, index) => {
+  return MOCK_ACCOUNTS.map((account, index) => {
     const institutionName = account.institutionName || 'Chase Bank';
-    const institutionData = institutionName in mockInstitutions 
-      ? mockInstitutions[institutionName as keyof typeof mockInstitutions]
+    const institutionData = institutionName in MOCK_INSTITUTIONS 
+      ? MOCK_INSTITUTIONS[institutionName as keyof typeof MOCK_INSTITUTIONS]
       : { color: '#004879' };
     
     // Map account subtypes to panel types
@@ -78,74 +77,6 @@ const transformMockAccounts = (): MockAccount[] => {
 };
 
 // Use all mock accounts when enabled
-const MOCK_ACCOUNTS: MockAccount[] = import.meta.env.VITE_USE_MOCK_ACCOUNTS === 'true' || import.meta.env.DEV
-  ? transformMockAccounts()
-  : [
-      {
-        id: 'acc_chase_checking_001',
-        institution: {
-          name: 'Chase Bank',
-          id: 'ins_chase',
-          color: '#004879',
-        },
-        type: 'checking',
-        name: 'Chase Total Checking',
-        mask: '4521',
-        balance: 4250.75,
-        availableBalance: 4250.75,
-        currency: 'USD',
-        isActive: true,
-        lastTransaction: {
-          merchant: 'Starbucks',
-          amount: -5.67,
-          date: '2024-01-15T09:30:00Z',
-          pending: false,
-        },
-      },
-      {
-        id: 'acc_bofa_savings_001',
-        institution: {
-          name: 'Bank of America',
-          id: 'ins_bofa',
-          color: '#E31837',
-        },
-        type: 'savings',
-        name: 'Advantage Savings',
-        mask: '8932',
-        balance: 15750.42,
-        availableBalance: 15750.42,
-        currency: 'USD',
-        isActive: true,
-        lastTransaction: {
-          merchant: 'Interest Payment',
-          amount: 18.25,
-          date: '2024-01-01T00:00:00Z',
-          pending: false,
-        },
-      },
-      {
-        id: 'acc_wells_credit_001',
-        institution: {
-          name: 'Wells Fargo',
-          id: 'ins_wells',
-          color: '#D50032',
-        },
-        type: 'credit',
-        name: 'Cash Wise Visa',
-        mask: '1847',
-        balance: -1285.63,
-        availableBalance: 3714.37,
-        currency: 'USD',
-        isActive: true,
-        creditLimit: 5000.0,
-        lastTransaction: {
-          merchant: 'Amazon',
-          amount: -89.99,
-          date: '2024-01-14T14:22:00Z',
-          pending: true,
-        },
-      },
-    ];
 
 const VISIBLE_COUNT = 5;
 
