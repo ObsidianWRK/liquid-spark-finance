@@ -169,12 +169,12 @@ export const getBackgroundColor = (
 
   switch (variant) {
     case 'primary':
-      return surface.background.secondary; // #1A2547
+      return surface.dark.secondary; // #1A2547
     case 'secondary':
-      return surface.background.tertiary; // #253655
+      return surface.dark.card; // #253655
     case 'surface':
     default:
-      return surface.background.primary; // #0F1939
+      return surface.dark.background; // #0F1939
   }
 };
 
@@ -211,9 +211,9 @@ export const generateGraphCSSProperties = (
     '--chart-color-senary': chartTokens.colors.extended.senary,
 
     // Background colors
-    '--chart-background': colors.surface.background.primary,
-    '--chart-card-background': colors.surface.background.secondary,
-    '--chart-overlay-background': colors.surface.background.tertiary,
+    '--chart-background': colors.surface.dark.background,
+    '--chart-card-background': colors.surface.dark.secondary,
+    '--chart-overlay-background': colors.surface.dark.card,
 
     // Text colors
     '--chart-text-primary': colors.text.primary,

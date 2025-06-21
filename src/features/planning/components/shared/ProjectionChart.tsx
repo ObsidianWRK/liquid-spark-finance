@@ -11,6 +11,7 @@ import {
   AreaChart,
 } from 'recharts';
 import { cn } from '@/shared/lib/utils';
+import { VueniCharts } from '@/theme/colors/vueniPalette';
 
 interface ProjectionChartProps {
   data: Array<{
@@ -32,7 +33,7 @@ const ProjectionChart: React.FC<ProjectionChartProps> = ({
   title,
   type = 'area',
   height = 300,
-  color = '#3b82f6',
+  color = VueniCharts.primary[0], // #516AC8 (Sapphire Dust)
   formatValue,
   className,
 }) => {

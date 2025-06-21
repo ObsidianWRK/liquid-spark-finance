@@ -23,8 +23,8 @@ export const CardShell: FC<CardShellProps> = ({
   const baseClasses = cn(
     // Core glass effect
     'relative overflow-hidden rounded-vueni-lg',
-    'bg-zinc-800/40 backdrop-blur',
-    'ring-1 ring-zinc-700/60',
+    'bg-vueni-glass-default backdrop-blur',
+    'ring-1 ring-vueni-glass-border',
     'shadow-[inset_0_0_0_1px_rgba(255,255,255,.05)]',
 
     // Hover states - Use standardized hover effect

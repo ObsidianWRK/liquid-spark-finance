@@ -8,9 +8,7 @@
  */
 
 import {
-  VueniCore,
-  VueniSemantic,
-  VueniNeutral,
+  vueni,
   VueniSurfaces,
   VueniCharts,
   generateVueniCSSProperties,
@@ -139,10 +137,10 @@ const cardSystem = {
 const chartSystem = {
   // Vueni 5-color sequence as specified
   colors: {
-    positive: VueniSemantic.success, // #4ABA70 - Accessible green
-    negative: VueniSemantic.error, // #D64545 - Accessible red
-    neutral: VueniCore.primary.sapphireDust, // #516AC8 - Sapphire Dust
-    warning: VueniCore.secondary.caramelEssence, // #E3AF64 - Caramel Essence
+    positive: vueni.semantic.success, // #4ABA70 - Accessible green
+    negative: vueni.semantic.error, // #D64545 - Accessible red
+    neutral: vueni.core.sapphireDust, // #516AC8 - Sapphire Dust
+    warning: vueni.core.caramelEssence, // #E3AF64 - Caramel Essence
 
     // Extended palette from VueniCharts.primary sequence
     extended: {
@@ -216,17 +214,17 @@ export const vueniTheme = {
   // Color system from VueniPalette
   colors: {
     palette: {
-      primary: VueniCore.primary.sapphireDust,
-      success: VueniSemantic.success,
-      danger: VueniSemantic.error,
-      warning: VueniCore.secondary.caramelEssence,
-      neutral: VueniNeutral[500],
+      primary: vueni.core.sapphireDust,
+      success: vueni.semantic.success,
+      danger: vueni.semantic.error,
+      warning: vueni.core.caramelEssence,
+      neutral: vueni.neutral.n500,
     },
-    semantic: VueniSemantic,
+    semantic: vueni.semantic,
     surface: VueniSurfaces,
-    text: VueniSurfaces.text,
-    core: VueniCore,
-    neutral: VueniNeutral,
+    text: VueniSurfaces.dark.text,
+    core: vueni.core,
+    neutral: vueni.neutral,
   },
 
   // Layout systems

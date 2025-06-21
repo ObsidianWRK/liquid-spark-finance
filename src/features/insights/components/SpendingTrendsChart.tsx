@@ -1,6 +1,7 @@
 import React, { useMemo } from 'react';
 import { AreaChart } from '@/shared/ui/charts';
 import { MonthlySpending } from '@/features/mockHistoricalData';
+import { VueniCharts } from '@/theme/colors/vueniPalette';
 
 interface SpendingTrendsChartProps {
   data: MonthlySpending[];
@@ -21,23 +22,23 @@ const SpendingTrendsChart = React.memo<SpendingTrendsChartProps>(
       [data]
     );
 
-    // Configure series for multi-area chart
+    // Configure series for multi-area chart using VueniCharts financial mappings
     const chartSeries = useMemo(
       () => [
         {
           dataKey: 'income',
           label: 'Income',
-          color: '#32D74B', // Apple green
+          color: VueniCharts.financial.income, // #4ABA70 (Success)
         },
         {
           dataKey: 'spending',
           label: 'Spending',
-          color: '#FF453A', // Apple red
+          color: VueniCharts.financial.expenses, // #D64545 (Error)
         },
         {
           dataKey: 'savings',
           label: 'Savings',
-          color: '#0A84FF', // Apple blue
+          color: VueniCharts.financial.savings, // #516AC8 (Sapphire Dust)
         },
       ],
       []

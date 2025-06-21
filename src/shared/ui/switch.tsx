@@ -12,9 +12,9 @@ const Switch = React.forwardRef<
       // Base iOS26 toggle styling - pill-shaped with proper size
       'peer inline-flex h-7 w-12 shrink-0 cursor-pointer items-center rounded-vueni-pill transition-all duration-300 ease-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background disabled:cursor-not-allowed disabled:opacity-50',
       // Dark mode styling
-      'data-[state=checked]:bg-blue-600 data-[state=unchecked]:bg-gray-600/60',
+      'data-[state=checked]:bg-vueni-sapphireDust data-[state=unchecked]:bg-vueni-n500/60',
       // Light mode styling
-      'dark:data-[state=checked]:bg-blue-500 dark:data-[state=unchecked]:bg-gray-500/40',
+      'dark:data-[state=checked]:bg-vueni-sapphireDust dark:data-[state=unchecked]:bg-vueni-n500/40',
       // Border for better definition
       'border-2 border-transparent',
       // Smooth shadow for depth

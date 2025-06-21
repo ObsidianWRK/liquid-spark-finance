@@ -32,15 +32,15 @@ const getAccountIcon = (type: string) => {
 const getAccountColor = (type: string) => {
   switch (type) {
     case 'Checking':
-      return 'bg-cyan-500/20 text-cyan-400 border-cyan-500/30';
+      return 'bg-vueni-sapphireDust/20 text-vueni-sapphireDust border-vueni-sapphireDust/30';
     case 'Savings':
-      return 'bg-green-500/20 text-green-400 border-green-500/30';
+      return 'bg-vueni-success/20 text-vueni-success border-vueni-success/30';
     case 'Credit Card':
-      return 'bg-orange-500/20 text-orange-400 border-orange-500/30';
+      return 'bg-vueni-warning/20 text-vueni-warning border-vueni-warning/30';
     case 'Investment':
-      return 'bg-purple-500/20 text-purple-400 border-purple-500/30';
+      return 'bg-vueni-blueOblivion/20 text-vueni-blueOblivion border-vueni-blueOblivion/30';
     default:
-      return 'bg-gray-500/20 text-gray-400 border-gray-500/30';
+      return 'bg-vueni-n500/20 text-vueni-n500 border-vueni-n500/30';
   }
 };
 

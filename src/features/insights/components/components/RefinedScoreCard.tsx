@@ -66,21 +66,21 @@ const RefinedScoreCard = memo(
       return 'Needs Attention';
     };
 
-    // Refined color system using professional palette
+    // Refined color system using Vueni palette
     const getScoreColor = (scoreValue: number) => {
-      if (scoreValue >= 80) return '#22c55e'; // Green-500 for excellent
-      if (scoreValue >= 70) return '#6366f1'; // Indigo-500 for very good
-      if (scoreValue >= 60) return '#f59e0b'; // Amber-500 for good
-      if (scoreValue >= 40) return '#f97316'; // Orange-500 for fair
-      return '#ef4444'; // Red-500 for needs attention
+      if (scoreValue >= 80) return '#4ABA70'; // Vueni success for excellent
+      if (scoreValue >= 70) return '#516AC8'; // Vueni sapphire dust for very good
+      if (scoreValue >= 60) return '#E3AF64'; // Vueni caramel essence for good
+      if (scoreValue >= 40) return '#E3AF64'; // Vueni caramel essence for fair
+      return '#D64545'; // Vueni error for needs attention
     };
 
     const getScoreTextColor = (scoreValue: number) => {
-      if (scoreValue >= 80) return 'text-green-400';
-      if (scoreValue >= 70) return 'text-indigo-400';
-      if (scoreValue >= 60) return 'text-amber-400';
-      if (scoreValue >= 40) return 'text-orange-400';
-      return 'text-red-400';
+      if (scoreValue >= 80) return 'text-vueni-success';
+      if (scoreValue >= 70) return 'text-vueni-sapphireDust';
+      if (scoreValue >= 60) return 'text-vueni-warning';
+      if (scoreValue >= 40) return 'text-vueni-warning';
+      return 'text-vueni-error';
     };
 
     const refinedColor = color || getScoreColor(score);
@@ -89,13 +89,13 @@ const RefinedScoreCard = memo(
       if (!trend) return null;
 
       const iconMap = {
-        up: <TrendingUp className="w-4 h-4 text-green-400" />,
-        down: <TrendingDown className="w-4 h-4 text-red-400" />,
-        stable: <Activity className="w-4 h-4 text-slate-400" />,
+        up: <TrendingUp className="w-4 h-4 text-vueni-success" />,
+        down: <TrendingDown className="w-4 h-4 text-vueni-error" />,
+        stable: <Activity className="w-4 h-4 text-vueni-n500" />,
       };
 
       return (
-        <div className="flex items-center space-x-1 px-3 py-1 rounded-vueni-pill bg-slate-800/30 border border-slate-700/40 backdrop-blur-sm">
+        <div className="flex items-center space-x-1 px-3 py-1 rounded-vueni-pill bg-vueni-glass-default border border-vueni-glass-border backdrop-blur-sm">
           {iconMap[trend]}
         </div>
       );
@@ -105,9 +105,9 @@ const RefinedScoreCard = memo(
       <EnhancedGlassCard
         variant="glass"
         className={`
-        relative overflow-hidden rounded-vueni-lg backdrop-blur-xl border border-slate-700/40 
-        hover:border-slate-600/60 transition-all duration-500 group hover-lift ${config.padding}
-        bg-slate-900/20 animate-[slideInScale_0.8s_ease-out_${delay}ms_both]
+        relative overflow-hidden rounded-vueni-lg backdrop-blur-xl border border-vueni-glass-border 
+        hover:border-vueni-glass-prominent transition-all duration-500 group hover-lift ${config.padding}
+        bg-vueni-glass-subtle animate-[slideInScale_0.8s_ease-out_${delay}ms_both]
       `}
         interactive={interactive}
       >
@@ -120,14 +120,14 @@ const RefinedScoreCard = memo(
         />
 
         {/* Glass morphism depth layer */}
-        <div className="absolute inset-0 bg-gradient-to-br from-slate-800/10 via-transparent to-slate-900/20 rounded-vueni-lg" />
+        <div className="absolute inset-0 bg-gradient-to-br from-vueni-glass-subtle via-transparent to-vueni-glass-default rounded-vueni-lg" />
 
         <div className="relative z-10">
           {/* Header */}
           <div className="flex items-center justify-between mb-6">
             <div className="flex items-center space-x-3">
               <div
-                className={`${config.iconPadding} rounded-vueni-lg backdrop-blur-sm border border-slate-700/30 bg-slate-800/20`}
+                className={`${config.iconPadding} rounded-vueni-lg backdrop-blur-sm border border-vueni-glass-border bg-vueni-glass-subtle`}
                 style={{
                   background: `linear-gradient(135deg, ${refinedColor}15, ${refinedColor}05)`,
                   borderColor: `${refinedColor}30`,
@@ -139,7 +139,7 @@ const RefinedScoreCard = memo(
                 })}
               </div>
               <h3
-                className={`${config.titleSize} font-semibold text-slate-100`}
+                className={`${config.titleSize} font-semibold text-white`}
               >
                 {title}
               </h3>
@@ -164,7 +164,7 @@ const RefinedScoreCard = memo(
             >
               {getScoreDescription(score)}
             </div>
-            <div className={`${config.subtitleSize} text-slate-400`}>
+            <div className={`${config.subtitleSize} text-vueni-n500`}>
               {subtitle}
             </div>
           </div>

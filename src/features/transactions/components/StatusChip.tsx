@@ -7,12 +7,12 @@ interface StatusChipProps {
 }
 
 const statusStyles: Record<TransactionStatus, string> = {
-  [TransactionStatus.Pending]: 'bg-yellow-700/60 text-yellow-300',
-  [TransactionStatus.InTransit]: 'bg-blue-700/60 text-blue-300',
-  [TransactionStatus.Delivered]: 'bg-green-700/60 text-green-300',
-  [TransactionStatus.Completed]: 'bg-green-700/60 text-green-300',
-  [TransactionStatus.Refunded]: 'bg-purple-700/60 text-purple-300',
-  [TransactionStatus.None]: 'bg-gray-700/60 text-gray-300',
+  [TransactionStatus.Pending]: 'bg-vueni-warning/60 text-vueni-warning',
+  [TransactionStatus.InTransit]: 'bg-vueni-sapphireDust/60 text-vueni-sapphireDust',
+  [TransactionStatus.Delivered]: 'bg-vueni-success/60 text-vueni-success',
+  [TransactionStatus.Completed]: 'bg-vueni-success/60 text-vueni-success',
+  [TransactionStatus.Refunded]: 'bg-vueni-blueOblivion/60 text-vueni-blueOblivion',
+  [TransactionStatus.None]: 'bg-vueni-n500/60 text-vueni-n500',
 };
 
 const labelMap: Record<TransactionStatus, string> = {

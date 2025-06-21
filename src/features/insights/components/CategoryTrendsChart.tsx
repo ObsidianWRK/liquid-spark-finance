@@ -2,6 +2,7 @@ import React, { useState, useMemo } from 'react';
 // import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend } from 'recharts';
 import { MultiLineChart } from '@/shared/ui/lightweight-charts';
 import { CategoryTrend } from '@/features/mockHistoricalData';
+import { VueniCharts } from '@/theme/colors/vueniPalette';
 
 interface CategoryTrendsChartProps {
   data: CategoryTrend[];
@@ -37,20 +38,20 @@ const CategoryTrendsChart: React.FC<CategoryTrendsChartProps> = ({
   ); // Show first 4 by default
 
   const categoryColors = {
-    // Health categories
-    fitness: '#10b981',
-    nutrition: '#f59e0b',
-    healthcare: '#3b82f6',
-    wellness: '#ef4444',
-    supplements: '#8b5cf6',
-    mentalHealth: '#06b6d4',
-    // Eco categories
-    sustainableFood: '#10b981',
-    renewableEnergy: '#f59e0b',
-    ecoTransport: '#3b82f6',
-    greenProducts: '#8b5cf6',
-    carbonOffset: '#059669',
-    conservation: '#0d9488',
+    // Health categories using VueniCharts
+    fitness: VueniCharts.primary[0], // #516AC8 (Sapphire Dust)
+    nutrition: VueniCharts.primary[1], // #E3AF64 (Caramel Essence)
+    healthcare: VueniCharts.primary[2], // #26428B (Blue Oblivion)
+    wellness: VueniCharts.primary[3], // #4ABA70 (Success)
+    supplements: VueniCharts.primary[4], // #D64545 (Error)
+    mentalHealth: VueniCharts.primary[5], // #8B8478 (Neutral)
+    // Eco categories using VueniCharts
+    sustainableFood: VueniCharts.primary[0], // #516AC8 (Sapphire Dust)
+    renewableEnergy: VueniCharts.primary[1], // #E3AF64 (Caramel Essence)
+    ecoTransport: VueniCharts.primary[2], // #26428B (Blue Oblivion)
+    greenProducts: VueniCharts.primary[3], // #4ABA70 (Success)
+    carbonOffset: VueniCharts.primary[4], // #D64545 (Error)
+    conservation: VueniCharts.primary[5], // #8B8478 (Neutral)
   };
 
   const categoryLabels = {

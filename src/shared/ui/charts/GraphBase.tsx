@@ -40,7 +40,9 @@ import {
   generateGraphCSSProperties,
   shouldReduceMotion,
   getOptimalAnimationDuration,
+  getSeriesColor,
 } from '@/theme/graph-tokens';
+import { VueniCharts } from '@/theme/colors/vueniPalette';
 import {
   GraphBaseProps,
   ChartType,
@@ -506,12 +508,7 @@ export const GraphBase = forwardRef<ChartRef, GraphBaseProps>(
         dataKey: key,
         label:
           key.charAt(0).toUpperCase() + key.slice(1).replace(/([A-Z])/g, ' $1'),
-        color: getGraphColor(
-          (['income', 'spending', 'savings', 'investments', 'debt'][
-            index
-          ] as any) || 'neutral',
-          currentTheme
-        ),
+        color: getSeriesColor(index),
       }));
     }, [processedData, series, currentTheme]);
 

@@ -10,6 +10,7 @@ import {
 } from '@/components/charts/StackedBarChart';
 import { investmentService } from '@/features/investments/api/investmentService';
 import { Portfolio } from '@/types/investments';
+import { VueniCharts } from '@/theme/colors/vueniPalette';
 import {
   TrendingUp,
   PieChart,
@@ -37,41 +38,41 @@ interface PortfolioAllocationChartProps {
   className?: string;
 }
 
-// Asset class configuration with colors and target allocations
+// Asset class configuration with colors and target allocations using VueniCharts
 const ASSET_CLASSES = {
   stocks: {
     label: 'Stocks',
-    color: '#007AFF', // Apple blue
+    color: VueniCharts.financial.investments, // #26428B (Blue Oblivion)
     target: 60,
     description: 'Equity investments and growth assets',
   },
   bonds: {
     label: 'Bonds',
-    color: '#32D74B', // Apple green
+    color: VueniCharts.financial.income, // #4ABA70 (Success)
     target: 25,
     description: 'Fixed income and stable investments',
   },
   cash: {
     label: 'Cash & Cash Equivalents',
-    color: '#FFCC00', // Apple yellow
+    color: VueniCharts.primary[1], // #E3AF64 (Caramel Essence)
     target: 10,
     description: 'High liquidity and emergency funds',
   },
   real_estate: {
     label: 'Real Estate',
-    color: '#FF9F0A', // Apple orange
+    color: VueniCharts.primary[2], // #26428B (Blue Oblivion)
     target: 5,
     description: 'REITs and real estate investments',
   },
   crypto: {
     label: 'Cryptocurrency',
-    color: '#AF52DE', // Apple purple
+    color: VueniCharts.primary[4], // #D64545 (Error)
     target: 0,
     description: 'Digital assets and alternative investments',
   },
   commodities: {
     label: 'Commodities',
-    color: '#5AC8FA', // Apple teal
+    color: VueniCharts.primary[5], // #8B8478 (Neutral)
     target: 0,
     description: 'Precious metals and commodity investments',
   },

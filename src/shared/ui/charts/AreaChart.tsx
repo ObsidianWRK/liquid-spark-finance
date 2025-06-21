@@ -22,7 +22,9 @@ import {
   getChartAnimationPreset,
   shouldReduceMotion,
   getOptimalAnimationDuration,
+  getSeriesColor,
 } from '@/theme/graph-tokens';
+import { VueniCharts } from '@/theme/colors/vueniPalette';
 import {
   GraphBaseProps,
   ChartDataPoint,
@@ -109,27 +111,27 @@ const STROKE_WIDTH_MAP = {
   thick: 2,
 } as const;
 
-// Apple gradient definitions with proper opacity patterns
-const APPLE_GRADIENTS = {
+// VueniCharts gradient definitions with proper opacity patterns
+const VUENI_GRADIENTS = {
   income: {
-    start: 'rgba(50, 215, 75, 0.4)', // Apple green with 40% opacity
-    end: 'rgba(50, 215, 75, 0.1)', // Apple green with 10% opacity
+    start: 'rgba(74, 186, 112, 0.4)', // Success with 40% opacity
+    end: 'rgba(74, 186, 112, 0.1)', // Success with 10% opacity
   },
   spending: {
-    start: 'rgba(255, 69, 58, 0.4)', // Apple red with 40% opacity
-    end: 'rgba(255, 69, 58, 0.1)', // Apple red with 10% opacity
+    start: 'rgba(214, 69, 69, 0.4)', // Error with 40% opacity
+    end: 'rgba(214, 69, 69, 0.1)', // Error with 10% opacity
   },
   savings: {
-    start: 'rgba(10, 132, 255, 0.4)', // Apple blue with 40% opacity
-    end: 'rgba(10, 132, 255, 0.1)', // Apple blue with 10% opacity
+    start: 'rgba(81, 106, 200, 0.4)', // Sapphire Dust with 40% opacity
+    end: 'rgba(81, 106, 200, 0.1)', // Sapphire Dust with 10% opacity
   },
   investments: {
-    start: 'rgba(191, 90, 242, 0.4)', // Apple purple with 40% opacity
-    end: 'rgba(191, 90, 242, 0.1)', // Apple purple with 10% opacity
+    start: 'rgba(38, 66, 139, 0.4)', // Blue Oblivion with 40% opacity
+    end: 'rgba(38, 66, 139, 0.1)', // Blue Oblivion with 10% opacity
   },
   debt: {
-    start: 'rgba(255, 159, 10, 0.4)', // Apple orange with 40% opacity
-    end: 'rgba(255, 159, 10, 0.1)', // Apple orange with 10% opacity
+    start: 'rgba(227, 175, 100, 0.4)', // Caramel Essence with 40% opacity
+    end: 'rgba(227, 175, 100, 0.1)', // Caramel Essence with 10% opacity
   },
 } as const;
 
@@ -347,12 +349,7 @@ export const AreaChart = forwardRef<ChartRef, AreaChartProps>(
           color:
             serie.color ||
             seriesColors?.[index] ||
-            getGraphColor(
-              (['income', 'spending', 'savings', 'investments', 'debt'][
-                index
-              ] as any) || 'neutral',
-              'dark'
-            ),
+            getSeriesColor(index),
           // Apple-style coordinated stroke and fill animations
           animationBegin: 0, // Stroke starts immediately
           animationDuration: strokeDuration, // 800ms stroke animation
@@ -365,12 +362,8 @@ export const AreaChart = forwardRef<ChartRef, AreaChartProps>(
                 r: 4,
                 fill:
                   serie.color ||
-                  getGraphColor(
-                    (['income', 'spending', 'savings', 'investments', 'debt'][
-                      index
-                    ] as any) || 'neutral',
-                    'dark'
-                  ),
+                  seriesColors?.[index] ||
+                  getSeriesColor(index),
                 strokeWidth: 2,
                 stroke: '#ffffff',
                 style: {
@@ -396,12 +389,7 @@ export const AreaChart = forwardRef<ChartRef, AreaChartProps>(
       return numericKeys.slice(0, multiSeries ? 6 : 1).map((key, index) => {
         const color =
           seriesColors?.[index] ||
-          getGraphColor(
-            (['income', 'spending', 'savings', 'investments', 'debt'][
-              index
-            ] as any) || 'neutral',
-            'dark'
-          );
+          getSeriesColor(index);
 
         return {
           dataKey: key,

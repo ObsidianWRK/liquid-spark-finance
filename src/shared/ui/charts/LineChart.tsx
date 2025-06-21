@@ -21,7 +21,9 @@ import {
   getChartAnimationPreset,
   shouldReduceMotion,
   getOptimalAnimationDuration,
+  getSeriesColor,
 } from '@/theme/graph-tokens';
+import { VueniCharts } from '@/theme/colors/vueniPalette';
 import {
   GraphBaseProps,
   ChartDataPoint,
@@ -242,23 +244,14 @@ export const LineChart = forwardRef<ChartRef, LineChartProps>(
           color:
             serie.color ||
             seriesColors?.[index] ||
-            getGraphColor(
-              (['income', 'spending', 'savings', 'investments', 'debt'][
-                index
-              ] as any) || 'neutral',
-              'dark'
-            ),
+            getSeriesColor(index),
           // Apple-style hover animations
           activeDot: {
             r: DOT_SIZE_MAP[lineConfigMerged.activeDotSize || 'medium'],
             fill:
               serie.color ||
-              getGraphColor(
-                (['income', 'spending', 'savings', 'investments', 'debt'][
-                  index
-                ] as any) || 'neutral',
-                'dark'
-              ),
+              seriesColors?.[index] ||
+              getSeriesColor(index),
             strokeWidth: 2,
             stroke: '#ffffff',
             style: {
@@ -291,12 +284,7 @@ export const LineChart = forwardRef<ChartRef, LineChartProps>(
       return numericKeys.slice(0, multiSeries ? 6 : 1).map((key, index) => {
         const color =
           seriesColors?.[index] ||
-          getGraphColor(
-            (['income', 'spending', 'savings', 'investments', 'debt'][
-              index
-            ] as any) || 'neutral',
-            'dark'
-          );
+          getSeriesColor(index);
 
         return {
           dataKey: key,

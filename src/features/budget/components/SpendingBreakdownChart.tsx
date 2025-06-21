@@ -10,6 +10,7 @@ import {
 } from '@/components/charts/StackedBarChart';
 import { MOCK_DATA } from '@/services/dataProvider';
 import { Transaction, TransactionCategory } from '@/types/transactions';
+import { VueniCharts } from '@/theme/colors/vueniPalette';
 import { Calendar, TrendingDown, Filter, Download, Share2 } from 'lucide-react';
 import { Button } from '@/shared/ui/button';
 
@@ -21,21 +22,21 @@ interface SpendingBreakdownChartProps {
   className?: string;
 }
 
-// Category mapping for better labels and colors
+// Category mapping for better labels and colors using VueniCharts
 const CATEGORY_MAPPING: Record<
   TransactionCategory,
   { label: string; color: string }
 > = {
-  food: { label: 'Food & Dining', color: '#FF453A' },
-  housing: { label: 'Housing', color: '#FF9F0A' },
-  transportation: { label: 'Transportation', color: '#FFCC00' },
-  entertainment: { label: 'Entertainment', color: '#AF52DE' },
-  healthcare: { label: 'Healthcare', color: '#FF375F' },
-  shopping: { label: 'Shopping', color: '#5AC8FA' },
-  utilities: { label: 'Utilities', color: '#32D74B' },
-  debt_payments: { label: 'Debt Payments', color: '#FF3B30' },
-  savings: { label: 'Savings', color: '#007AFF' },
-  other: { label: 'Other', color: '#8E8E93' },
+  food: { label: 'Food & Dining', color: VueniCharts.primary[0] }, // #516AC8 (Sapphire Dust)
+  housing: { label: 'Housing', color: VueniCharts.primary[1] }, // #E3AF64 (Caramel Essence)
+  transportation: { label: 'Transportation', color: VueniCharts.primary[2] }, // #26428B (Blue Oblivion)
+  entertainment: { label: 'Entertainment', color: VueniCharts.primary[3] }, // #4ABA70 (Success)
+  healthcare: { label: 'Healthcare', color: VueniCharts.primary[4] }, // #D64545 (Error)
+  shopping: { label: 'Shopping', color: VueniCharts.primary[5] }, // #8B8478 (Neutral)
+  utilities: { label: 'Utilities', color: VueniCharts.financial.income }, // #4ABA70 (Success)
+  debt_payments: { label: 'Debt Payments', color: VueniCharts.financial.debt }, // #E3AF64 (Caramel Essence)
+  savings: { label: 'Savings', color: VueniCharts.financial.savings }, // #516AC8 (Sapphire Dust)
+  other: { label: 'Other', color: VueniCharts.primary[5] }, // #8B8478 (Neutral)
 };
 
 const SpendingBreakdownChart: React.FC<SpendingBreakdownChartProps> = ({

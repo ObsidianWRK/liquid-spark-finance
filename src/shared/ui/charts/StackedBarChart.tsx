@@ -33,7 +33,9 @@ import {
   getChartAnimationPreset,
   shouldReduceMotion,
   getOptimalAnimationDuration,
+  getSeriesColor,
 } from '@/theme/graph-tokens';
+import { VueniCharts } from '@/theme/colors/vueniPalette';
 import { GraphBase } from './GraphBase';
 import {
   ChartDataPoint,
@@ -78,34 +80,34 @@ export interface StackedBarConfig {
   animateOnLoad?: boolean;
 }
 
-// Financial category mappings for automatic color assignment
+// Financial category mappings for automatic color assignment using VueniCharts
 const FINANCIAL_CATEGORY_COLORS = {
-  // Spending categories
-  food: '#FF453A', // Apple red
-  housing: '#FF9F0A', // Apple orange
-  transportation: '#FFCC00', // Apple yellow
-  entertainment: '#AF52DE', // Apple purple
-  healthcare: '#FF375F', // Apple pink
-  shopping: '#5AC8FA', // Apple teal
-  utilities: '#32D74B', // Apple green
-  debt_payments: '#FF3B30', // Apple red light
-  savings: '#007AFF', // Apple blue
-  other: '#8E8E93', // Apple gray
+  // Spending categories using VueniCharts primary sequence
+  food: VueniCharts.primary[0], // #516AC8 (Sapphire Dust)
+  housing: VueniCharts.primary[1], // #E3AF64 (Caramel Essence)
+  transportation: VueniCharts.primary[2], // #26428B (Blue Oblivion)
+  entertainment: VueniCharts.primary[3], // #4ABA70 (Success)
+  healthcare: VueniCharts.primary[4], // #D64545 (Error)
+  shopping: VueniCharts.primary[5], // #8B8478 (Neutral)
+  utilities: VueniCharts.financial.income, // #4ABA70 (Success)
+  debt_payments: VueniCharts.financial.debt, // #E3AF64 (Caramel Essence)
+  savings: VueniCharts.financial.savings, // #516AC8 (Sapphire Dust)
+  other: VueniCharts.primary[5], // #8B8478 (Neutral)
 
   // Investment categories
-  stocks: '#007AFF', // Apple blue
-  bonds: '#32D74B', // Apple green
-  cash: '#FFCC00', // Apple yellow
-  crypto: '#AF52DE', // Apple purple
-  real_estate: '#FF9F0A', // Apple orange
-  commodities: '#5AC8FA', // Apple teal
+  stocks: VueniCharts.financial.investments, // #26428B (Blue Oblivion)
+  bonds: VueniCharts.financial.income, // #4ABA70 (Success)
+  cash: VueniCharts.primary[1], // #E3AF64 (Caramel Essence)
+  crypto: VueniCharts.primary[3], // #4ABA70 (Success)
+  real_estate: VueniCharts.primary[1], // #E3AF64 (Caramel Essence)
+  commodities: VueniCharts.primary[2], // #26428B (Blue Oblivion)
 
   // Income categories
-  salary: '#32D74B', // Apple green
-  freelance: '#007AFF', // Apple blue
-  investments: '#AF52DE', // Apple purple
-  business: '#FF9F0A', // Apple orange
-  rental: '#5AC8FA', // Apple teal
+  salary: VueniCharts.financial.income, // #4ABA70 (Success)
+  freelance: VueniCharts.financial.savings, // #516AC8 (Sapphire Dust)
+  investments: VueniCharts.financial.investments, // #26428B (Blue Oblivion)
+  business: VueniCharts.primary[1], // #E3AF64 (Caramel Essence)
+  rental: VueniCharts.primary[2], // #26428B (Blue Oblivion)
 };
 
 // Props interface for StackedBarChart
@@ -365,18 +367,12 @@ export const StackedBarChart = forwardRef<ChartRef, StackedBarChartProps>(
               color:
                 FINANCIAL_CATEGORY_COLORS[
                   key as keyof typeof FINANCIAL_CATEGORY_COLORS
-                ] ||
-                getGraphColor(
-                  ['income', 'spending', 'savings', 'investments', 'debt'][
-                    index % 5
-                  ] as any,
-                  'dark'
-                ),
+                ] || getSeriesColor(index),
             })),
             {
               dataKey: 'other',
               label: 'Other',
-              color: '#8E8E93', // Apple gray
+              color: VueniCharts.primary[5], // #8B8478 (Neutral)
             },
           ];
         }
@@ -387,13 +383,7 @@ export const StackedBarChart = forwardRef<ChartRef, StackedBarChartProps>(
           color:
             FINANCIAL_CATEGORY_COLORS[
               key as keyof typeof FINANCIAL_CATEGORY_COLORS
-            ] ||
-            getGraphColor(
-              ['income', 'spending', 'savings', 'investments', 'debt'][
-                index % 5
-              ] as any,
-              'dark'
-            ),
+            ] || getSeriesColor(index),
         }));
       }
 
@@ -403,13 +393,7 @@ export const StackedBarChart = forwardRef<ChartRef, StackedBarChartProps>(
         color:
           FINANCIAL_CATEGORY_COLORS[
             key as keyof typeof FINANCIAL_CATEGORY_COLORS
-          ] ||
-          getGraphColor(
-            ['income', 'spending', 'savings', 'investments', 'debt'][
-              index % 5
-            ] as any,
-            'dark'
-          ),
+          ] || getSeriesColor(index),
       }));
     }, [data, series, maxCategories, groupSmallCategories]);
 
