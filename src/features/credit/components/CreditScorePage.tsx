@@ -145,6 +145,7 @@ const CreditScorePage = () => {
             fallbackPath="/"
             variant="default"
             label="Back to Dashboard"
+            className="mb-6"
           />
 
           <div className="bg-white/[0.02] rounded-2xl sm:rounded-3xl border border-white/[0.08] p-6 sm:p-8 text-center">
@@ -168,6 +169,7 @@ const CreditScorePage = () => {
           fallbackPath="/"
           variant="default"
           label="Back to Dashboard"
+          className="mb-6"
         />
 
         {/* Header */}
