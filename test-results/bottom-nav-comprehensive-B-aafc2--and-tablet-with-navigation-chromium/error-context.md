@@ -1,0 +1,358 @@
+# Page snapshot
+
+```yaml
+- banner "Top navigation bar"
+- main:
+  - button "Performance Monitor":
+    - img
+  - menubar
+  - main:
+    - heading "Intelligence you can bank on" [level=1]
+    - paragraph: Experience the power of intelligent financial management
+    - button "Navigate to Smart Banking": Smart Banking
+    - button "Navigate to AI Insights": AI Insights
+    - button "Navigate to Investment": Investment
+    - button "Navigate to Budgeting": Budgeting
+    - button "Navigate to Goals": Goals
+    - button "Navigate to Analytics": Analytics
+    - button "Navigate to Security": Security
+    - button "Navigate to Planning": Planning
+    - button "Navigate to Savings": Savings
+    - button "Navigate to Credit": Credit
+    - heading "Smart Accounts" [level=3]
+    - paragraph: 24 accounts • Scroll to view all
+    - text: C Main Checking Checking ••1234
+    - img "Trend sparkline showing up movement"
+    - text: $12,450
+    - img
+    - text: 0.4% B Emergency Fund Savings ••5678
+    - img "Trend sparkline showing up movement"
+    - text: $25,780.50
+    - img
+    - text: 0.3% W Rewards Card Credit Card ••9012
+    - img "Trend sparkline showing down movement"
+    - text: "-$1,245.30"
+    - img
+    - text: 3.8% C Investment Portfolio Brokerage ••3456
+    - img "Trend sparkline showing up movement"
+    - text: $45,600.25
+    - img
+    - text: 0.4% J Business Checking Checking ••7890
+    - img "Trend sparkline showing up movement"
+    - text: $8,920.14
+    - img
+    - text: 0.5% F 401(k) Retirement 401(k) ••4567
+    - img "Trend sparkline showing up movement"
+    - text: $174,250.67
+    - img
+    - text: 0.1% V Traditional IRA IRA ••8901
+    - img "Trend sparkline showing up movement"
+    - text: $62,340.22
+    - img
+    - text: 0.2%
+    - button "+ Add Account"
+    - region "Quick Access Accounts":
+      - heading "Quick Access" [level=2]
+      - paragraph: "24 accounts • Net Worth: $656,092.84"
+      - button "Hide balances":
+        - img
+        - text: Hide
+      - button "View All (24)"
+      - button "[object Object] Main Checking Chase Bank • ••••1234 $12,450 $1,165 vs last month Checking Active":
+        - text: "[object Object]"
+        - heading "Main Checking" [level=3]
+        - paragraph: Chase Bank • ••••1234
+        - img
+        - paragraph: $12,450
+        - text: $1,165 vs last month Checking Active
+      - button "[object Object] Emergency Fund Bank of America • ••••5678 $25,780.50 $454 vs last month Savings Active":
+        - text: "[object Object]"
+        - heading "Emergency Fund" [level=3]
+        - paragraph: Bank of America • ••••5678
+        - img
+        - paragraph: $25,780.50
+        - text: $454 vs last month Savings Active
+      - button "[object Object] Rewards Card Wells Fargo • ••••9012 -$1,245.30 $234 vs last month Credit Card Active Available $8,754.70":
+        - text: "[object Object]"
+        - heading "Rewards Card" [level=3]
+        - paragraph: Wells Fargo • ••••9012
+        - img
+        - paragraph: "-$1,245.30"
+        - text: $234 vs last month Credit Card Active Available $8,754.70
+      - button "[object Object] Investment Portfolio Charles Schwab • ••••3456 $45,600.25 $912 vs last month Investment Active":
+        - text: "[object Object]"
+        - heading "Investment Portfolio" [level=3]
+        - paragraph: Charles Schwab • ••••3456
+        - img
+        - paragraph: $45,600.25
+        - text: $912 vs last month Investment Active
+      - button "[object Object] Business Checking JPMorgan Chase • ••••7890 $8,920.14 $1,348 vs last month Checking Active":
+        - text: "[object Object]"
+        - heading "Business Checking" [level=3]
+        - paragraph: JPMorgan Chase • ••••7890
+        - img
+        - paragraph: $8,920.14
+        - text: $1,348 vs last month Checking Active
+      - button "[object Object] 401(k) Retirement Fidelity • ••••4567 $174,250.67 $510 vs last month Investment Active":
+        - text: "[object Object]"
+        - heading "401(k) Retirement" [level=3]
+        - paragraph: Fidelity • ••••4567
+        - img
+        - paragraph: $174,250.67
+        - text: $510 vs last month Investment Active
+      - text: Press arrow keys to navigate between accounts.24 accounts available.
+    - region:
+      - text: "[object Object]"
+      - heading "Recent Transactions" [level=3]
+      - paragraph: 10 transactions
+      - heading "Wednesday, June 25" [level=3]
+      - text: A
+      - paragraph
+      - paragraph: • Jun 25
+      - paragraph: "-$145.67"
+      - text: completed
+      - heading "Today" [level=3]
+      - text: S
+      - paragraph
+      - paragraph: • Jun 21
+      - paragraph: "-$102.38"
+      - text: completed
+      - heading "Yesterday" [level=3]
+      - text: X
+      - paragraph
+      - paragraph: • Jun 20
+      - paragraph: "-$79.99"
+      - text: completed
+      - heading "Thursday, June 19" [level=3]
+      - text: A
+      - paragraph
+      - paragraph: • Jun 19
+      - paragraph: "-$80.49"
+      - text: completed
+      - heading "Wednesday, June 18" [level=3]
+      - text: L
+      - paragraph
+      - paragraph: • Jun 18
+      - paragraph: "-$39.99"
+      - text: completed
+      - heading "Tuesday, June 17" [level=3]
+      - text: T
+      - paragraph
+      - paragraph: • Jun 17
+      - paragraph: "-$25.44"
+      - text: completed
+      - heading "Monday, June 16" [level=3]
+      - text: W
+      - paragraph
+      - paragraph: • Jun 16
+      - paragraph: "-$59.06"
+      - text: completed
+      - heading "Sunday, June 15" [level=3]
+      - text: V
+      - paragraph
+      - paragraph: • Jun 15
+      - paragraph: "-$89.99"
+      - text: completed P
+      - paragraph
+      - paragraph: • Jun 15
+      - paragraph: "-$10.00"
+      - text: completed
+      - heading "Saturday, June 14" [level=3]
+      - text: A
+      - paragraph
+      - paragraph: • Jun 14
+      - paragraph: "-$54.99"
+      - text: completed
+    - button "Click to interact":
+      - img
+      - heading "Credit Score" [level=3]
+      - paragraph: Updated weekly
+      - button:
+        - img
+      - img
+      - text: 742 out of 850 Very Good
+      - img
+      - text: +12 last month Credit Utilization 23%
+      - paragraph: Excellent utilization
+      - button "View Full Report":
+        - text: View Full Report
+        - img
+      - paragraph: "Next review: 7/21/2025"
+    - region:
+      - text: "[object Object]"
+      - heading "Savings Goals" [level=3]
+      - text: 🛡️
+      - heading "Emergency Fund" [level=4]
+      - paragraph: Emergency Fund
+      - text: Overdue $8,500 57% complete
+      - img
+      - heading "Vacation to Japan" [level=4]
+      - paragraph: Vacation
+      - text: Overdue $2,800 56% complete 🚗
+      - heading "New Car" [level=4]
+      - paragraph: Car
+      - text: Overdue $4,200 35% complete
+      - button "View All Goals →"
+    - heading "Personal Finance Management" [level=2]
+    - paragraph: Comprehensive financial tools and automation
+    - region "Privacy Settings":
+      - img
+      - heading "Privacy Settings" [level=3]
+      - text: Hide amounts
+      - switch
+    - img
+    - heading "Linked Bank Accounts" [level=3]
+    - text: Connected 24
+    - paragraph: Net Worth
+    - paragraph: $656,092.84
+    - img
+    - paragraph: Chase Bank
+    - paragraph: "****1234"
+    - text: Checking
+    - paragraph: $12,450
+    - img
+    - paragraph: Bank of America
+    - paragraph: "****5678"
+    - text: Savings
+    - paragraph: $25,780.50
+    - img
+    - paragraph: Wells Fargo
+    - paragraph: "****9012"
+    - text: Credit Card
+    - paragraph: "-$1,245.30"
+    - img
+    - paragraph: Schwab
+    - paragraph: "****3456"
+    - text: Investment
+    - paragraph: $45,600.25
+    - img
+    - paragraph: JPMorgan Chase
+    - paragraph: "****7890"
+    - text: Checking
+    - paragraph: $8,920.14
+    - text: Show all accounts
+    - button "Link Additional Account":
+      - img
+      - text: Link Additional Account
+    - img
+    - heading "Recurring Subscriptions" [level=3]
+    - img
+    - text: Active 24
+    - paragraph: Monthly
+    - paragraph: $1,335.63
+    - heading "Netflix" [level=4]
+    - img
+    - text: Jul 11
+    - paragraph: $15.99
+    - paragraph: monthly
+    - button:
+      - img
+    - heading "Spotify" [level=4]
+    - img
+    - text: Jul 10
+    - paragraph: $9.99
+    - paragraph: monthly
+    - button:
+      - img
+    - heading "Adobe Creative Cloud" [level=4]
+    - img
+    - text: Jul 8
+    - paragraph: $20.99
+    - paragraph: monthly
+    - button:
+      - img
+    - heading "Planet Fitness" [level=4]
+    - img
+    - text: Jul 15
+    - paragraph: $10
+    - paragraph: monthly
+    - button:
+      - img
+    - heading "Amazon Prime" [level=4]
+    - img
+    - text: Jul 7
+    - paragraph: $14.99
+    - paragraph: monthly
+    - button:
+      - img
+    - button "See all subscriptions"
+    - paragraph: Auto-detected from transactions
+    - img
+    - heading "Bill Negotiation Concierge" [level=3]
+    - button "Negotiate Bills":
+      - img
+      - text: Negotiate Bills
+    - img
+    - paragraph: No negotiations yet
+    - paragraph: Start by clicking above
+    - region "Smart Automated Savings":
+      - img
+      - heading "Smart Automated Savings" [level=3]
+      - spinbutton: "10"
+      - combobox: Weekly
+      - button "Create Plan":
+        - img
+        - text: Create Plan
+      - paragraph: No savings plans yet.
+    - region "Shared Budgets":
+      - img
+      - heading "Shared Budgets" [level=3]
+      - textbox "Household name"
+      - button "Create Household" [disabled]:
+        - img
+        - text: Create Household
+      - paragraph: No households yet.
+    - region "Ask an Advisor":
+      - img
+      - heading "Ask an Advisor" [level=3]
+      - button "Ask Advisor":
+        - img
+        - text: Ask Advisor
+    - region "Safe to Spend":
+      - img
+      - heading "Safe to Spend" [level=3]
+      - text: $871
+      - paragraph: Available to spend safely
+      - img
+      - text: "Next payday: 6/27/2025"
+    - region "Home Screen Widgets":
+      - img
+      - heading "Home Screen Widgets" [level=3]
+      - button "Balance Widget":
+        - img
+        - img
+        - text: Balance Widget
+      - button "Safe-to-Spend Widget":
+        - img
+        - img
+        - text: Safe-to-Spend Widget
+      - button:
+        - img
+      - img
+      - paragraph: Account Balance
+      - paragraph: $5,432.10
+      - button:
+        - img
+      - img
+      - paragraph: Safe to Spend
+      - paragraph: $687.50
+    - region "Age of Money":
+      - img
+      - heading "Age of Money" [level=3]
+      - 'img "Progress: 0"'
+      - text: "0"
+      - paragraph: Average 42 days held
+    - button "Biometric Monitor - Click to interact":
+      - img
+      - heading "Biometric Monitor" [level=3]
+      - 'img "Progress: 0"'
+      - text: "0"
+      - heading "Metrics" [level=4]
+      - img
+      - text: Heart Rate 98 BPM
+      - img
+      - text: Stress Level 73%
+      - img
+      - text: Risk Level High
+    - text: More features Coming soon
+```

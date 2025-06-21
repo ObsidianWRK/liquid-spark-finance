@@ -1,0 +1,37 @@
+/* Bottom Navigation Overrides - Show on all viewport sizes */
+
+/* Force bottom navigation to be visible on all screen sizes */
+.bottom-nav {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+
+/* Ensure the nav container inside is also visible */
+.bottom-nav .liquid-glass-nav {
+  display: block !important;
+}
+
+/* Make sure buttons are visible */
+.bottom-nav .nav-items-container {
+  display: flex !important;
+}
+
+/* Override any media query that might hide it */
+@media (min-width: 768px) {
+  .bottom-nav {
+    display: block !important;
+  }
+}
+
+@media (min-width: 1024px) {
+  .bottom-nav {
+    display: block !important;
+  }
+}
+
+@media (min-width: 1440px) {
+  .bottom-nav {
+    display: block !important;
+  }
+} 
