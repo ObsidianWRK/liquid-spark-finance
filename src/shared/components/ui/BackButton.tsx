@@ -54,9 +54,9 @@ export const BackButton: React.FC<BackButtonProps> = ({
     onClick?.();
 
     // Check if there's navigation history available
-    // window.history.length > 2 means user has navigated within the app
-    // (initial load creates 1 entry, first navigation creates 2)
-    if (window.history.length > 2) {
+    // window.history.length > 1 means there's at least one prior entry
+    // (initial load creates 1 entry)
+    if (window.history.length > 1) {
       navigate(-1);
     } else {
       // No history available (direct link, page refresh), use fallback
@@ -121,7 +121,7 @@ export const IconBackButton: React.FC<
   const handleBack = () => {
     onClick?.();
 
-    if (window.history.length > 2) {
+    if (window.history.length > 1) {
       navigate(-1);
     } else {
       navigate(fallbackPath);
