@@ -39,6 +39,10 @@ import { AdvisorChatPanel } from '@/features/advisor-chat/components/AdvisorChat
 import { SafeToSpendCard } from '@/features/safe-to-spend/components/SafeToSpendCard';
 import { WidgetsPanel } from '@/features/widgets/components/WidgetsPanel';
 import { BiometricMonitorCard } from '@/features/biometric-intervention/components/BiometricMonitorCard';
+// Financial selectors for proper financial calculations
+import { selectTotalWealth } from '@/selectors/financialSelectors';
+import { mockAccountsEnhanced } from '@/services/mockData';
+import { formatCurrency } from '@/shared/utils/formatters';
 
 // Lazy load components properly without webpack comments
 const InvestmentTrackerPage = lazy(
@@ -292,6 +296,9 @@ export default function Index() {
   const { setting: privacySetting, toggle: togglePrivacy } = usePrivacyStore();
   const isMobile = useIsMobile();
 
+  // Calculate proper financial metrics using selectors
+  const netWorth = selectTotalWealth(mockAccountsEnhanced);
+
   // Data validation in useEffect instead of early return
   useEffect(() => {
     const validateAndLoadData = async () => {
@@ -368,10 +375,10 @@ export default function Index() {
 
         <div className="p-6 space-y-6">
           {/* CC: Smart Accounts Deck and Compact Account Cards Grid */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:items-stretch">
             {/* Smart Accounts Deck (R2 requirement) */}
             {isFeatureEnabled('SMART_ACCOUNTS_DECK') && (
-              <div>
+              <div className="flex flex-col h-full">
                 <VirtualizedDeck
                   accounts={transformToAccountRowData()}
                   height={400}
@@ -382,28 +389,30 @@ export default function Index() {
                     );
                     // Account click handler
                   }}
+                  className="flex-1 h-full"
                 />
               </div>
             )}
 
             {/* Enhanced Quick Access Rail */}
-            <div>
-                          <QuickAccessRail
-              accounts={getCompactAccountCards()}
-              title="Quick Access"
-              subtitle={`${getCompactAccountCards().length} accounts • Total Balance: $83.8K`}
-              showBalance={!privacySetting.hideAmounts}
-              onToggleBalance={togglePrivacy}
-              onAccountSelect={(accountId) => {
-                console.log('Selected account:', accountId);
-                // TODO: Navigate to account details
-              }}
-              onViewAll={() => {
-                // Navigation will be handled by the global navigation system
-                console.log('Navigate to accounts page');
-              }}
-              maxVisibleDesktop={6}
-            />
+            <div className="flex flex-col h-full">
+              <QuickAccessRail
+                accounts={getCompactAccountCards()}
+                title="Quick Access"
+                subtitle={`${getCompactAccountCards().length} accounts • Net Worth: ${formatCurrency(netWorth, { currency: 'USD' })}`}
+                showBalance={!privacySetting.hideAmounts}
+                onToggleBalance={togglePrivacy}
+                onAccountSelect={(accountId) => {
+                  console.log('Selected account:', accountId);
+                  // TODO: Navigate to account details
+                }}
+                onViewAll={() => {
+                  // Navigation will be handled by the global navigation system
+                  console.log('Navigate to accounts page');
+                }}
+                maxVisibleDesktop={6}
+                className="flex-1"
+              />
             </div>
           </div>
 
