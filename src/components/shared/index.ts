@@ -1,13 +1,13 @@
 // Shared components that consolidate duplicate implementations
 
 // Transaction List Components
-export { default as VueniUnifiedTransactionList } from './VueniUnifiedTransactionList';
+export { default as VueniUnifiedTransactionList } from '@/features/transactions/components/UnifiedTransactionList';
 export type {
-  VueniUnifiedTransactionListProps,
-  VueniTransaction,
-  VueniTransactionFeatures,
+  Transaction as VueniTransaction,
   TransactionVariant,
-} from './VueniUnifiedTransactionList';
+  SortField,
+  SortDirection,
+} from '@/features/transactions/components/UnifiedTransactionList';
 
 // Score Circle Components
 export { SharedScoreCircle } from './SharedScoreCircle';

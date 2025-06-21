@@ -15,7 +15,7 @@ export { SharedScoreCircle } from '../components/shared/SharedScoreCircle';
 export { UnifiedCard } from '../shared/ui/UnifiedCard';
 
 // Unified Transaction Components
-export { default as UnifiedTransactionList } from '../features/transactions/components/UnifiedTransactionList';
+export { default as UnifiedTransactionList } from '@/features/transactions/components/UnifiedTransactionList';
 
 // Base Insights
 export { default as BaseInsightsPage } from '../features/insights/components/BaseInsightsPage';
