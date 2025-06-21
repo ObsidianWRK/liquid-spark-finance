@@ -347,8 +347,8 @@ const BaseInsightsPage = ({
   );
 
   const containerClasses = compactMode
-    ? 'relative overflow-hidden p-4'
-    : 'relative overflow-hidden';
+    ? 'relative overflow-hidden p-4 min-h-screen bg-black text-white'
+    : 'relative overflow-hidden min-h-screen bg-black text-white';
 
   return (
     <div className={`${containerClasses} ${className}`}>

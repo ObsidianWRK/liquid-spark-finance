@@ -6,6 +6,7 @@
 @import './app/styles/nav-styles.css'; /* iOS 26 Liquid Glass Navigation */
 @import './app/styles/viewport-guardian.css'; /* Viewport Guardian utilities */
 @import './app/styles/card-interactions.css';
+@import './app/styles/card-variants.css';
 @import './app/styles/accessibility.css';
 @import './app/styles/pfm-row.css';
 
@@ -20,7 +21,7 @@
     --radius: 0.5rem;
   }
 
-  .dark {
+  [data-theme='dark'], .dark {
     /* UPDATED: Dark mode with Vueni brand colors */
     --background: 219 68% 9%;           /* Cosmic Odyssey background */
     --foreground: 210 40% 98%;
@@ -58,6 +59,14 @@
     --sidebar-accent: 219 55% 15%;      /* Card color */
     --sidebar-accent-foreground: 240 4.8% 95.9%;
     --sidebar-border: 219 45% 25%;      /* Border color */
+    --vueni-eco: #4AFF88;
+    --vueni-eco-rgb: 74 255 136;
+    --vueni-wellness: #4A9EFF;
+    --vueni-wellness-rgb: 74 158 255;
+    --vueni-financial: #9F4AFF;
+    --vueni-financial-rgb: 159 74 255;
+    --vueni-cosmic-odyssey: #9F4AFF;
+    --vueni-blue-oblivion: #4A9EFF;
     --sidebar-ring: 224 44% 56%;        /* Sapphire Dust */
 
     /* NEW: Vueni Glass Effects CSS Custom Properties */
@@ -187,6 +196,7 @@
 }
 
 /* Dark mode dropdown enhancements for consistency */
+[data-theme='dark'] [data-radix-dropdown-menu-content],
 html.dark [data-radix-dropdown-menu-content] {
   background: rgba(0, 0, 0, 0.95) !important;
   border: 2px solid rgba(255, 255, 255, 0.2) !important;
@@ -194,15 +204,18 @@ html.dark [data-radix-dropdown-menu-content] {
   backdrop-filter: blur(16px) !important;
 }
 
+[data-theme='dark'] [data-radix-dropdown-menu-item],
 html.dark [data-radix-dropdown-menu-item] {
   color: rgba(255, 255, 255, 0.9) !important;
 }
 
+[data-theme='dark'] [data-radix-dropdown-menu-item]:hover,
 html.dark [data-radix-dropdown-menu-item]:hover {
   background: rgba(255, 255, 255, 0.1) !important;
   color: rgb(255, 255, 255) !important;
 }
 
+[data-theme='dark'] [data-radix-dropdown-menu-item]:focus,
 html.dark [data-radix-dropdown-menu-item]:focus {
   background: rgba(255, 255, 255, 0.15) !important;
   color: rgb(255, 255, 255) !important;

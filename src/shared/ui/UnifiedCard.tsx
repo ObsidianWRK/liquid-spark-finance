@@ -10,6 +10,8 @@ import {
 } from 'lucide-react';
 import { getTrendColor } from '@/shared/utils/theme-color-mapper';
 import { vueniTheme } from '@/theme/unified';
+import { vueniPalette } from '@/theme/vueniPalette';
+import { hexToRgb } from '@/shared/utils/color';
 
 interface UnifiedCardProps {
   title?: string;
@@ -134,35 +136,30 @@ export const UnifiedCard = React.memo<UnifiedCardProps>(
       'p-6 rounded-2xl border relative overflow-hidden',
       {
         'bg-white/[0.02] border-white/[0.08]': variant === 'default',
-        'bg-gradient-to-br from-green-500/10 to-emerald-600/10 border-green-500/20':
-          variant === 'eco',
-        'bg-gradient-to-br from-blue-500/10 to-cyan-600/10 border-blue-500/20':
-          variant === 'wellness',
-        'bg-gradient-to-br from-purple-500/10 to-indigo-600/10 border-purple-500/20':
-          variant === 'financial',
+        'card-variant': variant !== 'default',
+        'card-variant-hover': variant !== 'default' && !disableHover,
       },
       {
-        'hover:bg-white/[0.05] hover:border-white/[0.15] hover:scale-[1.02] transition-all duration-300 ease-out cursor-pointer': 
+        'hover:scale-[1.02] transition-all duration-300 ease-out cursor-pointer':
           !disableHover && (interactive || onClick),
-        'hover:bg-white/[0.04] hover:border-white/[0.12] transition-all duration-300 ease-out': 
+        'transition-all duration-300 ease-out':
           !disableHover && !interactive && !onClick,
-        
-        'hover:from-green-500/15 hover:to-emerald-600/15 hover:border-green-500/30 hover:shadow-lg hover:shadow-green-500/10': 
-          !disableHover && variant === 'eco',
-        'hover:from-blue-500/15 hover:to-cyan-600/15 hover:border-blue-500/30 hover:shadow-lg hover:shadow-blue-500/10': 
-          !disableHover && variant === 'wellness',
-        'hover:from-purple-500/15 hover:to-indigo-600/15 hover:border-purple-500/30 hover:shadow-lg hover:shadow-purple-500/10': 
-          !disableHover && variant === 'financial',
-        
-        'focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500': 
+
+        'focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500':
           interactive || onClick,
       },
       className
     );
 
+    const style =
+      variant !== 'default'
+        ? { ['--card-color' as any]: hexToRgb(vueniPalette[variant]) }
+        : undefined;
+
     return (
-      <div 
-        className={cardClasses} 
+      <div
+        className={cardClasses}
+        style={style}
         onClick={interactive || onClick ? onClick : undefined}
         role={interactive || onClick ? 'button' : 'region'}
         tabIndex={interactive || onClick ? 0 : undefined}
