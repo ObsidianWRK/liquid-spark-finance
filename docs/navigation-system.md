@@ -6,7 +6,7 @@ The Vueni Adaptive Navigation System provides a seamless, responsive navigation 
 
 - **Mobile** (<640px): Bottom navigation bar with glass-blur backdrop
 - **Tablet** (640px-1024px): Collapsible navigation rail
-- **Desktop** (≥1024px): Sidebar + top bar combination
+- **Desktop** (≥1024px): Sidebar layout
 
 ## Architecture
 
@@ -17,7 +17,6 @@ src/navigation/
 │   ├── BottomNav.tsx            # Mobile bottom navigation
 │   ├── NavRail.tsx              # Tablet navigation rail
 │   ├── Sidebar.tsx              # Desktop sidebar
-│   ├── TopBar.tsx               # Desktop top bar
 │   └── MotionWrapper.tsx        # Animation wrapper
 ├── routeConfig.ts               # Canonical route definitions
 └── index.ts                     # Exports
@@ -47,7 +46,6 @@ import {
   BottomNav,
   NavRail,
   Sidebar,
-  TopBar,
   useBreakpoint,
 } from '@/navigation';
 
@@ -61,7 +59,6 @@ function CustomNavigation() {
       {isDesktop && (
         <>
           <Sidebar />
-          <TopBar />
         </>
       )}
     </>
@@ -102,23 +99,23 @@ export const mainRoutes: Route[] = [
 
 | Route ID | Label | Mobile (<768px) | Tablet (768-1023px) | Desktop (≥1024px) | Badge Support |
 |----------|-------|------------------|---------------------|-------------------|---------------|
-| `dashboard` | Dashboard | ✅ Bottom Nav | ✅ Nav Rail | ✅ Top Bar | ❌ |
-| `accounts` | Accounts | ✅ Bottom Nav | ✅ Nav Rail | ✅ Top Bar | ❌ |
-| `transactions` | Transactions | ✅ Bottom Nav | ✅ Nav Rail | ✅ Top Bar | ❌ |
-| `insights` | Insights | ✅ Bottom Nav | ✅ Nav Rail | ✅ Top Bar | ❌ |
-| `calculators` | Calculators | ❌ Hidden | ✅ Nav Rail | ✅ Top Bar | ❌ |
-| `budget-planner` | Budget Planner | ❌ Hidden | ✅ Nav Rail | ✅ Top Bar | ❌ |
-| `investment-tracker` | Investment Tracker | ❌ Hidden | ✅ Nav Rail | ✅ Top Bar | ❌ |
-| `credit` | Credit Score | ❌ Hidden | ✅ Nav Rail | ✅ Top Bar | ❌ |
-| `savings` | Savings Goals | ❌ Hidden | ✅ Nav Rail | ✅ Top Bar | ❌ |
-| `reports` | Reports | ❌ Hidden | ✅ Nav Rail | ✅ Top Bar | ❌ |
-| `profile` | Profile | ❌ Hidden | ❌ Hidden | ✅ Top Bar | ❌ |
-| `settings` | Settings | ❌ Hidden | ❌ Hidden | ✅ Top Bar | ❌ |
+| `dashboard` | Dashboard | ✅ Bottom Nav | ✅ Nav Rail | ✅ Sidebar | ❌ |
+| `accounts` | Accounts | ✅ Bottom Nav | ✅ Nav Rail | ✅ Sidebar | ❌ |
+| `transactions` | Transactions | ✅ Bottom Nav | ✅ Nav Rail | ✅ Sidebar | ❌ |
+| `insights` | Insights | ✅ Bottom Nav | ✅ Nav Rail | ✅ Sidebar | ❌ |
+| `calculators` | Calculators | ❌ Hidden | ✅ Nav Rail | ✅ Sidebar | ❌ |
+| `budget-planner` | Budget Planner | ❌ Hidden | ✅ Nav Rail | ✅ Sidebar | ❌ |
+| `investment-tracker` | Investment Tracker | ❌ Hidden | ✅ Nav Rail | ✅ Sidebar | ❌ |
+| `credit` | Credit Score | ❌ Hidden | ✅ Nav Rail | ✅ Sidebar | ❌ |
+| `savings` | Savings Goals | ❌ Hidden | ✅ Nav Rail | ✅ Sidebar | ❌ |
+| `reports` | Reports | ❌ Hidden | ✅ Nav Rail | ✅ Sidebar | ❌ |
+| `profile` | Profile | ❌ Hidden | ❌ Hidden | ✅ Sidebar | ❌ |
+| `settings` | Settings | ❌ Hidden | ❌ Hidden | ✅ Sidebar | ❌ |
 
 **Navigation Strategy:**
 - **Mobile**: Limited to 4 primary routes (Dashboard, Accounts, Transactions, Insights) to maintain touch-friendly spacing
 - **Tablet**: Nav rail expands on hover to show all main routes and their labels
-- **Desktop**: Top bar shows all routes with full labels and supports keyboard navigation
+- **Desktop**: Sidebar shows all routes with full labels and supports keyboard navigation
 
 ### Route Properties
 
@@ -202,12 +199,11 @@ function MyComponent() {
 - **Long Press** (touch): 500ms hold to expand
 - **Focus**: Keyboard accessible
 
-### Desktop Navigation (Sidebar + TopBar)
+### Desktop Navigation (Sidebar Layout)
 
 **Features:**
 
 - **Sidebar**: 288px wide, permanently visible
-- **TopBar**: Search bar, quick actions, profile
 - Grouped navigation sections
 - Scrollable content area
 - Professional layout
@@ -223,13 +219,6 @@ function MyComponent() {
   bottom: 0;
 }
 
-.topbar {
-  position: fixed;
-  top: 0;
-  left: 18rem;
-  right: 0;
-  height: 48px;
-}
 ```
 
 ## Animations
@@ -242,7 +231,6 @@ const variants = {
   bottom: { y: [100, 0], opacity: [0, 1] },
   rail: { x: [-80, 0], opacity: [0, 1] },
   sidebar: { x: [-288, 0], opacity: [0, 1] },
-  topbar: { y: [-48, 0], opacity: [0, 1] },
 };
 ```
 
@@ -302,23 +290,6 @@ npm run test:e2e -- adaptive-navigation.spec.ts
 
 ## Migration Guide
 
-### From LiquidGlassTopMenuBar
-
-**Before:**
-
-```tsx
-import LiquidGlassTopMenuBar from '@/components/LiquidGlassTopMenuBar';
-
-<LiquidGlassTopMenuBar onMenuItemClick={handleClick} />;
-```
-
-**After:**
-
-```tsx
-import { AdaptiveNavigation } from '@/navigation';
-
-<AdaptiveNavigation />;
-```
 
 ### From Navigation.tsx
 
@@ -385,7 +356,6 @@ export const mainRoutes: Route[] = [
   --nav-tablet-width: 5rem; /* collapsed */
   --nav-tablet-expanded: 16rem;
   --nav-desktop-width: 18rem;
-  --nav-topbar-height: 3rem;
 }
 ```
 
