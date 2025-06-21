@@ -84,7 +84,7 @@ export const RecurringChargesList: React.FC<{ className?: string }> = ({
   if (loading && charges.length === 0) {
     return (
       <div className={cn('text-white/60 text-center py-4', className)}>
-        <div className="animate-spin w-4 h-4 border-2 border-orange-400 border-t-transparent rounded-full mx-auto mb-2"></div>
+        <div className="animate-spin w-4 h-4 border-2 border-orange-400 border-t-transparent rounded-vueni-pill mx-auto mb-2"></div>
         <p className="text-xs">Analyzing subscriptions...</p>
       </div>
     );
@@ -103,11 +103,11 @@ export const RecurringChargesList: React.FC<{ className?: string }> = ({
   return (
     <div className={cn('space-y-2', className)}>
       {/* Summary - Compact */}
-      <div className="flex items-center justify-between p-2 bg-white/[0.03] rounded-lg border border-white/[0.05] mb-3">
+      <div className="flex items-center justify-between p-2 bg-white/[0.03] rounded-vueni-lg border border-white/[0.05] mb-3">
         <div className="flex items-center gap-2">
           <Zap className="w-3 h-3 text-orange-400" />
           <span className="text-xs text-white/70">Active</span>
-          <span className="text-xs px-1.5 py-0.5 bg-orange-500/20 text-orange-400 rounded-full">
+          <span className="text-xs px-1.5 py-0.5 bg-orange-500/20 text-orange-400 rounded-vueni-pill">
             {charges.length}
           </span>
         </div>
@@ -131,7 +131,7 @@ export const RecurringChargesList: React.FC<{ className?: string }> = ({
         {displayCharges.map((charge) => (
           <div
             key={charge.id}
-            className="flex items-center justify-between p-3 bg-white/[0.02] rounded-lg border border-white/[0.05] hover:bg-white/[0.04] transition-all"
+            className="flex items-center justify-between p-3 bg-white/[0.02] rounded-vueni-lg border border-white/[0.05] hover:bg-white/[0.04] transition-all"
           >
             {/* Left side: Subscription name and due date */}
             <div className="flex flex-col min-w-0 flex-1">
@@ -180,7 +180,7 @@ export const RecurringChargesList: React.FC<{ className?: string }> = ({
       </div>
 
       {/* Footer - Compact */}
-      <div className="p-2 bg-white/[0.02] rounded-lg border border-white/[0.05]">
+      <div className="p-2 bg-white/[0.02] rounded-vueni-lg border border-white/[0.05]">
         <p className="text-xs text-white/60 text-center">
           Auto-detected from transactions
         </p>

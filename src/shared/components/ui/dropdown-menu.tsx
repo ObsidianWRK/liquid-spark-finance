@@ -25,7 +25,7 @@ const DropdownMenuSubTrigger = React.forwardRef<
   <DropdownMenuPrimitive.SubTrigger
     ref={ref}
     className={cn(
-      'flex cursor-default select-none items-center rounded-lg px-3 py-2 text-sm outline-none',
+      'flex cursor-default select-none items-center rounded-vueni-lg px-3 py-2 text-sm outline-none',
       'text-white/90 hover:text-white hover:bg-white/10 focus:bg-white/15 focus:text-white',
       'data-[state=open]:bg-white/15 data-[state=open]:text-white transition-all duration-200',
       'dark:text-white/90 dark:hover:text-white dark:hover:bg-white/10',
@@ -49,7 +49,7 @@ const DropdownMenuSubContent = React.forwardRef<
   <DropdownMenuPrimitive.SubContent
     ref={ref}
     className={cn(
-      'z-50 min-w-[8rem] overflow-hidden rounded-xl border p-2 shadow-2xl backdrop-blur-md',
+      'z-50 min-w-[8rem] overflow-hidden rounded-vueni-lg border p-2 shadow-2xl backdrop-blur-md',
       'bg-black/95 border-white/20 text-white',
       'dark:bg-black/95 dark:border-white/20 dark:text-white',
       'light:bg-white/95 light:border-slate-300 light:text-slate-900',
@@ -71,7 +71,7 @@ const DropdownMenuContent = React.forwardRef<
       ref={ref}
       sideOffset={sideOffset}
       className={cn(
-        'z-50 min-w-[8rem] overflow-hidden rounded-xl border p-2 shadow-2xl backdrop-blur-md',
+        'z-50 min-w-[8rem] overflow-hidden rounded-vueni-lg border p-2 shadow-2xl backdrop-blur-md',
         'bg-black/95 border-white/20 text-white',
         'dark:bg-black/95 dark:border-white/20 dark:text-white',
         'light:bg-white/95 light:border-slate-300 light:text-slate-900 light:shadow-lg',
@@ -93,7 +93,7 @@ const DropdownMenuItem = React.forwardRef<
   <DropdownMenuPrimitive.Item
     ref={ref}
     className={cn(
-      'relative flex cursor-default select-none items-center rounded-lg px-3 py-2 text-sm outline-none transition-all duration-200',
+      'relative flex cursor-default select-none items-center rounded-vueni-lg px-3 py-2 text-sm outline-none transition-all duration-200',
       'text-white/90 hover:text-white hover:bg-white/10 focus:bg-white/15 focus:text-white',
       'dark:text-white/90 dark:hover:text-white dark:hover:bg-white/10',
       'light:text-slate-700 light:hover:text-slate-900 light:hover:bg-slate-100 light:focus:bg-slate-200',
@@ -113,7 +113,7 @@ const DropdownMenuCheckboxItem = React.forwardRef<
   <DropdownMenuPrimitive.CheckboxItem
     ref={ref}
     className={cn(
-      'relative flex cursor-default select-none items-center rounded-lg py-2 pl-8 pr-3 text-sm outline-none transition-all duration-200',
+      'relative flex cursor-default select-none items-center rounded-vueni-lg py-2 pl-8 pr-3 text-sm outline-none transition-all duration-200',
       'text-white/90 hover:text-white hover:bg-white/10 focus:bg-white/15 focus:text-white',
       'dark:text-white/90 dark:hover:text-white dark:hover:bg-white/10',
       'light:text-slate-700 light:hover:text-slate-900 light:hover:bg-slate-100 light:focus:bg-slate-200',
@@ -141,7 +141,7 @@ const DropdownMenuRadioItem = React.forwardRef<
   <DropdownMenuPrimitive.RadioItem
     ref={ref}
     className={cn(
-      'relative flex cursor-default select-none items-center rounded-lg py-2 pl-8 pr-3 text-sm outline-none transition-all duration-200',
+      'relative flex cursor-default select-none items-center rounded-vueni-lg py-2 pl-8 pr-3 text-sm outline-none transition-all duration-200',
       'text-white/90 hover:text-white hover:bg-white/10 focus:bg-white/15 focus:text-white',
       'dark:text-white/90 dark:hover:text-white dark:hover:bg-white/10',
       'light:text-slate-700 light:hover:text-slate-900 light:hover:bg-slate-100 light:focus:bg-slate-200',

@@ -577,7 +577,7 @@ export const MultiLineChart: React.FC<MultiLineChartProps> = ({
           {lines.map((line, index) => (
             <div key={index} className="flex items-center space-x-2">
               <div
-                className="w-4 h-4 rounded-full"
+                className="w-4 h-4 rounded-vueni-pill"
                 style={{ backgroundColor: line.stroke }}
               />
               <span className="text-white text-xs">

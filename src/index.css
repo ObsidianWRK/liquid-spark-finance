@@ -166,7 +166,7 @@
 /* CLS Prevention: Chart loading skeletons */
 @layer components {
   .chart-skeleton {
-    @apply bg-white/[0.02] rounded-lg border border-white/[0.08] animate-pulse;
+    @apply bg-white/[0.02] rounded-vueni-lg border border-white/[0.08] animate-pulse;
     min-height: 180px;
     display: flex;
     align-items: center;
@@ -175,7 +175,7 @@
   }
 
   .chart-skeleton-bar {
-    @apply bg-white/[0.05] rounded-sm;
+    @apply bg-white/[0.05] rounded-vueni-sm;
     animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
   }
 
@@ -270,7 +270,7 @@ html.dark [data-radix-dropdown-menu-item]:focus {
   }
 
   .category-item {
-    @apply p-2 rounded-lg bg-white/5 hover:bg-white/10 transition-colors;
+    @apply p-2 rounded-vueni-lg bg-white/5 hover:bg-white/10 transition-colors;
     /* Mobile: smaller padding */
     @apply sm:p-3;
   }
@@ -322,13 +322,13 @@ html.dark [data-radix-dropdown-menu-item]:focus {
   .tab-navigation {
     @apply flex p-1 mb-6;
     /* Mobile: smaller padding */
-    @apply rounded-2xl sm:rounded-3xl;
+    @apply rounded-vueni-lg sm:rounded-vueni-lg;
   }
 
   .tab-button {
-    @apply flex-1 py-2 px-3 rounded-xl text-xs font-semibold transition-all duration-300;
+    @apply flex-1 py-2 px-3 rounded-vueni-lg text-xs font-semibold transition-all duration-300;
     /* Tablet: larger padding */
-    @apply sm:py-3 sm:px-6 sm:rounded-2xl sm:text-sm;
+    @apply sm:py-3 sm:px-6 sm:rounded-vueni-lg sm:text-sm;
   }
 
   /* Score circle responsiveness */

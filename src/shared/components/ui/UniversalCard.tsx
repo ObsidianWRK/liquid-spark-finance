@@ -92,10 +92,10 @@ export const UniversalCard = React.memo<UniversalCardProps>(
         'bg-transparent border border-white/5': variant === 'minimal',
 
         // Sizes
-        'p-3 rounded-lg text-sm': size === 'sm',
-        'p-4 rounded-xl text-base': size === 'md',
-        'p-6 rounded-2xl text-lg': size === 'lg',
-        'p-8 rounded-3xl text-xl': size === 'xl',
+        'p-3 rounded-vueni-lg text-sm': size === 'sm',
+        'p-4 rounded-vueni-lg text-base': size === 'md',
+        'p-6 rounded-vueni-lg text-lg': size === 'lg',
+        'p-8 rounded-vueni-lg text-xl': size === 'xl',
 
         // Interactive
         'cursor-pointer hover:scale-[1.02] hover:bg-white/15': interactive,
@@ -159,7 +159,7 @@ export const UniversalCard = React.memo<UniversalCardProps>(
       return (
         <div className="grid grid-cols-2 gap-3">
           {data.metrics.map((metric, index) => (
-            <div key={index} className="bg-white/5 rounded-lg p-3">
+            <div key={index} className="bg-white/5 rounded-vueni-lg p-3">
               <div className="flex items-center space-x-2 mb-1">
                 {metric.icon && (
                   <metric.icon
@@ -186,7 +186,7 @@ export const UniversalCard = React.memo<UniversalCardProps>(
           {data.trends.map((trend, index) => (
             <div
               key={index}
-              className="flex items-center justify-between p-2 rounded-lg bg-white/5"
+              className="flex items-center justify-between p-2 rounded-vueni-lg bg-white/5"
             >
               <span className="text-xs text-white/70">{trend.label}</span>
               <div className="flex items-center space-x-1">

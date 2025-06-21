@@ -272,7 +272,7 @@ const BudgetTracker = ({ familyId, className }: BudgetTrackerProps) => {
         {[...Array(3)].map((_, i) => (
           <div
             key={i}
-            className="bg-white/[0.02] rounded-2xl border border-white/[0.08] p-6 animate-pulse"
+            className="bg-white/[0.02] rounded-vueni-lg border border-white/[0.08] p-6 animate-pulse"
           >
             <div className="flex items-center justify-between mb-4">
               <div className="h-6 bg-white/[0.05] rounded w-32"></div>
@@ -292,7 +292,7 @@ const BudgetTracker = ({ familyId, className }: BudgetTrackerProps) => {
     <div className="space-y-6">
       {/* Budget Summary */}
       {budget && (
-        <UniversalCard className="p-6 rounded-2xl card-hover">
+        <UniversalCard className="p-6 rounded-vueni-lg card-hover">
           <h3 className="text-xl font-bold text-white mb-6 flex items-center gap-3">
             <PieChart className="w-6 h-6 text-blue-400" />
             {budget.name}
@@ -340,10 +340,10 @@ const BudgetTracker = ({ familyId, className }: BudgetTrackerProps) => {
                 )}
               </span>
             </div>
-            <div className="w-full bg-white/[0.05] rounded-full h-3">
+            <div className="w-full bg-white/[0.05] rounded-vueni-pill h-3">
               <div
                 className={cn(
-                  'h-3 rounded-full transition-all duration-300',
+                  'h-3 rounded-vueni-pill transition-all duration-300',
                   budget.totalSpent > budget.totalBudgeted
                     ? 'bg-red-500'
                     : 'bg-blue-500'
@@ -359,7 +359,7 @@ const BudgetTracker = ({ familyId, className }: BudgetTrackerProps) => {
 
       {/* Top Categories */}
       {budget && budget.categories.length > 0 && (
-        <UniversalCard className="p-6 rounded-2xl card-hover">
+        <UniversalCard className="p-6 rounded-vueni-lg card-hover">
           <h3 className="text-lg font-bold text-white mb-4 flex items-center gap-3">
             <BarChart3 className="w-5 h-5 text-blue-400" />
             Top Spending Categories
@@ -382,7 +382,7 @@ const BudgetTracker = ({ familyId, className }: BudgetTrackerProps) => {
                     className="flex items-center justify-between"
                   >
                     <div className="flex items-center gap-3 flex-1 min-w-0">
-                      <div className="w-8 h-8 rounded-xl bg-blue-500/20 flex items-center justify-center">
+                      <div className="w-8 h-8 rounded-vueni-lg bg-blue-500/20 flex items-center justify-center">
                         <Target className="w-4 h-4 text-blue-400" />
                       </div>
                       <div className="flex-1 min-w-0">
@@ -390,10 +390,10 @@ const BudgetTracker = ({ familyId, className }: BudgetTrackerProps) => {
                           {category.categoryName.replace('_', ' ')}
                         </p>
                         <div className="flex items-center gap-3 mt-1">
-                          <div className="flex-1 bg-white/[0.05] rounded-full h-2">
+                          <div className="flex-1 bg-white/[0.05] rounded-vueni-pill h-2">
                             <div
                               className={cn(
-                                'h-2 rounded-full transition-all duration-300',
+                                'h-2 rounded-vueni-pill transition-all duration-300',
                                 progress >= 100
                                   ? 'bg-red-500'
                                   : progress >= 80
@@ -405,7 +405,7 @@ const BudgetTracker = ({ familyId, className }: BudgetTrackerProps) => {
                           </div>
                           <span
                             className={cn(
-                              'text-xs px-2 py-1 rounded-xl border font-medium',
+                              'text-xs px-2 py-1 rounded-vueni-lg border font-medium',
                               getStatusColor(status)
                             )}
                           >
@@ -432,7 +432,7 @@ const BudgetTracker = ({ familyId, className }: BudgetTrackerProps) => {
 
       {/* Savings Goals */}
       {goals.length > 0 && (
-        <UniversalCard className="p-6 rounded-2xl card-hover">
+        <UniversalCard className="p-6 rounded-vueni-lg card-hover">
           <h3 className="text-lg font-bold text-white mb-4 flex items-center gap-3">
             <Target className="w-5 h-5 text-green-400" />
             Savings Goals
@@ -448,7 +448,7 @@ const BudgetTracker = ({ familyId, className }: BudgetTrackerProps) => {
                   className="flex items-center justify-between"
                 >
                   <div className="flex items-center gap-3 flex-1 min-w-0">
-                    <div className="w-8 h-8 rounded-xl bg-green-500/20 flex items-center justify-center">
+                    <div className="w-8 h-8 rounded-vueni-lg bg-green-500/20 flex items-center justify-center">
                       {getGoalStatusIcon(goal.status)}
                     </div>
                     <div className="flex-1 min-w-0">
@@ -456,9 +456,9 @@ const BudgetTracker = ({ familyId, className }: BudgetTrackerProps) => {
                         {goal.name}
                       </p>
                       <div className="flex items-center gap-3 mt-1">
-                        <div className="flex-1 bg-white/[0.05] rounded-full h-2">
+                        <div className="flex-1 bg-white/[0.05] rounded-vueni-pill h-2">
                           <div
-                            className="h-2 rounded-full bg-green-500 transition-all duration-300"
+                            className="h-2 rounded-vueni-pill bg-green-500 transition-all duration-300"
                             style={{ width: `${Math.min(progress, 100)}%` }}
                           ></div>
                         </div>
@@ -490,7 +490,7 @@ const BudgetTracker = ({ familyId, className }: BudgetTrackerProps) => {
     <div className="space-y-4">
       <div className="flex items-center justify-between">
         <h3 className="text-xl font-bold text-white">Budget Categories</h3>
-        <button className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-xl transition-colors flex items-center gap-2">
+        <button className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-vueni-lg transition-colors flex items-center gap-2">
           <Plus className="w-4 h-4" />
           Add Category
         </button>
@@ -504,11 +504,11 @@ const BudgetTracker = ({ familyId, className }: BudgetTrackerProps) => {
           return (
             <UniversalCard
               key={category.id}
-              className="p-6 rounded-2xl card-hover"
+              className="p-6 rounded-vueni-lg card-hover"
             >
               <div className="flex items-center justify-between mb-4">
                 <div className="flex items-center gap-3">
-                  <div className="w-12 h-12 rounded-2xl bg-blue-500/20 flex items-center justify-center">
+                  <div className="w-12 h-12 rounded-vueni-lg bg-blue-500/20 flex items-center justify-center">
                     <Target className="w-6 h-6 text-blue-400" />
                   </div>
                   <div>
@@ -517,12 +517,12 @@ const BudgetTracker = ({ familyId, className }: BudgetTrackerProps) => {
                     </h4>
                     <div className="flex items-center gap-3 mt-1">
                       {category.isEssential && (
-                        <span className="text-xs px-2 py-1 rounded-lg bg-red-500/20 text-red-400 border border-red-500/30">
+                        <span className="text-xs px-2 py-1 rounded-vueni-lg bg-red-500/20 text-red-400 border border-red-500/30">
                           Essential
                         </span>
                       )}
                       {category.isFixed && (
-                        <span className="text-xs px-2 py-1 rounded-lg bg-blue-500/20 text-blue-400 border border-blue-500/30">
+                        <span className="text-xs px-2 py-1 rounded-vueni-lg bg-blue-500/20 text-blue-400 border border-blue-500/30">
                           Fixed
                         </span>
                       )}
@@ -539,7 +539,7 @@ const BudgetTracker = ({ familyId, className }: BudgetTrackerProps) => {
                   </p>
                   <span
                     className={cn(
-                      'text-xs px-2 py-1 rounded-lg border font-medium inline-block mt-1',
+                      'text-xs px-2 py-1 rounded-vueni-lg border font-medium inline-block mt-1',
                       getStatusColor(status)
                     )}
                   >
@@ -556,10 +556,10 @@ const BudgetTracker = ({ familyId, className }: BudgetTrackerProps) => {
                     Remaining: {formatCurrency(category.remainingAmount)}
                   </span>
                 </div>
-                <div className="w-full bg-white/[0.05] rounded-full h-3">
+                <div className="w-full bg-white/[0.05] rounded-vueni-pill h-3">
                   <div
                     className={cn(
-                      'h-3 rounded-full transition-all duration-300',
+                      'h-3 rounded-vueni-pill transition-all duration-300',
                       progress >= 100
                         ? 'bg-red-500'
                         : progress >= 80
@@ -573,7 +573,7 @@ const BudgetTracker = ({ familyId, className }: BudgetTrackerProps) => {
 
               {/* Overage Warning */}
               {category.overageAmount > 0 && (
-                <div className="bg-red-500/10 border border-red-500/20 rounded-xl p-3 flex items-center gap-3">
+                <div className="bg-red-500/10 border border-red-500/20 rounded-vueni-lg p-3 flex items-center gap-3">
                   <AlertCircle className="w-5 h-5 text-red-400" />
                   <div>
                     <p className="text-red-400 font-medium">Over Budget</p>
@@ -593,7 +593,7 @@ const BudgetTracker = ({ familyId, className }: BudgetTrackerProps) => {
     <div className="space-y-4">
       <div className="flex items-center justify-between">
         <h3 className="text-xl font-bold text-white">Savings Goals</h3>
-        <button className="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-xl transition-colors flex items-center gap-2">
+        <button className="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-vueni-lg transition-colors flex items-center gap-2">
           <Plus className="w-4 h-4" />
           Add Goal
         </button>
@@ -612,17 +612,17 @@ const BudgetTracker = ({ familyId, className }: BudgetTrackerProps) => {
         );
 
         return (
-          <UniversalCard key={goal.id} className="p-6 rounded-2xl card-hover">
+          <UniversalCard key={goal.id} className="p-6 rounded-vueni-lg card-hover">
             <div className="flex items-center justify-between mb-4">
               <div className="flex items-center gap-3">
-                <div className="w-12 h-12 rounded-2xl bg-green-500/20 flex items-center justify-center">
+                <div className="w-12 h-12 rounded-vueni-lg bg-green-500/20 flex items-center justify-center">
                   {getGoalStatusIcon(goal.status)}
                 </div>
                 <div>
                   <h4 className="font-semibold text-white">{goal.name}</h4>
                   <p className="text-white/60 text-sm">{goal.description}</p>
                   <div className="flex items-center gap-3 mt-1">
-                    <span className="text-xs px-2 py-1 rounded-lg bg-green-500/20 text-green-400 border border-green-500/30 capitalize">
+                    <span className="text-xs px-2 py-1 rounded-vueni-lg bg-green-500/20 text-green-400 border border-green-500/30 capitalize">
                       {goal.goalType.replace('_', ' ')}
                     </span>
                     <span className="text-xs text-white/60">
@@ -654,9 +654,9 @@ const BudgetTracker = ({ familyId, className }: BudgetTrackerProps) => {
                 <span>Progress</span>
                 <span>Monthly: {formatCurrency(goal.monthlyContribution)}</span>
               </div>
-              <div className="w-full bg-white/[0.05] rounded-full h-3">
+              <div className="w-full bg-white/[0.05] rounded-vueni-pill h-3">
                 <div
-                  className="h-3 rounded-full bg-green-500 transition-all duration-300"
+                  className="h-3 rounded-vueni-pill bg-green-500 transition-all duration-300"
                   style={{ width: `${Math.min(progress, 100)}%` }}
                 ></div>
               </div>
@@ -686,7 +686,7 @@ const BudgetTracker = ({ familyId, className }: BudgetTrackerProps) => {
   return (
     <div className={cn('space-y-6', className)}>
       {/* Navigation Tabs */}
-      <div className="bg-white/[0.02] rounded-xl p-1 border border-white/[0.08]">
+      <div className="bg-white/[0.02] rounded-vueni-lg p-1 border border-white/[0.08]">
         {/* Mobile: Scrollable tabs */}
         <div className="flex sm:hidden overflow-x-auto gap-1 pb-1 scrollbar-hide">
           {[
@@ -699,7 +699,7 @@ const BudgetTracker = ({ familyId, className }: BudgetTrackerProps) => {
               key={id}
               onClick={() => setSelectedView(id as any)}
               className={cn(
-                'flex items-center gap-2 px-3 py-2 rounded-lg transition-all text-xs whitespace-nowrap flex-shrink-0',
+                'flex items-center gap-2 px-3 py-2 rounded-vueni-lg transition-all text-xs whitespace-nowrap flex-shrink-0',
                 selectedView === id
                   ? 'bg-blue-500 text-white'
                   : 'text-white/60 hover:text-white hover:bg-white/[0.05]'
@@ -723,7 +723,7 @@ const BudgetTracker = ({ familyId, className }: BudgetTrackerProps) => {
               key={id}
               onClick={() => setSelectedView(id as any)}
               className={cn(
-                'flex items-center justify-center gap-2 px-4 py-2 rounded-lg transition-all text-sm',
+                'flex items-center justify-center gap-2 px-4 py-2 rounded-vueni-lg transition-all text-sm',
                 selectedView === id
                   ? 'bg-blue-500 text-white'
                   : 'text-white/60 hover:text-white hover:bg-white/[0.05]'

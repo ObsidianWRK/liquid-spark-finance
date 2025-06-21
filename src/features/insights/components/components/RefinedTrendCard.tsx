@@ -40,18 +40,18 @@ const RefinedTrendCard = memo(
     return (
       <EnhancedGlassCard
         variant="glass"
-        className={`refined-trend-card relative overflow-hidden rounded-2xl backdrop-blur-xl border border-slate-700/40 hover:border-slate-600/60 transition-all duration-300 group cursor-pointer p-6 bg-slate-900/20 hover-lift animate-[slideInScale_0.6s_ease-out_${delay}ms_both]`}
+        className={`refined-trend-card relative overflow-hidden rounded-vueni-lg backdrop-blur-xl border border-slate-700/40 hover:border-slate-600/60 transition-all duration-300 group cursor-pointer p-6 bg-slate-900/20 hover-lift animate-[slideInScale_0.6s_ease-out_${delay}ms_both]`}
         interactive={interactive}
         onClick={onClick}
       >
         {/* Subtle gradient overlay */}
-        <div className="absolute inset-0 bg-gradient-to-br from-slate-800/5 via-transparent to-slate-900/10 rounded-2xl" />
+        <div className="absolute inset-0 bg-gradient-to-br from-slate-800/5 via-transparent to-slate-900/10 rounded-vueni-lg" />
 
         <div className="relative z-10">
           {/* Header */}
           <div className="flex items-start justify-between mb-4">
             <div className="flex items-start space-x-3">
-              <div className="p-2 rounded-xl bg-slate-800/30 border border-slate-700/40 backdrop-blur-sm">
+              <div className="p-2 rounded-vueni-lg bg-slate-800/30 border border-slate-700/40 backdrop-blur-sm">
                 {React.cloneElement(displayIcon, {
                   className: 'w-5 h-5 text-slate-300',
                 })}
@@ -80,7 +80,7 @@ const RefinedTrendCard = memo(
                 return (
                   <div
                     key={i}
-                    className="trend-bar flex-1 max-w-2 rounded-sm transition-all duration-500 relative overflow-hidden"
+                    className="trend-bar flex-1 max-w-2 rounded-vueni-sm transition-all duration-500 relative overflow-hidden"
                     style={{
                       height: `${heights[i]}%`,
                       background:
@@ -102,7 +102,7 @@ const RefinedTrendCard = memo(
 
           {/* Trend status */}
           <div className="text-center">
-            <span className="text-sm font-medium text-slate-200 bg-slate-800/20 px-3 py-1 rounded-lg border border-slate-700/30">
+            <span className="text-sm font-medium text-slate-200 bg-slate-800/20 px-3 py-1 rounded-vueni-lg border border-slate-700/30">
               {trend}
             </span>
           </div>
@@ -110,7 +110,7 @@ const RefinedTrendCard = memo(
 
         {/* Hover glow effect */}
         <div
-          className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
+          className="absolute inset-0 rounded-vueni-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
           style={{
             background: `linear-gradient(135deg, transparent, rgba(100, 116, 139, 0.1), transparent)`,
             filter: 'blur(1px)',

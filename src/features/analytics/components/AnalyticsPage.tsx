@@ -652,11 +652,11 @@ export const AnalyticsPage: React.FC<AnalyticsPageProps> = ({
           {displayedDevices.map((device) => (
             <div
               key={device.modelId}
-              className="flex items-center gap-3 p-3 bg-white/[0.02] rounded-lg border border-white/[0.05]"
+              className="flex items-center gap-3 p-3 bg-white/[0.02] rounded-vueni-lg border border-white/[0.05]"
             >
               <div
                 className={cn(
-                  'w-8 h-8 rounded-lg flex items-center justify-center',
+                  'w-8 h-8 rounded-vueni-lg flex items-center justify-center',
                   device.bgColor
                 )}
               >
@@ -698,11 +698,11 @@ export const AnalyticsPage: React.FC<AnalyticsPageProps> = ({
               {allConnectedDevices.slice(4).map((device) => (
                 <div
                   key={device.modelId}
-                  className="flex items-center gap-3 p-3 bg-white/[0.02] rounded-lg border border-white/[0.05]"
+                  className="flex items-center gap-3 p-3 bg-white/[0.02] rounded-vueni-lg border border-white/[0.05]"
                 >
                   <div
                     className={cn(
-                      'w-8 h-8 rounded-lg flex items-center justify-center',
+                      'w-8 h-8 rounded-vueni-lg flex items-center justify-center',
                       device.bgColor
                     )}
                   >
@@ -974,7 +974,7 @@ export const AnalyticsPage: React.FC<AnalyticsPageProps> = ({
             {dashboardData.correlations.slice(0, 3).map((correlation) => (
               <div
                 key={correlation.id}
-                className="p-4 bg-white/[0.02] rounded-xl border border-white/[0.05]"
+                className="p-4 bg-white/[0.02] rounded-vueni-lg border border-white/[0.05]"
               >
                 <div className="flex items-center justify-between mb-2">
                   <span className="text-sm font-medium text-white/80 capitalize">
@@ -1016,7 +1016,7 @@ export const AnalyticsPage: React.FC<AnalyticsPageProps> = ({
             {dashboardData.insights.slice(0, 5).map((insight) => (
               <div
                 key={insight.id}
-                className="p-3 bg-white/[0.02] rounded-lg border border-white/[0.05]"
+                className="p-3 bg-white/[0.02] rounded-vueni-lg border border-white/[0.05]"
               >
                 <div className="flex items-start justify-between gap-3">
                   <div className="flex-1">
@@ -1064,9 +1064,9 @@ export const AnalyticsPage: React.FC<AnalyticsPageProps> = ({
               <span className="text-sm text-white/70">Zone 1 (Recovery)</span>
               <span className="text-white font-medium">23%</span>
             </div>
-            <div className="w-full bg-white/[0.05] rounded-full h-2">
+            <div className="w-full bg-white/[0.05] rounded-vueni-pill h-2">
               <div
-                className="bg-blue-400 h-2 rounded-full"
+                className="bg-blue-400 h-2 rounded-vueni-pill"
                 style={{ width: '23%' }}
               ></div>
             </div>
@@ -1075,9 +1075,9 @@ export const AnalyticsPage: React.FC<AnalyticsPageProps> = ({
               <span className="text-sm text-white/70">Zone 2 (Aerobic)</span>
               <span className="text-white font-medium">45%</span>
             </div>
-            <div className="w-full bg-white/[0.05] rounded-full h-2">
+            <div className="w-full bg-white/[0.05] rounded-vueni-pill h-2">
               <div
-                className="bg-green-400 h-2 rounded-full"
+                className="bg-green-400 h-2 rounded-vueni-pill"
                 style={{ width: '45%' }}
               ></div>
             </div>
@@ -1086,9 +1086,9 @@ export const AnalyticsPage: React.FC<AnalyticsPageProps> = ({
               <span className="text-sm text-white/70">Zone 3 (Threshold)</span>
               <span className="text-white font-medium">22%</span>
             </div>
-            <div className="w-full bg-white/[0.05] rounded-full h-2">
+            <div className="w-full bg-white/[0.05] rounded-vueni-pill h-2">
               <div
-                className="bg-orange-400 h-2 rounded-full"
+                className="bg-orange-400 h-2 rounded-vueni-pill"
                 style={{ width: '22%' }}
               ></div>
             </div>
@@ -1097,14 +1097,14 @@ export const AnalyticsPage: React.FC<AnalyticsPageProps> = ({
               <span className="text-sm text-white/70">Zone 4 (VO2 Max)</span>
               <span className="text-white font-medium">10%</span>
             </div>
-            <div className="w-full bg-white/[0.05] rounded-full h-2">
+            <div className="w-full bg-white/[0.05] rounded-vueni-pill h-2">
               <div
-                className="bg-red-400 h-2 rounded-full"
+                className="bg-red-400 h-2 rounded-vueni-pill"
                 style={{ width: '10%' }}
               ></div>
             </div>
 
-            <div className="mt-4 p-3 bg-white/[0.02] rounded-lg">
+            <div className="mt-4 p-3 bg-white/[0.02] rounded-vueni-lg">
               <div className="flex justify-between text-xs">
                 <span className="text-white/60">Avg HR Today</span>
                 <span className="text-white">
@@ -1137,9 +1137,9 @@ export const AnalyticsPage: React.FC<AnalyticsPageProps> = ({
                 <span className="text-sm text-white/70">Deep Sleep</span>
                 <span className="text-purple-400">1h 52m</span>
               </div>
-              <div className="w-full bg-white/[0.05] rounded-full h-2">
+              <div className="w-full bg-white/[0.05] rounded-vueni-pill h-2">
                 <div
-                  className="bg-purple-400 h-2 rounded-full"
+                  className="bg-purple-400 h-2 rounded-vueni-pill"
                   style={{ width: '25%' }}
                 ></div>
               </div>
@@ -1148,9 +1148,9 @@ export const AnalyticsPage: React.FC<AnalyticsPageProps> = ({
                 <span className="text-sm text-white/70">REM Sleep</span>
                 <span className="text-blue-400">2h 18m</span>
               </div>
-              <div className="w-full bg-white/[0.05] rounded-full h-2">
+              <div className="w-full bg-white/[0.05] rounded-vueni-pill h-2">
                 <div
-                  className="bg-blue-400 h-2 rounded-full"
+                  className="bg-blue-400 h-2 rounded-vueni-pill"
                   style={{ width: '30%' }}
                 ></div>
               </div>
@@ -1159,15 +1159,15 @@ export const AnalyticsPage: React.FC<AnalyticsPageProps> = ({
                 <span className="text-sm text-white/70">Light Sleep</span>
                 <span className="text-green-400">3h 24m</span>
               </div>
-              <div className="w-full bg-white/[0.05] rounded-full h-2">
+              <div className="w-full bg-white/[0.05] rounded-vueni-pill h-2">
                 <div
-                  className="bg-green-400 h-2 rounded-full"
+                  className="bg-green-400 h-2 rounded-vueni-pill"
                   style={{ width: '45%' }}
                 ></div>
               </div>
             </div>
 
-            <div className="mt-4 p-3 bg-white/[0.02] rounded-lg">
+            <div className="mt-4 p-3 bg-white/[0.02] rounded-vueni-lg">
               <div className="flex justify-between text-xs">
                 <span className="text-white/60">Sleep Score</span>
                 <span className="text-green-400">
@@ -1194,9 +1194,9 @@ export const AnalyticsPage: React.FC<AnalyticsPageProps> = ({
                 {unifiedData.health.steps.toLocaleString()}
               </span>
             </div>
-            <div className="w-full bg-white/[0.05] rounded-full h-3">
+            <div className="w-full bg-white/[0.05] rounded-vueni-pill h-3">
               <div
-                className="bg-yellow-400 h-3 rounded-full"
+                className="bg-yellow-400 h-3 rounded-vueni-pill"
                 style={{
                   width: `${Math.min(100, (unifiedData.health.steps / 10000) * 100)}%`,
                 }}
@@ -1205,23 +1205,23 @@ export const AnalyticsPage: React.FC<AnalyticsPageProps> = ({
             <div className="text-xs text-white/60 text-right">Goal: 10,000</div>
 
             <div className="grid grid-cols-2 gap-4 mt-4">
-              <div className="p-3 bg-white/[0.02] rounded-lg">
+              <div className="p-3 bg-white/[0.02] rounded-vueni-lg">
                 <div className="text-xs text-white/60">Active Calories</div>
                 <div className="text-lg font-bold text-orange-400">
                   {unifiedData.health.activeCalories}
                 </div>
               </div>
-              <div className="p-3 bg-white/[0.02] rounded-lg">
+              <div className="p-3 bg-white/[0.02] rounded-vueni-lg">
                 <div className="text-xs text-white/60">Distance</div>
                 <div className="text-lg font-bold text-blue-400">3.2mi</div>
               </div>
-              <div className="p-3 bg-white/[0.02] rounded-lg">
+              <div className="p-3 bg-white/[0.02] rounded-vueni-lg">
                 <div className="text-xs text-white/60">Floors</div>
                 <div className="text-lg font-bold text-green-400">
                   {unifiedData.health.floors}
                 </div>
               </div>
-              <div className="p-3 bg-white/[0.02] rounded-lg">
+              <div className="p-3 bg-white/[0.02] rounded-vueni-lg">
                 <div className="text-xs text-white/60">Active Min</div>
                 <div className="text-lg font-bold text-purple-400">
                   {unifiedData.health.activeMinutes}
@@ -1254,7 +1254,7 @@ export const AnalyticsPage: React.FC<AnalyticsPageProps> = ({
             Stress vs Spending Patterns
           </h3>
           <div className="space-y-4">
-            <div className="p-4 bg-white/[0.02] rounded-lg">
+            <div className="p-4 bg-white/[0.02] rounded-vueni-lg">
               <div className="flex justify-between items-center mb-2">
                 <span className="text-sm text-white/70">High Stress Days</span>
                 <Badge
@@ -1268,7 +1268,7 @@ export const AnalyticsPage: React.FC<AnalyticsPageProps> = ({
               <div className="text-xs text-white/60">Avg daily spend</div>
             </div>
 
-            <div className="p-4 bg-white/[0.02] rounded-lg">
+            <div className="p-4 bg-white/[0.02] rounded-vueni-lg">
               <div className="flex justify-between items-center mb-2">
                 <span className="text-sm text-white/70">Low Stress Days</span>
                 <Badge
@@ -1282,7 +1282,7 @@ export const AnalyticsPage: React.FC<AnalyticsPageProps> = ({
               <div className="text-xs text-white/60">Avg daily spend</div>
             </div>
 
-            <div className="p-3 bg-orange-400/10 rounded-lg border border-orange-400/20">
+            <div className="p-3 bg-orange-400/10 rounded-vueni-lg border border-orange-400/20">
               <div className="flex items-center gap-2 mb-1">
                 <Zap className="w-4 h-4 text-orange-400" />
                 <span className="text-sm font-medium text-orange-400">
@@ -1303,7 +1303,7 @@ export const AnalyticsPage: React.FC<AnalyticsPageProps> = ({
             Sleep Quality Impact on ROI
           </h3>
           <div className="space-y-4">
-            <div className="p-4 bg-white/[0.02] rounded-lg">
+            <div className="p-4 bg-white/[0.02] rounded-vueni-lg">
               <div className="flex justify-between items-center mb-2">
                 <span className="text-sm text-white/70">
                   Good Sleep (8+ hrs)
@@ -1319,7 +1319,7 @@ export const AnalyticsPage: React.FC<AnalyticsPageProps> = ({
               <div className="text-xs text-white/60">Investment returns</div>
             </div>
 
-            <div className="p-4 bg-white/[0.02] rounded-lg">
+            <div className="p-4 bg-white/[0.02] rounded-vueni-lg">
               <div className="flex justify-between items-center mb-2">
                 <span className="text-sm text-white/70">
                   Poor Sleep (&lt;6 hrs)
@@ -1335,7 +1335,7 @@ export const AnalyticsPage: React.FC<AnalyticsPageProps> = ({
               <div className="text-xs text-white/60">Investment returns</div>
             </div>
 
-            <div className="p-3 bg-blue-400/10 rounded-lg border border-blue-400/20">
+            <div className="p-3 bg-blue-400/10 rounded-vueni-lg border border-blue-400/20">
               <div className="flex items-center gap-2 mb-1">
                 <Brain className="w-4 h-4 text-blue-400" />
                 <span className="text-sm font-medium text-blue-400">
@@ -1360,7 +1360,7 @@ export const AnalyticsPage: React.FC<AnalyticsPageProps> = ({
           </h3>
           <div className="space-y-4">
             {/* Heart Rate Trend */}
-            <div className="p-4 bg-white/[0.02] rounded-lg">
+            <div className="p-4 bg-white/[0.02] rounded-vueni-lg">
               <div className="flex justify-between items-center mb-3">
                 <span className="text-sm font-medium text-white">
                   Heart Rate Variability
@@ -1380,7 +1380,7 @@ export const AnalyticsPage: React.FC<AnalyticsPageProps> = ({
                     </div>
                     <div className="h-12 md:h-16 lg:h-32 bg-white/[0.05] rounded flex items-end justify-center">
                       <div
-                        className="bg-green-400 rounded-sm w-3 md:w-4 lg:w-6"
+                        className="bg-green-400 rounded-vueni-sm w-3 md:w-4 lg:w-6"
                         style={{ height: `${(hrv / 50) * 100}%` }}
                       ></div>
                     </div>
@@ -1391,7 +1391,7 @@ export const AnalyticsPage: React.FC<AnalyticsPageProps> = ({
             </div>
 
             {/* Stress Levels */}
-            <div className="p-4 bg-white/[0.02] rounded-lg">
+            <div className="p-4 bg-white/[0.02] rounded-vueni-lg">
               <div className="flex justify-between items-center mb-3">
                 <span className="text-sm font-medium text-white">
                   Stress Levels
@@ -1411,7 +1411,7 @@ export const AnalyticsPage: React.FC<AnalyticsPageProps> = ({
                     </div>
                     <div className="h-12 md:h-16 lg:h-32 bg-white/[0.05] rounded flex items-end justify-center">
                       <div
-                        className={`rounded-sm w-3 md:w-4 lg:w-6 ${stress > 45 ? 'bg-red-400' : stress > 35 ? 'bg-yellow-400' : 'bg-green-400'}`}
+                        className={`rounded-vueni-sm w-3 md:w-4 lg:w-6 ${stress > 45 ? 'bg-red-400' : stress > 35 ? 'bg-yellow-400' : 'bg-green-400'}`}
                         style={{ height: `${(stress / 60) * 100}%` }}
                       ></div>
                     </div>
@@ -1422,7 +1422,7 @@ export const AnalyticsPage: React.FC<AnalyticsPageProps> = ({
             </div>
 
             {/* Sleep Quality */}
-            <div className="p-4 bg-white/[0.02] rounded-lg">
+            <div className="p-4 bg-white/[0.02] rounded-vueni-lg">
               <div className="flex justify-between items-center mb-3">
                 <span className="text-sm font-medium text-white">
                   Sleep Quality
@@ -1442,7 +1442,7 @@ export const AnalyticsPage: React.FC<AnalyticsPageProps> = ({
                     </div>
                     <div className="h-12 md:h-16 lg:h-32 bg-white/[0.05] rounded flex items-end justify-center">
                       <div
-                        className="bg-purple-400 rounded-sm w-3 md:w-4 lg:w-6"
+                        className="bg-purple-400 rounded-vueni-sm w-3 md:w-4 lg:w-6"
                         style={{ height: `${(sleep / 10) * 100}%` }}
                       ></div>
                     </div>
@@ -1461,7 +1461,7 @@ export const AnalyticsPage: React.FC<AnalyticsPageProps> = ({
           </h3>
           <div className="space-y-4">
             {/* Net Worth Progression */}
-            <div className="p-4 bg-white/[0.02] rounded-lg">
+            <div className="p-4 bg-white/[0.02] rounded-vueni-lg">
               <div className="flex justify-between items-center mb-3">
                 <span className="text-sm font-medium text-white">
                   Net Worth Growth
@@ -1508,7 +1508,7 @@ export const AnalyticsPage: React.FC<AnalyticsPageProps> = ({
             </div>
 
             {/* Portfolio Returns */}
-            <div className="p-4 bg-white/[0.02] rounded-lg">
+            <div className="p-4 bg-white/[0.02] rounded-vueni-lg">
               <div className="flex justify-between items-center mb-3">
                 <span className="text-sm font-medium text-white">
                   Portfolio Returns
@@ -1527,9 +1527,9 @@ export const AnalyticsPage: React.FC<AnalyticsPageProps> = ({
                     <span className="text-green-400 text-sm">
                       +{(unifiedData.wealth.portfolioReturns + 4.2).toFixed(1)}%
                     </span>
-                    <div className="w-16 bg-white/[0.05] rounded-full h-1">
+                    <div className="w-16 bg-white/[0.05] rounded-vueni-pill h-1">
                       <div
-                        className="bg-green-400 h-1 rounded-full"
+                        className="bg-green-400 h-1 rounded-vueni-pill"
                         style={{ width: '62%' }}
                       ></div>
                     </div>
@@ -1541,9 +1541,9 @@ export const AnalyticsPage: React.FC<AnalyticsPageProps> = ({
                     <span className="text-yellow-400 text-sm">
                       +{(unifiedData.wealth.portfolioReturns - 4.4).toFixed(1)}%
                     </span>
-                    <div className="w-16 bg-white/[0.05] rounded-full h-1">
+                    <div className="w-16 bg-white/[0.05] rounded-vueni-pill h-1">
                       <div
-                        className="bg-yellow-400 h-1 rounded-full"
+                        className="bg-yellow-400 h-1 rounded-vueni-pill"
                         style={{ width: '19%' }}
                       ></div>
                     </div>
@@ -1553,9 +1553,9 @@ export const AnalyticsPage: React.FC<AnalyticsPageProps> = ({
                   <span className="text-xs text-white/60">Crypto</span>
                   <div className="flex items-center gap-2">
                     <span className="text-red-400 text-sm">-15.2%</span>
-                    <div className="w-16 bg-white/[0.05] rounded-full h-1">
+                    <div className="w-16 bg-white/[0.05] rounded-vueni-pill h-1">
                       <div
-                        className="bg-red-400 h-1 rounded-full"
+                        className="bg-red-400 h-1 rounded-vueni-pill"
                         style={{ width: '15%' }}
                       ></div>
                     </div>
@@ -1567,9 +1567,9 @@ export const AnalyticsPage: React.FC<AnalyticsPageProps> = ({
                     <span className="text-green-400 text-sm">
                       +{(unifiedData.wealth.portfolioReturns - 1.3).toFixed(1)}%
                     </span>
-                    <div className="w-16 bg-white/[0.05] rounded-full h-1">
+                    <div className="w-16 bg-white/[0.05] rounded-vueni-pill h-1">
                       <div
-                        className="bg-green-400 h-1 rounded-full"
+                        className="bg-green-400 h-1 rounded-vueni-pill"
                         style={{ width: '35%' }}
                       ></div>
                     </div>
@@ -1579,7 +1579,7 @@ export const AnalyticsPage: React.FC<AnalyticsPageProps> = ({
             </div>
 
             {/* Financial Health Metrics */}
-            <div className="p-4 bg-white/[0.02] rounded-lg">
+            <div className="p-4 bg-white/[0.02] rounded-vueni-lg">
               <div className="flex justify-between items-center mb-3">
                 <span className="text-sm font-medium text-white">
                   Financial Health

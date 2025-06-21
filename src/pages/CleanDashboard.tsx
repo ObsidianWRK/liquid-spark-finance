@@ -131,7 +131,7 @@ const DashboardMetric = ({
     <SimpleGlassCard variant="glass" className="p-6">
       <div className="flex items-center gap-3">
         <div
-          className="p-3 rounded-full"
+          className="p-3 rounded-vueni-pill"
           style={{ backgroundColor: vueniTheme.colors.surface.overlay }}
         >
           <Icon className="w-5 h-5" style={{ color: iconColor }} />

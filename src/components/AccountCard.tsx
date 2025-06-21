@@ -58,7 +58,7 @@ const AccountCard = React.memo<AccountCardProps>(
 
         <div className="flex justify-between items-center">
           <div className="flex space-x-2">
-            <div className="w-2 h-2 bg-green-400 rounded-full"></div>
+            <div className="w-2 h-2 bg-green-400 rounded-vueni-pill"></div>
             <span className="text-white/70 text-xs">Active</span>
           </div>
           {isExpanded ? (

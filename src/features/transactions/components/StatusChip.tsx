@@ -28,7 +28,7 @@ const StatusChip: React.FC<StatusChipProps> = ({ status }) => {
   return (
     <span
       className={cn(
-        'inline-flex items-center justify-center rounded-full px-2 py-0.5 text-xs font-medium capitalize',
+        'inline-flex items-center justify-center rounded-vueni-pill px-2 py-0.5 text-xs font-medium capitalize',
         statusStyles[status]
       )}
       data-testid="status-chip"

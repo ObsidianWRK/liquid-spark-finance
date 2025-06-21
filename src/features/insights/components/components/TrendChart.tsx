@@ -10,13 +10,13 @@ interface TrendChartProps {
 export const TrendChart = React.memo<TrendChartProps>(
   ({ data, timeframe, onTimeframeChange }) => {
     return (
-      <div className="bg-white/5 rounded-lg p-6">
+      <div className="bg-white/5 rounded-vueni-lg p-6">
         <div className="flex items-center justify-between mb-4">
           <h3 className="text-lg font-semibold text-white">Spending Trends</h3>
           <select
             value={timeframe}
             onChange={(e) => onTimeframeChange(e.target.value)}
-            className="bg-white/10 border border-white/20 rounded-lg px-3 py-1 text-white text-sm"
+            className="bg-white/10 border border-white/20 rounded-vueni-lg px-3 py-1 text-white text-sm"
           >
             <option value="7d">7 days</option>
             <option value="30d">30 days</option>

@@ -101,7 +101,7 @@ const GoalCreator = ({ onGoalCreated, onClose }: GoalCreatorProps) => {
           </div>
           <button
             onClick={onClose}
-            className="p-2 rounded-lg bg-slate-800/50 hover:bg-slate-700/50 transition-colors"
+            className="p-2 rounded-vueni-lg bg-slate-800/50 hover:bg-slate-700/50 transition-colors"
           >
             <X className="w-5 h-5 text-white" />
           </button>
@@ -120,7 +120,7 @@ const GoalCreator = ({ onGoalCreated, onClose }: GoalCreatorProps) => {
                   key={category.value}
                   type="button"
                   onClick={() => handleInputChange('category', category.value)}
-                  className={`p-3 rounded-lg border transition-all ${
+                  className={`p-3 rounded-vueni-lg border transition-all ${
                     formData.category === category.value
                       ? 'border-indigo-500 bg-indigo-500/20'
                       : 'border-white/10 hover:border-white/20'
@@ -145,7 +145,7 @@ const GoalCreator = ({ onGoalCreated, onClose }: GoalCreatorProps) => {
               value={formData.name}
               onChange={(e) => handleInputChange('name', e.target.value)}
               placeholder="e.g., Emergency Fund, Vacation to Japan"
-              className="w-full bg-slate-800/50 border border-slate-700 rounded-lg px-4 py-3 text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              className="w-full bg-slate-800/50 border border-slate-700 rounded-vueni-lg px-4 py-3 text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500"
               required
             />
           </div>
@@ -160,7 +160,7 @@ const GoalCreator = ({ onGoalCreated, onClose }: GoalCreatorProps) => {
               onChange={(e) => handleInputChange('description', e.target.value)}
               placeholder="Add details about your goal..."
               rows={3}
-              className="w-full bg-slate-800/50 border border-slate-700 rounded-lg px-4 py-3 text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 resize-none"
+              className="w-full bg-slate-800/50 border border-slate-700 rounded-vueni-lg px-4 py-3 text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 resize-none"
             />
           </div>
 
@@ -180,7 +180,7 @@ const GoalCreator = ({ onGoalCreated, onClose }: GoalCreatorProps) => {
                 placeholder="5000"
                 min="1"
                 step="0.01"
-                className="w-full bg-slate-800/50 border border-slate-700 rounded-lg pl-12 pr-4 py-3 text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                className="w-full bg-slate-800/50 border border-slate-700 rounded-vueni-lg pl-12 pr-4 py-3 text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500"
                 required
               />
             </div>
@@ -200,7 +200,7 @@ const GoalCreator = ({ onGoalCreated, onClose }: GoalCreatorProps) => {
                   handleInputChange('targetDate', e.target.value)
                 }
                 min={minDate}
-                className="w-full bg-slate-800/50 border border-slate-700 rounded-lg pl-12 pr-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                className="w-full bg-slate-800/50 border border-slate-700 rounded-vueni-lg pl-12 pr-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-indigo-500"
                 required
               />
             </div>
@@ -208,7 +208,7 @@ const GoalCreator = ({ onGoalCreated, onClose }: GoalCreatorProps) => {
 
           {/* Summary */}
           {formData.name && formData.targetAmount && formData.targetDate && (
-            <div className="bg-slate-800/30 rounded-lg p-4">
+            <div className="bg-slate-800/30 rounded-vueni-lg p-4">
               <div className="text-white font-medium mb-2">Goal Summary</div>
               <div className="space-y-1 text-sm">
                 <div className="flex justify-between">
@@ -250,7 +250,7 @@ const GoalCreator = ({ onGoalCreated, onClose }: GoalCreatorProps) => {
             <button
               type="button"
               onClick={onClose}
-              className="flex-1 bg-slate-800/50 text-white py-3 px-4 rounded-lg font-medium hover:bg-slate-700/50 transition-all"
+              className="flex-1 bg-slate-800/50 text-white py-3 px-4 rounded-vueni-lg font-medium hover:bg-slate-700/50 transition-all"
               disabled={isCreating}
             >
               Cancel
@@ -263,7 +263,7 @@ const GoalCreator = ({ onGoalCreated, onClose }: GoalCreatorProps) => {
                 !formData.targetDate ||
                 isCreating
               }
-              className="flex-1 bg-gradient-to-r from-green-500 to-emerald-500 text-white py-3 px-4 rounded-lg font-medium hover:from-green-600 hover:to-emerald-600 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+              className="flex-1 bg-gradient-to-r from-green-500 to-emerald-500 text-white py-3 px-4 rounded-vueni-lg font-medium hover:from-green-600 hover:to-emerald-600 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {isCreating ? 'Creating...' : 'Create Goal'}
             </button>

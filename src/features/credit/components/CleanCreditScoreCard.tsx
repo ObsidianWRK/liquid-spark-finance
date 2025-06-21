@@ -99,7 +99,7 @@ const CleanCreditScoreCard = ({
       {/* Header */}
       <div className="flex items-center justify-between mb-6">
         <div className="flex items-center gap-3">
-          <div className="p-2 rounded-xl bg-white/[0.06]">
+          <div className="p-2 rounded-vueni-lg bg-white/[0.06]">
             <CreditCard className="w-5 h-5 text-blue-400" />
           </div>
           <div>
@@ -108,7 +108,7 @@ const CleanCreditScoreCard = ({
           </div>
         </div>
 
-        <button className="p-2 rounded-xl bg-white/[0.06] hover:bg-white/[0.08] transition-colors">
+        <button className="p-2 rounded-vueni-lg bg-white/[0.06] hover:bg-white/[0.08] transition-colors">
           <Info className="w-4 h-4 text-white/70" />
         </button>
       </div>
@@ -192,9 +192,9 @@ const CleanCreditScoreCard = ({
           </span>
         </div>
 
-        <div className="w-full bg-white/[0.06] rounded-full h-2">
+        <div className="w-full bg-white/[0.06] rounded-vueni-pill h-2">
           <div
-            className="h-2 rounded-full transition-all duration-1000 ease-out"
+            className="h-2 rounded-vueni-pill transition-all duration-1000 ease-out"
             style={{
               width: `${animatedUtilization}%`,
               backgroundColor:
@@ -226,7 +226,7 @@ const CleanCreditScoreCard = ({
             navigate('/?tab=credit');
           }
         }}
-        className="w-full flex items-center justify-between p-3 rounded-2xl bg-white/[0.06] hover:bg-white/[0.08] transition-all duration-200 group"
+        className="w-full flex items-center justify-between p-3 rounded-vueni-lg bg-white/[0.06] hover:bg-white/[0.08] transition-all duration-200 group"
       >
         <span className="text-white font-medium">View Full Report</span>
         <ArrowRight className="w-4 h-4 text-white/70 group-hover:translate-x-1 transition-transform" />

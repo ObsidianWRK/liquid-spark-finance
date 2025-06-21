@@ -47,7 +47,7 @@ const BalanceCard = React.memo<BalanceCardProps>(
           </div>
           <button
             onClick={toggleBalanceVisibility}
-            className="p-2 rounded-lg bg-white/5 hover:bg-white/10 min-w-[44px] min-h-[44px] flex items-center justify-center focus:outline-none focus:ring-2 focus:ring-blue-400/50 transition-colors"
+            className="p-2 rounded-vueni-lg bg-white/5 hover:bg-white/10 min-w-[44px] min-h-[44px] flex items-center justify-center focus:outline-none focus:ring-2 focus:ring-blue-400/50 transition-colors"
             aria-label={
               isBalanceVisible ? 'Hide account balance' : 'Show account balance'
             }

@@ -230,7 +230,7 @@ const FinancialPlanningPage = ({
           {[...Array(4)].map((_, i) => (
             <div
               key={i}
-              className="bg-white/[0.02] rounded-2xl border border-white/[0.08] p-4 sm:p-6"
+              className="bg-white/[0.02] rounded-vueni-lg border border-white/[0.08] p-4 sm:p-6"
             >
               <div className="flex items-center justify-between mb-4">
                 <div className="h-5 sm:h-6 bg-white/[0.05] rounded w-32 sm:w-48"></div>
@@ -272,7 +272,7 @@ const FinancialPlanningPage = ({
 
           <button
             onClick={() => setShowNewGoalModal(true)}
-            className="w-full sm:w-auto bg-blue-500 hover:bg-blue-600 text-white px-4 sm:px-6 py-3 rounded-xl transition-colors flex items-center justify-center gap-2 text-sm sm:text-base min-h-[48px]"
+            className="w-full sm:w-auto bg-blue-500 hover:bg-blue-600 text-white px-4 sm:px-6 py-3 rounded-vueni-lg transition-colors flex items-center justify-center gap-2 text-sm sm:text-base min-h-[48px]"
           >
             <Plus className="w-4 h-4 sm:w-5 sm:h-5" />
             <span className="hidden sm:inline">New Goal</span>
@@ -281,7 +281,7 @@ const FinancialPlanningPage = ({
         </div>
 
         {/* Navigation Tabs */}
-        <div className="bg-white/[0.02] rounded-xl p-1 border border-white/[0.08]">
+        <div className="bg-white/[0.02] rounded-vueni-lg p-1 border border-white/[0.08]">
           {/* Mobile: Scrollable tabs */}
           <div className="flex sm:hidden overflow-x-auto gap-1 pb-1 scrollbar-hide">
             {[
@@ -295,7 +295,7 @@ const FinancialPlanningPage = ({
                 key={id}
                 onClick={() => setActiveTab(id as any)}
                 className={cn(
-                  'flex items-center gap-2 px-3 py-2 rounded-lg transition-all text-xs whitespace-nowrap flex-shrink-0 min-h-[44px] min-w-[80px]',
+                  'flex items-center gap-2 px-3 py-2 rounded-vueni-lg transition-all text-xs whitespace-nowrap flex-shrink-0 min-h-[44px] min-w-[80px]',
                   activeTab === id
                     ? 'bg-blue-500 text-white'
                     : 'text-white/60 hover:text-white hover:bg-white/[0.05]'
@@ -320,7 +320,7 @@ const FinancialPlanningPage = ({
                 key={id}
                 onClick={() => setActiveTab(id as any)}
                 className={cn(
-                  'flex items-center gap-2 px-4 py-3 rounded-lg transition-all text-sm flex-1 justify-center min-h-[48px]',
+                  'flex items-center gap-2 px-4 py-3 rounded-vueni-lg transition-all text-sm flex-1 justify-center min-h-[48px]',
                   activeTab === id
                     ? 'bg-blue-500 text-white'
                     : 'text-white/60 hover:text-white hover:bg-white/[0.05]'
@@ -338,7 +338,7 @@ const FinancialPlanningPage = ({
           <>
             {/* Financial Health Score */}
             {healthScore && (
-              <div className="bg-gradient-to-r from-blue-500/10 to-purple-500/10 border border-blue-500/20 rounded-2xl p-4 sm:p-6">
+              <div className="bg-gradient-to-r from-blue-500/10 to-purple-500/10 border border-blue-500/20 rounded-vueni-lg p-4 sm:p-6">
                 <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 sm:gap-0">
                   <div className="min-w-0 flex-1">
                     <h2 className="text-lg sm:text-xl font-bold text-white mb-2 flex items-center gap-3">
@@ -369,7 +369,7 @@ const FinancialPlanningPage = ({
                     ([category, score]) => (
                       <div
                         key={category}
-                        className="text-center p-3 bg-white/[0.03] rounded-lg border border-white/[0.05]"
+                        className="text-center p-3 bg-white/[0.03] rounded-vueni-lg border border-white/[0.05]"
                       >
                         <div className="text-lg sm:text-xl lg:text-2xl font-bold text-white">
                           {score as number}
@@ -377,9 +377,9 @@ const FinancialPlanningPage = ({
                         <div className="text-xs sm:text-sm text-white/60 capitalize truncate">
                           {category.replace('_', ' ')}
                         </div>
-                        <div className="w-full bg-white/[0.05] rounded-full h-2 mt-2">
+                        <div className="w-full bg-white/[0.05] rounded-vueni-pill h-2 mt-2">
                           <div
-                            className="bg-blue-400 h-2 rounded-full transition-all duration-500"
+                            className="bg-blue-400 h-2 rounded-vueni-pill transition-all duration-500"
                             style={{ width: `${score}%` }}
                           />
                         </div>
@@ -392,7 +392,7 @@ const FinancialPlanningPage = ({
 
             {/* Quick Stats */}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
-              <div className="bg-white/[0.02] rounded-2xl border border-white/[0.08] p-4 sm:p-6 card-hover">
+              <div className="bg-white/[0.02] rounded-vueni-lg border border-white/[0.08] p-4 sm:p-6 card-hover">
                 <div className="flex items-center justify-between">
                   <div className="min-w-0 flex-1">
                     <p className="text-white/60 text-sm">Active Goals</p>
@@ -404,7 +404,7 @@ const FinancialPlanningPage = ({
                 </div>
               </div>
 
-              <div className="bg-white/[0.02] rounded-2xl border border-white/[0.08] p-4 sm:p-6 card-hover">
+              <div className="bg-white/[0.02] rounded-vueni-lg border border-white/[0.08] p-4 sm:p-6 card-hover">
                 <div className="flex items-center justify-between">
                   <div className="min-w-0 flex-1">
                     <p className="text-white/60 text-sm">Total Saved</p>
@@ -421,7 +421,7 @@ const FinancialPlanningPage = ({
                 </div>
               </div>
 
-              <div className="bg-white/[0.02] rounded-2xl border border-white/[0.08] p-4 sm:p-6 card-hover">
+              <div className="bg-white/[0.02] rounded-vueni-lg border border-white/[0.08] p-4 sm:p-6 card-hover">
                 <div className="flex items-center justify-between">
                   <div className="min-w-0 flex-1">
                     <p className="text-white/60 text-sm">Target Amount</p>
@@ -435,7 +435,7 @@ const FinancialPlanningPage = ({
                 </div>
               </div>
 
-              <div className="bg-white/[0.02] rounded-2xl border border-white/[0.08] p-4 sm:p-6 card-hover">
+              <div className="bg-white/[0.02] rounded-vueni-lg border border-white/[0.08] p-4 sm:p-6 card-hover">
                 <div className="flex items-center justify-between">
                   <div className="min-w-0 flex-1">
                     <p className="text-white/60 text-sm">
@@ -457,7 +457,7 @@ const FinancialPlanningPage = ({
 
             {/* AI Recommendations */}
             {recommendations.length > 0 && (
-              <div className="bg-white/[0.02] rounded-2xl border border-white/[0.08] p-6 card-hover">
+              <div className="bg-white/[0.02] rounded-vueni-lg border border-white/[0.08] p-6 card-hover">
                 <h2 className="text-xl font-bold text-white mb-6 flex items-center gap-3">
                   <Zap className="w-6 h-6 text-yellow-400" />
                   AI-Powered Recommendations
@@ -467,7 +467,7 @@ const FinancialPlanningPage = ({
                   {recommendations.slice(0, 3).map((rec, index) => (
                     <div
                       key={index}
-                      className="bg-white/[0.03] rounded-xl p-4 border border-white/[0.05]"
+                      className="bg-white/[0.03] rounded-vueni-lg p-4 border border-white/[0.05]"
                     >
                       <div className="flex items-start justify-between">
                         <div className="flex-1">
@@ -481,7 +481,7 @@ const FinancialPlanningPage = ({
                           <div className="flex items-center gap-4">
                             <span
                               className={cn(
-                                'text-xs px-2 py-1 rounded-lg font-medium',
+                                'text-xs px-2 py-1 rounded-vueni-lg font-medium',
                                 rec.impact === 'high'
                                   ? 'bg-red-500/20 text-red-400'
                                   : rec.impact === 'medium'
@@ -502,7 +502,7 @@ const FinancialPlanningPage = ({
                           </div>
                         </div>
 
-                        <button className="p-2 rounded-lg hover:bg-white/[0.05] transition-colors">
+                        <button className="p-2 rounded-vueni-lg hover:bg-white/[0.05] transition-colors">
                           <ArrowRight className="w-4 h-4 text-white/60" />
                         </button>
                       </div>
@@ -524,13 +524,13 @@ const FinancialPlanningPage = ({
               return (
                 <div
                   key={goal.id}
-                  className="bg-white/[0.02] rounded-2xl border border-white/[0.08] p-4 sm:p-6 card-hover"
+                  className="bg-white/[0.02] rounded-vueni-lg border border-white/[0.08] p-4 sm:p-6 card-hover"
                 >
                   <div className="flex flex-col sm:flex-row items-start gap-4">
                     {/* Goal Icon */}
                     <div
                       className={cn(
-                        'w-10 h-10 sm:w-12 sm:h-12 rounded-2xl flex items-center justify-center bg-gradient-to-br flex-shrink-0',
+                        'w-10 h-10 sm:w-12 sm:h-12 rounded-vueni-lg flex items-center justify-center bg-gradient-to-br flex-shrink-0',
                         getGoalColor(goal.category)
                       )}
                     >
@@ -579,10 +579,10 @@ const FinancialPlanningPage = ({
                             {Math.round(goal.progress.percentComplete)}%
                           </span>
                         </div>
-                        <div className="w-full bg-white/[0.05] rounded-full h-3 sm:h-2">
+                        <div className="w-full bg-white/[0.05] rounded-vueni-pill h-3 sm:h-2">
                           <div
                             className={cn(
-                              'h-3 sm:h-2 rounded-full transition-all duration-500 bg-gradient-to-r',
+                              'h-3 sm:h-2 rounded-vueni-pill transition-all duration-500 bg-gradient-to-r',
                               getGoalColor(goal.category)
                             )}
                             style={{
@@ -594,19 +594,19 @@ const FinancialPlanningPage = ({
 
                       {/* Goal Stats */}
                       <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4 text-sm">
-                        <div className="p-3 sm:p-0 bg-white/[0.03] sm:bg-transparent rounded-lg sm:rounded-none border sm:border-0 border-white/[0.05]">
+                        <div className="p-3 sm:p-0 bg-white/[0.03] sm:bg-transparent rounded-vueni-lg sm:rounded-none border sm:border-0 border-white/[0.05]">
                           <p className="text-white/60">Monthly Contribution</p>
                           <p className="font-semibold text-white truncate">
                             {formatCurrency(goal.monthlyContribution || 0)}
                           </p>
                         </div>
-                        <div className="p-3 sm:p-0 bg-white/[0.03] sm:bg-transparent rounded-lg sm:rounded-none border sm:border-0 border-white/[0.05]">
+                        <div className="p-3 sm:p-0 bg-white/[0.03] sm:bg-transparent rounded-vueni-lg sm:rounded-none border sm:border-0 border-white/[0.05]">
                           <p className="text-white/60">Projected Completion</p>
                           <p className="font-semibold text-white">
                             {formatDate(goal.progress.projectedCompletionDate)}
                           </p>
                         </div>
-                        <div className="p-3 sm:p-0 bg-white/[0.03] sm:bg-transparent rounded-lg sm:rounded-none border sm:border-0 border-white/[0.05]">
+                        <div className="p-3 sm:p-0 bg-white/[0.03] sm:bg-transparent rounded-vueni-lg sm:rounded-none border sm:border-0 border-white/[0.05]">
                           <p className="text-white/60">Priority</p>
                           <p className="font-semibold text-white">
                             {goal.priority === 1

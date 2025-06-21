@@ -112,7 +112,7 @@ const ScoreDisplay = memo(
   }) => (
     <div className="grid grid-cols-3 gap-4 mb-6">
       <div className="text-center">
-        <div className="w-16 h-16 rounded-full bg-white/[0.05] border border-white/[0.08] flex items-center justify-center mb-2 mx-auto">
+        <div className="w-16 h-16 rounded-vueni-pill bg-white/[0.05] border border-white/[0.08] flex items-center justify-center mb-2 mx-auto">
           <span className="text-white text-sm font-medium">
             {scores.financial}
           </span>
@@ -120,7 +120,7 @@ const ScoreDisplay = memo(
         <p className="text-white/80 text-xs">Financial</p>
       </div>
       <div className="text-center">
-        <div className="w-16 h-16 rounded-full bg-white/[0.05] border border-white/[0.08] flex items-center justify-center mb-2 mx-auto">
+        <div className="w-16 h-16 rounded-vueni-pill bg-white/[0.05] border border-white/[0.08] flex items-center justify-center mb-2 mx-auto">
           <span className="text-white text-sm font-medium">
             {scores.health}
           </span>
@@ -128,7 +128,7 @@ const ScoreDisplay = memo(
         <p className="text-white/80 text-xs">Health</p>
       </div>
       <div className="text-center">
-        <div className="w-16 h-16 rounded-full bg-white/[0.05] border border-white/[0.08] flex items-center justify-center mb-2 mx-auto">
+        <div className="w-16 h-16 rounded-vueni-pill bg-white/[0.05] border border-white/[0.08] flex items-center justify-center mb-2 mx-auto">
           <span className="text-white text-sm font-medium">{scores.eco}</span>
         </div>
         <p className="text-white/80 text-xs">Eco</p>
@@ -340,9 +340,9 @@ export const UnifiedInsightsPage = memo<UnifiedInsightsPageProps>(
                     {scores.financial}/100
                   </span>
                 </div>
-                <div className="w-full bg-white/[0.1] rounded-full h-2">
+                <div className="w-full bg-white/[0.1] rounded-vueni-pill h-2">
                   <div
-                    className="bg-gradient-to-r from-blue-500 to-green-500 h-2 rounded-full transition-all duration-300"
+                    className="bg-gradient-to-r from-blue-500 to-green-500 h-2 rounded-vueni-pill transition-all duration-300"
                     style={{ width: `${scores.financial}%` }}
                   />
                 </div>

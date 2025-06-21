@@ -44,7 +44,7 @@ const SpendingTrendsChart = React.memo<SpendingTrendsChartProps>(
     );
 
     return (
-      <div className="liquid-glass-fallback rounded-2xl p-6">
+      <div className="liquid-glass-fallback rounded-vueni-lg p-6">
         <AreaChart
           data={chartData}
           series={chartSeries}

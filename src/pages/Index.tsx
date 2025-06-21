@@ -94,7 +94,7 @@ class ErrorBoundary extends React.Component<
             <p className="text-white/60">Error: {this.state.error?.message}</p>
             <button
               onClick={() => this.setState({ hasError: false })}
-              className="bg-blue-500 hover:bg-blue-600 px-4 py-2 rounded-lg"
+              className="bg-blue-500 hover:bg-blue-600 px-4 py-2 rounded-vueni-lg"
             >
               Try Again
             </button>
@@ -341,7 +341,7 @@ export default function Index() {
           <p className="text-white/70">{error}</p>
           <button
             onClick={() => window.location.reload()}
-            className="mt-4 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+            className="mt-4 px-4 py-2 bg-blue-600 text-white rounded-vueni-lg hover:bg-blue-700"
           >
             Retry
           </button>
@@ -355,7 +355,7 @@ export default function Index() {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500 mx-auto mb-4"></div>
+          <div className="animate-spin rounded-vueni-pill h-12 w-12 border-b-2 border-blue-500 mx-auto mb-4"></div>
           <p className="text-white/70">Loading your financial dashboard...</p>
         </div>
       </div>
@@ -465,7 +465,7 @@ export default function Index() {
               <BiometricMonitorCard />
               <div className="md:col-span-1 lg:col-span-1">
                 {/* Future expansion slot for additional wellness features */}
-                <div className="h-full bg-white/[0.02] border border-white/[0.08] rounded-2xl p-6 flex items-center justify-center">
+                <div className="h-full bg-white/[0.02] border border-white/[0.08] rounded-vueni-lg p-6 flex items-center justify-center">
                   <div className="text-center text-white/40">
                     <div className="text-sm">More features</div>
                     <div className="text-xs">Coming soon</div>

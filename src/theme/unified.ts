@@ -65,6 +65,16 @@ const radiusSystem = {
   full: '9999px', // Pills/circles
 } as const;
 
+// ─── Corner-radius scale (Apple HIG) ───────────────────
+export const radius = {
+  sm: 4, // Small controls
+  md: 6, // Medium controls
+  lg: 8, // Large / primary
+  pill: 9999, // Capsule (full pill)
+  container: 16, // Cards, sheets
+  island: 44, // Dynamic-Island-like surfaces
+} as const;
+
 // Animation system
 const animationSystem = {
   duration: {
@@ -124,9 +134,9 @@ const cardSystem = {
     xl: 'p-8',
   },
   radius: {
-    sm: 'rounded-xl', // Maps to radiusSystem.lg
-    md: 'rounded-xl', // Maps to radiusSystem.lg
-    lg: 'rounded-2xl', // Maps to radiusSystem.2xl
+    sm: 'rounded-vueni-lg',
+    md: 'rounded-vueni-lg',
+    lg: 'rounded-vueni-container',
   },
   effects: {
     backdrop: 'backdrop-blur-md',

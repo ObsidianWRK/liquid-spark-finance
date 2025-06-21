@@ -105,11 +105,11 @@ const TransactionDemo: React.FC = () => {
   ];
 
   const ViewToggle = () => (
-    <div className="flex items-center gap-2 p-1 bg-white/[0.05] rounded-xl">
+    <div className="flex items-center gap-2 p-1 bg-white/[0.05] rounded-vueni-lg">
       <button
         onClick={() => setView('mobile')}
         className={cn(
-          'px-4 py-2 rounded-lg flex items-center gap-2 transition-all',
+          'px-4 py-2 rounded-vueni-lg flex items-center gap-2 transition-all',
           view === 'mobile'
             ? 'bg-white/[0.1] text-white'
             : 'text-white/60 hover:text-white/80'
@@ -121,7 +121,7 @@ const TransactionDemo: React.FC = () => {
       <button
         onClick={() => setView('tablet')}
         className={cn(
-          'px-4 py-2 rounded-lg flex items-center gap-2 transition-all',
+          'px-4 py-2 rounded-vueni-lg flex items-center gap-2 transition-all',
           view === 'tablet'
             ? 'bg-white/[0.1] text-white'
             : 'text-white/60 hover:text-white/80'
@@ -133,7 +133,7 @@ const TransactionDemo: React.FC = () => {
       <button
         onClick={() => setView('desktop')}
         className={cn(
-          'px-4 py-2 rounded-lg flex items-center gap-2 transition-all',
+          'px-4 py-2 rounded-vueni-lg flex items-center gap-2 transition-all',
           view === 'desktop'
             ? 'bg-white/[0.1] text-white'
             : 'text-white/60 hover:text-white/80'
@@ -174,12 +174,12 @@ const TransactionDemo: React.FC = () => {
           {view === 'mobile' && (
             <div className="relative">
               {/* iPhone Frame */}
-              <div className="relative mx-auto bg-gray-900 rounded-[2.5rem] p-4 shadow-2xl">
-                <div className="absolute top-1/2 -translate-y-1/2 -right-1 w-1 h-16 bg-gray-800 rounded-r-lg" />
-                <div className="absolute top-1/2 -translate-y-1/2 -left-1 w-1 h-12 bg-gray-800 rounded-l-lg" />
-                <div className="bg-black rounded-[2rem] overflow-hidden">
+              <div className="relative mx-auto bg-gray-900 rounded-vueni-lg p-4 shadow-2xl">
+                <div className="absolute top-1/2 -translate-y-1/2 -right-1 w-1 h-16 bg-gray-800 rounded-r-vueni-lg" />
+                <div className="absolute top-1/2 -translate-y-1/2 -left-1 w-1 h-12 bg-gray-800 rounded-l-vueni-lg" />
+                <div className="bg-black rounded-vueni-lg overflow-hidden">
                   {/* Notch */}
-                  <div className="absolute top-0 left-1/2 -translate-x-1/2 w-40 h-7 bg-black rounded-b-2xl" />
+                  <div className="absolute top-0 left-1/2 -translate-x-1/2 w-40 h-7 bg-black rounded-b-vueni-lg" />
                   {/* Screen */}
                   <div className="relative h-[844px] overflow-hidden">
                     <MobileTransactionScreen />
@@ -191,8 +191,8 @@ const TransactionDemo: React.FC = () => {
 
           {/* Tablet View */}
           {view === 'tablet' && (
-            <div className="bg-gray-900 rounded-2xl p-8 shadow-2xl">
-              <div className="bg-black rounded-xl overflow-hidden">
+            <div className="bg-gray-900 rounded-vueni-lg p-8 shadow-2xl">
+              <div className="bg-black rounded-vueni-lg overflow-hidden">
                 <UnifiedTransactionList
                   transactions={transactions.map((t) => ({
                     id: t.id,
@@ -260,7 +260,7 @@ const TransactionDemo: React.FC = () => {
         {/* Feature Highlights */}
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 md:gap-6 mt-8 sm:mt-10 md:mt-12">
           <div
-            className="p-4 sm:p-5 md:p-6 bg-white/[0.02] rounded-xl border border-white/[0.08] 
+            className="p-4 sm:p-5 md:p-6 bg-white/[0.02] rounded-vueni-lg border border-white/[0.08] 
                           card-hover"
           >
             <h3 className="text-base sm:text-lg font-semibold text-white mb-2">
@@ -273,7 +273,7 @@ const TransactionDemo: React.FC = () => {
           </div>
 
           <div
-            className="p-4 sm:p-5 md:p-6 bg-white/[0.02] rounded-xl border border-white/[0.08]
+            className="p-4 sm:p-5 md:p-6 bg-white/[0.02] rounded-vueni-lg border border-white/[0.08]
                           card-hover"
           >
             <h3 className="text-base sm:text-lg font-semibold text-white mb-2">
@@ -286,7 +286,7 @@ const TransactionDemo: React.FC = () => {
           </div>
 
           <div
-            className="p-4 sm:p-5 md:p-6 bg-white/[0.02] rounded-xl border border-white/[0.08]
+            className="p-4 sm:p-5 md:p-6 bg-white/[0.02] rounded-vueni-lg border border-white/[0.08]
                           card-hover
                           sm:col-span-2 lg:col-span-1"
           >

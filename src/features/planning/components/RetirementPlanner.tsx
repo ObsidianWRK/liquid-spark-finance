@@ -153,10 +153,10 @@ const RetirementPlanner = ({ familyId }: RetirementPlannerProps) => {
 
   if (loading && !plan) {
     return (
-      <div className="bg-white/[0.02] rounded-2xl border border-white/[0.08] p-6">
+      <div className="bg-white/[0.02] rounded-vueni-lg border border-white/[0.08] p-6">
         <div className="flex items-center justify-center py-12">
           <div className="text-center">
-            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500 mx-auto mb-4"></div>
+            <div className="animate-spin rounded-vueni-pill h-12 w-12 border-b-2 border-blue-500 mx-auto mb-4"></div>
             <p className="text-white/70">Calculating your retirement plan...</p>
           </div>
         </div>
@@ -180,7 +180,7 @@ const RetirementPlanner = ({ familyId }: RetirementPlannerProps) => {
 
         <button
           onClick={() => setShowProjections(!showProjections)}
-          className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-xl transition-colors flex items-center gap-2"
+          className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-vueni-lg transition-colors flex items-center gap-2"
         >
           <PieChart className="w-4 h-4" />
           {showProjections ? 'Hide' : 'Show'} Projections
@@ -188,7 +188,7 @@ const RetirementPlanner = ({ familyId }: RetirementPlannerProps) => {
       </div>
 
       {/* Input Panel */}
-      <div className="bg-white/[0.02] rounded-2xl border border-white/[0.08] p-6">
+      <div className="bg-white/[0.02] rounded-vueni-lg border border-white/[0.08] p-6">
         <h3 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
           <Calculator className="w-5 h-5 text-blue-400" />
           Your Information
@@ -205,7 +205,7 @@ const RetirementPlanner = ({ familyId }: RetirementPlannerProps) => {
               onChange={(e) =>
                 handleInputChange('currentAge', parseInt(e.target.value))
               }
-              className="w-full bg-white/[0.05] border border-white/[0.08] rounded-lg text-white px-3 py-2"
+              className="w-full bg-white/[0.05] border border-white/[0.08] rounded-vueni-lg text-white px-3 py-2"
             />
           </div>
 
@@ -219,7 +219,7 @@ const RetirementPlanner = ({ familyId }: RetirementPlannerProps) => {
               onChange={(e) =>
                 handleInputChange('retirementAge', parseInt(e.target.value))
               }
-              className="w-full bg-white/[0.05] border border-white/[0.08] rounded-lg text-white px-3 py-2"
+              className="w-full bg-white/[0.05] border border-white/[0.08] rounded-vueni-lg text-white px-3 py-2"
             />
           </div>
 
@@ -233,7 +233,7 @@ const RetirementPlanner = ({ familyId }: RetirementPlannerProps) => {
               onChange={(e) =>
                 handleInputChange('currentIncome', parseInt(e.target.value))
               }
-              className="w-full bg-white/[0.05] border border-white/[0.08] rounded-lg text-white px-3 py-2"
+              className="w-full bg-white/[0.05] border border-white/[0.08] rounded-vueni-lg text-white px-3 py-2"
             />
           </div>
 
@@ -247,7 +247,7 @@ const RetirementPlanner = ({ familyId }: RetirementPlannerProps) => {
               onChange={(e) =>
                 handleInputChange('currentSavings', parseInt(e.target.value))
               }
-              className="w-full bg-white/[0.05] border border-white/[0.08] rounded-lg text-white px-3 py-2"
+              className="w-full bg-white/[0.05] border border-white/[0.08] rounded-vueni-lg text-white px-3 py-2"
             />
           </div>
 
@@ -264,7 +264,7 @@ const RetirementPlanner = ({ familyId }: RetirementPlannerProps) => {
                   parseInt(e.target.value)
                 )
               }
-              className="w-full bg-white/[0.05] border border-white/[0.08] rounded-lg text-white px-3 py-2"
+              className="w-full bg-white/[0.05] border border-white/[0.08] rounded-vueni-lg text-white px-3 py-2"
             />
           </div>
 
@@ -275,7 +275,7 @@ const RetirementPlanner = ({ familyId }: RetirementPlannerProps) => {
             <select
               value={inputs.riskProfile}
               onChange={(e) => handleInputChange('riskProfile', e.target.value)}
-              className="w-full bg-white/[0.05] border border-white/[0.08] rounded-lg text-white px-3 py-2"
+              className="w-full bg-white/[0.05] border border-white/[0.08] rounded-vueni-lg text-white px-3 py-2"
             >
               <option value="conservative">Conservative (4% return)</option>
               <option value="moderate">Moderate (7% return)</option>
@@ -287,10 +287,10 @@ const RetirementPlanner = ({ familyId }: RetirementPlannerProps) => {
         <button
           onClick={recalculatePlan}
           disabled={loading}
-          className="mt-4 bg-blue-500 hover:bg-blue-600 disabled:opacity-50 text-white px-6 py-2 rounded-lg transition-colors flex items-center gap-2"
+          className="mt-4 bg-blue-500 hover:bg-blue-600 disabled:opacity-50 text-white px-6 py-2 rounded-vueni-lg transition-colors flex items-center gap-2"
         >
           {loading ? (
-            <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+            <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-vueni-pill animate-spin" />
           ) : (
             <Calculator className="w-4 h-4" />
           )}
@@ -303,7 +303,7 @@ const RetirementPlanner = ({ familyId }: RetirementPlannerProps) => {
         <>
           {/* Key Metrics */}
           <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-            <div className="bg-white/[0.02] rounded-2xl border border-white/[0.08] p-6">
+            <div className="bg-white/[0.02] rounded-vueni-lg border border-white/[0.08] p-6">
               <div className="flex items-center justify-between">
                 <div>
                   <p className="text-white/60 text-sm">Years to Retirement</p>
@@ -315,7 +315,7 @@ const RetirementPlanner = ({ familyId }: RetirementPlannerProps) => {
               </div>
             </div>
 
-            <div className="bg-white/[0.02] rounded-2xl border border-white/[0.08] p-6">
+            <div className="bg-white/[0.02] rounded-vueni-lg border border-white/[0.08] p-6">
               <div className="flex items-center justify-between">
                 <div>
                   <p className="text-white/60 text-sm">Projected Value</p>
@@ -327,7 +327,7 @@ const RetirementPlanner = ({ familyId }: RetirementPlannerProps) => {
               </div>
             </div>
 
-            <div className="bg-white/[0.02] rounded-2xl border border-white/[0.08] p-6">
+            <div className="bg-white/[0.02] rounded-vueni-lg border border-white/[0.08] p-6">
               <div className="flex items-center justify-between">
                 <div>
                   <p className="text-white/60 text-sm">Monthly Income</p>
@@ -339,7 +339,7 @@ const RetirementPlanner = ({ familyId }: RetirementPlannerProps) => {
               </div>
             </div>
 
-            <div className="bg-white/[0.02] rounded-2xl border border-white/[0.08] p-6">
+            <div className="bg-white/[0.02] rounded-vueni-lg border border-white/[0.08] p-6">
               <div className="flex items-center justify-between">
                 <div>
                   <p className="text-white/60 text-sm">
@@ -367,7 +367,7 @@ const RetirementPlanner = ({ familyId }: RetirementPlannerProps) => {
           </div>
 
           {/* Analysis */}
-          <div className="bg-white/[0.02] rounded-2xl border border-white/[0.08] p-6">
+          <div className="bg-white/[0.02] rounded-vueni-lg border border-white/[0.08] p-6">
             <h3 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
               <Target className="w-5 h-5 text-blue-400" />
               Retirement Analysis
@@ -375,7 +375,7 @@ const RetirementPlanner = ({ familyId }: RetirementPlannerProps) => {
 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
               <div className="space-y-4">
-                <div className="flex items-center justify-between p-4 bg-white/[0.03] rounded-xl">
+                <div className="flex items-center justify-between p-4 bg-white/[0.03] rounded-vueni-lg">
                   <span className="text-white/80">
                     Target Retirement Savings
                   </span>
@@ -384,7 +384,7 @@ const RetirementPlanner = ({ familyId }: RetirementPlannerProps) => {
                   </span>
                 </div>
 
-                <div className="flex items-center justify-between p-4 bg-white/[0.03] rounded-xl">
+                <div className="flex items-center justify-between p-4 bg-white/[0.03] rounded-vueni-lg">
                   <span className="text-white/80">
                     Projected Retirement Value
                   </span>
@@ -393,14 +393,14 @@ const RetirementPlanner = ({ familyId }: RetirementPlannerProps) => {
                   </span>
                 </div>
 
-                <div className="flex items-center justify-between p-4 bg-white/[0.03] rounded-xl">
+                <div className="flex items-center justify-between p-4 bg-white/[0.03] rounded-vueni-lg">
                   <span className="text-white/80">Expected Annual Return</span>
                   <span className="font-semibold text-white">
                     {formatPercentage(plan.projections.expectedReturn)}
                   </span>
                 </div>
 
-                <div className="flex items-center justify-between p-4 bg-white/[0.03] rounded-xl">
+                <div className="flex items-center justify-between p-4 bg-white/[0.03] rounded-vueni-lg">
                   <span className="text-white/80">
                     Income Replacement Ratio
                   </span>
@@ -441,7 +441,7 @@ const RetirementPlanner = ({ familyId }: RetirementPlannerProps) => {
                         contentStyle={{
                           backgroundColor: 'rgba(0, 0, 0, 0.8)',
                           border: '1px solid rgba(255, 255, 255, 0.1)',
-                          borderRadius: '8px',
+                          borderRadius: vueniTheme.radius.lg,
                           color: 'white',
                         }}
                       />
@@ -472,7 +472,7 @@ const RetirementPlanner = ({ familyId }: RetirementPlannerProps) => {
 
           {/* Projections Chart */}
           {showProjections && (
-            <div className="bg-white/[0.02] rounded-2xl border border-white/[0.08] p-6">
+            <div className="bg-white/[0.02] rounded-vueni-lg border border-white/[0.08] p-6">
               <h3 className="text-lg font-semibold text-white mb-6 flex items-center gap-2">
                 <TrendingUp className="w-5 h-5 text-blue-400" />
                 Savings Growth Projection
@@ -508,7 +508,7 @@ const RetirementPlanner = ({ familyId }: RetirementPlannerProps) => {
                       contentStyle={{
                         backgroundColor: 'rgba(0, 0, 0, 0.8)',
                         border: '1px solid rgba(255, 255, 255, 0.1)',
-                        borderRadius: '8px',
+                        borderRadius: vueniTheme.radius.lg,
                         color: 'white',
                       }}
                     />
@@ -546,7 +546,7 @@ const RetirementPlanner = ({ familyId }: RetirementPlannerProps) => {
 
           {/* Recommendations */}
           {plan.recommendations.length > 0 && (
-            <div className="bg-white/[0.02] rounded-2xl border border-white/[0.08] p-6">
+            <div className="bg-white/[0.02] rounded-vueni-lg border border-white/[0.08] p-6">
               <h3 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
                 <Zap className="w-5 h-5 text-yellow-400" />
                 Recommendations
@@ -556,7 +556,7 @@ const RetirementPlanner = ({ familyId }: RetirementPlannerProps) => {
                 {plan.recommendations.map((rec, index) => (
                   <div
                     key={index}
-                    className="bg-white/[0.03] rounded-xl p-4 border border-white/[0.05]"
+                    className="bg-white/[0.03] rounded-vueni-lg p-4 border border-white/[0.05]"
                   >
                     <div className="flex items-start justify-between">
                       <div className="flex-1">
@@ -573,7 +573,7 @@ const RetirementPlanner = ({ familyId }: RetirementPlannerProps) => {
                               key={itemIndex}
                               className="flex items-center gap-2 text-sm"
                             >
-                              <div className="w-1.5 h-1.5 bg-blue-400 rounded-full"></div>
+                              <div className="w-1.5 h-1.5 bg-blue-400 rounded-vueni-pill"></div>
                               <span className="text-white/80">{item}</span>
                             </div>
                           ))}
@@ -583,7 +583,7 @@ const RetirementPlanner = ({ familyId }: RetirementPlannerProps) => {
                       <div className="text-right">
                         <span
                           className={cn(
-                            'text-xs px-2 py-1 rounded-lg font-medium',
+                            'text-xs px-2 py-1 rounded-vueni-lg font-medium',
                             rec.impact === 'high'
                               ? 'bg-red-500/20 text-red-400'
                               : rec.impact === 'medium'

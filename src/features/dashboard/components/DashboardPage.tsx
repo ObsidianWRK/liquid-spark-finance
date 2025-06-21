@@ -96,7 +96,7 @@ const DashboardPage = () => {
 
         <div className="flex items-center gap-3">
           {/* Timeframe Selector */}
-          <div className="flex items-center gap-1 bg-white/[0.02] rounded-xl p-1 border border-white/[0.08]">
+          <div className="flex items-center gap-1 bg-white/[0.02] rounded-vueni-lg p-1 border border-white/[0.08]">
             {[
               { id: '1m', label: '1M' },
               { id: '3m', label: '3M' },
@@ -107,7 +107,7 @@ const DashboardPage = () => {
                 key={id}
                 onClick={() => setSelectedTimeframe(id as any)}
                 className={cn(
-                  'px-3 py-1 rounded-lg transition-all text-sm',
+                  'px-3 py-1 rounded-vueni-lg transition-all text-sm',
                   selectedTimeframe === id
                     ? 'bg-blue-500 text-white'
                     : 'text-white/60 hover:text-white hover:bg-white/[0.05]'
@@ -121,7 +121,7 @@ const DashboardPage = () => {
           <button
             onClick={handleRefresh}
             disabled={isRefreshing}
-            className="bg-white/[0.05] hover:bg-white/[0.08] text-white/80 hover:text-white px-4 py-2 rounded-xl transition-colors flex items-center gap-2 border border-white/[0.08]"
+            className="bg-white/[0.05] hover:bg-white/[0.08] text-white/80 hover:text-white px-4 py-2 rounded-vueni-lg transition-colors flex items-center gap-2 border border-white/[0.08]"
           >
             <RefreshCw
               className={cn('w-4 h-4', isRefreshing && 'animate-spin')}
@@ -131,13 +131,13 @@ const DashboardPage = () => {
 
           <button
             onClick={handleExport}
-            className="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-xl transition-colors flex items-center gap-2"
+            className="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-vueni-lg transition-colors flex items-center gap-2"
           >
             <Download className="w-4 h-4" />
             Export
           </button>
 
-          <button className="bg-white/[0.05] hover:bg-white/[0.08] text-white/80 hover:text-white p-2 rounded-xl transition-colors border border-white/[0.08] flex items-center justify-center">
+          <button className="bg-white/[0.05] hover:bg-white/[0.08] text-white/80 hover:text-white p-2 rounded-vueni-lg transition-colors border border-white/[0.08] flex items-center justify-center">
             <Settings className="w-4 h-4" />
           </button>
 
@@ -146,10 +146,10 @@ const DashboardPage = () => {
       </div>
 
       {/* Quick Insights Bar */}
-      <div className="bg-gradient-to-r from-blue-500/10 to-purple-500/10 border border-blue-500/20 rounded-xl p-4">
+      <div className="bg-gradient-to-r from-blue-500/10 to-purple-500/10 border border-blue-500/20 rounded-vueni-lg p-4">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-4">
-            <div className="w-10 h-10 bg-blue-500/20 rounded-xl flex items-center justify-center">
+            <div className="w-10 h-10 bg-blue-500/20 rounded-vueni-lg flex items-center justify-center">
               <Zap className="w-5 h-5 text-blue-400" />
             </div>
             <div>
@@ -226,16 +226,16 @@ const DashboardPage = () => {
       {/* Additional Analytics Sections */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
         {/* Spending Insights */}
-        <div className="bg-white/[0.02] rounded-2xl border border-white/[0.08] p-6">
+        <div className="bg-white/[0.02] rounded-vueni-lg border border-white/[0.08] p-6">
           <h2 className="text-xl font-bold text-white mb-6 flex items-center gap-3">
             <BarChart3 className="w-6 h-6 text-orange-400" />
             Spending Insights
           </h2>
 
           <div className="space-y-4">
-            <div className="flex items-center justify-between p-4 bg-white/[0.03] rounded-xl border border-white/[0.05]">
+            <div className="flex items-center justify-between p-4 bg-white/[0.03] rounded-vueni-lg border border-white/[0.05]">
               <div className="flex items-center gap-3">
-                <div className="w-8 h-8 bg-orange-500/20 rounded-lg flex items-center justify-center">
+                <div className="w-8 h-8 bg-orange-500/20 rounded-vueni-lg flex items-center justify-center">
                   <TrendingUp className="w-4 h-4 text-orange-400" />
                 </div>
                 <div>
@@ -250,9 +250,9 @@ const DashboardPage = () => {
               <span className="text-orange-400 font-bold">$1,250</span>
             </div>
 
-            <div className="flex items-center justify-between p-4 bg-white/[0.03] rounded-xl border border-white/[0.05]">
+            <div className="flex items-center justify-between p-4 bg-white/[0.03] rounded-vueni-lg border border-white/[0.05]">
               <div className="flex items-center gap-3">
-                <div className="w-8 h-8 bg-green-500/20 rounded-lg flex items-center justify-center">
+                <div className="w-8 h-8 bg-green-500/20 rounded-vueni-lg flex items-center justify-center">
                   <TrendingUp className="w-4 h-4 text-green-400" />
                 </div>
                 <div>
@@ -267,9 +267,9 @@ const DashboardPage = () => {
               <span className="text-green-400 font-bold">-$320</span>
             </div>
 
-            <div className="flex items-center justify-between p-4 bg-white/[0.03] rounded-xl border border-white/[0.05]">
+            <div className="flex items-center justify-between p-4 bg-white/[0.03] rounded-vueni-lg border border-white/[0.05]">
               <div className="flex items-center gap-3">
-                <div className="w-8 h-8 bg-blue-500/20 rounded-lg flex items-center justify-center">
+                <div className="w-8 h-8 bg-blue-500/20 rounded-vueni-lg flex items-center justify-center">
                   <Target className="w-4 h-4 text-blue-400" />
                 </div>
                 <div>
@@ -285,16 +285,16 @@ const DashboardPage = () => {
         </div>
 
         {/* Investment Performance */}
-        <div className="bg-white/[0.02] rounded-2xl border border-white/[0.08] p-6">
+        <div className="bg-white/[0.02] rounded-vueni-lg border border-white/[0.08] p-6">
           <h2 className="text-xl font-bold text-white mb-6 flex items-center gap-3">
             <PieChart className="w-6 h-6 text-purple-400" />
             Investment Performance
           </h2>
 
           <div className="space-y-4">
-            <div className="flex items-center justify-between p-4 bg-white/[0.03] rounded-xl border border-white/[0.05]">
+            <div className="flex items-center justify-between p-4 bg-white/[0.03] rounded-vueni-lg border border-white/[0.05]">
               <div className="flex items-center gap-3">
-                <div className="w-8 h-8 bg-green-500/20 rounded-lg flex items-center justify-center">
+                <div className="w-8 h-8 bg-green-500/20 rounded-vueni-lg flex items-center justify-center">
                   <TrendingUp className="w-4 h-4 text-green-400" />
                 </div>
                 <div>
@@ -305,9 +305,9 @@ const DashboardPage = () => {
               <span className="text-green-400 font-bold">+8.2%</span>
             </div>
 
-            <div className="flex items-center justify-between p-4 bg-white/[0.03] rounded-xl border border-white/[0.05]">
+            <div className="flex items-center justify-between p-4 bg-white/[0.03] rounded-vueni-lg border border-white/[0.05]">
               <div className="flex items-center gap-3">
-                <div className="w-8 h-8 bg-blue-500/20 rounded-lg flex items-center justify-center">
+                <div className="w-8 h-8 bg-blue-500/20 rounded-vueni-lg flex items-center justify-center">
                   <Target className="w-4 h-4 text-blue-400" />
                 </div>
                 <div>
@@ -320,9 +320,9 @@ const DashboardPage = () => {
               <span className="text-blue-400 font-bold">92/100</span>
             </div>
 
-            <div className="flex items-center justify-between p-4 bg-white/[0.03] rounded-xl border border-white/[0.05]">
+            <div className="flex items-center justify-between p-4 bg-white/[0.03] rounded-vueni-lg border border-white/[0.05]">
               <div className="flex items-center gap-3">
-                <div className="w-8 h-8 bg-purple-500/20 rounded-lg flex items-center justify-center">
+                <div className="w-8 h-8 bg-purple-500/20 rounded-vueni-lg flex items-center justify-center">
                   <Activity className="w-4 h-4 text-purple-400" />
                 </div>
                 <div>
@@ -337,7 +337,7 @@ const DashboardPage = () => {
       </div>
 
       {/* Footer Analytics Summary */}
-      <div className="bg-gradient-to-r from-gray-800/20 to-gray-900/20 border border-white/[0.08] rounded-xl p-6">
+      <div className="bg-gradient-to-r from-gray-800/20 to-gray-900/20 border border-white/[0.08] rounded-vueni-lg p-6">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6 text-center">
           <div>
             <p className="text-white/60 text-sm">Total Assets</p>

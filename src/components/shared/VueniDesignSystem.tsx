@@ -133,7 +133,7 @@ export const VueniButton = memo(
         >
           <div className="flex items-center gap-2">
             {loading && (
-              <div className="w-3 h-3 border border-white/30 border-t-white rounded-full animate-spin" />
+              <div className="w-3 h-3 border border-white/30 border-t-white rounded-vueni-pill animate-spin" />
             )}
             {icon && !loading && icon}
             {children}
@@ -197,7 +197,7 @@ export const VueniMetric = memo(
           <div className="flex items-center justify-between mb-4">
             <h3 className="text-white/70 text-sm font-medium">{label}</h3>
             {icon && (
-              <div className={cn('p-2 rounded-lg', metricColors[color])}>
+              <div className={cn('p-2 rounded-vueni-lg', metricColors[color])}>
                 <div className="w-5 h-5">{icon}</div>
               </div>
             )}
@@ -226,7 +226,7 @@ export const VueniMetric = memo(
     return (
       <div className="flex items-center gap-3">
         {icon && (
-          <div className={cn('p-2 rounded-lg', metricColors[color])}>
+          <div className={cn('p-2 rounded-vueni-lg', metricColors[color])}>
             <div className="w-4 h-4">{icon}</div>
           </div>
         )}
@@ -290,7 +290,7 @@ export const VueniStatusBadge = memo(
         className={cn(
           statusColors[status],
           statusSizes[size],
-          'rounded-full font-medium inline-flex items-center gap-1',
+          'rounded-vueni-pill font-medium inline-flex items-center gap-1',
           variant === 'outline' && 'bg-transparent border',
           variant === 'ghost' && 'bg-transparent border-transparent'
         )}
@@ -318,7 +318,7 @@ export const VueniSkeleton = memo(
     if (variant === 'circular') {
       return (
         <div
-          className={cn(baseClasses, 'rounded-full', className)}
+          className={cn(baseClasses, 'rounded-vueni-pill', className)}
           style={{ width, height }}
         />
       );
@@ -327,7 +327,7 @@ export const VueniSkeleton = memo(
     if (variant === 'rectangular') {
       return (
         <div
-          className={cn(baseClasses, 'rounded-lg', className)}
+          className={cn(baseClasses, 'rounded-vueni-lg', className)}
           style={{ width, height }}
         />
       );

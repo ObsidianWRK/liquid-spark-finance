@@ -107,7 +107,7 @@ const LoanCalculator = () => {
 
       <div className="grid lg:grid-cols-2 gap-8">
         {/* Input Section */}
-        <div className="bg-white/5 backdrop-blur-xl rounded-3xl p-6 border border-white/10">
+        <div className="bg-white/5 backdrop-blur-xl rounded-vueni-lg p-6 border border-white/10">
           <h2 className="text-xl font-semibold text-white mb-6">
             Loan Parameters
           </h2>
@@ -156,7 +156,7 @@ const LoanCalculator = () => {
 
             <button
               onClick={handleCalculate}
-              className="w-full py-3 px-6 rounded-xl bg-white/10 border border-white/20 text-white font-semibold button-hover"
+              className="w-full py-3 px-6 rounded-vueni-lg bg-white/10 border border-white/20 text-white font-semibold button-hover"
             >
               Calculate Loan
             </button>
@@ -165,12 +165,12 @@ const LoanCalculator = () => {
 
         {/* Results Section */}
         {payment !== null && (
-          <div className="bg-white/5 backdrop-blur-xl rounded-3xl p-6 border border-white/10">
+          <div className="bg-white/5 backdrop-blur-xl rounded-vueni-lg p-6 border border-white/10">
             <h2 className="text-xl font-semibold text-white mb-6">
               Loan Summary
             </h2>
             <div className="space-y-4">
-              <div className="text-center p-6 bg-gradient-to-r from-blue-500/20 to-purple-500/20 rounded-2xl border border-blue-400/20">
+              <div className="text-center p-6 bg-gradient-to-r from-blue-500/20 to-purple-500/20 rounded-vueni-lg border border-blue-400/20">
                 <div className="text-3xl font-bold text-white mb-2">
                   {formatCurrency(payment)}
                 </div>
@@ -178,13 +178,13 @@ const LoanCalculator = () => {
               </div>
 
               <div className="grid grid-cols-2 gap-4">
-                <div className="text-center p-4 bg-white/5 rounded-xl">
+                <div className="text-center p-4 bg-white/5 rounded-vueni-lg">
                   <div className="text-xl font-semibold text-white">
                     {formatCurrency(totalPayments)}
                   </div>
                   <div className="text-sm text-white/60">Total Payments</div>
                 </div>
-                <div className="text-center p-4 bg-white/5 rounded-xl">
+                <div className="text-center p-4 bg-white/5 rounded-vueni-lg">
                   <div className="text-xl font-semibold text-white">
                     {formatCurrency(totalInterest)}
                   </div>
@@ -192,7 +192,7 @@ const LoanCalculator = () => {
                 </div>
               </div>
 
-              <div className="text-center p-4 bg-white/5 rounded-xl">
+              <div className="text-center p-4 bg-white/5 rounded-vueni-lg">
                 <div className="text-lg font-semibold text-white">
                   {((totalInterest / principal) * 100).toFixed(1)}%
                 </div>
@@ -209,7 +209,7 @@ const LoanCalculator = () => {
       {amortizationData.length > 0 && (
         <div className="grid lg:grid-cols-2 gap-8">
           {/* Amortization Chart */}
-          <div className="bg-white/5 backdrop-blur-xl rounded-3xl p-6 border border-white/10">
+          <div className="bg-white/5 backdrop-blur-xl rounded-vueni-lg p-6 border border-white/10">
             <h2 className="text-xl font-semibold text-white mb-6">
               Remaining Balance Over Time
             </h2>
@@ -252,7 +252,7 @@ const LoanCalculator = () => {
                     contentStyle={{
                       backgroundColor: 'rgba(0,0,0,0.8)',
                       border: '1px solid rgba(255,255,255,0.2)',
-                      borderRadius: '12px',
+                      borderRadius: vueniTheme.radius.lg,
                       color: '#fff',
                     }}
                   />
@@ -269,7 +269,7 @@ const LoanCalculator = () => {
           </div>
 
           {/* Principal vs Interest Chart */}
-          <div className="bg-white/5 backdrop-blur-xl rounded-3xl p-6 border border-white/10">
+          <div className="bg-white/5 backdrop-blur-xl rounded-vueni-lg p-6 border border-white/10">
             <h2 className="text-xl font-semibold text-white mb-6">
               Principal vs Interest
             </h2>
@@ -297,7 +297,7 @@ const LoanCalculator = () => {
                     contentStyle={{
                       backgroundColor: 'rgba(0,0,0,0.8)',
                       border: '1px solid rgba(255,255,255,0.2)',
-                      borderRadius: '12px',
+                      borderRadius: vueniTheme.radius.lg,
                       color: '#fff',
                     }}
                   />
@@ -321,7 +321,7 @@ const LoanCalculator = () => {
 
       {/* Loan Comparison */}
       {payment !== null && (
-        <div className="bg-white/5 backdrop-blur-xl rounded-3xl p-6 border border-white/10">
+        <div className="bg-white/5 backdrop-blur-xl rounded-vueni-lg p-6 border border-white/10">
           <h2 className="text-xl font-semibold text-white mb-6">
             Loan Type Comparison
           </h2>
@@ -346,7 +346,7 @@ const LoanCalculator = () => {
                   contentStyle={{
                     backgroundColor: 'rgba(0,0,0,0.8)',
                     border: '1px solid rgba(255,255,255,0.2)',
-                    borderRadius: '12px',
+                    borderRadius: vueniTheme.radius.lg,
                     color: '#fff',
                   }}
                 />

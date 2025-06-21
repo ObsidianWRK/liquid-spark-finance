@@ -98,7 +98,7 @@ const ROICalculator = React.memo(() => {
 
       <div className="grid lg:grid-cols-2 gap-8">
         {/* Input Section */}
-        <div className="bg-white/5 backdrop-blur-xl rounded-3xl p-6 border border-white/10">
+        <div className="bg-white/5 backdrop-blur-xl rounded-vueni-lg p-6 border border-white/10">
           <h2 className="text-xl font-semibold text-white mb-6">
             Investment Details
           </h2>
@@ -115,7 +115,7 @@ const ROICalculator = React.memo(() => {
                   type="number"
                   value={initial}
                   onChange={(e) => handleInitialChange(e.target.value)}
-                  className="w-full pl-8 pr-4 py-3 rounded-xl bg-white/5 text-white border border-white/10 focus:border-blue-400 focus:outline-none transition-colors"
+                  className="w-full pl-8 pr-4 py-3 rounded-vueni-lg bg-white/5 text-white border border-white/10 focus:border-blue-400 focus:outline-none transition-colors"
                   placeholder="1,000"
                 />
               </div>
@@ -133,7 +133,7 @@ const ROICalculator = React.memo(() => {
                   type="number"
                   value={current}
                   onChange={(e) => handleCurrentChange(e.target.value)}
-                  className="w-full pl-8 pr-4 py-3 rounded-xl bg-white/5 text-white border border-white/10 focus:border-blue-400 focus:outline-none transition-colors"
+                  className="w-full pl-8 pr-4 py-3 rounded-vueni-lg bg-white/5 text-white border border-white/10 focus:border-blue-400 focus:outline-none transition-colors"
                   placeholder="1,200"
                 />
               </div>
@@ -147,7 +147,7 @@ const ROICalculator = React.memo(() => {
                 type="number"
                 value={timeHeld}
                 onChange={(e) => handleTimeChange(e.target.value)}
-                className="w-full px-4 py-3 rounded-xl bg-white/5 text-white border border-white/10 focus:border-blue-400 focus:outline-none transition-colors"
+                className="w-full px-4 py-3 rounded-vueni-lg bg-white/5 text-white border border-white/10 focus:border-blue-400 focus:outline-none transition-colors"
                 placeholder="12"
               />
             </div>
@@ -156,11 +156,11 @@ const ROICalculator = React.memo(() => {
 
         {/* Results Section */}
         {calculatedROI !== null && (
-          <div className="bg-white/5 backdrop-blur-xl rounded-3xl p-6 border border-white/10">
+          <div className="bg-white/5 backdrop-blur-xl rounded-vueni-lg p-6 border border-white/10">
             <h2 className="text-xl font-semibold text-white mb-6">Results</h2>
             <div className="space-y-4">
               <div
-                className={`text-center p-6 rounded-2xl border ${calculatedROI >= 0 ? 'bg-gradient-to-r from-green-500/20 to-blue-500/20 border-green-400/20' : 'bg-gradient-to-r from-red-500/20 to-orange-500/20 border-red-400/20'}`}
+                className={`text-center p-6 rounded-vueni-lg border ${calculatedROI >= 0 ? 'bg-gradient-to-r from-green-500/20 to-blue-500/20 border-green-400/20' : 'bg-gradient-to-r from-red-500/20 to-orange-500/20 border-red-400/20'}`}
               >
                 <div className="text-3xl font-bold text-white mb-2">
                   {calculatedROI?.toFixed(2)}%
@@ -169,13 +169,13 @@ const ROICalculator = React.memo(() => {
               </div>
 
               <div className="grid grid-cols-2 gap-4">
-                <div className="text-center p-4 bg-white/5 rounded-xl">
+                <div className="text-center p-4 bg-white/5 rounded-vueni-lg">
                   <div className="text-xl font-semibold text-white">
                     {formatCurrency(current - initial)}
                   </div>
                   <div className="text-sm text-white/60">Gain/Loss</div>
                 </div>
-                <div className="text-center p-4 bg-white/5 rounded-xl">
+                <div className="text-center p-4 bg-white/5 rounded-vueni-lg">
                   <div className="text-xl font-semibold text-white">
                     {annualizedReturn.toFixed(2)}%
                   </div>
@@ -191,7 +191,7 @@ const ROICalculator = React.memo(() => {
       {chartData.length > 0 && (
         <div className="grid lg:grid-cols-2 gap-8">
           {/* Bar Chart */}
-          <div className="bg-white/5 backdrop-blur-xl rounded-3xl p-6 border border-white/10">
+          <div className="bg-white/5 backdrop-blur-xl rounded-vueni-lg p-6 border border-white/10">
             <h2 className="text-xl font-semibold text-white mb-6">
               Investment Breakdown
             </h2>
@@ -223,7 +223,7 @@ const ROICalculator = React.memo(() => {
                     contentStyle={{
                       backgroundColor: 'rgba(0,0,0,0.8)',
                       border: '1px solid rgba(255,255,255,0.2)',
-                      borderRadius: '12px',
+                      borderRadius: vueniTheme.radius.lg,
                       color: '#fff',
                     }}
                   />
@@ -234,7 +234,7 @@ const ROICalculator = React.memo(() => {
           </div>
 
           {/* Pie Chart */}
-          <div className="bg-white/5 backdrop-blur-xl rounded-3xl p-6 border border-white/10">
+          <div className="bg-white/5 backdrop-blur-xl rounded-vueni-lg p-6 border border-white/10">
             <h2 className="text-xl font-semibold text-white mb-6">
               Portfolio Composition
             </h2>
@@ -262,7 +262,7 @@ const ROICalculator = React.memo(() => {
                     contentStyle={{
                       backgroundColor: 'rgba(0,0,0,0.8)',
                       border: '1px solid rgba(255,255,255,0.2)',
-                      borderRadius: '12px',
+                      borderRadius: vueniTheme.radius.lg,
                       color: '#fff',
                     }}
                   />

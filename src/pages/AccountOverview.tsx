@@ -78,10 +78,10 @@ const CollapsiblePane: React.FC<CollapsiblePaneProps> = ({
   <UniversalCard variant="glass" className="w-full">
     <button
       onClick={onToggle}
-      className="w-full flex items-center justify-between p-6 text-left hover:bg-white/[0.02] transition-colors rounded-2xl"
+      className="w-full flex items-center justify-between p-6 text-left hover:bg-white/[0.02] transition-colors rounded-vueni-lg"
     >
       <div className="flex items-center gap-3">
-        <div className="w-10 h-10 rounded-xl bg-white/[0.05] flex items-center justify-center">
+        <div className="w-10 h-10 rounded-vueni-lg bg-white/[0.05] flex items-center justify-center">
           <Icon className="w-5 h-5 text-blue-400" />
         </div>
         <h3 className="text-lg font-semibold text-white">{title}</h3>
@@ -239,7 +239,7 @@ const AccountOverview: React.FC = () => {
           >
             {/* Health content */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              <div className="bg-white/[0.03] rounded-xl p-4 border border-white/[0.05]">
+              <div className="bg-white/[0.03] rounded-vueni-lg p-4 border border-white/[0.05]">
                 <div className="flex items-center gap-2 mb-2">
                   <CheckCircle className="w-5 h-5 text-green-400" />
                   <span className="text-sm font-medium text-white/90">
@@ -254,7 +254,7 @@ const AccountOverview: React.FC = () => {
                 </div>
               </div>
 
-              <div className="bg-white/[0.03] rounded-xl p-4 border border-white/[0.05]">
+              <div className="bg-white/[0.03] rounded-vueni-lg p-4 border border-white/[0.05]">
                 <div className="flex items-center gap-2 mb-2">
                   <Calendar className="w-5 h-5 text-blue-400" />
                   <span className="text-sm font-medium text-white/90">
@@ -268,7 +268,7 @@ const AccountOverview: React.FC = () => {
                 </div>
               </div>
 
-              <div className="bg-white/[0.03] rounded-xl p-4 border border-white/[0.05]">
+              <div className="bg-white/[0.03] rounded-vueni-lg p-4 border border-white/[0.05]">
                 <div className="flex items-center gap-2 mb-2">
                   <AlertTriangle
                     className={cn(
@@ -342,14 +342,14 @@ const AccountOverview: React.FC = () => {
                   <h4 className="text-white/90 font-medium mb-4">
                     Stress During Transactions
                   </h4>
-                  <div className="bg-white/[0.03] rounded-xl p-4 border border-white/[0.05]">
+                  <div className="bg-white/[0.03] rounded-vueni-lg p-4 border border-white/[0.05]">
                     <div className="space-y-4">
                       {transactionsWithBiometrics
                         .slice(0, 5)
                         .map((tx: TransactionWithBiometrics) => (
                           <div
                             key={tx.id}
-                            className="flex items-center justify-between p-3 bg-white/[0.02] rounded-lg"
+                            className="flex items-center justify-between p-3 bg-white/[0.02] rounded-vueni-lg"
                           >
                             <div>
                               <div className="text-white font-medium">
@@ -368,7 +368,7 @@ const AccountOverview: React.FC = () => {
                               <div className="text-sm">
                                 <span
                                   className={cn(
-                                    'inline-block px-2 py-1 rounded-full text-xs',
+                                    'inline-block px-2 py-1 rounded-vueni-pill text-xs',
                                     tx.stressAtTime >= 70
                                       ? 'bg-red-500/20 text-red-400'
                                       : tx.stressAtTime >= 40
@@ -397,7 +397,7 @@ const AccountOverview: React.FC = () => {
             badge="AI-powered"
           >
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div className="bg-white/[0.03] rounded-xl p-4 border border-white/[0.05]">
+              <div className="bg-white/[0.03] rounded-vueni-lg p-4 border border-white/[0.05]">
                 <h4 className="text-white/90 font-medium mb-3">
                   Spending Patterns
                 </h4>
@@ -406,7 +406,7 @@ const AccountOverview: React.FC = () => {
                   consistent saving habits.
                 </p>
               </div>
-              <div className="bg-white/[0.03] rounded-xl p-4 border border-white/[0.05]">
+              <div className="bg-white/[0.03] rounded-vueni-lg p-4 border border-white/[0.05]">
                 <h4 className="text-white/90 font-medium mb-3">
                   Recommendations
                 </h4>

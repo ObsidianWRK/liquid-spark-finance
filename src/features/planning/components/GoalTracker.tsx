@@ -223,7 +223,7 @@ const GoalTracker = ({ familyId, compact = false }: GoalTrackerProps) => {
         {[...Array(4)].map((_, i) => (
           <div
             key={i}
-            className="bg-white/[0.02] rounded-2xl border border-white/[0.08] p-4 animate-pulse"
+            className="bg-white/[0.02] rounded-vueni-lg border border-white/[0.08] p-4 animate-pulse"
           >
             <div className="flex items-center justify-between mb-3">
               <div className="h-5 bg-white/[0.05] rounded w-48"></div>
@@ -257,7 +257,7 @@ const GoalTracker = ({ familyId, compact = false }: GoalTrackerProps) => {
 
           <button
             onClick={() => setShowNewGoal(true)}
-            className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-xl transition-colors flex items-center gap-2"
+            className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-vueni-lg transition-colors flex items-center gap-2"
           >
             <Plus className="w-4 h-4" />
             Add Goal
@@ -273,7 +273,7 @@ const GoalTracker = ({ familyId, compact = false }: GoalTrackerProps) => {
               key={status}
               onClick={() => setFilter(status as any)}
               className={cn(
-                'px-3 py-1 rounded-lg text-sm transition-colors capitalize',
+                'px-3 py-1 rounded-vueni-lg text-sm transition-colors capitalize',
                 filter === status
                   ? 'bg-blue-500 text-white'
                   : 'text-white/60 hover:text-white hover:bg-white/[0.05]'
@@ -287,7 +287,7 @@ const GoalTracker = ({ familyId, compact = false }: GoalTrackerProps) => {
         <select
           value={sortBy}
           onChange={(e) => setSortBy(e.target.value as any)}
-          className="bg-white/[0.05] border border-white/[0.08] rounded-lg text-white text-sm py-1 px-3"
+          className="bg-white/[0.05] border border-white/[0.08] rounded-vueni-lg text-white text-sm py-1 px-3"
         >
           <option value="priority">Priority</option>
           <option value="progress">Progress</option>
@@ -299,7 +299,7 @@ const GoalTracker = ({ familyId, compact = false }: GoalTrackerProps) => {
       {/* Goals List */}
       <div className="space-y-4">
         {sortedGoals.length === 0 ? (
-          <div className="bg-white/[0.02] rounded-2xl border border-white/[0.08] p-8 text-center">
+          <div className="bg-white/[0.02] rounded-vueni-lg border border-white/[0.08] p-8 text-center">
             <Target className="w-12 h-12 text-white/20 mx-auto mb-3" />
             <h3 className="text-lg font-semibold text-white mb-2">
               No Goals Found
@@ -311,7 +311,7 @@ const GoalTracker = ({ familyId, compact = false }: GoalTrackerProps) => {
             </p>
             <button
               onClick={() => setShowNewGoal(true)}
-              className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg transition-colors"
+              className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-vueni-lg transition-colors"
             >
               Create Your First Goal
             </button>
@@ -323,7 +323,7 @@ const GoalTracker = ({ familyId, compact = false }: GoalTrackerProps) => {
             return (
               <div
                 key={goal.id}
-                className="bg-white/[0.02] rounded-2xl border border-white/[0.08] p-4 hover:bg-white/[0.03] transition-all"
+                className="bg-white/[0.02] rounded-vueni-lg border border-white/[0.08] p-4 hover:bg-white/[0.03] transition-all"
               >
                 <div className="flex items-start justify-between mb-3">
                   <div className="flex-1">
@@ -373,10 +373,10 @@ const GoalTracker = ({ familyId, compact = false }: GoalTrackerProps) => {
                       {Math.round(goal.progress.percentComplete)}%
                     </span>
                   </div>
-                  <div className="w-full bg-white/[0.05] rounded-full h-2">
+                  <div className="w-full bg-white/[0.05] rounded-vueni-pill h-2">
                     <div
                       className={cn(
-                        'h-2 rounded-full transition-all duration-500 bg-gradient-to-r',
+                        'h-2 rounded-vueni-pill transition-all duration-500 bg-gradient-to-r',
                         getProgressColor(
                           goal.progress.percentComplete,
                           goal.progress.onTrack
@@ -429,7 +429,7 @@ const GoalTracker = ({ familyId, compact = false }: GoalTrackerProps) => {
                     {goal.tags.map((tag) => (
                       <span
                         key={tag}
-                        className="text-xs px-2 py-1 bg-white/[0.05] rounded-lg text-white/60"
+                        className="text-xs px-2 py-1 bg-white/[0.05] rounded-vueni-lg text-white/60"
                       >
                         {tag}
                       </span>
@@ -453,7 +453,7 @@ const GoalTracker = ({ familyId, compact = false }: GoalTrackerProps) => {
 
       {/* Summary Stats */}
       {!compact && goals.length > 0 && (
-        <div className="bg-gradient-to-r from-blue-500/10 to-purple-500/10 border border-blue-500/20 rounded-2xl p-4">
+        <div className="bg-gradient-to-r from-blue-500/10 to-purple-500/10 border border-blue-500/20 rounded-vueni-lg p-4">
           <div className="grid grid-cols-4 gap-4 text-center">
             <div>
               <p className="text-2xl font-bold text-white">

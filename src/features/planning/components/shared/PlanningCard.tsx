@@ -23,7 +23,7 @@ const PlanningCard: React.FC<PlanningCardProps> = ({
   variant = 'default',
   onClick,
 }) => {
-  const baseClasses = 'rounded-2xl border transition-all duration-200';
+  const baseClasses = 'rounded-vueni-lg border transition-all duration-200';
 
   const variantClasses = {
     default: 'bg-white/[0.02] border-white/[0.08] hover:bg-white/[0.03]',

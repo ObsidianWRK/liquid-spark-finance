@@ -39,7 +39,7 @@ const liquidGlassNavPlugin = plugin(
         padding: '0.5rem 0.75rem',
         background: 'transparent',
         border: '1px solid transparent',
-        borderRadius: '0.75rem',
+        borderRadius: theme('borderRadius.vueni-lg'),
         color: 'rgba(255, 255, 255, 0.7)',
         cursor: 'pointer',
         touchAction: 'manipulation',

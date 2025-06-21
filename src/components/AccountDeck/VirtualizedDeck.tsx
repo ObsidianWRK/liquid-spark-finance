@@ -76,7 +76,7 @@ export const VirtualizedDeck: React.FC<VirtualizedDeckProps> = ({
       animate="visible"
       className={cn(
         // CC: R3 requirement - 12px radius, Liquid-Glass theme
-        'rounded-xl border border-white/[0.08] bg-white/[0.02] backdrop-blur-md overflow-hidden flex flex-col',
+        'rounded-vueni-lg border border-white/[0.08] bg-white/[0.02] backdrop-blur-md overflow-hidden flex flex-col',
         className
       )}
     >
@@ -108,7 +108,7 @@ export const VirtualizedDeck: React.FC<VirtualizedDeckProps> = ({
           whileHover={{ scale: 1.02 }}
           whileTap={{ scale: 0.98 }}
           className={cn(
-            'w-full py-2 px-4 rounded-lg text-sm font-medium',
+            'w-full py-2 px-4 rounded-vueni-lg text-sm font-medium',
             'bg-blue-500 hover:bg-blue-600 text-white',
             'transition-colors duration-200'
           )}

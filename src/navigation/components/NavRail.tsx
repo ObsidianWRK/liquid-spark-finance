@@ -53,7 +53,7 @@ const NavRail: React.FC = () => {
               size={isExpanded ? 'lg' : 'md'}
               variant={isExpanded ? 'full' : 'icon-only'}
               onClick={() => navigate('/')}
-              className="liquid-glass-button p-2 rounded-xl w-full justify-center"
+              className="liquid-glass-button p-2 rounded-vueni-lg w-full justify-center"
             />
           </div>
 
@@ -68,7 +68,7 @@ const NavRail: React.FC = () => {
                   key={route.id}
                   onClick={() => handleNavigation(route.path)}
                   className={cn(
-                    'w-full flex items-center transition-all duration-300 rounded-xl',
+                    'w-full flex items-center transition-all duration-300 rounded-vueni-lg',
                     'focus:outline-none focus:ring-2 focus:ring-blue-400/50',
                     isExpanded ? 'px-4 py-3 space-x-3' : 'p-3 justify-center',
                     isActive
@@ -87,7 +87,7 @@ const NavRail: React.FC = () => {
 
                     {/* Badge indicator */}
                     {route.badgeKey && (
-                      <span className="absolute -top-1 -right-1 w-3 h-3 bg-red-500 rounded-full border border-black/20 text-xs" />
+                      <span className="absolute -top-1 -right-1 w-3 h-3 bg-red-500 rounded-vueni-pill border border-black/20 text-xs" />
                     )}
                   </div>
 

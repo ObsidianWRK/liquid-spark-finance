@@ -31,7 +31,7 @@ export const ContextMenuContent = React.forwardRef<
       className={cn(
         // Base glass morphism styling
         'bg-black/80 backdrop-blur-xl border border-white/10',
-        'rounded-2xl p-2 shadow-2xl shadow-black/50',
+        'rounded-vueni-lg p-2 shadow-2xl shadow-black/50',
 
         // Animation
         'animate-in fade-in-0 zoom-in-95',
@@ -72,7 +72,7 @@ export const ContextMenuItem = React.forwardRef<
       // Base styling
       'relative flex items-center gap-3 px-3 py-2.5 mx-1',
       'text-sm text-white/80 font-medium',
-      'rounded-xl cursor-pointer',
+      'rounded-vueni-lg cursor-pointer',
 
       // Hover and focus states
       'hover:bg-white/10 hover:text-white',

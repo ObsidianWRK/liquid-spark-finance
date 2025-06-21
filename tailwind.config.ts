@@ -1,4 +1,5 @@
 import type { Config } from 'tailwindcss';
+import defaultTheme from 'tailwindcss/defaultTheme';
 import tailwindcssAnimate from 'tailwindcss-animate';
 
 export default {
@@ -121,9 +122,16 @@ export default {
         },
       },
       borderRadius: {
+        ...defaultTheme.borderRadius,
         lg: 'var(--radius)',
         md: 'calc(var(--radius) - 2px)',
         sm: 'calc(var(--radius) - 4px)',
+        'vueni-sm': '4px',
+        'vueni-md': '6px',
+        'vueni-lg': '8px',
+        'vueni-pill': '9999px',
+        'vueni-container': '16px',
+        'vueni-island': '44px',
       },
       keyframes: {
         'accordion-down': {

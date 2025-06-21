@@ -279,7 +279,7 @@ export const TimeRangeToggle = forwardRef<
         ref={containerRef}
         className={cn(
           'relative inline-flex items-center',
-          'bg-white/5 backdrop-blur-sm rounded-xl border border-white/10',
+          'bg-white/5 backdrop-blur-sm rounded-vueni-lg border border-white/10',
           'transition-all duration-200 ease-out',
           fullWidth && 'w-full',
           disabled && 'opacity-50 cursor-not-allowed',
@@ -299,7 +299,7 @@ export const TimeRangeToggle = forwardRef<
         <div
           ref={indicatorRef}
           className={cn(
-            'absolute inset-y-1 rounded-lg bg-white/25 shadow-sm border border-white/40',
+            'absolute inset-y-1 rounded-vueni-lg bg-white/25 shadow-sm border border-white/40',
             'transition-all ease-out',
             !isInitialized && 'opacity-0'
           )}
@@ -326,7 +326,7 @@ export const TimeRangeToggle = forwardRef<
               }}
               type="button"
               className={cn(
-                'relative z-10 flex-1 px-3 py-1.5 text-center font-medium rounded-lg',
+                'relative z-10 flex-1 px-3 py-1.5 text-center font-medium rounded-vueni-lg',
                 'focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-transparent',
                 'focus:bg-blue-500/15 focus:border-blue-500/40',
                 'active:scale-95',

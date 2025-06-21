@@ -64,7 +64,7 @@ const ProjectionChart: React.FC<ProjectionChartProps> = ({
   const CustomTooltip = ({ active, payload, label }: any) => {
     if (active && payload && payload.length) {
       return (
-        <div className="bg-black/90 border border-white/20 rounded-lg p-3 shadow-lg">
+        <div className="bg-black/90 border border-white/20 rounded-vueni-lg p-3 shadow-lg">
           <p className="text-white/80 text-sm mb-1">{label}</p>
           <p className="text-white font-semibold">
             {formatCurrency(payload[0].value)}
@@ -80,7 +80,7 @@ const ProjectionChart: React.FC<ProjectionChartProps> = ({
   return (
     <div
       className={cn(
-        'bg-white/[0.02] rounded-2xl border border-white/[0.08] p-6',
+        'bg-white/[0.02] rounded-vueni-lg border border-white/[0.08] p-6',
         className
       )}
     >

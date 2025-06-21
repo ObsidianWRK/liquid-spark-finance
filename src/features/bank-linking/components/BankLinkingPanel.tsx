@@ -208,19 +208,19 @@ export const BankLinkingPanel: React.FC = () => {
     : MOCK_ACCOUNTS.slice(0, VISIBLE_COUNT);
 
   return (
-    <div className="bg-white/[0.02] rounded-2xl border border-white/[0.08] p-4 hover:bg-white/[0.04] hover:border-white/[0.12] transition-all duration-300 hover:scale-[1.02] cursor-pointer">
+    <div className="bg-white/[0.02] rounded-vueni-lg border border-white/[0.08] p-4 hover:bg-white/[0.04] hover:border-white/[0.12] transition-all duration-300 hover:scale-[1.02] cursor-pointer">
       <div className="flex items-center gap-3 mb-4">
-        <div className="w-8 h-8 rounded-xl bg-blue-500/20 flex items-center justify-center">
+        <div className="w-8 h-8 rounded-vueni-lg bg-blue-500/20 flex items-center justify-center">
           <Banknote className="w-4 h-4 text-blue-400" />
         </div>
         <h3 className="font-medium text-white/80 text-sm">Linked Bank Accounts</h3>
       </div>
 
       {/* Account Summary - Compact */}
-      <div className="flex items-center justify-between p-2 bg-white/[0.03] rounded-lg border border-white/[0.05] mb-3">
+      <div className="flex items-center justify-between p-2 bg-white/[0.03] rounded-vueni-lg border border-white/[0.05] mb-3">
         <div className="flex items-center gap-2">
           <span className="text-xs text-white/70">Connected</span>
-          <span className="text-xs px-1.5 py-0.5 bg-green-500/20 text-green-400 rounded-full">
+          <span className="text-xs px-1.5 py-0.5 bg-green-500/20 text-green-400 rounded-vueni-pill">
             {MOCK_ACCOUNTS.length}
           </span>
         </div>
@@ -240,10 +240,10 @@ export const BankLinkingPanel: React.FC = () => {
         {visibleAccounts.map((account) => (
           <div
             key={account.id}
-            className="pfm-row justify-between px-1.5 bg-white/[0.02] rounded-lg border border-white/[0.05] hover:bg-white/[0.04] transition-all cursor-pointer"
+            className="pfm-row justify-between px-1.5 bg-white/[0.02] rounded-vueni-lg border border-white/[0.05] hover:bg-white/[0.04] transition-all cursor-pointer"
           >
             <div className="flex items-center gap-2">
-              <div className="w-5 h-5 rounded-lg bg-white/[0.05] flex items-center justify-center">
+              <div className="w-5 h-5 rounded-vueni-lg bg-white/[0.05] flex items-center justify-center">
                 {getAccountIcon(account.type)}
               </div>
               <div>
@@ -267,7 +267,7 @@ export const BankLinkingPanel: React.FC = () => {
         ))}
         {!expanded && MOCK_ACCOUNTS.length > VISIBLE_COUNT && (
           <div
-            className="flex items-center justify-center p-1.5 bg-white/[0.02] rounded-lg border border-white/[0.05] hover:bg-white/[0.04] transition-all cursor-pointer text-xs text-white/70"
+            className="flex items-center justify-center p-1.5 bg-white/[0.02] rounded-vueni-lg border border-white/[0.05] hover:bg-white/[0.04] transition-all cursor-pointer text-xs text-white/70"
             onClick={() => setExpanded(true)}
           >
             Show all accounts
@@ -276,7 +276,7 @@ export const BankLinkingPanel: React.FC = () => {
       </div>
 
       {/* Add Account Action - Compact */}
-      <button className="w-full p-2 bg-blue-500/10 hover:bg-blue-500/20 border border-blue-500/20 rounded-lg text-blue-400 text-xs font-medium transition-colors flex items-center justify-center gap-2">
+      <button className="w-full p-2 bg-blue-500/10 hover:bg-blue-500/20 border border-blue-500/20 rounded-vueni-lg text-blue-400 text-xs font-medium transition-colors flex items-center justify-center gap-2">
         <Banknote className="w-3 h-3" />
         Link Additional Account
       </button>

@@ -250,7 +250,7 @@ const CompoundInterestCalculator = React.memo<SecureCalculatorProps>(
 
         <div className="grid lg:grid-cols-2 gap-8">
           {/* Input Section */}
-          <div className="bg-white/5 backdrop-blur-xl rounded-3xl p-6 border border-white/10">
+          <div className="bg-white/5 backdrop-blur-xl rounded-vueni-lg p-6 border border-white/10">
             <h2 className="text-xl font-semibold text-white mb-6">
               Investment Parameters
             </h2>
@@ -269,7 +269,7 @@ const CompoundInterestCalculator = React.memo<SecureCalculatorProps>(
                     onChange={(e) =>
                       handleSecureInput('principal', e.target.value, 'amount')
                     }
-                    className={`w-full pl-8 pr-4 py-3 rounded-xl bg-white/5 text-white border transition-colors focus:outline-none ${
+                    className={`w-full pl-8 pr-4 py-3 rounded-vueni-lg bg-white/5 text-white border transition-colors focus:outline-none ${
                       inputErrors.principal
                         ? 'border-red-400 focus:border-red-400'
                         : 'border-white/10 focus:border-blue-400'
@@ -305,7 +305,7 @@ const CompoundInterestCalculator = React.memo<SecureCalculatorProps>(
                         'amount'
                       )
                     }
-                    className={`w-full pl-8 pr-4 py-3 rounded-xl bg-white/5 text-white border transition-colors focus:outline-none ${
+                    className={`w-full pl-8 pr-4 py-3 rounded-vueni-lg bg-white/5 text-white border transition-colors focus:outline-none ${
                       inputErrors.monthlyContribution
                         ? 'border-red-400 focus:border-red-400'
                         : 'border-white/10 focus:border-blue-400'
@@ -334,7 +334,7 @@ const CompoundInterestCalculator = React.memo<SecureCalculatorProps>(
                     onChange={(e) =>
                       handleSecureInput('rate', e.target.value, 'interestRate')
                     }
-                    className={`w-full pr-8 pl-4 py-3 rounded-xl bg-white/5 text-white border transition-colors focus:outline-none ${
+                    className={`w-full pr-8 pl-4 py-3 rounded-vueni-lg bg-white/5 text-white border transition-colors focus:outline-none ${
                       inputErrors.rate
                         ? 'border-red-400 focus:border-red-400'
                         : 'border-white/10 focus:border-blue-400'
@@ -367,7 +367,7 @@ const CompoundInterestCalculator = React.memo<SecureCalculatorProps>(
                     onChange={(e) =>
                       handleSecureInput('years', e.target.value, 'timePeriod')
                     }
-                    className={`w-full pr-16 pl-4 py-3 rounded-xl bg-white/5 text-white border transition-colors focus:outline-none ${
+                    className={`w-full pr-16 pl-4 py-3 rounded-vueni-lg bg-white/5 text-white border transition-colors focus:outline-none ${
                       inputErrors.years
                         ? 'border-red-400 focus:border-red-400'
                         : 'border-white/10 focus:border-blue-400'
@@ -395,7 +395,7 @@ const CompoundInterestCalculator = React.memo<SecureCalculatorProps>(
                 <select
                   value={compoundFreq}
                   onChange={(e) => setCompoundFreq(+e.target.value)}
-                  className="w-full px-4 py-3 rounded-xl bg-white/5 text-white border border-white/10 focus:border-blue-400 focus:outline-none transition-colors"
+                  className="w-full px-4 py-3 rounded-vueni-lg bg-white/5 text-white border border-white/10 focus:border-blue-400 focus:outline-none transition-colors"
                 >
                   {frequencyOptions.map((option) => (
                     <option
@@ -411,7 +411,7 @@ const CompoundInterestCalculator = React.memo<SecureCalculatorProps>(
 
               <button
                 onClick={handleCalculate}
-                className="w-full py-3 px-6 rounded-xl bg-white/10 border border-white/20 text-white font-semibold button-hover"
+                className="w-full py-3 px-6 rounded-vueni-lg bg-white/10 border border-white/20 text-white font-semibold button-hover"
               >
                 Calculate Growth
               </button>
@@ -429,10 +429,10 @@ const CompoundInterestCalculator = React.memo<SecureCalculatorProps>(
 
           {/* Results Section */}
           {futureValue !== null && (
-            <div className="bg-white/5 backdrop-blur-xl rounded-3xl p-6 border border-white/10">
+            <div className="bg-white/5 backdrop-blur-xl rounded-vueni-lg p-6 border border-white/10">
               <h2 className="text-xl font-semibold text-white mb-6">Results</h2>
               <div className="space-y-4">
-                <div className="text-center p-6 bg-white/5 rounded-2xl border border-white/20">
+                <div className="text-center p-6 bg-white/5 rounded-vueni-lg border border-white/20">
                   <div className="text-3xl font-bold text-white mb-2">
                     {formatCurrency(futureValue)}
                   </div>
@@ -440,7 +440,7 @@ const CompoundInterestCalculator = React.memo<SecureCalculatorProps>(
                 </div>
 
                 <div className="grid grid-cols-2 gap-4">
-                  <div className="text-center p-4 bg-white/5 rounded-xl">
+                  <div className="text-center p-4 bg-white/5 rounded-vueni-lg">
                     <div className="text-xl font-semibold text-white">
                       {formatCurrency(totalContributions)}
                     </div>
@@ -448,7 +448,7 @@ const CompoundInterestCalculator = React.memo<SecureCalculatorProps>(
                       Total Contributions
                     </div>
                   </div>
-                  <div className="text-center p-4 bg-white/5 rounded-xl">
+                  <div className="text-center p-4 bg-white/5 rounded-vueni-lg">
                     <div className="text-xl font-semibold text-white">
                       {formatCurrency(totalInterest)}
                     </div>
@@ -456,7 +456,7 @@ const CompoundInterestCalculator = React.memo<SecureCalculatorProps>(
                   </div>
                 </div>
 
-                <div className="text-center p-4 bg-white/5 rounded-xl">
+                <div className="text-center p-4 bg-white/5 rounded-vueni-lg">
                   <div className="text-lg font-semibold text-white">
                     {totalContributions > 0
                       ? ((totalInterest / totalContributions) * 100).toFixed(1)
@@ -507,11 +507,11 @@ const CompoundInterestCalculator = React.memo<SecureCalculatorProps>(
                 gradientOpacity: 0.1,
                 hoverEffects: true,
               }}
-              className="bg-white/5 backdrop-blur-xl rounded-3xl p-6 border border-white/10"
+              className="bg-white/5 backdrop-blur-xl rounded-vueni-lg p-6 border border-white/10"
             />
 
             {/* Yearly Growth Bar Chart */}
-            <div className="bg-white/5 backdrop-blur-xl rounded-3xl p-6 border border-white/10">
+            <div className="bg-white/5 backdrop-blur-xl rounded-vueni-lg p-6 border border-white/10">
               <h2 className="text-xl font-semibold text-white mb-6">
                 Annual Growth Breakdown
               </h2>
@@ -541,7 +541,7 @@ const CompoundInterestCalculator = React.memo<SecureCalculatorProps>(
                       contentStyle={{
                         backgroundColor: vueniTheme.colors.surface.overlay,
                         border: `1px solid ${vueniTheme.colors.surface.glass.border}`,
-                        borderRadius: '12px',
+                        borderRadius: vueniTheme.radius.lg,
                         color: vueniTheme.colors.text.primary,
                       }}
                     />

@@ -140,7 +140,7 @@ export const TimeRangeToggleRadix = forwardRef<
         disabled={disabled}
         className={cn(
           'inline-flex items-center',
-          'bg-white/5 backdrop-blur-sm rounded-xl border border-white/10',
+          'bg-white/5 backdrop-blur-sm rounded-vueni-lg border border-white/10',
           'transition-all duration-200 ease-out',
           fullWidth && 'w-full',
           disabled && 'opacity-50 cursor-not-allowed',
@@ -161,7 +161,7 @@ export const TimeRangeToggleRadix = forwardRef<
               key={option}
               value={option}
               className={cn(
-                'flex-1 px-3 py-1.5 text-center font-medium rounded-lg',
+                'flex-1 px-3 py-1.5 text-center font-medium rounded-vueni-lg',
                 'transition-all duration-200 ease-out',
                 'focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:ring-offset-2 focus:ring-offset-transparent',
                 'disabled:cursor-not-allowed',

@@ -202,7 +202,7 @@ export const LinkedAccountsCard: React.FC<LinkedAccountsCardProps> = ({
         className={className}
       >
         <div className="text-center py-8">
-          <div className="w-12 h-12 bg-red-500/20 rounded-full flex items-center justify-center mx-auto mb-4">
+          <div className="w-12 h-12 bg-red-500/20 rounded-vueni-pill flex items-center justify-center mx-auto mb-4">
             <RefreshCw className="w-6 h-6 text-red-400" />
           </div>
           <h3 className="text-lg font-semibold text-red-400 mb-2">
@@ -252,7 +252,7 @@ export const LinkedAccountsCard: React.FC<LinkedAccountsCardProps> = ({
             {accounts.slice(0, 6).map((account) => (
               <div
                 key={account.id}
-                className="flex items-center space-x-2 p-2 bg-white/[0.03] rounded-lg"
+                className="flex items-center space-x-2 p-2 bg-white/[0.03] rounded-vueni-lg"
               >
                 {getAccountIcon(account.accountType, account.accountSubtype)}
                 <div className="flex-1 min-w-0">
@@ -279,14 +279,14 @@ export const LinkedAccountsCard: React.FC<LinkedAccountsCardProps> = ({
   return (
     <div
       className={cn(
-        'bg-white/[0.02] rounded-2xl border border-white/[0.08] p-6 card-hover-subtle',
+        'bg-white/[0.02] rounded-vueni-lg border border-white/[0.08] p-6 card-hover-subtle',
         className
       )}
     >
 
       <div className="flex items-center justify-between mb-6">
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-xl bg-white/[0.05] flex items-center justify-center">
+          <div className="w-10 h-10 rounded-vueni-lg bg-white/[0.05] flex items-center justify-center">
             <Banknote className="w-5 h-5 text-blue-400" />
           </div>
           <h3 className="font-medium text-white/80">Linked Bank Accounts</h3>
@@ -294,14 +294,14 @@ export const LinkedAccountsCard: React.FC<LinkedAccountsCardProps> = ({
         <div className="text-right">
           <div className="flex items-center gap-2">
             <span className="text-sm text-white/60">Connected</span>
-            <span className="bg-green-500/20 text-green-400 px-2 py-1 rounded-lg text-sm font-medium">
+            <span className="bg-green-500/20 text-green-400 px-2 py-1 rounded-vueni-lg text-sm font-medium">
               {accounts.length}
             </span>
           </div>
         </div>
       </div>
 
-      <div className="mb-4 p-4 bg-white/[0.03] rounded-xl border border-white/[0.05]">
+      <div className="mb-4 p-4 bg-white/[0.03] rounded-vueni-lg border border-white/[0.05]">
         <div className="flex justify-between items-center">
           <span className="font-medium text-white/80">Net Worth</span>
           <span
@@ -319,10 +319,10 @@ export const LinkedAccountsCard: React.FC<LinkedAccountsCardProps> = ({
         {accounts.map((account) => (
           <div
             key={account.id}
-            className="flex items-center justify-between p-4 bg-white/[0.03] rounded-xl border border-white/[0.05] hover:bg-white/[0.05] transition-all"
+            className="flex items-center justify-between p-4 bg-white/[0.03] rounded-vueni-lg border border-white/[0.05] hover:bg-white/[0.05] transition-all"
           >
             <div className="flex items-center gap-3">
-              <div className="w-8 h-8 rounded-lg bg-white/[0.05] flex items-center justify-center">
+              <div className="w-8 h-8 rounded-vueni-lg bg-white/[0.05] flex items-center justify-center">
                 {getAccountIcon(account.accountType, account.accountSubtype)}
               </div>
               <div>
@@ -330,7 +330,7 @@ export const LinkedAccountsCard: React.FC<LinkedAccountsCardProps> = ({
                 <p className="text-sm text-white/70">{account.name}</p>
                 <div className="flex items-center gap-2">
                   <p className="text-xs text-white/60">****{getLastFourDigits(account)}</p>
-                  <span className="text-xs px-2 py-1 rounded-lg bg-white/[0.05] text-white/70">
+                  <span className="text-xs px-2 py-1 rounded-vueni-lg bg-white/[0.05] text-white/70">
                     {getAccountTypeLabel(account.accountType, account.accountSubtype)}
                   </span>
                 </div>
@@ -358,7 +358,7 @@ export const LinkedAccountsCard: React.FC<LinkedAccountsCardProps> = ({
       {onAddAccount && (
         <button
           onClick={onAddAccount}
-          className="w-full mt-4 p-3 border-2 border-dashed border-white/[0.15] rounded-xl text-white/60 hover:text-white/80 hover:border-white/[0.25] transition-all flex items-center justify-center gap-2"
+          className="w-full mt-4 p-3 border-2 border-dashed border-white/[0.15] rounded-vueni-lg text-white/60 hover:text-white/80 hover:border-white/[0.25] transition-all flex items-center justify-center gap-2"
         >
           <Plus className="w-4 h-4" />
           Link Additional Account

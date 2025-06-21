@@ -65,7 +65,7 @@ const DebtPayoffTab: React.FC<DebtPayoffTabProps> = ({ familyId }) => {
         {[...Array(3)].map((_, i) => (
           <div
             key={i}
-            className="bg-white/[0.02] rounded-2xl border border-white/[0.08] p-6 animate-pulse"
+            className="bg-white/[0.02] rounded-vueni-lg border border-white/[0.08] p-6 animate-pulse"
           >
             <div className="flex items-center gap-4 mb-4">
               <div className="w-8 h-8 bg-white/[0.05] rounded"></div>
@@ -181,7 +181,7 @@ const DebtPayoffTab: React.FC<DebtPayoffTabProps> = ({ familyId }) => {
             : 'Paying minimums on all debts, extra payments go to smallest balance first.'
         }
       >
-        <div className="mt-4 p-4 bg-white/[0.05] rounded-xl">
+        <div className="mt-4 p-4 bg-white/[0.05] rounded-vueni-lg">
           <div className="flex items-center justify-between">
             <span className="text-white/80">Monthly Savings After Payoff</span>
             <span className="text-2xl font-bold text-green-400">
@@ -201,7 +201,7 @@ const DebtPayoffTab: React.FC<DebtPayoffTabProps> = ({ familyId }) => {
           {plan.payoffSchedule.map((debt, index) => (
             <div
               key={index}
-              className="p-4 bg-white/[0.03] rounded-xl border border-white/[0.05]"
+              className="p-4 bg-white/[0.03] rounded-vueni-lg border border-white/[0.05]"
             >
               <div className="flex items-center justify-between mb-3">
                 <div className="flex-1">
@@ -244,10 +244,10 @@ const DebtPayoffTab: React.FC<DebtPayoffTabProps> = ({ familyId }) => {
                     Interest: {formatCurrency(debt.totalInterest)}
                   </span>
                 </div>
-                <div className="w-full bg-white/[0.05] rounded-full h-2">
+                <div className="w-full bg-white/[0.05] rounded-vueni-pill h-2">
                   <div
                     className={cn(
-                      'h-2 rounded-full',
+                      'h-2 rounded-vueni-pill',
                       debt.interestRate >= 0.2
                         ? 'bg-red-400'
                         : debt.interestRate >= 0.1
@@ -284,7 +284,7 @@ const DebtPayoffTab: React.FC<DebtPayoffTabProps> = ({ familyId }) => {
           {plan.recommendations.map((rec, index) => (
             <div
               key={index}
-              className="p-4 bg-white/[0.03] rounded-xl border border-white/[0.05]"
+              className="p-4 bg-white/[0.03] rounded-vueni-lg border border-white/[0.05]"
             >
               <div className="flex items-start justify-between">
                 <div className="flex-1">
@@ -296,7 +296,7 @@ const DebtPayoffTab: React.FC<DebtPayoffTabProps> = ({ familyId }) => {
                   <div className="flex items-center gap-4">
                     <span
                       className={cn(
-                        'text-xs px-2 py-1 rounded-lg font-medium',
+                        'text-xs px-2 py-1 rounded-vueni-lg font-medium',
                         rec.impact === 'high'
                           ? 'bg-red-500/20 text-red-400'
                           : rec.impact === 'medium'

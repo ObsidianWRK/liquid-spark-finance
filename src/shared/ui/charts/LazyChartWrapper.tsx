@@ -23,7 +23,7 @@ const ChartSkeleton: React.FC<{
 }> = ({ height = 180, className, showTitle = false, title }) => (
   <div
     className={cn(
-      'bg-white/[0.02] rounded-lg border border-white/[0.08] animate-pulse',
+      'bg-white/[0.02] rounded-vueni-lg border border-white/[0.08] animate-pulse',
       'flex flex-col justify-center items-center p-6',
       className
     )}
@@ -38,7 +38,7 @@ const ChartSkeleton: React.FC<{
 
     <div className="flex-1 w-full flex items-center justify-center">
       <div className="flex items-center space-x-2 text-white/60">
-        <div className="w-6 h-6 border-2 border-blue-500/30 border-t-blue-500 rounded-full animate-spin"></div>
+        <div className="w-6 h-6 border-2 border-blue-500/30 border-t-blue-500 rounded-vueni-pill animate-spin"></div>
         <span className="text-sm">Loading chart...</span>
       </div>
     </div>
@@ -48,7 +48,7 @@ const ChartSkeleton: React.FC<{
       {[...Array(8)].map((_, i) => (
         <div
           key={i}
-          className="bg-white/[0.05] rounded-t-sm"
+          className="bg-white/[0.05] rounded-t-vueni-sm"
           style={{
             width: '12px',
             height: `${Math.random() * 30 + 10}px`,

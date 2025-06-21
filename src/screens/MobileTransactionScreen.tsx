@@ -142,8 +142,8 @@ const MobileTransactionScreen: React.FC = () => {
           9:41
         </div>
         <div className="absolute top-2 right-6 flex items-center gap-1">
-          <div className="w-6 h-3 border border-white rounded-sm">
-            <div className="w-4 h-1 bg-white rounded-sm m-0.5"></div>
+          <div className="w-6 h-3 border border-white rounded-vueni-sm">
+            <div className="w-4 h-1 bg-white rounded-vueni-sm m-0.5"></div>
           </div>
         </div>
       </div>
@@ -170,7 +170,7 @@ const MobileTransactionScreen: React.FC = () => {
             placeholder="Search"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full pl-10 pr-4 py-2 bg-gray-900 border-0 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full pl-10 pr-4 py-2 bg-gray-900 border-0 rounded-vueni-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
         </div>
       </div>
@@ -187,12 +187,12 @@ const MobileTransactionScreen: React.FC = () => {
             </div>
 
             {/* Transactions */}
-            <div className="bg-gray-900 mx-4 rounded-xl overflow-hidden">
+            <div className="bg-gray-900 mx-4 rounded-vueni-lg overflow-hidden">
               {dateTransactions.map((transaction, index) => (
                 <div key={transaction.id}>
                   <div className="flex items-center gap-3 p-4">
                     {/* Icon */}
-                    <div className="w-8 h-8 rounded-full bg-gray-800 flex items-center justify-center text-lg flex-shrink-0">
+                    <div className="w-8 h-8 rounded-vueni-pill bg-gray-800 flex items-center justify-center text-lg flex-shrink-0">
                       {transaction.icon}
                     </div>
 
@@ -237,7 +237,7 @@ const MobileTransactionScreen: React.FC = () => {
 
                       {/* Shipping Status */}
                       {transaction.shipping && (
-                        <div className="flex items-center gap-2 mt-2 p-2 bg-gray-800 rounded-md">
+                        <div className="flex items-center gap-2 mt-2 p-2 bg-gray-800 rounded-vueni-md">
                           {getShippingIcon(transaction.shipping.status)}
                           <span className="text-xs text-gray-300">
                             {transaction.shipping.status}
@@ -272,7 +272,7 @@ const MobileTransactionScreen: React.FC = () => {
 
       {/* Home Indicator */}
       <div className="flex justify-center pb-2">
-        <div className="w-32 h-1 bg-gray-600 rounded-full"></div>
+        <div className="w-32 h-1 bg-gray-600 rounded-vueni-pill"></div>
       </div>
     </div>
   );

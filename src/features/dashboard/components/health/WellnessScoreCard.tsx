@@ -114,14 +114,14 @@ export const WellnessScoreCard: React.FC<WellnessScoreCardProps> = ({
   return (
     <div
       className={cn(
-        'bg-white/[0.02] rounded-2xl border border-white/[0.08] p-6 hover:bg-white/[0.03] transition-all duration-300',
+        'bg-white/[0.02] rounded-vueni-lg border border-white/[0.08] p-6 hover:bg-white/[0.03] transition-all duration-300',
         className
       )}
       onClick={onClick}
     >
       <div className="flex items-center justify-between mb-4">
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-xl bg-white/[0.05] flex items-center justify-center">
+          <div className="w-10 h-10 rounded-vueni-lg bg-white/[0.05] flex items-center justify-center">
             <Heart className="w-5 h-5 text-pink-400" />
           </div>
           <h3 className="font-medium text-white/80">Wellness Score</h3>

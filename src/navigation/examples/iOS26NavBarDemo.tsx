@@ -29,7 +29,7 @@ const DemoPage: React.FC<{ title: string; color: string }> = ({
       <p className="text-white/70">Scroll down to see navigation hide</p>
       <div className="mt-8 space-y-4">
         {Array.from({ length: 50 }, (_, i) => (
-          <div key={i} className="bg-white/10 p-4 rounded-lg text-white">
+          <div key={i} className="bg-white/10 p-4 rounded-vueni-lg text-white">
             Content block {i + 1}
           </div>
         ))}

@@ -61,7 +61,7 @@ export class FinancialDashboardErrorBoundary extends Component<Props, State> {
 
       // Default error UI
       return (
-        <div className="bg-red-900/20 rounded-2xl border border-red-500/30 p-8 text-center">
+        <div className="bg-red-900/20 rounded-vueni-lg border border-red-500/30 p-8 text-center">
           <AlertTriangle className="w-16 h-16 text-red-400/70 mx-auto mb-4" />
           <h3 className="text-xl font-bold text-white mb-2">Dashboard Error</h3>
           <p className="text-white/60 mb-4">
@@ -74,7 +74,7 @@ export class FinancialDashboardErrorBoundary extends Component<Props, State> {
               <summary className="text-white/80 cursor-pointer hover:text-white transition-colors">
                 Technical Details
               </summary>
-              <div className="mt-2 p-3 bg-black/30 rounded-lg text-sm text-white/70 font-mono">
+              <div className="mt-2 p-3 bg-black/30 rounded-vueni-lg text-sm text-white/70 font-mono">
                 <div className="mb-2">
                   <strong>Error:</strong> {this.state.error.message}
                 </div>
@@ -90,7 +90,7 @@ export class FinancialDashboardErrorBoundary extends Component<Props, State> {
           <div className="flex items-center justify-center gap-4">
             <button
               onClick={this.handleRetry}
-              className="bg-blue-500 hover:bg-blue-600 text-white px-6 py-2 rounded-xl transition-colors flex items-center gap-2"
+              className="bg-blue-500 hover:bg-blue-600 text-white px-6 py-2 rounded-vueni-lg transition-colors flex items-center gap-2"
             >
               <RefreshCw className="w-4 h-4" />
               Retry Dashboard
@@ -98,7 +98,7 @@ export class FinancialDashboardErrorBoundary extends Component<Props, State> {
 
             <button
               onClick={() => window.location.reload()}
-              className="bg-white/10 hover:bg-white/20 text-white/80 hover:text-white px-6 py-2 rounded-xl transition-colors"
+              className="bg-white/10 hover:bg-white/20 text-white/80 hover:text-white px-6 py-2 rounded-vueni-lg transition-colors"
             >
               Reload Page
             </button>
@@ -126,7 +126,7 @@ export class FinancialDashboardErrorBoundary extends Component<Props, State> {
             ].map((item, index) => (
               <div
                 key={index}
-                className="bg-white/[0.02] rounded-xl border border-white/[0.08] p-4"
+                className="bg-white/[0.02] rounded-vueni-lg border border-white/[0.08] p-4"
               >
                 <h4 className="font-semibold text-white/80">{item.title}</h4>
                 <p className="text-white/50 text-sm">{item.description}</p>

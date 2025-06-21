@@ -49,7 +49,7 @@ const TimeSeriesChart: React.FC<TimeSeriesChartProps> = ({
         gradientFill: false,
         hoverEffects: true,
       }}
-      className="liquid-glass-fallback rounded-2xl p-6"
+      className="liquid-glass-fallback rounded-vueni-lg p-6"
     />
   );
 };
