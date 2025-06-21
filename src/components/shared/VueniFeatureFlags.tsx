@@ -288,7 +288,7 @@ export const FeatureFlagDebugPanel: React.FC = () => {
   }
 
   return (
-    <div className="fixed bottom-4 right-4 bg-black/90 backdrop-blur-sm border border-white/20 rounded-lg p-4 max-w-sm max-h-96 overflow-y-auto z-50">
+    <div className="fixed bottom-4 right-4 bg-black/90 backdrop-blur-sm border border-white/20 rounded-vueni-lg p-4 max-w-sm max-h-96 overflow-y-auto z-50">
       <h3 className="text-white font-bold mb-3">Feature Flags Debug</h3>
 
       <div className="space-y-2 mb-4">

@@ -213,7 +213,7 @@ const StackedBarTooltip: React.FC<{
     const total = payload.reduce((sum, entry) => sum + (entry.value || 0), 0);
 
     return (
-      <div className="bg-black/90 backdrop-blur-sm border border-white/10 rounded-lg p-3 shadow-lg">
+      <div className="bg-black/90 backdrop-blur-sm border border-white/10 rounded-vueni-lg p-3 shadow-lg">
         <p className="text-white font-medium mb-2">{label}</p>
         <div className="space-y-1">
           {payload.map((entry, index) => (
@@ -223,7 +223,7 @@ const StackedBarTooltip: React.FC<{
             >
               <div className="flex items-center gap-2">
                 <div
-                  className="w-3 h-3 rounded-sm"
+                  className="w-3 h-3 rounded-vueni-sm"
                   style={{ backgroundColor: entry.color }}
                 />
                 <span className="text-white/80 text-sm capitalize">
@@ -516,7 +516,7 @@ export const StackedBarChart = forwardRef<ChartRef, StackedBarChartProps>(
           {computedSeries.map((serie) => (
             <div key={serie.dataKey} className="flex items-center gap-2">
               <div
-                className="w-3 h-3 rounded-sm"
+                className="w-3 h-3 rounded-vueni-sm"
                 style={{ backgroundColor: serie.color }}
               />
               <span className="text-white/80 text-sm">{serie.label}</span>

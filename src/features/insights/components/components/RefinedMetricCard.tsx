@@ -126,7 +126,7 @@ const RefinedMetricCard = memo(
       return (
         <div
           className={`
-        flex items-center space-x-1 px-2 py-1 rounded-lg 
+        flex items-center space-x-1 px-2 py-1 rounded-vueni-lg 
         ${config.bg} ${config.border} border backdrop-blur-sm
       `}
         >
@@ -145,7 +145,7 @@ const RefinedMetricCard = memo(
     return (
       <div
         className={`
-        relative overflow-hidden rounded-2xl backdrop-blur-xl border border-white/[0.08] 
+        relative overflow-hidden rounded-vueni-lg backdrop-blur-xl border border-white/[0.08] 
         hover:border-white/[0.12] transition-all duration-300 group hover-lift ${config.padding}
         bg-white/[0.02]
       `}
@@ -155,21 +155,21 @@ const RefinedMetricCard = memo(
       >
         {/* Subtle gradient overlay */}
         <div
-          className="absolute inset-0 opacity-5 transition-opacity duration-300 group-hover:opacity-10 rounded-2xl"
+          className="absolute inset-0 opacity-5 transition-opacity duration-300 group-hover:opacity-10 rounded-vueni-lg"
           style={{
             background: `linear-gradient(135deg, ${color}20 0%, transparent 50%, ${color}10 100%)`,
           }}
         />
 
         {/* Glass morphism depth */}
-        <div className="absolute inset-0 bg-gradient-to-br from-slate-800/5 via-transparent to-slate-900/10 rounded-2xl" />
+        <div className="absolute inset-0 bg-gradient-to-br from-slate-800/5 via-transparent to-slate-900/10 rounded-vueni-lg" />
 
         <div className="relative z-10">
           {/* Header */}
           <div className="flex items-center justify-between mb-4">
             <div className="flex items-center space-x-3">
               <div
-                className={`${config.iconPadding} rounded-xl backdrop-blur-sm border border-white/[0.08] bg-white/[0.02]`}
+                className={`${config.iconPadding} rounded-vueni-lg backdrop-blur-sm border border-white/[0.08] bg-white/[0.02]`}
                 style={{
                   background: `linear-gradient(135deg, ${color}10, ${color}05)`,
                   borderColor: `${color}20`,
@@ -209,9 +209,9 @@ const RefinedMetricCard = memo(
                   {Math.round(animatedProgress)}%
                 </span>
               </div>
-              <div className="relative h-2 bg-white/[0.05] rounded-full overflow-hidden backdrop-blur-sm">
+              <div className="relative h-2 bg-white/[0.05] rounded-vueni-pill overflow-hidden backdrop-blur-sm">
                 <div
-                  className="absolute top-0 left-0 h-full rounded-full transition-all duration-1000 ease-out"
+                  className="absolute top-0 left-0 h-full rounded-vueni-pill transition-all duration-1000 ease-out"
                   style={{
                     width: `${animatedProgress}%`,
                     background: `linear-gradient(90deg, ${color}80, ${color}60)`,
@@ -233,7 +233,7 @@ const RefinedMetricCard = memo(
 
         {/* Hover glow effect */}
         <div
-          className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
+          className="absolute inset-0 rounded-vueni-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
           style={{
             background: `radial-gradient(circle at center, ${color}15 0%, transparent 70%)`,
             filter: 'blur(1px)',

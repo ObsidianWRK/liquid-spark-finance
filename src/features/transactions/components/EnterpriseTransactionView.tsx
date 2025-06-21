@@ -63,7 +63,7 @@ const EnterpriseTransactionView: React.FC<EnterpriseTransactionViewProps> = ({
   // Get status badge styles
   const getStatusBadge = (status: string) => {
     const baseClasses =
-      'inline-flex items-center px-2 py-1 rounded-full text-xs font-medium';
+      'inline-flex items-center px-2 py-1 rounded-vueni-pill text-xs font-medium';
     switch (status) {
       case 'completed':
         return `${baseClasses} bg-green-100 text-green-800`;
@@ -177,7 +177,7 @@ const EnterpriseTransactionView: React.FC<EnterpriseTransactionViewProps> = ({
   );
 
   return (
-    <div className={cn('bg-white rounded-lg shadow-lg', className)}>
+    <div className={cn('bg-white rounded-vueni-lg shadow-lg', className)}>
       {/* Header */}
       <div className="p-6 border-b border-gray-200">
         <div className="flex items-center justify-between mb-4">
@@ -191,11 +191,11 @@ const EnterpriseTransactionView: React.FC<EnterpriseTransactionViewProps> = ({
           </div>
 
           <div className="flex items-center gap-3">
-            <button className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors flex items-center gap-2">
+            <button className="px-4 py-2 bg-blue-600 text-white rounded-vueni-lg hover:bg-blue-700 transition-colors flex items-center gap-2">
               <Download className="w-4 h-4" />
               Export
             </button>
-            <button className="p-2 rounded-lg bg-gray-100 hover:bg-gray-200 transition-colors">
+            <button className="p-2 rounded-vueni-lg bg-gray-100 hover:bg-gray-200 transition-colors">
               <Filter className="w-4 h-4 text-gray-600" />
             </button>
           </div>
@@ -209,7 +209,7 @@ const EnterpriseTransactionView: React.FC<EnterpriseTransactionViewProps> = ({
             placeholder="Search transactions..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+            className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-vueni-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
           />
         </div>
       </div>
@@ -273,7 +273,7 @@ const EnterpriseTransactionView: React.FC<EnterpriseTransactionViewProps> = ({
                 </td>
 
                 <td className="px-6 py-4 whitespace-nowrap">
-                  <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-gray-100 text-gray-800">
+                  <span className="inline-flex items-center px-2 py-1 rounded-vueni-pill text-xs font-medium bg-gray-100 text-gray-800">
                     {transaction.category}
                   </span>
                 </td>
@@ -327,7 +327,7 @@ const EnterpriseTransactionView: React.FC<EnterpriseTransactionViewProps> = ({
                       e.stopPropagation();
                       // Handle actions menu
                     }}
-                    className="p-1 rounded-lg hover:bg-gray-100 transition-colors"
+                    className="p-1 rounded-vueni-lg hover:bg-gray-100 transition-colors"
                   >
                     <MoreHorizontal className="w-4 h-4 text-gray-400" />
                   </button>
@@ -357,7 +357,7 @@ const EnterpriseTransactionView: React.FC<EnterpriseTransactionViewProps> = ({
           <button
             onClick={() => setCurrentPage(Math.max(1, currentPage - 1))}
             disabled={currentPage === 1}
-            className="p-2 rounded-lg border border-gray-300 disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50 transition-colors"
+            className="p-2 rounded-vueni-lg border border-gray-300 disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50 transition-colors"
           >
             <ChevronLeft className="w-4 h-4" />
           </button>
@@ -371,7 +371,7 @@ const EnterpriseTransactionView: React.FC<EnterpriseTransactionViewProps> = ({
               setCurrentPage(Math.min(totalPages, currentPage + 1))
             }
             disabled={currentPage === totalPages}
-            className="p-2 rounded-lg border border-gray-300 disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50 transition-colors"
+            className="p-2 rounded-vueni-lg border border-gray-300 disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50 transition-colors"
           >
             <ChevronRight className="w-4 h-4" />
           </button>

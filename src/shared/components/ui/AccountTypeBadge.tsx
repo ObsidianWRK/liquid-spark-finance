@@ -52,7 +52,7 @@ export const AccountTypeBadge: React.FC<AccountTypeBadgeProps> = ({
   return (
     <span
       className={cn(
-        'inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-sm font-medium border',
+        'inline-flex items-center gap-1.5 px-3 py-1.5 rounded-vueni-pill text-sm font-medium border',
         getAccountColor(accountType),
         className
       )}

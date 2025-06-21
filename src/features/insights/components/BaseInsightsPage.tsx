@@ -388,7 +388,7 @@ const BaseInsightsPage = ({
                 <button
                   key={tab}
                   onClick={() => setActiveTab(tab as ViewMode)}
-                  className={`tab-button transition-all duration-300 px-4 py-2 rounded-lg text-sm font-medium ${
+                  className={`tab-button transition-all duration-300 px-4 py-2 rounded-vueni-lg text-sm font-medium ${
                     activeTab === tab
                       ? 'text-white shadow-lg backdrop-blur-sm border border-white/30 bg-white/20'
                       : 'text-white/70 hover:text-white/90 hover:bg-white/10'

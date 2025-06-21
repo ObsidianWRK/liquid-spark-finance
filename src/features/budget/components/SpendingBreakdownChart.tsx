@@ -302,7 +302,7 @@ const SpendingBreakdownChart: React.FC<SpendingBreakdownChartProps> = ({
 
   if (chartData.length === 0) {
     return (
-      <div className="bg-white/[0.02] rounded-2xl border border-white/[0.08] p-8 text-center">
+      <div className="bg-white/[0.02] rounded-vueni-lg border border-white/[0.08] p-8 text-center">
         <TrendingDown className="w-12 h-12 text-white/20 mx-auto mb-4" />
         <h3 className="text-lg font-medium text-white mb-2">
           No Spending Data
@@ -319,7 +319,7 @@ const SpendingBreakdownChart: React.FC<SpendingBreakdownChartProps> = ({
       {/* Header with insights */}
       {insights && (
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
-          <div className="bg-white/[0.02] rounded-xl border border-white/[0.08] p-4">
+          <div className="bg-white/[0.02] rounded-vueni-lg border border-white/[0.08] p-4">
             <p className="text-white/60 text-sm mb-1">Total Spending</p>
             <p className="text-xl font-bold text-white">
               {new Intl.NumberFormat('en-US', {
@@ -329,7 +329,7 @@ const SpendingBreakdownChart: React.FC<SpendingBreakdownChartProps> = ({
             </p>
           </div>
 
-          <div className="bg-white/[0.02] rounded-xl border border-white/[0.08] p-4">
+          <div className="bg-white/[0.02] rounded-vueni-lg border border-white/[0.08] p-4">
             <p className="text-white/60 text-sm mb-1">Monthly Average</p>
             <p className="text-xl font-bold text-white">
               {new Intl.NumberFormat('en-US', {
@@ -339,7 +339,7 @@ const SpendingBreakdownChart: React.FC<SpendingBreakdownChartProps> = ({
             </p>
           </div>
 
-          <div className="bg-white/[0.02] rounded-xl border border-white/[0.08] p-4">
+          <div className="bg-white/[0.02] rounded-vueni-lg border border-white/[0.08] p-4">
             <p className="text-white/60 text-sm mb-1">Top Category</p>
             <p className="text-lg font-bold text-white">
               {insights.topCategory.name}
@@ -349,7 +349,7 @@ const SpendingBreakdownChart: React.FC<SpendingBreakdownChartProps> = ({
             </p>
           </div>
 
-          <div className="bg-white/[0.02] rounded-xl border border-white/[0.08] p-4">
+          <div className="bg-white/[0.02] rounded-vueni-lg border border-white/[0.08] p-4">
             <p className="text-white/60 text-sm mb-1">Month-over-Month</p>
             <p
               className={`text-lg font-bold ${
@@ -417,7 +417,7 @@ const SpendingBreakdownChart: React.FC<SpendingBreakdownChartProps> = ({
       {/* Additional insights */}
       {showComparisons && insights && (
         <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div className="bg-white/[0.02] rounded-xl border border-white/[0.08] p-4">
+          <div className="bg-white/[0.02] rounded-vueni-lg border border-white/[0.08] p-4">
             <h4 className="text-white font-medium mb-3 flex items-center gap-2">
               <TrendingDown className="w-4 h-4 text-blue-400" />
               Spending Trends
@@ -449,7 +449,7 @@ const SpendingBreakdownChart: React.FC<SpendingBreakdownChartProps> = ({
             </div>
           </div>
 
-          <div className="bg-white/[0.02] rounded-xl border border-white/[0.08] p-4">
+          <div className="bg-white/[0.02] rounded-vueni-lg border border-white/[0.08] p-4">
             <h4 className="text-white font-medium mb-3 flex items-center gap-2">
               <Calendar className="w-4 h-4 text-green-400" />
               Budget Insights

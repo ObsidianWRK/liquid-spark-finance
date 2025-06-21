@@ -9,7 +9,7 @@
 
   /* Background + border + radius */
   .calculator-content .bg-white\/5 {
-    @apply bg-white/[0.02] border border-white/[0.08] rounded-2xl;
+    @apply bg-white/[0.02] border border-white/[0.08] rounded-vueni-lg;
   }
 
   /* Ensure borders that were previously at 10% opacity use the unified 8% token */
@@ -18,7 +18,7 @@
   }
 
   /* Normalise oversized corner radius */
-  .calculator-content .rounded-3xl {
-    @apply rounded-2xl;
+  .calculator-content .rounded-vueni-lg {
+    @apply rounded-vueni-lg;
   }
 }

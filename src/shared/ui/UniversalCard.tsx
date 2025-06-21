@@ -100,10 +100,10 @@ export const UniversalCard = React.memo<UniversalCardProps>(
         'bg-white/[0.02] border border-white/[0.05]': variant === 'minimal',
 
         // Sizes
-        'p-3 rounded-lg text-sm': size === 'sm',
-        'p-4 rounded-xl text-base': size === 'md',
-        'p-6 rounded-2xl text-lg': size === 'lg',
-        'p-8 rounded-3xl text-xl': size === 'xl',
+        'p-3 rounded-vueni-lg text-sm': size === 'sm',
+        'p-4 rounded-vueni-lg text-base': size === 'md',
+        'p-6 rounded-vueni-lg text-lg': size === 'lg',
+        'p-8 rounded-vueni-lg text-xl': size === 'xl',
 
         // Enhanced hover effects for all cards (unless disabled)
         'hover:bg-white/[0.05] hover:border-white/[0.15] hover:scale-[1.02] transition-all duration-300 ease-out cursor-pointer': 
@@ -158,7 +158,7 @@ export const UniversalCard = React.memo<UniversalCardProps>(
           {data.metrics.map((metric, index) => (
             <div
               key={index}
-              className="bg-white/[0.03] border border-white/[0.05] rounded-lg p-3 hover:bg-white/[0.06] hover:border-white/[0.10] transition-all duration-200"
+              className="bg-white/[0.03] border border-white/[0.05] rounded-vueni-lg p-3 hover:bg-white/[0.06] hover:border-white/[0.10] transition-all duration-200"
             >
               <div className="flex items-center space-x-2 mb-1">
                 {metric.icon && (
@@ -186,7 +186,7 @@ export const UniversalCard = React.memo<UniversalCardProps>(
           {data.trends.map((trend, index) => (
             <div
               key={index}
-              className="flex items-center justify-between p-2 rounded-lg bg-white/[0.03] border border-white/[0.05] hover:bg-white/[0.06] hover:border-white/[0.10] transition-all duration-200"
+              className="flex items-center justify-between p-2 rounded-vueni-lg bg-white/[0.03] border border-white/[0.05] hover:bg-white/[0.06] hover:border-white/[0.10] transition-all duration-200"
             >
               <span className="text-xs text-white/70">{trend.label}</span>
               <div className="flex items-center space-x-1">
@@ -218,7 +218,7 @@ export const UniversalCard = React.memo<UniversalCardProps>(
           {data.spending.map((item, index) => (
             <div
               key={index}
-              className="flex items-center justify-between p-2 rounded-lg bg-white/[0.03] border border-white/[0.05] hover:bg-white/[0.06] hover:border-white/[0.10] transition-all duration-200"
+              className="flex items-center justify-between p-2 rounded-vueni-lg bg-white/[0.03] border border-white/[0.05] hover:bg-white/[0.06] hover:border-white/[0.10] transition-all duration-200"
             >
               <span className="text-sm text-white/70 capitalize">
                 {item.category}
@@ -259,7 +259,7 @@ export const UniversalCard = React.memo<UniversalCardProps>(
             <div className="flex items-center justify-between mb-4">
               <div className="flex items-center space-x-3">
                 {Icon && (
-                  <div className="w-10 h-10 rounded-xl bg-white/[0.05] flex items-center justify-center hover:bg-white/[0.08] transition-all duration-200">
+                  <div className="w-10 h-10 rounded-vueni-lg bg-white/[0.05] flex items-center justify-center hover:bg-white/[0.08] transition-all duration-200">
                     <Icon className="w-5 h-5" style={{ color: iconColor }} />
                   </div>
                 )}

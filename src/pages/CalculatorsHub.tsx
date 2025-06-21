@@ -157,7 +157,7 @@ const CalculatorsHub = () => {
               <DropdownMenuTrigger asChild>
                 <button
                   onClick={() => setIsMenuOpen(!isMenuOpen)}
-                  className="w-full sm:w-auto px-4 py-3 sm:py-2 bg-blue-600 rounded-lg hover:bg-blue-700 
+                  className="w-full sm:w-auto px-4 py-3 sm:py-2 bg-blue-600 rounded-vueni-lg hover:bg-blue-700 
                                              transition-all duration-200 text-sm sm:text-base font-medium
                                              focus:outline-none focus:ring-2 focus:ring-blue-500/50"
                 >
@@ -233,7 +233,7 @@ const CalculatorsHub = () => {
             <div className="mt-4">
               <Suspense fallback={
                 <div className="flex items-center justify-center p-8">
-                  <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-400"></div>
+                  <div className="animate-spin rounded-vueni-pill h-8 w-8 border-b-2 border-blue-400"></div>
                   <span className="ml-3 text-white/70">Loading calculator...</span>
                 </div>
               }>

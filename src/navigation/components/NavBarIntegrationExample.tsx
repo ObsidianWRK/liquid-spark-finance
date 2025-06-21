@@ -73,7 +73,7 @@ const NavBarIntegrationExample: React.FC = () => {
           NavBar Integration Example
         </h1>
         <div className="space-y-6">
-          <div className="bg-white/10 backdrop-blur-md rounded-lg p-6">
+          <div className="bg-white/10 backdrop-blur-md rounded-vueni-lg p-6">
             <h2 className="text-xl font-semibold text-white mb-4">
               Current Route: {location.pathname}
             </h2>
@@ -83,7 +83,7 @@ const NavBarIntegrationExample: React.FC = () => {
             </p>
           </div>
 
-          <div className="bg-white/10 backdrop-blur-md rounded-lg p-6">
+          <div className="bg-white/10 backdrop-blur-md rounded-vueni-lg p-6">
             <h2 className="text-xl font-semibold text-white mb-4">
               Notification Badges
             </h2>
@@ -102,13 +102,13 @@ const NavBarIntegrationExample: React.FC = () => {
                   insights: Math.floor(Math.random() * 5),
                 })
               }
-              className="mt-4 bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg transition-colors"
+              className="mt-4 bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-vueni-lg transition-colors"
             >
               Simulate New Notifications
             </button>
           </div>
 
-          <div className="bg-white/10 backdrop-blur-md rounded-lg p-6">
+          <div className="bg-white/10 backdrop-blur-md rounded-vueni-lg p-6">
             <h2 className="text-xl font-semibold text-white mb-4">
               Integration Steps
             </h2>
@@ -122,7 +122,7 @@ const NavBarIntegrationExample: React.FC = () => {
             </ol>
           </div>
 
-          <div className="bg-white/10 backdrop-blur-md rounded-lg p-6">
+          <div className="bg-white/10 backdrop-blur-md rounded-vueni-lg p-6">
             <h2 className="text-xl font-semibold text-white mb-4">
               Key Features Demonstrated
             </h2>
@@ -141,7 +141,7 @@ const NavBarIntegrationExample: React.FC = () => {
           {Array.from({ length: 10 }, (_, i) => (
             <div
               key={i}
-              className="bg-white/5 backdrop-blur-sm rounded-lg p-4 border border-white/10"
+              className="bg-white/5 backdrop-blur-sm rounded-vueni-lg p-4 border border-white/10"
             >
               <h3 className="text-white font-semibold mb-2">
                 Demo Content {i + 1}

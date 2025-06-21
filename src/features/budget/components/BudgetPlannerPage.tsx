@@ -71,7 +71,7 @@ const BudgetPlannerPage = () => {
             {[...Array(3)].map((_, i) => (
               <div
                 key={i}
-                className="bg-white/[0.02] rounded-2xl border border-white/[0.08] p-6"
+                className="bg-white/[0.02] rounded-vueni-lg border border-white/[0.08] p-6"
               >
                 <div className="h-6 bg-white/[0.05] rounded w-32 mb-2"></div>
                 <div className="h-8 bg-white/[0.05] rounded w-24"></div>
@@ -108,12 +108,12 @@ const BudgetPlannerPage = () => {
           <button
             type="button"
             onClick={handleNewGoalClick}
-            className="bg-green-500 hover:bg-green-600 text-white px-3 sm:px-4 py-2 rounded-xl transition-colors flex items-center gap-2 text-sm sm:text-base whitespace-nowrap"
+            className="bg-green-500 hover:bg-green-600 text-white px-3 sm:px-4 py-2 rounded-vueni-lg transition-colors flex items-center gap-2 text-sm sm:text-base whitespace-nowrap"
           >
             <Target className="w-4 h-4" />
             New Goal
           </button>
-          <button className="bg-blue-500 hover:bg-blue-600 text-white px-3 sm:px-4 py-2 rounded-xl transition-colors flex items-center gap-2 text-sm sm:text-base whitespace-nowrap">
+          <button className="bg-blue-500 hover:bg-blue-600 text-white px-3 sm:px-4 py-2 rounded-vueni-lg transition-colors flex items-center gap-2 text-sm sm:text-base whitespace-nowrap">
             <Plus className="w-4 h-4" />
             New Budget
           </button>
@@ -123,7 +123,7 @@ const BudgetPlannerPage = () => {
       {/* Quick Stats */}
       {budget && (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
-          <UniversalCard className="p-4 sm:p-6 rounded-2xl card-hover">
+          <UniversalCard className="p-4 sm:p-6 rounded-vueni-lg card-hover">
             <div className="flex items-center gap-3 mb-2">
               <BarChart3 className="w-5 h-5 text-blue-400" />
               <p className="text-white/60 text-sm">Monthly Budget</p>
@@ -133,7 +133,7 @@ const BudgetPlannerPage = () => {
             </p>
           </UniversalCard>
 
-          <UniversalCard className="p-4 sm:p-6 rounded-2xl card-hover">
+          <UniversalCard className="p-4 sm:p-6 rounded-vueni-lg card-hover">
             <div className="flex items-center gap-3 mb-2">
               <TrendingUp className="w-5 h-5 text-red-400" />
               <p className="text-white/60 text-sm">Total Spent</p>
@@ -147,7 +147,7 @@ const BudgetPlannerPage = () => {
             </p>
           </UniversalCard>
 
-          <UniversalCard className="p-4 sm:p-6 rounded-2xl card-hover">
+          <UniversalCard className="p-4 sm:p-6 rounded-vueni-lg card-hover">
             <div className="flex items-center gap-3 mb-2">
               <Target className="w-5 h-5 text-green-400" />
               <p className="text-white/60 text-sm">Remaining</p>
@@ -163,7 +163,7 @@ const BudgetPlannerPage = () => {
             </p>
           </UniversalCard>
 
-          <UniversalCard className="p-4 sm:p-6 rounded-2xl card-hover">
+          <UniversalCard className="p-4 sm:p-6 rounded-vueni-lg card-hover">
             <div className="flex items-center gap-3 mb-2">
               <AlertCircle className="w-5 h-5 text-yellow-400" />
               <p className="text-white/60 text-sm">Active Goals</p>
@@ -183,7 +183,7 @@ const BudgetPlannerPage = () => {
 
       {/* Budget Status Alert */}
       {budget && budget.totalSpent > budget.totalBudgeted && (
-        <div className="bg-red-500/10 border border-red-500/20 rounded-xl p-4 flex items-center gap-3">
+        <div className="bg-red-500/10 border border-red-500/20 rounded-vueni-lg p-4 flex items-center gap-3">
           <AlertCircle className="w-6 h-6 text-red-400" />
           <div>
             <p className="text-red-400 font-medium">Budget Exceeded</p>

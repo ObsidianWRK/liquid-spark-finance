@@ -126,7 +126,7 @@ const TimeRangeDemo: React.FC = memo(() => {
       </div>
 
       {/* Debug information */}
-      <div className="mt-8 p-4 bg-white/5 rounded-lg border border-white/10">
+      <div className="mt-8 p-4 bg-white/5 rounded-vueni-lg border border-white/10">
         <h3 className="text-sm font-medium text-white mb-2">
           Debug Information
         </h3>

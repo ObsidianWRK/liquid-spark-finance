@@ -143,7 +143,7 @@ export const QuickAccessRail = React.memo<QuickAccessRailProps>(
             {onToggleBalance && (
               <button
                 onClick={onToggleBalance}
-                className="flex items-center space-x-2 px-3 py-1.5 bg-white/[0.05] border border-white/[0.08] rounded-lg text-white/80 hover:bg-white/[0.08] hover:text-white transition-all duration-200"
+                className="flex items-center space-x-2 px-3 py-1.5 bg-white/[0.05] border border-white/[0.08] rounded-vueni-lg text-white/80 hover:bg-white/[0.08] hover:text-white transition-all duration-200"
                 aria-label={showBalance ? 'Hide balances' : 'Show balances'}
               >
                 {showBalance ? (
@@ -159,7 +159,7 @@ export const QuickAccessRail = React.memo<QuickAccessRailProps>(
             {!isMobile && accounts.length > maxVisibleDesktop && onViewAll && (
               <button
                 onClick={onViewAll}
-                className="px-3 py-1.5 bg-blue-500/20 border border-blue-500/30 rounded-lg text-blue-400 hover:bg-blue-500/30 transition-colors text-sm font-medium"
+                className="px-3 py-1.5 bg-blue-500/20 border border-blue-500/30 rounded-vueni-lg text-blue-400 hover:bg-blue-500/30 transition-colors text-sm font-medium"
               >
                 View All ({accounts.length})
               </button>
@@ -174,7 +174,7 @@ export const QuickAccessRail = React.memo<QuickAccessRailProps>(
             {canScrollLeft && (
               <button
                 onClick={scrollLeft}
-                className="absolute left-0 top-1/2 -translate-y-1/2 z-10 w-8 h-8 bg-black/80 border border-white/20 rounded-full flex items-center justify-center text-white hover:bg-black/90 transition-colors"
+                className="absolute left-0 top-1/2 -translate-y-1/2 z-10 w-8 h-8 bg-black/80 border border-white/20 rounded-vueni-pill flex items-center justify-center text-white hover:bg-black/90 transition-colors"
                 aria-label="Scroll left"
               >
                 <ChevronLeft className="w-4 h-4" />
@@ -184,7 +184,7 @@ export const QuickAccessRail = React.memo<QuickAccessRailProps>(
             {canScrollRight && (
               <button
                 onClick={scrollRight}
-                className="absolute right-0 top-1/2 -translate-y-1/2 z-10 w-8 h-8 bg-black/80 border border-white/20 rounded-full flex items-center justify-center text-white hover:bg-black/90 transition-colors"
+                className="absolute right-0 top-1/2 -translate-y-1/2 z-10 w-8 h-8 bg-black/80 border border-white/20 rounded-vueni-pill flex items-center justify-center text-white hover:bg-black/90 transition-colors"
                 aria-label="Scroll right"
               >
                 <ChevronRight className="w-4 h-4" />
@@ -219,7 +219,7 @@ export const QuickAccessRail = React.memo<QuickAccessRailProps>(
                   <div
                     key={index}
                     className={cn(
-                      'w-2 h-2 rounded-full transition-colors',
+                      'w-2 h-2 rounded-vueni-pill transition-colors',
                       index === Math.floor(currentIndex / 3)
                         ? 'bg-blue-400'
                         : 'bg-white/20'

@@ -71,17 +71,17 @@ export const MindfulnessVsSpending: React.FC = () => {
       </div>
       
       <div className="grid grid-cols-2 gap-4 text-sm">
-        <div className="p-3 bg-white/[0.02] rounded-lg">
+        <div className="p-3 bg-white/[0.02] rounded-vueni-lg">
           <div className="text-white/60">Avg Mindful Minutes</div>
           <div className="text-lg font-bold text-purple-400">{avgMindful.toFixed(1)}</div>
         </div>
-        <div className="p-3 bg-white/[0.02] rounded-lg">
+        <div className="p-3 bg-white/[0.02] rounded-vueni-lg">
           <div className="text-white/60">Avg Spending Variance</div>
           <div className="text-lg font-bold text-blue-400">${avgStdDev.toFixed(0)}</div>
         </div>
       </div>
 
-      <div className="mt-4 p-3 bg-purple-400/10 rounded-lg border border-purple-400/20">
+      <div className="mt-4 p-3 bg-purple-400/10 rounded-vueni-lg border border-purple-400/20">
         <div className="text-xs text-white/80">
           💡 <strong>Insight:</strong> {correlation < -5 
             ? 'Higher mindfulness correlates with more stable spending patterns.' 

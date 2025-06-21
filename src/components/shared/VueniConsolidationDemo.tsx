@@ -95,7 +95,7 @@ const ConsolidationDemo: React.FC = () => {
                     e.target.value as TransactionVariant
                   )
                 }
-                className="w-full p-2 bg-white/10 border border-white/20 rounded-lg text-white"
+                className="w-full p-2 bg-white/10 border border-white/20 rounded-vueni-lg text-white"
               >
                 <option value="default">Default</option>
                 <option value="apple">Apple Style</option>
@@ -113,7 +113,7 @@ const ConsolidationDemo: React.FC = () => {
               <select
                 value={selectedInsightsVariant}
                 onChange={(e) => setSelectedInsightsVariant(e.target.value)}
-                className="w-full p-2 bg-white/10 border border-white/20 rounded-lg text-white"
+                className="w-full p-2 bg-white/10 border border-white/20 rounded-vueni-lg text-white"
               >
                 <option value="standard">Standard</option>
                 <option value="refined">Refined</option>
@@ -241,7 +241,7 @@ const ConsolidationDemo: React.FC = () => {
               }}
             /> 
           */}
-          <div className="p-8 text-center text-white/60 bg-white/5 rounded-lg border border-white/10">
+          <div className="p-8 text-center text-white/60 bg-white/5 rounded-vueni-lg border border-white/10">
             VueniUnifiedInsightsPage temporarily disabled during consolidation
             refactor
           </div>

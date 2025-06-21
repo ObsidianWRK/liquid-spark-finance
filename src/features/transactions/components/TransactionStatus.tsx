@@ -21,7 +21,7 @@ const TransactionStatus = ({ status }: TransactionStatusProps) => {
   return (
     <div className="transaction-status">
       <div
-        className={`w-3 h-3 rounded-full ${getStatusColor(status)}`}
+        className={`w-3 h-3 rounded-vueni-pill ${getStatusColor(status)}`}
         aria-label={`Status: ${status}`}
       />
     </div>

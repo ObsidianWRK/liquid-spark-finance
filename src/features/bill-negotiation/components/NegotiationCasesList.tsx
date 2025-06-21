@@ -32,11 +32,11 @@ export const NegotiationCasesList: React.FC<{ className?: string }> = ({
   return (
     <div className={cn('space-y-2', className)}>
       {/* Summary */}
-      <div className="flex items-center justify-between p-2 bg-white/[0.03] rounded-lg border border-white/[0.05] mb-2">
+      <div className="flex items-center justify-between p-2 bg-white/[0.03] rounded-vueni-lg border border-white/[0.05] mb-2">
         <div className="flex items-center gap-2">
           <FileText className="w-3 h-3 text-green-400" />
           <span className="text-xs text-white/70">Cases</span>
-          <span className="text-xs px-1.5 py-0.5 bg-green-500/20 text-green-400 rounded-full">
+          <span className="text-xs px-1.5 py-0.5 bg-green-500/20 text-green-400 rounded-vueni-pill">
             {cases.length}
           </span>
         </div>
@@ -68,7 +68,7 @@ export const NegotiationCasesList: React.FC<{ className?: string }> = ({
           return (
             <div 
               key={cs.id}
-              className="p-2 bg-white/[0.02] rounded-lg border border-white/[0.05] hover:bg-white/[0.04] transition-all"
+              className="p-2 bg-white/[0.02] rounded-vueni-lg border border-white/[0.05] hover:bg-white/[0.04] transition-all"
             >
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2">

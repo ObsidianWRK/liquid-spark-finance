@@ -135,14 +135,14 @@ export const QuickAccessCard = React.memo<QuickAccessCardProps>(
       >
         {/* Account Type Badge */}
         <div className="flex items-center justify-between mb-2">
-          <span className="inline-block px-2 py-0.5 bg-white/[0.08] rounded-md text-xs font-medium text-white/80 capitalize">
+          <span className="inline-block px-2 py-0.5 bg-white/[0.08] rounded-vueni-md text-xs font-medium text-white/80 capitalize">
             {account.accountType?.replace(/([A-Z])/g, ' $1').trim()}
           </span>
 
           {/* Quick Action Indicator */}
           {account.quickActions && account.quickActions.length > 0 && (
             <div className="flex items-center space-x-1">
-              <div className="w-1.5 h-1.5 bg-green-400 rounded-full"></div>
+              <div className="w-1.5 h-1.5 bg-green-400 rounded-vueni-pill"></div>
               <span className="text-xs text-white/60">Active</span>
             </div>
           )}

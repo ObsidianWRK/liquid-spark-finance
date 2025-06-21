@@ -89,7 +89,7 @@ const RetirementTab: React.FC<RetirementTabProps> = ({ familyId }) => {
         {[...Array(3)].map((_, i) => (
           <div
             key={i}
-            className="bg-white/[0.02] rounded-2xl border border-white/[0.08] p-6 animate-pulse"
+            className="bg-white/[0.02] rounded-vueni-lg border border-white/[0.08] p-6 animate-pulse"
           >
             <div className="flex items-center gap-4 mb-4">
               <div className="w-8 h-8 bg-white/[0.05] rounded"></div>
@@ -216,7 +216,7 @@ const RetirementTab: React.FC<RetirementTabProps> = ({ familyId }) => {
           {plan.recommendations.map((rec, index) => (
             <div
               key={index}
-              className="p-4 bg-white/[0.03] rounded-xl border border-white/[0.05]"
+              className="p-4 bg-white/[0.03] rounded-vueni-lg border border-white/[0.05]"
             >
               <div className="flex items-start justify-between">
                 <div className="flex-1">
@@ -228,7 +228,7 @@ const RetirementTab: React.FC<RetirementTabProps> = ({ familyId }) => {
                   <div className="flex items-center gap-4">
                     <span
                       className={cn(
-                        'text-xs px-2 py-1 rounded-lg font-medium',
+                        'text-xs px-2 py-1 rounded-vueni-lg font-medium',
                         rec.impact === 'high'
                           ? 'bg-red-500/20 text-red-400'
                           : rec.impact === 'medium'

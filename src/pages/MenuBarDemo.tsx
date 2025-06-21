@@ -138,7 +138,7 @@ const MenuBarDemo = () => {
             <CardContent>
               <div className="space-y-2">
                 {selectedAction ? (
-                  <div className="liquid-glass-button p-3 rounded-xl">
+                  <div className="liquid-glass-button p-3 rounded-vueni-lg">
                     <p className="text-white/90 text-sm">
                       Last action:{' '}
                       <span className="font-semibold text-blue-300">

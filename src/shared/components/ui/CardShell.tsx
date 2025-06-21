@@ -22,7 +22,7 @@ export const CardShell: FC<CardShellProps> = ({
   // Base classes for glass morphism effect
   const baseClasses = cn(
     // Core glass effect
-    'relative overflow-hidden rounded-xl',
+    'relative overflow-hidden rounded-vueni-lg',
     'bg-zinc-800/40 backdrop-blur',
     'ring-1 ring-zinc-700/60',
     'shadow-[inset_0_0_0_1px_rgba(255,255,255,.05)]',

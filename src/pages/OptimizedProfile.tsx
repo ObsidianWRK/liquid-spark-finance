@@ -181,7 +181,7 @@ const OptimizedProfile = React.memo(() => {
           <div className="flex items-center mb-4">
             <button
               onClick={handleBackToDashboard}
-              className="flex items-center space-x-2 text-white/70 hover:text-white transition-all duration-200 group cursor-pointer bg-transparent border-none outline-none focus:outline-none focus:ring-2 focus:ring-blue-500/50 rounded-lg p-2 -m-2"
+              className="flex items-center space-x-2 text-white/70 hover:text-white transition-all duration-200 group cursor-pointer bg-transparent border-none outline-none focus:outline-none focus:ring-2 focus:ring-blue-500/50 rounded-vueni-lg p-2 -m-2"
               aria-label="Back to Dashboard (Press Escape or Ctrl+H)"
               title="Back to Dashboard (Press Escape or Ctrl+H)"
               type="button"
@@ -233,7 +233,7 @@ const OptimizedProfile = React.memo(() => {
               <div className="mb-4 pb-4 border-b border-white/10">
                 <button
                   onClick={handleBackToDashboard}
-                  className="w-full flex items-center space-x-3 p-3 rounded-lg text-white/70 hover:text-white hover:bg-white/5 transition-colors"
+                  className="w-full flex items-center space-x-3 p-3 rounded-vueni-lg text-white/70 hover:text-white hover:bg-white/5 transition-colors"
                 >
                   <Home className="w-5 h-5" />
                   <span className="font-medium">Dashboard</span>
@@ -284,7 +284,7 @@ const SectionNavItem = React.memo<{
       <button
         onClick={onClick}
         className={cn(
-          'w-full flex items-center justify-between p-3 rounded-lg transition-colors',
+          'w-full flex items-center justify-between p-3 rounded-vueni-lg transition-colors',
           isActive
             ? 'bg-blue-500/20 text-blue-400 border border-blue-500/30'
             : 'hover:bg-white/5 text-white/70 hover:text-white'
@@ -315,7 +315,7 @@ const ProfileSection = React.memo<SectionProps>(
         </h2>
         <button
           onClick={onBackToDashboard}
-          className="flex items-center space-x-2 px-3 py-2 text-sm text-white/70 hover:text-white hover:bg-white/10 rounded-lg transition-colors"
+          className="flex items-center space-x-2 px-3 py-2 text-sm text-white/70 hover:text-white hover:bg-white/10 rounded-vueni-lg transition-colors"
         >
           <Home className="w-4 h-4" />
           <span>Dashboard</span>
@@ -324,7 +324,7 @@ const ProfileSection = React.memo<SectionProps>(
 
       <div className="space-y-6">
         <div className="flex items-center space-x-4">
-          <div className="w-20 h-20 rounded-full bg-gradient-to-r from-blue-500 to-purple-500 flex items-center justify-center">
+          <div className="w-20 h-20 rounded-vueni-pill bg-gradient-to-r from-blue-500 to-purple-500 flex items-center justify-center">
             <User className="w-10 h-10 text-white" />
           </div>
           <div>
@@ -357,7 +357,7 @@ const ProfileSection = React.memo<SectionProps>(
 
         <div className="flex justify-end">
           <button
-            className="px-6 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg transition-colors"
+            className="px-6 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-vueni-lg transition-colors"
             onClick={() => updateState?.({ isEditing: false })}
           >
             Save Changes
@@ -375,7 +375,7 @@ const PreferencesSection = React.memo<SectionProps>(
         <h2 className="text-xl font-semibold text-white">Preferences</h2>
         <button
           onClick={onBackToDashboard}
-          className="flex items-center space-x-2 px-3 py-2 text-sm text-white/70 hover:text-white hover:bg-white/10 rounded-lg transition-colors"
+          className="flex items-center space-x-2 px-3 py-2 text-sm text-white/70 hover:text-white hover:bg-white/10 rounded-vueni-lg transition-colors"
         >
           <Home className="w-4 h-4" />
           <span>Dashboard</span>
@@ -416,7 +416,7 @@ const NotificationsSection = React.memo<SectionProps>(
         <h2 className="text-xl font-semibold text-white">Notifications</h2>
         <button
           onClick={onBackToDashboard}
-          className="flex items-center space-x-2 px-3 py-2 text-sm text-white/70 hover:text-white hover:bg-white/10 rounded-lg transition-colors"
+          className="flex items-center space-x-2 px-3 py-2 text-sm text-white/70 hover:text-white hover:bg-white/10 rounded-vueni-lg transition-colors"
         >
           <Home className="w-4 h-4" />
           <span>Dashboard</span>
@@ -463,7 +463,7 @@ const PrivacySection = React.memo<SectionProps>(
         <h2 className="text-xl font-semibold text-white">Privacy & Security</h2>
         <button
           onClick={onBackToDashboard}
-          className="flex items-center space-x-2 px-3 py-2 text-sm text-white/70 hover:text-white hover:bg-white/10 rounded-lg transition-colors"
+          className="flex items-center space-x-2 px-3 py-2 text-sm text-white/70 hover:text-white hover:bg-white/10 rounded-vueni-lg transition-colors"
         >
           <Home className="w-4 h-4" />
           <span>Dashboard</span>
@@ -504,7 +504,7 @@ const AppearanceSection = React.memo<SectionProps>(
         <h2 className="text-xl font-semibold text-white">Appearance</h2>
         <button
           onClick={onBackToDashboard}
-          className="flex items-center space-x-2 px-3 py-2 text-sm text-white/70 hover:text-white hover:bg-white/10 rounded-lg transition-colors"
+          className="flex items-center space-x-2 px-3 py-2 text-sm text-white/70 hover:text-white hover:bg-white/10 rounded-vueni-lg transition-colors"
         >
           <Home className="w-4 h-4" />
           <span>Dashboard</span>
@@ -522,7 +522,7 @@ const AppearanceSection = React.memo<SectionProps>(
                 key={theme}
                 onClick={() => updatePreferences?.({ theme })}
                 className={cn(
-                  'p-4 rounded-lg border transition-colors',
+                  'p-4 rounded-vueni-lg border transition-colors',
                   state.preferences.theme === theme
                     ? 'border-blue-500 bg-blue-500/20'
                     : 'border-white/20 hover:border-white/40'
@@ -561,7 +561,7 @@ const OptimizedFormField = React.memo<{
       <textarea
         value={value}
         onChange={(e) => onChange(e.target.value)}
-        className="w-full bg-white/10 border border-white/20 rounded-lg px-3 py-2 text-white placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-blue-500/50"
+        className="w-full bg-white/10 border border-white/20 rounded-vueni-lg px-3 py-2 text-white placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-blue-500/50"
         rows={3}
       />
     ) : (
@@ -569,7 +569,7 @@ const OptimizedFormField = React.memo<{
         type="text"
         value={value}
         onChange={(e) => onChange(e.target.value)}
-        className="w-full bg-white/10 border border-white/20 rounded-lg px-3 py-2 text-white placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-blue-500/50"
+        className="w-full bg-white/10 border border-white/20 rounded-vueni-lg px-3 py-2 text-white placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-blue-500/50"
       />
     )}
   </div>
@@ -586,7 +586,7 @@ const OptimizedSelectField = React.memo<{
     <select
       value={value}
       onChange={(e) => onChange(e.target.value)}
-      className="w-full bg-white/10 border border-white/20 rounded-lg px-3 py-2 text-white focus:outline-none focus:ring-2 focus:ring-blue-500/50"
+      className="w-full bg-white/10 border border-white/20 rounded-vueni-lg px-3 py-2 text-white focus:outline-none focus:ring-2 focus:ring-blue-500/50"
     >
       {options.map((option) => (
         <option key={option.value} value={option.value}>
@@ -603,7 +603,7 @@ const OptimizedToggleField = React.memo<{
   checked: boolean;
   onChange: (checked: boolean) => void;
 }>(({ label, description, checked, onChange }) => (
-  <div className="flex items-center justify-between p-4 bg-white/5 rounded-lg">
+  <div className="flex items-center justify-between p-4 bg-white/5 rounded-vueni-lg">
     <div>
       <div className="font-medium text-white">{label}</div>
       <div className="text-sm text-white/60">{description}</div>
@@ -611,13 +611,13 @@ const OptimizedToggleField = React.memo<{
     <button
       onClick={() => onChange(!checked)}
       className={cn(
-        'relative w-12 h-6 rounded-full transition-colors',
+        'relative w-12 h-6 rounded-vueni-pill transition-colors',
         checked ? 'bg-blue-500' : 'bg-white/20'
       )}
     >
       <div
         className={cn(
-          'absolute top-1 w-4 h-4 rounded-full bg-white transition-transform',
+          'absolute top-1 w-4 h-4 rounded-vueni-pill bg-white transition-transform',
           checked ? 'translate-x-7' : 'translate-x-1'
         )}
       />

@@ -64,7 +64,7 @@ const TimeControl: React.FC<{
   return (
     <div
       className={cn(
-        'flex items-center bg-white/5 backdrop-blur-sm rounded-lg p-1',
+        'flex items-center bg-white/5 backdrop-blur-sm rounded-vueni-lg p-1',
         'border border-white/10',
         className
       )}
@@ -76,7 +76,7 @@ const TimeControl: React.FC<{
           key={option}
           onClick={() => onChange(option)}
           className={cn(
-            'px-3 py-1.5 text-xs font-medium rounded-md transition-all duration-200',
+            'px-3 py-1.5 text-xs font-medium rounded-vueni-md transition-all duration-200',
             'focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:ring-offset-2 focus:ring-offset-transparent',
             currentRange === option
               ? 'bg-white/15 text-white shadow-sm'
@@ -153,20 +153,20 @@ const ChartSkeleton: React.FC<{
       <div className={cn(!reducedMotion && 'animate-pulse', className)}>
         {showTitle && (
           <div className="mb-6">
-            <div className="h-5 bg-white/10 rounded-md w-48 mb-2"></div>
-            <div className="h-3 bg-white/5 rounded-md w-32"></div>
+            <div className="h-5 bg-white/10 rounded-vueni-md w-48 mb-2"></div>
+            <div className="h-3 bg-white/5 rounded-vueni-md w-32"></div>
           </div>
         )}
 
         <div
-          className="bg-white/5 rounded-lg flex items-end justify-center space-x-1 p-4"
+          className="bg-white/5 rounded-vueni-lg flex items-end justify-center space-x-1 p-4"
           style={{ height }}
         >
           {/* Skeleton bars/lines based on chart type */}
           {Array.from({ length: 12 }).map((_, i) => (
             <div
               key={i}
-              className="bg-white/10 rounded-t-sm flex-1"
+              className="bg-white/10 rounded-t-vueni-sm flex-1"
               style={{
                 height: `${Math.random() * 60 + 20}%`,
                 animationDelay: reducedMotion ? '0ms' : `${i * 100}ms`,
@@ -180,7 +180,7 @@ const ChartSkeleton: React.FC<{
           <div className="flex justify-center space-x-4 mt-4">
             {Array.from({ length: 3 }).map((_, i) => (
               <div key={i} className="flex items-center space-x-2">
-                <div className="w-3 h-3 bg-white/10 rounded-full"></div>
+                <div className="w-3 h-3 bg-white/10 rounded-vueni-pill"></div>
                 <div className="h-3 bg-white/10 rounded w-16"></div>
               </div>
             ))}
@@ -211,7 +211,7 @@ const ChartError: React.FC<{
           className
         )}
       >
-        <div className="w-12 h-12 rounded-full bg-red-500/10 flex items-center justify-center">
+        <div className="w-12 h-12 rounded-vueni-pill bg-red-500/10 flex items-center justify-center">
           <svg
             className="w-6 h-6 text-red-400"
             fill="none"
@@ -240,7 +240,7 @@ const ChartError: React.FC<{
           <button
             onClick={onRetry}
             className={cn(
-              'px-4 py-2 text-sm font-medium rounded-lg',
+              'px-4 py-2 text-sm font-medium rounded-vueni-lg',
               'bg-blue-500/20 text-blue-300 border border-blue-500/30',
               'hover:bg-blue-500/30 hover:border-blue-500/50',
               'focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:ring-offset-2 focus:ring-offset-transparent',
@@ -863,7 +863,7 @@ export const GraphBase = forwardRef<ChartRef, GraphBaseProps>(
             actions={headerActions}
           />
           <div className="flex flex-col items-center justify-center h-64 text-center space-y-4">
-            <div className="w-12 h-12 rounded-full bg-white/5 flex items-center justify-center">
+            <div className="w-12 h-12 rounded-vueni-pill bg-white/5 flex items-center justify-center">
               <svg
                 className="w-6 h-6 text-white/40"
                 fill="none"

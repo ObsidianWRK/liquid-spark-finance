@@ -187,7 +187,7 @@ export const UnifiedCard = React.memo<UnifiedCardProps>(
               {getTrendIcon()}
               {badge && (
                 <span
-                  className={cn('px-2 py-1 rounded-full text-xs font-medium', {
+                  className={cn('px-2 py-1 rounded-vueni-pill text-xs font-medium', {
                     'bg-green-500/20 text-green-400 border border-green-500/30':
                       badge.variant === 'success',
                     'bg-yellow-500/20 text-yellow-400 border border-yellow-500/30':
@@ -241,9 +241,9 @@ export const UnifiedCard = React.memo<UnifiedCardProps>(
                 </span>
               )}
             </div>
-            <div className="relative h-2 bg-white/[0.05] rounded-full overflow-hidden">
+            <div className="relative h-2 bg-white/[0.05] rounded-vueni-pill overflow-hidden">
               <div
-                className="absolute top-0 left-0 h-full rounded-full transition-all duration-1000 ease-out"
+                className="absolute top-0 left-0 h-full rounded-vueni-pill transition-all duration-1000 ease-out"
                 style={{
                   width: `${Math.min(100, (progress.value / progress.max) * 100)}%`,
                   backgroundColor: progress.color || '#3b82f6',

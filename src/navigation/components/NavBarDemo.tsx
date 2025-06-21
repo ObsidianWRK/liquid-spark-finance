@@ -164,20 +164,20 @@ const NavBarDemo: React.FC = () => {
 
         {/* Demo Controls */}
         <div className="max-w-4xl mx-auto space-y-6">
-          <div className="bg-white/10 backdrop-blur-md rounded-lg p-6 space-y-4">
+          <div className="bg-white/10 backdrop-blur-md rounded-vueni-lg p-6 space-y-4">
             <h2 className="text-xl font-semibold text-white">Demo Controls</h2>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <button
                 onClick={() => setNotificationCount((prev) => prev + 1)}
-                className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg transition-colors"
+                className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-vueni-lg transition-colors"
               >
                 Add Notification ({notificationCount})
               </button>
 
               <button
                 onClick={() => setNotificationCount(0)}
-                className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg transition-colors"
+                className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-vueni-lg transition-colors"
               >
                 Clear Notifications
               </button>
@@ -191,7 +191,7 @@ const NavBarDemo: React.FC = () => {
 
           {/* Feature Showcase */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className="bg-white/10 backdrop-blur-md rounded-lg p-6 space-y-3">
+            <div className="bg-white/10 backdrop-blur-md rounded-vueni-lg p-6 space-y-3">
               <h3 className="text-lg font-semibold text-white">Key Features</h3>
               <ul className="text-white/70 space-y-2 text-sm">
                 <li>✅ TypeScript interfaces for type safety</li>
@@ -207,7 +207,7 @@ const NavBarDemo: React.FC = () => {
               </ul>
             </div>
 
-            <div className="bg-white/10 backdrop-blur-md rounded-lg p-6 space-y-3">
+            <div className="bg-white/10 backdrop-blur-md rounded-vueni-lg p-6 space-y-3">
               <h3 className="text-lg font-semibold text-white">
                 Performance Optimizations
               </h3>
@@ -229,7 +229,7 @@ const NavBarDemo: React.FC = () => {
             {Array.from({ length: 20 }, (_, i) => (
               <div
                 key={i}
-                className="bg-white/5 backdrop-blur-sm rounded-lg p-6 border border-white/10"
+                className="bg-white/5 backdrop-blur-sm rounded-vueni-lg p-6 border border-white/10"
               >
                 <h3 className="text-white font-semibold mb-2">
                   Content Block {i + 1}
@@ -242,7 +242,7 @@ const NavBarDemo: React.FC = () => {
                 </p>
 
                 {i === 5 && (
-                  <div className="mt-4 p-4 bg-blue-500/20 rounded-lg border border-blue-400/30">
+                  <div className="mt-4 p-4 bg-blue-500/20 rounded-vueni-lg border border-blue-400/30">
                     <p className="text-blue-200 text-sm">
                       💡 <strong>Tip:</strong> The navbar will hide when
                       scrolling down and reveal when scrolling up, but it always
@@ -252,7 +252,7 @@ const NavBarDemo: React.FC = () => {
                 )}
 
                 {i === 10 && (
-                  <div className="mt-4 p-4 bg-green-500/20 rounded-lg border border-green-400/30">
+                  <div className="mt-4 p-4 bg-green-500/20 rounded-vueni-lg border border-green-400/30">
                     <p className="text-green-200 text-sm">
                       🎯 <strong>Accessibility:</strong> All buttons have proper
                       ARIA labels, focus indicators, and meet WCAG touch target
@@ -262,7 +262,7 @@ const NavBarDemo: React.FC = () => {
                 )}
 
                 {i === 15 && (
-                  <div className="mt-4 p-4 bg-purple-500/20 rounded-lg border border-purple-400/30">
+                  <div className="mt-4 p-4 bg-purple-500/20 rounded-vueni-lg border border-purple-400/30">
                     <p className="text-purple-200 text-sm">
                       📱 <strong>Responsive:</strong> The component adapts to
                       different screen sizes and orientations, hiding certain

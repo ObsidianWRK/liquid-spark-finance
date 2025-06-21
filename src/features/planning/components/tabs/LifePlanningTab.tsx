@@ -107,7 +107,7 @@ const LifePlanningTab: React.FC<LifePlanningTabProps> = ({ familyId }) => {
         {[...Array(3)].map((_, i) => (
           <div
             key={i}
-            className="bg-white/[0.02] rounded-2xl border border-white/[0.08] p-6 animate-pulse"
+            className="bg-white/[0.02] rounded-vueni-lg border border-white/[0.08] p-6 animate-pulse"
           >
             <div className="flex items-center gap-4 mb-4">
               <div className="w-8 h-8 bg-white/[0.05] rounded"></div>
@@ -136,7 +136,7 @@ const LifePlanningTab: React.FC<LifePlanningTabProps> = ({ familyId }) => {
             Plan and save for major life milestones
           </p>
         </div>
-        <button className="bg-purple-500 hover:bg-purple-600 text-white px-4 py-2 rounded-xl transition-colors flex items-center gap-2">
+        <button className="bg-purple-500 hover:bg-purple-600 text-white px-4 py-2 rounded-vueni-lg transition-colors flex items-center gap-2">
           <Plus className="w-4 h-4" />
           Add Event
         </button>
@@ -219,10 +219,10 @@ const LifePlanningTab: React.FC<LifePlanningTabProps> = ({ familyId }) => {
                         {Math.round(progress)}%
                       </span>
                     </div>
-                    <div className="w-full bg-white/[0.05] rounded-full h-3">
+                    <div className="w-full bg-white/[0.05] rounded-vueni-pill h-3">
                       <div
                         className={cn(
-                          'h-3 rounded-full transition-all duration-500',
+                          'h-3 rounded-vueni-pill transition-all duration-500',
                           progress >= 100
                             ? 'bg-green-400'
                             : progress >= 50
@@ -236,28 +236,28 @@ const LifePlanningTab: React.FC<LifePlanningTabProps> = ({ familyId }) => {
 
                   {/* Key Metrics */}
                   <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                    <div className="text-center p-3 bg-white/[0.03] rounded-xl">
+                    <div className="text-center p-3 bg-white/[0.03] rounded-vueni-lg">
                       <div className="text-lg font-bold text-white">
                         {formatCurrency(plan.estimatedCost)}
                       </div>
                       <div className="text-white/60 text-xs">Target Cost</div>
                     </div>
 
-                    <div className="text-center p-3 bg-white/[0.03] rounded-xl">
+                    <div className="text-center p-3 bg-white/[0.03] rounded-vueni-lg">
                       <div className="text-lg font-bold text-white">
                         {formatCurrency(plan.currentSavings)}
                       </div>
                       <div className="text-white/60 text-xs">Saved</div>
                     </div>
 
-                    <div className="text-center p-3 bg-white/[0.03] rounded-xl">
+                    <div className="text-center p-3 bg-white/[0.03] rounded-vueni-lg">
                       <div className="text-lg font-bold text-white">
                         {formatCurrency(plan.monthlyContribution)}
                       </div>
                       <div className="text-white/60 text-xs">Monthly</div>
                     </div>
 
-                    <div className="text-center p-3 bg-white/[0.03] rounded-xl">
+                    <div className="text-center p-3 bg-white/[0.03] rounded-vueni-lg">
                       <div className="text-lg font-bold text-white">
                         {monthsRemaining}
                       </div>
@@ -266,7 +266,7 @@ const LifePlanningTab: React.FC<LifePlanningTabProps> = ({ familyId }) => {
                   </div>
 
                   {/* Timeline */}
-                  <div className="p-4 bg-white/[0.03] rounded-xl">
+                  <div className="p-4 bg-white/[0.03] rounded-vueni-lg">
                     <div className="flex items-center justify-between">
                       <div>
                         <div className="text-white font-semibold">
@@ -307,7 +307,7 @@ const LifePlanningTab: React.FC<LifePlanningTabProps> = ({ familyId }) => {
                   {plan.recommendations.map((rec, recIndex) => (
                     <div
                       key={recIndex}
-                      className="p-3 bg-white/[0.03] rounded-xl border border-white/[0.05]"
+                      className="p-3 bg-white/[0.03] rounded-vueni-lg border border-white/[0.05]"
                     >
                       <h5 className="font-semibold text-white text-sm mb-1">
                         {rec.title}
@@ -319,7 +319,7 @@ const LifePlanningTab: React.FC<LifePlanningTabProps> = ({ familyId }) => {
                       <div className="flex items-center gap-2 mb-2">
                         <span
                           className={cn(
-                            'text-xs px-2 py-1 rounded-lg font-medium',
+                            'text-xs px-2 py-1 rounded-vueni-lg font-medium',
                             rec.impact === 'high'
                               ? 'bg-red-500/20 text-red-400'
                               : rec.impact === 'medium'
@@ -340,7 +340,7 @@ const LifePlanningTab: React.FC<LifePlanningTabProps> = ({ familyId }) => {
                             key={actionIndex}
                             className="flex items-center gap-2 text-xs text-white/70"
                           >
-                            <div className="w-1 h-1 bg-white/40 rounded-full" />
+                            <div className="w-1 h-1 bg-white/40 rounded-vueni-pill" />
                             {action}
                           </div>
                         ))}
@@ -368,7 +368,7 @@ const LifePlanningTab: React.FC<LifePlanningTabProps> = ({ familyId }) => {
               Start planning for major life events like buying a home, having a
               baby, or pursuing education.
             </p>
-            <button className="bg-purple-500 hover:bg-purple-600 text-white px-6 py-3 rounded-xl transition-colors flex items-center gap-2 mx-auto">
+            <button className="bg-purple-500 hover:bg-purple-600 text-white px-6 py-3 rounded-vueni-lg transition-colors flex items-center gap-2 mx-auto">
               <Plus className="w-4 h-4" />
               Add Your First Life Event
             </button>

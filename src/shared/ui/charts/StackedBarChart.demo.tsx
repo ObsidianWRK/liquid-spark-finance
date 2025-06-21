@@ -572,7 +572,7 @@ export const StackedBarChartDemo: React.FC = () => {
                 'TypeScript support',
               ].map((feature, index) => (
                 <div key={index} className="flex items-center space-x-2">
-                  <div className="w-2 h-2 bg-green-500 rounded-full flex-shrink-0"></div>
+                  <div className="w-2 h-2 bg-green-500 rounded-vueni-pill flex-shrink-0"></div>
                   <span className="text-sm text-gray-700 dark:text-gray-300">
                     {feature}
                   </span>

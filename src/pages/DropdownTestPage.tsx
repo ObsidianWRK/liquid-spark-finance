@@ -37,7 +37,7 @@ const DropdownTestPage = () => {
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {/* Basic Dropdown */}
-          <div className="bg-white/[0.02] border border-white/[0.08] rounded-2xl p-6">
+          <div className="bg-white/[0.02] border border-white/[0.08] rounded-vueni-lg p-6">
             <h3 className="text-lg font-semibold text-white mb-4">
               Basic Dropdown
             </h3>
@@ -70,7 +70,7 @@ const DropdownTestPage = () => {
           </div>
 
           {/* Checkbox Dropdown */}
-          <div className="bg-white/[0.02] border border-white/[0.08] rounded-2xl p-6">
+          <div className="bg-white/[0.02] border border-white/[0.08] rounded-vueni-lg p-6">
             <h3 className="text-lg font-semibold text-white mb-4">
               Checkbox Options
             </h3>
@@ -101,7 +101,7 @@ const DropdownTestPage = () => {
           </div>
 
           {/* Radio Group Dropdown */}
-          <div className="bg-white/[0.02] border border-white/[0.08] rounded-2xl p-6">
+          <div className="bg-white/[0.02] border border-white/[0.08] rounded-vueni-lg p-6">
             <h3 className="text-lg font-semibold text-white mb-4">
               Radio Selection
             </h3>
@@ -132,7 +132,7 @@ const DropdownTestPage = () => {
           </div>
 
           {/* Complex Dropdown */}
-          <div className="bg-white/[0.02] border border-white/[0.08] rounded-2xl p-6">
+          <div className="bg-white/[0.02] border border-white/[0.08] rounded-vueni-lg p-6">
             <h3 className="text-lg font-semibold text-white mb-4">
               Complex Menu
             </h3>
@@ -168,7 +168,7 @@ const DropdownTestPage = () => {
           </div>
 
           {/* Dark Background Test */}
-          <div className="bg-black/30 border border-white/[0.15] rounded-2xl p-6">
+          <div className="bg-black/30 border border-white/[0.15] rounded-vueni-lg p-6">
             <h3 className="text-lg font-semibold text-white mb-4">
               Dark Background
             </h3>
@@ -195,7 +195,7 @@ const DropdownTestPage = () => {
           </div>
 
           {/* Light Background Test */}
-          <div className="bg-white/[0.15] border border-white/[0.25] rounded-2xl p-6">
+          <div className="bg-white/[0.15] border border-white/[0.25] rounded-vueni-lg p-6">
             <h3 className="text-lg font-semibold text-white mb-4">
               Light Background
             </h3>
@@ -222,7 +222,7 @@ const DropdownTestPage = () => {
           </div>
         </div>
 
-        <div className="bg-white/[0.02] border border-white/[0.08] rounded-2xl p-6">
+        <div className="bg-white/[0.02] border border-white/[0.08] rounded-vueni-lg p-6">
           <h3 className="text-xl font-semibold text-white mb-4">
             Visibility Improvements Summary
           </h3>

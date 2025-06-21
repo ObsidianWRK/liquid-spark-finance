@@ -24,7 +24,7 @@ const AccountsListPage = React.lazy(() => import('./pages/AccountsListPage'));
 // Loading component
 const LoadingSpinner = () => (
   <div className="min-h-screen bg-black flex items-center justify-center">
-    <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-blue-400"></div>
+    <div className="animate-spin rounded-vueni-pill h-32 w-32 border-b-2 border-blue-400"></div>
   </div>
 );
 
@@ -32,7 +32,7 @@ const LoadingSpinner = () => (
 const AccountLoadingFallback = () => (
   <div className="min-h-screen bg-black flex items-center justify-center">
     <div className="text-center">
-      <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500 mx-auto mb-4"></div>
+      <div className="animate-spin rounded-vueni-pill h-12 w-12 border-b-2 border-blue-500 mx-auto mb-4"></div>
       <p className="text-white/70">Loading account details...</p>
     </div>
   </div>
@@ -85,7 +85,7 @@ class ErrorBoundary extends React.Component<
                 error and will look into it.
               </p>
               {import.meta.env.DEV && this.state.errorMessage && (
-                <details className="mt-4 p-3 bg-red-900/20 border border-red-500/30 rounded-lg text-left">
+                <details className="mt-4 p-3 bg-red-900/20 border border-red-500/30 rounded-vueni-lg text-left">
                   <summary className="cursor-pointer text-red-400 font-medium">
                     Error Details (Development)
                   </summary>
@@ -98,13 +98,13 @@ class ErrorBoundary extends React.Component<
 
             <div className="flex flex-col sm:flex-row gap-3 justify-center">
               <button
-                className="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium"
+                className="px-6 py-3 bg-blue-600 text-white rounded-vueni-lg hover:bg-blue-700 transition-colors font-medium"
                 onClick={this.handleRetry}
               >
                 Try Again
               </button>
               <button
-                className="px-6 py-3 bg-white/10 text-white border border-white/20 rounded-lg hover:bg-white/20 transition-colors font-medium"
+                className="px-6 py-3 bg-white/10 text-white border border-white/20 rounded-vueni-lg hover:bg-white/20 transition-colors font-medium"
                 onClick={this.handleGoHome}
               >
                 Back to Home

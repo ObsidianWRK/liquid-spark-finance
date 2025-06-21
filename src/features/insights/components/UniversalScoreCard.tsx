@@ -157,7 +157,7 @@ const UniversalScoreCard = memo(
 
       return (
         <div
-          className={`flex items-center space-x-1 px-2 py-1 rounded-full ${variantStyles.trend}`}
+          className={`flex items-center space-x-1 px-2 py-1 rounded-vueni-pill ${variantStyles.trend}`}
         >
           {iconMap[trend]}
         </div>
@@ -168,7 +168,7 @@ const UniversalScoreCard = memo(
       <UniversalCard
         variant="glass"
         className={`
-        relative overflow-hidden rounded-2xl md:rounded-3xl hover:border-white/30 transition-all duration-500 group 
+        relative overflow-hidden rounded-vueni-lg md:rounded-vueni-lg hover:border-white/30 transition-all duration-500 group 
         ${config.padding} ${onClick ? 'cursor-pointer' : ''} ${variantStyles.container}
         ${animationsEnabled ? `animate-[slideInScale_0.8s_ease-out_${delay}ms_both]` : ''}
       `}
@@ -190,7 +190,7 @@ const UniversalScoreCard = memo(
           >
             <div className="flex items-center space-x-2 md:space-x-3">
               <div
-                className={`${config.iconPadding} rounded-xl md:rounded-2xl backdrop-blur-sm border border-white/20`}
+                className={`${config.iconPadding} rounded-vueni-lg md:rounded-vueni-lg backdrop-blur-sm border border-white/20`}
                 style={{ background: `${color}20` }}
               >
                 {React.cloneElement(icon, {

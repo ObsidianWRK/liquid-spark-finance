@@ -38,7 +38,7 @@ export const ErrorState: React.FC<ErrorStateProps> = ({
       )}
     >
       <div className="text-center max-w-md mx-auto px-6">
-        <div className="w-16 h-16 rounded-full bg-red-500/20 flex items-center justify-center mx-auto mb-4">
+        <div className="w-16 h-16 rounded-vueni-pill bg-red-500/20 flex items-center justify-center mx-auto mb-4">
           <AlertTriangle className="w-8 h-8 text-red-400" />
         </div>
         <h2 className="text-2xl font-bold text-red-400 mb-4">{title}</h2>

@@ -80,13 +80,13 @@ export const AccountCard: React.FC<Props> = ({
   return (
     <TooltipProvider>
       <div
-        className="relative rounded-2xl p-5 bg-black/40 backdrop-blur border border-white/10 flex flex-col h-72 w-full min-h-[18rem] cursor-pointer card-hover"
+        className="relative rounded-vueni-lg p-5 bg-black/40 backdrop-blur border border-white/10 flex flex-col h-72 w-full min-h-[18rem] cursor-pointer card-hover"
         onClick={handleCardClick}
       >
         {/* Gradient top border */}
         <div
           className={cn(
-            'absolute left-0 right-0 top-0 h-1 rounded-t-2xl bg-gradient-to-r',
+            'absolute left-0 right-0 top-0 h-1 rounded-t-vueni-lg bg-gradient-to-r',
             topGradient
           )}
         />
@@ -98,7 +98,7 @@ export const AccountCard: React.FC<Props> = ({
               <img
                 src={acct.institution.logo}
                 alt={acct.institution.name}
-                className="w-8 h-8 rounded-full object-cover flex-shrink-0"
+                className="w-8 h-8 rounded-vueni-pill object-cover flex-shrink-0"
               />
             )}
             <div className="min-w-0 flex-1">
@@ -129,7 +129,7 @@ export const AccountCard: React.FC<Props> = ({
           {clampedDelta !== null && (
             <span
               className={cn(
-                'flex items-center gap-1 text-xs font-medium px-2 py-1 rounded-full bg-white/10 flex-shrink-0',
+                'flex items-center gap-1 text-xs font-medium px-2 py-1 rounded-vueni-pill bg-white/10 flex-shrink-0',
                 deltaColor
               )}
             >
@@ -141,7 +141,7 @@ export const AccountCard: React.FC<Props> = ({
 
         {/* Key figures row - Two columns to prevent overlap */}
         <div className="grid grid-cols-2 gap-3 mb-4 text-sm">
-          <div className="bg-white/5 rounded-xl p-3">
+          <div className="bg-white/5 rounded-vueni-lg p-3">
             <div className="text-white/60 text-xs mb-1">Available</div>
             <div className="text-white font-semibold truncate">
               {showBalance
@@ -151,7 +151,7 @@ export const AccountCard: React.FC<Props> = ({
                 : '••••••'}
             </div>
           </div>
-          <div className="bg-white/5 rounded-xl p-3">
+          <div className="bg-white/5 rounded-vueni-lg p-3">
             <div className="text-white/60 text-xs mb-1">
               {acct.category === 'CREDIT' ? 'Utilization' : 'APY'}
             </div>
@@ -172,10 +172,10 @@ export const AccountCard: React.FC<Props> = ({
           clampedUtil !== null &&
           clampedUtil <= 100 && (
             <div className="mb-4">
-              <div className="h-2 bg-white/10 rounded-full overflow-hidden">
+              <div className="h-2 bg-white/10 rounded-vueni-pill overflow-hidden">
                 <div
                   className={cn(
-                    'h-full rounded-full',
+                    'h-full rounded-vueni-pill',
                     clampedUtil > 80
                       ? 'bg-red-500'
                       : clampedUtil > 60
@@ -219,7 +219,7 @@ export const AccountCard: React.FC<Props> = ({
         <div className="mt-auto flex gap-2">
           {/* Transfer button - for all account types */}
           <button
-            className="flex-1 bg-white/5 rounded-full h-8 flex items-center justify-center text-white text-xs hover:bg-white/10 transition-colors"
+            className="flex-1 bg-white/5 rounded-vueni-pill h-8 flex items-center justify-center text-white text-xs hover:bg-white/10 transition-colors"
             onClick={(e) => {
               e.stopPropagation();
               onAction?.(acct.id, 'transfer');
@@ -231,7 +231,7 @@ export const AccountCard: React.FC<Props> = ({
 
           {/* Pay/Spend button - contextual to account type */}
           <button
-            className="flex-1 bg-white/5 rounded-full h-8 flex items-center justify-center text-white text-xs hover:bg-white/10 transition-colors"
+            className="flex-1 bg-white/5 rounded-vueni-pill h-8 flex items-center justify-center text-white text-xs hover:bg-white/10 transition-colors"
             onClick={(e) => {
               e.stopPropagation();
               onAction?.(acct.id, 'pay');
@@ -248,7 +248,7 @@ export const AccountCard: React.FC<Props> = ({
           {/* Deposit/Save button - only for non-credit accounts */}
           {acct.category !== 'CREDIT' && (
             <button
-              className="flex-1 bg-white/5 rounded-full h-8 flex items-center justify-center text-white text-xs hover:bg-white/10 transition-colors"
+              className="flex-1 bg-white/5 rounded-vueni-pill h-8 flex items-center justify-center text-white text-xs hover:bg-white/10 transition-colors"
               onClick={(e) => {
                 e.stopPropagation();
                 onAction?.(acct.id, 'deposit');

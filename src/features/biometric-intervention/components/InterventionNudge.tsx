@@ -90,10 +90,10 @@ export const InterventionNudge: React.FC<InterventionNudgeProps> = ({
             <span>Stress Level</span>
             <span>{event.stressLevel.score}/100</span>
           </div>
-          <div className="w-full bg-white/10 rounded-full h-2">
+          <div className="w-full bg-white/10 rounded-vueni-pill h-2">
             <div
               className={cn(
-                'h-2 rounded-full transition-all duration-300',
+                'h-2 rounded-vueni-pill transition-all duration-300',
                 event.stressLevel.score >= 80
                   ? 'bg-red-400'
                   : event.stressLevel.score >= 60
@@ -112,7 +112,7 @@ export const InterventionNudge: React.FC<InterventionNudgeProps> = ({
 
         {/* Countdown Timer */}
         {countdown > 0 && (
-          <div className="flex items-center justify-center mb-4 p-2 bg-white/10 rounded-lg">
+          <div className="flex items-center justify-center mb-4 p-2 bg-white/10 rounded-vueni-lg">
             <Clock className="w-4 h-4 mr-2" />
             <span className="text-sm font-medium">
               Cooling off: {countdown}s

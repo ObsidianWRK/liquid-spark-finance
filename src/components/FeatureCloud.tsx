@@ -140,7 +140,7 @@ const FeatureCloud: React.FC<FeatureCloudProps> = ({
             onClick={() => handleKeywordClick(keyword)}
             className={cn(
               // CC: Liquid glass theme with 12px radius and surface.borderLight
-              'rounded-xl border border-white/[0.08] bg-white/[0.02] backdrop-blur-md',
+              'rounded-vueni-lg border border-white/[0.08] bg-white/[0.02] backdrop-blur-md',
               'flex items-center gap-2 cursor-pointer transition-all duration-300',
               'card-hover',
               'active:scale-95 select-none',
@@ -167,9 +167,9 @@ const FeatureCloud: React.FC<FeatureCloudProps> = ({
 
       {/* CC: Decorative background elements */}
       <div className="absolute inset-0 -z-10 overflow-hidden">
-        <div className="absolute top-1/4 left-1/4 w-32 h-32 bg-blue-500/10 rounded-full blur-3xl" />
-        <div className="absolute bottom-1/4 right-1/4 w-40 h-40 bg-purple-500/10 rounded-full blur-3xl" />
-        <div className="absolute top-3/4 left-1/2 w-24 h-24 bg-green-500/10 rounded-full blur-3xl" />
+        <div className="absolute top-1/4 left-1/4 w-32 h-32 bg-blue-500/10 rounded-vueni-pill blur-3xl" />
+        <div className="absolute bottom-1/4 right-1/4 w-40 h-40 bg-purple-500/10 rounded-vueni-pill blur-3xl" />
+        <div className="absolute top-3/4 left-1/2 w-24 h-24 bg-green-500/10 rounded-vueni-pill blur-3xl" />
       </div>
     </div>
   );

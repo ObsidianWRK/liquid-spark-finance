@@ -88,7 +88,7 @@ const BudgetReportsPage = () => {
         <div className="flex gap-3">
           {/* Month Selector */}
           <Select value={selectedMonth} onValueChange={setSelectedMonth}>
-            <SelectTrigger className="w-[140px] bg-white/10 border-white/20 text-white rounded-lg focus:border-blue-400">
+            <SelectTrigger className="w-[140px] bg-white/10 border-white/20 text-white rounded-vueni-lg focus:border-blue-400">
               <SelectValue placeholder="Month" />
             </SelectTrigger>
             <SelectContent className="bg-black/90 border-white/20 text-white">
@@ -109,7 +109,7 @@ const BudgetReportsPage = () => {
             value={String(selectedYear)}
             onValueChange={(val) => setSelectedYear(Number(val))}
           >
-            <SelectTrigger className="w-[100px] bg-white/10 border-white/20 text-white rounded-lg focus:border-blue-400">
+            <SelectTrigger className="w-[100px] bg-white/10 border-white/20 text-white rounded-vueni-lg focus:border-blue-400">
               <SelectValue placeholder="Year" />
             </SelectTrigger>
             <SelectContent className="bg-black/90 border-white/20 text-white">
@@ -228,9 +228,9 @@ const BudgetReportsPage = () => {
           {report.insights.map((insight, index) => (
             <div
               key={index}
-              className="flex items-start gap-3 p-3 bg-white/5 rounded-lg"
+              className="flex items-start gap-3 p-3 bg-white/5 rounded-vueni-lg"
             >
-              <div className="w-2 h-2 bg-blue-400 rounded-full mt-2 flex-shrink-0" />
+              <div className="w-2 h-2 bg-blue-400 rounded-vueni-pill mt-2 flex-shrink-0" />
               <p className="text-white/90">{insight}</p>
             </div>
           ))}

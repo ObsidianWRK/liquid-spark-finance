@@ -212,11 +212,11 @@ const TransactionManager = ({
         {[...Array(5)].map((_, i) => (
           <div
             key={i}
-            className="bg-white/[0.02] rounded-2xl border border-white/[0.08] p-4 animate-pulse"
+            className="bg-white/[0.02] rounded-vueni-lg border border-white/[0.08] p-4 animate-pulse"
           >
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-4">
-                <div className="w-12 h-12 bg-white/[0.05] rounded-2xl"></div>
+                <div className="w-12 h-12 bg-white/[0.05] rounded-vueni-lg"></div>
                 <div className="space-y-2">
                   <div className="h-4 bg-white/[0.05] rounded w-32"></div>
                   <div className="h-3 bg-white/[0.05] rounded w-24"></div>
@@ -234,7 +234,7 @@ const TransactionManager = ({
     <div className="space-y-6">
       {/* Header & Controls */}
       {!compact && (
-        <div className="bg-white/[0.02] rounded-2xl border border-white/[0.08] p-6">
+        <div className="bg-white/[0.02] rounded-vueni-lg border border-white/[0.08] p-6">
           <div className="flex items-center justify-between mb-6">
             <div>
               <h2 className="text-2xl font-bold text-white flex items-center gap-3">
@@ -257,7 +257,7 @@ const TransactionManager = ({
               <button
                 onClick={() => setShowFilters(!showFilters)}
                 className={cn(
-                  'liquid-glass-button px-4 py-2 rounded-xl transition-all flex items-center gap-2',
+                  'liquid-glass-button px-4 py-2 rounded-vueni-lg transition-all flex items-center gap-2',
                   showFilters
                     ? 'bg-blue-500/20 text-blue-400'
                     : 'text-white/80 hover:text-white'
@@ -267,12 +267,12 @@ const TransactionManager = ({
                 Filters
               </button>
 
-              <button className="liquid-glass-button px-4 py-2 rounded-xl text-white/80 hover:text-white transition-all flex items-center gap-2">
+              <button className="liquid-glass-button px-4 py-2 rounded-vueni-lg text-white/80 hover:text-white transition-all flex items-center gap-2">
                 <Upload className="w-4 h-4" />
                 Import
               </button>
 
-              <button className="liquid-glass-button px-4 py-2 rounded-xl text-white/80 hover:text-white transition-all flex items-center gap-2">
+              <button className="liquid-glass-button px-4 py-2 rounded-vueni-lg text-white/80 hover:text-white transition-all flex items-center gap-2">
                 <Download className="w-4 h-4" />
                 Export
               </button>
@@ -287,13 +287,13 @@ const TransactionManager = ({
               placeholder="Search transactions, merchants, descriptions..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-12 pr-4 py-3 bg-white/[0.05] border border-white/[0.08] rounded-xl text-white placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500/50"
+              className="w-full pl-12 pr-4 py-3 bg-white/[0.05] border border-white/[0.08] rounded-vueni-lg text-white placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500/50"
             />
           </div>
 
           {/* Advanced Filters */}
           {showFilters && (
-            <div className="bg-white/[0.03] rounded-xl p-4 border border-white/[0.05] space-y-4">
+            <div className="bg-white/[0.03] rounded-vueni-lg p-4 border border-white/[0.05] space-y-4">
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <div>
                   <label className="block text-sm font-medium text-white/80 mb-2">
@@ -301,7 +301,7 @@ const TransactionManager = ({
                   </label>
                   <select
                     multiple
-                    className="w-full bg-white/[0.05] border border-white/[0.08] rounded-lg text-white text-sm"
+                    className="w-full bg-white/[0.05] border border-white/[0.08] rounded-vueni-lg text-white text-sm"
                   >
                     {Object.values([
                       'income',
@@ -323,7 +323,7 @@ const TransactionManager = ({
                   <label className="block text-sm font-medium text-white/80 mb-2">
                     Date Range
                   </label>
-                  <select className="w-full bg-white/[0.05] border border-white/[0.08] rounded-lg text-white text-sm py-2 px-3">
+                  <select className="w-full bg-white/[0.05] border border-white/[0.08] rounded-vueni-lg text-white text-sm py-2 px-3">
                     <option value="">All Time</option>
                     <option value="7d">Last 7 Days</option>
                     <option value="30d">Last 30 Days</option>
@@ -340,12 +340,12 @@ const TransactionManager = ({
                     <input
                       type="number"
                       placeholder="Min"
-                      className="flex-1 bg-white/[0.05] border border-white/[0.08] rounded-lg text-white text-sm py-2 px-3"
+                      className="flex-1 bg-white/[0.05] border border-white/[0.08] rounded-vueni-lg text-white text-sm py-2 px-3"
                     />
                     <input
                       type="number"
                       placeholder="Max"
-                      className="flex-1 bg-white/[0.05] border border-white/[0.08] rounded-lg text-white text-sm py-2 px-3"
+                      className="flex-1 bg-white/[0.05] border border-white/[0.08] rounded-vueni-lg text-white text-sm py-2 px-3"
                     />
                   </div>
                 </div>
@@ -380,7 +380,7 @@ const TransactionManager = ({
               <div className="flex items-center gap-2">
                 <button
                   onClick={handleSelectAll}
-                  className="p-2 rounded-lg hover:bg-white/[0.05] transition-colors"
+                  className="p-2 rounded-vueni-lg hover:bg-white/[0.05] transition-colors"
                 >
                   {selectedTransactions.size === transactions.length ? (
                     <CheckSquare className="w-4 h-4 text-blue-400" />
@@ -403,7 +403,7 @@ const TransactionManager = ({
               <select
                 value={sortBy}
                 onChange={(e) => setSortBy(e.target.value as any)}
-                className="bg-white/[0.05] border border-white/[0.08] rounded-lg text-white text-sm py-1 px-2"
+                className="bg-white/[0.05] border border-white/[0.08] rounded-vueni-lg text-white text-sm py-1 px-2"
               >
                 <option value="date">Date</option>
                 <option value="amount">Amount</option>
@@ -424,7 +424,7 @@ const TransactionManager = ({
 
       {/* Bulk Actions Bar */}
       {showBulkActions && (
-        <div className="bg-blue-500/10 border border-blue-500/20 rounded-xl p-4">
+        <div className="bg-blue-500/10 border border-blue-500/20 rounded-vueni-lg p-4">
           <div className="flex items-center justify-between">
             <span className="text-blue-400 font-medium">
               {selectedTransactions.size} transaction
@@ -437,7 +437,7 @@ const TransactionManager = ({
                   e.target.value &&
                   handleBulkUpdate({ changes: { category: e.target.value } })
                 }
-                className="bg-white/[0.05] border border-white/[0.08] rounded-lg text-white text-sm py-2 px-3"
+                className="bg-white/[0.05] border border-white/[0.08] rounded-vueni-lg text-white text-sm py-2 px-3"
               >
                 <option value="">Set Category...</option>
                 {Object.values([
@@ -459,7 +459,7 @@ const TransactionManager = ({
                 onClick={() =>
                   handleBulkUpdate({ changes: { excludeFromBudget: true } })
                 }
-                className="px-3 py-2 bg-white/[0.05] border border-white/[0.08] rounded-lg text-white/80 hover:text-white text-sm transition-colors"
+                className="px-3 py-2 bg-white/[0.05] border border-white/[0.08] rounded-vueni-lg text-white/80 hover:text-white text-sm transition-colors"
               >
                 Exclude from Budget
               </button>
@@ -478,7 +478,7 @@ const TransactionManager = ({
       {/* Transaction List */}
       <div className="space-y-3">
         {sortedTransactions.length === 0 ? (
-          <div className="bg-white/[0.02] rounded-2xl border border-white/[0.08] p-12 text-center">
+          <div className="bg-white/[0.02] rounded-vueni-lg border border-white/[0.08] p-12 text-center">
             <DollarSign className="w-16 h-16 text-white/20 mx-auto mb-4" />
             <h3 className="text-xl font-bold text-white mb-2">
               No Transactions Found
@@ -494,7 +494,7 @@ const TransactionManager = ({
             <div
               key={transaction.id}
               className={cn(
-                'bg-white/[0.02] rounded-2xl border border-white/[0.08] p-4 hover:bg-white/[0.03] transition-all duration-300 backdrop-blur-md',
+                'bg-white/[0.02] rounded-vueni-lg border border-white/[0.08] p-4 hover:bg-white/[0.03] transition-all duration-300 backdrop-blur-md',
                 selectedTransactions.has(transaction.id) &&
                   'ring-2 ring-blue-500/50 bg-blue-500/5'
               )}
@@ -519,7 +519,7 @@ const TransactionManager = ({
 
                 {/* Transaction Icon */}
                 <div className="flex-shrink-0">
-                  <div className="w-12 h-12 rounded-2xl bg-white/[0.06] flex items-center justify-center">
+                  <div className="w-12 h-12 rounded-vueni-lg bg-white/[0.06] flex items-center justify-center">
                     {getTransactionIcon(transaction)}
                   </div>
                 </div>
@@ -534,7 +534,7 @@ const TransactionManager = ({
                       <div className="flex items-center gap-3 mt-1">
                         <span
                           className={cn(
-                            'text-xs px-2 py-1 rounded-lg border font-medium',
+                            'text-xs px-2 py-1 rounded-vueni-lg border font-medium',
                             getCategoryColor(transaction.category)
                           )}
                         >
@@ -583,7 +583,7 @@ const TransactionManager = ({
 
                     {/* Action Menu */}
                     <div className="flex-shrink-0 ml-2">
-                      <button className="p-2 rounded-lg hover:bg-white/[0.05] transition-colors">
+                      <button className="p-2 rounded-vueni-lg hover:bg-white/[0.05] transition-colors">
                         <MoreHorizontal className="w-4 h-4 text-white/60" />
                       </button>
                     </div>

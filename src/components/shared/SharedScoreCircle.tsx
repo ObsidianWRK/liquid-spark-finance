@@ -91,7 +91,7 @@ export const SharedScoreCircle = memo(
       <div className={cn('flex flex-col items-center gap-1', className)}>
         <div
           className={cn(
-            'relative flex items-center justify-center rounded-full border-2 transition-all',
+            'relative flex items-center justify-center rounded-vueni-pill border-2 transition-all',
             sizeClasses[size],
             getScoreColor(normalizedScore, type),
             getScoreBackground(normalizedScore, type),

@@ -126,11 +126,11 @@ const CreditScorePage = () => {
       <div className="min-h-screen bg-black text-white">
         <div className="responsive-padding-md space-y-4 sm:space-y-6 animate-pulse">
           <div className="h-6 sm:h-8 bg-white/[0.05] rounded w-32 sm:w-48"></div>
-          <div className="h-48 sm:h-64 md:h-80 bg-white/[0.02] rounded-2xl sm:rounded-3xl border border-white/[0.08]"></div>
+          <div className="h-48 sm:h-64 md:h-80 bg-white/[0.02] rounded-vueni-lg sm:rounded-vueni-lg border border-white/[0.08]"></div>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6">
-            <div className="h-24 sm:h-32 bg-white/[0.02] rounded-2xl sm:rounded-3xl border border-white/[0.08]"></div>
-            <div className="h-24 sm:h-32 bg-white/[0.02] rounded-2xl sm:rounded-3xl border border-white/[0.08]"></div>
-            <div className="h-24 sm:h-32 bg-white/[0.02] rounded-2xl sm:rounded-3xl border border-white/[0.08] sm:block hidden"></div>
+            <div className="h-24 sm:h-32 bg-white/[0.02] rounded-vueni-lg sm:rounded-vueni-lg border border-white/[0.08]"></div>
+            <div className="h-24 sm:h-32 bg-white/[0.02] rounded-vueni-lg sm:rounded-vueni-lg border border-white/[0.08]"></div>
+            <div className="h-24 sm:h-32 bg-white/[0.02] rounded-vueni-lg sm:rounded-vueni-lg border border-white/[0.08] sm:block hidden"></div>
           </div>
         </div>
       </div>
@@ -147,7 +147,7 @@ const CreditScorePage = () => {
             label="Back to Dashboard"
           />
 
-          <div className="bg-white/[0.02] rounded-2xl sm:rounded-3xl border border-white/[0.08] p-6 sm:p-8 text-center">
+          <div className="bg-white/[0.02] rounded-vueni-lg sm:rounded-vueni-lg border border-white/[0.08] p-6 sm:p-8 text-center">
             <AlertCircle className="w-12 h-12 sm:w-16 sm:h-16 text-orange-400 mx-auto mb-4" />
             <h2 className="text-xl sm:text-2xl font-bold mb-2">
               Credit Score Unavailable
@@ -181,7 +181,7 @@ const CreditScorePage = () => {
         </div>
 
         {/* Score Overview Card */}
-        <div className="bg-white/[0.02] rounded-2xl sm:rounded-3xl border border-white/[0.08] p-4 sm:p-6 md:p-8">
+        <div className="bg-white/[0.02] rounded-vueni-lg sm:rounded-vueni-lg border border-white/[0.08] p-4 sm:p-6 md:p-8">
           <div className="flex flex-col lg:flex-row items-center lg:items-start gap-6 sm:gap-8">
             {/* Score Display */}
             <div className="text-center flex-shrink-0 w-full lg:w-auto">
@@ -196,7 +196,7 @@ const CreditScorePage = () => {
                 >
                   {creditScore.scoreRange} Credit
                 </div>
-                <div className="text-xs sm:text-sm text-gray-500 bg-white/[0.05] px-3 py-1 rounded-full inline-block">
+                <div className="text-xs sm:text-sm text-gray-500 bg-white/[0.05] px-3 py-1 rounded-vueni-pill inline-block">
                   {creditScore.provider} Score
                 </div>
               </div>
@@ -249,7 +249,7 @@ const CreditScorePage = () => {
                     <div
                       key={index}
                       className={cn(
-                        'flex items-center justify-between p-3 sm:p-4 rounded-lg transition-all min-h-[44px]',
+                        'flex items-center justify-between p-3 sm:p-4 rounded-vueni-lg transition-all min-h-[44px]',
                         item.current
                           ? 'bg-white/[0.05] border border-white/[0.1]'
                           : 'hover:bg-white/[0.02]'
@@ -257,7 +257,7 @@ const CreditScorePage = () => {
                     >
                       <div className="flex items-center space-x-3">
                         <div
-                          className={cn('w-3 h-3 rounded-full', item.color)}
+                          className={cn('w-3 h-3 rounded-vueni-pill', item.color)}
                         />
                         <span
                           className={cn(
@@ -279,7 +279,7 @@ const CreditScorePage = () => {
                 </div>
               </div>
 
-              <div className="bg-white/[0.02] rounded-lg p-4 border border-white/[0.05]">
+              <div className="bg-white/[0.02] rounded-vueni-lg p-4 border border-white/[0.05]">
                 <h4 className="text-base sm:text-lg font-semibold text-white mb-2">
                   What this means
                 </h4>
@@ -295,7 +295,7 @@ const CreditScorePage = () => {
         </div>
 
         {/* Tab Navigation - Mobile-first responsive */}
-        <div className="bg-white/[0.02] rounded-2xl sm:rounded-3xl p-1 border border-white/[0.08]">
+        <div className="bg-white/[0.02] rounded-vueni-lg sm:rounded-vueni-lg p-1 border border-white/[0.08]">
           {/* Mobile: Scrollable tabs */}
           <div className="flex sm:hidden overflow-x-auto gap-1 pb-1 scrollbar-hide">
             {[
@@ -310,7 +310,7 @@ const CreditScorePage = () => {
                   key={tab.id}
                   onClick={() => setActiveTab(tab.id as typeof activeTab)}
                   className={cn(
-                    'flex items-center gap-2 px-3 py-2 rounded-lg transition-all text-xs whitespace-nowrap flex-shrink-0 min-h-[44px] min-w-[80px]',
+                    'flex items-center gap-2 px-3 py-2 rounded-vueni-lg transition-all text-xs whitespace-nowrap flex-shrink-0 min-h-[44px] min-w-[80px]',
                     activeTab === tab.id
                       ? 'bg-blue-500 text-white'
                       : 'text-gray-400 hover:text-white hover:bg-white/[0.05]'
@@ -337,7 +337,7 @@ const CreditScorePage = () => {
                   key={tab.id}
                   onClick={() => setActiveTab(tab.id as typeof activeTab)}
                   className={cn(
-                    'flex items-center justify-center gap-2 px-4 py-3 text-sm font-medium rounded-lg transition-all min-h-[48px]',
+                    'flex items-center justify-center gap-2 px-4 py-3 text-sm font-medium rounded-vueni-lg transition-all min-h-[48px]',
                     activeTab === tab.id
                       ? 'bg-blue-500 text-white shadow-lg'
                       : 'text-gray-400 hover:text-white hover:bg-white/[0.05]'
@@ -356,9 +356,9 @@ const CreditScorePage = () => {
         <div className="space-y-4 sm:space-y-6">
           {activeTab === 'overview' && (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
-              <div className="bg-white/[0.02] rounded-2xl sm:rounded-3xl border border-white/[0.08] p-4 sm:p-6 transition-all duration-300 hover:bg-white/[0.05] hover:border-white/[0.15] hover:transform hover:scale-[1.02] cursor-pointer">
+              <div className="bg-white/[0.02] rounded-vueni-lg sm:rounded-vueni-lg border border-white/[0.08] p-4 sm:p-6 transition-all duration-300 hover:bg-white/[0.05] hover:border-white/[0.15] hover:transform hover:scale-[1.02] cursor-pointer">
                 <div className="flex items-center space-x-3 mb-4">
-                  <div className="w-10 h-10 sm:w-12 sm:h-12 bg-blue-500/20 rounded-lg flex items-center justify-center transition-all duration-300 group-hover:bg-blue-500/30">
+                  <div className="w-10 h-10 sm:w-12 sm:h-12 bg-blue-500/20 rounded-vueni-lg flex items-center justify-center transition-all duration-300 group-hover:bg-blue-500/30">
                     <CreditCard className="w-5 h-5 sm:w-6 sm:h-6 text-blue-400" />
                   </div>
                   <div className="min-w-0 flex-1">
@@ -378,9 +378,9 @@ const CreditScorePage = () => {
                 </div>
               </div>
 
-              <div className="bg-white/[0.02] rounded-2xl sm:rounded-3xl border border-white/[0.08] p-4 sm:p-6 transition-all duration-300 hover:bg-white/[0.05] hover:border-white/[0.15] hover:transform hover:scale-[1.02] cursor-pointer">
+              <div className="bg-white/[0.02] rounded-vueni-lg sm:rounded-vueni-lg border border-white/[0.08] p-4 sm:p-6 transition-all duration-300 hover:bg-white/[0.05] hover:border-white/[0.15] hover:transform hover:scale-[1.02] cursor-pointer">
                 <div className="flex items-center space-x-3 mb-4">
-                  <div className="w-10 h-10 sm:w-12 sm:h-12 bg-green-500/20 rounded-lg flex items-center justify-center transition-all duration-300 group-hover:bg-green-500/30">
+                  <div className="w-10 h-10 sm:w-12 sm:h-12 bg-green-500/20 rounded-vueni-lg flex items-center justify-center transition-all duration-300 group-hover:bg-green-500/30">
                     <Calendar className="w-5 h-5 sm:w-6 sm:h-6 text-green-400" />
                   </div>
                   <div className="min-w-0 flex-1">
@@ -400,9 +400,9 @@ const CreditScorePage = () => {
                 </div>
               </div>
 
-              <div className="bg-white/[0.02] rounded-2xl sm:rounded-3xl border border-white/[0.08] p-4 sm:p-6 sm:col-span-2 lg:col-span-1 transition-all duration-300 hover:bg-white/[0.05] hover:border-white/[0.15] hover:transform hover:scale-[1.02] cursor-pointer">
+              <div className="bg-white/[0.02] rounded-vueni-lg sm:rounded-vueni-lg border border-white/[0.08] p-4 sm:p-6 sm:col-span-2 lg:col-span-1 transition-all duration-300 hover:bg-white/[0.05] hover:border-white/[0.15] hover:transform hover:scale-[1.02] cursor-pointer">
                 <div className="flex items-center space-x-3 mb-4">
-                  <div className="w-10 h-10 sm:w-12 sm:h-12 bg-purple-500/20 rounded-lg flex items-center justify-center transition-all duration-300 group-hover:bg-purple-500/30">
+                  <div className="w-10 h-10 sm:w-12 sm:h-12 bg-purple-500/20 rounded-vueni-lg flex items-center justify-center transition-all duration-300 group-hover:bg-purple-500/30">
                     <TrendingUp className="w-5 h-5 sm:w-6 sm:h-6 text-purple-400" />
                   </div>
                   <div className="min-w-0 flex-1">
@@ -425,7 +425,7 @@ const CreditScorePage = () => {
           )}
 
           {activeTab === 'factors' && (
-            <div className="bg-white/[0.02] rounded-2xl sm:rounded-3xl border border-white/[0.08] p-4 sm:p-6">
+            <div className="bg-white/[0.02] rounded-vueni-lg sm:rounded-vueni-lg border border-white/[0.08] p-4 sm:p-6">
               <h3 className="text-lg sm:text-xl font-bold text-white mb-4 sm:mb-6">
                 Factors Affecting Your Score
               </h3>
@@ -433,7 +433,7 @@ const CreditScorePage = () => {
                 {creditScore.factors?.map((factor, index) => (
                   <div
                     key={index}
-                    className="flex flex-col sm:flex-row sm:items-center justify-between p-3 sm:p-4 bg-white/[0.02] rounded-lg gap-3 sm:gap-0"
+                    className="flex flex-col sm:flex-row sm:items-center justify-between p-3 sm:p-4 bg-white/[0.02] rounded-vueni-lg gap-3 sm:gap-0"
                   >
                     <div className="flex-1 min-w-0">
                       <div className="font-medium text-white text-sm sm:text-base">
@@ -462,7 +462,7 @@ const CreditScorePage = () => {
           )}
 
           {activeTab === 'history' && (
-            <div className="bg-white/[0.02] rounded-2xl sm:rounded-3xl border border-white/[0.08] p-4 sm:p-6">
+            <div className="bg-white/[0.02] rounded-vueni-lg sm:rounded-vueni-lg border border-white/[0.08] p-4 sm:p-6">
               <h3 className="text-lg sm:text-xl font-bold text-white mb-4 sm:mb-6">
                 Score History
               </h3>
@@ -480,12 +480,12 @@ const CreditScorePage = () => {
               {creditTips.map((tip, index) => (
                 <div
                   key={index}
-                  className="bg-white/[0.02] rounded-2xl sm:rounded-3xl border border-white/[0.08] p-4 sm:p-6"
+                  className="bg-white/[0.02] rounded-vueni-lg sm:rounded-vueni-lg border border-white/[0.08] p-4 sm:p-6"
                 >
                   <div className="flex flex-col sm:flex-row sm:items-start space-y-4 sm:space-y-0 sm:space-x-4">
                     <div
                       className={cn(
-                        'w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0',
+                        'w-10 h-10 rounded-vueni-lg flex items-center justify-center flex-shrink-0',
                         tip.impact === 'High' && 'bg-red-500/20',
                         tip.impact === 'Medium' && 'bg-yellow-500/20',
                         tip.impact === 'Low' && 'bg-green-500/20'
@@ -507,7 +507,7 @@ const CreditScorePage = () => {
                         </h4>
                         <span
                           className={cn(
-                            'text-xs px-2 py-1 rounded-full w-fit',
+                            'text-xs px-2 py-1 rounded-vueni-pill w-fit',
                             tip.impact === 'High' &&
                               'bg-red-500/20 text-red-400',
                             tip.impact === 'Medium' &&

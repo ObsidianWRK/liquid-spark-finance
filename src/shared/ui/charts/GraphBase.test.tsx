@@ -23,7 +23,7 @@ const GraphBaseTest: React.FC = () => {
         </h1>
 
         {/* Basic Line Chart */}
-        <div className="bg-white/5 p-6 rounded-2xl border border-white/10">
+        <div className="bg-white/5 p-6 rounded-vueni-lg border border-white/10">
           <GraphBase
             data={testData}
             type="line"
@@ -35,7 +35,7 @@ const GraphBaseTest: React.FC = () => {
         </div>
 
         {/* Multi-series Area Chart */}
-        <div className="bg-white/5 p-6 rounded-2xl border border-white/10">
+        <div className="bg-white/5 p-6 rounded-vueni-lg border border-white/10">
           <GraphBase
             data={testData}
             type="area"
@@ -51,7 +51,7 @@ const GraphBaseTest: React.FC = () => {
         </div>
 
         {/* Bar Chart */}
-        <div className="bg-white/5 p-6 rounded-2xl border border-white/10">
+        <div className="bg-white/5 p-6 rounded-vueni-lg border border-white/10">
           <GraphBase
             data={testData}
             type="bar"
@@ -64,7 +64,7 @@ const GraphBaseTest: React.FC = () => {
         </div>
 
         {/* Loading State Test */}
-        <div className="bg-white/5 p-6 rounded-2xl border border-white/10">
+        <div className="bg-white/5 p-6 rounded-vueni-lg border border-white/10">
           <GraphBase
             data={[]}
             type="line"
@@ -75,7 +75,7 @@ const GraphBaseTest: React.FC = () => {
         </div>
 
         {/* Error State Test */}
-        <div className="bg-white/5 p-6 rounded-2xl border border-white/10">
+        <div className="bg-white/5 p-6 rounded-vueni-lg border border-white/10">
           <GraphBase
             data={[]}
             type="line"

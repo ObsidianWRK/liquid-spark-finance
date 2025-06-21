@@ -306,7 +306,7 @@ const NavBar: React.FC<NavBarProps> = ({
                     // Base button styles
                     'flex flex-col items-center justify-center transition-all duration-300',
                     'focus:outline-none focus:ring-2 focus:ring-blue-400/50 focus:ring-offset-2 focus:ring-offset-transparent',
-                    'touch-manipulation rounded-xl',
+                    'touch-manipulation rounded-vueni-lg',
 
                     // Touch target size
                     `min-w-[${TOUCH_TARGET_SIZE}px] min-h-[${TOUCH_TARGET_SIZE}px]`,
@@ -346,7 +346,7 @@ const NavBar: React.FC<NavBarProps> = ({
                       <span
                         className={cn(
                           'absolute -top-1 -right-1 min-w-[16px] h-4 px-1',
-                          'bg-red-500 text-white text-xs font-bold rounded-full',
+                          'bg-red-500 text-white text-xs font-bold rounded-vueni-pill',
                           'flex items-center justify-center border border-black/20',
                           'animate-pulse'
                         )}
@@ -385,7 +385,7 @@ const NavBar: React.FC<NavBarProps> = ({
               onClick={handleFabPress}
               className={cn(
                 // Base FAB styles
-                'absolute rounded-full shadow-lg transition-all duration-300',
+                'absolute rounded-vueni-pill shadow-lg transition-all duration-300',
                 'focus:outline-none focus:ring-2 focus:ring-blue-400/50 focus:ring-offset-2',
                 'touch-manipulation',
 
