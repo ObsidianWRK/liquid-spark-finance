@@ -474,6 +474,7 @@
 }
 
 /* Explicit dark mode */
+[data-theme='dark'] .liquid-glass-nav,
 .dark .liquid-glass-nav {
   --nav-glass-primary: rgba(0, 0, 0, 0.3);
   --nav-glass-secondary: rgba(0, 0, 0, 0.4);
