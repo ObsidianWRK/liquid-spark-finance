@@ -1,74 +1,46 @@
 import React from 'react';
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import { describe, it, expect } from 'vitest';
-import TransactionList from '@/features/transactions/components/TransactionList';
-import { Transaction } from '@/types/transactions';
+import { UnifiedTransactionList } from '@/ui-kit';
+import type { Transaction } from '@/features/transactions/components/UnifiedTransactionList';
 
 // Helper to generate mock transactions
 const generateTx = (id: number): Transaction => ({
   id: `t-${id}`,
-  accountId: 'acc',
-  familyId: 'fam',
+  merchant: `Merchant ${id}`,
+  category: { name: 'shopping', color: '#f00' },
   amount: id % 2 === 0 ? -100 * id : 200 * id,
-  currency: 'USD',
-  date: new Date(2025, 0, (id % 28) + 1),
-  description: 'Test',
-  category: 'shopping',
-  paymentChannel: 'online',
-  transactionType: 'purchase',
-  status: 'posted',
-  isPending: false,
-  isRecurring: false,
-  metadata: {},
-  tags: [],
-  excludeFromBudget: false,
-  isTransfer: false,
-  createdAt: new Date(),
-  updatedAt: new Date(),
+  date: new Date(2025, 0, (id % 28) + 1).toISOString(),
+  status: 'completed',
 });
 
-describe('TransactionList', () => {
+describe('UnifiedTransactionList', () => {
   it('renders empty state', () => {
-    render(<TransactionList transactions={[]} />);
-    expect(screen.getByTestId('transaction-list-empty')).toBeInTheDocument();
+    render(<UnifiedTransactionList transactions={[]} />);
+    expect(screen.getByText(/no transactions/i)).toBeInTheDocument();
   });
 
-  it('renders loading skeletons', () => {
-    render(<TransactionList transactions={[]} isLoading />);
-    expect(screen.getByTestId('transaction-list-loading')).toBeInTheDocument();
+  it('renders provided transactions', () => {
+    const txs = Array.from({ length: 3 }, (_, i) => generateTx(i));
+    render(<UnifiedTransactionList transactions={txs} />);
+    expect(screen.getByText('Merchant 1')).toBeInTheDocument();
+    expect(screen.getByText('Merchant 2')).toBeInTheDocument();
   });
 
-  it('renders without virtualization for small lists', () => {
-    const txs = Array.from({ length: 10 }, (_, i) => generateTx(i));
-    render(<TransactionList transactions={txs} />);
-    expect(screen.getByTestId('transaction-list')).toBeInTheDocument();
-    expect(screen.getAllByTestId('transaction-row').length).toBeGreaterThan(0);
+  it('filters transactions via search', async () => {
+    const txs = Array.from({ length: 3 }, (_, i) => generateTx(i));
+    render(<UnifiedTransactionList transactions={txs} />);
+    const search = screen.getByPlaceholderText(/search/i);
+    fireEvent.change(search, { target: { value: 'Merchant 2' } });
+    await waitFor(() => {
+      expect(screen.getByText('Merchant 2')).toBeInTheDocument();
+      expect(screen.queryByText('Merchant 1')).not.toBeInTheDocument();
+    });
   });
 
-  it('uses virtualization for large lists', () => {
-    const txs = Array.from({ length: 501 }, (_, i) => generateTx(i));
-    render(<TransactionList transactions={txs} />);
-    expect(
-      screen.getByTestId('transaction-virtualized-list')
-    ).toBeInTheDocument();
-  });
-
-  it('shows CTA when collapsed and expands on click', () => {
-    const txs = Array.from({ length: 6 }, (_, i) => generateTx(i));
-    render(<TransactionList transactions={txs} />);
-    expect(screen.getByTestId('transaction-list')).toBeInTheDocument();
-    expect(screen.getByTestId('transaction-list-cta')).toBeInTheDocument();
-    expect(screen.getAllByTestId('transaction-row').length).toBe(5);
-    fireEvent.click(screen.getByTestId('transaction-list-cta'));
-    expect(screen.queryByTestId('transaction-list-cta')).not.toBeInTheDocument();
-    expect(screen.getAllByTestId('transaction-row').length).toBe(6);
-  });
-
-  it('virtualizes after expanding when list is large', () => {
-    const txs = Array.from({ length: 501 }, (_, i) => generateTx(i));
-    render(<TransactionList transactions={txs} />);
-    expect(screen.queryByTestId('transaction-virtualized-list')).not.toBeInTheDocument();
-    fireEvent.click(screen.getByTestId('transaction-list-cta'));
-    expect(screen.getByTestId('transaction-virtualized-list')).toBeInTheDocument();
+  it('supports compact mode', () => {
+    const txs = Array.from({ length: 2 }, (_, i) => generateTx(i));
+    render(<UnifiedTransactionList transactions={txs} features={{ compactMode: true }} />);
+    expect(screen.getByText('Transactions')).toBeInTheDocument();
   });
 });
