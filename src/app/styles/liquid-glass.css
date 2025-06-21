@@ -309,3 +309,42 @@
     display: none !important;
   }
 }
+
+/* Liquid Glass Effects - Updated to use Vueni tokens */
+
+/* Glass morphism base */
+.liquid-glass {
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  background: var(--vueni-glass-default, rgba(81, 106, 200, 0.06));
+  border: 1px solid var(--vueni-glass-border, rgba(81, 106, 200, 0.08));
+  border-radius: 12px;
+}
+
+/* Glass variants */
+.liquid-glass-subtle {
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  background: var(--vueni-glass-subtle, rgba(81, 106, 200, 0.03));
+  border: 1px solid var(--vueni-glass-border, rgba(81, 106, 200, 0.08));
+}
+
+.liquid-glass-prominent {
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  background: var(--vueni-glass-prominent, rgba(81, 106, 200, 0.12));
+  border: 1px solid var(--vueni-glass-border, rgba(81, 106, 200, 0.08));
+}
+
+/* Glass navigation */
+.liquid-glass-nav {
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  background: var(--vueni-surface-primary, #0F1939);
+  border: 1px solid var(--vueni-glass-border, rgba(81, 106, 200, 0.08));
+}
+
+/* Override any legacy border colors */
+.liquid-glass-override {
+  border: 1px solid var(--vueni-glass-border, rgba(81, 106, 200, 0.08)) !important;
+}

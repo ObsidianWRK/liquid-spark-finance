@@ -39,5 +39,57 @@
 }
 
 .read-the-docs {
-  color: #888;
+  color: var(--vueni-text-muted, rgba(255, 255, 255, 0.4));
+}
+
+/* App.css - Updated to use Vueni tokens */
+
+/* Remove focus outline from buttons to prevent duplicated focus styles */
+button:focus {
+  outline: none;
+}
+
+/* Global focus styles for accessibility */
+:focus-visible {
+  outline: 2px solid var(--vueni-primary, #516AC8);
+  outline-offset: 2px;
+}
+
+/* Layout helpers */
+.flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.full-height {
+  height: 100vh;
+}
+
+.content-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+/* Responsive helpers */
+@media (max-width: 768px) {
+  .content-container {
+    padding: 0 0.5rem;
+  }
+}
+
+/* Text utilities */
+.text-muted {
+  color: var(--vueni-text-muted, rgba(255, 255, 255, 0.4));
+}
+
+.text-secondary {
+  color: var(--vueni-text-secondary, rgba(255, 255, 255, 0.8));
+}
+
+/* Loading states */
+.loading {
+  opacity: 0.6;
+  pointer-events: none;
 }

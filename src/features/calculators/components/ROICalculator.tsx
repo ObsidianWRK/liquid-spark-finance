@@ -204,14 +204,14 @@ const ROICalculator = React.memo(() => {
                   />
                   <XAxis
                     dataKey="investment"
-                    stroke="#fff"
+                    stroke="var(--vueni-text-primary, #FFFFFF)"
                     fontSize={12}
                     angle={-45}
                     textAnchor="end"
                     height={60}
                   />
                   <YAxis
-                    stroke="#fff"
+                    stroke="var(--vueni-text-primary, #FFFFFF)"
                     fontSize={12}
                     tickFormatter={(value) => formatCurrency(value)}
                   />

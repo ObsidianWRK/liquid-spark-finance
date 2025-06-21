@@ -1,12 +1,16 @@
 /**
  * Apple HIG-compliant design tokens for charts and graphs
  *
- * TEMPORARY FILE: Re-exports chart system from unified.ts
- * This file exists to maintain backward compatibility with existing chart imports
- * while the unified theme system is being rolled out.
+ * Updated to use Vueni 5-color sequence from unified theme system
+ * 1. #516AC8 (Sapphire Dust)
+ * 2. #E3AF64 (Caramel Essence)  
+ * 3. #26428B (Blue Oblivion)
+ * 4. #4ABA70 (Success Green)
+ * 5. #8B8478 (Neutral 500)
  */
 
 import { vueniTheme } from './unified';
+import { VueniCharts } from './colors/vueniPalette';
 
 // Re-export chart system from unified theme
 export const appleGraphTokens = vueniTheme.charts;
@@ -33,10 +37,24 @@ export const {
   chartDrawing: optimalAnimationDuration,
 } = vueniTheme.charts.animation.duration;
 
-// Utility functions for backward compatibility
+// Utility functions for enhanced chart color management
 
 /**
- * Get a graph color based on type and theme
+ * Get series color by index using Vueni 5-color sequence
+ */
+export const getSeriesColor = (index: number): string => {
+  return VueniCharts.primary[index % VueniCharts.primary.length];
+};
+
+/**
+ * Get multiple series colors for multi-series charts
+ */
+export const getSeriesColors = (count: number): string[] => {
+  return Array.from({ length: count }, (_, i) => getSeriesColor(i));
+};
+
+/**
+ * Get a graph color based on type and theme (updated with Vueni colors)
  */
 export const getGraphColor = (
   type:
@@ -56,21 +74,30 @@ export const getGraphColor = (
   switch (type) {
     case 'income':
     case 'positive':
-      return chartColors.positive;
+      return chartColors.positive; // #4ABA70
     case 'spending':
     case 'negative':
-      return chartColors.negative;
+      return chartColors.negative; // #D64545
     case 'savings':
     case 'neutral':
-      return chartColors.neutral;
+      return chartColors.neutral; // #516AC8
     case 'investments':
-      return chartColors.extended.purple;
+      return chartColors.extended.tertiary; // #26428B - Blue Oblivion
     case 'debt':
     case 'warning':
-      return chartColors.warning;
+      return chartColors.warning; // #E3AF64
     default:
-      return chartColors.neutral;
+      return chartColors.neutral; // #516AC8
   }
+};
+
+/**
+ * Get chart color by semantic meaning
+ */
+export const getChartColorSemantic = (
+  semantic: 'primary' | 'secondary' | 'tertiary' | 'quaternary' | 'quinary' | 'senary'
+): string => {
+  return vueniTheme.charts.colors.extended[semantic];
 };
 
 /**
@@ -142,17 +169,17 @@ export const getBackgroundColor = (
 
   switch (variant) {
     case 'primary':
-      return surface.card;
+      return surface.background.secondary; // #1A2547
     case 'secondary':
-      return surface.overlay;
+      return surface.background.tertiary; // #253655
     case 'surface':
     default:
-      return surface.background;
+      return surface.background.primary; // #0F1939
   }
 };
 
 /**
- * Generate CSS custom properties for charts
+ * Generate CSS custom properties for charts using Vueni tokens
  */
 export const generateGraphCSSProperties = (
   theme: 'light' | 'dark' = 'dark'
@@ -161,23 +188,32 @@ export const generateGraphCSSProperties = (
   const colors = vueniTheme.colors;
 
   return {
-    // Chart colors
+    // Vueni 5-color sequence
+    '--chart-color-series-0': getSeriesColor(0), // #516AC8 - Sapphire Dust
+    '--chart-color-series-1': getSeriesColor(1), // #E3AF64 - Caramel Essence
+    '--chart-color-series-2': getSeriesColor(2), // #26428B - Blue Oblivion
+    '--chart-color-series-3': getSeriesColor(3), // #4ABA70 - Success Green
+    '--chart-color-series-4': getSeriesColor(4), // #D64545 - Error Red
+    '--chart-color-series-5': getSeriesColor(5), // #8B8478 - Neutral 500
+
+    // Semantic chart colors
     '--chart-color-positive': chartTokens.colors.positive,
     '--chart-color-negative': chartTokens.colors.negative,
     '--chart-color-neutral': chartTokens.colors.neutral,
     '--chart-color-warning': chartTokens.colors.warning,
 
     // Extended colors
-    '--chart-color-teal': chartTokens.colors.extended.teal,
-    '--chart-color-mint': chartTokens.colors.extended.mint,
-    '--chart-color-pink': chartTokens.colors.extended.pink,
-    '--chart-color-yellow': chartTokens.colors.extended.yellow,
-    '--chart-color-purple': chartTokens.colors.extended.purple,
+    '--chart-color-primary': chartTokens.colors.extended.primary,
+    '--chart-color-secondary': chartTokens.colors.extended.secondary,
+    '--chart-color-tertiary': chartTokens.colors.extended.tertiary,
+    '--chart-color-quaternary': chartTokens.colors.extended.quaternary,
+    '--chart-color-quinary': chartTokens.colors.extended.quinary,
+    '--chart-color-senary': chartTokens.colors.extended.senary,
 
     // Background colors
-    '--chart-background': colors.surface.background,
-    '--chart-card-background': colors.surface.card,
-    '--chart-overlay-background': colors.surface.overlay,
+    '--chart-background': colors.surface.background.primary,
+    '--chart-card-background': colors.surface.background.secondary,
+    '--chart-overlay-background': colors.surface.background.tertiary,
 
     // Text colors
     '--chart-text-primary': colors.text.primary,
@@ -231,8 +267,17 @@ export const generateGraphCSSProperties = (
 export default appleGraphTokens;
 
 /**
- * TODO: Once all chart components are migrated to use unified theme directly,
- * this file can be removed and imports updated to:
- * import { vueniTheme } from '@/theme/unified';
- * const chartTokens = vueniTheme.charts;
+ * Vueni Chart Migration Notes:
+ * 
+ * Updated to use the official Vueni 5-color sequence:
+ * 1. #516AC8 (Sapphire Dust) - Primary brand color
+ * 2. #E3AF64 (Caramel Essence) - Secondary accent
+ * 3. #26428B (Blue Oblivion) - Secondary blue
+ * 4. #4ABA70 (Success Green) - Positive values
+ * 5. #8B8478 (Neutral 500) - Neutral values
+ * 
+ * New helper functions:
+ * - getSeriesColor(index) - Get color by series index
+ * - getSeriesColors(count) - Get array of colors for multi-series
+ * - getChartColorSemantic() - Get color by semantic meaning
  */

@@ -11,6 +11,7 @@ import {
   Wind,
   Droplet,
 } from 'lucide-react';
+import { VueniSemantic, VueniCore, VueniCharts } from '@/theme/colors/vueniPalette';
 
 export interface HealthKitMetrics {
   // Physical Activity
@@ -136,7 +137,7 @@ export const getWellnessCategories = (
     id: 'activity',
     name: 'Physical Activity',
     iconName: 'Activity',
-    color: '#ef4444',
+    color: VueniSemantic.error,
     metrics: [
       {
         key: 'stepCount',
@@ -179,7 +180,7 @@ export const getWellnessCategories = (
     id: 'vitals',
     name: 'Vital Signs',
     iconName: 'Heart',
-    color: '#dc2626',
+    color: VueniSemantic.error,
     metrics: [
       {
         key: 'heartRate',
@@ -222,7 +223,7 @@ export const getWellnessCategories = (
     id: 'body',
     name: 'Body Measurements',
     iconName: 'Users',
-    color: '#7c3aed',
+    color: VueniCore.secondary.blueOblivion,
     metrics: [
       {
         key: 'bodyMass',
@@ -265,7 +266,7 @@ export const getWellnessCategories = (
     id: 'nutrition',
     name: 'Nutrition',
     iconName: 'Utensils',
-    color: '#16a34a',
+    color: VueniSemantic.success,
     metrics: [
       {
         key: 'dietaryCalories',
@@ -329,7 +330,7 @@ export const getWellnessCategories = (
     id: 'sleep',
     name: 'Sleep Analysis',
     iconName: 'Moon',
-    color: '#3b82f6',
+    color: VueniCore.primary.sapphireDust,
     metrics: [
       {
         key: 'sleepAnalysis',
@@ -358,7 +359,7 @@ export const getWellnessCategories = (
     id: 'mindfulness',
     name: 'Mental Health',
     iconName: 'Brain',
-    color: '#8b5cf6',
+    color: VueniCore.secondary.blueOblivion,
     metrics: [
       {
         key: 'mindfulMinutes',
@@ -380,7 +381,7 @@ export const getWellnessCategories = (
     id: 'hearing',
     name: 'Hearing Health',
     iconName: 'Ear',
-    color: '#f59e0b',
+    color: VueniCore.secondary.caramelEssence,
     metrics: [
       {
         key: 'audioExposure',
@@ -402,7 +403,7 @@ export const getWellnessCategories = (
     id: 'mobility',
     name: 'Mobility',
     iconName: 'Accessibility',
-    color: '#06b6d4',
+    color: VueniCore.primary.sapphireDust,
     metrics: [
       {
         key: 'walkingSpeed',
@@ -438,7 +439,7 @@ export const getWellnessCategories = (
     id: 'respiratory',
     name: 'Respiratory Health',
     iconName: 'Wind',
-    color: '#84cc16',
+    color: VueniSemantic.success,
     metrics: [
       {
         key: 'peakExpiratoryFlowRate',
@@ -460,7 +461,7 @@ export const getWellnessCategories = (
     id: 'reproductive',
     name: 'Reproductive Health',
     iconName: 'Heart',
-    color: '#ec4899',
+    color: VueniSemantic.error,
     metrics: [
       {
         key: 'menstrualFlow',
@@ -482,7 +483,7 @@ export const getWellnessCategories = (
     id: 'lab',
     name: 'Lab Results',
     iconName: 'Droplet',
-    color: '#ef4444',
+    color: VueniSemantic.error,
     metrics: [
       {
         key: 'bloodGlucose',
@@ -517,9 +518,9 @@ export const getWellnessCategories = (
 ];
 
 export const getWellnessScoreColor = (value: number): string => {
-  if (value >= 80) return '#22c55e'; // green-500
-  if (value >= 60) return '#f59e0b'; // amber-500
-  return '#ef4444'; // red-500
+  if (value >= 80) return VueniSemantic.success;
+  if (value >= 60) return VueniCore.secondary.caramelEssence;
+  return VueniSemantic.error;
 };
 
 export const getWellnessScoreLabel = (value: number): string => {
