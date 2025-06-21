@@ -42,6 +42,14 @@ export const VueniSemantic = {
   warning: VueniCore.secondary.caramelEssence,
   info: VueniCore.primary.sapphireDust,
   
+  // Status sub-object for API compatibility
+  status: {
+    success: '#4ABA70',          // Accessible green
+    error: '#D64545',            // Accessible red  
+    warning: VueniCore.secondary.caramelEssence,
+    info: VueniCore.primary.sapphireDust,
+  },
+  
   // Financial semantic colors
   financial: {
     positive: '#4ABA70',          // Income/gains
