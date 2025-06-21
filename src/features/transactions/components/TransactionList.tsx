@@ -1,7 +1,7 @@
 // TransactionList Revamp – unified, responsive, virtualized list
 // IMPORTANT: This file has been completely rewritten to satisfy the TransactionList Revamp spec.
 
-import React, { memo, useMemo, useEffect, useState } from 'react';
+import React, { memo, useMemo, useEffect, useState, useCallback } from 'react';
 import { FixedSizeList as List, ListChildComponentProps } from 'react-window';
 import { cn } from '@/shared/lib/utils';
 import TransactionRow from './TransactionRow';
@@ -27,9 +27,14 @@ interface RowItemTransaction {
   tx: Transaction;
 }
 
-type RowItem = RowItemSeparator | RowItemTransaction;
+interface RowItemCTA {
+  type: 'cta';
+}
+
+type RowItem = RowItemSeparator | RowItemTransaction | RowItemCTA;
 
 const ROW_HEIGHT = 72; // px – consistent row & separator height
+const VISIBLE_COUNT = 5;
 const VIRTUALIZE_THRESHOLD = 500;
 
 // Hook to calculate available height for desktop transaction list
@@ -108,6 +113,7 @@ const buildRowItems = (transactions: Transaction[]): RowItem[] => {
 interface RowRendererData {
   items: RowItem[];
   onTransactionClick?: (tx: Transaction) => void;
+  onExpand?: () => void;
 }
 
 const RowRenderer: React.FC<ListChildComponentProps<RowRendererData>> = ({
@@ -124,6 +130,20 @@ const RowRenderer: React.FC<ListChildComponentProps<RowRendererData>> = ({
       </div>
     );
   }
+  if (item.type === 'cta') {
+    return (
+      <div style={style} className="px-4">
+        <button
+          data-testid="transaction-list-cta"
+          onClick={data.onExpand}
+          className="w-full py-2 text-blue-400 hover:underline"
+          type="button"
+        >
+          Show all transactions
+        </button>
+      </div>
+    );
+  }
   return (
     <div style={style}>
       <TransactionRow tx={item.tx} onClick={data.onTransactionClick} />
@@ -134,6 +154,16 @@ const RowRenderer: React.FC<ListChildComponentProps<RowRendererData>> = ({
 export const TransactionList: React.FC<TransactionListProps> = memo(
   ({ transactions, isLoading = false, onTransactionClick, className }) => {
     const items = useMemo(() => buildRowItems(transactions), [transactions]);
+    const [{ expanded }, setState] = useState({ expanded: false });
+    const handleExpand = useCallback(() => setState({ expanded: true }), []);
+
+    const sliced = expanded ? items : items.slice(0, VISIBLE_COUNT);
+    const displayItems = useMemo(() => {
+      if (!expanded && items.length > VISIBLE_COUNT) {
+        return [...sliced, { type: 'cta' } as RowItemCTA];
+      }
+      return sliced;
+    }, [expanded, items, sliced]);
     const availableHeight = useAvailableHeight();
 
     // Loading state skeletons
@@ -163,8 +193,9 @@ export const TransactionList: React.FC<TransactionListProps> = memo(
     }
 
     // Enhanced virtualization logic with desktop height optimization
-    const shouldVirtualize = transactions.length > VIRTUALIZE_THRESHOLD || 
-                           (availableHeight && transactions.length > 20);
+    const shouldVirtualize =
+      sliced.length > VIRTUALIZE_THRESHOLD ||
+      (availableHeight && sliced.length > 20);
 
     if (shouldVirtualize || availableHeight) {
       // Use available height for desktop, fallback for smaller screens
@@ -173,9 +204,9 @@ export const TransactionList: React.FC<TransactionListProps> = memo(
       return (
         <List
           height={height}
-          itemCount={items.length}
+          itemCount={displayItems.length}
           itemSize={ROW_HEIGHT}
-          itemData={{ items, onTransactionClick }}
+          itemData={{ items: displayItems, onTransactionClick, onExpand: handleExpand }}
           width="100%"
           overscanCount={8}
           className={cn('transaction-scroll-container', className)}
@@ -200,15 +231,27 @@ export const TransactionList: React.FC<TransactionListProps> = memo(
         style={listStyle}
         data-testid="transaction-list"
       >
-        {items.map((item, idx) =>
+        {displayItems.map((item, idx) =>
           item.type === 'separator' ? (
             <DateSeparator key={item.dateKey} date={item.date} />
           ) : (
-            <TransactionRow
-              key={item.tx.id || idx}
-              tx={item.tx}
-              onClick={onTransactionClick}
-            />
+            item.type === 'cta' ? (
+              <button
+                key={`cta-${idx}`}
+                data-testid="transaction-list-cta"
+                onClick={handleExpand}
+                className="w-full py-2 text-blue-400 hover:underline"
+                type="button"
+              >
+                Show all transactions
+              </button>
+            ) : (
+              <TransactionRow
+                key={item.tx.id || idx}
+                tx={item.tx}
+                onClick={onTransactionClick}
+              />
+            )
           )
         )}
       </div>

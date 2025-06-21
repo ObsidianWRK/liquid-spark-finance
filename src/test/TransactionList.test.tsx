@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, screen } from '@testing-library/react';
+import { render, screen, fireEvent } from '@testing-library/react';
 import { describe, it, expect } from 'vitest';
 import TransactionList from '@/features/transactions/components/TransactionList';
 import { Transaction } from '@/types/transactions';
@@ -51,5 +51,24 @@ describe('TransactionList', () => {
     expect(
       screen.getByTestId('transaction-virtualized-list')
     ).toBeInTheDocument();
+  });
+
+  it('shows CTA when collapsed and expands on click', () => {
+    const txs = Array.from({ length: 6 }, (_, i) => generateTx(i));
+    render(<TransactionList transactions={txs} />);
+    expect(screen.getByTestId('transaction-list')).toBeInTheDocument();
+    expect(screen.getByTestId('transaction-list-cta')).toBeInTheDocument();
+    expect(screen.getAllByTestId('transaction-row').length).toBe(5);
+    fireEvent.click(screen.getByTestId('transaction-list-cta'));
+    expect(screen.queryByTestId('transaction-list-cta')).not.toBeInTheDocument();
+    expect(screen.getAllByTestId('transaction-row').length).toBe(6);
+  });
+
+  it('virtualizes after expanding when list is large', () => {
+    const txs = Array.from({ length: 501 }, (_, i) => generateTx(i));
+    render(<TransactionList transactions={txs} />);
+    expect(screen.queryByTestId('transaction-virtualized-list')).not.toBeInTheDocument();
+    fireEvent.click(screen.getByTestId('transaction-list-cta'));
+    expect(screen.getByTestId('transaction-virtualized-list')).toBeInTheDocument();
   });
 });
