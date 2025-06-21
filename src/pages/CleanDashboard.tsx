@@ -26,7 +26,6 @@ import {
   Eye,
   EyeOff,
 } from 'lucide-react';
-import { OptimizedTransactionList } from '@/features/transactions/components/OptimizedTransactionList';
 
 // Mock data that matches your existing structure
 const mockAccounts = [

@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
-import { VueniUnifiedTransactionList } from '@/components/shared';
+import { UnifiedTransactionList } from '@/features/transactions/components/UnifiedTransactionList';
 import MobileTransactionScreen from '@/screens/MobileTransactionScreen';
-import EnterpriseTransactionView from '@/features/transactions/components/EnterpriseTransactionView';
 import { Smartphone, Tablet, Monitor } from 'lucide-react';
 import { cn } from '@/shared/lib/utils';
 import { SubscriptionsPanel } from '@/features/subscriptions/components/SubscriptionsPanel';
@@ -194,15 +193,13 @@ const TransactionDemo: React.FC = () => {
           {view === 'tablet' && (
             <div className="bg-gray-900 rounded-2xl p-8 shadow-2xl">
               <div className="bg-black rounded-xl overflow-hidden">
-                <VueniUnifiedTransactionList
+                <UnifiedTransactionList
                   transactions={transactions.map((t) => ({
                     id: t.id,
-                    date: t.date,
-                    description: t.merchant,
-                    amount: Math.abs(t.amount),
-                    category: t.category.toLowerCase(),
-                    type: t.amount < 0 ? 'expense' : ('income' as const),
                     merchant: t.merchant,
+                    category: { name: t.category, color: '#6366f1' },
+                    amount: t.amount,
+                    date: t.date,
                     status: t.status,
                     scores: {
                       health: Math.floor(Math.random() * 100),
@@ -210,7 +207,7 @@ const TransactionDemo: React.FC = () => {
                       financial: Math.floor(Math.random() * 100),
                     },
                   }))}
-                  variant="polished"
+                  variant="modern"
                   currency="USD"
                   features={{
                     showScores: true,
@@ -228,7 +225,30 @@ const TransactionDemo: React.FC = () => {
 
           {/* Desktop View */}
           {view === 'desktop' && (
-            <EnterpriseTransactionView transactions={transactions} />
+            <UnifiedTransactionList
+              transactions={transactions.map((t) => ({
+                id: t.id,
+                merchant: t.merchant,
+                category: { name: t.category, color: '#6366f1' },
+                amount: t.amount,
+                date: t.date,
+                status: t.status,
+                shipping: t.shipping && {
+                  trackingNumber: t.shipping.trackingNumber,
+                  provider: t.shipping.provider,
+                  status: t.shipping.status,
+                },
+              }))}
+              variant="enterprise"
+              currency="USD"
+              features={{
+                showScores: false,
+                showCategories: true,
+                searchable: true,
+                filterable: true,
+                sortable: true,
+              }}
+            />
           )}
         </div>
 

@@ -17,7 +17,7 @@ import { Badge } from '@/shared/ui/badge';
 import { formatCurrency } from '@/shared/utils/formatters';
 import { useSynchronizedMetrics } from '@/providers/BiometricsProvider';
 import { BiometricMonitor } from '@/features/biometric-intervention/components/BiometricMonitor';
-import { TransactionList } from '@/features/transactions/components/TransactionList';
+import { UnifiedTransactionList } from '@/features/transactions/components/UnifiedTransactionList';
 import { AccountOverviewSkeleton } from '@/shared/ui/account-overview-skeleton';
 import { ErrorState } from '@/shared/ui/error-state';
 import { useAccountOverview } from '@/features/accounts/hooks/useAccountOverview';
@@ -300,9 +300,23 @@ const AccountOverview: React.FC = () => {
             onToggle={() => togglePane('transactions')}
             badge={`${transactions.length} transactions`}
           >
-            <TransactionList
-              transactions={transactions}
-              isLoading={false}
+            <UnifiedTransactionList
+              transactions={transactions.map((t) => ({
+                id: t.id,
+                merchant: t.merchantName ?? t.description ?? 'Unknown',
+                category: { name: String(t.category), color: '#6366f1' },
+                amount: t.amount,
+                date: t.date instanceof Date ? t.date.toISOString() : t.date,
+                status:
+                  (t.status as string) === 'pending'
+                    ? 'pending'
+                    : ['failed', 'cancelled', 'returned', 'refunded'].includes(
+                        t.status as string
+                      )
+                    ? 'failed'
+                    : 'completed',
+              }))}
+              currency={account.currency}
               onTransactionClick={(transaction) =>
                 console.log('Transaction clicked:', transaction)
               }
