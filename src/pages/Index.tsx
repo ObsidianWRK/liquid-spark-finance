@@ -3,7 +3,7 @@ import { useSearchParams } from 'react-router-dom';
 import AccountCard from '@/features/accounts/components/AccountCard';
 import { Grid } from '@/features/accounts/components/Grid';
 import { QuickAccessRail } from '@/features/accounts/components/QuickAccessRail';
-import TransactionList from '@/components/TransactionList';
+import { UnifiedTransactionList } from '@/features/transactions/components/UnifiedTransactionList';
 import LiquidGlassTopMenuBar from '@/components/LiquidGlassTopMenuBar';
 import BudgetReportsPage from '@/features/budget/components/BudgetReportsPage';
 import SavingsGoals from '@/features/savings/components/SavingsGoals';
@@ -418,12 +418,28 @@ export default function Index() {
 
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
             <div className="lg:col-span-2">
-              <TransactionList
+              <UnifiedTransactionList
                 transactions={
-                  adaptTransactions(mockData.transactions)?.slice(0, 10) ||
-                  []
+                  (adaptTransactions(mockData.transactions)?.slice(0, 10) || [])
+                    .map((t) => ({
+                      id: t.id,
+                      merchant: t.merchantName || t.description || 'Unknown',
+                      category: { name: String(t.category), color: '#6366f1' },
+                      amount: t.amount,
+                      date:
+                        typeof t.date === 'string'
+                          ? t.date
+                          : t.date.toISOString(),
+                      status:
+                        (t.status as string) === 'pending'
+                          ? 'pending'
+                          : ['failed', 'cancelled', 'returned', 'refunded'].includes(
+                              t.status as string
+                            )
+                          ? 'failed'
+                          : 'completed',
+                    }))
                 }
-                isLoading={false}
                 currency="USD"
                 onTransactionClick={(transaction) =>
                   console.log('Transaction clicked:', transaction)
