@@ -30,6 +30,7 @@ export const SafeToSpendCard: React.FC = () => {
             : 'No data'
       }
       orientation="vertical"
+      interactive
     >
       {cash && (
         <div className="space-y-3">
