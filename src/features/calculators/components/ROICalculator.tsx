@@ -1,4 +1,5 @@
 import React, { useState, useMemo, useCallback } from 'react';
+import { getColor, applyOpacity } from '@/theme/vueniPalette';
 import { calculateROI } from '@/shared/utils/calculators';
 import {
   BarChart,
@@ -57,11 +58,11 @@ const ROICalculator = React.memo(() => {
   // Memoized pie chart data
   const pieData = useMemo(
     () => [
-      { name: 'Initial Investment', value: initial, color: '#3B82F6' },
+      { name: 'Initial Investment', value: initial, color: getColor('palette.primary') },
       {
         name: 'Gain/Loss',
         value: Math.max(0, current - initial),
-        color: '#10B981',
+        color: getColor('palette.success'),
       },
     ],
     [initial, current]
@@ -200,18 +201,18 @@ const ROICalculator = React.memo(() => {
                 <BarChart data={chartData}>
                   <CartesianGrid
                     strokeDasharray="3 3"
-                    stroke="rgba(255,255,255,0.1)"
+                    stroke={applyOpacity(getColor('text.primary'), 0.1)}
                   />
                   <XAxis
                     dataKey="investment"
-                    stroke="#fff"
+                    stroke={getColor('text.primary')}
                     fontSize={12}
                     angle={-45}
                     textAnchor="end"
                     height={60}
                   />
                   <YAxis
-                    stroke="#fff"
+                    stroke={getColor('text.primary')}
                     fontSize={12}
                     tickFormatter={(value) => formatCurrency(value)}
                   />
@@ -221,13 +222,13 @@ const ROICalculator = React.memo(() => {
                       'Amount',
                     ]}
                     contentStyle={{
-                      backgroundColor: 'rgba(0,0,0,0.8)',
-                      border: '1px solid rgba(255,255,255,0.2)',
+                      backgroundColor: applyOpacity(getColor('surface.background'), 0.8),
+                      border: `1px solid ${applyOpacity(getColor('text.primary'), 0.2)}`,
                       borderRadius: '12px',
-                      color: '#fff',
+                      color: getColor('text.primary'),
                     }}
                   />
-                  <Bar dataKey="amount" fill="#3B82F6" radius={[4, 4, 0, 0]} />
+                  <Bar dataKey="amount" fill={getColor('palette.primary')} radius={[4, 4, 0, 0]} />
                 </BarChart>
               </ResponsiveContainer>
             </div>
@@ -260,10 +261,10 @@ const ROICalculator = React.memo(() => {
                       'Amount',
                     ]}
                     contentStyle={{
-                      backgroundColor: 'rgba(0,0,0,0.8)',
-                      border: '1px solid rgba(255,255,255,0.2)',
+                      backgroundColor: applyOpacity(getColor('surface.background'), 0.8),
+                      border: `1px solid ${applyOpacity(getColor('text.primary'), 0.2)}`,
                       borderRadius: '12px',
-                      color: '#fff',
+                      color: getColor('text.primary'),
                     }}
                   />
                 </PieChart>
