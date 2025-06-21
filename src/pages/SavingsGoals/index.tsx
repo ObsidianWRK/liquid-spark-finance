@@ -11,7 +11,7 @@ import { SmartSavingsPanel } from '@/features/smart-savings/components/SmartSavi
  */
 const SavingsGoalsPage: React.FC = () => {
   return (
-    <div className="space-y-4 sm:space-y-6">
+    <div className="min-h-screen bg-black text-white space-y-4 sm:space-y-6">
       {/* Smart Automated Savings Plans */}
       <div className="px-4 sm:px-6 pt-4 sm:pt-6">
         <SmartSavingsPanel />
