@@ -5,34 +5,34 @@
 
 import { vueniTheme } from '@/theme/unified';
 
-// Common hardcoded colors and their unified theme replacements
+// UPDATED: Hardcoded color mappings to new Vueni palette
 export const HARDCODED_COLOR_MAP = {
-  // Chart color violations - most frequent
-  '#3b82f6': vueniTheme.colors.palette.primary, // Blue -> Primary
-  '#10b981': vueniTheme.colors.palette.success, // Green -> Success
-  '#ef4444': vueniTheme.colors.palette.danger, // Red -> Danger
-  '#f59e0b': vueniTheme.colors.palette.warning, // Orange -> Warning
-  '#8b5cf6': vueniTheme.colors.semantic.chart.investments, // Purple -> Investments
+  // Chart color violations - most frequent (mapped to Vueni colors)
+  '#3b82f6': '#516AC8', // Blue -> Sapphire Dust (Vueni primary)
+  '#10b981': '#4ABA70', // Green -> Vueni success
+  '#ef4444': '#D64545', // Red -> Vueni error
+  '#f59e0b': '#E3AF64', // Orange -> Caramel Essence (Vueni warning)
+  '#8b5cf6': '#26428B', // Purple -> Blue Oblivion (Vueni investments)
 
   // Secondary violations
-  '#22c55e': vueniTheme.colors.palette.success, // Green variant -> Success
-  '#dc2626': vueniTheme.colors.palette.danger, // Red variant -> Danger
-  '#6366f1': vueniTheme.colors.palette.primary, // Blue variant -> Primary
-  '#a855f7': vueniTheme.colors.semantic.chart.investments, // Purple variant -> Investments
+  '#22c55e': '#4ABA70', // Green variant -> Vueni success
+  '#dc2626': '#D64545', // Red variant -> Vueni error
+  '#6366f1': '#516AC8', // Blue variant -> Sapphire Dust
+  '#a855f7': '#26428B', // Purple variant -> Blue Oblivion
 
-  // Legacy theme colors (exact matches from colors.ts)
-  '#4A9EFF': vueniTheme.colors.palette.primary, // Legacy blue -> Primary
-  '#4AFF88': vueniTheme.colors.palette.success, // Legacy green -> Success
-  '#FF4A6A': vueniTheme.colors.palette.danger, // Legacy red -> Danger
-  '#FFD700': vueniTheme.colors.palette.warning, // Legacy gold -> Warning
-  '#A0A0B8': vueniTheme.colors.palette.neutral, // Legacy gray -> Neutral
+  // Legacy theme colors (direct replacements with Vueni)
+  '#4A9EFF': '#516AC8', // Legacy blue -> Sapphire Dust
+  '#4AFF88': '#4ABA70', // Legacy green -> Vueni success
+  '#FF4A6A': '#D64545', // Legacy red -> Vueni error
+  '#FFD700': '#E3AF64', // Legacy gold -> Caramel Essence
+  '#A0A0B8': '#8B8478', // Legacy gray -> Vueni neutral
 
-  // Apple System Colors (for chart consistency)
-  '#007AFF': vueniTheme.colors.palette.primary, // Apple blue -> Primary
-  '#32D74B': vueniTheme.colors.palette.success, // Apple green -> Success
-  '#FF453A': vueniTheme.colors.palette.danger, // Apple red -> Danger
-  '#FF9F0A': vueniTheme.colors.palette.warning, // Apple orange -> Warning
-  '#AF52DE': vueniTheme.colors.semantic.chart.investments, // Apple purple -> Investments
+  // Apple System Colors (mapped to Vueni equivalents)
+  '#007AFF': '#516AC8', // Apple blue -> Sapphire Dust
+  '#32D74B': '#4ABA70', // Apple green -> Vueni success
+  '#FF453A': '#D64545', // Apple red -> Vueni error
+  '#FF9F0A': '#E3AF64', // Apple orange -> Caramel Essence
+  '#AF52DE': '#26428B', // Apple purple -> Blue Oblivion
 } as const;
 
 // Utility function to replace hardcoded color with theme token

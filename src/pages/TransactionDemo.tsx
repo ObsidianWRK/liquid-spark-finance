@@ -197,7 +197,7 @@ const TransactionDemo: React.FC = () => {
                   transactions={transactions.map((t) => ({
                     id: t.id,
                     merchant: t.merchant,
-                    category: { name: t.category, color: '#6366f1' },
+                    category: { name: t.category, color: '#516AC8' }, // Vueni Sapphire Dust
                     amount: t.amount,
                     date: t.date,
                     status: t.status,
@@ -229,7 +229,7 @@ const TransactionDemo: React.FC = () => {
               transactions={transactions.map((t) => ({
                 id: t.id,
                 merchant: t.merchant,
-                category: { name: t.category, color: '#6366f1' },
+                category: { name: t.category, color: '#516AC8' }, // Vueni Sapphire Dust
                 amount: t.amount,
                 date: t.date,
                 status: t.status,

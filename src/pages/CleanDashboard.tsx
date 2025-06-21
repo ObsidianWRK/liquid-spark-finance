@@ -308,7 +308,7 @@ const CleanDashboard = () => {
                 amount: t.amount,
                 category: {
                   name: t.category,
-                  color: '#6366f1',
+                  color: '#516AC8', // Vueni Sapphire Dust
                 },
                 type: t.amount < 0 ? 'expense' : ('income' as const),
                 merchant: t.merchant,

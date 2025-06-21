@@ -41,6 +41,7 @@ export default {
         ],
       },
       colors: {
+        // Base shadcn colors (keeping for compatibility)
         border: 'hsl(var(--border))',
         input: 'hsl(var(--input))',
         ring: 'hsl(var(--ring))',
@@ -83,6 +84,40 @@ export default {
           'accent-foreground': 'hsl(var(--sidebar-accent-foreground))',
           border: 'hsl(var(--sidebar-border))',
           ring: 'hsl(var(--sidebar-ring))',
+        },
+
+        // NEW: Vueni Brand Color System
+        vueni: {
+          // Core brand colors
+          'sapphire-dust': '#516AC8',      // Primary
+          'cosmic-odyssey': '#0F1939',     // Dark background
+          'caramel-essence': '#E3AF64',    // Accent/warning
+          'blue-oblivion': '#26428B',      // Secondary blue
+          'raptures-light': '#F6F3E7',     // Light background
+          'milk-tooth': '#FAEBD7',         // Light secondary
+
+          // Semantic colors
+          primary: '#516AC8',
+          secondary: '#E3AF64',
+          success: '#4ABA70',
+          error: '#D64545',
+          warning: '#E3AF64',
+          info: '#516AC8',
+
+          // Surface system
+          surface: {
+            primary: '#0F1939',
+            secondary: '#1A2547',
+            tertiary: '#253655',
+          },
+
+          // Glass effects (using CSS custom properties)
+          glass: {
+            subtle: 'var(--vueni-glass-subtle)',
+            default: 'var(--vueni-glass-default)',
+            prominent: 'var(--vueni-glass-prominent)',
+            border: 'var(--vueni-glass-border)',
+          },
         },
       },
       borderRadius: {

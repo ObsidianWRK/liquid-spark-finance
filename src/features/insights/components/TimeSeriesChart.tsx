@@ -13,22 +13,22 @@ const TimeSeriesChart: React.FC<TimeSeriesChartProps> = ({
   title,
   showLegend = true,
 }) => {
-  // Configure series for Apple-style LineChart
+  // Configure series for Vueni-branded LineChart
   const series = [
     {
       dataKey: 'financial',
       label: 'Financial Health',
-      color: '#007AFF', // Apple system blue
+      color: '#516AC8', // Vueni Sapphire Dust
     },
     {
       dataKey: 'health',
       label: 'Wellness Score',
-      color: '#FF453A', // Apple system red
+      color: '#E3AF64', // Vueni Caramel Essence
     },
     {
       dataKey: 'eco',
       label: 'Eco Impact',
-      color: '#32D74B', // Apple system green
+      color: '#4ABA70', // Vueni Success Green
     },
   ];
 
