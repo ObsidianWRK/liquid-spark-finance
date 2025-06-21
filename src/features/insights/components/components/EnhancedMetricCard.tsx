@@ -62,7 +62,7 @@ const EnhancedMetricCard = memo(
     return (
       <EnhancedGlassCard
         className={`
-        relative overflow-hidden rounded-2xl backdrop-blur-xl border border-white/20 
+        relative overflow-hidden rounded-vueni-lg backdrop-blur-xl border border-white/20 
         hover:border-white/30 transition-all duration-300 group 
         ${onClick ? 'cursor-pointer' : ''} ${config.padding}
       `}
@@ -81,7 +81,7 @@ const EnhancedMetricCard = memo(
           <div className="flex items-center justify-between mb-3">
             <div className="flex items-center space-x-2">
               <div
-                className={`${config.iconPadding} rounded-xl backdrop-blur-sm border border-white/20`}
+                className={`${config.iconPadding} rounded-vueni-lg backdrop-blur-sm border border-white/20`}
                 style={{ background: `${color}15` }}
               >
                 {React.cloneElement(icon, {
@@ -113,9 +113,9 @@ const EnhancedMetricCard = memo(
           {/* Progress bar */}
           {progress !== undefined && (
             <div className="relative">
-              <div className="w-full h-2 rounded-full bg-white/10 border border-white/20 overflow-hidden">
+              <div className="w-full h-2 rounded-vueni-pill bg-white/10 border border-white/20 overflow-hidden">
                 <div
-                  className="h-full rounded-full transition-all duration-1000 ease-out relative overflow-hidden"
+                  className="h-full rounded-vueni-pill transition-all duration-1000 ease-out relative overflow-hidden"
                   style={{
                     width: `${Math.min(100, Math.max(0, progress))}%`,
                     background: `linear-gradient(90deg, ${color}, ${color}CC)`,

@@ -433,11 +433,11 @@ const PortfolioAllocationChart: React.FC<PortfolioAllocationChartProps> = ({
                   ({ asset, drift, action, label }) => (
                     <div
                       key={asset}
-                      className="flex items-center justify-between p-3 bg-white/[0.03] rounded-lg border border-white/[0.05]"
+                      className="flex items-center justify-between p-3 bg-white/[0.03] rounded-vueni-lg border border-white/[0.05]"
                     >
                       <div className="flex items-center gap-3">
                         <div
-                          className="w-3 h-3 rounded-sm"
+                          className="w-3 h-3 rounded-vueni-sm"
                           style={{
                             backgroundColor:
                               ASSET_CLASSES[asset as keyof typeof ASSET_CLASSES]
@@ -467,7 +467,7 @@ const PortfolioAllocationChart: React.FC<PortfolioAllocationChartProps> = ({
                 )}
               </div>
 
-              <div className="mt-4 p-3 bg-blue-500/10 border border-blue-500/20 rounded-lg">
+              <div className="mt-4 p-3 bg-blue-500/10 border border-blue-500/20 rounded-vueni-lg">
                 <p className="text-blue-400 text-sm">
                   <strong>Tip:</strong> Rebalancing helps maintain your desired
                   risk level and can improve long-term returns. Consider
@@ -491,7 +491,7 @@ const PortfolioAllocationChart: React.FC<PortfolioAllocationChartProps> = ({
                 <div className="flex items-center justify-between mb-3">
                   <div className="flex items-center gap-2">
                     <div
-                      className="w-3 h-3 rounded-sm"
+                      className="w-3 h-3 rounded-vueni-sm"
                       style={{ backgroundColor: config.color }}
                     />
                     <h4 className="font-medium text-white">{config.label}</h4>

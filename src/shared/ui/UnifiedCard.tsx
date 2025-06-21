@@ -133,7 +133,7 @@ export const UnifiedCard = React.memo<UnifiedCardProps>(
     };
 
     const cardClasses = cn(
-      'p-6 rounded-2xl border relative overflow-hidden',
+      'p-6 rounded-vueni-lg border relative overflow-hidden',
       {
         'bg-white/[0.02] border-white/[0.08]': variant === 'default',
         'card-variant': variant !== 'default',
@@ -175,7 +175,7 @@ export const UnifiedCard = React.memo<UnifiedCardProps>(
             <div className="flex items-center gap-3">
               {icon && (
                 <div
-                  className="w-10 h-10 rounded-xl flex items-center justify-center bg-white/[0.05] hover:bg-white/[0.08] transition-all duration-200"
+                  className="w-10 h-10 rounded-vueni-lg flex items-center justify-center bg-white/[0.05] hover:bg-white/[0.08] transition-all duration-200"
                   style={{ color: iconColor }}
                 >
                   {renderIcon()}
@@ -195,7 +195,7 @@ export const UnifiedCard = React.memo<UnifiedCardProps>(
               {getTrendIcon()}
               {badge && (
                 <span
-                  className={cn('px-2 py-1 rounded-full text-xs font-medium', {
+                  className={cn('px-2 py-1 rounded-vueni-pill text-xs font-medium', {
                     'bg-green-500/20 text-green-400 border border-green-500/30':
                       badge.variant === 'success',
                     'bg-yellow-500/20 text-yellow-400 border border-yellow-500/30':
@@ -252,9 +252,9 @@ export const UnifiedCard = React.memo<UnifiedCardProps>(
                 </span>
               )}
             </div>
-            <div className="relative h-2 bg-white/[0.05] rounded-full overflow-hidden">
+            <div className="relative h-2 bg-white/[0.05] rounded-vueni-pill overflow-hidden">
               <div
-                className="absolute top-0 left-0 h-full rounded-full transition-all duration-1000 ease-out"
+                className="absolute top-0 left-0 h-full rounded-vueni-pill transition-all duration-1000 ease-out"
                 style={{
                   width: `${Math.min(100, (progress.value / progress.max) * 100)}%`,
                   backgroundColor:

@@ -67,9 +67,9 @@ export const BackButton: React.FC<BackButtonProps> = ({
   // Style variants
   const variants = {
     default:
-      'flex items-center gap-2 px-3 py-2 rounded-xl text-white/80 hover:text-white hover:bg-white/[0.05] transition-colors',
+      'flex items-center gap-2 px-3 py-2 rounded-vueni-lg text-white/80 hover:text-white hover:bg-white/[0.05] transition-colors',
     ghost:
-      'flex items-center gap-2 px-3 py-2 rounded-xl text-white/80 hover:text-white hover:bg-white/[0.05] transition-colors border border-white/10',
+      'flex items-center gap-2 px-3 py-2 rounded-vueni-lg text-white/80 hover:text-white hover:bg-white/[0.05] transition-colors border border-white/10',
     minimal:
       'flex items-center gap-2 text-white/80 hover:text-white transition-colors',
   };
@@ -138,7 +138,7 @@ export const IconBackButton: React.FC<
     <button
       onClick={handleBack}
       className={cn(
-        'flex items-center justify-center rounded-xl',
+        'flex items-center justify-center rounded-vueni-lg',
         'text-white/80 hover:text-white hover:bg-white/[0.05] transition-colors',
         'focus:outline-none focus:ring-2 focus:ring-blue-400/50',
         'touch-manipulation',

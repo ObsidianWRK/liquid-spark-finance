@@ -81,7 +81,7 @@ export const MetricDisplay: React.FC<MetricDisplayProps> = ({
       'p-2': variant === 'compact',
       'p-3': variant === 'default',
       'p-4': variant === 'large',
-      'cursor-pointer hover:bg-white/[0.04] rounded-lg': onClick,
+      'cursor-pointer hover:bg-white/[0.04] rounded-vueni-lg': onClick,
     },
     className
   );
@@ -171,10 +171,10 @@ export const MetricDisplay: React.FC<MetricDisplayProps> = ({
           </div>
 
           {/* Progress bar for target */}
-          <div className="w-full bg-white/10 rounded-full h-1 mt-1">
+          <div className="w-full bg-white/10 rounded-vueni-pill h-1 mt-1">
             <div
               className={cn(
-                'h-1 rounded-full transition-all duration-300',
+                'h-1 rounded-vueni-pill transition-all duration-300',
                 status === 'good'
                   ? 'bg-green-400'
                   : status === 'warning'

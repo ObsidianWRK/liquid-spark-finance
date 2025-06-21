@@ -90,7 +90,7 @@ const GraphBaseDemo: React.FC = () => {
       </div>
 
       {/* Controls */}
-      <div className="bg-white/5 backdrop-blur-sm rounded-xl p-6 border border-white/10">
+      <div className="bg-white/5 backdrop-blur-sm rounded-vueni-lg p-6 border border-white/10">
         <div className="flex flex-wrap gap-4 items-center justify-between">
           <div className="space-y-2">
             <label className="block text-sm font-medium text-white/80">
@@ -102,7 +102,7 @@ const GraphBaseDemo: React.FC = () => {
                   <button
                     key={type}
                     onClick={() => handleChartTypeChange(type)}
-                    className={`px-3 py-1.5 text-sm rounded-lg transition-all ${
+                    className={`px-3 py-1.5 text-sm rounded-vueni-lg transition-all ${
                       chartType === type
                         ? 'bg-blue-500/20 text-blue-300 border border-blue-500/30'
                         : 'bg-white/5 text-white/70 border border-white/10 hover:bg-white/10'
@@ -118,13 +118,13 @@ const GraphBaseDemo: React.FC = () => {
           <div className="flex gap-2">
             <button
               onClick={simulateError}
-              className="px-4 py-2 text-sm bg-red-500/20 text-red-300 border border-red-500/30 rounded-lg hover:bg-red-500/30 transition-all"
+              className="px-4 py-2 text-sm bg-red-500/20 text-red-300 border border-red-500/30 rounded-vueni-lg hover:bg-red-500/30 transition-all"
             >
               Simulate Error
             </button>
             <button
               onClick={clearError}
-              className="px-4 py-2 text-sm bg-green-500/20 text-green-300 border border-green-500/30 rounded-lg hover:bg-green-500/30 transition-all"
+              className="px-4 py-2 text-sm bg-green-500/20 text-green-300 border border-green-500/30 rounded-vueni-lg hover:bg-green-500/30 transition-all"
             >
               Clear Error
             </button>
@@ -222,7 +222,7 @@ const GraphBaseDemo: React.FC = () => {
       </div>
 
       {/* Feature Showcase */}
-      <div className="bg-white/5 backdrop-blur-sm rounded-xl p-6 border border-white/10">
+      <div className="bg-white/5 backdrop-blur-sm rounded-vueni-lg p-6 border border-white/10">
         <h3 className="text-xl font-semibold text-white mb-4">Features</h3>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 text-sm">
           <div className="space-y-2">

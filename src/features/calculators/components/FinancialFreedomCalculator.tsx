@@ -108,7 +108,7 @@ const FinancialFreedomCalculator = () => {
 
       <div className="grid lg:grid-cols-2 gap-8">
         {/* Input Section */}
-        <div className="bg-white/5 backdrop-blur-xl rounded-3xl p-6 border border-white/10">
+        <div className="bg-white/5 backdrop-blur-xl rounded-vueni-lg p-6 border border-white/10">
           <h2 className="text-xl font-semibold text-white mb-6">
             Input Parameters
           </h2>
@@ -125,7 +125,7 @@ const FinancialFreedomCalculator = () => {
                   type="number"
                   value={savings}
                   onChange={(e) => setSavings(+e.target.value)}
-                  className="w-full pl-8 pr-4 py-3 rounded-xl bg-white/5 text-white border border-white/10 focus:border-blue-400 focus:outline-none transition-colors"
+                  className="w-full pl-8 pr-4 py-3 rounded-vueni-lg bg-white/5 text-white border border-white/10 focus:border-blue-400 focus:outline-none transition-colors"
                   placeholder="100,000"
                 />
               </div>
@@ -143,7 +143,7 @@ const FinancialFreedomCalculator = () => {
                   type="number"
                   value={monthlyExpenses}
                   onChange={(e) => setMonthlyExpenses(+e.target.value)}
-                  className="w-full pl-8 pr-4 py-3 rounded-xl bg-white/5 text-white border border-white/10 focus:border-blue-400 focus:outline-none transition-colors"
+                  className="w-full pl-8 pr-4 py-3 rounded-vueni-lg bg-white/5 text-white border border-white/10 focus:border-blue-400 focus:outline-none transition-colors"
                   placeholder="4,000"
                 />
               </div>
@@ -158,7 +158,7 @@ const FinancialFreedomCalculator = () => {
                   type="number"
                   value={growthRate}
                   onChange={(e) => setGrowthRate(+e.target.value)}
-                  className="w-full pr-8 pl-4 py-3 rounded-xl bg-white/5 text-white border border-white/10 focus:border-blue-400 focus:outline-none transition-colors"
+                  className="w-full pr-8 pl-4 py-3 rounded-vueni-lg bg-white/5 text-white border border-white/10 focus:border-blue-400 focus:outline-none transition-colors"
                   placeholder="5"
                   step="0.1"
                 />
@@ -170,7 +170,7 @@ const FinancialFreedomCalculator = () => {
 
             <button
               onClick={handleCalculate}
-              className="w-full py-3 px-6 rounded-xl bg-white/10 border border-white/20 text-white font-semibold button-hover"
+              className="w-full py-3 px-6 rounded-vueni-lg bg-white/10 border border-white/20 text-white font-semibold button-hover"
             >
               Calculate Financial Freedom
             </button>
@@ -179,10 +179,10 @@ const FinancialFreedomCalculator = () => {
 
         {/* Results Section */}
         {years !== null && (
-          <div className="bg-white/5 backdrop-blur-xl rounded-3xl p-6 border border-white/10">
+          <div className="bg-white/5 backdrop-blur-xl rounded-vueni-lg p-6 border border-white/10">
             <h2 className="text-xl font-semibold text-white mb-6">Results</h2>
             <div className="space-y-4">
-              <div className="text-center p-6 bg-gradient-to-r from-green-500/20 to-blue-500/20 rounded-2xl border border-green-400/20">
+              <div className="text-center p-6 bg-gradient-to-r from-green-500/20 to-blue-500/20 rounded-vueni-lg border border-green-400/20">
                 <div className="text-3xl font-bold text-white mb-2">
                   {years} Years
                 </div>
@@ -190,13 +190,13 @@ const FinancialFreedomCalculator = () => {
               </div>
 
               <div className="grid grid-cols-2 gap-4">
-                <div className="text-center p-4 bg-white/5 rounded-xl">
+                <div className="text-center p-4 bg-white/5 rounded-vueni-lg">
                   <div className="text-xl font-semibold text-white">
                     {formatCurrency(monthlyExpenses * 12)}
                   </div>
                   <div className="text-sm text-white/60">Annual Expenses</div>
                 </div>
-                <div className="text-center p-4 bg-white/5 rounded-xl">
+                <div className="text-center p-4 bg-white/5 rounded-vueni-lg">
                   <div className="text-xl font-semibold text-white">
                     {formatCurrency(monthlyExpenses * years * 12)}
                   </div>
@@ -238,7 +238,7 @@ const FinancialFreedomCalculator = () => {
             gradientOpacity: 0.15,
             hoverEffects: true,
           }}
-          className="bg-white/5 backdrop-blur-xl rounded-3xl p-6 border border-white/10"
+          className="bg-white/5 backdrop-blur-xl rounded-vueni-lg p-6 border border-white/10"
         />
       )}
     </div>

@@ -161,7 +161,7 @@ export function SecureCalculatorWrapper({
   // Render security locked state
   if (securityState.securityLevel === 'locked') {
     return (
-      <div className="p-6 bg-red-50 border border-red-200 rounded-lg">
+      <div className="p-6 bg-red-50 border border-red-200 rounded-vueni-lg">
         <div className="flex items-center gap-3 mb-4">
           <Shield className="h-6 w-6 text-red-600" />
           <h3 className="text-lg font-semibold text-red-800">
@@ -188,7 +188,7 @@ export function SecureCalculatorWrapper({
   // Render rate limited state
   if (securityState.isRateLimited) {
     return (
-      <div className="p-6 bg-yellow-50 border border-yellow-200 rounded-lg">
+      <div className="p-6 bg-yellow-50 border border-yellow-200 rounded-vueni-lg">
         <div className="flex items-center gap-3 mb-4">
           <Clock className="h-6 w-6 text-yellow-600" />
           <h3 className="text-lg font-semibold text-yellow-800">
@@ -214,7 +214,7 @@ export function SecureCalculatorWrapper({
     <div className="relative">
       {/* Security Level Indicator */}
       {securityState.securityLevel !== 'normal' && (
-        <div className="mb-4 p-3 bg-orange-50 border border-orange-200 rounded-lg">
+        <div className="mb-4 p-3 bg-orange-50 border border-orange-200 rounded-vueni-lg">
           <div className="flex items-center gap-2">
             <AlertTriangle className="h-4 w-4 text-orange-600" />
             <span className="text-sm font-medium text-orange-800">
@@ -242,7 +242,7 @@ export function SecureCalculatorWrapper({
 
       {/* Security Information Panel */}
       {showSecurityInfo && (
-        <div className="mb-4 p-4 bg-blue-50 border border-blue-200 rounded-lg">
+        <div className="mb-4 p-4 bg-blue-50 border border-blue-200 rounded-vueni-lg">
           <h4 className="font-semibold text-blue-800 mb-2">
             Security Information
           </h4>

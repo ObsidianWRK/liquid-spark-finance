@@ -98,14 +98,14 @@ const TransactionRow: React.FC<TransactionRowProps> = ({
         'grid items-center gap-3 lg:gap-4',
         // icon (3rem) | merchant (auto) | date (min 6rem) | status (min 6.875rem) | amount (min 6rem)
         'grid-cols-[3rem_1fr_minmax(6rem,_1fr)_minmax(6.875rem,_1fr)_minmax(6rem,_1fr)]',
-        'px-4 py-3 rounded-md transition-colors text-left',
+        'px-4 py-3 rounded-vueni-md transition-colors text-left',
         'hover:bg-zinc-800/60 bg-transparent',
         className
       )}
     >
       {/* Icon Placeholder */}
       <div
-        className="w-10 h-10 rounded-lg bg-white/5 flex items-center justify-center"
+        className="w-10 h-10 rounded-vueni-lg bg-white/5 flex items-center justify-center"
         aria-hidden="true"
       >
         <span className="text-sm text-white/60">💸</span>

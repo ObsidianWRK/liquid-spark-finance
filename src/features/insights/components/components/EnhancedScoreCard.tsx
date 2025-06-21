@@ -86,7 +86,7 @@ const EnhancedScoreCard = memo(
       };
 
       return (
-        <div className="flex items-center space-x-1 px-3 py-1 rounded-full bg-white/10 border border-white/20">
+        <div className="flex items-center space-x-1 px-3 py-1 rounded-vueni-pill bg-white/10 border border-white/20">
           {iconMap[trend]}
         </div>
       );
@@ -96,7 +96,7 @@ const EnhancedScoreCard = memo(
       <EnhancedGlassCard
         variant="glass"
         className={`
-        relative overflow-hidden rounded-3xl backdrop-blur-xl border border-white/20 
+        relative overflow-hidden rounded-vueni-lg backdrop-blur-xl border border-white/20 
         hover:border-white/30 transition-all duration-500 group ${config.padding} ${onClick ? 'cursor-pointer' : ''}
         animate-[slideInScale_0.8s_ease-out_${delay}ms_both]
       `}
@@ -116,7 +116,7 @@ const EnhancedScoreCard = memo(
           <div className="flex items-center justify-between mb-6">
             <div className="flex items-center space-x-3">
               <div
-                className={`${config.iconPadding} rounded-2xl backdrop-blur-sm border border-white/20`}
+                className={`${config.iconPadding} rounded-vueni-lg backdrop-blur-sm border border-white/20`}
                 style={{ background: `${color}20` }}
               >
                 {React.cloneElement(icon, {

@@ -73,7 +73,7 @@ const InvestmentTrackerPage = () => {
               {[...Array(4)].map((_, i) => (
                 <div
                   key={i}
-                  className="bg-white/[0.02] rounded-2xl border border-white/[0.08] p-4 sm:p-6"
+                  className="bg-white/[0.02] rounded-vueni-lg border border-white/[0.08] p-4 sm:p-6"
                 >
                   <div className="h-5 sm:h-6 bg-white/[0.05] rounded w-24 sm:w-32 mb-2"></div>
                   <div className="h-6 sm:h-8 bg-white/[0.05] rounded w-16 sm:w-24"></div>
@@ -108,7 +108,7 @@ const InvestmentTrackerPage = () => {
               Track your investments, analyze performance, and manage risk
             </p>
           </div>
-          <button className="w-full sm:w-auto bg-blue-500 hover:bg-blue-600 text-white px-4 sm:px-6 py-3 rounded-xl transition-colors flex items-center justify-center gap-2 min-h-[48px]">
+          <button className="w-full sm:w-auto bg-blue-500 hover:bg-blue-600 text-white px-4 sm:px-6 py-3 rounded-vueni-lg transition-colors flex items-center justify-center gap-2 min-h-[48px]">
             <Plus className="w-4 h-4 sm:w-5 sm:h-5" />
             <span className="text-sm sm:text-base">Add Investment</span>
           </button>
@@ -117,9 +117,9 @@ const InvestmentTrackerPage = () => {
         {/* Quick Stats */}
         {portfolio && (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
-            <div className="bg-white/[0.02] rounded-2xl border border-white/[0.08] p-4 sm:p-6 card-hover">
+            <div className="bg-white/[0.02] rounded-vueni-lg border border-white/[0.08] p-4 sm:p-6 card-hover">
               <div className="flex items-center gap-3 mb-3 sm:mb-4">
-                <div className="w-10 h-10 sm:w-12 sm:h-12 bg-blue-500/20 rounded-lg flex items-center justify-center flex-shrink-0">
+                <div className="w-10 h-10 sm:w-12 sm:h-12 bg-blue-500/20 rounded-vueni-lg flex items-center justify-center flex-shrink-0">
                   <DollarSign className="w-5 h-5 sm:w-6 sm:h-6 text-blue-400" />
                 </div>
                 <p className="text-white/60 text-sm sm:text-base font-medium">
@@ -131,9 +131,9 @@ const InvestmentTrackerPage = () => {
               </p>
             </div>
 
-            <div className="bg-white/[0.02] rounded-2xl border border-white/[0.08] p-4 sm:p-6 card-hover">
+            <div className="bg-white/[0.02] rounded-vueni-lg border border-white/[0.08] p-4 sm:p-6 card-hover">
               <div className="flex items-center gap-3 mb-3 sm:mb-4">
-                <div className="w-10 h-10 sm:w-12 sm:h-12 bg-green-500/20 rounded-lg flex items-center justify-center flex-shrink-0">
+                <div className="w-10 h-10 sm:w-12 sm:h-12 bg-green-500/20 rounded-vueni-lg flex items-center justify-center flex-shrink-0">
                   <TrendingUp className="w-5 h-5 sm:w-6 sm:h-6 text-green-400" />
                 </div>
                 <p className="text-white/60 text-sm sm:text-base font-medium">
@@ -165,9 +165,9 @@ const InvestmentTrackerPage = () => {
               </div>
             </div>
 
-            <div className="bg-white/[0.02] rounded-2xl border border-white/[0.08] p-4 sm:p-6 card-hover">
+            <div className="bg-white/[0.02] rounded-vueni-lg border border-white/[0.08] p-4 sm:p-6 card-hover">
               <div className="flex items-center gap-3 mb-3 sm:mb-4">
-                <div className="w-10 h-10 sm:w-12 sm:h-12 bg-purple-500/20 rounded-lg flex items-center justify-center flex-shrink-0">
+                <div className="w-10 h-10 sm:w-12 sm:h-12 bg-purple-500/20 rounded-vueni-lg flex items-center justify-center flex-shrink-0">
                   <Target className="w-5 h-5 sm:w-6 sm:h-6 text-purple-400" />
                 </div>
                 <p className="text-white/60 text-sm sm:text-base font-medium">
@@ -185,9 +185,9 @@ const InvestmentTrackerPage = () => {
               </div>
             </div>
 
-            <div className="bg-white/[0.02] rounded-2xl border border-white/[0.08] p-4 sm:p-6 sm:col-span-2 lg:col-span-1 card-hover">
+            <div className="bg-white/[0.02] rounded-vueni-lg border border-white/[0.08] p-4 sm:p-6 sm:col-span-2 lg:col-span-1 card-hover">
               <div className="flex items-center gap-3 mb-3 sm:mb-4">
-                <div className="w-10 h-10 sm:w-12 sm:h-12 bg-yellow-500/20 rounded-lg flex items-center justify-center flex-shrink-0">
+                <div className="w-10 h-10 sm:w-12 sm:h-12 bg-yellow-500/20 rounded-vueni-lg flex items-center justify-center flex-shrink-0">
                   <AlertTriangle className="w-5 h-5 sm:w-6 sm:h-6 text-yellow-400" />
                 </div>
                 <p className="text-white/60 text-sm sm:text-base font-medium">
@@ -208,7 +208,7 @@ const InvestmentTrackerPage = () => {
 
         {/* Investment Recommendations */}
         {recommendations.length > 0 && (
-          <div className="bg-white/[0.02] rounded-2xl border border-white/[0.08] p-4 sm:p-6 card-hover">
+          <div className="bg-white/[0.02] rounded-vueni-lg border border-white/[0.08] p-4 sm:p-6 card-hover">
             <h2 className="text-lg sm:text-xl font-bold text-white mb-4 sm:mb-6 flex items-center gap-3">
               <Target className="w-5 h-5 sm:w-6 sm:h-6 text-blue-400" />
               Investment Recommendations
@@ -218,14 +218,14 @@ const InvestmentTrackerPage = () => {
               {recommendations.map((rec, index) => (
                 <div
                   key={index}
-                  className="bg-white/[0.03] rounded-xl border border-white/[0.05] p-4 sm:p-6"
+                  className="bg-white/[0.03] rounded-vueni-lg border border-white/[0.05] p-4 sm:p-6"
                 >
                   <div className="flex flex-col lg:flex-row lg:items-start justify-between mb-3 sm:mb-4 gap-3 lg:gap-4">
                     <div className="flex-1 min-w-0">
                       <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3 mb-2 sm:mb-3">
                         <span
                           className={cn(
-                            'text-xs px-2 py-1 rounded-lg border font-medium w-fit',
+                            'text-xs px-2 py-1 rounded-vueni-lg border font-medium w-fit',
                             getPriorityColor(rec.priority)
                           )}
                         >

@@ -113,7 +113,7 @@ const useAvailableHeight = () => {
 
 const SkeletonRow = () => (
   <div className="flex items-center justify-between py-3 px-4 animate-pulse">
-    <div className="w-10 h-10 rounded-lg bg-white/10" />
+    <div className="w-10 h-10 rounded-vueni-lg bg-white/10" />
     <div className="flex-1 ml-3 space-y-1">
       <div className="h-3 w-24 bg-white/10 rounded" />
       <div className="h-2 w-16 bg-white/10 rounded" />
@@ -450,7 +450,7 @@ export const UnifiedTransactionList = React.memo<UnifiedTransactionListProps>(
               {mergedFeatures.exportable && onExport && (
                 <button
                   onClick={onExport}
-                  className="p-2 rounded-lg bg-white/10 hover:bg-white/20 transition-colors"
+                  className="p-2 rounded-vueni-lg bg-white/10 hover:bg-white/20 transition-colors"
                 >
                   <Download className="w-4 h-4 text-white/70" />
                 </button>
@@ -458,7 +458,7 @@ export const UnifiedTransactionList = React.memo<UnifiedTransactionListProps>(
 
               <button
                 onClick={() => setIsCollapsed(!isCollapsed)}
-                className="p-2 rounded-lg bg-white/10 hover:bg-white/20 transition-colors"
+                className="p-2 rounded-vueni-lg bg-white/10 hover:bg-white/20 transition-colors"
               >
                 {isCollapsed ? (
                   <Eye className="w-4 h-4 text-white/70" />
@@ -482,7 +482,7 @@ export const UnifiedTransactionList = React.memo<UnifiedTransactionListProps>(
                       placeholder="Search transactions..."
                       value={searchTerm}
                       onChange={handleSearchChange}
-                      className="w-full bg-white/10 border border-white/20 rounded-lg py-2 pl-10 pr-4 text-white placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-blue-500/50"
+                      className="w-full bg-white/10 border border-white/20 rounded-vueni-lg py-2 pl-10 pr-4 text-white placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-blue-500/50"
                     />
                   </div>
                 )}
@@ -493,7 +493,7 @@ export const UnifiedTransactionList = React.memo<UnifiedTransactionListProps>(
                     <select
                       value={selectedCategory}
                       onChange={(e) => handleCategoryChange(e.target.value)}
-                      className="bg-white/10 border border-white/20 rounded-lg py-2 pl-3 pr-8 text-white focus:outline-none focus:ring-2 focus:ring-blue-500/50 appearance-none"
+                      className="bg-white/10 border border-white/20 rounded-vueni-lg py-2 pl-3 pr-8 text-white focus:outline-none focus:ring-2 focus:ring-blue-500/50 appearance-none"
                     >
                       <option value="all">All Categories</option>
                       {categories.map((category) => (
@@ -516,7 +516,7 @@ export const UnifiedTransactionList = React.memo<UnifiedTransactionListProps>(
                         key={field}
                         onClick={() => handleSort(field)}
                         className={cn(
-                          'px-3 py-1 rounded-lg text-xs font-medium transition-colors',
+                          'px-3 py-1 rounded-vueni-lg text-xs font-medium transition-colors',
                           sortField === field
                             ? 'bg-blue-500/20 text-blue-400'
                             : 'bg-white/10 text-white/60 hover:text-white/80'
@@ -580,7 +580,7 @@ export const UnifiedTransactionList = React.memo<UnifiedTransactionListProps>(
 
             {processedTransactions.length === 0 && (
               <div className="p-8 text-center">
-                <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-white/5 flex items-center justify-center">
+                <div className="w-16 h-16 mx-auto mb-4 rounded-vueni-pill bg-white/5 flex items-center justify-center">
                   <Calendar className="w-8 h-8 text-white/40" />
                 </div>
                 <div className="text-white/60 mb-2">No transactions found</div>
@@ -665,7 +665,7 @@ const TransactionItem = React.memo<{
         {/* Status Indicator */}
         {features.showStatus && (
           <div
-            className="w-2 h-2 rounded-full flex-shrink-0"
+            className="w-2 h-2 rounded-vueni-pill flex-shrink-0"
             style={{
               backgroundColor: getStatusIndicatorColor(transaction.status),
             }}
@@ -675,7 +675,7 @@ const TransactionItem = React.memo<{
         {/* Category Icon */}
         <div
           className={cn(
-            'rounded-lg flex items-center justify-center text-white font-semibold text-sm',
+            'rounded-vueni-lg flex items-center justify-center text-white font-semibold text-sm',
             features.compactMode ? 'w-8 h-8 text-xs' : 'w-10 h-10'
           )}
           style={{ backgroundColor: transaction.category.color + '30' }}

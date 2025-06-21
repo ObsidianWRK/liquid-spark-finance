@@ -166,7 +166,7 @@ const Retirement401kCalculator = () => {
 
       <div className="grid lg:grid-cols-2 gap-8">
         {/* Input Section */}
-        <div className="bg-white/5 backdrop-blur-xl rounded-3xl p-6 border border-white/10">
+        <div className="bg-white/5 backdrop-blur-xl rounded-vueni-lg p-6 border border-white/10">
           <h2 className="text-xl font-semibold text-white mb-6">
             Retirement Planning
           </h2>
@@ -180,7 +180,7 @@ const Retirement401kCalculator = () => {
                   type="number"
                   value={currentAge}
                   onChange={(e) => setCurrentAge(+e.target.value)}
-                  className="w-full px-4 py-3 rounded-xl bg-white/5 text-white border border-white/10 focus:border-blue-400 focus:outline-none transition-colors"
+                  className="w-full px-4 py-3 rounded-vueni-lg bg-white/5 text-white border border-white/10 focus:border-blue-400 focus:outline-none transition-colors"
                   placeholder="35"
                 />
               </div>
@@ -192,7 +192,7 @@ const Retirement401kCalculator = () => {
                   type="number"
                   value={retirementAge}
                   onChange={(e) => setRetirementAge(+e.target.value)}
-                  className="w-full px-4 py-3 rounded-xl bg-white/5 text-white border border-white/10 focus:border-blue-400 focus:outline-none transition-colors"
+                  className="w-full px-4 py-3 rounded-vueni-lg bg-white/5 text-white border border-white/10 focus:border-blue-400 focus:outline-none transition-colors"
                   placeholder="65"
                 />
               </div>
@@ -210,7 +210,7 @@ const Retirement401kCalculator = () => {
                   type="number"
                   value={balance}
                   onChange={(e) => setBalance(+e.target.value)}
-                  className="w-full pl-8 pr-4 py-3 rounded-xl bg-white/5 text-white border border-white/10 focus:border-blue-400 focus:outline-none transition-colors"
+                  className="w-full pl-8 pr-4 py-3 rounded-vueni-lg bg-white/5 text-white border border-white/10 focus:border-blue-400 focus:outline-none transition-colors"
                   placeholder="50,000"
                 />
               </div>
@@ -228,7 +228,7 @@ const Retirement401kCalculator = () => {
                   type="number"
                   value={salary}
                   onChange={(e) => setSalary(+e.target.value)}
-                  className="w-full pl-8 pr-4 py-3 rounded-xl bg-white/5 text-white border border-white/10 focus:border-blue-400 focus:outline-none transition-colors"
+                  className="w-full pl-8 pr-4 py-3 rounded-vueni-lg bg-white/5 text-white border border-white/10 focus:border-blue-400 focus:outline-none transition-colors"
                   placeholder="75,000"
                 />
               </div>
@@ -243,7 +243,7 @@ const Retirement401kCalculator = () => {
                   type="number"
                   value={contributionPercent}
                   onChange={(e) => setContributionPercent(+e.target.value)}
-                  className="w-full pr-8 pl-4 py-3 rounded-xl bg-white/5 text-white border border-white/10 focus:border-blue-400 focus:outline-none transition-colors"
+                  className="w-full pr-8 pl-4 py-3 rounded-vueni-lg bg-white/5 text-white border border-white/10 focus:border-blue-400 focus:outline-none transition-colors"
                   placeholder="10"
                   step="0.5"
                 />
@@ -265,7 +265,7 @@ const Retirement401kCalculator = () => {
                   type="number"
                   value={matchRate}
                   onChange={(e) => setMatchRate(+e.target.value)}
-                  className="w-full pr-8 pl-4 py-3 rounded-xl bg-white/5 text-white border border-white/10 focus:border-blue-400 focus:outline-none transition-colors"
+                  className="w-full pr-8 pl-4 py-3 rounded-vueni-lg bg-white/5 text-white border border-white/10 focus:border-blue-400 focus:outline-none transition-colors"
                   placeholder="0.5"
                   step="0.25"
                 />
@@ -287,7 +287,7 @@ const Retirement401kCalculator = () => {
                   type="number"
                   value={returnRate}
                   onChange={(e) => setReturnRate(+e.target.value)}
-                  className="w-full pr-8 pl-4 py-3 rounded-xl bg-white/5 text-white border border-white/10 focus:border-blue-400 focus:outline-none transition-colors"
+                  className="w-full pr-8 pl-4 py-3 rounded-vueni-lg bg-white/5 text-white border border-white/10 focus:border-blue-400 focus:outline-none transition-colors"
                   placeholder="7"
                   step="0.1"
                 />
@@ -299,7 +299,7 @@ const Retirement401kCalculator = () => {
 
             <button
               onClick={handleCalculate}
-              className="w-full py-3 px-6 rounded-xl bg-white/10 border border-white/20 text-white font-semibold button-hover"
+              className="w-full py-3 px-6 rounded-vueni-lg bg-white/10 border border-white/20 text-white font-semibold button-hover"
             >
               Calculate Retirement
             </button>
@@ -308,12 +308,12 @@ const Retirement401kCalculator = () => {
 
         {/* Results Section */}
         {futureBalance !== null && (
-          <div className="bg-white/5 backdrop-blur-xl rounded-3xl p-6 border border-white/10">
+          <div className="bg-white/5 backdrop-blur-xl rounded-vueni-lg p-6 border border-white/10">
             <h2 className="text-xl font-semibold text-white mb-6">
               Retirement Projection
             </h2>
             <div className="space-y-4">
-              <div className="text-center p-6 bg-gradient-to-r from-green-500/20 to-blue-500/20 rounded-2xl border border-green-400/20">
+              <div className="text-center p-6 bg-gradient-to-r from-green-500/20 to-blue-500/20 rounded-vueni-lg border border-green-400/20">
                 <div className="text-3xl font-bold text-white mb-2">
                   {formatCurrency(futureBalance)}
                 </div>
@@ -323,7 +323,7 @@ const Retirement401kCalculator = () => {
               </div>
 
               <div className="grid grid-cols-2 gap-4">
-                <div className="text-center p-4 bg-white/5 rounded-xl">
+                <div className="text-center p-4 bg-white/5 rounded-vueni-lg">
                   <div className="text-xl font-semibold text-white">
                     {formatCurrency(monthlyRetirementIncome)}
                   </div>
@@ -331,7 +331,7 @@ const Retirement401kCalculator = () => {
                     Monthly Income (4% Rule)
                   </div>
                 </div>
-                <div className="text-center p-4 bg-white/5 rounded-xl">
+                <div className="text-center p-4 bg-white/5 rounded-vueni-lg">
                   <div className="text-xl font-semibold text-white">
                     {years}
                   </div>
@@ -339,7 +339,7 @@ const Retirement401kCalculator = () => {
                 </div>
               </div>
 
-              <div className="text-center p-4 bg-white/5 rounded-xl">
+              <div className="text-center p-4 bg-white/5 rounded-vueni-lg">
                 <div className="text-lg font-semibold text-white">
                   {formatCurrency((annualContribution + annualMatch) * years)}
                 </div>
@@ -354,7 +354,7 @@ const Retirement401kCalculator = () => {
       {projectionData.length > 0 && (
         <div className="grid lg:grid-cols-2 gap-8">
           {/* Growth Projection Chart */}
-          <div className="bg-white/5 backdrop-blur-xl rounded-3xl p-6 border border-white/10">
+          <div className="bg-white/5 backdrop-blur-xl rounded-vueni-lg p-6 border border-white/10">
             <h2 className="text-xl font-semibold text-white mb-6">
               401(k) Growth Over Time
             </h2>
@@ -423,7 +423,7 @@ const Retirement401kCalculator = () => {
           </div>
 
           {/* Contribution Breakdown */}
-          <div className="bg-white/5 backdrop-blur-xl rounded-3xl p-6 border border-white/10">
+          <div className="bg-white/5 backdrop-blur-xl rounded-vueni-lg p-6 border border-white/10">
             <h2 className="text-xl font-semibold text-white mb-6">
               Final Balance Breakdown
             </h2>
@@ -451,7 +451,7 @@ const Retirement401kCalculator = () => {
                     contentStyle={{
                       backgroundColor: vueniTheme.colors.surface.overlay,
                       border: `1px solid ${vueniTheme.colors.surface.glass.border}`,
-                      borderRadius: '12px',
+                      borderRadius: vueniTheme.radius.lg,
                       color: vueniTheme.colors.text.primary,
                     }}
                   />
@@ -475,7 +475,7 @@ const Retirement401kCalculator = () => {
 
       {/* Contribution Limits */}
       {futureBalance !== null && (
-        <div className="bg-white/5 backdrop-blur-xl rounded-3xl p-6 border border-white/10">
+        <div className="bg-white/5 backdrop-blur-xl rounded-vueni-lg p-6 border border-white/10">
           <h2 className="text-xl font-semibold text-white mb-6">
             2024 Contribution Limits
           </h2>
@@ -504,7 +504,7 @@ const Retirement401kCalculator = () => {
                   contentStyle={{
                     backgroundColor: vueniTheme.colors.surface.overlay,
                     border: `1px solid ${vueniTheme.colors.surface.glass.border}`,
-                    borderRadius: '12px',
+                    borderRadius: vueniTheme.radius.lg,
                     color: vueniTheme.colors.text.primary,
                   }}
                 />

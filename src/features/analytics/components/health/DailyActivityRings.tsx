@@ -19,7 +19,7 @@ const DailyActivityRings: React.FC = () => {
   }, []);
 
   return (
-    <div className="bg-white/[0.02] border border-white/[0.05] rounded-xl p-6 space-y-4">
+    <div className="bg-white/[0.02] border border-white/[0.05] rounded-vueni-lg p-6 space-y-4">
       <div className="flex items-center justify-between">
         <h3 className="text-lg font-semibold text-white flex items-center gap-2">
           <Target className="w-5 h-5 text-yellow-400" />

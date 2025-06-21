@@ -183,7 +183,7 @@ const FinancialDashboard = ({
         {[...Array(4)].map((_, i) => (
           <div
             key={i}
-            className="bg-white/[0.02] rounded-2xl border border-white/[0.08] p-6 h-96 animate-pulse"
+            className="bg-white/[0.02] rounded-vueni-lg border border-white/[0.08] p-6 h-96 animate-pulse"
           >
             <div className="h-8 bg-white/[0.05] rounded w-1/2 mb-8"></div>
             <div className="space-y-4">
@@ -202,7 +202,7 @@ const FinancialDashboard = ({
     return (
       <div
         className={cn(
-          'bg-red-900/20 rounded-2xl border border-red-500/30 p-12 text-center',
+          'bg-red-900/20 rounded-vueni-lg border border-red-500/30 p-12 text-center',
           className
         )}
       >
@@ -213,7 +213,7 @@ const FinancialDashboard = ({
         <p className="text-white/60 mb-4">
           {error || 'Could not display dashboard data.'}
         </p>
-        <pre className="text-left text-xs bg-black/30 p-4 rounded-lg text-white/50 overflow-auto max-h-40">
+        <pre className="text-left text-xs bg-black/30 p-4 rounded-vueni-lg text-white/50 overflow-auto max-h-40">
           {`Attempted to load data for familyId: ${familyId}, timeframe: ${timeframe}`}
         </pre>
       </div>

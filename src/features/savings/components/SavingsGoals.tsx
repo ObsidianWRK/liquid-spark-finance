@@ -120,11 +120,11 @@ const SavingsGoals = ({ compact = false }: SavingsGoalsProps) => {
         <div className="max-w-7xl mx-auto px-4 py-8 sm:px-6 lg:px-8">
           <div className="space-y-6 animate-pulse">
             <div className="h-8 bg-white/[0.05] rounded w-48"></div>
-            <div className="h-32 bg-white/[0.02] rounded-xl border border-white/[0.08]"></div>
+            <div className="h-32 bg-white/[0.02] rounded-vueni-lg border border-white/[0.08]"></div>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              <div className="h-48 bg-white/[0.02] rounded-xl border border-white/[0.08]"></div>
-              <div className="h-48 bg-white/[0.02] rounded-xl border border-white/[0.08]"></div>
-              <div className="h-48 bg-white/[0.02] rounded-xl border border-white/[0.08]"></div>
+              <div className="h-48 bg-white/[0.02] rounded-vueni-lg border border-white/[0.08]"></div>
+              <div className="h-48 bg-white/[0.02] rounded-vueni-lg border border-white/[0.08]"></div>
+              <div className="h-48 bg-white/[0.02] rounded-vueni-lg border border-white/[0.08]"></div>
             </div>
           </div>
         </div>
@@ -147,7 +147,7 @@ const SavingsGoals = ({ compact = false }: SavingsGoalsProps) => {
             {[...Array(2)].map((_, i) => (
               <div
                 key={i}
-                className="h-16 bg-white/[0.02] rounded-xl border border-white/[0.08] animate-pulse"
+                className="h-16 bg-white/[0.02] rounded-vueni-lg border border-white/[0.08] animate-pulse"
               ></div>
             ))}
           </div>
@@ -175,12 +175,12 @@ const SavingsGoals = ({ compact = false }: SavingsGoalsProps) => {
               return (
                 <div
                   key={goal.id}
-                  className="bg-white/[0.02] border border-white/[0.08] rounded-xl p-3 hover:bg-white/[0.03] transition-all cursor-pointer"
+                  className="bg-white/[0.02] border border-white/[0.08] rounded-vueni-lg p-3 hover:bg-white/[0.03] transition-all cursor-pointer"
                   onClick={() => navigate('/savings')}
                 >
                   <div className="flex items-center justify-between mb-2">
                     <div className="flex items-center gap-3">
-                      <div className="w-8 h-8 rounded-lg bg-white/[0.05] flex items-center justify-center">
+                      <div className="w-8 h-8 rounded-vueni-lg bg-white/[0.05] flex items-center justify-center">
                         {typeof goalIcon === 'string' ? (
                           <span className="text-sm">{goalIcon}</span>
                         ) : (
@@ -195,7 +195,7 @@ const SavingsGoals = ({ compact = false }: SavingsGoalsProps) => {
                       </div>
                     </div>
                     {daysLeft <= 0 && !goal.isCompleted && (
-                      <span className="px-2 py-1 bg-red-500/20 text-red-400 border border-red-500/30 rounded-full text-xs font-medium">
+                      <span className="px-2 py-1 bg-red-500/20 text-red-400 border border-red-500/30 rounded-vueni-pill text-xs font-medium">
                         Overdue
                       </span>
                     )}
@@ -210,9 +210,9 @@ const SavingsGoals = ({ compact = false }: SavingsGoalsProps) => {
                         {Math.round(progress)}% complete
                       </span>
                     </div>
-                    <div className="w-full bg-white/[0.05] rounded-full h-2">
+                    <div className="w-full bg-white/[0.05] rounded-vueni-pill h-2">
                       <div
-                        className="h-2 rounded-full transition-all duration-300"
+                        className="h-2 rounded-vueni-pill transition-all duration-300"
                         style={{
                           width: `${Math.min(100, progress)}%`,
                           backgroundColor: getProgressColor(progress),
@@ -263,7 +263,7 @@ const SavingsGoals = ({ compact = false }: SavingsGoalsProps) => {
 
           <button
             onClick={() => setShowGoalCreator(true)}
-            className="px-6 py-3 bg-white/[0.05] border border-white/[0.12] rounded-xl font-medium hover:bg-white/[0.08] transition-all flex items-center space-x-2 text-white backdrop-blur-md"
+            className="px-6 py-3 bg-white/[0.05] border border-white/[0.12] rounded-vueni-lg font-medium hover:bg-white/[0.08] transition-all flex items-center space-x-2 text-white backdrop-blur-md"
           >
             <Plus className="w-5 h-5" />
             <span>New Goal</span>
@@ -350,7 +350,7 @@ const SavingsGoals = ({ compact = false }: SavingsGoalsProps) => {
         </div>
 
         {/* Tab Navigation */}
-        <div className="flex space-x-1 bg-white/[0.05] p-1 rounded-xl">
+        <div className="flex space-x-1 bg-white/[0.05] p-1 rounded-vueni-lg">
           {[
             { id: 'goals', label: 'My Goals', icon: Target },
             { id: 'insights', label: 'Insights', icon: TrendingUp },
@@ -361,7 +361,7 @@ const SavingsGoals = ({ compact = false }: SavingsGoalsProps) => {
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id as 'goals' | 'insights')}
                 className={cn(
-                  'flex-1 py-3 px-4 text-sm font-medium rounded-xl transition-all flex items-center justify-center space-x-2',
+                  'flex-1 py-3 px-4 text-sm font-medium rounded-vueni-lg transition-all flex items-center justify-center space-x-2',
                   activeTab === tab.id
                     ? 'bg-gradient-to-r from-blue-500 to-blue-600 text-white shadow-lg shadow-blue-500/25'
                     : 'text-white/60 hover:text-white hover:bg-white/10'
@@ -394,7 +394,7 @@ const SavingsGoals = ({ compact = false }: SavingsGoalsProps) => {
                   </p>
                   <button
                     onClick={() => setShowGoalCreator(true)}
-                    className="px-6 py-3 bg-white/[0.05] border border-white/[0.12] rounded-xl font-medium hover:bg-white/[0.08] transition-all flex items-center space-x-2 mx-auto text-white backdrop-blur-md"
+                    className="px-6 py-3 bg-white/[0.05] border border-white/[0.12] rounded-vueni-lg font-medium hover:bg-white/[0.08] transition-all flex items-center space-x-2 mx-auto text-white backdrop-blur-md"
                   >
                     <Plus className="w-5 h-5" />
                     <span>Create Your First Goal</span>
@@ -499,7 +499,7 @@ const SavingsGoals = ({ compact = false }: SavingsGoalsProps) => {
 
                         {/* Action Button */}
                         {!goal.isCompleted && (
-                          <button className="w-full mt-4 py-2 bg-white/[0.05] border border-white/[0.08] rounded-lg text-white/80 hover:bg-white/[0.08] hover:text-white transition-all text-sm font-medium">
+                          <button className="w-full mt-4 py-2 bg-white/[0.05] border border-white/[0.08] rounded-vueni-lg text-white/80 hover:bg-white/[0.08] hover:text-white transition-all text-sm font-medium">
                             Add Contribution
                           </button>
                         )}

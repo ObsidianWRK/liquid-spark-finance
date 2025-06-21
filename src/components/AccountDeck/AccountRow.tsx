@@ -88,7 +88,7 @@ export const AccountRow: React.FC<AccountRowProps> = ({
         // CC: R2 requirement - 56px height row
         'h-14 px-4 flex items-center gap-3',
         // CC: R3 requirement - 12px radius, 1px surface.borderLight, Liquid-Glass theme
-        'rounded-xl border border-white/[0.08] bg-white/[0.02] backdrop-blur-md',
+        'rounded-vueni-lg border border-white/[0.08] bg-white/[0.02] backdrop-blur-md',
         'card-hover',
         'cursor-pointer group'
       )}

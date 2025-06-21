@@ -147,7 +147,7 @@ const FinancialTooltip: React.FC<{
   return (
     <div
       className={cn(
-        'bg-black/90 backdrop-blur-md rounded-xl px-4 py-3 shadow-2xl',
+        'bg-black/90 backdrop-blur-md rounded-vueni-lg px-4 py-3 shadow-2xl',
         'border border-white/20 max-w-xs'
       )}
     >
@@ -162,7 +162,7 @@ const FinancialTooltip: React.FC<{
           >
             <div className="flex items-center space-x-2">
               <div
-                className="w-2 h-2 rounded-full"
+                className="w-2 h-2 rounded-vueni-pill"
                 style={{ backgroundColor: entry.color }}
               />
               <span className="text-white/80 text-xs">{entry.name}</span>
@@ -427,7 +427,7 @@ export const LineChart = forwardRef<ChartRef, LineChartProps>(
         <div className="flex items-center space-x-2 text-sm">
           <div
             className={cn(
-              'flex items-center space-x-1 px-2 py-1 rounded-full',
+              'flex items-center space-x-1 px-2 py-1 rounded-vueni-pill',
               isPositive
                 ? 'bg-green-500/20 text-green-400'
                 : 'bg-red-500/20 text-red-400'

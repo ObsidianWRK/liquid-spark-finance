@@ -24,7 +24,7 @@ const Menubar = React.forwardRef<
     <MenubarPrimitive.Root
       ref={ref}
       className={cn(
-        'liquid-glass-nav flex h-12 items-center space-x-2 rounded-2xl p-2 border-0',
+        'liquid-glass-nav flex h-12 items-center space-x-2 rounded-vueni-lg p-2 border-0',
         className
       )}
       {...props}
@@ -40,7 +40,7 @@ const MenubarTrigger = React.forwardRef<
   <MenubarPrimitive.Trigger
     ref={ref}
     className={cn(
-      'liquid-glass-menu-item flex cursor-default select-none items-center rounded-xl px-4 py-2 text-sm font-medium outline-none text-white/90 hover:text-white transition-all duration-300 focus:ring-2 focus:ring-blue-400/50 data-[state=open]:bg-white/10 data-[state=open]:text-white data-[state=open]:scale-105',
+      'liquid-glass-menu-item flex cursor-default select-none items-center rounded-vueni-lg px-4 py-2 text-sm font-medium outline-none text-white/90 hover:text-white transition-all duration-300 focus:ring-2 focus:ring-blue-400/50 data-[state=open]:bg-white/10 data-[state=open]:text-white data-[state=open]:scale-105',
       className
     )}
     {...props}
@@ -57,7 +57,7 @@ const MenubarSubTrigger = React.forwardRef<
   <MenubarPrimitive.SubTrigger
     ref={ref}
     className={cn(
-      'flex cursor-default select-none items-center rounded-xl px-3 py-2 text-sm outline-none text-white/80 hover:text-white hover:bg-white/5 focus:bg-white/10 focus:text-white data-[state=open]:bg-white/10 data-[state=open]:text-white transition-all duration-200',
+      'flex cursor-default select-none items-center rounded-vueni-lg px-3 py-2 text-sm outline-none text-white/80 hover:text-white hover:bg-white/5 focus:bg-white/10 focus:text-white data-[state=open]:bg-white/10 data-[state=open]:text-white transition-all duration-200',
       inset && 'pl-8',
       className
     )}
@@ -76,7 +76,7 @@ const MenubarSubContent = React.forwardRef<
   <MenubarPrimitive.SubContent
     ref={ref}
     className={cn(
-      'liquid-glass-card z-50 min-w-[8rem] overflow-hidden rounded-2xl border-0 p-2 text-white shadow-2xl data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2',
+      'liquid-glass-card z-50 min-w-[8rem] overflow-hidden rounded-vueni-lg border-0 p-2 text-white shadow-2xl data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2',
       className
     )}
     {...props}
@@ -99,7 +99,7 @@ const MenubarContent = React.forwardRef<
         alignOffset={alignOffset}
         sideOffset={sideOffset}
         className={cn(
-          'liquid-glass-card z-50 min-w-[12rem] overflow-hidden rounded-2xl border-0 p-2 text-white shadow-2xl data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2',
+          'liquid-glass-card z-50 min-w-[12rem] overflow-hidden rounded-vueni-lg border-0 p-2 text-white shadow-2xl data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2',
           className
         )}
         {...props}
@@ -118,7 +118,7 @@ const MenubarItem = React.forwardRef<
   <MenubarPrimitive.Item
     ref={ref}
     className={cn(
-      'relative flex cursor-default select-none items-center rounded-xl px-3 py-2 text-sm outline-none text-white/80 hover:text-white transition-all duration-200 hover:bg-white/5 focus:bg-white/10 focus:text-white data-[disabled]:pointer-events-none data-[disabled]:opacity-50',
+      'relative flex cursor-default select-none items-center rounded-vueni-lg px-3 py-2 text-sm outline-none text-white/80 hover:text-white transition-all duration-200 hover:bg-white/5 focus:bg-white/10 focus:text-white data-[disabled]:pointer-events-none data-[disabled]:opacity-50',
       inset && 'pl-8',
       className
     )}
@@ -134,7 +134,7 @@ const MenubarCheckboxItem = React.forwardRef<
   <MenubarPrimitive.CheckboxItem
     ref={ref}
     className={cn(
-      'relative flex cursor-default select-none items-center rounded-xl py-2 pl-8 pr-3 text-sm outline-none text-white/80 hover:text-white hover:bg-white/5 focus:bg-white/10 focus:text-white data-[disabled]:pointer-events-none data-[disabled]:opacity-50 transition-all duration-200',
+      'relative flex cursor-default select-none items-center rounded-vueni-lg py-2 pl-8 pr-3 text-sm outline-none text-white/80 hover:text-white hover:bg-white/5 focus:bg-white/10 focus:text-white data-[disabled]:pointer-events-none data-[disabled]:opacity-50 transition-all duration-200',
       className
     )}
     checked={checked}
@@ -157,7 +157,7 @@ const MenubarRadioItem = React.forwardRef<
   <MenubarPrimitive.RadioItem
     ref={ref}
     className={cn(
-      'relative flex cursor-default select-none items-center rounded-xl py-2 pl-8 pr-3 text-sm outline-none text-white/80 hover:text-white hover:bg-white/5 focus:bg-white/10 focus:text-white data-[disabled]:pointer-events-none data-[disabled]:opacity-50 transition-all duration-200',
+      'relative flex cursor-default select-none items-center rounded-vueni-lg py-2 pl-8 pr-3 text-sm outline-none text-white/80 hover:text-white hover:bg-white/5 focus:bg-white/10 focus:text-white data-[disabled]:pointer-events-none data-[disabled]:opacity-50 transition-all duration-200',
       className
     )}
     {...props}

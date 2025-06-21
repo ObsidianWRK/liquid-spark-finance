@@ -150,7 +150,7 @@ const BottomNav: React.FC = () => {
                   key={route.id}
                   onClick={() => handleNavigation(route.path, route.label)}
                   className={cn(
-                    'nav-item flex flex-col items-center justify-center space-y-1 py-2 px-3 rounded-xl transition-all interactive-enhanced',
+                    'nav-item flex flex-col items-center justify-center space-y-1 py-2 px-3 rounded-vueni-lg transition-all interactive-enhanced',
                     'min-w-[56px] min-h-[56px] touch-manipulation',
                     'focus:outline-none focus-ring',
                     prefersReducedMotion ? 'transition-none' : 'duration-300',
@@ -190,13 +190,13 @@ const BottomNav: React.FC = () => {
                   {route.badgeKey && (
                     <span
                       id={`${route.id}-badge`}
-                      className="nav-badge absolute -top-1 -right-1 w-4 h-4 bg-red-500 rounded-full border border-black/20 flex items-center justify-center"
+                      className="nav-badge absolute -top-1 -right-1 w-4 h-4 bg-red-500 rounded-vueni-pill border border-black/20 flex items-center justify-center"
                       aria-label={`${route.label} has notifications`}
                       role="status"
                     >
                       <span className="sr-only">New notifications</span>
                       <span
-                        className="w-2 h-2 bg-red-500 rounded-full"
+                        className="w-2 h-2 bg-red-500 rounded-vueni-pill"
                         aria-hidden="true"
                       />
                     </span>

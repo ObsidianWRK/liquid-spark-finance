@@ -127,14 +127,14 @@ export const BiometricMonitor: React.FC<BiometricMonitorProps> = ({
     return (
       <div
         className={cn(
-          'bg-white/[0.02] rounded-2xl border border-white/[0.08] p-4 hover:bg-white/[0.03] transition-all duration-300',
+          'bg-white/[0.02] rounded-vueni-lg border border-white/[0.08] p-4 hover:bg-white/[0.03] transition-all duration-300',
           className
         )}
       >
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-3">
             <div className="relative">
-              <div className="w-10 h-10 rounded-xl bg-white/[0.05] flex items-center justify-center">
+              <div className="w-10 h-10 rounded-vueni-lg bg-white/[0.05] flex items-center justify-center">
                 <Heart
                   className={cn(
                     'w-5 h-5',
@@ -151,7 +151,7 @@ export const BiometricMonitor: React.FC<BiometricMonitorProps> = ({
                 />
               </div>
               {isActive && (
-                <div className="absolute -top-1 -right-1 w-3 h-3 bg-green-400 rounded-full animate-pulse" />
+                <div className="absolute -top-1 -right-1 w-3 h-3 bg-green-400 rounded-vueni-pill animate-pulse" />
               )}
             </div>
             <div>
@@ -172,13 +172,13 @@ export const BiometricMonitor: React.FC<BiometricMonitorProps> = ({
   return (
     <div
       className={cn(
-        'bg-white/[0.02] rounded-2xl border border-white/[0.08] p-6 hover:bg-white/[0.03] transition-all duration-300',
+        'bg-white/[0.02] rounded-vueni-lg border border-white/[0.08] p-6 hover:bg-white/[0.03] transition-all duration-300',
         className
       )}
     >
       <div className="flex items-center justify-between mb-6">
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-xl bg-white/[0.05] flex items-center justify-center">
+          <div className="w-10 h-10 rounded-vueni-lg bg-white/[0.05] flex items-center justify-center">
             <Activity className="w-5 h-5 text-blue-400" />
           </div>
           <h3 className="font-medium text-white/80">Biometric Monitor</h3>
@@ -190,7 +190,7 @@ export const BiometricMonitor: React.FC<BiometricMonitorProps> = ({
 
       <div className="space-y-6">
         {error && (
-          <div className="p-3 bg-red-500/20 border border-red-500/30 rounded-lg">
+          <div className="p-3 bg-red-500/20 border border-red-500/30 rounded-vueni-lg">
             <p className="text-sm text-red-400">{error}</p>
           </div>
         )}
@@ -209,10 +209,10 @@ export const BiometricMonitor: React.FC<BiometricMonitorProps> = ({
             </div>
           </div>
 
-          <div className="w-full bg-white/[0.05] rounded-full h-3">
+          <div className="w-full bg-white/[0.05] rounded-vueni-pill h-3">
             <div
               className={cn(
-                'h-3 rounded-full transition-all duration-300',
+                'h-3 rounded-vueni-pill transition-all duration-300',
                 stressIndicator.color === 'red'
                   ? 'bg-red-400'
                   : stressIndicator.color === 'orange'
@@ -251,7 +251,7 @@ export const BiometricMonitor: React.FC<BiometricMonitorProps> = ({
 
         {/* Biometric Data */}
         <div className="grid grid-cols-2 gap-4">
-          <div className="bg-white/[0.03] rounded-xl p-3 border border-white/[0.05]">
+          <div className="bg-white/[0.03] rounded-vueni-lg p-3 border border-white/[0.05]">
             <div className="flex items-center space-x-2 mb-1">
               <Heart className="w-4 h-4 text-red-400" />
               <span className="text-xs text-white/70">Heart Rate</span>
@@ -261,7 +261,7 @@ export const BiometricMonitor: React.FC<BiometricMonitorProps> = ({
             </p>
           </div>
 
-          <div className="bg-white/[0.03] rounded-xl p-3 border border-white/[0.05]">
+          <div className="bg-white/[0.03] rounded-vueni-lg p-3 border border-white/[0.05]">
             <div className="flex items-center space-x-2 mb-1">
               <Activity className="w-4 h-4 text-blue-400" />
               <span className="text-xs text-white/70">HRV</span>
@@ -271,7 +271,7 @@ export const BiometricMonitor: React.FC<BiometricMonitorProps> = ({
             </p>
           </div>
 
-          <div className="bg-white/[0.03] rounded-xl p-3 border border-white/[0.05]">
+          <div className="bg-white/[0.03] rounded-vueni-lg p-3 border border-white/[0.05]">
             <div className="flex items-center space-x-2 mb-1">
               <Thermometer className="w-4 h-4 text-orange-400" />
               <span className="text-xs text-white/70">Skin Temp</span>
@@ -281,7 +281,7 @@ export const BiometricMonitor: React.FC<BiometricMonitorProps> = ({
             </p>
           </div>
 
-          <div className="bg-white/[0.03] rounded-xl p-3 border border-white/[0.05]">
+          <div className="bg-white/[0.03] rounded-vueni-lg p-3 border border-white/[0.05]">
             <div className="flex items-center space-x-2 mb-1">
               <Wind className="w-4 h-4 text-cyan-400" />
               <span className="text-xs text-white/70">Breathing</span>

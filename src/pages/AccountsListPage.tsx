@@ -157,7 +157,7 @@ const AccountsListPage: React.FC = () => {
               >
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-4">
-                    <div className="w-12 h-12 rounded-xl bg-white/[0.05] flex items-center justify-center">
+                    <div className="w-12 h-12 rounded-vueni-lg bg-white/[0.05] flex items-center justify-center">
                       <CreditCard className="w-6 h-6 text-blue-400" />
                     </div>
 
@@ -214,7 +214,7 @@ const AccountsListPage: React.FC = () => {
             <p className="text-white/60 mb-6">
               Connect your bank accounts to start tracking your finances
             </p>
-            <button className="bg-blue-500 hover:bg-blue-600 text-white px-6 py-3 rounded-xl transition-colors">
+            <button className="bg-blue-500 hover:bg-blue-600 text-white px-6 py-3 rounded-vueni-lg transition-colors">
               Add Account
             </button>
           </UniversalCard>

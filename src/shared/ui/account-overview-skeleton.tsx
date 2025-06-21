@@ -7,7 +7,7 @@ export const AccountOverviewSkeleton: React.FC = () => (
     <div className="p-6 max-w-6xl mx-auto">
       {/* Header skeleton */}
       <div className="flex items-center gap-4 mb-8">
-        <Skeleton className="w-10 h-10 rounded-full bg-white/10" />
+        <Skeleton className="w-10 h-10 rounded-vueni-pill bg-white/10" />
         <div className="flex-1">
           <Skeleton className="h-8 w-64 bg-white/10 mb-2" />
           <Skeleton className="h-4 w-48 bg-white/10" />
@@ -25,9 +25,9 @@ export const AccountOverviewSkeleton: React.FC = () => (
             {/* Pane header skeleton */}
             <div className="flex items-center justify-between p-6">
               <div className="flex items-center gap-3">
-                <Skeleton className="w-10 h-10 rounded-xl bg-white/10" />
+                <Skeleton className="w-10 h-10 rounded-vueni-lg bg-white/10" />
                 <Skeleton className="h-6 w-32 bg-white/10" />
-                <Skeleton className="h-5 w-16 rounded-full bg-white/10" />
+                <Skeleton className="h-5 w-16 rounded-vueni-pill bg-white/10" />
               </div>
               <Skeleton className="w-5 h-5 bg-white/10" />
             </div>
@@ -40,7 +40,7 @@ export const AccountOverviewSkeleton: React.FC = () => (
                     {Array.from({ length: 3 }).map((_, j) => (
                       <div
                         key={j}
-                        className="bg-white/[0.03] rounded-xl p-4 border border-white/[0.05]"
+                        className="bg-white/[0.03] rounded-vueni-lg p-4 border border-white/[0.05]"
                       >
                         <div className="flex items-center gap-2 mb-2">
                           <Skeleton className="w-5 h-5 bg-white/10" />

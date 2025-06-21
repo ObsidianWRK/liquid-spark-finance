@@ -129,7 +129,7 @@ export const PerformanceMonitor = React.memo<PerformanceMonitorProps>(
         {/* Toggle Button */}
         <button
           onClick={() => setIsVisible(!isVisible)}
-          className="bg-black/80 backdrop-blur-sm text-white p-2 rounded-full border border-white/20 hover:bg-black/90 transition-colors"
+          className="bg-black/80 backdrop-blur-sm text-white p-2 rounded-vueni-pill border border-white/20 hover:bg-black/90 transition-colors"
           title="Performance Monitor"
         >
           <Activity className="w-4 h-4" />
@@ -162,7 +162,7 @@ export const PerformanceMonitor = React.memo<PerformanceMonitorProps>(
 
               {/* Key Metrics */}
               <div className="grid grid-cols-2 gap-3">
-                <div className="bg-white/5 rounded-xl p-3">
+                <div className="bg-white/5 rounded-vueni-lg p-3">
                   <div className="flex items-center space-x-2 mb-1">
                     <Clock className="w-3 h-3 text-blue-400" />
                     <span className="text-xs text-white/60">Render Time</span>
@@ -172,7 +172,7 @@ export const PerformanceMonitor = React.memo<PerformanceMonitorProps>(
                   </div>
                 </div>
 
-                <div className="bg-white/5 rounded-xl p-3">
+                <div className="bg-white/5 rounded-vueni-lg p-3">
                   <div className="flex items-center space-x-2 mb-1">
                     <Zap className="w-3 h-3 text-green-400" />
                     <span className="text-xs text-white/60">Memory</span>
@@ -182,7 +182,7 @@ export const PerformanceMonitor = React.memo<PerformanceMonitorProps>(
                   </div>
                 </div>
 
-                <div className="bg-white/5 rounded-xl p-3">
+                <div className="bg-white/5 rounded-vueni-lg p-3">
                   <div className="flex items-center space-x-2 mb-1">
                     <TrendingUp className="w-3 h-3 text-purple-400" />
                     <span className="text-xs text-white/60">Components</span>
@@ -192,7 +192,7 @@ export const PerformanceMonitor = React.memo<PerformanceMonitorProps>(
                   </div>
                 </div>
 
-                <div className="bg-white/5 rounded-xl p-3">
+                <div className="bg-white/5 rounded-vueni-lg p-3">
                   <div className="flex items-center space-x-2 mb-1">
                     <Activity className="w-3 h-3 text-orange-400" />
                     <span className="text-xs text-white/60">Re-renders</span>
@@ -233,7 +233,7 @@ export const PerformanceMonitor = React.memo<PerformanceMonitorProps>(
               </div>
 
               {/* Performance Tips */}
-              <div className="bg-blue-500/10 rounded-xl p-3 border border-blue-500/20">
+              <div className="bg-blue-500/10 rounded-vueni-lg p-3 border border-blue-500/20">
                 <div className="text-xs font-semibold text-blue-400 mb-1">
                   Optimization Tips
                 </div>
@@ -268,7 +268,7 @@ const OptimizationStatus = React.memo<{
     <span className="text-white/70">{label}</span>
     <div className="flex items-center space-x-2">
       <span
-        className={`w-2 h-2 rounded-full ${enabled ? 'bg-green-400' : 'bg-red-400'}`}
+        className={`w-2 h-2 rounded-vueni-pill ${enabled ? 'bg-green-400' : 'bg-red-400'}`}
         title={description}
       />
       <span className={enabled ? 'text-green-400' : 'text-red-400'}>

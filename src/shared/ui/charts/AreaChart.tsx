@@ -189,7 +189,7 @@ const FinancialAreaTooltip: React.FC<{
     return (
       <div
         className={cn(
-          'bg-black/90 backdrop-blur-md rounded-xl px-4 py-3 shadow-2xl',
+          'bg-black/90 backdrop-blur-md rounded-vueni-lg px-4 py-3 shadow-2xl',
           'border border-white/20 max-w-xs'
         )}
       >
@@ -222,7 +222,7 @@ const FinancialAreaTooltip: React.FC<{
               >
                 <div className="flex items-center space-x-2">
                   <div
-                    className="w-2 h-2 rounded-full"
+                    className="w-2 h-2 rounded-vueni-pill"
                     style={{ backgroundColor: entry.color }}
                   />
                   <span className="text-white/80 text-xs">{entry.name}</span>
@@ -542,7 +542,7 @@ export const AreaChart = forwardRef<ChartRef, AreaChartProps>(
             return (
               <div key={serie.dataKey} className="flex items-center space-x-1">
                 <div
-                  className="w-2 h-2 rounded-full"
+                  className="w-2 h-2 rounded-vueni-pill"
                   style={{ backgroundColor: serie.color }}
                 />
                 <span className="text-white/80 text-xs">

@@ -34,7 +34,7 @@ export const CategoryBreakdown = React.memo<CategoryBreakdownProps>(
     };
 
     return (
-      <div className="bg-white/5 rounded-lg p-6">
+      <div className="bg-white/5 rounded-vueni-lg p-6">
         <h3 className="text-lg font-semibold text-white mb-4">
           Category Breakdown
         </h3>
@@ -50,7 +50,7 @@ export const CategoryBreakdown = React.memo<CategoryBreakdownProps>(
             return (
               <div
                 key={category}
-                className={`flex items-center justify-between p-3 bg-white/5 rounded-lg ${
+                className={`flex items-center justify-between p-3 bg-white/5 rounded-vueni-lg ${
                   interactive
                     ? 'hover:bg-white/10 cursor-pointer transition-colors'
                     : ''
@@ -58,7 +58,7 @@ export const CategoryBreakdown = React.memo<CategoryBreakdownProps>(
               >
                 <div className="flex items-center space-x-3">
                   <div
-                    className="w-3 h-3 rounded-full"
+                    className="w-3 h-3 rounded-vueni-pill"
                     style={{ backgroundColor: '#6366f1' }}
                   />
                   <span className="text-white capitalize">{category}</span>

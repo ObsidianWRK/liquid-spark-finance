@@ -185,7 +185,7 @@ const UniversalMetricCard = memo(
         variant="glass"
         interactive={interactive}
         className={`
-        relative overflow-hidden rounded-xl md:rounded-2xl transition-all duration-300 group 
+        relative overflow-hidden rounded-vueni-lg md:rounded-vueni-lg transition-all duration-300 group 
         ${onClick ? 'cursor-pointer' : ''} ${config.padding} ${variantStyles.container}
       `}
         onClick={onClick}
@@ -195,7 +195,7 @@ const UniversalMetricCard = memo(
           <div className="flex items-center justify-between mb-2 md:mb-3">
             <div className="flex items-center space-x-2">
               <div
-                className={`${config.iconPadding} rounded-xl backdrop-blur-sm ${variantStyles.iconContainer}`}
+                className={`${config.iconPadding} rounded-vueni-lg backdrop-blur-sm ${variantStyles.iconContainer}`}
                 style={{ background: `${color}15` }}
               >
                 {React.cloneElement(icon, {
@@ -237,10 +237,10 @@ const UniversalMetricCard = memo(
           {showProgress && progress !== undefined && (
             <div className="relative">
               <div
-                className={`w-full h-1.5 md:h-2 rounded-full overflow-hidden ${variantStyles.progressBar}`}
+                className={`w-full h-1.5 md:h-2 rounded-vueni-pill overflow-hidden ${variantStyles.progressBar}`}
               >
                 <div
-                  className="h-full rounded-full transition-all duration-1000 ease-out relative overflow-hidden"
+                  className="h-full rounded-vueni-pill transition-all duration-1000 ease-out relative overflow-hidden"
                   style={{
                     width: `${Math.min(100, Math.max(0, progress))}%`,
                     background: `linear-gradient(90deg, ${color}, ${color}CC)`,

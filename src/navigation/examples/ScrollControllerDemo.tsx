@@ -188,7 +188,7 @@ const DemoContent: React.FC = () => {
             <input
               type="text"
               placeholder="Type here to test virtual keyboard detection..."
-              className="w-full p-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-blue-500/50"
+              className="w-full p-3 bg-white/10 border border-white/20 rounded-vueni-lg text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-blue-500/50"
             />
           </div>
         </Card>
@@ -295,14 +295,14 @@ const DemoContent: React.FC = () => {
               {/* Add some variety to content heights */}
               {i % 3 === 0 && (
                 <div className="mt-4 grid grid-cols-2 gap-4">
-                  <div className="h-20 bg-gradient-to-r from-blue-500/20 to-purple-500/20 rounded-lg"></div>
-                  <div className="h-20 bg-gradient-to-r from-green-500/20 to-blue-500/20 rounded-lg"></div>
+                  <div className="h-20 bg-gradient-to-r from-blue-500/20 to-purple-500/20 rounded-vueni-lg"></div>
+                  <div className="h-20 bg-gradient-to-r from-green-500/20 to-blue-500/20 rounded-vueni-lg"></div>
                 </div>
               )}
 
               {i % 5 === 0 && (
                 <div className="mt-4">
-                  <div className="h-32 bg-gradient-to-br from-purple-500/20 to-pink-500/20 rounded-lg flex items-center justify-center">
+                  <div className="h-32 bg-gradient-to-br from-purple-500/20 to-pink-500/20 rounded-vueni-lg flex items-center justify-center">
                     <span className="text-white/60">Interactive Test Area</span>
                   </div>
                 </div>

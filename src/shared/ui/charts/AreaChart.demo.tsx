@@ -158,7 +158,7 @@ const AreaChartDemo: React.FC = () => {
           <button
             key={demo.key}
             onClick={() => setSelectedDemo(demo.key as any)}
-            className={`px-6 py-3 rounded-xl font-medium transition-all duration-200 ${
+            className={`px-6 py-3 rounded-vueni-lg font-medium transition-all duration-200 ${
               selectedDemo === demo.key
                 ? 'bg-blue-500/20 text-blue-400 border border-blue-500/30'
                 : 'bg-white/5 text-white/70 border border-white/10 hover:bg-white/10 hover:text-white'
@@ -172,7 +172,7 @@ const AreaChartDemo: React.FC = () => {
       {/* Chart Demos */}
       <div className="grid gap-8">
         {selectedDemo === 'portfolio' && (
-          <div className="bg-black/20 backdrop-blur-xl rounded-3xl p-8 border border-white/10">
+          <div className="bg-black/20 backdrop-blur-xl rounded-vueni-lg p-8 border border-white/10">
             <AreaChart
               data={portfolioData}
               series={portfolioSeries}
@@ -211,7 +211,7 @@ const AreaChartDemo: React.FC = () => {
         )}
 
         {selectedDemo === 'spending' && (
-          <div className="bg-black/20 backdrop-blur-xl rounded-3xl p-8 border border-white/10">
+          <div className="bg-black/20 backdrop-blur-xl rounded-vueni-lg p-8 border border-white/10">
             <AreaChart
               data={spendingData}
               series={spendingSeries}
@@ -248,7 +248,7 @@ const AreaChartDemo: React.FC = () => {
         )}
 
         {selectedDemo === 'networth' && (
-          <div className="bg-black/20 backdrop-blur-xl rounded-3xl p-8 border border-white/10">
+          <div className="bg-black/20 backdrop-blur-xl rounded-vueni-lg p-8 border border-white/10">
             <AreaChart
               data={netWorthData}
               series={netWorthSeries}
@@ -290,7 +290,7 @@ const AreaChartDemo: React.FC = () => {
 
       {/* Feature Highlights */}
       <div className="grid md:grid-cols-3 gap-6 mt-12">
-        <div className="bg-black/20 backdrop-blur-xl rounded-2xl p-6 border border-white/10">
+        <div className="bg-black/20 backdrop-blur-xl rounded-vueni-lg p-6 border border-white/10">
           <h3 className="text-lg font-semibold text-white mb-3">
             🍎 Apple Design
           </h3>
@@ -300,7 +300,7 @@ const AreaChartDemo: React.FC = () => {
           </p>
         </div>
 
-        <div className="bg-black/20 backdrop-blur-xl rounded-2xl p-6 border border-white/10">
+        <div className="bg-black/20 backdrop-blur-xl rounded-vueni-lg p-6 border border-white/10">
           <h3 className="text-lg font-semibold text-white mb-3">
             💰 Financial Focus
           </h3>
@@ -310,7 +310,7 @@ const AreaChartDemo: React.FC = () => {
           </p>
         </div>
 
-        <div className="bg-black/20 backdrop-blur-xl rounded-2xl p-6 border border-white/10">
+        <div className="bg-black/20 backdrop-blur-xl rounded-vueni-lg p-6 border border-white/10">
           <h3 className="text-lg font-semibold text-white mb-3">
             ⚡ Performance
           </h3>
@@ -322,9 +322,9 @@ const AreaChartDemo: React.FC = () => {
       </div>
 
       {/* Usage Example */}
-      <div className="bg-black/20 backdrop-blur-xl rounded-2xl p-6 border border-white/10">
+      <div className="bg-black/20 backdrop-blur-xl rounded-vueni-lg p-6 border border-white/10">
         <h3 className="text-lg font-semibold text-white mb-4">Usage Example</h3>
-        <pre className="text-xs text-white/80 bg-black/30 rounded-lg p-4 overflow-x-auto">
+        <pre className="text-xs text-white/80 bg-black/30 rounded-vueni-lg p-4 overflow-x-auto">
           {`<AreaChart
   data={portfolioData}
   series={portfolioSeries}

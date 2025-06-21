@@ -95,7 +95,7 @@ const RefinedScoreCard = memo(
       };
 
       return (
-        <div className="flex items-center space-x-1 px-3 py-1 rounded-full bg-slate-800/30 border border-slate-700/40 backdrop-blur-sm">
+        <div className="flex items-center space-x-1 px-3 py-1 rounded-vueni-pill bg-slate-800/30 border border-slate-700/40 backdrop-blur-sm">
           {iconMap[trend]}
         </div>
       );
@@ -105,7 +105,7 @@ const RefinedScoreCard = memo(
       <EnhancedGlassCard
         variant="glass"
         className={`
-        relative overflow-hidden rounded-3xl backdrop-blur-xl border border-slate-700/40 
+        relative overflow-hidden rounded-vueni-lg backdrop-blur-xl border border-slate-700/40 
         hover:border-slate-600/60 transition-all duration-500 group hover-lift ${config.padding}
         bg-slate-900/20 animate-[slideInScale_0.8s_ease-out_${delay}ms_both]
       `}
@@ -113,21 +113,21 @@ const RefinedScoreCard = memo(
       >
         {/* Subtle moving gradient overlay */}
         <div
-          className="absolute inset-0 opacity-10 transition-opacity duration-500 group-hover:opacity-20 rounded-3xl"
+          className="absolute inset-0 opacity-10 transition-opacity duration-500 group-hover:opacity-20 rounded-vueni-lg"
           style={{
             background: `radial-gradient(circle at 50% 50%, ${refinedColor}30 0%, transparent 70%)`,
           }}
         />
 
         {/* Glass morphism depth layer */}
-        <div className="absolute inset-0 bg-gradient-to-br from-slate-800/10 via-transparent to-slate-900/20 rounded-3xl" />
+        <div className="absolute inset-0 bg-gradient-to-br from-slate-800/10 via-transparent to-slate-900/20 rounded-vueni-lg" />
 
         <div className="relative z-10">
           {/* Header */}
           <div className="flex items-center justify-between mb-6">
             <div className="flex items-center space-x-3">
               <div
-                className={`${config.iconPadding} rounded-2xl backdrop-blur-sm border border-slate-700/30 bg-slate-800/20`}
+                className={`${config.iconPadding} rounded-vueni-lg backdrop-blur-sm border border-slate-700/30 bg-slate-800/20`}
                 style={{
                   background: `linear-gradient(135deg, ${refinedColor}15, ${refinedColor}05)`,
                   borderColor: `${refinedColor}30`,
@@ -172,7 +172,7 @@ const RefinedScoreCard = memo(
 
         {/* Subtle border glow effect */}
         <div
-          className="absolute inset-0 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
+          className="absolute inset-0 rounded-vueni-lg opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
           style={{
             background: `linear-gradient(135deg, transparent, ${refinedColor}20, transparent)`,
             filter: 'blur(1px)',

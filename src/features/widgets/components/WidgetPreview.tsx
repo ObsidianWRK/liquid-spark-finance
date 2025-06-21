@@ -40,7 +40,7 @@ export const WidgetPreview: React.FC<WidgetPreviewProps> = ({ widget }) => {
   };
 
   return (
-    <div className="relative bg-white/[0.02] border border-white/[0.08] rounded-xl p-4 min-h-[80px] flex items-center">
+    <div className="relative bg-white/[0.02] border border-white/[0.08] rounded-vueni-lg p-4 min-h-[80px] flex items-center">
       <Button
         size="icon"
         variant="ghost"

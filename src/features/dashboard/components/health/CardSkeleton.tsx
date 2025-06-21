@@ -20,7 +20,7 @@ export const CardSkeleton: React.FC<CardSkeletonProps> = ({
 }) => {
   const baseClasses = cn(
     // Base Eco Impact card styling (dark mode only)
-    'bg-white/[0.02] border-white/[0.08] rounded-2xl backdrop-blur-md',
+    'bg-white/[0.02] border-white/[0.08] rounded-vueni-lg backdrop-blur-md',
     'transition-all duration-300 ease-out',
 
     // Variant-specific styling
@@ -47,14 +47,14 @@ export const CardSkeleton: React.FC<CardSkeletonProps> = ({
         <div className="animate-pulse space-y-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-3">
-              <div className="w-6 h-6 bg-white/[0.1] rounded-full"></div>
+              <div className="w-6 h-6 bg-white/[0.1] rounded-vueni-pill"></div>
               <div className="h-5 bg-white/[0.1] rounded w-24"></div>
             </div>
             <div className="w-16 h-8 bg-white/[0.1] rounded"></div>
           </div>
 
           <div className="space-y-3">
-            <div className="h-12 bg-white/[0.1] rounded-lg"></div>
+            <div className="h-12 bg-white/[0.1] rounded-vueni-lg"></div>
             <div className="grid grid-cols-2 gap-3">
               <div className="h-8 bg-white/[0.1] rounded"></div>
               <div className="h-8 bg-white/[0.1] rounded"></div>
@@ -83,10 +83,10 @@ export const BiometricCardSkeleton: React.FC<
       {/* Header */}
       <div className="flex items-center justify-between">
         <div className="flex items-center space-x-3">
-          <div className="w-5 h-5 bg-red-400/20 rounded-full"></div>
+          <div className="w-5 h-5 bg-red-400/20 rounded-vueni-pill"></div>
           <div className="h-4 bg-white/[0.1] rounded w-20"></div>
         </div>
-        <div className="w-12 h-6 bg-green-400/20 rounded-full"></div>
+        <div className="w-12 h-6 bg-green-400/20 rounded-vueni-pill"></div>
       </div>
 
       {/* Stress level bar */}
@@ -95,8 +95,8 @@ export const BiometricCardSkeleton: React.FC<
           <div className="h-3 bg-white/[0.1] rounded w-16"></div>
           <div className="h-3 bg-white/[0.1] rounded w-8"></div>
         </div>
-        <div className="w-full bg-white/10 rounded-full h-3">
-          <div className="h-3 bg-gradient-to-r from-green-400 to-red-400 rounded-full w-2/3"></div>
+        <div className="w-full bg-white/10 rounded-vueni-pill h-3">
+          <div className="h-3 bg-gradient-to-r from-green-400 to-red-400 rounded-vueni-pill w-2/3"></div>
         </div>
       </div>
 
@@ -121,7 +121,7 @@ export const WellnessCardSkeleton: React.FC<
       {/* Header with score circle */}
       <div className="flex items-center justify-between">
         <div className="flex items-center space-x-3">
-          <div className="w-5 h-5 bg-green-400/20 rounded-full"></div>
+          <div className="w-5 h-5 bg-green-400/20 rounded-vueni-pill"></div>
           <div className="h-4 bg-white/[0.1] rounded w-24"></div>
         </div>
       </div>
@@ -129,7 +129,7 @@ export const WellnessCardSkeleton: React.FC<
       {/* Score circle */}
       <div className="flex justify-center">
         <div className="relative">
-          <div className="w-20 h-20 bg-white/[0.1] rounded-full"></div>
+          <div className="w-20 h-20 bg-white/[0.1] rounded-vueni-pill"></div>
           <div className="absolute inset-0 flex items-center justify-center">
             <div className="h-6 bg-white/[0.1] rounded w-8"></div>
           </div>
@@ -153,7 +153,7 @@ export const AccountCardSkeleton: React.FC<
       {/* Institution header */}
       <div className="flex items-center justify-between">
         <div className="flex items-center space-x-3">
-          <div className="w-8 h-8 bg-blue-400/20 rounded-lg"></div>
+          <div className="w-8 h-8 bg-blue-400/20 rounded-vueni-lg"></div>
           <div className="space-y-1">
             <div className="h-4 bg-white/[0.1] rounded w-20"></div>
             <div className="h-3 bg-white/[0.1] rounded w-16"></div>

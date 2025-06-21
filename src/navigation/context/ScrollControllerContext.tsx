@@ -162,7 +162,7 @@ export const ScrollControllerDebugger: React.FC<DebuggerProps> = ({
 
   return (
     <div
-      className={`fixed z-[9999] p-3 bg-black/80 text-white text-xs font-mono rounded-lg backdrop-blur-sm border border-white/20 max-w-xs ${positionClasses[position]} ${className}`}
+      className={`fixed z-[9999] p-3 bg-black/80 text-white text-xs font-mono rounded-vueni-lg backdrop-blur-sm border border-white/20 max-w-xs ${positionClasses[position]} ${className}`}
       style={{ pointerEvents: 'none' }}
     >
       <div className="mb-2 font-semibold text-blue-300">

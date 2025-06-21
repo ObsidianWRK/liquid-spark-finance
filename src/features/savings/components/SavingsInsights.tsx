@@ -46,7 +46,7 @@ const SavingsInsights = ({ insights }: SavingsInsightsProps) => {
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         <div className="liquid-glass-card p-6 card-hover">
           <div className="flex items-center space-x-3 mb-3">
-            <div className="w-10 h-10 bg-blue-500/20 rounded-lg flex items-center justify-center">
+            <div className="w-10 h-10 bg-blue-500/20 rounded-vueni-lg flex items-center justify-center">
               <Target className="w-5 h-5 text-blue-400" />
             </div>
             <div>
@@ -58,7 +58,7 @@ const SavingsInsights = ({ insights }: SavingsInsightsProps) => {
 
         <div className="liquid-glass-card p-6 card-hover">
           <div className="flex items-center space-x-3 mb-3">
-            <div className="w-10 h-10 bg-green-500/20 rounded-lg flex items-center justify-center">
+            <div className="w-10 h-10 bg-green-500/20 rounded-vueni-lg flex items-center justify-center">
               <Award className="w-5 h-5 text-green-400" />
             </div>
             <div>
@@ -70,7 +70,7 @@ const SavingsInsights = ({ insights }: SavingsInsightsProps) => {
 
         <div className="liquid-glass-card p-6 card-hover">
           <div className="flex items-center space-x-3 mb-3">
-            <div className="w-10 h-10 bg-orange-500/20 rounded-lg flex items-center justify-center">
+            <div className="w-10 h-10 bg-orange-500/20 rounded-vueni-lg flex items-center justify-center">
               <TrendingUp className="w-5 h-5 text-orange-400" />
             </div>
             <div>
@@ -98,7 +98,7 @@ const SavingsInsights = ({ insights }: SavingsInsightsProps) => {
               Create some savings goals to get personalized insights and
               recommendations.
             </p>
-            <button className="bg-gradient-to-r from-green-500 to-emerald-500 text-white px-6 py-3 rounded-lg font-medium hover:from-green-600 hover:to-emerald-600 transition-all flex items-center space-x-2 mx-auto">
+            <button className="bg-gradient-to-r from-green-500 to-emerald-500 text-white px-6 py-3 rounded-vueni-lg font-medium hover:from-green-600 hover:to-emerald-600 transition-all flex items-center space-x-2 mx-auto">
               <Plus className="w-5 h-5" />
               <span>Create Your First Goal</span>
             </button>
@@ -123,7 +123,7 @@ const SavingsInsights = ({ insights }: SavingsInsightsProps) => {
                     </p>
 
                     {insight.actionable && insight.action && (
-                      <button className="bg-gradient-to-r from-indigo-500 to-purple-500 text-white px-4 py-2 rounded-lg text-sm font-medium hover:from-indigo-600 hover:to-purple-600 transition-all">
+                      <button className="bg-gradient-to-r from-indigo-500 to-purple-500 text-white px-4 py-2 rounded-vueni-lg text-sm font-medium hover:from-indigo-600 hover:to-purple-600 transition-all">
                         {insight.action}
                       </button>
                     )}
@@ -145,7 +145,7 @@ const SavingsInsights = ({ insights }: SavingsInsightsProps) => {
         <div className="space-y-4">
           <div className="liquid-glass-card p-6 border border-green-500/30 bg-green-500/10 card-hover">
             <div className="flex items-start space-x-4">
-              <div className="w-10 h-10 bg-green-500/20 rounded-lg flex items-center justify-center">
+              <div className="w-10 h-10 bg-green-500/20 rounded-vueni-lg flex items-center justify-center">
                 <TrendingUp className="w-5 h-5 text-green-400" />
               </div>
               <div className="flex-1">
@@ -158,9 +158,9 @@ const SavingsInsights = ({ insights }: SavingsInsightsProps) => {
                   target 2 months earlier.
                 </p>
                 <div className="flex items-center space-x-3">
-                  <div className="w-full bg-white/10 rounded-full h-2">
+                  <div className="w-full bg-white/10 rounded-vueni-pill h-2">
                     <div
-                      className="bg-green-400 h-2 rounded-full"
+                      className="bg-green-400 h-2 rounded-vueni-pill"
                       style={{ width: '78%' }}
                     ></div>
                   </div>
@@ -174,7 +174,7 @@ const SavingsInsights = ({ insights }: SavingsInsightsProps) => {
 
           <div className="liquid-glass-card p-6 border border-blue-500/30 bg-blue-500/10 card-hover">
             <div className="flex items-start space-x-4">
-              <div className="w-10 h-10 bg-blue-500/20 rounded-lg flex items-center justify-center">
+              <div className="w-10 h-10 bg-blue-500/20 rounded-vueni-lg flex items-center justify-center">
                 <Target className="w-5 h-5 text-blue-400" />
               </div>
               <div className="flex-1">
@@ -186,9 +186,9 @@ const SavingsInsights = ({ insights }: SavingsInsightsProps) => {
                   current rate, you'll have enough saved by your target date.
                 </p>
                 <div className="flex items-center space-x-3">
-                  <div className="w-full bg-white/10 rounded-full h-2">
+                  <div className="w-full bg-white/10 rounded-vueni-pill h-2">
                     <div
-                      className="bg-blue-400 h-2 rounded-full"
+                      className="bg-blue-400 h-2 rounded-vueni-pill"
                       style={{ width: '45%' }}
                     ></div>
                   </div>
@@ -200,7 +200,7 @@ const SavingsInsights = ({ insights }: SavingsInsightsProps) => {
 
           <div className="liquid-glass-card p-6 border border-orange-500/30 bg-orange-500/10 card-hover">
             <div className="flex items-start space-x-4">
-              <div className="w-10 h-10 bg-orange-500/20 rounded-lg flex items-center justify-center">
+              <div className="w-10 h-10 bg-orange-500/20 rounded-vueni-lg flex items-center justify-center">
                 <AlertCircle className="w-5 h-5 text-orange-400" />
               </div>
               <div className="flex-1">
@@ -213,9 +213,9 @@ const SavingsInsights = ({ insights }: SavingsInsightsProps) => {
                   date by 6 months.
                 </p>
                 <div className="flex items-center space-x-3">
-                  <div className="w-full bg-white/10 rounded-full h-2">
+                  <div className="w-full bg-white/10 rounded-vueni-pill h-2">
                     <div
-                      className="bg-orange-400 h-2 rounded-full"
+                      className="bg-orange-400 h-2 rounded-vueni-pill"
                       style={{ width: '23%' }}
                     ></div>
                   </div>

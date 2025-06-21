@@ -188,7 +188,7 @@ export const InterventionSettings: React.FC<InterventionSettingsProps> = ({
                 activePolicies.map((policy) => (
                   <div
                     key={policy.id}
-                    className="p-4 bg-white/[0.02] border border-white/[0.08] rounded-lg"
+                    className="p-4 bg-white/[0.02] border border-white/[0.08] rounded-vueni-lg"
                   >
                     <div className="flex items-start justify-between mb-3">
                       <div>

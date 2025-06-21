@@ -21,7 +21,7 @@ export const NegotiateBillsButton: React.FC = () => {
     <button 
       onClick={onClick} 
       disabled={loading}
-      className="w-full p-2 bg-green-500/10 hover:bg-green-500/20 border border-green-500/20 rounded-lg text-green-400 text-xs font-medium transition-colors flex items-center justify-center gap-2 disabled:opacity-50"
+      className="w-full p-2 bg-green-500/10 hover:bg-green-500/20 border border-green-500/20 rounded-vueni-lg text-green-400 text-xs font-medium transition-colors flex items-center justify-center gap-2 disabled:opacity-50"
     >
       <Handshake className="w-3 h-3" />
       {loading ? 'Negotiating...' : 'Negotiate Bills'}

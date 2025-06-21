@@ -60,9 +60,9 @@ const CalculatorsPage = () => {
       <Suspense
         fallback={
           <div className="w-full text-white flex items-center justify-center py-20">
-            <div className="liquid-glass-fallback rounded-2xl p-8">
+            <div className="liquid-glass-fallback rounded-vueni-lg p-8">
               <div className="flex items-center space-x-4">
-                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-white"></div>
+                <div className="animate-spin rounded-vueni-pill h-8 w-8 border-b-2 border-white"></div>
                 <span className="text-white text-lg">
                   Loading calculator...
                 </span>
@@ -72,7 +72,7 @@ const CalculatorsPage = () => {
         }
       >
         <div className="w-full px-4 py-6 max-w-6xl mx-auto">
-          <div className="liquid-glass-fallback rounded-2xl p-6">
+          <div className="liquid-glass-fallback rounded-vueni-lg p-6">
             {Component || (
               <div className="text-white p-4 text-center">
                 Calculator not found.

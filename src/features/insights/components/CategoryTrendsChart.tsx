@@ -88,7 +88,7 @@ const CategoryTrendsChart: React.FC<CategoryTrendsChartProps> = ({
   };
 
   return (
-    <div className="liquid-glass-fallback rounded-2xl p-6">
+    <div className="liquid-glass-fallback rounded-vueni-lg p-6">
       <h3 className="text-lg sm:text-xl font-bold text-white mb-4">{title}</h3>
 
       {/* Category Toggle Buttons */}
@@ -97,7 +97,7 @@ const CategoryTrendsChart: React.FC<CategoryTrendsChartProps> = ({
           <button
             key={category}
             onClick={() => toggleCategory(category)}
-            className={`px-3 py-1 rounded-lg text-xs font-medium transition-all duration-200 ${
+            className={`px-3 py-1 rounded-vueni-lg text-xs font-medium transition-all duration-200 ${
               visibleCategories.has(category)
                 ? 'bg-white/20 text-white border border-white/30'
                 : 'bg-white/5 text-white/60 border border-white/10 hover:bg-white/10'

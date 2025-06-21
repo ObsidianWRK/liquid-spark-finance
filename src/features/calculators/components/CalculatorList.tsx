@@ -65,7 +65,7 @@ const ExchangeRateCalculator = lazy(
 const CalculatorSkeleton = () => (
   <div className="p-8 space-y-6">
     <div className="space-y-3">
-      <div className="h-8 bg-white/[0.05] rounded-lg w-1/3 animate-pulse"></div>
+      <div className="h-8 bg-white/[0.05] rounded-vueni-lg w-1/3 animate-pulse"></div>
       <div className="h-4 bg-white/[0.03] rounded w-2/3 animate-pulse"></div>
     </div>
     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -73,11 +73,11 @@ const CalculatorSkeleton = () => (
         {[...Array(4)].map((_, i) => (
           <div key={i} className="space-y-2">
             <div className="h-4 bg-white/[0.05] rounded w-1/4 animate-pulse"></div>
-            <div className="h-12 bg-white/[0.03] rounded-lg animate-pulse"></div>
+            <div className="h-12 bg-white/[0.03] rounded-vueni-lg animate-pulse"></div>
           </div>
         ))}
       </div>
-      <div className="h-64 bg-white/[0.03] rounded-lg animate-pulse"></div>
+      <div className="h-64 bg-white/[0.03] rounded-vueni-lg animate-pulse"></div>
     </div>
   </div>
 );
@@ -240,7 +240,7 @@ const CalculatorList = () => {
 
             {/* Calculator Selector Dropdown */}
             <DropdownMenu>
-              <DropdownMenuTrigger className="w-full sm:w-auto px-4 py-3 bg-white/[0.05] hover:bg-white/[0.08] border border-white/[0.12] rounded-xl flex items-center justify-between gap-3 transition-all duration-200">
+              <DropdownMenuTrigger className="w-full sm:w-auto px-4 py-3 bg-white/[0.05] hover:bg-white/[0.08] border border-white/[0.12] rounded-vueni-lg flex items-center justify-between gap-3 transition-all duration-200">
                 <div className="flex items-center gap-3">
                   <div className="text-xl">{selectedCalculator.emoji}</div>
                   <div className="text-left">
@@ -275,12 +275,12 @@ const CalculatorList = () => {
                                 <div className="font-medium text-white flex items-center gap-2">
                                   {calc.name}
                                   {calc.status === 'new' && (
-                                    <span className="text-xs px-1.5 py-0.5 rounded-full bg-green-500/20 text-green-400 border border-green-500/30">
+                                    <span className="text-xs px-1.5 py-0.5 rounded-vueni-pill bg-green-500/20 text-green-400 border border-green-500/30">
                                       New
                                     </span>
                                   )}
                                   {calc.status === 'popular' && (
-                                    <span className="text-xs px-1.5 py-0.5 rounded-full bg-blue-500/20 text-blue-400 border border-blue-500/30">
+                                    <span className="text-xs px-1.5 py-0.5 rounded-vueni-pill bg-blue-500/20 text-blue-400 border border-blue-500/30">
                                       Popular
                                     </span>
                                   )}
@@ -308,9 +308,9 @@ const CalculatorList = () => {
           </div>
 
           {/* Selected Calculator Info */}
-          <div className="bg-white/[0.02] border border-white/[0.08] rounded-2xl p-6 backdrop-blur-md">
+          <div className="bg-white/[0.02] border border-white/[0.08] rounded-vueni-lg p-6 backdrop-blur-md">
             <div className="flex items-start gap-4">
-              <div className="w-12 h-12 rounded-xl bg-white/[0.05] flex items-center justify-center text-2xl flex-shrink-0">
+              <div className="w-12 h-12 rounded-vueni-lg bg-white/[0.05] flex items-center justify-center text-2xl flex-shrink-0">
                 {selectedCalculator.emoji}
               </div>
               <div className="flex-1">
@@ -321,12 +321,12 @@ const CalculatorList = () => {
                   {selectedCalculator.description}
                 </p>
                 <div className="flex items-center gap-3 mt-3">
-                  <span className="text-xs px-2 py-1 rounded-full bg-white/10 text-white/80">
+                  <span className="text-xs px-2 py-1 rounded-vueni-pill bg-white/10 text-white/80">
                     {selectedCalculator.category}
                   </span>
                   {selectedCalculator.status && (
                     <span
-                      className={`text-xs px-2 py-1 rounded-full border ${
+                      className={`text-xs px-2 py-1 rounded-vueni-pill border ${
                         selectedCalculator.status === 'new'
                           ? 'bg-green-500/20 text-green-400 border-green-500/30'
                           : 'bg-blue-500/20 text-blue-400 border-blue-500/30'
@@ -342,7 +342,7 @@ const CalculatorList = () => {
         </div>
 
         {/* Calculator Component */}
-        <div className="bg-white/[0.02] border border-white/[0.08] rounded-2xl backdrop-blur-md overflow-hidden">
+        <div className="bg-white/[0.02] border border-white/[0.08] rounded-vueni-lg backdrop-blur-md overflow-hidden">
           <Suspense fallback={<CalculatorSkeleton />}>
             {selectedCalculator.component}
           </Suspense>
