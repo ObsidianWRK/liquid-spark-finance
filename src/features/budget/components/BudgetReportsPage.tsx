@@ -18,6 +18,7 @@ import {
   SelectItem,
 } from '@/shared/components/ui/select';
 import { BackButton } from '@/shared/components/ui/BackButton';
+import PageContainer from '@/shared/components/PageContainer';
 
 const BudgetReportsPage = () => {
   const navigate = useNavigate();
@@ -67,7 +68,7 @@ const BudgetReportsPage = () => {
   };
 
   return (
-    <div className="space-y-6">
+    <PageContainer className="space-y-6">
       {/* Back Button */}
       <BackButton
         fallbackPath="/"
@@ -236,7 +237,7 @@ const BudgetReportsPage = () => {
           ))}
         </div>
       </GlassCard>
-    </div>
+    </PageContainer>
   );
 };
 
