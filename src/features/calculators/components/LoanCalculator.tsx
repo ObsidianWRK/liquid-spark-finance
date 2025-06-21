@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { getColor, applyOpacity } from '@/theme/vueniPalette';
 import { calculateLoanPayment } from '@/shared/utils/calculators';
 import GlassSlider from '@/shared/ui/GlassSlider';
 import {
@@ -83,8 +84,8 @@ const LoanCalculator = () => {
   const totalInterest = totalPayments - principal;
 
   const summaryData = [
-    { name: 'Principal', value: principal, color: '#3B82F6' },
-    { name: 'Interest', value: totalInterest, color: '#EF4444' },
+    { name: 'Principal', value: principal, color: getColor('palette.primary') },
+    { name: 'Interest', value: totalInterest, color: getColor('palette.danger') },
   ];
 
   const loanTypes = [
@@ -224,22 +225,22 @@ const LoanCalculator = () => {
                       x2="0"
                       y2="1"
                     >
-                      <stop offset="5%" stopColor="#3B82F6" stopOpacity={0.3} />
-                      <stop offset="95%" stopColor="#3B82F6" stopOpacity={0} />
+                      <stop offset="5%" stopColor={getColor('palette.primary')} stopOpacity={0.3} />
+                      <stop offset="95%" stopColor={getColor('palette.primary')} stopOpacity={0} />
                     </linearGradient>
                   </defs>
                   <CartesianGrid
                     strokeDasharray="3 3"
-                    stroke="rgba(255,255,255,0.1)"
+                    stroke={applyOpacity(getColor('text.primary'), 0.1)}
                   />
                   <XAxis
                     dataKey="year"
-                    stroke="#fff"
+                    stroke={getColor('text.primary')}
                     fontSize={12}
                     tickFormatter={(value) => `Year ${value}`}
                   />
                   <YAxis
-                    stroke="#fff"
+                    stroke={getColor('text.primary')}
                     fontSize={12}
                     tickFormatter={(value) => formatCurrency(value)}
                   />
@@ -250,16 +251,16 @@ const LoanCalculator = () => {
                     ]}
                     labelFormatter={(value) => `Year ${value}`}
                     contentStyle={{
-                      backgroundColor: 'rgba(0,0,0,0.8)',
-                      border: '1px solid rgba(255,255,255,0.2)',
+                      backgroundColor: applyOpacity(getColor('surface.background'), 0.8),
+                      border: `1px solid ${applyOpacity(getColor('text.primary'), 0.2)}`,
                       borderRadius: '12px',
-                      color: '#fff',
+                      color: getColor('text.primary'),
                     }}
                   />
                   <Area
                     type="monotone"
                     dataKey="balance"
-                    stroke="#3B82F6"
+                    stroke={getColor('palette.primary')}
                     fill="url(#balanceGradient)"
                     strokeWidth={2}
                   />
@@ -295,10 +296,10 @@ const LoanCalculator = () => {
                       'Amount',
                     ]}
                     contentStyle={{
-                      backgroundColor: 'rgba(0,0,0,0.8)',
-                      border: '1px solid rgba(255,255,255,0.2)',
+                      backgroundColor: applyOpacity(getColor('surface.background'), 0.8),
+                      border: `1px solid ${applyOpacity(getColor('text.primary'), 0.2)}`,
                       borderRadius: '12px',
-                      color: '#fff',
+                      color: getColor('text.primary'),
                     }}
                   />
                 </PieChart>
@@ -330,11 +331,11 @@ const LoanCalculator = () => {
               <BarChart data={loanTypes}>
                 <CartesianGrid
                   strokeDasharray="3 3"
-                  stroke="rgba(255,255,255,0.1)"
+                  stroke={applyOpacity(getColor('text.primary'), 0.1)}
                 />
-                <XAxis dataKey="type" stroke="#fff" fontSize={12} />
+                <XAxis dataKey="type" stroke={getColor('text.primary')} fontSize={12} />
                 <YAxis
-                  stroke="#fff"
+                  stroke={getColor('text.primary')}
                   fontSize={12}
                   tickFormatter={(value) => formatCurrency(value)}
                 />
@@ -344,13 +345,13 @@ const LoanCalculator = () => {
                     'Monthly Payment',
                   ]}
                   contentStyle={{
-                    backgroundColor: 'rgba(0,0,0,0.8)',
-                    border: '1px solid rgba(255,255,255,0.2)',
+                    backgroundColor: applyOpacity(getColor('surface.background'), 0.8),
+                    border: `1px solid ${applyOpacity(getColor('text.primary'), 0.2)}`,
                     borderRadius: '12px',
-                    color: '#fff',
+                    color: getColor('text.primary'),
                   }}
                 />
-                <Bar dataKey="payment" fill="#10B981" radius={[4, 4, 0, 0]} />
+                <Bar dataKey="payment" fill={getColor('palette.success')} radius={[4, 4, 0, 0]} />
               </BarChart>
             </ResponsiveContainer>
           </div>

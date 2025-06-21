@@ -3,6 +3,7 @@ import { UniversalCard } from '@/shared/ui/UniversalCard';
 import { CreatePlanForm } from './CreatePlanForm';
 import { AutosavePlansList } from './AutosavePlansList';
 import { PiggyBank } from 'lucide-react';
+import { getColor } from '@/theme/vueniPalette';
 
 export const SmartSavingsPanel: React.FC = () => {
   return (
@@ -11,7 +12,7 @@ export const SmartSavingsPanel: React.FC = () => {
       size="md"
       title="Smart Automated Savings"
       icon={PiggyBank}
-      iconColor="#ec4899"
+      iconColor={getColor('charts.colors.extended.pink')}
     >
       <div className="space-y-4">
         <CreatePlanForm />
