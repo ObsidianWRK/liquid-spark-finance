@@ -1,0 +1,246 @@
+{
+  "testFiles": [
+    {
+      "path": "src/__tests__/phase3-performance.test.tsx",
+      "imports": [
+        "@testing-library/react",
+        "@tanstack/react-query",
+        "react-router-dom",
+        "@/features/insights/components/UnifiedInsightsPage",
+        "@/features/transactions/components/OptimizedTransactionList",
+        "@/features/calculators/components/CompoundInterestCalculator",
+        "@/components/AccountCard",
+        "@/components/BalanceCard",
+        "@/components/TransactionItem",
+        "@/services/mockData"
+      ]
+    },
+    {
+      "path": "src/features/insights/components/BaseInsightsPage.test.tsx",
+      "imports": [
+        "vitest",
+        "@testing-library/react",
+        "@/features/scoringModel",
+        "@/hooks/usePerformanceOptimization",
+        "@/services/mockData"
+      ]
+    },
+    {
+      "path": "src/features/transactions/components/UnifiedTransactionList.test.tsx",
+      "imports": [
+        "vitest",
+        "@testing-library/react",
+        "@/shared/lib/utils",
+        "@/theme/unified"
+      ]
+    },
+    {
+      "path": "src/navigation/__tests__/BottomNav.accessibility.test.tsx",
+      "imports": [
+        "@testing-library/react",
+        "react-router-dom",
+        "@testing-library/user-event",
+        "jest-axe",
+        "../components/BottomNav",
+        "../hooks/useAccessibility"
+      ]
+    },
+    {
+      "path": "src/navigation/__tests__/iOS26NavBar.test.tsx",
+      "imports": [
+        "@testing-library/react",
+        "@testing-library/user-event",
+        "react-router-dom",
+        "jest-axe",
+        "lucide-react",
+        "@/navigation/utils/scroll-controller",
+        "@/shared/utils/viewport-guardian"
+      ]
+    },
+    {
+      "path": "src/navigation/__tests__/NavBar.test.tsx",
+      "imports": [
+        "@testing-library/react",
+        "react-router-dom",
+        "vitest",
+        "lucide-react",
+        "@/shared/hooks/useBreakpoint",
+        "@/shared/lib/utils",
+        "@/shared/ui/LiquidGlassSVGFilters"
+      ]
+    },
+    {
+      "path": "src/test/calculators.test.ts",
+      "imports": [
+        "vitest",
+        "../utils/calculators"
+      ]
+    },
+    {
+      "path": "src/test/TransactionRow.test.tsx",
+      "imports": [
+        "@testing-library/react",
+        "vitest",
+        "@/features/transactions/components/TransactionRow",
+        "@/types/transactions"
+      ]
+    },
+    {
+      "path": "src/shared/ui/charts/AreaChart.test.tsx",
+      "imports": [
+        "@testing-library/react",
+        "vitest",
+        "recharts"
+      ]
+    },
+    {
+      "path": "e2e/dashboard.spec.ts",
+      "imports": [
+        "@playwright/test"
+      ]
+    }
+  ],
+  "testUtilities": [
+    "src/test/setup.ts",
+    "@testing-library/react",
+    "@testing-library/user-event",
+    "@testing-library/jest-dom",
+    "vitest",
+    "jest-axe"
+  ],
+  "mockFiles": [
+    "src/services/mockData.ts"
+  ],
+  "fixtures": [
+    "src/test/setup.ts"
+  ],
+  "referencedByTests": [
+    "src/features/insights/components/UnifiedInsightsPage.tsx",
+    "src/features/transactions/components/OptimizedTransactionList.tsx",
+    "src/features/calculators/components/CompoundInterestCalculator.tsx",
+    "src/components/AccountCard.tsx",
+    "src/components/BalanceCard.tsx",
+    "src/components/TransactionItem.tsx",
+    "src/services/mockData.ts",
+    "src/features/insights/components/BaseInsightsPage.tsx",
+    "src/features/scoringModel.ts",
+    "src/hooks/usePerformanceOptimization.ts",
+    "src/features/transactions/components/UnifiedTransactionList.tsx",
+    "src/shared/lib/utils.ts",
+    "src/theme/unified.ts",
+    "src/navigation/components/BottomNav.tsx",
+    "src/navigation/hooks/useAccessibility.ts",
+    "src/navigation/components/iOS26NavBar.tsx",
+    "src/navigation/utils/scroll-controller.ts",
+    "src/shared/utils/viewport-guardian.ts",
+    "src/navigation/components/NavBar.tsx",
+    "src/shared/hooks/useBreakpoint.ts",
+    "src/shared/ui/LiquidGlassSVGFilters.tsx",
+    "src/utils/calculators.ts",
+    "src/features/transactions/components/TransactionRow.tsx",
+    "src/types/transactions.ts",
+    "src/shared/ui/charts/AreaChart.tsx",
+    "src/shared/types/shared.ts",
+    "src/types/accounts.ts",
+    "src/shared/utils/formatters.ts",
+    "src/ui-kit/index.ts",
+    "src/features/bill-negotiation/store.ts",
+    "src/features/privacy-hide-amounts/store.ts",
+    "src/features/safe-to-spend/store.ts",
+    "src/features/shared-budgets/store.ts",
+    "src/features/smart-savings/store.ts",
+    "src/features/subscriptions/store.ts",
+    "src/features/widgets/store.ts"
+  ],
+  "testOnlyFiles": [
+    "src/test/setup.ts",
+    "src/test/calculators.test.ts",
+    "src/test/data-integrity.test.ts",
+    "src/test/formatters.test.ts",
+    "src/test/gap10-advisor.test.ts",
+    "src/test/gap10-age-of-money.test.ts",
+    "src/test/gap10-biometric.test.ts",
+    "src/test/gap10-negotiation.test.ts",
+    "src/test/gap10-privacy.test.ts",
+    "src/test/gap10-safe-to-spend.test.ts",
+    "src/test/gap10-schemas.test.ts",
+    "src/test/gap10-services.test.ts",
+    "src/test/gap10-shared-budgets.test.ts",
+    "src/test/gap10-subscriptions.test.ts",
+    "src/test/gap10-widgets.test.ts",
+    "src/test/regression.test.tsx",
+    "src/test/security.test.ts",
+    "src/test/selectors.test.ts",
+    "src/test/theme-drift-detection.test.ts",
+    "src/test/TransactionRow.test.tsx",
+    "src/test/vueni-security.test.ts",
+    "src/test/gap10-smart-savings.test.ts",
+    "src/test/privacy-hide-show-fix.test.ts",
+    "src/test/TransactionList.test.tsx",
+    "src/test/components.test.tsx",
+    "src/__tests__/phase3-performance.test.tsx",
+    "src/features/insights/components/BaseInsightsPage.test.tsx",
+    "src/features/transactions/components/UnifiedTransactionList.test.tsx",
+    "src/navigation/__tests__/BottomNav.accessibility.test.tsx",
+    "src/navigation/__tests__/iOS26NavBar.test.tsx",
+    "src/navigation/__tests__/NavBar.test.tsx",
+    "src/navigation/__tests__/scroll-controller.test.ts",
+    "src/navigation/__tests__/useBreakpoint.test.ts",
+    "src/navigation/__tests__/AdaptiveNavigation.test.tsx",
+    "src/shared/hooks/__tests__/useBreakpoint.test.ts",
+    "src/shared/ui/__tests__/VueniLogo.test.tsx",
+    "src/shared/ui/charts/AreaChart.test.tsx",
+    "src/shared/ui/charts/GraphBase.test.tsx",
+    "src/shared/ui/charts/LineChart.test.tsx",
+    "src/shared/ui/charts/StackedBarChart.integration.test.tsx",
+    "src/shared/ui/charts/StackedBarChart.test.tsx",
+    "src/pages/__tests__/page-rendering.test.tsx",
+    "e2e/**/*.spec.ts",
+    "vitest.config.ts",
+    "playwright.config.ts"
+  ],
+  "testConfiguration": {
+    "vitest": {
+      "config": "vitest.config.ts",
+      "setupFiles": ["src/test/setup.ts"],
+      "environment": "jsdom",
+      "coverage": {
+        "provider": "v8",
+        "reporter": ["text", "json", "html"]
+      }
+    },
+    "playwright": {
+      "config": "playwright.config.ts",
+      "testDir": "./e2e",
+      "webServer": {
+        "command": "npm run dev",
+        "port": 5191
+      }
+    }
+  },
+  "dependencies": {
+    "testing": [
+      "@testing-library/react",
+      "@testing-library/jest-dom",
+      "@testing-library/user-event",
+      "vitest",
+      "@playwright/test",
+      "jest-axe"
+    ],
+    "mocking": [
+      "vitest"
+    ],
+    "ui": [
+      "recharts",
+      "lucide-react",
+      "react-router-dom",
+      "@tanstack/react-query"
+    ]
+  },
+  "testPatterns": {
+    "unit": "**/*.test.{ts,tsx}",
+    "integration": "**/*.integration.test.{ts,tsx}",
+    "e2e": "e2e/**/*.spec.{ts,tsx}",
+    "accessibility": "**/*.accessibility.test.{ts,tsx}"
+  }
+}

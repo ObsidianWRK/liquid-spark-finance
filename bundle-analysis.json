@@ -1,0 +1,1084 @@
+{
+  "bundles": {
+    "vendor-charts-Do_mHxw5": {
+      "size": 434040,
+      "type": "vendor",
+      "modules": []
+    },
+    "Index-vD-uY9ve": {
+      "size": 190300,
+      "type": "main",
+      "modules": []
+    },
+    "index-BsOrS9Bq": {
+      "size": 149860,
+      "type": "main",
+      "modules": []
+    },
+    "vendor-react-BZjvl5xL": {
+      "size": 141654,
+      "type": "vendor",
+      "modules": []
+    },
+    "vendor-ui-DvSaxMx6": {
+      "size": 90999,
+      "type": "vendor",
+      "modules": []
+    },
+    "AnalyticsPage--bU-yloQ": {
+      "size": 90012,
+      "type": "page",
+      "modules": []
+    },
+    "InsightsPage-CVUDOm-n": {
+      "size": 51888,
+      "type": "page",
+      "modules": []
+    },
+    "FinancialPlanningPage-wmkVU8CF": {
+      "size": 49965,
+      "type": "page",
+      "modules": []
+    },
+    "vendor-utils-C8kelVoT": {
+      "size": 41129,
+      "type": "vendor",
+      "modules": []
+    },
+    "InvestmentTrackerPage-Bp_JS-XY": {
+      "size": 37921,
+      "type": "page",
+      "modules": []
+    },
+    "SmartSavingsPanel-B49CRGoT": {
+      "size": 37597,
+      "type": "chunk",
+      "modules": []
+    },
+    "visualizationService-pIlZCPau": {
+      "size": 34375,
+      "type": "chunk",
+      "modules": []
+    },
+    "StackedBarChart-D3ZCumWX": {
+      "size": 31196,
+      "type": "chunk",
+      "modules": []
+    },
+    "CompoundInterestCalculator-BNFYuEbt": {
+      "size": 29586,
+      "type": "page",
+      "modules": []
+    },
+    "mockData-By3JsybB": {
+      "size": 28884,
+      "type": "chunk",
+      "modules": []
+    },
+    "UnifiedTransactionList-CQzl7ioq": {
+      "size": 24228,
+      "type": "chunk",
+      "modules": []
+    },
+    "DashboardPage-D3WH_lSd": {
+      "size": 24226,
+      "type": "page",
+      "modules": []
+    },
+    "BudgetPlannerPage-DKeqpTmv": {
+      "size": 20606,
+      "type": "page",
+      "modules": []
+    },
+    "index-CG9ZkqkX": {
+      "size": 20237,
+      "type": "main",
+      "modules": []
+    },
+    "CreditScorePage-DveSUlzk": {
+      "size": 19083,
+      "type": "page",
+      "modules": []
+    },
+    "vendor-router-DU6mg8Dr": {
+      "size": 18217,
+      "type": "vendor",
+      "modules": []
+    },
+    "AccountOverview-CrHt58B3": {
+      "size": 18064,
+      "type": "chunk",
+      "modules": []
+    },
+    "UniversalCard-FKpp-uL2": {
+      "size": 16846,
+      "type": "component",
+      "modules": []
+    },
+    "TimeRangeToggle-nAAl8cMM": {
+      "size": 16735,
+      "type": "chunk",
+      "modules": []
+    },
+    "TransactionDemo-B4f1UQXJ": {
+      "size": 14126,
+      "type": "chunk",
+      "modules": []
+    },
+    "Profile-DZdaVbo3": {
+      "size": 13848,
+      "type": "chunk",
+      "modules": []
+    },
+    "SubscriptionsPanel-BFq7lQ4H": {
+      "size": 13155,
+      "type": "chunk",
+      "modules": []
+    },
+    "CalculatorsPage-B9QIPsKa": {
+      "size": 13007,
+      "type": "page",
+      "modules": []
+    },
+    "unifiedDataManager-B0Rd4Bp6": {
+      "size": 11780,
+      "type": "chunk",
+      "modules": []
+    },
+    "Retirement401kCalculator-DV64jZcc": {
+      "size": 10354,
+      "type": "page",
+      "modules": []
+    },
+    "investmentService-CyqalKvq": {
+      "size": 10345,
+      "type": "chunk",
+      "modules": []
+    },
+    "index-BDCob_Tl": {
+      "size": 10247,
+      "type": "main",
+      "modules": []
+    },
+    "index-Dcc_yGXU": {
+      "size": 8995,
+      "type": "main",
+      "modules": []
+    },
+    "BiometricMonitor-CMfadQyo": {
+      "size": 8500,
+      "type": "chunk",
+      "modules": []
+    },
+    "CalculatorsHub-Cq71kIZi": {
+      "size": 8474,
+      "type": "page",
+      "modules": []
+    },
+    "budgetService-DG_eFD4J": {
+      "size": 7899,
+      "type": "chunk",
+      "modules": []
+    },
+    "LoanCalculator-Dg5J7Hhe": {
+      "size": 7258,
+      "type": "page",
+      "modules": []
+    },
+    "BankLinkingPanel-EBowc-7I": {
+      "size": 6814,
+      "type": "chunk",
+      "modules": []
+    },
+    "CaloricBalanceImpulseBuys-CotuS6TY": {
+      "size": 6670,
+      "type": "chunk",
+      "modules": []
+    },
+    "dropdown-menu-CwpUQB-5": {
+      "size": 6538,
+      "type": "chunk",
+      "modules": []
+    },
+    "AccountsListPage-s15BcJmc": {
+      "size": 6287,
+      "type": "page",
+      "modules": []
+    },
+    "ROICalculator-CFqC9Xdg": {
+      "size": 5929,
+      "type": "page",
+      "modules": []
+    },
+    "UnifiedCard-BZxJQSkF": {
+      "size": 5636,
+      "type": "component",
+      "modules": []
+    },
+    "crypto-DlK9reWr": {
+      "size": 5232,
+      "type": "chunk",
+      "modules": []
+    },
+    "FinancialFreedomCalculator-vippFoWW": {
+      "size": 4974,
+      "type": "page",
+      "modules": []
+    },
+    "MindfulnessVsSpending-Bru-EzXF": {
+      "size": 4516,
+      "type": "chunk",
+      "modules": []
+    },
+    "dialog-Dx9w3XDY": {
+      "size": 3595,
+      "type": "chunk",
+      "modules": []
+    },
+    "theme-color-mapper-BF72QamY": {
+      "size": 3496,
+      "type": "chunk",
+      "modules": []
+    },
+    "SharedBudgetsPanel-xyH9H5lp": {
+      "size": 2837,
+      "type": "chunk",
+      "modules": []
+    },
+    "card-BtO5PjyA": {
+      "size": 2407,
+      "type": "chunk",
+      "modules": []
+    },
+    "MortgagePayoffCalculator-ltnZdM7Z": {
+      "size": 2103,
+      "type": "page",
+      "modules": []
+    },
+    "HomeAffordabilityCalculator-CTfbV7JM": {
+      "size": 2087,
+      "type": "page",
+      "modules": []
+    },
+    "financialSelectors-B2UhmP_L": {
+      "size": 1984,
+      "type": "chunk",
+      "modules": []
+    },
+    "ThreeFundPortfolioCalculator-BuUg7Nvn": {
+      "size": 1958,
+      "type": "page",
+      "modules": []
+    },
+    "DailyActivityRings-D-nclLNy": {
+      "size": 1955,
+      "type": "chunk",
+      "modules": []
+    },
+    "button-DfwuxHQu": {
+      "size": 1897,
+      "type": "chunk",
+      "modules": []
+    },
+    "RestingHeartRateTrend-Cnddf_eH": {
+      "size": 1671,
+      "type": "chunk",
+      "modules": []
+    },
+    "InflationCalculator-DBFtLRdr": {
+      "size": 1512,
+      "type": "page",
+      "modules": []
+    },
+    "StockBacktestCalculator-CRQqm06K": {
+      "size": 1476,
+      "type": "page",
+      "modules": []
+    },
+    "healthKitService-peUIJ_un": {
+      "size": 1433,
+      "type": "chunk",
+      "modules": []
+    },
+    "calculators-Cu5eQgSO": {
+      "size": 1429,
+      "type": "chunk",
+      "modules": []
+    },
+    "AgeOfMoneyCard-CD5X4fbR": {
+      "size": 1426,
+      "type": "component",
+      "modules": []
+    },
+    "index-CCARrq-O": {
+      "size": 1342,
+      "type": "main",
+      "modules": []
+    },
+    "badge-CR7oR0P-": {
+      "size": 1324,
+      "type": "chunk",
+      "modules": []
+    },
+    "ExchangeRateCalculator-BDY6Ae1a": {
+      "size": 1258,
+      "type": "page",
+      "modules": []
+    },
+    "index-C5fMr83O": {
+      "size": 1162,
+      "type": "main",
+      "modules": []
+    },
+    "BackButton-CIJ4cUjy": {
+      "size": 1127,
+      "type": "chunk",
+      "modules": []
+    },
+    "index-B7mwCSyS": {
+      "size": 1007,
+      "type": "main",
+      "modules": []
+    },
+    "restingHeartRate-SxvMXQ-0": {
+      "size": 953,
+      "type": "chunk",
+      "modules": []
+    },
+    "brain-D8jFnRox": {
+      "size": 903,
+      "type": "chunk",
+      "modules": []
+    },
+    "index-Bx8jn0V4": {
+      "size": 726,
+      "type": "main",
+      "modules": []
+    },
+    "index-123J2y5j": {
+      "size": 625,
+      "type": "main",
+      "modules": []
+    },
+    "car-5Zm-fx9r": {
+      "size": 571,
+      "type": "chunk",
+      "modules": []
+    },
+    "index-DrMnZPWa": {
+      "size": 526,
+      "type": "main",
+      "modules": []
+    },
+    "piggy-bank-BQhYHtkv": {
+      "size": 489,
+      "type": "chunk",
+      "modules": []
+    },
+    "users-Uq7lPfXB": {
+      "size": 473,
+      "type": "chunk",
+      "modules": []
+    },
+    "repeat-Xr5nzVTU": {
+      "size": 441,
+      "type": "chunk",
+      "modules": []
+    },
+    "shield-D6H3V5kL": {
+      "size": 441,
+      "type": "chunk",
+      "modules": []
+    },
+    "leaf-DaOtSwNh": {
+      "size": 434,
+      "type": "chunk",
+      "modules": []
+    },
+    "triangle-alert-BXdjfBYZ": {
+      "size": 433,
+      "type": "chunk",
+      "modules": []
+    },
+    "download-BuVGu0p7": {
+      "size": 431,
+      "type": "chunk",
+      "modules": []
+    },
+    "zap-DlTyCrUD": {
+      "size": 431,
+      "type": "chunk",
+      "modules": []
+    },
+    "calendar-Cp4NPHC1": {
+      "size": 426,
+      "type": "chunk",
+      "modules": []
+    },
+    "circle-alert-CSU9gu1Z": {
+      "size": 418,
+      "type": "chunk",
+      "modules": []
+    },
+    "wind-Bsdc-xtu": {
+      "size": 415,
+      "type": "chunk",
+      "modules": []
+    },
+    "globe-CMS4jl59": {
+      "size": 411,
+      "type": "chunk",
+      "modules": []
+    },
+    "heart-bcJre24_": {
+      "size": 409,
+      "type": "chunk",
+      "modules": []
+    },
+    "percent-DSfZZOaH": {
+      "size": 406,
+      "type": "chunk",
+      "modules": []
+    },
+    "activity-DidabvDu": {
+      "size": 403,
+      "type": "chunk",
+      "modules": []
+    },
+    "ellipsis-BVRU1JM4": {
+      "size": 390,
+      "type": "chunk",
+      "modules": []
+    },
+    "briefcase-C1SqFXwQ": {
+      "size": 389,
+      "type": "chunk",
+      "modules": []
+    },
+    "dollar-sign-D3Z7veGv": {
+      "size": 387,
+      "type": "chunk",
+      "modules": []
+    },
+    "trending-down-V8xR_ckE": {
+      "size": 376,
+      "type": "chunk",
+      "modules": []
+    },
+    "info-CctTzoXY": {
+      "size": 368,
+      "type": "chunk",
+      "modules": []
+    },
+    "circle-check-big-klSoJMrK": {
+      "size": 356,
+      "type": "chunk",
+      "modules": []
+    },
+    "clock-BjZc3tpA": {
+      "size": 347,
+      "type": "chunk",
+      "modules": []
+    },
+    "arrow-left-D_e7xoYO": {
+      "size": 333,
+      "type": "chunk",
+      "modules": []
+    },
+    "plus-D-QtjrDk": {
+      "size": 322,
+      "type": "chunk",
+      "modules": []
+    },
+    "index-Ear6Ll_Z": {
+      "size": 299,
+      "type": "main",
+      "modules": []
+    },
+    "chevron-right-BprT3OOD": {
+      "size": 298,
+      "type": "chunk",
+      "modules": []
+    },
+    "chevron-down-BV1Rqexp": {
+      "size": 296,
+      "type": "chunk",
+      "modules": []
+    },
+    "chevron-up-BIttrVgW": {
+      "size": 296,
+      "type": "chunk",
+      "modules": []
+    },
+    "check-DP-FTwL5": {
+      "size": 288,
+      "type": "chunk",
+      "modules": []
+    },
+    "minus-CP962BVL": {
+      "size": 286,
+      "type": "chunk",
+      "modules": []
+    },
+    "index-2rvwg5Zd": {
+      "size": 276434,
+      "type": "css",
+      "modules": []
+    }
+  },
+  "includedFiles": [
+    "src/App.tsx",
+    "src/components/TransactionList.tsx",
+    "src/components/ai/ChatDrawer.tsx",
+    "src/components/ai/FinancialAIChat.tsx",
+    "src/components/shared/ErrorBoundary.tsx",
+    "src/components/shared/SharedScoreCircle.tsx",
+    "src/components/shared/VueniConsolidationDemo.tsx",
+    "src/components/shared/VueniDesignSystem.tsx",
+    "src/components/shared/VueniFeatureFlags.tsx",
+    "src/components/shared/VueniUnifiedTransactionList.tsx",
+    "src/components/shared/index.ts",
+    "src/components/ui/EnhancedGlassCard.tsx",
+    "src/context/index.ts",
+    "src/data/health/index.ts",
+    "src/features/accounts/api/accountService.ts",
+    "src/features/accounts/components/AccountCard.tsx",
+    "src/features/accounts/components/AccountLinking.tsx",
+    "src/features/accounts/components/AccountSkeleton.tsx",
+    "src/features/accounts/components/AccountsOverview.tsx",
+    "src/features/accounts/components/CleanAccountCard.tsx",
+    "src/features/accounts/components/CompactAccountCard.tsx",
+    "src/features/accounts/components/Grid.tsx",
+    "src/features/accounts/components/QuickAccessCard.tsx",
+    "src/features/accounts/components/QuickAccessRail.tsx",
+    "src/features/accounts/hooks/useAccountOverview.ts",
+    "src/features/advisor-chat/index.ts",
+    "src/features/age-of-money/components/AgeOfMoneyCard.tsx",
+    "src/features/age-of-money/index.ts",
+    "src/features/analytics/api/analyticsService.ts",
+    "src/features/analytics/components/AnalyticsPage.tsx",
+    "src/features/analytics/components/health/CaloricBalanceImpulseBuys.tsx",
+    "src/features/analytics/components/health/DailyActivityRings.tsx",
+    "src/features/analytics/components/health/HydrationTracker.tsx",
+    "src/features/analytics/components/health/MindfulnessVsSpending.tsx",
+    "src/features/analytics/components/health/RestingHeartRateTrend.tsx",
+    "src/features/analytics/store/hydration.ts",
+    "src/features/bank-linking/components/BankLinkingPanel.tsx",
+    "src/features/bank-linking/index.ts",
+    "src/features/bill-negotiation/index.ts",
+    "src/features/biometric-intervention/api/healthKitService.ts",
+    "src/features/biometric-intervention/components/BiometricMonitor.tsx",
+    "src/features/biometric-intervention/index.ts",
+    "src/features/budget/api/budgetService.ts",
+    "src/features/budget/components/BudgetPlannerPage.tsx",
+    "src/features/budget/components/BudgetReportsPage.tsx",
+    "src/features/budget/components/BudgetTracker.tsx",
+    "src/features/budget/components/SpendingBreakdownChart.tsx",
+    "src/features/calculators/components/CalculatorList.tsx",
+    "src/features/calculators/components/CompoundInterestCalculator.tsx",
+    "src/features/calculators/components/ExchangeRateCalculator.tsx",
+    "src/features/calculators/components/FinancialFreedomCalculator.tsx",
+    "src/features/calculators/components/HomeAffordabilityCalculator.tsx",
+    "src/features/calculators/components/InflationCalculator.tsx",
+    "src/features/calculators/components/LoanCalculator.tsx",
+    "src/features/calculators/components/MortgagePayoffCalculator.tsx",
+    "src/features/calculators/components/ROICalculator.tsx",
+    "src/features/calculators/components/Retirement401kCalculator.tsx",
+    "src/features/calculators/components/SecureCalculatorWrapper.tsx",
+    "src/features/calculators/components/StockBacktestCalculator.tsx",
+    "src/features/calculators/components/ThreeFundPortfolioCalculator.tsx",
+    "src/features/credit/api/creditScoreService.ts",
+    "src/features/credit/components/CleanCreditScoreCard.tsx",
+    "src/features/credit/components/CreditEducation.tsx",
+    "src/features/credit/components/CreditFactors.tsx",
+    "src/features/credit/components/CreditScoreCard.tsx",
+    "src/features/credit/components/CreditScorePage.tsx",
+    "src/features/credit/components/CreditTips.tsx",
+    "src/features/credit/components/ScoreHistory.tsx",
+    "src/features/dashboard/api/visualizationService.ts",
+    "src/features/dashboard/components/DashboardPage.tsx",
+    "src/features/dashboard/components/FinancialDashboard.tsx",
+    "src/features/dashboard/components/FinancialDashboardErrorBoundary.tsx",
+    "src/features/dashboard/components/LinkedAccountsCard.tsx",
+    "src/features/dashboard/components/NetWorthSummary.tsx",
+    "src/features/dashboard/components/health/BiometricMonitorCard.tsx",
+    "src/features/dashboard/components/health/CardSkeleton.tsx",
+    "src/features/dashboard/components/health/MetricDisplay.tsx",
+    "src/features/dashboard/components/health/WellnessScoreCard.tsx",
+    "src/features/dashboard/components/health/index.ts",
+    "src/features/index.ts",
+    "src/features/insights/components/BaseInsightsPage.test.tsx",
+    "src/features/insights/components/BaseInsightsPage.tsx",
+    "src/features/insights/components/CategoryTrendsChart.tsx",
+    "src/features/insights/components/ConfigurableInsightsPage.tsx",
+    "src/features/insights/components/EcoCard.tsx",
+    "src/features/insights/components/EcoScore.tsx",
+    "src/features/insights/components/FinancialCard.tsx",
+    "src/features/insights/components/HealthScore.tsx",
+    "src/features/insights/components/MetricCard.tsx",
+    "src/features/insights/components/RefactoredEcoCard.tsx",
+    "src/features/insights/components/SpendingTrendsChart.tsx",
+    "src/features/insights/components/TimeSeriesChart.tsx",
+    "src/features/insights/components/UnifiedInsightsPage.tsx",
+    "src/features/insights/components/UniversalMetricCard.tsx",
+    "src/features/insights/components/UniversalScoreCard.tsx",
+    "src/features/insights/components/WellnessCard.tsx",
+    "src/features/insights/components/components/CategoryBreakdown.tsx",
+    "src/features/insights/components/components/ComprehensiveEcoCard.tsx",
+    "src/features/insights/components/components/ComprehensiveWellnessCard.tsx",
+    "src/features/insights/components/components/EnhancedMetricCard.tsx",
+    "src/features/insights/components/components/EnhancedScoreCard.tsx",
+    "src/features/insights/components/components/OptimizedScoreCard.tsx",
+    "src/features/insights/components/components/RefinedMetricCard.tsx",
+    "src/features/insights/components/components/RefinedScoreCard.tsx",
+    "src/features/insights/components/components/RefinedTrendCard.tsx",
+    "src/features/insights/components/components/TrendChart.tsx",
+    "src/features/insights/ui/EnhancedGlassCard.tsx",
+    "src/features/investments/api/investmentService.ts",
+    "src/features/investments/components/InvestmentPortfolio.tsx",
+    "src/features/investments/components/InvestmentTrackerPage.tsx",
+    "src/features/investments/components/PortfolioAllocationChart.tsx",
+    "src/features/planning/api/financialPlanningService.ts",
+    "src/features/planning/components/FinancialPlanningPage.tsx",
+    "src/features/planning/components/GoalTracker.tsx",
+    "src/features/planning/components/RetirementPlanner.tsx",
+    "src/features/planning/components/shared/PlanningCard.tsx",
+    "src/features/planning/components/shared/ProjectionChart.tsx",
+    "src/features/planning/components/tabs/DebtPayoffTab.tsx",
+    "src/features/planning/components/tabs/LifePlanningTab.tsx",
+    "src/features/planning/components/tabs/RetirementTab.tsx",
+    "src/features/privacy-hide-amounts/index.ts",
+    "src/features/safe-to-spend/index.ts",
+    "src/features/savings/SavingsGoals.tsx",
+    "src/features/savings/api/savingsGoalsService.ts",
+    "src/features/savings/components/GoalCard.tsx",
+    "src/features/savings/components/GoalCreator.tsx",
+    "src/features/savings/components/SavingsGoals.tsx",
+    "src/features/savings/components/SavingsInsights.tsx",
+    "src/features/shared-budgets/components/SharedBudgetsPanel.tsx",
+    "src/features/shared-budgets/index.ts",
+    "src/features/smart-savings/components/SmartSavingsPanel.tsx",
+    "src/features/smart-savings/index.ts",
+    "src/features/subscriptions/api/subscriptionService.ts",
+    "src/features/subscriptions/components/RecurringChargesList.tsx",
+    "src/features/subscriptions/components/SubscriptionsPanel.tsx",
+    "src/features/subscriptions/index.ts",
+    "src/features/subscriptions/store.ts",
+    "src/features/transactions/components/TransactionList.tsx",
+    "src/features/transactions/components/UnifiedTransactionList.tsx",
+    "src/features/widgets/index.ts",
+    "src/mocks/health/activity.ts",
+    "src/mocks/health/caloricBalance.ts",
+    "src/mocks/health/mindfulSpending.ts",
+    "src/mocks/health/restingHeartRate.ts",
+    "src/navigation/hooks/index.ts",
+    "src/navigation/index.ts",
+    "src/navigation/utils/scroll-controller.ts",
+    "src/pages/AccountOverview.tsx",
+    "src/pages/AccountsListPage.tsx",
+    "src/pages/BudgetPlanner/index.tsx",
+    "src/pages/CalculatorsHub.tsx",
+    "src/pages/CalculatorsPage.tsx",
+    "src/pages/CreditScore/index.tsx",
+    "src/pages/Index.tsx",
+    "src/pages/InsightsPage.tsx",
+    "src/pages/InvestmentTracker/index.tsx",
+    "src/pages/Profile.tsx",
+    "src/pages/Reports/index.tsx",
+    "src/pages/SavingsGoals/index.tsx",
+    "src/pages/TransactionDemo.tsx",
+    "src/selectors/financialSelectors.ts",
+    "src/services/mockData.ts",
+    "src/services/unifiedDataManager.ts",
+    "src/shared/components/ui/AccountTypeBadge.tsx",
+    "src/shared/components/ui/BackButton.tsx",
+    "src/shared/components/ui/BackHeader.tsx",
+    "src/shared/components/ui/CardShell.tsx",
+    "src/shared/components/ui/GlassSlider.tsx",
+    "src/shared/components/ui/GlobalGradientBackground.tsx",
+    "src/shared/components/ui/LiquidGlass.tsx",
+    "src/shared/components/ui/LiquidGlassSVGFilters.tsx",
+    "src/shared/components/ui/NavPill.tsx",
+    "src/shared/components/ui/UnifiedCard.tsx",
+    "src/shared/components/ui/UniversalCard.original.tsx",
+    "src/shared/components/ui/UniversalCard.tsx",
+    "src/shared/components/ui/accordion.tsx",
+    "src/shared/components/ui/alert-dialog.tsx",
+    "src/shared/components/ui/alert.tsx",
+    "src/shared/components/ui/aspect-ratio.tsx",
+    "src/shared/components/ui/avatar.tsx",
+    "src/shared/components/ui/badge.tsx",
+    "src/shared/components/ui/breadcrumb.tsx",
+    "src/shared/components/ui/button.tsx",
+    "src/shared/components/ui/calendar.tsx",
+    "src/shared/components/ui/card.tsx",
+    "src/shared/components/ui/carousel.tsx",
+    "src/shared/components/ui/chart.tsx",
+    "src/shared/components/ui/checkbox.tsx",
+    "src/shared/components/ui/collapsible.tsx",
+    "src/shared/components/ui/command.tsx",
+    "src/shared/components/ui/context-menu.tsx",
+    "src/shared/components/ui/dialog.tsx",
+    "src/shared/components/ui/drawer.tsx",
+    "src/shared/components/ui/dropdown-menu.tsx",
+    "src/shared/components/ui/form.tsx",
+    "src/shared/components/ui/hover-card.tsx",
+    "src/shared/components/ui/input-otp.tsx",
+    "src/shared/components/ui/input.tsx",
+    "src/shared/components/ui/label.tsx",
+    "src/shared/components/ui/lightweight-charts.tsx",
+    "src/shared/components/ui/menubar.tsx",
+    "src/shared/components/ui/navigation-menu.tsx",
+    "src/shared/components/ui/pagination.tsx",
+    "src/shared/components/ui/popover.tsx",
+    "src/shared/components/ui/progress.tsx",
+    "src/shared/components/ui/radio-group.tsx",
+    "src/shared/components/ui/resizable.tsx",
+    "src/shared/components/ui/scroll-area.tsx",
+    "src/shared/components/ui/select.tsx",
+    "src/shared/components/ui/separator.tsx",
+    "src/shared/components/ui/sheet.tsx",
+    "src/shared/components/ui/sidebar.tsx",
+    "src/shared/components/ui/skeleton.tsx",
+    "src/shared/components/ui/slider.tsx",
+    "src/shared/components/ui/sonner.tsx",
+    "src/shared/components/ui/switch.tsx",
+    "src/shared/components/ui/table.tsx",
+    "src/shared/components/ui/tabs.tsx",
+    "src/shared/components/ui/textarea.tsx",
+    "src/shared/components/ui/toast.tsx",
+    "src/shared/components/ui/toaster.tsx",
+    "src/shared/components/ui/toggle-group.tsx",
+    "src/shared/components/ui/toggle.tsx",
+    "src/shared/components/ui/tooltip.tsx",
+    "src/shared/components/ui/use-toast.ts",
+    "src/shared/config/security.ts",
+    "src/shared/hooks/__tests__/useBreakpoint.test.ts",
+    "src/shared/hooks/index.ts",
+    "src/shared/hooks/use-main-thread-optimization.ts",
+    "src/shared/hooks/use-mobile.tsx",
+    "src/shared/hooks/use-toast.ts",
+    "src/shared/hooks/useBreakpoint.ts",
+    "src/shared/hooks/useDownload.ts",
+    "src/shared/hooks/useFinancialMetrics.ts",
+    "src/shared/hooks/useLiquidGlass.tsx",
+    "src/shared/hooks/usePerformanceOptimization.ts",
+    "src/shared/hooks/useTimeRange.ts",
+    "src/shared/hooks/useViewport.ts",
+    "src/shared/index.ts",
+    "src/shared/lib/VueniCacheManager.ts",
+    "src/shared/lib/VueniLazyImports.ts",
+    "src/shared/lib/VueniPerformanceMonitor.ts",
+    "src/shared/lib/VueniSecureStorage.ts",
+    "src/shared/lib/VueniSessionManager.ts",
+    "src/shared/lib/chartLazyLoader.ts",
+    "src/shared/lib/utils.ts",
+    "src/shared/tokens/menuBar.tokens.ts",
+    "src/shared/types/accounts.ts",
+    "src/shared/types/analytics.ts",
+    "src/shared/types/budget.ts",
+    "src/shared/types/budgets.ts",
+    "src/shared/types/creditScore.ts",
+    "src/shared/types/family.ts",
+    "src/shared/types/financialPlanning.ts",
+    "src/shared/types/investments.ts",
+    "src/shared/types/savingsGoals.ts",
+    "src/shared/types/shared.ts",
+    "src/shared/types/transactions.ts",
+    "src/shared/types/zustand.d.ts",
+    "src/shared/ui/AccountTypeBadge.tsx",
+    "src/shared/ui/BackHeader.tsx",
+    "src/shared/ui/BrandDownloadMenu.tsx",
+    "src/shared/ui/CardShell.tsx",
+    "src/shared/ui/ContextMenu.tsx",
+    "src/shared/ui/EnhancedGlassCard.tsx",
+    "src/shared/ui/GlassSlider.tsx",
+    "src/shared/ui/GlobalGradientBackground.tsx",
+    "src/shared/ui/LiquidGlass.tsx",
+    "src/shared/ui/LiquidGlassSVGFilters.tsx",
+    "src/shared/ui/NavPill.tsx",
+    "src/shared/ui/SimpleGlassCard.tsx",
+    "src/shared/ui/UnifiedCard.tsx",
+    "src/shared/ui/UniversalCard.original.tsx",
+    "src/shared/ui/UniversalCard.tsx",
+    "src/shared/ui/VueniLogo.tsx",
+    "src/shared/ui/__tests__/VueniLogo.test.tsx",
+    "src/shared/ui/accordion.tsx",
+    "src/shared/ui/account-overview-skeleton.tsx",
+    "src/shared/ui/alert-dialog.tsx",
+    "src/shared/ui/alert.tsx",
+    "src/shared/ui/aspect-ratio.tsx",
+    "src/shared/ui/avatar.tsx",
+    "src/shared/ui/badge.tsx",
+    "src/shared/ui/breadcrumb.tsx",
+    "src/shared/ui/button.tsx",
+    "src/shared/ui/calendar.tsx",
+    "src/shared/ui/card.tsx",
+    "src/shared/ui/carousel.tsx",
+    "src/shared/ui/chart.tsx",
+    "src/shared/ui/charts/AnimatedCircularProgress.tsx",
+    "src/shared/ui/charts/AreaChart.demo.tsx",
+    "src/shared/ui/charts/AreaChart.test.tsx",
+    "src/shared/ui/charts/AreaChart.tsx",
+    "src/shared/ui/charts/GraphBase.demo.tsx",
+    "src/shared/ui/charts/GraphBase.quicktest.tsx",
+    "src/shared/ui/charts/GraphBase.test.tsx",
+    "src/shared/ui/charts/GraphBase.tsx",
+    "src/shared/ui/charts/LazyChartWrapper.tsx",
+    "src/shared/ui/charts/LineChart.test.tsx",
+    "src/shared/ui/charts/LineChart.tsx",
+    "src/shared/ui/charts/ScatterPlot.tsx",
+    "src/shared/ui/charts/StackedBarChart.demo.tsx",
+    "src/shared/ui/charts/StackedBarChart.integration.test.tsx",
+    "src/shared/ui/charts/StackedBarChart.test.tsx",
+    "src/shared/ui/charts/StackedBarChart.tsx",
+    "src/shared/ui/charts/TimeRangeDemo.tsx",
+    "src/shared/ui/charts/TimeRangeToggle.tsx",
+    "src/shared/ui/charts/TimeRangeToggleRadix.tsx",
+    "src/shared/ui/charts/index.ts",
+    "src/shared/ui/charts/types.ts",
+    "src/shared/ui/checkbox.tsx",
+    "src/shared/ui/collapsible.tsx",
+    "src/shared/ui/command.tsx",
+    "src/shared/ui/context-menu.tsx",
+    "src/shared/ui/dialog.tsx",
+    "src/shared/ui/drawer.tsx",
+    "src/shared/ui/dropdown-menu.tsx",
+    "src/shared/ui/error-state.tsx",
+    "src/shared/ui/form.tsx",
+    "src/shared/ui/hover-card.tsx",
+    "src/shared/ui/index.ts",
+    "src/shared/ui/input-otp.tsx",
+    "src/shared/ui/input.tsx",
+    "src/shared/ui/label.tsx",
+    "src/shared/ui/lightweight-charts.tsx",
+    "src/shared/ui/loading-spinner.tsx",
+    "src/shared/ui/menubar.tsx",
+    "src/shared/ui/navigation-menu.tsx",
+    "src/shared/ui/pagination.tsx",
+    "src/shared/ui/popover.tsx",
+    "src/shared/ui/progress.tsx",
+    "src/shared/ui/radio-group.tsx",
+    "src/shared/ui/resizable.tsx",
+    "src/shared/ui/scroll-area.tsx",
+    "src/shared/ui/select.tsx",
+    "src/shared/ui/separator.tsx",
+    "src/shared/ui/sheet.tsx",
+    "src/shared/ui/sidebar.tsx",
+    "src/shared/ui/skeleton.tsx",
+    "src/shared/ui/slider.tsx",
+    "src/shared/ui/sonner.tsx",
+    "src/shared/ui/switch.tsx",
+    "src/shared/ui/table.tsx",
+    "src/shared/ui/tabs.tsx",
+    "src/shared/ui/textarea.tsx",
+    "src/shared/ui/toast.tsx",
+    "src/shared/ui/toaster.tsx",
+    "src/shared/ui/toggle-group.tsx",
+    "src/shared/ui/toggle.tsx",
+    "src/shared/ui/tooltip.tsx",
+    "src/shared/ui/use-toast.ts",
+    "src/shared/utils/accountTransformers.ts",
+    "src/shared/utils/accountUtils.ts",
+    "src/shared/utils/animation-performance.ts",
+    "src/shared/utils/browserCrypto.ts",
+    "src/shared/utils/calculators.ts",
+    "src/shared/utils/crypto.ts",
+    "src/shared/utils/envValidation.ts",
+    "src/shared/utils/featureFlags.ts",
+    "src/shared/utils/formatters.ts",
+    "src/shared/utils/monitoring.ts",
+    "src/shared/utils/optimizedHelpers.ts",
+    "src/shared/utils/orientation-utils.ts",
+    "src/shared/utils/performanceOptimizer.ts",
+    "src/shared/utils/performanceReporter.ts",
+    "src/shared/utils/sanitize.ts",
+    "src/shared/utils/secureRandom.ts",
+    "src/shared/utils/security.ts",
+    "src/shared/utils/session.ts",
+    "src/shared/utils/sessionManager.ts",
+    "src/shared/utils/shipping.ts",
+    "src/shared/utils/theme-color-mapper.ts",
+    "src/shared/utils/transactionScoring.ts",
+    "src/shared/utils/viewport-feature-detection.ts",
+    "src/shared/utils/viewport-guardian.ts",
+    "src/shared/utils/viewport-init.ts",
+    "src/shared/utils/viewport-polyfills.ts",
+    "src/shared/utils/visual-viewport-utils.ts",
+    "src/shared/utils/webCrypto.ts",
+    "src/test/TransactionList.test.tsx",
+    "src/test/TransactionRow.test.tsx",
+    "src/test/calculators.test.ts",
+    "src/test/components.test.tsx",
+    "src/test/data-integrity.test.ts",
+    "src/test/formatters.test.ts",
+    "src/test/gap10-advisor.test.ts",
+    "src/test/gap10-age-of-money.test.ts",
+    "src/test/gap10-biometric.test.ts",
+    "src/test/gap10-negotiation.test.ts",
+    "src/test/gap10-privacy.test.ts",
+    "src/test/gap10-safe-to-spend.test.ts",
+    "src/test/gap10-schemas.test.ts",
+    "src/test/gap10-services.test.ts",
+    "src/test/gap10-shared-budgets.test.ts",
+    "src/test/gap10-smart-savings.test.ts",
+    "src/test/gap10-subscriptions.test.ts",
+    "src/test/gap10-widgets.test.ts",
+    "src/test/privacy-hide-show-fix.test.ts",
+    "src/test/regression.test.tsx",
+    "src/test/security.test.ts",
+    "src/test/selectors.test.ts",
+    "src/test/setup.ts",
+    "src/test/theme-drift-detection.test.ts",
+    "src/test/vueni-security.test.ts",
+    "src/theme/ThemeProvider.tsx",
+    "src/theme/breakpoints.ts",
+    "src/theme/graph-tokens.ts",
+    "src/theme/unified.ts",
+    "src/ui-kit/index.ts",
+    "src/utils/calculators.ts",
+    "src/utils/cardHoverAudit.ts",
+    "src/utils/cardHoverVerification.ts"
+  ],
+  "excludedFiles": [
+    "src/__tests__/phase3-performance.test.tsx",
+    "src/components/AccountCard.tsx",
+    "src/components/AccountDeck/AccountRow.tsx",
+    "src/components/AccountDeck/VirtualizedDeck.tsx",
+    "src/components/BalanceCard.tsx",
+    "src/components/FeatureCloud.tsx",
+    "src/components/GlassCard.tsx",
+    "src/components/Navigation.tsx",
+    "src/components/QuickActions.tsx",
+    "src/components/TransactionItem.tsx",
+    "src/components/TransactionWithScores.tsx",
+    "src/components/examples/EnhancedEcoScore.tsx",
+    "src/components/family/FamilyManagement.tsx",
+    "src/components/layout/AppShell.tsx",
+    "src/components/performance/PerformanceMonitor.tsx",
+    "src/components/viewport/ViewportGuardianDemo.tsx",
+    "src/components/wrapped/WrappedPage.tsx",
+    "src/context/TimeRangeContext.tsx",
+    "src/features/advisor-chat/api/advisorService.ts",
+    "src/features/advisor-chat/api/aiFinancialService.ts",
+    "src/features/advisor-chat/components/AdvisorChatButton.tsx",
+    "src/features/advisor-chat/components/AdvisorChatPanel.tsx",
+    "src/features/advisor-chat/components/ChatDialog.tsx",
+    "src/features/advisor-chat/store.ts",
+    "src/features/age-of-money/api/ageMetricService.ts",
+    "src/features/age-of-money/store.ts",
+    "src/features/bank-linking/api/bankLinkProvider.ts",
+    "src/features/bank-linking/components/LinkAccountsButton.tsx",
+    "src/features/bank-linking/components/LinkedAccountsList.tsx",
+    "src/features/bank-linking/store.ts",
+    "src/features/bill-negotiation/api/billAnalysisService.ts",
+    "src/features/bill-negotiation/api/negotiationService.ts",
+    "src/features/bill-negotiation/components/BillNegotiationPanel.tsx",
+    "src/features/bill-negotiation/components/NegotiateBillsButton.tsx",
+    "src/features/bill-negotiation/components/NegotiationCasesList.tsx",
+    "src/features/bill-negotiation/store.ts",
+    "src/features/biometric-intervention/api/BiometricStream.ts",
+    "src/features/biometric-intervention/api/WellnessEngine.ts",
+    "src/features/biometric-intervention/api/biometricService.ts",
+    "src/features/biometric-intervention/components/BiometricMonitorCard.tsx",
+    "src/features/biometric-intervention/components/InterventionNudge.tsx",
+    "src/features/biometric-intervention/components/InterventionSettings.tsx",
+    "src/features/biometric-intervention/store.ts",
+    "src/features/biometric-intervention/types.ts",
+    "src/features/privacy-hide-amounts/components/PrivacyToggle.tsx",
+    "src/features/privacy-hide-amounts/store.ts",
+    "src/features/safe-to-spend/api/safeToSpendService.ts",
+    "src/features/safe-to-spend/components/SafeToSpendCard.tsx",
+    "src/features/safe-to-spend/store.ts",
+    "src/features/shared-budgets/api/familyService.ts",
+    "src/features/shared-budgets/api/householdService.ts",
+    "src/features/shared-budgets/components/CreateHouseholdForm.tsx",
+    "src/features/shared-budgets/components/HouseholdsList.tsx",
+    "src/features/shared-budgets/store.ts",
+    "src/features/smart-savings/api/autoSaveEngine.ts",
+    "src/features/smart-savings/components/AutosavePlansList.tsx",
+    "src/features/smart-savings/components/CreatePlanForm.tsx",
+    "src/features/smart-savings/store.ts",
+    "src/features/transactions/api/transactionService.ts",
+    "src/features/transactions/components/DateSeparator.tsx",
+    "src/features/transactions/components/EnterpriseTransactionView.tsx",
+    "src/features/transactions/components/OptimizedTransactionList.tsx",
+    "src/features/transactions/components/ScoreCircle.tsx",
+    "src/features/transactions/components/ScoreCircles.tsx",
+    "src/features/transactions/components/ShippingInfo.tsx",
+    "src/features/transactions/components/StatusChip.tsx",
+    "src/features/transactions/components/TransactionAmount.tsx",
+    "src/features/transactions/components/TransactionMain.tsx",
+    "src/features/transactions/components/TransactionManager.tsx",
+    "src/features/transactions/components/TransactionRow.tsx",
+    "src/features/transactions/components/TransactionStatus.tsx",
+    "src/features/transactions/components/UnifiedTransactionList.test.tsx",
+    "src/features/widgets/api/widgetService.ts",
+    "src/features/widgets/components/AddWidgetButtons.tsx",
+    "src/features/widgets/components/WidgetPreview.tsx",
+    "src/features/widgets/components/WidgetsPanel.tsx",
+    "src/features/widgets/store.ts",
+    "src/hooks/useMenuBarReveal.ts",
+    "src/main.tsx",
+    "src/mocks/financialPlanningMocks.ts",
+    "src/navigation/__tests__/AdaptiveNavigation.test.tsx",
+    "src/navigation/__tests__/BottomNav.accessibility.test.tsx",
+    "src/navigation/__tests__/NavBar.test.tsx",
+    "src/navigation/__tests__/iOS26NavBar.test.tsx",
+    "src/navigation/__tests__/scroll-controller.test.ts",
+    "src/navigation/__tests__/useBreakpoint.test.ts",
+    "src/navigation/components/AdaptiveNavigation.tsx",
+    "src/navigation/components/BottomNav.tsx",
+    "src/navigation/components/MotionWrapper.tsx",
+    "src/navigation/components/NavBar.tsx",
+    "src/navigation/components/NavBarDemo.tsx",
+    "src/navigation/components/NavBarIntegrationExample.tsx",
+    "src/navigation/components/NavRail.tsx",
+    "src/navigation/components/iOS26NavBar.tsx",
+    "src/navigation/context/ScrollControllerContext.tsx",
+    "src/navigation/examples/ScrollControllerDemo.tsx",
+    "src/navigation/examples/iOS26NavBarDemo.tsx",
+    "src/navigation/hooks/useAccessibility.ts",
+    "src/navigation/hooks/useScrollController.ts",
+    "src/navigation/routeConfig.ts",
+    "src/navigation/types/scroll-controller.d.ts",
+    "src/pages/ChartDemo.tsx",
+    "src/pages/CleanDashboard.tsx",
+    "src/pages/DropdownTestPage.tsx",
+    "src/pages/MenuBarDemo.tsx",
+    "src/pages/NotFound.tsx",
+    "src/pages/OptimizedProfile.tsx",
+    "src/pages/__tests__/page-rendering.test.tsx",
+    "src/plugins/liquid-glass-nav-plugin.d.ts",
+    "src/plugins/liquid-glass-nav-plugin.js",
+    "src/providers/BiometricsProvider.tsx",
+    "src/schemas/gap10.ts",
+    "src/screens/MobileTransactionScreen.tsx",
+    "src/services/dataProvider.ts",
+    "src/services/ecoScoreService.ts",
+    "src/services/ecoService.ts",
+    "src/services/mockAiService.ts",
+    "src/services/mockDataProvider.ts",
+    "src/services/mockHealthEcoService.ts",
+    "src/services/mockHistoricalData.ts",
+    "src/services/mockReportService.ts",
+    "src/services/performanceService.ts",
+    "src/services/scoringModel.ts",
+    "src/services/wellnessService.ts",
+    "src/telemetry/vitals.ts",
+    "src/types.ts",
+    "src/types/transactions.ts",
+    "src/vite-env.d.ts"
+  ],
+  "treeShakenExports": [],
+  "buildStats": {
+    "totalSize": 2140948,
+    "jsSize": 1864514,
+    "cssSize": 276434,
+    "chunks": 105,
+    "assets": 115,
+    "sourceFilesScanned": 540,
+    "filesIncluded": 412,
+    "filesExcluded": 128
+  }
+}

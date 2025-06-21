@@ -1,0 +1,123 @@
+# Dynamic Files List
+# All files that might be loaded dynamically at runtime
+
+## Main Route Components (Lazy Loaded)
+src/pages/Index.tsx
+src/pages/Profile.tsx
+src/pages/TransactionDemo.tsx
+src/pages/CalculatorsPage.tsx
+src/pages/CalculatorsHub.tsx
+src/pages/CreditScore/index.tsx
+src/pages/SavingsGoals/index.tsx
+src/pages/BudgetPlanner/index.tsx
+src/pages/InvestmentTracker/index.tsx
+src/pages/Reports/index.tsx
+src/pages/InsightsPage.tsx
+src/pages/AccountOverview.tsx
+src/pages/AccountsListPage.tsx
+
+## Vueni System Components (Lazy Loaded)
+src/pages/Dashboard.tsx
+src/pages/Transactions.tsx
+src/pages/Insights.tsx
+src/pages/Settings.tsx
+src/features/transactions/components/UnifiedTransactionList.tsx
+src/components/shared/VueniUnifiedInsightsPage.tsx
+src/components/shared/VueniConsolidationDemo.tsx
+src/components/shared/VueniDesignSystem.tsx
+
+## Chart Components (Lazy Loaded)
+src/shared/ui/charts/LineChart.tsx
+src/shared/ui/charts/AreaChart.tsx
+src/shared/ui/charts/StackedBarChart.tsx
+src/features/budget/components/SpendingBreakdownChart.tsx
+src/shared/ui/charts/GraphBase.tsx
+src/shared/ui/charts/TimeRangeToggle.tsx
+src/shared/ui/charts/TimeRangeToggleRadix.tsx
+src/components/charts/SpendingChart.tsx
+src/components/charts/CashFlowChart.tsx
+src/components/charts/CategoryBreakdown.tsx
+
+## Calculator Components (Lazy Loaded)
+src/features/calculators/components/FinancialFreedomCalculator.tsx
+src/features/calculators/components/ROICalculator.tsx
+src/features/calculators/components/LoanCalculator.tsx
+src/features/calculators/components/InflationCalculator.tsx
+src/features/calculators/components/CompoundInterestCalculator.tsx
+src/features/calculators/components/Retirement401kCalculator.tsx
+src/features/calculators/components/ThreeFundPortfolioCalculator.tsx
+src/features/calculators/components/HomeAffordabilityCalculator.tsx
+src/features/calculators/components/MortgagePayoffCalculator.tsx
+src/features/calculators/components/StockBacktestCalculator.tsx
+src/features/calculators/components/ExchangeRateCalculator.tsx
+
+## Modal and Panel Components (Lazy Loaded)
+src/components/modals/ExportModal.tsx
+src/components/filters/FilterPanel.tsx
+src/features/reports/components/ReportsEngine.tsx
+
+## External Dependencies (Dynamic Imports)
+node_modules/recharts
+
+## Asset Files (Referenced Dynamically)
+public/branding/vueni-logo.svg
+public/branding/brand-guidelines.pdf
+public/branding/LLM.txt
+public/favicon.ico
+public/manifest.json
+public/placeholder.svg
+public/robots.txt
+
+## CSS Files (Loaded Statically but Could Be Dynamic)
+src/index.css
+src/App.css
+src/app/styles/scroll-fix.css
+src/app/styles/accessibility.css
+src/app/styles/account-card.css
+src/app/styles/calculator-overrides.css
+src/app/styles/card-alignment.css
+src/app/styles/card-interactions.css
+src/app/styles/glass.css
+src/app/styles/liquid-backgrounds.css
+src/app/styles/liquid-glass-wwdc.css
+src/app/styles/liquid-glass.css
+src/app/styles/nav-overrides.css
+src/app/styles/nav-styles.css
+src/app/styles/performance-optimized.css
+src/app/styles/pfm-row.css
+src/app/styles/quick-access-performance.css
+src/app/styles/refined-animations.css
+src/app/styles/responsive-enhancements.css
+src/app/styles/viewport-guardian.css
+src/navigation/styles/navigation-accessibility.css
+
+## Plugin Files
+src/plugins/liquid-glass-nav-plugin.js
+src/plugins/liquid-glass-nav-plugin.d.ts
+
+## Potential Missing Files (Referenced but May Not Exist)
+src/pages/Dashboard.tsx
+src/pages/Transactions.tsx
+src/pages/Insights.tsx
+src/pages/Settings.tsx
+src/components/charts/SpendingChart.tsx
+src/components/charts/CashFlowChart.tsx
+src/components/charts/CategoryBreakdown.tsx
+src/components/modals/ExportModal.tsx
+src/components/filters/FilterPanel.tsx
+
+## Directories with Dynamic Loading Potential
+src/pages/
+src/features/*/components/
+src/components/charts/
+src/features/calculators/components/
+src/components/shared/
+src/components/modals/
+src/components/filters/
+src/features/reports/components/
+src/features/transactions/components/
+src/features/budget/components/
+src/shared/ui/charts/
+src/app/styles/
+src/navigation/styles/
+public/branding/

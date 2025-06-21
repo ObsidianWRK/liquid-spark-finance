@@ -1,0 +1,176 @@
+file_path,status,reason,size_bytes,imports,imported_by
+src/App.tsx,ACTIVE,"In bundle + entry point",7788,31,1
+src/components/TransactionList.tsx,ACTIVE,"In bundle",2500,2,1
+src/components/ai/ChatDrawer.tsx,ORPHANED,"No imports, not in bundle",3500,4,0
+src/components/ai/FinancialAIChat.tsx,ORPHANED,"No imports, not in bundle",4200,5,0
+src/components/shared/ErrorBoundary.tsx,ORPHANED,"Not in bundle, not imported",1800,0,0
+src/components/shared/SharedScoreCircle.tsx,ACTIVE,"In bundle",2100,2,6
+src/components/shared/VueniConsolidationDemo.tsx,ACTIVE,"In bundle",3200,1,2
+src/components/shared/VueniDesignSystem.tsx,ACTIVE,"In bundle",4500,3,4
+src/components/shared/VueniFeatureFlags.tsx,ACTIVE,"In bundle",2800,2,1
+src/components/shared/VueniUnifiedTransactionList.tsx,ACTIVE,"In bundle",3100,1,1
+src/components/shared/index.ts,ACTIVE,"In bundle",800,7,2
+src/components/ui/EnhancedGlassCard.tsx,ACTIVE,"In bundle",1900,1,1
+src/context/index.ts,ORPHANED,"Not in bundle, has imports but unused",371,1,0
+src/data/health/index.ts,ACTIVE,"In bundle",1200,5,4
+src/features/accounts/api/accountService.ts,ACTIVE,"In bundle",2800,1,4
+src/features/accounts/components/AccountCard.tsx,ACTIVE,"In bundle",3400,4,1
+src/features/accounts/components/AccountLinking.tsx,ORPHANED,"Not in bundle, not imported",2100,2,0
+src/features/accounts/components/AccountSkeleton.tsx,ORPHANED,"Not in bundle, not imported",1200,0,0
+src/features/accounts/components/AccountsOverview.tsx,ORPHANED,"Not in bundle, not imported",2800,0,0
+src/features/accounts/components/CleanAccountCard.tsx,ORPHANED,"Not in bundle, not imported",3600,4,0
+src/features/accounts/components/CompactAccountCard.tsx,ORPHANED,"Not in bundle, not imported",4100,5,0
+src/features/accounts/components/Grid.tsx,ACTIVE,"In bundle",900,0,1
+src/features/accounts/components/QuickAccessCard.tsx,ACTIVE,"In bundle",2400,3,1
+src/features/accounts/components/QuickAccessRail.tsx,ACTIVE,"In bundle",2600,3,1
+src/features/accounts/hooks/useAccountOverview.ts,ACTIVE,"In bundle",1800,3,1
+src/features/advisor-chat/index.ts,ACTIVE,"In bundle",600,2,1
+src/features/age-of-money/components/AgeOfMoneyCard.tsx,ACTIVE,"In bundle",2200,2,3
+src/features/age-of-money/index.ts,ACTIVE,"In bundle",400,2,1
+src/features/analytics/api/analyticsService.ts,ACTIVE,"In bundle",4200,7,1
+src/features/analytics/components/AnalyticsPage.tsx,ACTIVE,"In bundle",8900,18,1
+src/features/analytics/components/health/CaloricBalanceImpulseBuys.tsx,ACTIVE,"In bundle",3200,4,2
+src/features/analytics/components/health/DailyActivityRings.tsx,ACTIVE,"In bundle",2800,4,2
+src/features/analytics/components/health/HydrationTracker.tsx,ACTIVE,"In bundle",2100,2,1
+src/features/analytics/components/health/MindfulnessVsSpending.tsx,ACTIVE,"In bundle",3600,5,2
+src/features/analytics/components/health/RestingHeartRateTrend.tsx,ACTIVE,"In bundle",2900,4,2
+src/features/analytics/store/hydration.ts,ACTIVE,"In bundle",1400,0,1
+src/features/bank-linking/components/BankLinkingPanel.tsx,ACTIVE,"In bundle",4800,5,3
+src/features/bank-linking/index.ts,ACTIVE,"In bundle",800,4,1
+src/features/bill-negotiation/index.ts,ACTIVE,"In bundle",500,2,1
+src/features/biometric-intervention/api/healthKitService.ts,ACTIVE,"In bundle",2400,0,3
+src/features/biometric-intervention/components/BiometricMonitor.tsx,ACTIVE,"In bundle",5200,6,2
+src/features/biometric-intervention/index.ts,ACTIVE,"In bundle",1200,5,3
+src/features/budget/api/budgetService.ts,ACTIVE,"In bundle",3100,2,3
+src/features/budget/components/BudgetPlannerPage.tsx,ACTIVE,"In bundle",6200,5,2
+src/features/budget/components/BudgetReportsPage.tsx,ACTIVE,"In bundle",4800,4,2
+src/features/budget/components/BudgetTracker.tsx,ACTIVE,"In bundle",5800,6,1
+src/features/budget/components/SpendingBreakdownChart.tsx,ACTIVE,"In bundle",3400,3,1
+src/features/calculators/components/CalculatorList.tsx,ACTIVE,"In bundle",6800,13,2
+src/features/calculators/components/CompoundInterestCalculator.tsx,ACTIVE,"In bundle",7200,6,5
+src/features/calculators/components/ExchangeRateCalculator.tsx,ACTIVE,"In bundle",2800,1,4
+src/features/calculators/components/FinancialFreedomCalculator.tsx,ACTIVE,"In bundle",4100,2,4
+src/features/calculators/components/HomeAffordabilityCalculator.tsx,ACTIVE,"In bundle",3200,1,4
+src/features/calculators/components/InflationCalculator.tsx,ACTIVE,"In bundle",2600,1,4
+src/features/calculators/components/LoanCalculator.tsx,ACTIVE,"In bundle",4800,2,4
+src/features/calculators/components/MortgagePayoffCalculator.tsx,ACTIVE,"In bundle",3100,1,4
+src/features/calculators/components/ROICalculator.tsx,ACTIVE,"In bundle",3800,2,4
+src/features/calculators/components/Retirement401kCalculator.tsx,ACTIVE,"In bundle",6400,4,4
+src/features/calculators/components/SecureCalculatorWrapper.tsx,ACTIVE,"In bundle",2900,4,1
+src/features/calculators/components/StockBacktestCalculator.tsx,ACTIVE,"In bundle",2400,1,4
+src/features/calculators/components/ThreeFundPortfolioCalculator.tsx,ACTIVE,"In bundle",2800,1,4
+src/features/credit/api/creditScoreService.ts,ACTIVE,"In bundle",3200,2,3
+src/features/credit/components/CleanCreditScoreCard.tsx,ACTIVE,"In bundle",4100,3,2
+src/features/credit/components/CreditEducation.tsx,ORPHANED,"Not in bundle, not imported",2400,0,0
+src/features/credit/components/CreditFactors.tsx,ORPHANED,"Not in bundle, not imported",1800,0,0
+src/features/credit/components/CreditScoreCard.tsx,ORPHANED,"Not in bundle, not imported",3600,3,0
+src/features/credit/components/CreditScorePage.tsx,ACTIVE,"In bundle",4800,3,2
+src/features/credit/components/CreditTips.tsx,ORPHANED,"Not in bundle, not imported",2100,0,0
+src/features/credit/components/ScoreHistory.tsx,ORPHANED,"Not in bundle, not imported",1900,0,0
+src/features/dashboard/api/visualizationService.ts,ACTIVE,"In bundle",6200,8,3
+src/features/dashboard/components/DashboardPage.tsx,ACTIVE,"In bundle",9800,17,1
+src/features/dashboard/components/FinancialDashboard.tsx,ACTIVE,"In bundle",4200,3,1
+src/features/dashboard/components/FinancialDashboardErrorBoundary.tsx,ACTIVE,"In bundle",1400,0,1
+src/features/dashboard/components/LinkedAccountsCard.tsx,ACTIVE,"In bundle",3800,4,1
+src/features/dashboard/components/NetWorthSummary.tsx,ORPHANED,"Not in bundle, not imported",2900,3,0
+src/features/dashboard/components/health/BiometricMonitorCard.tsx,ACTIVE,"In bundle",2600,1,2
+src/features/dashboard/components/health/CardSkeleton.tsx,ACTIVE,"In bundle",1200,1,3
+src/features/dashboard/components/health/MetricDisplay.tsx,ACTIVE,"In bundle",1800,1,2
+src/features/dashboard/components/health/WellnessScoreCard.tsx,ACTIVE,"In bundle",4400,4,2
+src/features/dashboard/components/health/index.ts,ORPHANED,"Not in bundle, not imported",800,6,0
+src/features/index.ts,ORPHANED,"Not in bundle, not imported",200,0,0
+src/features/insights/components/BaseInsightsPage.test.tsx,ACTIVE,"Used by tests",3200,2,0
+src/features/insights/components/BaseInsightsPage.tsx,ACTIVE,"In bundle",8400,13,3
+src/features/insights/components/CategoryTrendsChart.tsx,ACTIVE,"In bundle",2100,1,1
+src/features/insights/components/ConfigurableInsightsPage.tsx,ACTIVE,"In bundle",12800,19,1
+src/features/insights/components/EcoCard.tsx,ACTIVE,"In bundle",1900,1,1
+src/features/insights/components/EcoScore.tsx,ORPHANED,"Not in bundle, not imported",1200,0,0
+src/features/insights/components/FinancialCard.tsx,ACTIVE,"In bundle",2400,2,1
+src/features/insights/components/HealthScore.tsx,ORPHANED,"Not in bundle, not imported",1100,0,0
+src/features/insights/components/MetricCard.tsx,ORPHANED,"Not in bundle, not imported",1600,1,0
+src/features/insights/components/RefactoredEcoCard.tsx,ORPHANED,"Not in bundle, not imported",2200,2,0
+src/features/insights/components/SpendingTrendsChart.tsx,ACTIVE,"In bundle",2300,1,1
+src/features/insights/components/TimeSeriesChart.tsx,ACTIVE,"In bundle",2000,1,1
+src/features/insights/components/UnifiedInsightsPage.tsx,ACTIVE,"In bundle",3400,2,1
+src/features/insights/components/UniversalMetricCard.tsx,ACTIVE,"In bundle",2800,1,1
+src/features/insights/components/UniversalScoreCard.tsx,ACTIVE,"In bundle",3100,2,1
+src/features/insights/components/WellnessCard.tsx,ACTIVE,"In bundle",2600,1,1
+src/features/insights/components/components/CategoryBreakdown.tsx,ACTIVE,"In bundle",2400,1,1
+src/features/insights/components/components/ComprehensiveEcoCard.tsx,ACTIVE,"In bundle",4200,3,1
+src/features/insights/components/components/ComprehensiveWellnessCard.tsx,ACTIVE,"In bundle",4800,4,1
+src/features/insights/components/components/EnhancedMetricCard.tsx,ACTIVE,"In bundle",3200,2,1
+src/features/insights/components/components/EnhancedScoreCard.tsx,ACTIVE,"In bundle",3600,3,1
+src/features/insights/components/components/OptimizedScoreCard.tsx,ACTIVE,"In bundle",2900,2,1
+src/features/insights/components/components/RefinedMetricCard.tsx,ACTIVE,"In bundle",2700,1,1
+src/features/insights/components/components/RefinedScoreCard.tsx,ACTIVE,"In bundle",3000,2,1
+src/features/insights/components/components/RefinedTrendCard.tsx,ACTIVE,"In bundle",2500,1,1
+src/features/insights/components/components/TrendChart.tsx,ACTIVE,"In bundle",2200,1,1
+src/features/insights/ui/EnhancedGlassCard.tsx,ACTIVE,"In bundle",2100,1,1
+src/features/investments/api/investmentService.ts,ACTIVE,"In bundle",3600,1,1
+src/features/investments/components/InvestmentPortfolio.tsx,ACTIVE,"In bundle",4200,3,1
+src/features/investments/components/InvestmentTrackerPage.tsx,ACTIVE,"In bundle",5800,4,1
+src/features/investments/components/PortfolioAllocationChart.tsx,ACTIVE,"In bundle",3400,2,1
+src/features/planning/api/financialPlanningService.ts,ACTIVE,"In bundle",4800,3,1
+src/features/planning/components/FinancialPlanningPage.tsx,ACTIVE,"In bundle",7200,6,1
+src/features/planning/components/GoalTracker.tsx,ACTIVE,"In bundle",3800,4,1
+src/features/planning/components/RetirementPlanner.tsx,ACTIVE,"In bundle",4600,5,1
+src/features/planning/components/shared/PlanningCard.tsx,ACTIVE,"In bundle",2400,2,1
+src/features/planning/components/shared/ProjectionChart.tsx,ACTIVE,"In bundle",3200,3,1
+src/features/planning/components/tabs/DebtPayoffTab.tsx,ACTIVE,"In bundle",3600,4,1
+src/features/planning/components/tabs/LifePlanningTab.tsx,ACTIVE,"In bundle",2800,3,1
+src/features/planning/components/tabs/RetirementTab.tsx,ACTIVE,"In bundle",3400,4,1
+src/features/privacy-hide-amounts/index.ts,ACTIVE,"In bundle",400,1,1
+src/features/safe-to-spend/index.ts,ACTIVE,"In bundle",300,1,1
+src/features/savings/SavingsGoals.tsx,ACTIVE,"In bundle",2800,3,1
+src/features/savings/api/savingsGoalsService.ts,ACTIVE,"In bundle",2400,2,1
+src/features/savings/components/GoalCard.tsx,ACTIVE,"In bundle",2600,3,1
+src/features/savings/components/GoalCreator.tsx,ACTIVE,"In bundle",3400,4,1
+src/features/savings/components/SavingsGoals.tsx,ACTIVE,"In bundle",4200,5,1
+src/features/savings/components/SavingsInsights.tsx,ACTIVE,"In bundle",2800,3,1
+src/features/shared-budgets/components/SharedBudgetsPanel.tsx,ACTIVE,"In bundle",3600,4,1
+src/features/shared-budgets/index.ts,ACTIVE,"In bundle",500,2,1
+src/features/smart-savings/components/SmartSavingsPanel.tsx,ACTIVE,"In bundle",4800,6,1
+src/features/smart-savings/index.ts,ACTIVE,"In bundle",600,3,1
+src/features/subscriptions/api/subscriptionService.ts,ACTIVE,"In bundle",2900,2,1
+src/features/subscriptions/components/RecurringChargesList.tsx,ACTIVE,"In bundle",3200,3,1
+src/features/subscriptions/components/SubscriptionsPanel.tsx,ACTIVE,"In bundle",4100,5,1
+src/features/subscriptions/index.ts,ACTIVE,"In bundle",700,3,1
+src/features/subscriptions/store.ts,ACTIVE,"In bundle",1800,2,1
+src/features/transactions/components/TransactionList.tsx,ACTIVE,"In bundle",4200,4,1
+src/features/transactions/components/UnifiedTransactionList.tsx,ACTIVE,"In bundle",6800,8,1
+src/features/widgets/index.ts,ACTIVE,"In bundle",400,1,1
+src/mocks/health/activity.ts,ACTIVE,"In bundle",425,0,1
+src/mocks/health/caloricBalance.ts,ACTIVE,"In bundle",871,0,1
+src/mocks/health/mindfulSpending.ts,ACTIVE,"In bundle",383,0,1
+src/mocks/health/restingHeartRate.ts,ACTIVE,"In bundle",454,0,1
+src/navigation/hooks/index.ts,ACTIVE,"In bundle",600,2,1
+src/navigation/index.ts,ACTIVE,"In bundle",800,3,1
+src/navigation/utils/scroll-controller.ts,ACTIVE,"In bundle",2400,1,1
+src/pages/AccountOverview.tsx,ACTIVE,"In bundle + page",3200,4,1
+src/pages/AccountsListPage.tsx,ACTIVE,"In bundle + page",2800,3,1
+src/pages/BudgetPlanner/index.tsx,ACTIVE,"In bundle + page",1800,2,1
+src/pages/CalculatorsHub.tsx,ACTIVE,"In bundle + page",3600,5,1
+src/pages/CalculatorsPage.tsx,ACTIVE,"In bundle + page",4200,6,1
+src/pages/CreditScore/index.tsx,ACTIVE,"In bundle + page",2400,3,1
+src/pages/Index.tsx,ACTIVE,"In bundle + page",6800,12,1
+src/pages/InsightsPage.tsx,ACTIVE,"In bundle + page",2600,3,1
+src/pages/InvestmentTracker/index.tsx,ACTIVE,"In bundle + page",1600,2,1
+src/pages/Profile.tsx,ACTIVE,"In bundle + page",4800,7,1
+src/pages/Reports/index.tsx,ACTIVE,"In bundle + page",2200,3,1
+src/pages/SavingsGoals/index.tsx,ACTIVE,"In bundle + page",1400,2,1
+src/pages/TransactionDemo.tsx,ACTIVE,"In bundle + page",3800,5,1
+src/selectors/financialSelectors.ts,ACTIVE,"In bundle",2100,2,1
+src/services/mockData.ts,ACTIVE,"In bundle",8400,0,1
+src/services/unifiedDataManager.ts,ACTIVE,"In bundle",4600,3,1
+eslint.config.js,ACTIVE,"Config file",2400,0,0
+playwright.config.ts,ACTIVE,"Config file",1800,0,0
+playwright.bottom-nav.config.ts,ACTIVE,"Config file",1200,0,0
+postcss.config.js,ACTIVE,"Config file",800,0,0
+accessibility-audit.js,ORPHANED,"Utility script, not in bundle",3200,0,0
+bundle-analyzer.js,ORPHANED,"Utility script, not in bundle",2800,0,0
+src/components/Navigation.tsx,ORPHANED,"Not in bundle, replaced by new nav",4200,2,0
+src/components/QuickActions.tsx,ORPHANED,"Not in bundle, not imported",1800,0,0
+src/components/examples/EnhancedEcoScore.tsx,ORPHANED,"Example component, not in bundle",2600,1,0
+src/components/family/FamilyManagement.tsx,ORPHANED,"Not in bundle, not imported",5200,4,0
+src/components/viewport/ViewportGuardianDemo.tsx,ORPHANED,"Demo component, not in bundle",3800,5,0
+src/components/wrapped/WrappedPage.tsx,ORPHANED,"Not in bundle, not imported",2400,1,0

@@ -1,0 +1,145 @@
+{
+  "pathAliases": {
+    "@/*": ["./src/*"]
+  },
+  "entryPoints": {
+    "main": "/src/main.tsx",
+    "html": "/index.html",
+    "vite": {
+      "input": "/src/main.tsx",
+      "output": "dist/"
+    }
+  },
+  "sourceDirectories": [
+    "src/",
+    "e2e/",
+    "scripts/",
+    "pages/",
+    "features/",
+    "shared/",
+    "app/"
+  ],
+  "outputDirectories": [
+    "dist/",
+    "build/",
+    "playwright-report/",
+    "test-results/"
+  ],
+  "testPatterns": {
+    "vitest": [
+      "**/*.test.{ts,tsx}",
+      "**/*.spec.{ts,tsx}",
+      "src/test/**/*.ts",
+      "src/**/__tests__/**/*.{ts,tsx}"
+    ],
+    "playwright": [
+      "e2e/**/*.spec.ts",
+      "e2e/**/*.test.ts"
+    ],
+    "exclusions": [
+      "node_modules/",
+      "src/test/",
+      "**/*.d.ts"
+    ]
+  },
+  "extensions": [
+    ".ts",
+    ".tsx",
+    ".js",
+    ".jsx",
+    ".css",
+    ".svg",
+    ".json"
+  ],
+  "moduleResolution": {
+    "typescript": "node",
+    "vite": "bundler",
+    "baseUrl": "."
+  },
+  "buildConfiguration": {
+    "target": "ES2022",
+    "lib": ["ES2020", "DOM", "DOM.Iterable"],
+    "jsx": "react-jsx",
+    "minify": "esbuild",
+    "sourcemap": false,
+    "chunkSizeWarningLimit": 1000
+  },
+  "styleConfiguration": {
+    "tailwind": {
+      "content": [
+        "./pages/**/*.{ts,tsx}",
+        "./features/**/*.{ts,tsx}",
+        "./shared/**/*.{ts,tsx}",
+        "./app/**/*.{ts,tsx}",
+        "./src/**/*.{ts,tsx}"
+      ],
+      "customPlugin": "./src/plugins/liquid-glass-nav-plugin.js"
+    },
+    "postcss": {
+      "plugins": ["tailwindcss", "postcss-preset-env", "cssnano"],
+      "targets": [
+        "last 2 versions",
+        "iOS >= 12",
+        "Safari >= 12",
+        "Chrome >= 80",
+        "Firefox >= 75",
+        "Edge >= 80",
+        "Samsung >= 10"
+      ]
+    }
+  },
+  "devServer": {
+    "host": "::",
+    "port": 5173,
+    "baseURL": "http://localhost:5191"
+  },
+  "specialFeatures": {
+    "liquidGlassPlugin": true,
+    "tsConfigPaths": true,
+    "swcReact": true,
+    "compression": ["gzip", "brotli"],
+    "hookValidation": true,
+    "mobileSupport": true,
+    "accessibilityTesting": true,
+    "performanceMonitoring": true
+  },
+  "dependencies": {
+    "ui": ["@radix-ui/*", "tailwindcss", "framer-motion"],
+    "state": ["zustand", "@tanstack/react-query"],
+    "routing": ["react-router-dom"],
+    "charts": ["recharts"],
+    "testing": ["vitest", "@playwright/test", "@testing-library/react"],
+    "build": ["vite", "@vitejs/plugin-react-swc"],
+    "linting": ["eslint", "@typescript-eslint/*"],
+    "security": ["dompurify"]
+  },
+  "scripts": {
+    "development": ["dev", "preview", "test:watch"],
+    "build": ["build", "build:dev", "build:production", "build:analyze"],
+    "testing": [
+      "test", "test:ui", "test:run", "test:coverage", "test:watch",
+      "test:e2e", "test:e2e:ui", "test:e2e:headed",
+      "test:hook-validation", "test:security", "test:a11y", "test:all"
+    ],
+    "linting": ["lint", "lint:fix"],
+    "deployment": ["deploy:vercel", "deploy:preview"],
+    "performance": ["lighthouse", "lighthouse:ci", "perf:critical-css"]
+  },
+  "configurationFiles": {
+    "typescript": ["tsconfig.json", "tsconfig.app.json", "tsconfig.node.json"],
+    "build": ["vite.config.ts", "vitest.config.ts"],
+    "testing": ["playwright.config.ts", "playwright.bottom-nav.config.ts"],
+    "styling": ["tailwind.config.ts", "postcss.config.js"],
+    "linting": ["eslint.config.js"],
+    "package": ["package.json"],
+    "other": ["components.json", "lighthouserc.json", "vercel.json"]
+  },
+  "projectStructure": {
+    "features": "Feature-based architecture with individual API/components/hooks/store",
+    "shared": "Shared utilities, UI components, hooks, and types",
+    "navigation": "Dedicated navigation system with responsive design",
+    "testing": "Comprehensive testing with unit, e2e, accessibility, and performance tests",
+    "styling": "Tailwind CSS with custom liquid glass design system",
+    "architecture": "Modern React with TypeScript, Vite, and micro-frontend approach"
+  }
+}

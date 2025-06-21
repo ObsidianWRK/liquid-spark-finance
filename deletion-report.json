@@ -1,0 +1,237 @@
+{
+  "deletion_summary": {
+    "timestamp": "2025-06-21T12:57:26.191093",
+    "total_files_processed": 29,
+    "files_deleted": 28,
+    "files_not_found": 1,
+    "deletion_errors": 0,
+    "total_bytes_saved": 177711,
+    "total_kb_saved": 173.55,
+    "total_mb_saved": 0.17
+  },
+  "categories_deleted": {
+    "components": {
+      "total_files": 25,
+      "files_deleted": 25,
+      "bytes_saved": 161006,
+      "kb_saved": 157.23
+    },
+    "utilities": {
+      "total_files": 2,
+      "files_deleted": 1,
+      "bytes_saved": 15841,
+      "kb_saved": 15.47
+    },
+    "other": {
+      "total_files": 2,
+      "files_deleted": 2,
+      "bytes_saved": 864,
+      "kb_saved": 0.84
+    }
+  },
+  "deletion_log": [
+    {
+      "path": "src/components/ai/ChatDrawer.tsx",
+      "status": "DELETED",
+      "size_bytes": 6527,
+      "reason": "No imports, not in bundle",
+      "timestamp": "2025-06-21T12:57:26.179709"
+    },
+    {
+      "path": "src/components/ai/FinancialAIChat.tsx",
+      "status": "DELETED",
+      "size_bytes": 13841,
+      "reason": "No imports, not in bundle",
+      "timestamp": "2025-06-21T12:57:26.180291"
+    },
+    {
+      "path": "src/components/shared/ErrorBoundary.tsx",
+      "status": "DELETED",
+      "size_bytes": 1889,
+      "reason": "Not in bundle, not imported",
+      "timestamp": "2025-06-21T12:57:26.180711"
+    },
+    {
+      "path": "src/context/index.ts",
+      "status": "DELETED",
+      "size_bytes": 371,
+      "reason": "Not in bundle, has imports but unused",
+      "timestamp": "2025-06-21T12:57:26.181354"
+    },
+    {
+      "path": "src/features/accounts/components/AccountLinking.tsx",
+      "status": "DELETED",
+      "size_bytes": 16158,
+      "reason": "Not in bundle, not imported",
+      "timestamp": "2025-06-21T12:57:26.181784"
+    },
+    {
+      "path": "src/features/accounts/components/AccountSkeleton.tsx",
+      "status": "DELETED",
+      "size_bytes": 166,
+      "reason": "Not in bundle, not imported",
+      "timestamp": "2025-06-21T12:57:26.181953"
+    },
+    {
+      "path": "src/features/accounts/components/AccountsOverview.tsx",
+      "status": "DELETED",
+      "size_bytes": 0,
+      "reason": "Not in bundle, not imported",
+      "timestamp": "2025-06-21T12:57:26.182059"
+    },
+    {
+      "path": "src/features/accounts/components/CleanAccountCard.tsx",
+      "status": "DELETED",
+      "size_bytes": 5176,
+      "reason": "Not in bundle, not imported",
+      "timestamp": "2025-06-21T12:57:26.182193"
+    },
+    {
+      "path": "src/features/accounts/components/CompactAccountCard.tsx",
+      "status": "DELETED",
+      "size_bytes": 9560,
+      "reason": "Not in bundle, not imported",
+      "timestamp": "2025-06-21T12:57:26.182765"
+    },
+    {
+      "path": "src/features/credit/components/CreditEducation.tsx",
+      "status": "DELETED",
+      "size_bytes": 6140,
+      "reason": "Not in bundle, not imported",
+      "timestamp": "2025-06-21T12:57:26.182938"
+    },
+    {
+      "path": "src/features/credit/components/CreditFactors.tsx",
+      "status": "DELETED",
+      "size_bytes": 2818,
+      "reason": "Not in bundle, not imported",
+      "timestamp": "2025-06-21T12:57:26.183341"
+    },
+    {
+      "path": "src/features/credit/components/CreditScoreCard.tsx",
+      "status": "DELETED",
+      "size_bytes": 5317,
+      "reason": "Not in bundle, not imported",
+      "timestamp": "2025-06-21T12:57:26.183501"
+    },
+    {
+      "path": "src/features/credit/components/CreditTips.tsx",
+      "status": "DELETED",
+      "size_bytes": 3187,
+      "reason": "Not in bundle, not imported",
+      "timestamp": "2025-06-21T12:57:26.183640"
+    },
+    {
+      "path": "src/features/credit/components/ScoreHistory.tsx",
+      "status": "DELETED",
+      "size_bytes": 4652,
+      "reason": "Not in bundle, not imported",
+      "timestamp": "2025-06-21T12:57:26.183766"
+    },
+    {
+      "path": "src/features/dashboard/components/NetWorthSummary.tsx",
+      "status": "DELETED",
+      "size_bytes": 14999,
+      "reason": "Not in bundle, not imported",
+      "timestamp": "2025-06-21T12:57:26.185109"
+    },
+    {
+      "path": "src/features/dashboard/components/health/index.ts",
+      "status": "DELETED",
+      "size_bytes": 802,
+      "reason": "Not in bundle, not imported",
+      "timestamp": "2025-06-21T12:57:26.185513"
+    },
+    {
+      "path": "src/features/index.ts",
+      "status": "DELETED",
+      "size_bytes": 493,
+      "reason": "Not in bundle, not imported",
+      "timestamp": "2025-06-21T12:57:26.186066"
+    },
+    {
+      "path": "src/features/insights/components/EcoScore.tsx",
+      "status": "DELETED",
+      "size_bytes": 7925,
+      "reason": "Not in bundle, not imported",
+      "timestamp": "2025-06-21T12:57:26.186574"
+    },
+    {
+      "path": "src/features/insights/components/HealthScore.tsx",
+      "status": "DELETED",
+      "size_bytes": 6713,
+      "reason": "Not in bundle, not imported",
+      "timestamp": "2025-06-21T12:57:26.186829"
+    },
+    {
+      "path": "src/features/insights/components/MetricCard.tsx",
+      "status": "DELETED",
+      "size_bytes": 622,
+      "reason": "Not in bundle, not imported",
+      "timestamp": "2025-06-21T12:57:26.187066"
+    },
+    {
+      "path": "src/features/insights/components/RefactoredEcoCard.tsx",
+      "status": "DELETED",
+      "size_bytes": 2429,
+      "reason": "Not in bundle, not imported",
+      "timestamp": "2025-06-21T12:57:26.187701"
+    },
+    {
+      "path": "accessibility-audit.js",
+      "status": "DELETED",
+      "size_bytes": 15841,
+      "reason": "Utility script, not in bundle",
+      "timestamp": "2025-06-21T12:57:26.188213"
+    },
+    {
+      "path": "bundle-analyzer.js",
+      "status": "NOT_FOUND",
+      "error": "File does not exist",
+      "timestamp": "2025-06-21T12:57:26.188294"
+    },
+    {
+      "path": "src/components/Navigation.tsx",
+      "status": "DELETED",
+      "size_bytes": 7983,
+      "reason": "Not in bundle, replaced by new nav",
+      "timestamp": "2025-06-21T12:57:26.188727"
+    },
+    {
+      "path": "src/components/QuickActions.tsx",
+      "status": "DELETED",
+      "size_bytes": 1230,
+      "reason": "Not in bundle, not imported",
+      "timestamp": "2025-06-21T12:57:26.189436"
+    },
+    {
+      "path": "src/components/examples/EnhancedEcoScore.tsx",
+      "status": "DELETED",
+      "size_bytes": 8505,
+      "reason": "Example component, not in bundle",
+      "timestamp": "2025-06-21T12:57:26.189699"
+    },
+    {
+      "path": "src/components/family/FamilyManagement.tsx",
+      "status": "DELETED",
+      "size_bytes": 12657,
+      "reason": "Not in bundle, not imported",
+      "timestamp": "2025-06-21T12:57:26.189951"
+    },
+    {
+      "path": "src/components/viewport/ViewportGuardianDemo.tsx",
+      "status": "DELETED",
+      "size_bytes": 10356,
+      "reason": "Demo component, not in bundle",
+      "timestamp": "2025-06-21T12:57:26.190428"
+    },
+    {
+      "path": "src/components/wrapped/WrappedPage.tsx",
+      "status": "DELETED",
+      "size_bytes": 11354,
+      "reason": "Not in bundle, not imported",
+      "timestamp": "2025-06-21T12:57:26.190587"
+    }
+  ],
+  "errors": []
+}
