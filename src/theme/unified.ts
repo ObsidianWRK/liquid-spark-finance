@@ -226,6 +226,12 @@ export const vueniTheme = {
       status: {
         ...vueni.semantic,
       },
+      // Financial semantic alias for legacy code (positive/negative/neutral)
+      financial: {
+        positive: vueni.semantic.success,
+        negative: vueni.semantic.error,
+        neutral: vueni.neutral.n500,
+      },
     },
     surface: VueniSurfaces,
     text: VueniSurfaces.dark.text,
