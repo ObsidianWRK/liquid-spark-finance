@@ -38,7 +38,10 @@ import { PrivacyToggle } from '@/features/privacy-hide-amounts/components/Privac
 import { AdvisorChatPanel } from '@/features/advisor-chat/components/AdvisorChatPanel';
 import { SafeToSpendCard } from '@/features/safe-to-spend/components/SafeToSpendCard';
 import { WidgetsPanel } from '@/features/widgets/components/WidgetsPanel';
-import { BiometricMonitorCard } from '@/features/biometric-intervention/components/BiometricMonitorCard';
+import {
+  BiometricMonitorCard,
+  BiometricGuardrailsCard,
+} from '@/features/biometric-intervention';
 
 // Lazy load components properly without webpack comments
 const InvestmentTrackerPage = lazy(
@@ -627,18 +630,13 @@ export default function Index() {
                 </div>
 
                 {/* Analytics & Wellness Features */}
+                <p className="text-white/60 text-sm">
+                  Biometric spending guardrails can pause high-stress purchases.
+                </p>
                 <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
                   <AgeOfMoneyCard />
                   <BiometricMonitorCard />
-                  <div className="md:col-span-1 lg:col-span-1">
-                    {/* Future expansion slot for additional wellness features */}
-                    <div className="h-full bg-white/[0.02] border border-white/[0.08] rounded-2xl p-6 flex items-center justify-center">
-                      <div className="text-center text-white/40">
-                        <div className="text-sm">More features</div>
-                        <div className="text-xs">Coming soon</div>
-                      </div>
-                    </div>
-                  </div>
+                  <BiometricGuardrailsCard />
                 </div>
               </div>
             </div>
