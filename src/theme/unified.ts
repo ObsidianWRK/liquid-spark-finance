@@ -15,6 +15,7 @@ import {
   VueniCharts,
   generateVueniCSSProperties,
 } from './colors/vueniPalette';
+import { fontSizes, lineHeights } from './typography';
 
 // Typography system - single font family
 const typographySystem = {
@@ -22,26 +23,14 @@ const typographySystem = {
     primary:
       '"SF Pro Display", -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif',
   },
-  fontSize: {
-    xs: '0.75rem', // 12px
-    sm: '0.875rem', // 14px
-    base: '1rem', // 16px
-    lg: '1.125rem', // 18px
-    xl: '1.25rem', // 20px
-    '2xl': '1.5rem', // 24px
-    '3xl': '2rem', // 32px
-  },
+  fontSize: fontSizes,
   fontWeight: {
     normal: 400,
     medium: 500,
     semibold: 600,
     bold: 700,
   },
-  lineHeight: {
-    tight: 1.2,
-    normal: 1.4,
-    relaxed: 1.6,
-  },
+  lineHeight: lineHeights,
 } as const;
 
 // Spacing system - 8px grid
@@ -198,9 +187,9 @@ const chartSystem = {
     fontSize: {
       chartTitle: '20px',
       axisLabel: '12px',
-      dataLabel: '11px',
-      legend: '11px',
-      tooltip: '11px',
+      dataLabel: '12px',
+      legend: '12px',
+      tooltip: '12px',
     },
     fontWeight: {
       chartTitle: 600,

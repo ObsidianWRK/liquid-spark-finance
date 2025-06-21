@@ -514,3 +514,4 @@ html.dark [data-radix-dropdown-menu-item]:focus {
 }
 
 /* Remove duplicate import - already imported at top of file */
+@layer base { html { font-size: 16px; } }
