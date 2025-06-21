@@ -19,6 +19,6 @@
 
   /* Normalise oversized corner radius */
   .calculator-content .rounded-vueni-lg {
-    @apply rounded-vueni-lg;
+    border-radius: 8px;
   }
 }
