@@ -232,7 +232,7 @@
    ========================================================================== */
 
 .liquid-glass-nav-label {
-  font-size: 0.75rem;
+  font-size: var(--fs-label);
   font-weight: 500;
   line-height: 1;
   text-align: center;
@@ -346,7 +346,8 @@
   }
 
   .liquid-glass-nav-label {
-    font-size: 0.6875rem;
+    font-size: var(--fs-caption);
+    /* TODO: verify fs-caption mapping for 0.6875rem */
   }
 }
 

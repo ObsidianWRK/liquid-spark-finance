@@ -109,11 +109,11 @@
   }
 
   .transaction-merchant {
-    font-size: 15px;
+    font-size: var(--fs-body); /* TODO: 15px mapped to body */
   }
 
   .transaction-amount-text {
-    font-size: 15px;
+    font-size: var(--fs-body); /* TODO: 15px mapped to body */
   }
 }
 
@@ -126,19 +126,19 @@
   }
 
   .transaction-merchant {
-    font-size: 16px;
+    font-size: var(--fs-body);
   }
 
   .transaction-amount-text {
-    font-size: 16px;
+    font-size: var(--fs-body);
   }
 
   .transaction-category {
-    font-size: 13px;
+    font-size: var(--fs-caption); /* TODO: 13px approximated */
   }
 
   .transaction-date-text {
-    font-size: 13px;
+    font-size: var(--fs-caption); /* TODO: 13px approximated */
   }
 }
 
@@ -190,7 +190,7 @@
 }
 
 .transaction-merchant {
-  font-size: 14px;
+  font-size: var(--fs-label);
   font-weight: 500;
   line-height: 1.2;
   margin: 0 0 2px 0;
@@ -201,7 +201,7 @@
 }
 
 .transaction-category {
-  font-size: 12px;
+  font-size: var(--fs-caption);
   line-height: 1.2;
   margin: 0;
   color: rgba(255, 255, 255, 0.7);
@@ -211,7 +211,7 @@
 }
 
 .transaction-amount-text {
-  font-size: 14px;
+  font-size: var(--fs-label);
   font-weight: 600;
   line-height: 1.2;
   text-align: right;
@@ -219,7 +219,7 @@
 }
 
 .transaction-date-text {
-  font-size: 12px;
+  font-size: var(--fs-caption);
   line-height: 1.2;
   text-align: right;
   margin: 0;
