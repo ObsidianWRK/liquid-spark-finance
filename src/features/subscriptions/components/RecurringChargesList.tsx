@@ -131,27 +131,30 @@ export const RecurringChargesList: React.FC<{ className?: string }> = ({
         {displayCharges.map((charge) => (
           <div
             key={charge.id}
-            className="pfm-row flex-col sm:flex-row px-2 bg-white/[0.02] rounded-lg border border-white/[0.05] hover:bg-white/[0.04] transition-all"
+            className="flex items-center justify-between p-3 bg-white/[0.02] rounded-lg border border-white/[0.05] hover:bg-white/[0.04] transition-all"
           >
-            <div className="flex items-center justify-between w-full sm:w-auto mb-1 sm:mb-0">
-              <h4 className="text-xs font-medium text-white truncate">
+            {/* Left side: Subscription name and due date */}
+            <div className="flex flex-col min-w-0 flex-1">
+              <h4 className="text-sm font-medium text-white truncate">
                 {charge.merchantName}
               </h4>
-              <div className="text-right ml-2">
-                <p className="text-xs font-bold text-white">
+              <div className="flex items-center gap-1 mt-0.5">
+                <Calendar className="w-3 h-3 text-white/40" />
+                <span className="text-xs text-white/60">
+                  {formatDate(charge.nextDueDate)}
+                </span>
+              </div>
+            </div>
+
+            {/* Right side: Monthly cost and actions */}
+            <div className="flex items-center gap-3 ml-4">
+              <div className="text-right">
+                <p className="text-sm font-bold text-white">
                   {formatCurrency(charge.amount)}
                 </p>
                 <p className={cn('text-xs', getFrequencyColor(charge.frequency))}>
                   {charge.frequency}
                 </p>
-              </div>
-            </div>
-            <div className="flex items-center justify-between w-full sm:w-auto">
-              <div className="flex items-center gap-1">
-                <Calendar className="w-3 h-3 text-white/40" />
-                <span className="text-xs text-white/60">
-                  {formatDate(charge.nextDueDate)}
-                </span>
               </div>
               
               <Button
@@ -159,7 +162,7 @@ export const RecurringChargesList: React.FC<{ className?: string }> = ({
                 variant="outline"
                 onClick={() => cancel(charge.id)}
                 disabled={charge.status === 'pending_cancel'}
-                className="h-6 px-2 text-xs border-red-500/20 text-red-400 hover:bg-red-500/10"
+                className="h-6 px-2 text-xs border-red-500/20 text-red-400 hover:bg-red-500/10 flex-shrink-0"
               >
                 <XCircle className="w-3 h-3" />
               </Button>
