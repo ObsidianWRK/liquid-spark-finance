@@ -36,12 +36,19 @@ const TransactionRow: React.FC<TransactionRowProps> = ({
   // Merchant and category fallback – support legacy shapes
   const merchant = (tx as any).merchantName ?? (tx as any).merchant ?? '—';
 
-  // If category is an object (legacy mock shape), use its name field; else use the string directly
+  // If category is an object (legacy mock shape), use its name field; otherwise
+  // provide a generic label instead of "[object Object]" when an unexpected
+  // object shape is encountered during the MVP phase.
   const category = (() => {
     const raw = (tx as any).category;
     if (!raw) return '—';
     if (typeof raw === 'string') return raw;
-    if (typeof raw === 'object' && 'name' in raw) return String(raw.name);
+    if (typeof raw === 'object') {
+      if ('name' in raw && typeof (raw as any).name === 'string') {
+        return String((raw as any).name);
+      }
+      return 'Unknown Category';
+    }
     return String(raw);
   })();
 
