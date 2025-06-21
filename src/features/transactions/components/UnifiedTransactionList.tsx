@@ -135,11 +135,17 @@ interface RowItemTransaction {
 
 type RowItem = RowItemSeparator | RowItemTransaction;
 
+interface VariantStyles {
+  container: string;
+  item: string;
+  spacing: string;
+}
+
 interface RowRendererData {
   items: RowItem[];
   onClick?: (tx: Transaction) => void;
   features: TransactionFeatures;
-  styles: ReturnType<typeof getVariantStyles>;
+  styles: VariantStyles;
 }
 
 const RowRenderer: React.FC<ListChildComponentProps<RowRendererData>> = ({ index, style, data }) => {
@@ -599,7 +605,7 @@ const TransactionItem = React.memo<{
   transaction: Transaction;
   currency: string;
   features: TransactionFeatures;
-  styles: ReturnType<typeof getVariantStyles>;
+  styles: VariantStyles;
   onClick: () => void;
 }>(({ transaction, currency, features, styles, onClick }) => {
   const formatAmount = (amount: number) => {
@@ -612,21 +618,21 @@ const TransactionItem = React.memo<{
   };
 
   const getAmountColor = (amount: number) => {
-    if (amount > 0) return colors.financial.positive;
-    if (amount < 0) return colors.financial.negative;
-    return colors.financial.neutral;
+    if (amount > 0) return vueniTheme.colors.semantic.financial.positive;
+    if (amount < 0) return vueniTheme.colors.semantic.financial.negative;
+    return vueniTheme.colors.semantic.financial.neutral;
   };
 
   const getStatusIndicatorColor = (status: string) => {
     switch (status) {
       case 'completed':
-        return colors.status.success;
+        return vueniTheme.colors.semantic.status.success;
       case 'pending':
-        return colors.status.warning;
+        return vueniTheme.colors.semantic.status.warning;
       case 'failed':
-        return colors.status.error;
+        return vueniTheme.colors.semantic.status.error;
       default:
-        return colors.status.neutral;
+        return vueniTheme.colors.palette.neutral;
     }
   };
 
@@ -722,17 +728,17 @@ const TransactionItem = React.memo<{
         {/* Scores */}
         {features.showScores && transaction.scores && (
           <div className="flex space-x-1">
-            <UniversalScoreCircle
+            <SharedScoreCircle
               score={transaction.scores.health}
               type="health"
               size={features.compactMode ? 'sm' : 'md'}
             />
-            <UniversalScoreCircle
+            <SharedScoreCircle
               score={transaction.scores.eco}
               type="eco"
               size={features.compactMode ? 'sm' : 'md'}
             />
-            <UniversalScoreCircle
+            <SharedScoreCircle
               score={transaction.scores.financial}
               type="financial"
               size={features.compactMode ? 'sm' : 'md'}

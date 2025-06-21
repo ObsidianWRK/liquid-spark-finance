@@ -21,22 +21,22 @@ const defaultKeywords = [
     text: 'Smart Banking',
     emoji: '🏦',
     size: 'lg' as const,
-    route: 'accounts',
+    route: '/accounts',
   },
-  { text: 'AI Insights', emoji: '🤖', size: 'md' as const, route: 'insights' },
+  { text: 'AI Insights', emoji: '🤖', size: 'md' as const, route: '/insights' },
   {
     text: 'Investment',
     emoji: '📈',
     size: 'md' as const,
-    route: 'investments',
+    route: '/investment-tracker',
   },
-  { text: 'Budgeting', emoji: '💰', size: 'sm' as const, route: 'budget' },
-  { text: 'Goals', emoji: '🎯', size: 'sm' as const, route: 'savings' },
-  { text: 'Analytics', emoji: '📊', size: 'md' as const, route: 'analytics' },
-  { text: 'Security', emoji: '🔒', size: 'sm' as const, route: 'dashboard' },
-  { text: 'Planning', emoji: '📋', size: 'lg' as const, route: 'planning' },
-  { text: 'Savings', emoji: '🐷', size: 'md' as const, route: 'savings' },
-  { text: 'Credit', emoji: '💳', size: 'sm' as const, route: 'credit' },
+  { text: 'Budgeting', emoji: '💰', size: 'sm' as const, route: '/budget-planner' },
+  { text: 'Goals', emoji: '🎯', size: 'sm' as const, route: '/savings' },
+  { text: 'Analytics', emoji: '📊', size: 'md' as const, route: '/reports' },
+  { text: 'Security', emoji: '🔒', size: 'sm' as const, route: '/' },
+  { text: 'Planning', emoji: '📋', size: 'lg' as const, route: '/budget-planner' },
+  { text: 'Savings', emoji: '🐷', size: 'md' as const, route: '/savings' },
+  { text: 'Credit', emoji: '💳', size: 'sm' as const, route: '/credit' },
 ];
 
 // CC: Framer Motion stagger animation variants
@@ -80,8 +80,8 @@ const FeatureCloud: React.FC<FeatureCloudProps> = ({
     }
 
     if (keyword.route) {
-      // Navigate to the route
-      navigate(`/?tab=${keyword.route}`);
+      // Navigate directly to the route path
+      navigate(keyword.route);
     }
   };
 
