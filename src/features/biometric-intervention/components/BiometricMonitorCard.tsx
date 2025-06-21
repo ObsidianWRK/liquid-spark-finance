@@ -27,6 +27,7 @@ export const BiometricMonitorCard: React.FC = () => {
       iconColor="#06b6d4"
       score={wellnessScore}
       orientation="vertical"
+      interactive
       data={{
         metrics: reading
           ? [
