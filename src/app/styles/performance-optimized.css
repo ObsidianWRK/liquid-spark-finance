@@ -216,7 +216,7 @@
   color: white;
   padding: 0.5rem;
   border-radius: 0.5rem;
-  font-size: 0.75rem;
+  font-size: var(--fs-label);
   z-index: 9999;
   font-family: var(--vueni-font-family);
 }

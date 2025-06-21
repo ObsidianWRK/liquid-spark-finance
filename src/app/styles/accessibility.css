@@ -131,7 +131,7 @@
   text-decoration: none;
   border-radius: 4px;
   z-index: 1000;
-  font-size: 14px;
+  font-size: var(--fs-label);
   font-weight: 500;
   border: 2px solid #007aff;
 }
@@ -145,7 +145,7 @@
   border-collapse: collapse;
   width: 100%;
   margin-top: 1rem;
-  font-size: 14px;
+  font-size: var(--fs-label);
 }
 
 .chart-data-table th,
@@ -202,7 +202,7 @@
   color: #ffffff;
   padding: 4px 8px;
   border-radius: 4px;
-  font-size: 12px;
+  font-size: var(--fs-caption);
   white-space: nowrap;
   z-index: 100;
   pointer-events: none;

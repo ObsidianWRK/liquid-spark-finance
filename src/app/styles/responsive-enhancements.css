@@ -894,25 +894,26 @@ html:not(.dark) [class*='text-muted'] {
    Typography System
    ============================================== */
 .responsive-heading {
-  font-size: 1.5rem;
+  font-size: var(--fs-heading4);
   line-height: 1.4;
 }
 
 @media (min-width: 768px) {
   .responsive-heading {
-    font-size: 1.75rem;
+    font-size: var(--fs-heading3);
   }
 }
 
 @media (min-width: 1024px) {
   .responsive-heading {
-    font-size: 2rem;
+    font-size: var(--fs-heading2);
   }
 }
 
 @media (min-width: 1440px) {
   .responsive-heading {
-    font-size: 2.25rem;
+    font-size: var(--fs-heading1);
+    /* TODO: confirm token mapping across breakpoints */
   }
 }
 
@@ -1035,18 +1036,18 @@ main,
    ============================================== */
 
 .collapsed-card-title {
-  font-size: 1rem !important;
+  font-size: var(--fs-body) !important;
   line-height: 1.3 !important;
 }
 
 @media (min-width: 1024px) {
   .collapsed-card-title {
-    font-size: 1.125rem !important;
+    font-size: var(--fs-body-lg) !important;
   }
 }
 
 .expanded-card-title {
-  font-size: 1.25rem !important;
+  font-size: var(--fs-heading5) !important;
   line-height: 1.4 !important;
   margin-bottom: 1rem !important;
   word-break: break-word;
@@ -1055,7 +1056,7 @@ main,
 
 @media (min-width: 1024px) {
   .expanded-card-title {
-    font-size: 1.5rem !important;
+    font-size: var(--fs-heading4) !important;
   }
 }
 
@@ -1259,12 +1260,12 @@ main,
   }
 
   .page-header-desktop h1 {
-    font-size: 2.5rem;
+    font-size: var(--fs-display);
     line-height: 1.2;
   }
 
   .page-header-desktop p {
-    font-size: 1.125rem;
+    font-size: var(--fs-body-lg);
     margin-top: 0.5rem;
   }
 }
