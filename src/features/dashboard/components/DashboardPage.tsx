@@ -17,7 +17,7 @@ import { useNavigate } from 'react-router-dom';
 import FinancialDashboard from './FinancialDashboard';
 import { FinancialDashboardErrorBoundary } from './FinancialDashboardErrorBoundary';
 import { BankLinkingPanel } from '@/features/bank-linking';
-import { visualizationService } from '@/services/visualizationService';
+import { visualizationService } from '@/features/dashboard/api/visualizationService';
 import { cn } from '@/shared/lib/utils';
 import { SubscriptionsPanel } from '@/features/subscriptions';
 import { BillNegotiationPanel } from '@/features/bill-negotiation';
@@ -178,9 +178,8 @@ const DashboardPage = () => {
       </div>
 
               {/* Bank Linking & Mock Accounts */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 gap-6">
           <BankLinkingPanel />
-          {/* <LinkedAccountsCard compact={false} /> */}
         </div>
 
       {/* Subscriptions Detection */}

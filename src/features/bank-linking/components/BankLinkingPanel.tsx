@@ -152,13 +152,13 @@ export const BankLinkingPanel: React.FC = () => {
     switch (type) {
       case 'checking':
       case 'savings':
-        return <Building2 className="w-4 h-4 text-blue-400" />;
+        return <Building2 className="w-3 h-3 text-blue-400" />;
       case 'credit':
-        return <CreditCard className="w-4 h-4 text-orange-400" />;
+        return <CreditCard className="w-3 h-3 text-orange-400" />;
       case 'investment':
-        return <TrendingUp className="w-4 h-4 text-green-400" />;
+        return <TrendingUp className="w-3 h-3 text-green-400" />;
       default:
-        return <PiggyBank className="w-4 h-4 text-purple-400" />;
+        return <PiggyBank className="w-3 h-3 text-purple-400" />;
     }
   };
 
@@ -224,15 +224,15 @@ export const BankLinkingPanel: React.FC = () => {
         </div>
       </div>
 
-      {/* Scrollable Account List */}
-      <div className="max-h-52 overflow-y-auto space-y-2 mb-3 scrollbar-thin scrollbar-thumb-white/20 scrollbar-track-white/5">
+      {/* Scrollable Account List - Show only 5 accounts initially */}
+      <div className="max-h-32 overflow-y-auto space-y-1 mb-3 scrollbar-thin scrollbar-thumb-white/20 scrollbar-track-white/5">
         {MOCK_ACCOUNTS.map((account) => (
           <div
             key={account.id}
-            className="flex items-center justify-between p-2 bg-white/[0.02] rounded-lg border border-white/[0.05] hover:bg-white/[0.04] transition-all cursor-pointer"
+            className="flex items-center justify-between p-1.5 bg-white/[0.02] rounded-lg border border-white/[0.05] hover:bg-white/[0.04] transition-all cursor-pointer"
           >
             <div className="flex items-center gap-2">
-              <div className="w-6 h-6 rounded-lg bg-white/[0.05] flex items-center justify-center">
+              <div className="w-5 h-5 rounded-lg bg-white/[0.05] flex items-center justify-center">
                 {getAccountIcon(account.type)}
               </div>
               <div>
