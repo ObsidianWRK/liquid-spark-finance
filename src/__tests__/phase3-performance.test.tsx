@@ -2,7 +2,7 @@ import { render, screen, waitFor } from '@testing-library/react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { BrowserRouter } from 'react-router-dom';
 import { UnifiedInsightsPage } from '@/features/insights/components/UnifiedInsightsPage';
-import { OptimizedTransactionList } from '@/features/transactions/components/OptimizedTransactionList';
+import { UnifiedTransactionList } from '@/ui-kit';
 import { CompoundInterestCalculator } from '@/features/calculators/components/CompoundInterestCalculator';
 import AccountCard from '@/components/AccountCard';
 import BalanceCard from '@/components/BalanceCard';
@@ -91,15 +91,13 @@ describe('Phase 3 Performance Optimizations', () => {
 
       const transformedTransactions = mockData.transactions.map((t) => ({
         id: t.id,
-        date: t.date,
-        description: t.merchant,
-        amount: Math.abs(t.amount),
+        merchant: t.merchant,
         category: {
           name: t.category.name.toLowerCase(),
           color: t.category.color || '#6366f1',
         },
-        type: t.amount < 0 ? 'expense' : ('income' as const),
-        merchant: t.merchant,
+        amount: t.amount,
+        date: t.date,
         status: 'completed' as const,
         scores: {
           health: 85,
@@ -109,7 +107,7 @@ describe('Phase 3 Performance Optimizations', () => {
       }));
 
       renderWithProviders(
-        <OptimizedTransactionList
+        <UnifiedTransactionList
           transactions={transformedTransactions}
           variant="apple"
           currency="USD"
@@ -125,7 +123,7 @@ describe('Phase 3 Performance Optimizations', () => {
       );
 
       await waitFor(() => {
-        expect(screen.getByRole('table')).toBeInTheDocument();
+        expect(screen.getByText('Transactions')).toBeInTheDocument();
       });
 
       const renderTime = performance.now() - startTime;
