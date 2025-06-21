@@ -17,7 +17,7 @@ import {
 import { budgetService } from '@/features/budget/api/budgetService';
 import { Budget, BudgetCategory, SavingsGoal } from '@/shared/types/budgets';
 import { cn } from '@/shared/lib/utils';
-import { mockData } from '@/services/mockData';
+import { MOCK_DATA } from '@/services/dataProvider';
 import { TransactionCategory } from '@/shared/types/transactions';
 import { UniversalCard } from '@/shared/ui/UniversalCard';
 
@@ -51,7 +51,7 @@ const BudgetTracker = ({ familyId, className }: BudgetTrackerProps) => {
       const populateSpentFromMock = (budgetToPopulate: Budget | null) => {
         if (!budgetToPopulate) return budgetToPopulate;
 
-        const expenses = mockData.transactions.filter((t) => t.amount < 0);
+        const expenses = MOCK_DATA.transactions.filter((t) => t.amount < 0);
 
         // Helper to map mock category labels -> internal TransactionCategory keys
         const mapCategory = (label: string): TransactionCategory => {

@@ -1,5 +1,5 @@
 import { RecurringCharge } from '@/types';
-import { mockData } from '@/services/mockData';
+import { MOCK_DATA } from '@/services/dataProvider';
 import { billAnalysisService } from '@/features/bill-negotiation/api/billAnalysisService';
 
 export interface SubscriptionService {
