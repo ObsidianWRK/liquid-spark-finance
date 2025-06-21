@@ -23,6 +23,7 @@ export const AgeOfMoneyCard: React.FC = () => {
       iconColor="#06b6d4"
       score={metric ? Math.min(metric.averageDaysHeld, 100) : undefined}
       orientation="vertical"
+      interactive
     >
       {!metric && (
         <div className="text-center">
