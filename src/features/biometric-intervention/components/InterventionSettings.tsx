@@ -9,7 +9,8 @@ import {
   Clock,
   DollarSign,
 } from 'lucide-react';
-import { Card, CardHeader, CardTitle, CardContent } from '@/shared/ui/card';
+import { CardHeader, CardTitle, CardContent } from '@/shared/ui/card';
+import { UniversalCard } from '@/shared/ui/UniversalCard';
 import { Button } from '@/shared/ui/button';
 import { Badge } from '@/shared/ui/badge';
 import { Switch } from '@/shared/ui/switch';
@@ -144,7 +145,7 @@ export const InterventionSettings: React.FC<InterventionSettingsProps> = ({
   return (
     <div className={cn('space-y-6', className)}>
       {/* Main Toggle */}
-      <Card className="bg-white/[0.02] border-white/[0.08]">
+      <UniversalCard className="bg-white/[0.02] border-white/[0.08]">
         <CardHeader>
           <CardTitle className="flex items-center justify-between">
             <div className="flex items-center space-x-2">
@@ -165,12 +166,12 @@ export const InterventionSettings: React.FC<InterventionSettingsProps> = ({
               : 'Enable biometric interventions to help prevent stress-induced spending.'}
           </p>
         </CardContent>
-      </Card>
+      </UniversalCard>
 
       {isActive && (
         <>
           {/* Active Policies */}
-          <Card className="bg-white/[0.02] border-white/[0.08]">
+          <UniversalCard className="bg-white/[0.02] border-white/[0.08]">
             <CardHeader>
               <CardTitle className="flex items-center justify-between">
                 <span>Intervention Policies</span>
@@ -270,11 +271,11 @@ export const InterventionSettings: React.FC<InterventionSettingsProps> = ({
                 ))
               )}
             </CardContent>
-          </Card>
+          </UniversalCard>
 
           {/* Add/Edit Policy Form */}
           {showAddForm && (
-            <Card className="bg-white/[0.02] border-white/[0.08]">
+            <UniversalCard className="bg-white/[0.02] border-white/[0.08]">
               <CardHeader>
                 <CardTitle>
                   {editingPolicy ? 'Edit Policy' : 'Add New Policy'}
@@ -421,11 +422,11 @@ export const InterventionSettings: React.FC<InterventionSettingsProps> = ({
                   </Button>
                 </div>
               </CardContent>
-            </Card>
+            </UniversalCard>
           )}
 
           {/* Wearable Integrations */}
-          <Card className="bg-white/[0.02] border-white/[0.08]">
+          <UniversalCard className="bg-white/[0.02] border-white/[0.08]">
             <CardHeader>
               <CardTitle>Wearable Devices</CardTitle>
             </CardHeader>
@@ -451,7 +452,7 @@ export const InterventionSettings: React.FC<InterventionSettingsProps> = ({
                 )
               )}
             </CardContent>
-          </Card>
+          </UniversalCard>
         </>
       )}
     </div>

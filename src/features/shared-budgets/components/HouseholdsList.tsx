@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { useSharedBudgetsStore } from '../store';
-import { Card, CardHeader, CardTitle, CardContent } from '@/shared/ui/card';
+import { CardHeader, CardTitle, CardContent } from '@/shared/ui/card';
+import { UniversalCard } from '@/shared/ui/UniversalCard';
 import { Users } from 'lucide-react';
 import { cn } from '@/shared/lib/utils';
 
@@ -36,7 +37,7 @@ export const HouseholdsList: React.FC<{ className?: string }> = ({
   return (
     <div className={cn('space-y-4', className)}>
       {households.map((h) => (
-        <Card key={h.id}>
+        <UniversalCard key={h.id}>
           <CardHeader className="flex-row items-center gap-2 space-y-0">
             <Users className="text-primary" />
             <CardTitle>{h.name}</CardTitle>
@@ -44,7 +45,7 @@ export const HouseholdsList: React.FC<{ className?: string }> = ({
           <CardContent className="text-sm text-muted-foreground">
             {h.members.length} member{h.members.length === 1 ? '' : 's'}
           </CardContent>
-        </Card>
+        </UniversalCard>
       ))}
     </div>
   );

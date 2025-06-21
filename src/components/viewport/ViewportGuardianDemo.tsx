@@ -24,7 +24,7 @@ import {
   getFeatureSupport,
   getBrowserInfo,
 } from '@/shared/utils/viewport-guardian';
-import { Card } from '@/shared/ui/card';
+import { UniversalCard } from '@/shared/ui/UniversalCard';
 import { Button } from '@/shared/ui/button';
 import { Badge } from '@/shared/ui/badge';
 
@@ -55,7 +55,7 @@ const ViewportGuardianDemo: React.FC = () => {
       </div>
 
       {/* Quick Status */}
-      <Card className="p-4">
+      <UniversalCard className="p-4">
         <h2 className="text-lg font-semibold mb-3">Quick Status</h2>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
           <div className="text-center">
@@ -88,10 +88,10 @@ const ViewportGuardianDemo: React.FC = () => {
             <p className="text-sm text-muted-foreground mt-1">Breakpoint</p>
           </div>
         </div>
-      </Card>
+      </UniversalCard>
 
       {/* Viewport Dimensions */}
-      <Card className="p-4">
+      <UniversalCard className="p-4">
         <h2 className="text-lg font-semibold mb-3">Viewport Dimensions</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
@@ -121,10 +121,10 @@ const ViewportGuardianDemo: React.FC = () => {
             </div>
           </div>
         </div>
-      </Card>
+      </UniversalCard>
 
       {/* Safe Area Insets */}
-      <Card className="p-4">
+      <UniversalCard className="p-4">
         <h2 className="text-lg font-semibold mb-3">Safe Area Insets</h2>
         <div className="relative border-2 border-dashed border-muted rounded-lg p-8">
           {/* Safe area visualization */}
@@ -163,10 +163,10 @@ const ViewportGuardianDemo: React.FC = () => {
             </div>
           </div>
         </div>
-      </Card>
+      </UniversalCard>
 
       {/* Virtual Keyboard */}
-      <Card className="p-4">
+      <UniversalCard className="p-4">
         <h2 className="text-lg font-semibold mb-3">Virtual Keyboard</h2>
         <div className="space-y-3">
           <div className="flex items-center justify-between">
@@ -191,10 +191,10 @@ const ViewportGuardianDemo: React.FC = () => {
             />
           </div>
         </div>
-      </Card>
+      </UniversalCard>
 
       {/* Browser Capabilities */}
-      <Card className="p-4">
+      <UniversalCard className="p-4">
         <h2 className="text-lg font-semibold mb-3">Browser & Features</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
@@ -255,7 +255,7 @@ const ViewportGuardianDemo: React.FC = () => {
             </div>
           </div>
         </div>
-      </Card>
+      </UniversalCard>
 
       {/* Debug Toggle */}
       <div className="text-center">
@@ -269,16 +269,16 @@ const ViewportGuardianDemo: React.FC = () => {
 
       {/* Debug Information */}
       {showDebugInfo && debugInfo && (
-        <Card className="p-4">
+        <UniversalCard className="p-4">
           <h2 className="text-lg font-semibold mb-3">Debug Information</h2>
           <pre className="text-xs bg-muted p-4 rounded overflow-x-auto">
             {JSON.stringify(debugInfo, null, 2)}
           </pre>
-        </Card>
+        </UniversalCard>
       )}
 
       {/* CSS Demo */}
-      <Card className="p-4">
+      <UniversalCard className="p-4">
         <h2 className="text-lg font-semibold mb-3">CSS Utilities Demo</h2>
         <div className="space-y-4">
           <div className="glass-effect p-4 rounded-lg">
@@ -297,7 +297,7 @@ const ViewportGuardianDemo: React.FC = () => {
             </p>
           </div>
         </div>
-      </Card>
+      </UniversalCard>
     </div>
   );
 };

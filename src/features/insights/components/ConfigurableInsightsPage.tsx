@@ -26,7 +26,6 @@ import {
   PiggyBank,
   ChevronRight,
 } from 'lucide-react';
-import { Card } from '@/shared/ui/card';
 import { Button } from '@/shared/ui/button';
 import { Badge } from '@/shared/ui/badge';
 import { Switch } from '@/shared/ui/switch';
